@@ -5,7 +5,22 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 <!-- DAILY_REPORT_START -->
 ## 每日 AI 分析
 
-今日尚未生成 AI 趋势报告。运行 `scripts/run_pipeline.py` 后会在这里插入 `reports/daily/` 中的最新报告。
+## 每日总览
+
+来源：`data/papers.json`、`data/processed_papers.json`、`interests.md`。
+
+- 当前滚动窗口论文数：44
+- 分类分布：
+  - Neural Scene Representations & Rendering: 14
+  - Embodied / Robotics / AR Applications: 13
+  - 3D Reconstruction & Multi-view Geometry: 12
+  - Dynamic / 4D Reconstruction: 5
+- 当前兴趣方向：未指定
+- 当前显式任务：未指定
+
+### interests.md 指令分析
+
+未指定 `generate daily trend report`，因此未执行额外趋势报告任务。
 
 <!-- DAILY_REPORT_END -->
 
@@ -156,6 +171,45 @@ We present \emph{DisFlow}, a novel framework for online scene flow estimation fr
 **Matched keywords:** 3D reconstruction, scene reconstruction, manipulation, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：SimuScene: Simulation-Ready Compositional 3D Scene Reconstruction from a Single Image
+- 作者：Inhee Lee, Sangwon Baik, Sungjoo Kim, Hyeonwoo Kim, Hyunsoo Cha, Hanbyul Joo
+- 出版日期：2026-06-02
+- 分类：3D重建与多视角几何（主要）；具身/机器人/AR应用（次要）
+- 链接：摘要页 https://arxiv.org/abs/2606.03994 ，PDF https://arxiv.org/pdf/2606.03994
+
+### 一句话总结
+SimuScene 提出一种将物理模拟作为诊断工具的3D场景重建流程，从单张图像生成可稳定用于物理仿真的组合式3D场景。
+
+### 研究问题
+如何从单张图像重建出组合式3D场景，使其在物理模拟中不出现物体穿透、悬空或下沉等不稳定现象。
+
+### 核心思路/方法
+1. 将物理引擎嵌入形状和布局估计的生成过程中，而非仅作为后处理校正。
+2. 通过模拟重力作用下重建物体的行为，将穿透和支撑失败转化为量化校正信号。
+3. 利用这些信号驱动重力轴拉伸和模态形状重采样，形成有物理反馈的循环，逐步修正累积的重建误差，最终输出稳定的仿真就绪场景。
+
+### 主要贡献
+- 提出一种物理在环的组合式3D重建流水线，将物理模拟作为诊断测量工具用于生成过程。
+- 将物理稳定性作为校正信号，实现重力轴拉伸和形状重采样，解决穿透和支撑问题。
+- 在物理稳定性和几何对齐基准上达到最先进性能，并验证了在人形控制与机器人臂操作任务中的实用性。
+
+### 与相关方法的关系
+- 与 VGGT、DUSt3R、MASt3R、CroCo、NeRF、Gaussian Splatting、动态场景重建方法的关系：摘要未提供足够信息。
+- 与现有物理感知方法的关系：明确指出这些方法将物理处理严格视为后处理的布局校正，无法解决底层几何误差；SimuScene 则将物理模拟集成至生成过程中，实现持续反馈和修正。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+高  
+理由：该方法针对具身智能和机器人操控中的关键瓶颈（仿真就绪场景重建），提出了一种将物理模拟融入生成过程的创新范式，实验表明在稳定性和对齐性上优于现有方法，且在人形控制和机械臂任务中有直接应用价值。对3D重建、物理模拟、机器人学方向的研究者具有重要参考意义。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Reconstructing interactive, simulation-ready 3D scenes from a single image is a critical bottleneck for robotic manipulation. While recent single-image lifters recover plausible per-object shapes, composing them yields scenes that collapse under physical simulation due to interpenetrating, hovering, or sinking objects. Existing physics-aware methods address this strictly as a post-hoc layout correction, leaving the underlying geometric errors unresolved. To address this, we introduce SimuScene, a compositional 3D reconstruction pipeline that puts physics in the loop of shape and layout estimation. Rather than using physics merely for layout cleanup, we utilize the physics engine as a diagnostic measurement tool during the generative process itself. By diagnostically simulating reconstructed objects under gravity, we convert penetration and support failures into quantitative correction signals that drive gravity-axis stretching and amodal shape resampling. This physics-informed feedback loop mitigates accumulated reconstruction errors and produces a stable, simulation-ready compositional 3D scene. Extensive experiments demonstrate state-of-the-art performance on physical stability and geometric alignment benchmarks. We further highlight SimuScene's utility by deploying reconstructed environments in humanoid control and robot-arm manipulation tasks.
@@ -171,6 +225,48 @@ Reconstructing interactive, simulation-ready 3D scenes from a single image is a 
 **Matched keywords:** depth estimation
 
 <details>
+<summary>AI 简析</summary>
+
+好的，这是基于您提供的论文元数据和摘要生成的简要分析。
+
+### Metadata
+- 标题：PixVOD: 像素分布式直接视觉里程计与深度估计
+- 作者：Shinjeong Kim, Ignacio Alzugaray, Callum Rhodes, Paul H. J. Kelly, Andrew J. Davison
+- 出版日期：2026-06-02
+- 分类：3D重建与多视图几何
+- 链接：摘要: https://arxiv.org/abs/2606.03989，PDF: https://arxiv.org/pdf/2606.03989
+
+### 一句话总结
+本文提出一种完全可并行化的视觉里程计与深度估计方法，该方法通过高斯置信传播（GBP）在像素之间分布式地进行相机运动和深度的推理，旨在实现传感器内计算。
+
+### 研究问题
+如何设计一种能够直接在图像传感器像素级别进行分布式计算的视觉里程计和深度估计算法，以减少从传感器传输冗余、噪声数据的开销，并减轻下游计算负担。
+
+### 核心思路/方法
+1.  **像素级分布式处理**：核心思想是将视觉里程计和深度估计的计算过程分布到每个像素上，而不是在传统处理器上进行集中式计算。这契合了焦平面传感器-处理器（focal-plane sensor-processor）的硬件趋势。
+2.  **高斯置信传播（GBP）**：通过GBP算法，使传感器上的每个像素能够与其邻居像素交换信息，从而就相机运动达成共识，并根据每个像素的光度观测值和表面法线先验来推断深度。
+3.  **关键帧锚定机制**：为了优化过程中的几何稳定性，引入了一种类似关键帧的锚定机制。该机制通过调节帧之间的有效基线，使得运动和深度更新能够保持一致性。
+
+### 主要贡献
+根据摘要，主要贡献是：
+1.  提出了一种基于像素级分布式计算的视觉里程计和深度估计方法（PixVOD）。
+2.  证明了基于高斯置信传播（GBP）的像素级分布式里程计与深度估计的可行性。
+3.  提出了关键帧锚定机制，以实现在传感器上的稳定优化。
+4.  在现实数据集上对该方法的可行性进行了评估。
+
+### 与相关方法的关系
+摘要未提供足够信息。因此无法说明它与VGGT、DUSt3R、MASt3R、CroCo、NeRF、Gaussian Splatting、动态场景重建方法的具体关系。摘要仅将自身定位为一种与“焦平面传感器-处理器”硬件趋势相关的、全新的分布式计算范式。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**中**
+理由：该方法提出了一个颇具新意的计算范式，即完全在像素级别分布式地进行视觉里程计。这对于关注传感器内计算、低功耗视觉和边缘AI的研究者来说是一个有趣的方向。然而，当前信息仅包含初步的可行性验证，对于其实际性能（如精度、鲁棒性、与现有集中式方法的对比）以及具体的硬件实现细节尚不清楚，因此优先级设为中等。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Images composed of 2D pixel arrays are the standard input to computer vision algorithms, yet many underlying computations can be distributed across pixels. Transmitting raw, redundant, and noisy pixel data off the sensor remains inefficient, motivating a shift toward focal-plane sensor-processors that perform a significant part of the computation directly within each pixel. We envision pixels synthesizing higher-level signals locally, reducing downstream load, and providing richer inputs for higher-level vision tasks. We propose a fully parallelizable form of visual odometry and depth estimation across pixels, where sensor-processors exchange information through Gaussian Belief Propagation (GBP) to achieve consensus about camera motion and infer depth from per-pixel photometric observations and a surface normal prior. To maintain geometric stability during optimization, we introduce a keyframe-like anchoring mechanism that regulates the effective baseline between frames, enabling consistent motion and depth updates. Our method is evaluated on realistic datasets, demonstrating the feasibility of GBP-based pixel-level distributed odometry and depth estimation with keyframe anchoring on-sensor. Project Page: https://www.shinjeongkim.com/pixvod/
@@ -184,6 +280,47 @@ Images composed of 2D pixel arrays are the standard input to computer vision alg
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** pose estimation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：基于角度刚性的多机器人仅方位姿态估计
+- 作者：J. Francisco Presenza, Leonardo J. Colombo, Ignacio Mas, Juan I. Giribet
+- 出版日期：2026-06-02
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2606.03931
+
+### 一句话总结
+本文提出一种基于角度刚性的分布式仅方位（bearing-only）估计器，利用机器人间方位测量即可同时估计三维位置和姿态，并在弱于传统刚性条件的角度刚性拓扑下保证局部指数稳定性。
+
+### 研究问题
+如何在时变多机器人系统中，仅使用从机体坐标系获取的方位信息（无需先验方向或全局位置），分布式地估计机器人在ℝ³中的位置和SO(3)中的姿态。
+
+### 核心思路/方法
+1. 从机体坐标系的轴承测量中计算出机器人之间的夹角度量。
+2. 基于这些角度建立位置估计器，无需知道机器人各自的朝向。
+3. 利用估计出的位置、原始轴承及其导数，反推出每个机器人的SO(3)姿态。
+4. 要求感知拓扑满足“角度刚性”（angle-rigid）条件——该条件比常用的轴承刚性更弱。
+5. 在部分机器人具有持续激励（persistently exciting）运动的前提下，证明估计器的局部一致指数稳定性。
+
+### 主要贡献
+- 提出首个基于角度刚性的分布式仅方位姿态估计方法，无需全局坐标系或姿态先验。
+- 证明该方法在三维空间中同时恢复位置和旋转，且要求拓扑条件弱于传统轴承刚性。
+- 给出连续时间估计器的局部指数稳定性证明（依赖持续激励假设）。
+- 通过仿真验证了方法的有效性和实用性。
+
+### 与相关方法的关系
+摘要未提供足够信息。文中未提及VGGT、DUSt3R、MASt3R、CroCo、NeRF、Gaussian Splatting或动态场景重建方法，无法判断与之关系。
+
+### 局限性
+摘要未提供足够信息。例如未讨论传感器噪声、编队规模、收敛速度、非持续激励状态下的性能退化等局限。
+
+### 阅读优先级
+中  
+理由：对于多机器人分布式定位和编队控制领域有参考价值，属于方法论创新；但属于特定应用场景（仅方位估计）的增强型方案，非通用视觉重建或SLAM方法。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -342,6 +479,47 @@ Active scene reconstruction enables robots/UAVs to autonomously plan trajectorie
 **Matched keywords:** dynamic scene reconstruction, scene reconstruction, Gaussian Splatting, 3D Gaussian Splatting, scene representation, rendering, splatting, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：SparseStreet: Sparse Gaussian Splatting for Real-Time Street Scene Simulation
+- 作者：Qingpo Wuwu, Xiaobao Wei, Peng Chen, Nan Huang, Zhongyu Zhao, Hao Wang, Ming Lu, Ningning Ma, Shanghang Zhang
+- 出版日期：2026-06-02T17:06:14Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2606.03909
+
+### 一句话总结
+SparseStreet 提出一种针对街景的3D高斯泼溅压缩框架，通过可学习剪枝和背景压缩实现高达80%的压缩比，在保持动态物体高保真度的同时显著降低存储和渲染开销。
+
+### 研究问题
+现有3D高斯泼溅方法在街景重建中需要大量高斯基元以捕捉细节，导致存储成本高和渲染速度慢，特别是动态物体（如车辆、行人）和静态背景之间存在冗余不均衡的问题。
+
+### 核心思路/方法
+1. **节点可学习剪枝策略**：系统地移除低贡献的高斯基元，同时保留视觉关键区域（如动态物体）。
+2. **背景压缩**：在场景表示稳定后，进一步减少静态区域的冗余高斯基元。
+3. 综合应用以上两步，在不显著降低质量的前提下，大幅压缩总高斯基元数量。
+
+### 主要贡献
+- 提出专门面向街景场景的通用压缩框架SparseStreet。
+- 设计节点级可学习剪枝方法，保留动态物体几何与外观。
+- 引入背景压缩策略，消除静态区域冗余。
+- 在Waymo和nuScenes上实现最高80%压缩比，且质量损失极小。
+
+### 与相关方法的关系
+- **NeRF、Gaussian Splatting**：基于3D高斯泼溅（Gaussian Splatting）改进，而非NeRF；针对其高存储和低速度问题提出压缩方案。
+- **动态场景重建方法**：专注于动态物体（车辆、行人）的高保真重建，与一般动态场景方法在技术路径上不同（侧重压缩而非建模）。
+- **VGGT、DUSt3R、MASt3R、CroCo**：摘要未提供足够信息，无法判断关联。
+
+### 局限性
+摘要未提供足够信息，例如：未报告在极高压缩比下的具体质量损失指标（如PSNR/SSIM）、未讨论不同场景的鲁棒性、未给出实际渲染帧率或推理时间、未说明剪枝策略的训练稳定性和超参数敏感性。
+
+### 阅读优先级
+**高**
+理由：论文针对3D高斯泼溅在街景重建中的实际部署瓶颈（存储和速度），提出有效压缩框架（80%压缩比），且实验结果来自主流数据集（Waymo、nuScenes），对从事自动驾驶、城区数字孪生和实时渲染的研究者具有直接参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 While 3D Gaussian Splatting has shown promising results in street scene reconstruction, existing methods require massive numbers of Gaussian primitives to capture fine details, leading to prohibitive storage costs and slow rendering speeds. We observe that dynamic objects (e.g., vehicles and pedestrians) demand high-fidelity representations to maintain temporal consistency, while static background regions often contain substantial redundancy. Motivated by this, we propose SparseStreet, a general compression framework specifically designed for street scenes. First, we introduce a node-based learnable pruning strategy that systematically removes low-contributing Gaussian primitives while preserving visually critical regions. Second, after the scene representation stabilizes, we apply background compression, further reducing redundancy in static regions. Our method effectively preserves the geometry and appearance of dynamic objects while significantly reducing the total number of Gaussian primitives. Extensive experiments on the Waymo and nuScenes demonstrate that SparseStreet achieves up to 80% compression ratio with minimal quality degradation, enabling resource-efficient, high-fidelity dynamic scene reconstruction. Project website: https://sparsestreet.github.io/.
@@ -355,6 +533,50 @@ While 3D Gaussian Splatting has shown promising results in street scene reconstr
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** radiance field, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, rendering, radiance, splatting, manipulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：MLP Splatting: Object-Centric Neural Fields
+- 作者：Shinjeong Kim, Yuzhou Cheng, Xin Kong, Paul H. J. Kelly, Andrew J. Davison
+- 出版日期：2026-06-02
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2606.03877
+
+### 一句话总结
+MLP-Splatting 使用多个紧凑的 MLP 作为空间局部化的光场基元，在实现照片级真实感新视角合成的同时，可通过少量基元选择实现对象级场景分解与编辑，且内存和渲染效率优于现有方法。
+
+### 研究问题
+如何获得一种既能提供照片级真实感新视角合成，又能轻松将场景分解为可编辑对象级基元的3D表示，从而避免额外的分割或分组步骤。
+
+### 核心思路/方法
+- 将场景表示为若干独立的紧凑 MLP（多层感知机），每个 MLP 具有局部空间支持，负责预测光线在该区域的 radiance（辐射度）和 opacity（不透明度）。
+- 渲染时，通过稀疏体素合成（sparse volumetric compositing）沿光线与基元交互进行高效计算。
+- 仅使用 RGB 监督训练，导致基元自动对应局部场景区域（常与对象或对象部分对应），从而无需分割掩码即可通过选择少量基元进行交互式对象级编辑。
+- 可选语义特征蒸馏以支持开放词汇场景交互和开放集实例分割。
+
+### 主要贡献
+- 提出一种基于可学习、空间局部化的 MLP 基元的场景表示，兼具高表达能力和局部性。
+- 实现无需额外分割掩码的对象级编辑能力，通过选择少量基元即可。
+- 相比语义 3DGS 方法，内存使用降至 1/15，渲染速度提升至 3 倍。
+- 可选语义蒸馏实现开放词汇交互与开放集实例分割。
+
+### 与相关方法的关系
+- **NeRF** 和 **Gaussian Splatting**：摘要明确指出 MLP-Splatting 与这两类方法对比——它们虽能实现照片级真实感新视角合成，但缺乏易于将场景分解为少量基元的能力。MLP-Splatting 通过局部 MLP 基元解决了此问题。
+- **VGGT、DUSt3R、MASt3R、CroCo**：摘要未提供足够信息说明与这些方法的关系。
+- **动态场景重建方法**：摘要未提供足够信息说明与动态场景重建方法的关系。
+
+### 局限性
+- 摘要未提供足够信息说明该方法在处理复杂遮挡、大尺度场景或极端视角时的表现。
+- 未提及对非静态场景（动态场景）的适用性。
+- 摘要未提供定量比较之外的失败案例或边界情况分析。
+
+### 阅读优先级
+**高**。
+理由：该方法针对 NeRF / 3DGS 等主流方法缺乏对象级分解这一关键局限，提出了使用局部 MLP 基元的高效解决方案，在编辑能力、内存和速度上均有显著优势，并支持开放词汇交互。主题新颖且实用，适合对场景表示、新视角合成和三维交互感兴趣的读者。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -372,6 +594,54 @@ While 3D Gaussian Splatting has shown promising results in street scene reconstr
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, splatting, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+好的，以下是根据您提供的论文元数据和摘要生成的简要分析。
+
+### Metadata
+- 标题：GN0: Toward a Unified Paradigm for Generation, Evaluation, and Policy Learning in Visual-Language Navigation
+- 作者：Xinhai Li, Xiaotao Zhang, Yuehao Huang, Jiankun Dong, Tianhang Wang, Sunyao Zhou, Yunzi Wu, Chengnuo Sun, Yunfei Ge, Qizhen Weng, Chi Zhang, Chenjia Bai, Xuelong Li
+- 出版日期：2026-06-02
+- 分类：神经场景表示与渲染
+- 链接：论文摘要: https://arxiv.org/abs/2606.03682, PDF: https://arxiv.org/pdf/2606.03682
+
+### 一句话总结
+本文提出了一个名为GN0的统一框架，通过构建大规模数据集GN-Matrix、高保真仿真平台和BEV基准GN-Bench，并利用RL驱动的导航基础模型BAE，旨在解决视觉语言导航（VLN）中数据稀缺和泛化能力不足的问题。
+
+### 研究问题
+视觉语言导航（VLN）系统面临数据规模和质量的限制，导致其泛化能力和长期任务执行能力不足。
+
+### 核心思路/方法
+1.  **数据生成**：策划多样化的3D场景，并开发自动化管线以生成大规模导航数据，构建GN-Matrix数据集。
+2.  **仿真平台**：基于3D高斯泼溅引擎（3DGS），构建一个支持交互式漫游和碰撞感知导航的高保真模拟平台。
+3.  **评估基准**：提出首个基于鸟瞰图（BEV）的基准GN-Bench，该基准集成了动态3DGS化身用于人机交互评估。
+4.  **策略学习**：开发一个名为BAE（Break and Establish）的RL驱动的导航基础模型。该模型先进行监督学习，然后通过DAgger算法处理rollout产生的状态，以打破狭窄的专家中心化分布，并启用下游的强化学习探索。
+5.  **统一范式**：GN0将基于地图和无地图的任务（如指令跟随、人类跟随、目标导航）统一在一个框架内。GN-BAE将高保真3DGS渲染的BEV表示形式化为紧凑记忆，以解锁视觉语言模型（VLM）中的潜在空间推理能力。
+
+### 主要贡献
+1.  提出了一个统一的数据、仿真和学习框架GN0，用于推进具身导航的研究与应用。
+2.  创建了大规模导航数据集GN-Matrix和基于3DGS的高保真仿真平台。
+3.  提出了首个包含动态3DGS化身的BEV基准GN-Bench。
+4.  开发了名为BAE的RL驱动导航基础模型。
+5.  在GN-Bench和VLN-CE基准上，GN0的性能超越了现有的最先进VLN方法。
+
+### 与相关方法的关系
+- **NeRF**：摘要提及该方法使用了**3D高斯泼溅（3DGS）**引擎作为仿真核心，这与NeRF类似，但采用了不同的场景表示技术（高斯泼溅而非神经辐射场）。
+- **Gaussian Splatting**：本文的仿真平台和GN-Bench基准中的动态化身均基于3DGS构建，是其核心组件。
+- **VGGT、DUSt3R、MASt3R、CroCo**：这些论文与方法主要涉及3D结构重建或跨视角匹配。虽然它们可能与VLN中的场景理解相关，但**摘要未提供足够信息**以说明GN0与这些特定方法的关系或对比。
+- **动态场景重建方法**：GN-Bench基准中包含了“动态3DGS化身”，这需要处理动态对象，因此与动态场景重建方法相关。然而，**摘要未提供足够信息**来详细阐述GN0在动态重建方面的具体技术细节或与其区别。
+
+### 局限性
+- **摘要未提供足够信息**：摘要未提及该方法的计算复杂度、实时性、对复杂环境（如遮挡严重或光照剧烈变化）的鲁棒性，以及BAE模型训练的具体收敛情况和数据规模扩充后的性能边际效应。也未讨论其失败案例或潜在的偏差问题。
+
+### 阅读优先级
+**高**
+
+**理由**：该工作提出了一套非常完整的端到端VLN系统，涵盖数据、仿真、评估和策略学习四大核心环节，并在多个基准上取得了SOTA性能。对于从事具身智能、机器人导航、视觉语言学习的研究人员，这是一个具有重大参考价值的系统性工作。其提出的数据集、基准和训练范式可能成为该领域社区的重要基础设施。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Embodied navigation connects intelligent agents with the physical world and is fundamental for general robotic intelligence. Limited availability and quality of navigation data have constrained Vision-and-Language Navigation (VLN) systems' generalization and long-horizon capabilities. To address this, we curate diverse 3D scenes and develop an automated pipeline for large-scale navigation data, resulting in the GN-Matrix dataset. Building on a 3D Gaussian Splatting (3DGS) engine, we introduce a high-fidelity simulation platform supporting interactive roaming and collision-aware navigation. We further propose GN-Bench, the first BEV-based benchmark incorporating dynamic 3DGS avatars for human-robot interaction evaluation. To leverage the simulator, we develop an RL-driven navigation foundation model, Break and Establish (BAE). After supervised learning, DAgger exposes the model to rollout-induced states, breaking narrow expert-centric distributions and enabling downstream RL exploration. This unified VLN paradigm integrates map-based and map-free tasks, including instruction following, human following, and goal navigation. GN-BAE formalizes high-fidelity 3DGS-rendered Bird's Eye View representations as compact memory, unlocking latent spatial reasoning in VLMs. Extensive evaluations on GN-Bench and VLN-CE show that GN0 outperforms state-of-the-art VLN methods. Overall, GN-Matrix offers a unified framework spanning data, simulation, and learning, advancing embodied navigation in research and industrial applications.
@@ -387,6 +657,46 @@ Embodied navigation connects intelligent agents with the physical world and is f
 **Matched keywords:** Gaussian Splatting, rendering, splatting, autonomous driving
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：UnsOcc: 非结构化场景下基于渲染融合的三维语义占据预测
+- 作者：Ye Wu, Ruiqi Song, Baiyong Ding, Nanxin Zeng, Junjie Cheng, Yunfeng Ai
+- 出版日期：2026-06-02
+- 分类：神经场景表示与渲染
+- 链接：https://arxiv.org/abs/2606.03581
+
+### 一句话总结
+本文提出UnsOcc，一种针对非结构化场景（如露天矿）的多模态三维语义占据预测框架，通过渲染融合模块和基于高斯泼溅的细节感知辅助监督，提升跨模态对齐和长尾类别预测性能。
+
+### 研究问题
+非结构化场景中，场景稀疏性阻碍有效的跨模态融合，且长尾分布更严重，导致现有三维语义占据预测方法性能下降。
+
+### 核心思路/方法
+1. 构建专用非结构化场景数据集（露天矿）。
+2. 提出渲染融合模块（RenderFusion），通过双向渲染监督增强跨模态特征对齐。
+3. 提出基于高斯泼溅的细节感知辅助监督（GSRefinement），将稀疏三维占据预测投影为密集二维语义分割图，实现对长尾类别的有效监督。
+
+### 主要贡献
+- 提出首个面向非结构化场景的多模态三维语义占据预测框架UnsOcc。
+- 设计RenderFusion模块，利用渲染监督改善跨模态融合。
+- 提出GSRefinement方法，通过高斯泼溅投影提供长尾类别监督。
+- 在露天矿数据集和nuScenes数据集上超越现有最先进方法。
+
+### 与相关方法的关系
+- 与NeRF/Gaussian Splatting的关系：本文使用**高斯泼溅**（Gaussian Splatting）作为辅助监督手段（GSRefinement），将其生成的密集语义图用于监督稀疏占据预测；未提及与NeRF的直接对比或融合。
+- 与VGGT、DUSt3R、MASt3R、CroCo的关系：摘要未提供足够信息。
+- 与动态场景重建方法的关系：摘要未提供足够信息。
+
+### 局限性
+摘要未提供关于计算效率、实时性、对恶劣光照/天气的鲁棒性、以及长尾类别具体性能增益的详细信息。
+
+### 阅读优先级：中
+理由：该方法针对特定应用场景（非结构化环境如矿山）设计，技术贡献明确（渲染融合+高斯泼溅辅助监督），但方法通用性和效率细节不足，适合对该细分领域感兴趣的读者。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Unstructured scenes present unique challenges for autonomous driving, as irregular obstacles and sparse scene layouts undermine the effectiveness of traditional perception methods such as 3D object detection. 3D semantic occupancy prediction has emerged as a prominent focus due to its ability to provide dense spatial representations by assigning semantic labels to individual voxels in 3D space. However, directly applying 3D semantic occupancy prediction to unstructured scenes remains challenging because scene sparsity hinders effective cross-modal fusion and the more severe long-tail distribution in these scenarios further degrades prediction performance. To validate the effectiveness of our approach, we construct a dedicated dataset of unstructured scenes collected from open-pit mines. Based on this, we propose UnsOcc, a multi-modal 3D semantic occupancy prediction framework that improves robustness in unstructured environments. At its core, we introduce a rendering-based fusion module, RenderFusion, which enhances cross-modal feature alignment through bidirectional rendering supervision. Furthermore, we propose GSRefinement, a detail-aware auxiliary supervision method based on Gaussian Splatting that projects sparse 3D occupancy predictions into dense 2D semantic segmentation maps, enabling effective supervision for long-tail categories. Extensive experiments on both the open-pit mine dataset and the nuScenes dataset demonstrate that our method significantly outperforms existing state-of-the-art approaches.
@@ -400,6 +710,44 @@ Unstructured scenes present unique challenges for autonomous driving, as irregul
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Characterizing Detectability in 3DGS Poisoning: A Stage-wise Benchmark
+- 作者：Quoc-Anh Bui-Huynh, Thanh Duc Ngo, Xue Geng, Kaixin Xu, Wang Zhe, Xulei Yang, Ngai-Man Cheung
+- 出版日期：2026-06-02
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2606.03499
+
+### 一句话总结
+本文提出了一个面向3D高斯泼溅（3DGS）投毒检测的分阶段基准（Poison-3DGS），系统地分析了不同攻击在重建流水线各阶段的可检测性，揭示检测效果高度依赖于信号出现阶段。
+
+### 研究问题
+针对3DGS容易遭受多种投毒攻击（如幻觉物体注入、计算开销放大、事后水印嵌入）但防御检测研究不足的现状，从检测视角出发，研究以下核心问题：如何系统地表征和评估投毒攻击在3DGS多阶段重建流水线中的可检测性，特别是不同攻击在不同阶段产生的法医信号分布规律。
+
+### 核心思路/方法
+1.  **识别核心挑战**：3DGS重建流水线具有多阶段特性（生成多视角图像、几何体、训练动态、高斯参数），这导致攻击在不同阶段会留下异质性中间表征，法医信号具有阶段依赖性。
+2.  **构建基准**：提出Poison-3DGS基准，该基准公开了多种场景和攻击类型下各流水线阶段的专有伪影（包括多视角图像、几何体、训练动态、高斯参数）。
+3.  **系统性研究**：利用该基准，对不同攻击类型在流水线各阶段的可检测性进行系统性分析，比较各阶段的检测效果差异。
+
+### 主要贡献
+1.  提出并发布了第一个专门用于3DGS投毒检测的**分阶段基准（Poison-3DGS）**。
+2.  首次**系统性地表征了3DGS中与阶段相关的可检测性**，揭示了可检测性在不同阶段差异显著，且没有一个单一阶段对所有攻击类型普遍最优。
+3.  发现不同攻击会产生**不同阶段的特异性法医信号**，例如训练动态和高斯参数统计量等后期信号能提供早期阶段无法观测到的强检测线索。
+
+### 与相关方法的关系
+摘要未提供足够信息。本文主要关注3DGS的投毒攻击检测，与NeRF、Gaussian Splatting等相关，但未提及与VGGT、DUSt3R、MASt3R、CroCo、动态场景重建方法的具体关系。
+
+### 局限性
+摘要未提供足够信息。具体实验层面（如使用的数据集规模、具体攻击方法数量、防御检测算法的性能量化结果等）的局限性未在摘要中描述。
+
+### 阅读优先级
+**高**
+理由：3DGS是当前实时视图合成的主流技术，但其安全性（尤其是防御检测）是开放且前沿的问题。本文首次构建了系统的分阶段检测基准并发布，对后续研究鲁棒3DGS系统具有重要的基础性支撑价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -558,6 +906,49 @@ Real-scene indoor millimeter-wave simulation requires efficient modeling of radi
 **Matched keywords:** robotics, autonomous driving, mapping, AR, simulation, spatial intelligence
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：OVO-S-Bench: A Hierarchical Benchmark for Streaming Spatial Intelligence in Multimodal LLMs
+- 作者：Yifei Li, Pengyiang Liu, Yuhang Zang, Zhongyue Shi, Qi Fu, Hongye Hao, Jiwen Lu
+- 出版日期：2026-06-02T16:51:32Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2606.03890
+
+### 一句话总结
+本文提出了一个用于评估多模态大模型（MLLMs）在连续第一人称视角下空间推理能力的分层基准OVO-S-Bench，实验显示当前最强模型落后人类专家27个百分点，其中“异中心映射”是主要瓶颈。
+
+### 研究问题
+如何系统评估多模态大模型在流式（连续、实时）第一人称视频输入中的空间智能，特别是对当前视野之外的空间结构和布局进行推理的能力？
+
+### 核心思路/方法
+1.  **数据集构建**：基于348个源视频，由12名训练有素的标注员经过约804小时多轮质量保证，人工标注了1680个问题，每个问题都附带查询时间戳和证据区间。
+2.  **评估范式**：模型在评估时只能看到查询时间戳之前的视频片段（即流式前缀），不能看到完整视频。
+3.  **分层问题设计**：将问题分为四个抽象层级：瞬时自我中心感知、时空上下文跟踪、空间模拟与推理、异中心映射。
+4.  **模型评估**：在38个专有和开源MLLM上测试，并对比人类专家表现。
+
+### 主要贡献
+1.  **新基准和数据集**：提出了OVO-S-Bench，一个完全人工标注、专为流式空间智能设计的基准和数据集。
+2.  **系统性评估**：对大量MLLM进行了评估，揭示了现有模型在流式空间推理方面的显著不足。
+3.  **关键发现**：
+    - 当前最强模型Gemini-3.1-Pro得分为59.2，而人类专家为86.6，差距达27分。
+    - “异中心映射”是所有模型的主要瓶颈。
+    - 专门进行流式和空间微调的MLLM性能反而低于其基础骨干模型。
+    - 当思维链推理未基于流式输入时，会放大空间错误。
+
+### 与相关方法的关系
+摘要未提供足够信息。未提及与VGGT、DUSt3R、MASt3R、CroCo、NeRF、Gaussian Splatting、动态场景重建方法的关系。
+
+### 局限性
+摘要未提供足够信息。从文本推断，可能存在的局限性包括：基准仅覆盖特定类型的视频和场景；仅评估了固定时间前缀下的推理，未涉及更复杂的交互式或主动感知设置；未深入分析模型在不同空间推理层级上的具体失败模式（但指出了主要瓶颈）。
+
+### 阅读优先级
+**高**。
+理由：该工作为评估多模态大模型在具身智能、增强现实等核心应用场景（连续流式空间推理）中的能力提供了一个急需的、经过严格标注的基准。其关键发现（如异中心映射是瓶颈、专用微调反而降低性能等）对领域研究有重要指导意义，有助于识别当前MLLM在该方向的核心弱点。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Multimodal agents in robotics, AR, and autonomous driving must reason about places and layouts from continuous egocentric streams, often using evidence outside the current view. Existing benchmarks either evaluate offline over full videos or target events rather than spatial structure. We introduce OVO-S-Bench, a fully human-annotated benchmark for streaming spatial intelligence, comprising 1,680 questions over 348 source videos. Annotation involves 12 trained annotators, each also serving as a blind cross-reviewer, across roughly 804 person-hours of multi-round quality assurance. Each question carries a query timestamp and an evidence interval, and at evaluation, the model sees only the prefix preceding the query. Questions span four levels of increasing abstraction: instantaneous egocentric perception, spatiotemporal context tracking, spatial simulation and reasoning, and allocentric mapping. Across 38 proprietary and open-source MLLMs, Gemini-3.1-Pro trails human experts by 27 points, 59.2 vs. 86.6, with allocentric mapping as the dominant bottleneck. Notably, streaming and spatially fine-tuned MLLMs underperform their own backbones. We further find that chain-of-thought reasoning amplifies spatial errors when ungrounded in the stream. By exposing these limitations, OVO-S-Bench establishes a demanding testbed for next-generation streaming spatial MLLMs.
@@ -571,6 +962,47 @@ Multimodal agents in robotics, AR, and autonomous driving must reason about plac
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** embodied AI, robotics, world model
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：A 3D Isovist World Model -- Revealing a City's Unseen Geometry and Its Emergent Cross-City Signature
+- 作者：Xuhui Lin, Stephen Law, Nanjiang Chen, Kunyao Li, Tao Yang
+- 出版日期：2026-06-02
+- 分类：Embodied / Robotics / AR Applications（具身/机器人/增强现实应用）
+- 链接：摘要: https://arxiv.org/abs/2606.03609, PDF: https://arxiv.org/pdf/2606.03609
+
+### 一句话总结
+本文提出一种基于3D等视域（isovist）的具身世界模型，通过预测导航几何结构而非外观，发现单城市训练的模型能学习到跨城市的空间特征。
+
+### 研究问题
+现有世界模型主要预测场景外观（如照片真实感渲染），或使用鸟瞰图占据网格压缩三维环境，忽略了可导航空间的立体结构（如地面以上及多层空间）和光照信息。问题是如何构建一个既无光度纠缠、又不丢失三维信息的可导航几何预测目标。
+
+### 核心思路/方法
+1. **3D等视域编码**：将开放体积（建筑间负面空间）编码为球形可见性深度图，记录每个方向到最近表面的距离。
+2. **深度残差预测**：将下一等视域的预测公式化为深度残差，使解码器保留建筑边缘等锐利几何特征。
+3. **自回滚调度采样**：训练时使用自回滚调度采样，使被破坏的上下文保持在几何流形上。
+4. **持久潜在鸟瞰空间地图**：配备跨路径一致性的潜在空间图，以维持路径一致性。
+5. **跨城市实验**：仅在曼哈顿和巴黎上训练一个城市盲模型，发现其时间潜伏可线性解码出城市身份，且显著高于单帧基线。
+
+### 主要贡献
+1. 提出以3D等视域作为具身世界模型的预测目标，避免光度纠缠并保留完整导航几何。
+2. 设计深度残差预测、自回滚调度采样和持久潜在空间图，实现高质量几何预测。
+3. **意外发现**：单城市训练模型产生跨城市空间特征，城市身份可从动力学潜伏中解码，表明该特征存在于学习动态而非外观。
+4. 轻量、可解释、可复现的几何表示，并开源数据集和流程。
+
+### 与相关方法的关系
+摘要未提供与VGGT、DUSt3R、MASt3R、CroCo的对比信息。与NeRF和Gaussian Splatting的关系：本文明确不预测外观（光度），而NeRF和Gaussian Splatting主要关注光度真实感渲染，因此核心目标不同。动态场景重建方法：本文模型通过动作预测下一等视域，隐含处理动态场景，但摘要未具体讨论动态复现细节。
+
+### 局限性
+摘要未提供足够信息，无法从正文中得知具体局限性，例如模型对大规模场景的可扩展性、对稀疏输入的敏感性，或跨城市泛化能力的具体边界。建议阅读全文以获取详细信息。
+
+### 阅读优先级
+**中**  
+理由：论文提出新颖的等视域几何表示和跨城市空间特征发现，对具身AI和机器人导航有潜在价值。但与其主要竞争对手（如预测外观的世界模型或传统鸟瞰图方法）的定量对比未在摘要中提供，且实验细节缺失，因此优先级为中等，适合对几何导航或城市分析感兴趣的读者进一步查阅。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
