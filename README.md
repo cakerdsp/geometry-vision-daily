@@ -9,7 +9,7 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 Paper metadata is collected from the public arXiv API and stored as structured JSON. PDF files are not downloaded, mirrored, or redistributed.
 
-Full structured archive: [data/papers.json](data/papers.json)
+Rolling 7-day structured archive: [data/papers.json](data/papers.json)
 
 ## Table of Contents
 
@@ -25,8 +25,8 @@ Full structured archive: [data/papers.json](data/papers.json)
 2. The update script searches candidate papers from the latest configured lookback window.
 3. A deterministic rule-based classifier filters and categorizes papers.
 4. Papers are deduplicated by normalized arXiv ID.
-5. README displays papers from the latest 90 days.
-6. The complete historical archive is kept in data/papers.json.
+5. README displays papers from the latest 7 days.
+6. The rolling 7-day archive is kept in data/papers.json.
 7. PDF files are never stored in this repository.
 
 ## Run Locally

@@ -234,4 +234,5 @@ classification:
 output:
   json_path: "data/papers.json"
   readme_path: "README.md"
-  readme_days: 90
+  retention_days: 7
+  readme_days: 7

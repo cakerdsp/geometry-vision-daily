@@ -127,7 +127,7 @@ def render_readme(
         "A daily updated collection of papers on geometry foundation models, 3D reconstruction, 4D reconstruction, and neural scene representations.",
     )
     category_order = list(classification.get("category_priority", []))
-    readme_days = int(output.get("readme_days", 90))
+    readme_days = int(output.get("readme_days", output.get("retention_days", 7)))
     now = now or datetime.now(timezone.utc)
     if now.tzinfo is None:
         now = now.replace(tzinfo=timezone.utc)
@@ -145,7 +145,7 @@ def render_readme(
         "",
         "Paper metadata is collected from the public arXiv API and stored as structured JSON. PDF files are not downloaded, mirrored, or redistributed.",
         "",
-        "Full structured archive: [data/papers.json](data/papers.json)",
+        f"Rolling {readme_days}-day structured archive: [data/papers.json](data/papers.json)",
         "",
         "## Table of Contents",
         "",
@@ -160,7 +160,7 @@ def render_readme(
             "3. A deterministic rule-based classifier filters and categorizes papers.",
             "4. Papers are deduplicated by normalized arXiv ID.",
             f"5. README displays papers from the latest {readme_days} days.",
-            "6. The complete historical archive is kept in data/papers.json.",
+            f"6. The rolling {readme_days}-day archive is kept in data/papers.json.",
             "7. PDF files are never stored in this repository.",
             "",
             "## Run Locally",

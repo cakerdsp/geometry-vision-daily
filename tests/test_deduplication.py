@@ -1,6 +1,13 @@
 import json
 
-from scripts.update_papers import normalize_arxiv_id, upsert_papers, write_json_atomic
+from datetime import datetime, timezone
+
+from scripts.update_papers import (
+    normalize_arxiv_id,
+    prune_papers_by_retention,
+    upsert_papers,
+    write_json_atomic,
+)
 
 
 def test_normalize_arxiv_id_removes_version_suffix() -> None:
@@ -57,7 +64,28 @@ def test_atomic_write_keeps_valid_json(tmp_path) -> None:
     assert loaded == papers
 
 
-def _paper(arxiv_id: str, title: str = "Example Paper", version: str = "v1") -> dict:
+def test_prune_papers_by_retention_removes_entries_older_than_window() -> None:
+    papers = [
+        _paper("2501.01234", title="Recent Paper", published="2026-06-02T12:00:00Z"),
+        _paper("2501.01235", title="Expired Paper", published="2026-05-24T12:00:00Z"),
+    ]
+
+    kept, removed_count = prune_papers_by_retention(
+        papers,
+        retention_days=7,
+        now=datetime(2026, 6, 3, 12, 0, tzinfo=timezone.utc),
+    )
+
+    assert removed_count == 1
+    assert [paper["title"] for paper in kept] == ["Recent Paper"]
+
+
+def _paper(
+    arxiv_id: str,
+    title: str = "Example Paper",
+    version: str = "v1",
+    published: str = "2026-06-02T12:00:00Z",
+) -> dict:
     normalized_id, parsed_version = normalize_arxiv_id(arxiv_id)
     return {
         "arxiv_id": normalized_id,
@@ -65,8 +93,8 @@ def _paper(arxiv_id: str, title: str = "Example Paper", version: str = "v1") -> 
         "title": title,
         "authors": ["Author One", "Author Two"],
         "abstract": "Paper abstract about 3D reconstruction.",
-        "published": "2026-06-02T12:00:00Z",
-        "updated": "2026-06-02T12:00:00Z",
+        "published": published,
+        "updated": published,
         "primary_arxiv_category": "cs.CV",
         "arxiv_categories": ["cs.CV"],
         "primary_category": "3D Reconstruction & Multi-view Geometry",

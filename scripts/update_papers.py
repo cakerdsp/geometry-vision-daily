@@ -359,6 +359,26 @@ def reclassify_existing_papers(
     return reclassified, removed_count
 
 
+def prune_papers_by_retention(
+    papers: list[dict[str, Any]],
+    retention_days: int,
+    now: datetime | None = None,
+) -> tuple[list[dict[str, Any]], int]:
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    cutoff = now.astimezone(timezone.utc) - timedelta(days=retention_days)
+    kept: list[dict[str, Any]] = []
+    removed_count = 0
+    for paper in papers:
+        published = parse_arxiv_datetime(paper.get("published"))
+        if published is not None and published >= cutoff:
+            kept.append(paper)
+        else:
+            removed_count += 1
+    return kept, removed_count
+
+
 def write_json_atomic(json_path: str | Path, papers: list[dict[str, Any]]) -> None:
     path = Path(json_path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -383,6 +403,7 @@ def run_update(config_path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, int]:
     output_config = config["output"]
     json_path = Path(output_config.get("json_path", "data/papers.json"))
     lookback_days = int(config["arxiv"].get("lookback_days", 3))
+    retention_days = int(output_config.get("retention_days", output_config.get("readme_days", 7)))
 
     candidates = fetch_candidate_entries(config)
     recent_entries = filter_by_lookback(candidates, lookback_days)
@@ -396,6 +417,7 @@ def run_update(config_path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, int]:
     existing, removed_count = reclassify_existing_papers(existing, config)
     seen_at = current_seen_at(config)
     merged, new_count, updated_count = upsert_papers(existing, relevant_papers, seen_at)
+    merged, expired_count = prune_papers_by_retention(merged, retention_days)
     write_json_atomic(json_path, merged)
     write_readme(merged, config, output_config.get("readme_path", "README.md"))
 
@@ -407,6 +429,7 @@ def run_update(config_path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, int]:
         "new_papers": new_count,
         "updated_papers": updated_count,
         "removed_papers": removed_count,
+        "expired_papers": expired_count,
         "ignored_papers": max(ignored_count, 0),
         "total_stored_papers": len(merged),
     }
@@ -415,6 +438,7 @@ def run_update(config_path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, int]:
     LOGGER.info("New papers: %s", summary["new_papers"])
     LOGGER.info("Updated papers: %s", summary["updated_papers"])
     LOGGER.info("Removed papers: %s", summary["removed_papers"])
+    LOGGER.info("Expired papers: %s", summary["expired_papers"])
     LOGGER.info("Ignored papers: %s", summary["ignored_papers"])
     LOGGER.info("Total stored papers: %s", summary["total_stored_papers"])
     print(f"Fetched candidates: {summary['fetched_candidates']}")
@@ -422,6 +446,7 @@ def run_update(config_path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, int]:
     print(f"New papers: {summary['new_papers']}")
     print(f"Updated papers: {summary['updated_papers']}")
     print(f"Removed papers: {summary['removed_papers']}")
+    print(f"Expired papers: {summary['expired_papers']}")
     print(f"Ignored papers: {summary['ignored_papers']}")
     print(f"Total stored papers: {summary['total_stored_papers']}")
     return summary

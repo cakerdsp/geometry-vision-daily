@@ -34,17 +34,17 @@ def test_readme_date_sorting_and_links() -> None:
     assert "[pdf](https://arxiv.org/pdf/2501.00002)" in readme
 
 
-def test_readme_hides_papers_outside_90_day_window_but_keeps_archive_link() -> None:
+def test_readme_hides_papers_outside_configured_window_but_keeps_archive_link() -> None:
     papers = [
         _paper("2501.00001", "Recent Paper", "2026-06-01T12:00:00Z"),
-        _paper("2412.99999", "Old Paper", "2025-12-01T12:00:00Z"),
+        _paper("2412.99999", "Old Paper", "2026-05-20T12:00:00Z"),
     ]
 
     readme = render_readme(papers, CONFIG, now=NOW)
 
     assert "Recent Paper" in readme
     assert "Old Paper" not in readme
-    assert "Full structured archive: [data/papers.json](data/papers.json)" in readme
+    assert "Rolling 7-day structured archive: [data/papers.json](data/papers.json)" in readme
 
 
 def test_same_input_generates_identical_readme() -> None:
