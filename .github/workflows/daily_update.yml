@@ -14,6 +14,9 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Gate scheduled runs to 08:17 America/New_York
         id: schedule_gate
@@ -30,11 +33,11 @@ jobs:
 
       - name: Checkout
         if: github.event_name == 'workflow_dispatch' || steps.schedule_gate.outputs.should_run == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Python
         if: github.event_name == 'workflow_dispatch' || steps.schedule_gate.outputs.should_run == 'true'
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
@@ -44,7 +47,7 @@ jobs:
 
       - name: Run tests
         if: github.event_name == 'workflow_dispatch' || steps.schedule_gate.outputs.should_run == 'true'
-        run: pytest
+        run: python -m pytest
 
       - name: Update papers
         if: github.event_name == 'workflow_dispatch' || steps.schedule_gate.outputs.should_run == 'true'
