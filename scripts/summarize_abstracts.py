@@ -21,9 +21,11 @@ def summarize_abstracts(
     interests: InterestProfile,
     client: DeepSeekClient,
 ) -> int:
-    output_dir = Path(config.get("analysis", {}).get("brief_summary_dir", "summaries/brief"))
+    analysis_config = config.get("analysis", {})
+    output_dir = Path(analysis_config.get("brief_summary_dir", "summaries/brief"))
     output_dir.mkdir(parents=True, exist_ok=True)
-    max_tokens = int(config.get("analysis", {}).get("max_tokens", {}).get("brief_summary", 1200))
+    max_tokens = int(analysis_config.get("max_tokens", {}).get("brief_summary", 1200))
+    prompt_version = str(analysis_config.get("brief_prompt_version", "brief-v1"))
     completed = 0
     for paper in papers:
         arxiv_id = str(paper.get("arxiv_id", "")).strip()
@@ -34,7 +36,11 @@ def summarize_abstracts(
             [
                 {
                     "role": "system",
-                    "content": "你是严谨的计算机视觉论文分析助手。只能根据用户提供的标题、作者、摘要和元数据分析；不得编造正文中未提供的信息。输出必须是简体中文 Markdown。",
+                    "content": (
+                        "你是严谨的计算机视觉论文分析助手。只能根据用户提供的标题、"
+                        "作者、摘要和元数据分析；不得编造摘要未提供的信息。"
+                        "输出必须是简体中文 Markdown。"
+                    ),
                 },
                 {"role": "user", "content": prompt},
             ],
@@ -49,6 +55,7 @@ def summarize_abstracts(
         record["brief"] = {
             "status": "success",
             "input_hash": paper_input_hash(paper),
+            "prompt_version": prompt_version,
             "updated_at": utc_now_iso(),
             "path": str(summary_path.as_posix()),
             "markdown": markdown,
@@ -92,11 +99,8 @@ def build_brief_prompt(paper: dict[str, Any], interests: InterestProfile) -> str
 
 ### 主要贡献
 
-### 与相关方法的关系
-说明它与 VGGT、DUSt3R、MASt3R、CroCo、NeRF、Gaussian Splatting、动态场景重建方法的关系；没有依据时明确写“摘要未提供足够信息”。
-
 ### 局限性
-正文未提供的信息必须注明“摘要未提供足够信息”。
+摘要未提供的信息必须明确写“摘要未提供足够信息”。
 
 ### 阅读优先级
 给出 高 / 中 / 低，并说明理由。

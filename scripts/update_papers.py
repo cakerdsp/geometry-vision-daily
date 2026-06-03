@@ -434,14 +434,57 @@ def current_seen_at(config: dict[str, Any]) -> str:
     return datetime.now(tz).replace(microsecond=0).isoformat()
 
 
+def is_arxiv_rate_limit_error(exc: Exception) -> bool:
+    current: BaseException | None = exc
+    while current is not None:
+        if isinstance(current, requests.HTTPError) and current.response is not None:
+            if current.response.status_code == 429:
+                return True
+        message = str(current).lower()
+        if "429" in message and "arxiv" in message:
+            return True
+        current = current.__cause__ or current.__context__
+    return False
+
+
 def run_update(config_path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, int]:
     config = load_config(config_path)
     output_config = config["output"]
+    arxiv_config = config["arxiv"]
     json_path = Path(output_config.get("json_path", "data/papers.json"))
-    lookback_days = int(config["arxiv"].get("lookback_days", 3))
+    lookback_days = int(arxiv_config.get("lookback_days", 3))
     retention_days = int(output_config.get("retention_days", output_config.get("readme_days", 7)))
+    existing = load_existing_papers(json_path)
 
-    candidates = fetch_candidate_entries(config)
+    try:
+        candidates = fetch_candidate_entries(config)
+    except Exception as exc:
+        allow_stale = bool(arxiv_config.get("allow_stale_on_arxiv_rate_limit", False))
+        if not allow_stale or not existing or not is_arxiv_rate_limit_error(exc):
+            raise
+        LOGGER.warning(
+            "arXiv returned rate limits; using existing data/papers.json and keeping workflow successful."
+        )
+        existing, removed_count = reclassify_existing_papers(existing, config)
+        merged, expired_count = prune_papers_by_retention(existing, retention_days)
+        write_json_atomic(json_path, merged)
+        write_readme(merged, config, output_config.get("readme_path", "README.md"))
+        summary = {
+            "fetched_candidates": 0,
+            "recent_candidates": 0,
+            "relevant_papers": 0,
+            "new_papers": 0,
+            "updated_papers": 0,
+            "removed_papers": removed_count,
+            "expired_papers": expired_count,
+            "ignored_papers": 0,
+            "total_stored_papers": len(merged),
+            "used_stale_data": 1,
+        }
+        print("arXiv rate limited; used existing data/papers.json.")
+        print(f"Total stored papers: {summary['total_stored_papers']}")
+        return summary
+
     recent_entries = filter_by_lookback(candidates, lookback_days)
     relevant_papers = [
         paper
@@ -449,7 +492,6 @@ def run_update(config_path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, int]:
         if (paper := paper_from_entry(entry, config)) is not None
     ]
 
-    existing = load_existing_papers(json_path)
     existing, removed_count = reclassify_existing_papers(existing, config)
     seen_at = current_seen_at(config)
     merged, new_count, updated_count = upsert_papers(existing, relevant_papers, seen_at)
@@ -468,6 +510,7 @@ def run_update(config_path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, int]:
         "expired_papers": expired_count,
         "ignored_papers": max(ignored_count, 0),
         "total_stored_papers": len(merged),
+        "used_stale_data": 0,
     }
     LOGGER.info("Fetched candidates: %s", summary["fetched_candidates"])
     LOGGER.info("Relevant papers: %s", summary["relevant_papers"])

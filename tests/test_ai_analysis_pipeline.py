@@ -1,8 +1,10 @@
 from pathlib import Path
 
 from scripts.analysis_io import ensure_state_shape
+from scripts.fetch_new_papers import fetch_new_papers
 from scripts.generate_readme import load_config, render_readme
 from scripts.parse_interests import parse_interests
+from scripts.summarize_abstracts import build_brief_prompt
 from scripts.summarize_abstracts import summarize_abstracts
 from scripts.summarize_full_text import summarize_full_texts
 
@@ -72,6 +74,34 @@ def test_summarize_abstracts_writes_state_and_markdown(tmp_path) -> None:
     assert brief["status"] == "success"
     assert "中文分析" in brief["markdown"]
     assert Path(brief["path"]).exists()
+
+
+def test_brief_prompt_does_not_request_related_method_section(tmp_path) -> None:
+    interests = parse_interests(tmp_path / "missing.md")
+
+    prompt = build_brief_prompt(_paper(), interests)
+
+    assert "### 与相关方法的关系" not in prompt
+    assert "VGGT、DUSt3R、MASt3R、CroCo" not in prompt
+
+
+def test_prompt_version_change_requeues_existing_brief_summary() -> None:
+    paper = _paper()
+    state = {
+        "papers": {
+            "2606.00001": {
+                "brief": {
+                    "status": "success",
+                    "input_hash": "stale",
+                    "prompt_version": "brief-v1",
+                }
+            }
+        }
+    }
+
+    selected = fetch_new_papers([paper], state, max_papers=10, prompt_version="brief-v2-no-related-methods")
+
+    assert selected == [paper]
 
 
 def test_full_text_analysis_downloads_temporarily_and_writes_links(tmp_path, monkeypatch) -> None:

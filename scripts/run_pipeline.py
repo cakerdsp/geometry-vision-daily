@@ -30,9 +30,16 @@ def run_pipeline(config_path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, int
     state = ensure_state_shape(load_json(processed_path, {"papers": {}, "reports": {}}))
     interests = parse_interests(interests_path)
     max_papers = int(analysis_config.get("max_papers_per_run", 10))
-    new_papers = fetch_new_papers(papers, state, max_papers)
+    brief_prompt_version = str(analysis_config.get("brief_prompt_version", "brief-v1"))
+    new_papers = fetch_new_papers(papers, state, max_papers, brief_prompt_version)
 
-    client_needed = bool(new_papers) or "full-text analysis" in interests.tasks or "generate daily trend report" in interests.tasks
+    always_report = bool(analysis_config.get("always_generate_daily_report", True))
+    client_needed = (
+        bool(new_papers)
+        or "full-text analysis" in interests.tasks
+        or "generate daily trend report" in interests.tasks
+        or (always_report and bool(papers))
+    )
     client = DeepSeekClient(config) if client_needed else None
 
     brief_count = 0

@@ -22,6 +22,7 @@ arxiv:
   max_retries: 3
   retry_429_seconds: 60
   retry_5xx_seconds: 10
+  allow_stale_on_arxiv_rate_limit: true
   user_agent: "geometry-vision-daily/1.0 (research paper discovery project)"
 
 classification:
@@ -253,9 +254,11 @@ analysis:
   brief_summary_dir: "summaries/brief"
   full_text_summary_dir: "summaries/full-text"
   daily_report_dir: "reports/daily"
-  max_papers_per_run: 10
+  max_papers_per_run: 100
   max_full_text_summaries_per_run: 3
   max_daily_report_papers: 20
+  brief_prompt_version: "brief-v2-no-related-methods"
+  always_generate_daily_report: true
   chunk_size: 12000
   max_chunks_per_paper: 8
   max_readme_report_chars: 6000
