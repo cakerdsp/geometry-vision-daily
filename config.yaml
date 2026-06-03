@@ -236,3 +236,34 @@ output:
   readme_path: "README.md"
   retention_days: 7
   readme_days: 7
+
+analysis:
+  enabled: true
+  model: deepseek-v4-flash
+  base_url: "https://api.deepseek.com"
+  timeout_seconds: 60
+  max_retries: 3
+  retry_initial_seconds: 2
+  processed_path: "data/processed_papers.json"
+  usage_log_path: "data/usage_log.json"
+  interests_path: "interests.md"
+  interests_output_dir: "interests"
+  brief_summary_dir: "summaries/brief"
+  full_text_summary_dir: "summaries/full-text"
+  daily_report_dir: "reports/daily"
+  max_papers_per_run: 10
+  max_full_text_summaries_per_run: 3
+  max_daily_report_papers: 20
+  chunk_size: 12000
+  max_chunks_per_paper: 8
+  max_readme_report_chars: 6000
+  monthly_budget_cny: 50
+  usd_to_cny: 7.2
+  pricing_per_1m_tokens_usd:
+    input_cache_miss: 0.14
+    output: 0.28
+  max_tokens:
+    brief_summary: 1200
+    chunk_summary: 1400
+    full_text_synthesis: 2000
+    daily_report: 1800

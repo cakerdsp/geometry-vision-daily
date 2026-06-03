@@ -44,6 +44,33 @@ def load_papers(json_path: str | Path) -> list[dict[str, Any]]:
     return [paper for paper in data if isinstance(paper, dict)]
 
 
+def load_processed_state(processed_path: str | Path) -> dict[str, Any]:
+    path = Path(processed_path)
+    if not path.exists():
+        return {"papers": {}, "reports": {}}
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            data = json.load(handle)
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Invalid JSON in {path}: {exc}") from exc
+    if not isinstance(data, dict):
+        raise ValueError(f"Expected a JSON object in {path}")
+    data.setdefault("papers", {})
+    data.setdefault("reports", {})
+    return data
+
+
+def latest_report_markdown(config: dict[str, Any]) -> str:
+    analysis = config.get("analysis", {})
+    report_dir = Path(analysis.get("daily_report_dir", "reports/daily"))
+    if not report_dir.exists():
+        return ""
+    reports = sorted(report_dir.glob("*.md"), reverse=True)
+    if not reports:
+        return ""
+    return reports[0].read_text(encoding="utf-8").strip()
+
+
 def parse_datetime(value: str | None) -> datetime | None:
     if not value:
         return None
@@ -115,11 +142,14 @@ def render_readme(
     papers: list[dict[str, Any]],
     config: dict[str, Any],
     now: datetime | None = None,
+    processed_state: dict[str, Any] | None = None,
+    daily_report_markdown: str | None = None,
 ) -> str:
     project = config.get("project", {})
     output = config.get("output", {})
     classification = config.get("classification", {})
     arxiv = config.get("arxiv", {})
+    analysis = config.get("analysis", {})
 
     title = project.get("readme_title", "Geometry Vision Daily")
     description = project.get(
@@ -132,18 +162,27 @@ def render_readme(
     if now.tzinfo is None:
         now = now.replace(tzinfo=timezone.utc)
     cutoff = now.astimezone(timezone.utc) - timedelta(days=readme_days)
+    processed_state = processed_state or {"papers": {}, "reports": {}}
+    daily_report_markdown = daily_report_markdown or ""
 
     lines: list[str] = [
         f"# {title}",
         "",
         str(description),
         "",
+        "<!-- DAILY_REPORT_START -->",
+        "## 每日 AI 分析",
+        "",
+        _readme_report_block(daily_report_markdown, int(analysis.get("max_readme_report_chars", 6000))),
+        "",
+        "<!-- DAILY_REPORT_END -->",
+        "",
         f"**Last updated:** {_latest_update_label(papers)}",
         f"**Total number of papers:** {len(papers)}",
         f"**Number of papers added in the latest update:** {_count_added_in_latest_update(papers)}",
         f"**Categories tracked:** {', '.join(arxiv.get('categories', []))}",
         "",
-        "Paper metadata is collected from the public arXiv API and stored as structured JSON. PDF files are not downloaded, mirrored, or redistributed.",
+        "Paper metadata is collected from the public arXiv API and stored as structured JSON. PDF files are not mirrored or redistributed; full-text analysis only downloads PDFs temporarily during the workflow run and deletes them afterward.",
         "",
         f"Rolling {readme_days}-day structured archive: [data/papers.json](data/papers.json)",
         "",
@@ -212,6 +251,8 @@ def render_readme(
                 secondary = paper.get("secondary_categories") or []
                 matched = paper.get("matched_keywords") or []
                 abstract = str(paper.get("abstract", "")).strip()
+                brief_markdown = _paper_brief_markdown(paper, processed_state)
+                full_text_link = _paper_full_text_link(paper, processed_state)
                 lines.extend(
                     [
                         f"#### {_date_label(paper.get('published'))} - {title_text}",
@@ -222,6 +263,24 @@ def render_readme(
                         f"**Secondary categories:** {_markdown_escape(', '.join(secondary)) if secondary else 'None'}",
                         f"**Matched keywords:** {_markdown_escape(', '.join(matched)) if matched else 'None'}",
                         "",
+                    ]
+                )
+                if brief_markdown:
+                    lines.extend(
+                        [
+                            "<details>",
+                            "<summary>AI 简析</summary>",
+                            "",
+                            brief_markdown,
+                            "",
+                            "</details>",
+                            "",
+                        ]
+                    )
+                if full_text_link:
+                    lines.extend([f"**全文分析:** [{full_text_link}]({full_text_link})", ""])
+                lines.extend(
+                    [
                         "<details>",
                         "<summary>Abstract</summary>",
                         "",
@@ -244,14 +303,69 @@ def _anchor(text: str) -> str:
     return anchor
 
 
+def _readme_report_block(markdown: str, max_chars: int) -> str:
+    if not markdown.strip():
+        return "今日尚未生成 AI 趋势报告。运行 `scripts/run_pipeline.py` 后会在这里插入 `reports/daily/` 中的最新报告。"
+    body = _downgrade_headings(markdown.strip())
+    if len(body) > max_chars:
+        body = body[:max_chars].rstrip() + "\n\n[报告过长，README 中已截断；完整内容见 reports/daily/。]"
+    return body
+
+
+def _downgrade_headings(markdown: str) -> str:
+    lines = []
+    for line in markdown.splitlines():
+        if line.startswith("#"):
+            lines.append("#" + line)
+        else:
+            lines.append(line)
+    return "\n".join(lines)
+
+
+def _paper_brief_markdown(paper: dict[str, Any], processed_state: dict[str, Any]) -> str:
+    arxiv_id = str(paper.get("arxiv_id", ""))
+    record = processed_state.get("papers", {}).get(arxiv_id, {})
+    brief = record.get("brief", {}) if isinstance(record, dict) else {}
+    if brief.get("status") != "success":
+        return ""
+    markdown = str(brief.get("markdown", "")).strip()
+    if markdown:
+        return markdown
+    path = brief.get("path")
+    if path and Path(path).exists():
+        return Path(path).read_text(encoding="utf-8").strip()
+    return ""
+
+
+def _paper_full_text_link(paper: dict[str, Any], processed_state: dict[str, Any]) -> str:
+    arxiv_id = str(paper.get("arxiv_id", ""))
+    record = processed_state.get("papers", {}).get(arxiv_id, {})
+    full_text = record.get("full_text", {}) if isinstance(record, dict) else {}
+    if full_text.get("status") != "success":
+        return ""
+    return str(full_text.get("path") or full_text.get("mirror_path") or "").strip()
+
+
 def write_readme(
     papers: list[dict[str, Any]],
     config: dict[str, Any],
     readme_path: str | Path | None = None,
 ) -> None:
     output = config.get("output", {})
+    analysis = config.get("analysis", {})
+    processed_path = analysis.get("processed_path", "data/processed_papers.json")
+    processed_state = load_processed_state(processed_path)
+    report_markdown = latest_report_markdown(config)
     path = Path(readme_path or output.get("readme_path", "README.md"))
-    path.write_text(render_readme(papers, config), encoding="utf-8")
+    path.write_text(
+        render_readme(
+            papers,
+            config,
+            processed_state=processed_state,
+            daily_report_markdown=report_markdown,
+        ),
+        encoding="utf-8",
+    )
 
 
 def main() -> None:

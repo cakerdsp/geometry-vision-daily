@@ -2,12 +2,19 @@
 
 A daily updated collection of papers on geometry foundation models, 3D reconstruction, 4D reconstruction, and neural scene representations.
 
+<!-- DAILY_REPORT_START -->
+## 每日 AI 分析
+
+今日尚未生成 AI 趋势报告。运行 `scripts/run_pipeline.py` 后会在这里插入 `reports/daily/` 中的最新报告。
+
+<!-- DAILY_REPORT_END -->
+
 **Last updated:** 2026-06-03T01:30:19-04:00
 **Total number of papers:** 44
 **Number of papers added in the latest update:** 44
 **Categories tracked:** cs.CV, cs.GR, cs.RO, eess.IV
 
-Paper metadata is collected from the public arXiv API and stored as structured JSON. PDF files are not downloaded, mirrored, or redistributed.
+Paper metadata is collected from the public arXiv API and stored as structured JSON. PDF files are not mirrored or redistributed; full-text analysis only downloads PDFs temporarily during the workflow run and deletes them afterward.
 
 Rolling 7-day structured archive: [data/papers.json](data/papers.json)
 
