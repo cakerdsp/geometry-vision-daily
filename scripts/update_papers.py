@@ -7,6 +7,7 @@ import os
 import re
 import sys
 import time
+from email.utils import parsedate_to_datetime
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -87,6 +88,8 @@ class ArxivClient:
         self.timeout = int(arxiv_config.get("timeout_seconds", 30))
         self.max_retries = int(arxiv_config.get("max_retries", 3))
         self.request_interval = float(arxiv_config.get("request_interval_seconds", 3))
+        self.retry_429_seconds = float(arxiv_config.get("retry_429_seconds", 60))
+        self.retry_5xx_seconds = float(arxiv_config.get("retry_5xx_seconds", 10))
         self.session = requests.Session()
         self.session.headers.update({"User-Agent": str(arxiv_config["user_agent"])})
         self._last_request_time: float | None = None
@@ -128,10 +131,43 @@ class ArxivClient:
                 last_error = exc
                 if attempt >= self.max_retries:
                     break
-                sleep_seconds = min(self.request_interval * (2 ** (attempt - 1)), 60)
-                LOGGER.warning("arXiv request failed on attempt %s/%s: %s", attempt, self.max_retries, exc)
+                sleep_seconds = self._sleep_seconds_for_error(exc, attempt)
+                LOGGER.warning(
+                    "arXiv request failed on attempt %s/%s; sleeping %.1fs before retry: %s",
+                    attempt,
+                    self.max_retries,
+                    sleep_seconds,
+                    exc,
+                )
                 time.sleep(sleep_seconds)
         raise RuntimeError(f"arXiv query failed after {self.max_retries} attempts: {last_error}") from last_error
+
+    def _sleep_seconds_for_error(self, exc: Exception, attempt: int) -> float:
+        if isinstance(exc, requests.HTTPError) and exc.response is not None:
+            status_code = exc.response.status_code
+            if status_code == 429:
+                retry_after = self._retry_after_seconds(exc.response)
+                if retry_after is not None:
+                    return min(max(retry_after, self.request_interval), 300)
+                return min(self.retry_429_seconds * (2 ** (attempt - 1)), 300)
+            if status_code >= 500:
+                return min(self.retry_5xx_seconds * (2 ** (attempt - 1)), 120)
+        return min(self.request_interval * (2 ** (attempt - 1)), 120)
+
+    def _retry_after_seconds(self, response: requests.Response) -> float | None:
+        value = response.headers.get("Retry-After")
+        if not value:
+            return None
+        try:
+            return float(value)
+        except ValueError:
+            try:
+                retry_at = parsedate_to_datetime(value)
+            except (TypeError, ValueError):
+                return None
+            if retry_at.tzinfo is None:
+                retry_at = retry_at.replace(tzinfo=timezone.utc)
+            return max(0.0, (retry_at.astimezone(timezone.utc) - datetime.now(timezone.utc)).total_seconds())
 
 
 def _feed_total_results(feed: feedparser.FeedParserDict) -> int | None:

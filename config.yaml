@@ -16,10 +16,12 @@ arxiv:
     - eess.IV
   lookback_days: 3
   max_results_per_query: 300
-  page_size: 100
-  request_interval_seconds: 3
+  page_size: 300
+  request_interval_seconds: 10
   timeout_seconds: 30
   max_retries: 3
+  retry_429_seconds: 60
+  retry_5xx_seconds: 10
   user_agent: "geometry-vision-daily/1.0 (research paper discovery project)"
 
 classification:
