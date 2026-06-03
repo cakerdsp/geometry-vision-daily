@@ -1,0 +1,237 @@
+project:
+  name: geometry-vision-daily
+  readme_title: Geometry Vision Daily
+  description: "A daily updated collection of papers on geometry foundation models, 3D reconstruction, 4D reconstruction, and neural scene representations."
+
+schedule:
+  timezone: America/New_York
+  local_time: "08:17"
+
+arxiv:
+  base_url: "http://export.arxiv.org/api/query"
+  categories:
+    - cs.CV
+    - cs.GR
+    - cs.RO
+    - eess.IV
+  lookback_days: 3
+  max_results_per_query: 300
+  page_size: 100
+  request_interval_seconds: 3
+  timeout_seconds: 30
+  max_retries: 3
+  user_agent: "geometry-vision-daily/1.0 (research paper discovery project)"
+
+classification:
+  relevance_threshold: 4
+  secondary_category_threshold: 3
+  exclusion_threshold: 3
+  category_priority:
+    - Geometry Foundation Models
+    - Dynamic / 4D Reconstruction
+    - 3D Reconstruction & Multi-view Geometry
+    - Neural Scene Representations & Rendering
+    - Embodied / Robotics / AR Applications
+  representative_models:
+    Geometry Foundation Models:
+      - VGGT
+      - DUSt3R
+      - MASt3R
+      - CroCo
+  categories:
+    Geometry Foundation Models:
+      definition: "General-purpose geometry foundation models and feed-forward geometry reasoning systems that predict depth, camera poses, point maps, correspondences, or 3D structure."
+      include_keywords:
+        - geometry foundation model
+        - geometric foundation model
+        - foundation model for geometry
+        - visual geometry grounded transformer
+        - VGGT
+        - DUSt3R
+        - MASt3R
+        - CroCo
+        - pointmap
+        - point map
+        - feed-forward reconstruction
+        - feedforward reconstruction
+        - feed-forward 3D reconstruction
+        - generalizable geometry
+        - generalizable reconstruction
+        - multi-view transformer
+        - camera prediction
+        - camera pose prediction
+        - depth prediction
+        - correspondence prediction
+        - dense correspondence
+        - image matching
+        - geometric reasoning
+        - metric depth
+        - monocular geometry
+        - multi-view geometry estimation
+    Dynamic / 4D Reconstruction:
+      definition: "Dynamic scenes, video spatiotemporal structure, motion trajectories, non-rigid objects, deformable scenes, and 4D reconstruction."
+      include_keywords:
+        - 4D reconstruction
+        - dynamic scene reconstruction
+        - dynamic reconstruction
+        - dynamic 3D
+        - dynamic 4D
+        - spatiotemporal reconstruction
+        - spatio-temporal reconstruction
+        - temporal reconstruction
+        - video reconstruction
+        - video-to-4D
+        - dynamic scene representation
+        - motion reconstruction
+        - motion trajectory
+        - motion trajectories
+        - scene flow
+        - deformable reconstruction
+        - non-rigid reconstruction
+        - nonrigid reconstruction
+        - dynamic point cloud
+        - dynamic Gaussian
+        - 4D Gaussian
+        - dynamic radiance field
+        - human reconstruction
+        - avatar reconstruction
+        - animatable avatar
+        - articulated reconstruction
+    3D Reconstruction & Multi-view Geometry:
+      definition: "Static scene 3D reconstruction, multi-view geometry, SfM, MVS, pose estimation, depth, point cloud, mesh, and surface reconstruction."
+      include_keywords:
+        - 3D reconstruction
+        - scene reconstruction
+        - multi-view reconstruction
+        - multiview reconstruction
+        - multi-view stereo
+        - MVS
+        - structure from motion
+        - SfM
+        - simultaneous localization and mapping
+        - SLAM
+        - visual SLAM
+        - camera pose estimation
+        - pose estimation
+        - bundle adjustment
+        - depth estimation
+        - monocular depth
+        - stereo depth
+        - dense reconstruction
+        - sparse reconstruction
+        - point cloud reconstruction
+        - mesh reconstruction
+        - surface reconstruction
+        - shape reconstruction
+        - geometric reconstruction
+        - photogrammetry
+        - RGB-D reconstruction
+        - RGBD reconstruction
+        - 3D mapping
+        - camera calibration
+        - feature matching
+        - image matching
+    Neural Scene Representations & Rendering:
+      definition: "NeRF, Gaussian Splatting, neural rendering, novel view synthesis, inverse rendering, and neural scene representations."
+      include_keywords:
+        - NeRF
+        - neural radiance field
+        - radiance field
+        - Gaussian Splatting
+        - 3D Gaussian Splatting
+        - 3DGS
+        - 4D Gaussian
+        - dynamic Gaussian
+        - Gaussian primitive
+        - neural rendering
+        - novel view synthesis
+        - view synthesis
+        - scene representation
+        - neural scene representation
+        - inverse rendering
+        - differentiable rendering
+        - relighting
+        - rendering
+        - radiance
+        - splatting
+    Embodied / Robotics / AR Applications:
+      definition: "Applications of 3D or 4D geometry in robotics, embodied AI, autonomous driving, AR, VR, digital twins, and simulation."
+      include_keywords:
+        - embodied AI
+        - embodied vision
+        - robotics
+        - robot perception
+        - robot navigation
+        - manipulation
+        - autonomous driving
+        - driving scene
+        - mapping
+        - localization
+        - AR
+        - augmented reality
+        - VR
+        - virtual reality
+        - mixed reality
+        - digital twin
+        - simulation
+        - scene understanding
+        - spatial intelligence
+        - world model
+        - world modeling
+  exclude_keywords:
+    - text-to-3D
+    - text to 3D
+    - image editing
+    - video editing
+    - text-to-image
+    - image generation
+    - video generation
+    - diffusion model
+    - texture generation
+    - material generation
+    - medical imaging
+    - medical image
+    - remote sensing
+    - satellite imagery
+    - semantic segmentation
+    - object detection
+    - super-resolution
+    - large language model
+    - language-only
+    - vision-language model
+    - VLM
+    - LLM
+  strict_exclude_keywords:
+    - medical imaging
+    - medical image
+    - medical reconstruction
+    - clinical
+    - radiograph
+    - X-ray
+    - lung nodule
+    - pulmonary
+    - thoracic
+    - remote sensing
+    - satellite imagery
+  exclusion_rescue_keywords:
+    - 3D reconstruction
+    - 4D reconstruction
+    - reconstruction
+    - geometry
+    - geometric
+    - scene representation
+    - neural scene representation
+    - radiance field
+    - Gaussian Splatting
+    - SLAM
+    - mapping
+    - localization
+    - depth estimation
+    - point cloud
+    - mesh reconstruction
+    - surface reconstruction
+
+output:
+  json_path: "data/papers.json"
+  readme_path: "README.md"
+  readme_days: 90

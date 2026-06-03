@@ -1,0 +1,4 @@
+requests
+PyYAML
+feedparser
+pytest

@@ -1,0 +1,64 @@
+name: Update Geometry Vision Daily
+
+on:
+  schedule:
+    # GitHub Actions cron is UTC. These two entries cover 08:17 America/New_York
+    # across daylight-saving and standard time; the gate step below keeps one run.
+    - cron: "17 12 * * *"
+    - cron: "17 13 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Gate scheduled runs to 08:17 America/New_York
+        id: schedule_gate
+        if: github.event_name == 'schedule'
+        run: |
+          hour="$(TZ=America/New_York date +'%H')"
+          minute="$(TZ=America/New_York date +'%M')"
+          if [ "$hour:$minute" != "08:17" ]; then
+            echo "Not 08:17 America/New_York; skipping update."
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "should_run=true" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        if: github.event_name == 'workflow_dispatch' || steps.schedule_gate.outputs.should_run == 'true'
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        if: github.event_name == 'workflow_dispatch' || steps.schedule_gate.outputs.should_run == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        if: github.event_name == 'workflow_dispatch' || steps.schedule_gate.outputs.should_run == 'true'
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        if: github.event_name == 'workflow_dispatch' || steps.schedule_gate.outputs.should_run == 'true'
+        run: pytest
+
+      - name: Update papers
+        if: github.event_name == 'workflow_dispatch' || steps.schedule_gate.outputs.should_run == 'true'
+        run: python scripts/update_papers.py
+
+      - name: Commit and push changes
+        if: github.event_name == 'workflow_dispatch' || steps.schedule_gate.outputs.should_run == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md data/papers.json
+          if git diff --cached --quiet; then
+            echo "No README.md or data/papers.json changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: update daily geometry vision papers"
+          git push
