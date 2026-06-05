@@ -22,10 +22,23 @@ jobs:
         id: schedule_gate
         if: github.event_name == 'schedule'
         run: |
-          hour="$(TZ=America/New_York date +'%H')"
-          minute="$(TZ=America/New_York date +'%M')"
-          if [ "$hour:$minute" != "09:00" ]; then
-            echo "Not 09:00 America/New_York; skipping analysis."
+          cron="${{ github.event.schedule }}"
+          case "$cron" in
+            "0 13 * * *") nominal_utc_time="13:00" ;;
+            "0 14 * * *") nominal_utc_time="14:00" ;;
+            *)
+              echo "Unexpected schedule '$cron'; skipping analysis."
+              echo "should_run=false" >> "$GITHUB_OUTPUT"
+              exit 0
+              ;;
+          esac
+
+          utc_date="$(date -u +'%Y-%m-%d')"
+          ny_time="$(TZ=America/New_York date -d "$utc_date $nominal_utc_time UTC" +'%H:%M')"
+          echo "Triggered cron '$cron' maps to $ny_time America/New_York on $utc_date."
+
+          if [ "$ny_time" != "09:00" ]; then
+            echo "This is the companion DST/standard-time cron; skipping analysis."
             echo "should_run=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
