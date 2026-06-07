@@ -23,56 +23,55 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 科研趋势综合分析
 
-好的，这是根据您提供的论文列表生成的科研趋势综合分析。
+好的，这是基于您提供的论文列表生成的科研趋势综合分析报告。
+
+---
 
 #### 今日主要趋势
 
-1.  **从静态到动态、从单视角到稀疏多视角的 4D 重建成为焦点**：
-    今天的论文显示了动态 3D 重建（即 4D 重建）的强烈趋势，并且重点在于解决现实世界捕获的复杂性。传统的多相机设置被证明是昂贵的、不灵活的。因此，研究者开始聚焦于**稀疏动态相机**（`4D Reconstruction from Sparse Dynamic Cameras`）以及**高效压缩与流式传输动态 3D 高斯泼溅**（`GS-NFS`）。这超越了单目和固定多相机系统，向更加灵活、低成本的视频制作和场景捕获场景迈进。
+1.  **“几何基础模型”成为降采样与定位任务的核心工具**：论文如 `Anchor3R` (流式重建)、`CIPER` (跨视角定位与位姿估计) 和 `LiAuto-GeoX` (自动驾驶重建) 开始将VGGT、DUSt3R等几何基础模型作为其核心组件，用于取代或增强传统的SfM/SLAM流程。这说明该领域正从“从零构建几何”转向“利用预训练模型蒸馏或适配几何知识”，以解决长时序漂移、跨视角匹配等难题。
 
-2.  **基于前馈的 3D 重建走向高效、流式处理和少高斯化**：
-    不同于传统的逐场景优化，前馈式 3D 重建方法（如 DUSt3R 后继者）正朝着更实用的方向发展。关键路径包括：**流式处理长序列**以解决累积漂移（`Anchor3R`）、**摆脱高斯数量与像素分辨率绑定**以减少冗余并提升效率（`ZipSplat`）、以及**从大规模模型蒸馏出紧凑的实时模型**以满足自动驾驶等场景的部署需求（`LiAuto-GeoX`）。这一趋势表明，研究者们正在弥合高精度前馈模型与实时部署之间的鸿沟。
+2.  **物理与几何约束“在环”成为神经表示和三维重建的新范式**：`SimuScene` 将物理仿真引擎作为诊断工具在重建过程中修正物体形态和布局；`Geometry Gaussians` 通过解耦外观与几何参数来改善3DGS的几何重建；`CLEAR` 则在自动驾驶规划中利用大模型（LLM）的语义推理作为“规划评估器”来筛选行动。这体现了从“纯数据驱动”到“知识/约束驱动”的转变，通过引入物理定律或高级语义先验来提升模型的鲁棒性和泛化性。
 
-3.  **多模态融合与跨模态对齐成为新常态，但追求无配对/弱校准**：
-    无论是结合 RGB 与热成像（`Unpaired RGB-Thermal Gaussian-Splatting`），还是航空与地面视图（`Meridian`, `CIPER`），跨模态或多模态感知与重建的重要性日益凸显。然而，新颖的趋势是**摆脱对精确配对数据或严格校准的依赖**。通过使用基础模型（如 VGGT）进行独立位姿估计后再对齐，或基于语义基元的匹配，研究者正在探索更实用、泛化性更强的解决方案。
+3.  **“效率优化”成为三维视觉走向实时的核心瓶颈和突破口**：有多篇论文聚焦于加速现有算法的关键瓶颈。`RadiusFPS` 通过球形体素剪枝加速了点云下采样；`GS-NFS` 通过GPU并行化加速了动态3DGS的编解码；`LiAuto-GeoX` 通过知识蒸馏将大几何模型压缩为轻量级部署模型。这表明在追求高保真度的同时，实现实时、低功耗的板端推理是当前研究的重点方向。
 
-4.  **物理知识与几何先验深度融合至学习和重建流程**：
-    算法设计不再仅仅是“数据驱动”，而是开始主动引入物理或几何约束。例如，在场景重建中**使用物理引擎作为诊断工具**来生成物理稳定的场景（`SimuScene`）；在图像重建中**融入迭代细化模块来弥补基于学习的表示（NeRF）丢失的高频纹理细节**（`Texture-preserving implicit neural representation for CBCT`）；以及通过**主动学习局部几何与可见性图**来指导无人机敏捷飞行（`MAD`）。
-
-5.  **具身智能与感知的强耦合：从“感知到交互”的管道正在被挑战**：
-    机器人/AR 应用论文不再仅仅讨论感知，而是直接与下游任务耦合。例如，端到端自动驾驶模型中**用潜空间单步扩散替代多步去噪**以解决延迟问题（`CLEAR`）；通过结构化**可供性预测（Affordance）** 作为视觉-语言模型与机器人控制策略的中间桥梁（`AffordanceVLA`）。趋势显示，感知模块的设计正越来越多地受到**下游任务对速度、物理稳定性或实时交互需求**的反向驱动。
+4.  **从“几何驱动”到“可供性(affordance)驱动”的具身智能理解**：`AffordanceVLA` 明确提出将“可供性预测”作为连接视觉语言模型与机器人操控的中间表示。这标志着机器人感知正从纯粹的“是什么、在哪”（几何）向“能做什么”（任务导向）演进，通过结构化中间层（如可供性图、交互点）来简化感知到动作的映射。
 
 #### 技术路线观察
 
-*   **几何基础模型与 3D/4D 重建**：该领域是这次论文的核心引擎。技术路线正从单一的基于优化（如传统 3DGS）或前馈模型，转向**大规模、前馈式的混合架构**。`Anchor3R` 和 `LiAuto-GeoX` 代表了两种主流路径：前者强调**流式处理与局部锚定**；后者强调**知识蒸馏**。`ZipSplat` 则引领了“少即是多”的提升效率与质量并重的路线。同时，关注点从静态场景扩展到**动态场景的流式压缩** (`GS-NFS`) 和**稀疏动态相机重建** (`4D Reconstruction from Sparse Dynamic Cameras`)。
+- **几何基础模型**：该类模型（`CIPER`, `Anchor3R`, `LiAuto-GeoX`）的技术侧重点是 **“蒸馏与适配”**。它们通常使用一个大容量、处理全图的几何先验模型（如VGGT）作为“教师”，然后通过知识蒸馏、局部化处理（如窗口式重建）等方式，将其能力迁移到一个更高效、更适合长序列或实时部署的“学生”模型中。关键技术包括`相对位姿关系蒸馏`和`瞬态锚点`设计。
 
-*   **神经场景表示**：当前的重点是**对 3D 高斯泼溅 (3DGS) 框架的深度改良**。`Geometry Gaussians` 揭示了 3DGS 本身在设计上无法同时表示外观与几何的固有问题，并提出解耦方案。`ZipSplat` 是其效率路线的代表。`Unpaired RGB-Thermal Gaussian-Splatting` 则将 3DGS 的应用场景扩展到多模态无配对数据。这些工作表明，虽然 3DGS 仍是主流，但其内部机理正被更深入地审视和重构。
+- **3D/4D 重建**：该方向（`ZipSplat`, `Hierarchical Space Partition`, `4D Reconstruction from Sparse Dynamic Cameras`）的技术侧重点在于 **“表示与效率的平衡”**。`ZipSplat` 将高斯与像素解耦，实现表示开销对场景复杂度的自适应；`4D Reconstruction` 则专注于如何利用稀疏动态相机解决时空不一致性；`Hierarchical Space Partition` 通过层级结构来恢复缺失几何。核心思路是摆脱传统稠密网格或像素对齐的限制，寻找更紧凑、更鲁棒的表示方法。
 
-*   **机器人/AR 应用**：这个类别的论文表现出极强的**实用性导向**和**任务驱动**特点。技术路线体现在几个方面：1) **系统集成**：如 `Multi-Camera AR Guidance System for Surgical Instruments` 将多相机位姿估计、AR 渲染和用户交互（眼动追踪、脚踏板）整合为端到端系统；2) **端到端模型**：如 `CLEAR` 和 `AffordanceVLA`，它们不再将感知和规划环节独立设计，而是通过**潜空间漂移**或**中间表示（可供性）** 直接生成动作；3) **世界模型**：`MAD` 通过主动学习地图表征将感知融入决策；4) **数据与评测**：`Impostor` 作为一项数据基础设施的工作，展示了合成数据和自动化生成在推进某个子领域（AIGC 溯源）中的作用。
+- **神经场景表示（NeRF/3DGS）**：当前主流（`Geometry Gaussians`, `Texture-preserving neural representation`, `Unpaired RGB-Thermal Gaussian-Splatting`）的侧重点是 **“解耦与物理增强”**。`Geometry Gaussians` 解耦外观与几何；`Texture-preserving` 将物理迭代细化模块引入隐式表示以保留纹理；`Unpaired RGB-Thermal` 则解耦了不同模态间的信息。这表明该领域正从简单的外观渲染向融合多模态、增强物理属性和几何精度的方向发展。
+
+- **机器人/AR 应用**：该方向（`AffordanceVLA`, `MAD`, `CLEAR`, `Meridian`, `SimuScene`）的技术路线呈现出高度的 **“深度融合”** 趋势。例如，`CLEAR` 将VAE、大模型与交叉注意力评分器结合；`MAD` 将世界模型与地图感知结合；`AffordanceVLA` 将VLM与可供性预测结合。通用大模型（如Qwen）和世界模型正被广泛引入，作为控制器或评估器，与底层的感知和控制算法协同工作。
 
 #### 值得优先阅读的论文
 
-1.  **Geometry Gaussians** (**优先级: 极高**)
-    *   **理由**: 该论文直指当前最热门的 3DGS 的根基性问题——无法同时表示外观和几何。其提出的“增加一个几何不透明度参数”的解法极其轻量，但可能会改变后续许多 3DGS 相关工作的设计思路，无论你是做渲染还是重建，都应优先理解。
+1.  **`ZipSplat (2606.05102)`**：**优先级：极高**。它直接点出了当前前馈式3DGS方法的根本性缺陷（高斯数量与像素分辨率绑定），并提出了一个优雅的解耦方案。其“一个模型走遍质量-效率曲线”的特性极具实用价值，是当前3DGS前馈生成方向的里程碑式工作。
 
-2.  **Anchor3R / LiAuto-GeoX** (**优先级: 高**)
-    *   **理由**: 这两篇代表了前馈式 3D 重建走向实用化的两条关键路径。`Anchor3R` 解决了长序列在线重建的漂移问题，这是该技术能否从演示走向长期部署的核心。`LiAuto-GeoX` 则展示了如何将大模型压缩成一个适用于自动驾驶的实时模型，是少有的直接瞄准工程落地的系统性工作。
+2.  **`LiAuto-GeoX (2606.05774)`**：**优先级：极高**。它展示了如何将强大的几何基础模型实际部署到自动驾驶场景。其“几何保持蒸馏框架”涵盖了掩码引导的深度感知蒸馏和相对位姿关系蒸馏，对于如何压缩大模型而不损失关键几何信息提供了重要参考。
 
-3.  **ZipSplat** (**优先级: 高**)
-    *   **理由**: 这篇对 3DGS 的效率优化思路非常新颖，通过将高斯放置与像素网格解耦，一举两得地实现了“更少的高斯，更好的效果”。它打破了“分辨率越高，高斯越多，质量越好”的固有认知，为未来更高效的场景表示开辟了新方向。
+3.  **`Geometry Gaussians (2606.05124)`**：**优先级：高**。该工作通过一个极其简单的修改（增加一个几何不透明度参数）就解决了标准3DGS无法同时表示外观和几何的固有缺陷。这个见解深刻，且修改成本极低，很有可能成为后续3DGS模型的标配，值得所有从事该方向的研究者关注。
 
-4.  **CLEAR** (**优先级: 中-高**)
-    *   **理由**: 这篇文章针对端到端自动驾驶中扩散模型的延迟问题，提出了一个极为巧妙的解法。在潜空间做单步条件漂移加上大模型做评估调度，这种架构设计非常具有启发性，可能对任何面临生成模型延迟问题的具身智能任务都有参考价值。
+4.  **`Anchor3R (2606.05035)`**：**优先级：高**。它针对流式三维重建中长序列累积漂移这一核心问题，提出了“当前帧为中心”的瞬态锚点思想。这种放弃全局坐标系、回归局部测量的策略非常新颖，为在线重建提供了新的思路。
+
+5.  **`AffordanceVLA (2606.06155)`**：**优先级：高**。对于关注机器人操控和具身智能的研究者，这篇论文展示了如何用结构化的“可供性”来弥合视觉语言大模型与具体动作间的鸿沟。其`Which2Act`、`Where2Act`、`How2Act`的分层设计清晰且实用，是该领域极具代表性的工作。
 
 #### 可能的研究机会
 
-1.  **物理约束与语义/几何表示的深度结合**：
-    *   **空白**: `SimuScene` 和 `Geometry Gaussians` 都引入了物理知识，但分别侧重于场景级（场景稳定性）和基元级（高斯基元的几何不透明度）。可以参考 `Texture-preserving...CT` 的思路，将物理先验（如刚性运动、光照模型）作为可学习的模块，嵌入到前馈或优化重建流程中，而不仅仅是作为后处理。
-    *   **机会**: 探索将物理仿真引擎作为可微分模块，直接嵌入到 3D 重建网络训练中，实现“物理约束驱动”的重建。
+1.  **“可供性”驱动的几何基础模型**：将 `AffordanceVLA` 中的“可供性预测”与 `Anchor3R` 或 `LiAuto-GeoX` 中的几何基础模型结合。可以探索一种模型，它不仅理解场景的几何结构，还能识别出哪些几何体是可操作的（如可抓取、可推、可坐），从而实现任务导向的3D重建。
 
-2.  **跨模态、无配对/弱校准几何学习的通用框架**：
-    *   **空白**: `Unpaired RGB-Thermal Gaussian-Splatting` 和 `Meridian` 都解决了特定模态对的匹配问题，但缺乏一个通用的框架。如视觉-触觉、视觉-声音、或 LiDAR-热成像等组合。
-    *   **机会**: 研究一个通用的跨模态位姿校准或特征对齐框架，利用视觉
+2.  **物理增强的可供性规划**：将 `SimuScene` 的“物理在环”思想与 `CLEAR` 的大模型规划相结合。可以构建一个使用物理仿真作为“世界模型”的规划器，大模型生成行动候选，然后由物理仿真来预测这些行动的结果，进而选出最可行、最安全的行动方案。
+
+3.  **面向动态场景的实时、紧凑表示与传输**：将 `ZipSplat` 的高效率与 `GS-NFS` 的实时编解码以及 `4D Reconstruction from Sparse Dynamic Cameras` 的动态建模相结合。研究如何从稀疏、动态的相机中实时生成ZipSplat风格的紧凑表示，并实现高效流式传输，这将极大推动远程协作、VR/AR直播等应用。
+
+4.  **跨模态位姿估计与融合的泛化性研究**：`Unpaired RGB-Thermal Gaussian-Splatting` 和 `Meridian` 都致力于跨模态定位。一个潜在的机会是将两者的优势结合，例如，研究如何在没有 (RGB, 热成像)配对数据和 (航空, 地面)对齐数据的情况下，利用一种统一的几何基础模型（如VGGT）的隐式几何先验，实现任意两个不同模态、不同视角传感器间的鲁棒位姿对齐。
+
+#### 风险和不确定性
+
+- **
 
 ### interests.md 指令分析
 
@@ -2208,58 +2207,6 @@ LEGS 提出一种混合模拟器，通过3D高斯泼溅重建真实场景背景�
 <summary>Abstract</summary>
 
 Training vision-language-action (VLA) policies for humanoid loco-manipulation is constrained by the high cost and complexity of collecting human teleoperation demonstrations. VLA policies fine-tuned in simulators have, until now, failed to transfer effectively in humanoid loco-manipulation tasks. We present LEGS (Loco-manipulation via Embodied Gaussian Splatting), a hybrid simulator that composites a mesh foreground (robot, objects, props) over a photorealistic 3D Gaussian Splatting (3DGS) background reconstructed from a handheld scene capture. LEGS uses a procedural motion-primitive generator to synthesize labeled demonstrations at scale without human teleoperation, and a deterministic two-stage color calibration to align the rendered 3DGS image to the robot's deployment camera. On a Unitree G1 humanoid robot, across three pick-and-place tasks of increasing whole-body difficulty and three VLA backbones (psi_0, pi_0.5, GR00T N1.6), a policy trained purely on LEGS data matches or exceeds one trained on human teleoperation demos on every experiment. It also outperforms a mesh-only simulation baseline that ablates the effect of the 3DGS background, showing that photorealistic rendering is a key enabler for synthetic data transfer. Humanoid motion is recorded independently of scene appearance in LEGS, allowing the same auto-generated demonstrations to be re-rendered under new backgrounds and object meshes--covering a new scene at more than 15x lower cost than teleoperation--to augment training data for robustness to scene variations. Under combined object-and-scene appearance shift, the policy trained on re-rendered LEGS-AUG data maintains task success while the baseline trained on teleoperation data fails entirely. Our project page is located at https://legsvla.github.io/.
-
-</details>
-
-#### 2026-05-31 - RFDT-Channel: RGB-LiDAR-Based RF Digital Twin Scene Construction for 28 GHz Indoor Ray-Tracing Channel Simulation
-
-**Authors:** Chengyang Yao, Cunhua Pan, Jiaming Zeng, Yuquan Sun, Haoyang Weng, Haojian Wang, Hong Ren, Jiangzhou Wang
-**Links:** [abs](https://arxiv.org/abs/2606.01261) - [pdf](https://arxiv.org/pdf/2606.01261)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** Embodied / Robotics / AR Applications
-**Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, splatting, digital twin, simulation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：RFDT-Channel: RGB-LiDAR-Based RF Digital Twin Scene Construction for 28 GHz Indoor Ray-Tracing Channel Simulation  
-- 作者：Chengyang Yao, Cunhua Pan, Jiaming Zeng, Yuquan Sun, Haoyang Weng, Haojian Wang, Hong Ren, Jiangzhou Wang  
-- 出版日期：2026-05-31  
-- 分类：Neural Scene Representations & Rendering（主要），Embodied / Robotics / AR Applications（次要）  
-- 链接：https://arxiv.org/abs/2606.01261  
-
-### 一句话总结
-提出一种基于RGB图像和LiDAR点云的射频数字孪生场景构建工作流，用于28 GHz室内射线追踪信道仿真，能有效减少有效路径数量并保持主路径幅度不变。
-
-### 研究问题
-如何高效构建射频可计算的室内三维几何模型，并在28 GHz射线追踪仿真中准确绑定电磁材料属性，以克服手动建模效率低、视觉重建网格射频适应性差以及材料绑定缺失的问题。
-
-### 核心思路/方法
-1. 使用Jetson Orin平台搭载LiDAR和GMSL摄像头采集室内视频和点云。  
-2. 通过COLMAP、3D Gaussian Splatting和SuGaR生成初始三角形网格。  
-3. 在Blender中利用LiDAR点云提供几何和尺度参考，进行射频导向的网格正则化（包括对齐、墙面固化、门窗开口构建和拓扑修复）。  
-4. 使用OpenScene语义分割将主要室内结构映射到混凝土、玻璃、木材和金属四种材料。  
-5. 利用Sionna RT执行28 GHz射线追踪仿真，并输出信道冲激响应（CIR）、信道频率响应（CFR）和无线电地图。
-
-### 主要贡献
-- 开发了一套完整的RF数字孪生场景构建工作流（RFDT-Channel），自动将RGB图像和LiDAR点云转换为射频可计算的室内几何模型。  
-- 通过材料绑定，显著改变了弱反射、透射和散射路径，将有效路径数量从约742条减少到约52条，同时保持主导路径幅度几乎不变。  
-- 实现了高效、自动化的室内毫米波信道仿真场景构建。
-
-### 局限性
-摘要未提供足够信息（例如：未提及方法在复杂场景下的泛化能力、计算开销、实验对比基线、或对动态环境的适用性）。
-
-### 阅读优先级
-**中**  
-理由：论文聚焦于射频数字孪生与信道仿真这一相对小众的交叉领域，方法结合了视觉重建、语义分割和射线追踪，技术创新点明确且应用场景具体。若读者从事毫米波通信、数字孪生或室内定位相关研究，则值得一读；若主要关注通用计算机视觉或机器人领域，则相关性较低。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Real-scene indoor millimeter-wave simulation requires efficient modeling of radio frequency (RF)-computable geometry and electromagnetic material properties. To address the low efficiency of manual scene modeling, the limited RF adaptability of visually reconstructed meshes, and the lack of material binding in 28 GHz ray-tracing simulation, RFDT-Channel is developed as an RF digital twin scene construction workflow based on red-green-blue (RGB) images and light detection and ranging (LiDAR) point clouds. Indoor videos and point clouds are collected by a Jetson Orin platform with LiDAR and GMSL cameras. An initial triangular mesh is generated through COLMAP, 3D Gaussian Splatting, and SuGaR. The LiDAR point cloud then provides geometric and scale references for RF-oriented regularization in Blender, including alignment, wall solidification, door/window opening construction, and topology repair. OpenScene semantic segmentation maps major indoor structures to concrete, glass, wood, and metal materials, and Sionna RT performs 28 GHz ray tracing. Under a fixed transmitter-receiver deployment, the generated channel impulse response (CIR), channel frequency response (CFR), and Radio Map results show that material binding mainly changes weak reflection, transmission, and scattering paths, reducing the number of effective paths from about 742 to about 52 while keeping the dominant path amplitude nearly unchanged.
 
 </details>
 
