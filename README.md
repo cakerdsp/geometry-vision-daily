@@ -11,67 +11,57 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：62
+- 当前滚动窗口论文数：44
 - 分类分布：
-  - Embodied / Robotics / AR Applications: 20
-  - Neural Scene Representations & Rendering: 17
-  - 3D Reconstruction & Multi-view Geometry: 16
-  - Dynamic / 4D Reconstruction: 7
+  - Embodied / Robotics / AR Applications: 16
+  - Neural Scene Representations & Rendering: 12
+  - 3D Reconstruction & Multi-view Geometry: 11
+  - Dynamic / 4D Reconstruction: 3
   - Geometry Foundation Models: 2
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-好的，这是基于您提供的论文列表生成的科研趋势综合分析报告。
+好的，这是基于您提供的论文列表生成的科研趋势综合分析。
 
 ---
 
 #### 今日主要趋势
 
-1.  **“几何基础模型”成为降采样与定位任务的核心工具**：论文如 `Anchor3R` (流式重建)、`CIPER` (跨视角定位与位姿估计) 和 `LiAuto-GeoX` (自动驾驶重建) 开始将VGGT、DUSt3R等几何基础模型作为其核心组件，用于取代或增强传统的SfM/SLAM流程。这说明该领域正从“从零构建几何”转向“利用预训练模型蒸馏或适配几何知识”，以解决长时序漂移、跨视角匹配等难题。
+1.  **从“适用特定场景”向“通用性与泛化性”全面演进**：当前研究不再满足于在特定、受控环境下表现良好的方法，而是致力于开发能够直接处理多种复杂、非结构化场景的通用模型。例如，**Meridian** 针对非城市环境的跨视角定位，**UniSHARP** 的通用相机模型渲染，以及 **CIPER** 统一检索与位姿估计的任务，都鲜明地体现了这种趋势。这背后是对模型泛化能力、鲁棒性和零样本部署能力前所未有的强调。
 
-2.  **物理与几何约束“在环”成为神经表示和三维重建的新范式**：`SimuScene` 将物理仿真引擎作为诊断工具在重建过程中修正物体形态和布局；`Geometry Gaussians` 通过解耦外观与几何参数来改善3DGS的几何重建；`CLEAR` 则在自动驾驶规划中利用大模型（LLM）的语义推理作为“规划评估器”来筛选行动。这体现了从“纯数据驱动”到“知识/约束驱动”的转变，通过引入物理定律或高级语义先验来提升模型的鲁棒性和泛化性。
+2.  **神经隐式/显式表示与物理/几何先验的深度融合**：无论是3D高斯泼溅（3DGS）还是神经辐射场（NeRF），研究者正试图将更明确的几何、物理或声学知识引入神经表示中。**Geometry Gaussians** 通过增加几何不透明度参数解耦外观与几何；**SimuScene** 把物理引擎作为诊断工具引入重建流程；**Towards Realistic 3D Sonar Simulation** 则将声学传播原理融入仿真。这表明纯数据驱动的“黑盒”表示正在向融合先验知识的“灰盒”进化，以提升表示的真实性和可编辑性。
 
-3.  **“效率优化”成为三维视觉走向实时的核心瓶颈和突破口**：有多篇论文聚焦于加速现有算法的关键瓶颈。`RadiusFPS` 通过球形体素剪枝加速了点云下采样；`GS-NFS` 通过GPU并行化加速了动态3DGS的编解码；`LiAuto-GeoX` 通过知识蒸馏将大几何模型压缩为轻量级部署模型。这表明在追求高保真度的同时，实现实时、低功耗的板端推理是当前研究的重点方向。
+3.  **高效、实时与流式处理成为核心瓶颈与突破口**：随着模型复杂度和输入数据速率的提升，实时性要求变得极为苛刻。多个工作直接以此为出发点：**RadiusFPS** 通过算法剪枝加速点云降采样；**CLEAR** 用单步潜空间漂移替代扩散模型的多步去噪；**LiAuto-GeoX** 通过知识蒸馏获得高效紧凑的模型；**GS-NFS** 和 **Anchor3R** 分别针对动态3DGS的流传输和长时序在线建图提出并行加速与流式架构。这显示领域正在从“能跑就行”转向“快而稳地跑”。
 
-4.  **从“几何驱动”到“可供性(affordance)驱动”的具身智能理解**：`AffordanceVLA` 明确提出将“可供性预测”作为连接视觉语言模型与机器人操控的中间表示。这标志着机器人感知正从纯粹的“是什么、在哪”（几何）向“能做什么”（任务导向）演进，通过结构化中间层（如可供性图、交互点）来简化感知到动作的映射。
+4.  **多模态感知与融合的实用化探索**：从简单的RGB-D融合扩展到更复杂的传感器组合（如RGB-热成像、相机-IMU-声纳），并且开始解决数据模态间不对齐、不配对等实际问题。**Unpaired RGB-Thermal Gaussian-Splatting** 解决了无配对校准的跨模态新视角合成；**CLEAR** 融合视觉与大语言模型（LLM）进行驾驶规划。此外，**Impostor** 与 **Multi-Camera AR Guidance**等应用也体现了多视角/多传感器在实际系统中的集成趋势。
+
+5.  **从“重建”到“可交互/可操作”的范式转变**：三维重建的最终目的不仅仅是得到几何模型，更要服务于下游的机器人操作、仿真或分析。**SimuScene** 明确以“物理仿真就绪”为目标；**AffordanceVLA** 和 **CLEAR** 直接通过视觉-语言-动作模型指导机器人/车辆的行为。这表明学界正更主动地将感知、重建、理解和动作生成串联为端到端的认知闭环。
 
 #### 技术路线观察
 
-- **几何基础模型**：该类模型（`CIPER`, `Anchor3R`, `LiAuto-GeoX`）的技术侧重点是 **“蒸馏与适配”**。它们通常使用一个大容量、处理全图的几何先验模型（如VGGT）作为“教师”，然后通过知识蒸馏、局部化处理（如窗口式重建）等方式，将其能力迁移到一个更高效、更适合长序列或实时部署的“学生”模型中。关键技术包括`相对位姿关系蒸馏`和`瞬态锚点`设计。
-
-- **3D/4D 重建**：该方向（`ZipSplat`, `Hierarchical Space Partition`, `4D Reconstruction from Sparse Dynamic Cameras`）的技术侧重点在于 **“表示与效率的平衡”**。`ZipSplat` 将高斯与像素解耦，实现表示开销对场景复杂度的自适应；`4D Reconstruction` 则专注于如何利用稀疏动态相机解决时空不一致性；`Hierarchical Space Partition` 通过层级结构来恢复缺失几何。核心思路是摆脱传统稠密网格或像素对齐的限制，寻找更紧凑、更鲁棒的表示方法。
-
-- **神经场景表示（NeRF/3DGS）**：当前主流（`Geometry Gaussians`, `Texture-preserving neural representation`, `Unpaired RGB-Thermal Gaussian-Splatting`）的侧重点是 **“解耦与物理增强”**。`Geometry Gaussians` 解耦外观与几何；`Texture-preserving` 将物理迭代细化模块引入隐式表示以保留纹理；`Unpaired RGB-Thermal` 则解耦了不同模态间的信息。这表明该领域正从简单的外观渲染向融合多模态、增强物理属性和几何精度的方向发展。
-
-- **机器人/AR 应用**：该方向（`AffordanceVLA`, `MAD`, `CLEAR`, `Meridian`, `SimuScene`）的技术路线呈现出高度的 **“深度融合”** 趋势。例如，`CLEAR` 将VAE、大模型与交叉注意力评分器结合；`MAD` 将世界模型与地图感知结合；`AffordanceVLA` 将VLM与可供性预测结合。通用大模型（如Qwen）和世界模型正被广泛引入，作为控制器或评估器，与底层的感知和控制算法协同工作。
+| 方向 | 技术侧重点 | 代表论文 |
+| :--- | :--- | :--- |
+| **几何基础模型** | 强调零样本泛化、长时序流式处理和几何一致性。多采用Transformer架构，结合稀疏先验（如LiDAR）或局部测量预测。 | **Meridian** (度量-语义基元匹配), **Anchor3R** (瞬态锚点流式重建), **LiAuto-GeoX** (蒸馏与几何先验) |
+| **3D/4D 重建** | 从静态场景扩展到动态/4D场景，并关注稀疏数据、长时序和实时性问题。 包括表面重建与体素表示。 | **4D Reconstruction from Sparse Dynamic Cameras** (3D轨迹初始化), **Hierarchical Space Partition** (面片组装), **GS-NFS** (动态GS压缩), **SimuScene** (物理感知重建) |
+| **神经场景表示与渲染** | 核心技术路线为3DGS的扩展，包括：适应非常规相机、解耦外观与几何、减少高斯基元数量、以及引入多模态数据。 | **UniSHARP** (通用相机), **Geometry Gaussians** (几何解耦), **ZipSplat** (基元稀疏化), **Unpaired RGB-Thermal GS** (多模态无对齐) |
+| **机器人/AR应用** | 侧重于提升感知效率、融合高级语义（LLM/可供性）和实现真实世界的交互与控制。强调端到端、低延迟和实际部署。 | **RadiusFPS** (加速采样), **CLEAR** (LLM指导规划), **AffordanceVLA** (可供性中间表示), **MAD** (地图感知世界模型), **Multi-Camera AR Guidance** (AR交互) |
 
 #### 值得优先阅读的论文
 
-1.  **`ZipSplat (2606.05102)`**：**优先级：极高**。它直接点出了当前前馈式3DGS方法的根本性缺陷（高斯数量与像素分辨率绑定），并提出了一个优雅的解耦方案。其“一个模型走遍质量-效率曲线”的特性极具实用价值，是当前3DGS前馈生成方向的里程碑式工作。
-
-2.  **`LiAuto-GeoX (2606.05774)`**：**优先级：极高**。它展示了如何将强大的几何基础模型实际部署到自动驾驶场景。其“几何保持蒸馏框架”涵盖了掩码引导的深度感知蒸馏和相对位姿关系蒸馏，对于如何压缩大模型而不损失关键几何信息提供了重要参考。
-
-3.  **`Geometry Gaussians (2606.05124)`**：**优先级：高**。该工作通过一个极其简单的修改（增加一个几何不透明度参数）就解决了标准3DGS无法同时表示外观和几何的固有缺陷。这个见解深刻，且修改成本极低，很有可能成为后续3DGS模型的标配，值得所有从事该方向的研究者关注。
-
-4.  **`Anchor3R (2606.05035)`**：**优先级：高**。它针对流式三维重建中长序列累积漂移这一核心问题，提出了“当前帧为中心”的瞬态锚点思想。这种放弃全局坐标系、回归局部测量的策略非常新颖，为在线重建提供了新的思路。
-
-5.  **`AffordanceVLA (2606.06155)`**：**优先级：高**。对于关注机器人操控和具身智能的研究者，这篇论文展示了如何用结构化的“可供性”来弥合视觉语言大模型与具体动作间的鸿沟。其`Which2Act`、`Where2Act`、`How2Act`的分层设计清晰且实用，是该领域极具代表性的工作。
+1.  **Geometry Gaussians: Decoupling Appearance and Geometry in Gaussian Splatting**：**优先级极高**。该文直指当前主流3DGS框架（同时表示纹理和几何）的固有缺陷，并提出了一个极其简洁（仅增加一个参数）且有效的解决方案。对于所有从事3DGS相关研究的学者，理解这一缺陷和解决方案是基础性的。阅读全文以确认其在不同场景下的量化对比。
+2.  **Meridian: Metric-Semantic Primitive Matching for Cross-View Geo-Localization Beyond Urban Environments**：**优先级高**。该工作在之前专注于城市环境的跨视角定位领域，首次在非结构化自然环境中展示了无需特定区域训练的鲁棒定位能力。这对于户外机器人、自动驾驶等应用具有重要的启发性。阅读全文确认其在不同野外环境下的失败案例和泛化边界。
+3.  **ZipSplat: Fewer Gaussians, Better Splats**：**优先级高**。该文提出的前馈式方法能够仅用1/6的高斯数量即达到或超越基线性能，实现了表示预算与场景复杂度的匹配。这对降低存储、传输和渲染开销具有重要意义，是提升3DGS实用性的关键步骤。需要仔细阅读其聚类策略和推理时的质量控制机制。
+4.  **LiAuto-GeoX: Efficient Grounded Driving Transformer**：**优先级高**。该文展示了如何将大规模、高容量的几何模型通过知识蒸馏，变成一个足以在车端实时运行（KITTI上220 FPS）的紧凑模型。其提出的蒸馏框架（掩码引导深度感知+相对位姿关系）值得深入研究，是连接学术前沿与实际部署的典范。
+5.  **Anchor3R: Streaming 3D Reconstruction with Transient Anchors for Long-Horizon Visual Mapping**：**优先级高**。该文精准指出了当前流式前馈重建方法在长序列下的漂移问题，并基于“当前帧为中心”的局部测量思想提出了新颖有效的解决方案。对于SLAM和在线建图领域的研究者具有重要参考价值。建议阅读全文以评估其在极端长序列上的漂移程度。
 
 #### 可能的研究机会
 
-1.  **“可供性”驱动的几何基础模型**：将 `AffordanceVLA` 中的“可供性预测”与 `Anchor3R` 或 `LiAuto-GeoX` 中的几何基础模型结合。可以探索一种模型，它不仅理解场景的几何结构，还能识别出哪些几何体是可操作的（如可抓取、可推、可坐），从而实现任务导向的3D重建。
-
-2.  **物理增强的可供性规划**：将 `SimuScene` 的“物理在环”思想与 `CLEAR` 的大模型规划相结合。可以构建一个使用物理仿真作为“世界模型”的规划器，大模型生成行动候选，然后由物理仿真来预测这些行动的结果，进而选出最可行、最安全的行动方案。
-
-3.  **面向动态场景的实时、紧凑表示与传输**：将 `ZipSplat` 的高效率与 `GS-NFS` 的实时编解码以及 `4D Reconstruction from Sparse Dynamic Cameras` 的动态建模相结合。研究如何从稀疏、动态的相机中实时生成ZipSplat风格的紧凑表示，并实现高效流式传输，这将极大推动远程协作、VR/AR直播等应用。
-
-4.  **跨模态位姿估计与融合的泛化性研究**：`Unpaired RGB-Thermal Gaussian-Splatting` 和 `Meridian` 都致力于跨模态定位。一个潜在的机会是将两者的优势结合，例如，研究如何在没有 (RGB, 热成像)配对数据和 (航空, 地面)对齐数据的情况下，利用一种统一的几何基础模型（如VGGT）的隐式几何先验，实现任意两个不同模态、不同视角传感器间的鲁棒位姿对齐。
-
-#### 风险和不确定性
-
-- **
+1.  **结合“几何解耦”与“高效表示”**：**ZipSplat**解决的是高斯数量冗余问题，**Geometry Gaussians**解决的是几何表达力不足问题。将两者的思想结合，即设计一个既能根据场景复杂度自适应分配高斯数量、又能同时高质量表达外观和几何的框架，是一个很有潜力的方向。
+2.  **为通用相机模型设计高效的物理-神经融合表示**：**UniSHARP**实现了对不同全局相机模型的通用渲染，可以引入**SimuScene**的思想，在这种通用表示中内嵌物理仿真引擎，实现“一次重建，处处仿真”，尤其适用于需要模拟多种传感器（如全景+深度）的虚拟环境构建。
+3.  **基于基元匹配的自主导航闭环**：**Meridian**展示了基于度量-语义基元的零样本跨视角定位能力，而**MAD**展示了环境地图感知的飞行控制。将两者结合，利用**Meridian**为无人机/机器人提供无GPS的全球定位初始化，然后由**MAD**进行局部敏捷导航和地图更新，可以形成一个稳健的完全自主导航闭环。
+4.  **融合可供性预测的流式场景重建**：**AffordanceVLA**提出了可供性预测作为感知-动作的中间桥梁，而**Anchor3R**专注于
 
 ### interests.md 指令分析
 
@@ -955,6 +945,42 @@ Despite advances in depth estimation, flying points remain a persistent failure 
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** view synthesis, rendering
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：UniSHARP: Universal Sharp Monocular View Synthesis
+- 作者：Meixi Song, Dizhe Zhang, Hao Ren, Ruiyang Zhang, Bo Du, Ming-Hsuan Yang, Lu Qi
+- 出版日期：2026-06-05
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2606.07514
+
+### 一句话总结
+UniSHARP通过统一的全方位潜在空间对齐，将经典的针对针孔相机的视图合成方法SHARP扩展至支持透视、广角、鱼眼及全景等连续相机系统的单目渲染。
+
+### 研究问题
+如何克服SHARP方法对针孔相机模型的特定假设，使其能适用于多种不同相机系统（从常规透视到广角、鱼眼和全景）的通用单目视图合成。
+
+### 核心思路/方法
+核心思想是将不同图像统一到一个全方位的潜在空间进行隐式对齐。具体包括：
+- 在特征空间和高斯空间中进行隐式对齐。
+- 基于射线的通用表示，沿射线和径向距离排列高斯原语。
+- 利用UniK3D启发的编码器提取2D语义和3D空间特征，共同解码生成完整的高斯云。
+
+### 主要贡献
+- 提出了UniSHARP，将SHARP扩展为适用于连续相机系统的通用单目渲染方法。
+- 构建了一个覆盖多种成像系统和场景的基准测试，并按视场角分层以精细评估通用单目渲染任务。
+- 在提出的基准上，UniSHARP大幅优于其他对比方法。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。
+理由：该方法将流行的视图合成技术SHARP从针孔相机推广到鱼眼、全景等广泛相机系统，解决了单目渲染领域的通用性问题，并构建了分层基准进行系统评估。实验表现显著优于现有方法，具有重要的应用和学术价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -2275,56 +2301,6 @@ MetaWorld 提出了一种从单视角视频数据扩展至多智能体视频世�
 <summary>Abstract</summary>
 
 Video world models are a foundational generative technology for embodied AI and the Metaverse, yet existing approaches are inherently limited to a single agent observing from a single perspective. Extending these models to multi-agent settings introduces two critical challenges: data scarcity (coordinated multi-view recordings are prohibitively expensive to collect for general open-domain scenarios) and world state alignment (independently generated video streams cannot ensure that shared physical environments and events evolve consistently across views). To address these challenges, we propose MetaWorld, a novel framework that scales multi-agent video world models to open-domain environments directly from single-view videos. First, we introduce Monocular World-State Unrolling (MWSU) to explicitly decompose monocular footage into the camera operator's ego-motion and the visible subject's spatial trajectory. This camera-trajectory decomposition naturally extracts synchronized multi-agent motion data within a shared 3D space, completely bypassing the need for multi-camera setups. Second, for precise visual control, we develop the Subject-Aware World Generator to enable appearance-driven simulation conditioned on per-agent identity images. Finally, to ensure both views are grounded in the identical physical reality, we propose World-State Alignment, a per-frame inter-branch cross-attention mechanism inserted at every transformer layer of the video DiT. By jointly synchronizing the denoising process, WSA enforces both static geometric consistency and dynamic motion consistency, encouraging that the shared 3D environment and physical events remain well-aligned across both egocentric views. Extensive experiments demonstrate that MetaWorld achieves superior cross-view consistency and identity fidelity, establishing a highly scalable, physics-driven paradigm for multi-agent video world modeling.
-
-</details>
-
-#### 2026-06-01 - MASER: Modality-Adaptive Specialist Routing for Embodied 3D Spatial Intelligence
-
-**Authors:** Hilton Raj, Vishnuram AV
-**Links:** [abs](https://arxiv.org/abs/2606.02463) - [pdf](https://arxiv.org/pdf/2606.02463)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** spatial intelligence
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：MASER: Modality-Adaptive Specialist Routing for Embodied 3D Spatial Intelligence
-- 作者：Hilton Raj, Vishnuram AV
-- 出版日期：2026-06-01
-- 分类：Embodied / Robotics / AR Applications
-- 链接：https://arxiv.org/abs/2606.02463
-
-### 一句话总结
-MASER提出一种轻量化框架，通过训练五个模态适配器并学习基于问题语义进行路由的策略，解决具身3D智能中单一模态忽略问题语义的问题。
-
-### 研究问题
-具身3D智能中，现有视觉-语言模型仅针对单一模态微调，忽略了问题本身的语义可能导致不同模态（如点云、RGB图像等）更适合不同场景，无法自适应选择最优模态。
-
-### 核心思路/方法
-1. **五模态适配器**：在共享VLM骨干上训练五个独立的模态适配器（分别处理自然语言、RGB图像、点云、深度图和相机位姿）。
-2. **神经路由策略**：使用冻结的句子编码器将问题编码为嵌入，通过一个小型多层感知机（MLP）根据问题选择最优适配器。该MLP在oracle适配器-准确率标签上训练。
-3. **推理高效**：每次推理只需调用一次适配器，避免多模态全量计算。
-
-### 主要贡献
-1. 首次在具身3D VQA中引入模态自适应路由，使模型根据问题动态选择最佳模态。
-2. 通过轻量框架（单个MLP）实现接近oracle水平的路由（51.3% oracle一致性），优于随机森林基线（43.5%）。
-3. 实验证实无单一模态普遍最优（点云在51.5%情况下最佳），验证了自适应路由的必要性。
-
-### 局限性
-摘要未提供足够信息：未提及跨领域泛化能力、对噪声或多模态缺失情况的鲁棒性、以及更复杂场景下的路由延迟分析。
-
-### 阅读优先级
-**高**
-理由：该方法针对具身3D智能中模态选择的核心瓶颈，提出实用轻量框架，且实验指标明确（oracle一致性、适配器仅调用一次），对多模态理解与智能体决策领域有参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-In 3D environments, Embodied Agents answer spatially relevant questions through reasoning from a mixture of modalities including natural language, RGB images, point clouds, depth maps and camera poses. Existing Vision-Language models (VLMs) are fine-tuned over a single modality. This completely ignores the question semantics which may favor a different modality than the finetuned modality. To address this, we propose MASER (Modality-Adaptive SpEcialist Routing), a lightweight framework that trains five different modality adapters of a shared VLM backbone and learns a neural routing policy that selects the best adapter based on the question during inference. We encode each question with a frozen sentence transformer and pass the embedding through a small Multi-layer Perceptron (MLP) trained on oracle adapter-accuracy labels. We evaluate our methodology over the Open3D-VQA benchmark and our evaluations show that no single modality is universally optimal -- point-cloud answers are best in 51.5% of cases. MASER routes with 51.3% oracle agreement, outperforming a Random-Forest ablation (43.5%), with only a single adapter call per question.
 
 </details>
 

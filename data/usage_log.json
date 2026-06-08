@@ -834,5 +834,27 @@
     "total_tokens": 14913,
     "estimated_cost_usd": 0.00233982,
     "estimated_cost_cny": 0.016847
+  },
+  {
+    "timestamp": "2026-06-08T16:48:44Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.07514",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 529,
+    "completion_tokens": 421,
+    "total_tokens": 950,
+    "estimated_cost_usd": 0.00019194,
+    "estimated_cost_cny": 0.001382
+  },
+  {
+    "timestamp": "2026-06-08T16:49:13Z",
+    "task": "daily_trend_report",
+    "arxiv_id": null,
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 13106,
+    "completion_tokens": 1800,
+    "total_tokens": 14906,
+    "estimated_cost_usd": 0.00233884,
+    "estimated_cost_cny": 0.01684
   }
 ]
