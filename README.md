@@ -11,64 +11,67 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：16
+- 当前滚动窗口论文数：6
 - 分类分布：
-  - 3D Reconstruction & Multi-view Geometry: 6
-  - Embodied / Robotics / AR Applications: 5
-  - Neural Scene Representations & Rendering: 5
+  - 3D Reconstruction & Multi-view Geometry: 4
+  - Embodied / Robotics / AR Applications: 1
+  - Neural Scene Representations & Rendering: 1
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-好的，以下是根据您提供的论文列表生成的中文科研趋势综合分析。
+好的，基于今日提供的论文列表，以下是针对计算机视觉与三维重建领域的科研趋势综合分析。
 
 ---
 
 #### 今日主要趋势
 
-1.  **从“单视角/场景”到“多实例/多视角协同”的几何与感知：** 本日论文中一个显著趋势是突破传统单目/单个场景的限制，转向利用“多”的优势。这体现在两个方面：一是利用同一图像中**多个物体实例**隐式提供的多视图几何信息，从本质上的不适定问题中求解3D结构（如`MooMIns`利用堆叠物体进行重建与位姿估计）；二是针对**多个智能体**（如多无人机、多视角摄像机）的场景，探索如何保证跨视角感知的几何一致性与可控性（如`Prisma-World`生成多智能体视角一致的视频，`Trajectory Optimization in Single and Dual-UAV`优化双机观测几何）。这表明研究正从孤立感知走向协同和互补性几何推理。
+1.  **从单目到“隐式多视图”的范式转变：挖掘单张图像中的多重几何线索**
+    传统单目3D重建面临不适定问题，而今日趋势显示，研究者们正积极从单张图像中挖掘“隐式多视图”信息。例如，`MooMIns` (2606.14389) 巧妙地利用了工业场景中堆叠的多个物体实例，将其视为同一物体的多视图观测，并创新性地反转了高斯溅射的经典流程（从“多相机渲染单场景”变为“单相机渲染多实例”）。这表明未来研究方向正从依赖显式的多视角输入，转向利用场景中的重复结构或物理先验来创造几何约束。
 
-2.  **对感知系统鲁棒性与实用性的深刻关注：** 研究重点不再局限于干净环境下的性能提升，而是更多地考虑真实世界中的不理想因素。这具体表现为三类工作：一是**对抗性攻击**研究，发现硬件物理损伤（如镜头划痕）可作为新的被动攻击面，扰乱深度估计（`Scratched Lenses`），挑战了传统对攻击面的认知；二是**低成本与自动化**，利用设计阶段的建筑信息模型（BIM）替代昂贵的预先地图进行室内定位（`BIM-Loc`），或用纯单目视觉结合地面几何约束实现度量级导航（`VGP-Nav`），降低了部署门槛；三是**零样本与语义化**，探索用VLM生成的语义描述代替视觉特征进行目标重识别（`Zero-Shot Semantic Re-Identification`），追求更强的可解释性和鲁棒性。
+2.  **端到端与任务统一化：深度融合传统几何与学习范式**
+    多个工作展现了将传统几何算法（如SfM、光线投射、可微分优化）与深度学习特征提取、任务解码头（如全景分割）进行端到端融合的趋势。`StereoGeo` (2606.14619) 将基于学习的特征提取与可微分优化器结合，实现立体相机联合标定。`Pano3D` (2606.14307) 则明确地将底层的几何重建与高层的全景分割任务统一在一个前馈网络框架下，并证明任务间的相互促进。这反映了领域内试图打破“几何”与“语义”壁垒，构建更强健、更通用3D理解模型的努力。
 
-3.  **神经渲染进入“精细化”与“工程化”阶段：** 以3DGS和NeRF为代表的神经渲染技术，正从基础框架构建迈向对核心环节的精细优化和面向应用的有效组合。一方面，`REFINE`和`Beyond Spherical Harmonics`分别针对3DGS的**剪枝效率**和**外观建模**两大核心痛点，提出理论驱动的解析解与新型基函数；另一方面，`Leveraging NeRF-Rendered Images for 3DGS`利用NeRF生成高质量训练数据来“指导”3DGS训练，`MaterialClusterGS`则引入调色板概念解决材质分解中的欠约束问题。这表明领域正从“能否实现”转向“如何更高效率、更高质量、更易编辑地实现”。
+3.  **对3D视觉系统鲁棒性进行多层次审视：从算法到物理层面**
+    除了追求更好的性能，安全性研究成为新热点。`Scratched Lenses` (2606.14504) 跳出了传统对抗攻击（如patch或投影）的框架，揭示了由物理硬件损伤（镜头划痕）引入的、场景触发的安全漏洞。这标志着3D视觉的安全性研究已从纯“数字域”攻击扩展到“物理-光学-算法”的复合层面，促使研究者关注现实世界中不可忽视的物理退化对几何推理的影响。同时，`BIM-Loc` (2606.14237) 对“设计模型”与“真实环境”之间差异的感知，也体现了面向实际应用时的鲁棒性考量。
 
-4.  **自动驾驶感知中的“轻量级”与“先验驱动”求解器：** 在自动驾驶和机器人应用的几何估计问题上，多篇论文聚焦于设计高效的最小求解器（`Efficient Minimal Solvers`系列）。它们共同的核心策略是：通过创新的参数化方法，并充分利用IMU提供的**强先验信息**（如垂直方向、旋转轴方向）或车辆的运动约束（如平面运动），大幅减少对特征点数量的需求和计算复杂度。这不仅提升了实时性，也增强了对特征缺失场景的鲁棒性，代表了实际部署中的重要技术路线。
-
----
+4.  **神经场景表示中的高效表示与基础性研究回归**
+  `Beyond Spherical Harmonics` (2606.09794) 并非提出全新框架，而是回归到对基本数学模型（球面函数）的系统性评估与替换。针对神经辐射场中高频外观模型（如镜面反射）与计算/内存开销的经典矛盾，该工作通过实验驱动的方式提出更高效的基函数。这表明当NeRF等场景表示方法逐渐成熟后，学术界开始重新审视其底层组件，通过优化基础函数来获得量级级别的效率提升，而非仅仅依赖更深的网络或更复杂的架构。
 
 #### 技术路线观察
 
-- **几何基础模型（3D Reconstruction & Multi-view Geometry）**：这部分论文的技术路线呈现多元化。`StereoGeo`延续了“学习+可微分优化”的深度学习标定范式；`MooMIns`和`Pano3D`则代表了“重建与感知任务联合”的趋势，前者创新性地反向使用高斯溅射，后者则为前馈网络附加语义解码器。而多篇`Efficient Minimal Solvers`坚持了经典的“解析几何+鲁棒估计”路线，通过代数技巧和先验信息实现高效求解。
-
-- **神经场景表示与渲染（Neural Scene Representations & Rendering）**：技术路线正从“渲染质量”和“速度”的基本盘转向“可编辑性”与“效率”。在3DGS领域，`REFINE`追求剪枝效率，`MaterialClusterGS`追求材质编辑的一致性。在更广泛的外观模型上，`Beyond Spherical Harmonics`尝试用更高效的基函数替代经典方法。同时，不同表示方法之间的“混合”策略，如`Leveraging NeRF-Rendered Images for 3DGS`，成为一种实用的技术路线。
-
-- **具身/机器人/AR应用（Embodied / Robotics / AR Applications）**：技术路线强调**实用性**和**健壮性**。
-    - **导航与定位**：从依赖多传感器融合（LiDAR+相机）的趋势中，出现了向**单目视觉**（`VGP-Nav`）和**利用建筑设计模型**（`BIM-Loc`）的转移，追求低成本、高自动化的解决方案。
-    - **传感器与系统级安全**：`Scratched Lenses`从物理硬件漏洞出发，开创了一种新型的安全攻击面，这是对现代视觉系统鲁棒性的一种逆向思维挑战。
-    - **世界模型的构建**：`Prisma-World`代表了从单智能体视频生成向**多智能体、几何一致的未来帧预测**的跨越，这需要更复杂的数据集和联合生成机制。
-
----
+-   **几何基础模型**：今日论文中，**可微优化器** (StereoGeo)、**运动恢复结构（SfM）** (MooMIns)、**光线投射** (BIM-Loc) 等经典几何算法模型仍作为核心模块被集成。不同之处在于，这些几何模块现在被设计成可学习的“管道”或“层”，与神经网络深度耦合。
+-   **3D/4D 重建**：**高斯溅射 (Gaussian Splatting)** 的灵活运用是亮点。`MooMIns` 对其经典流程进行了反向推理，展示了Gaussian Splatting作为表示和渲染工具的模块化潜力。而 `Pano3D` 则代表了**前馈式（feedforward）Transformer重建网络**与语义理解的集成，是另一种主流路线。
+-   **神经场景表示与渲染**：主要关注点集中在**效率**上。`Beyond Spherical Harmonics` 不依赖于改进网络架构，而是通过引入新的、更高效的数学基函数（Normalized Anisotropic Spherical Gabor）来优化表示本身。这暗示了一个“返璞归真”的趋势：通过优化基础数学工具来提升表达能力和运行速度。
+-   **机器人/AR应用**：论文如 `BIM-Loc` 直接面向**实用化**和**鲁棒性**。该技术路线强调利用现有信息（如BIM设计图纸）来弥补传感器数据的不足，并在线感知模型与真实环境的偏差，这对于工业巡检、室内服务机器人等应用场景至关重要。
 
 #### 值得优先阅读的论文
 
-1.  **Pano3D**：**理由**：它成功地将3D重建与3D全景分割统一在一个框架中，解决了前馈重建网络缺乏语义理解的关键开放性问题，并通过实验证明了几何与语义学习可以互相促进。其方法通用性强，能适配多种骨干网络，对推动3D视觉的综合性发展具有里程碑式意义。
-2.  **REFINE**：**理由**：针对3DGS剪枝这一实际部署的核心痛点，提出了一个优雅且高效的理论解。通过解析推导重要性度量，避免了计算昂贵的渲染过程，实现了3000倍加速。对关注神经渲染压缩、高效表示及边缘部署的研究者而言，这是必读之作。
-3.  **BIM-Loc**：**理由**：该工作解决了机器人室内定位中一个非常现实的工程问题——如何在无法预先构建精确地图的情况下利用设计蓝图。其“差异感知”的在线更新机制，使得定位系统能适应环境变化，思路新颖且极具应用价值，对SLAM和机器人定位方向有重要启发。
-4.  **Path-Traced Inverse Rendering with Global Illumination in 3D Gaussian Fields**：**理由**：该工作直面了当前3DGS逆渲染方法中因管线不一致（光栅化 vs. 路径追踪）带来的伪影问题。通过设计的“路径空间等效交互模型”，首次在3DGS中实现了统一的、支持全局光照的路径追踪逆渲染，理论坚实，有望成为该领域的新标准。
-5.  **Beyond Spherical Harmonics**：**理由**：对于任何从事神经渲染或可微渲染的研究者来说，该工作挑战了球谐函数作为“万金油”的惯例。其系统性评估并引入新型球面函数，为建模视角依赖的复杂高频效果（如镜面反射）提供了更紧凑、更高效的新工具，可能引发外观表示方法的革新。
+1.  **Pano3D (2606.14307)** - **阅读优先级：高**
+    - **理由**：该文最具当前趋势代表性，完美融合了**几何重建**与**语义理解**（全景分割）两大任务，并在ScanNet等多个数据集上取得SOTA，具备很强的实用价值和启发意义。
 
----
+2.  **Beyond Spherical Harmonics (2606.09794)** - **阅读优先级：高**
+    - **理由**：直击神经渲染领域的核心计算瓶颈（高频表示与效率的权衡），提出了一种系统性的评估方法和改进方案（新基函数），报告了**5倍内存节省**，对希望优化现有NeRF或3D Gaussian模型的研究者极具参考价值。
+
+3.  **BIM-Loc (2606.14237)** - **阅读优先级：高**
+    - **理由**：技术架构清晰且创新（多命中射线投射、差异感知），并且直接面向机器人定位这一硬核应用，能启发如何将“不完美”（设计图纸）与“现实”（传感器数据）结合的研究思路。其模拟和真实实验的双重验证也增加了可信度。
+
+4.  **MooMIns (2606.14389)** - **阅读优先级：中**
+    - **理由**：提出了利用“隐式多视图”这一非常有启发性的思路，并且巧妙反转了Gaussian Splatting流程，概念层面创新性突出。阅读优先级低于前三篇是因为其应用场景相对局限（特定工业堆叠场景）。
 
 #### 可能的研究机会
 
-1.  **融合多视角一致性先验的世界模型**：`Prisma-World`展示了如何生成多视角一致的视频。未来的研究可以进一步探索如何将这种通过全局注意力机制实现的“几何一致性”与物理知识或因果推断结合，使生成的世界模型具有更好的泛化性和可解释性。
+1.  **“隐式多视图”的通用化**：`MooMIns` 的思路能否扩展到非工业场景？例如，在自动驾驶中，同一类别的目标（如行人、车辆）是否可以被视为提供隐式视图的“实例”？或者，能否通过合成数据的扩散模型，人为创造多实例去辅助单目重建？
+2.  **物理攻击防御**：`Scratched Lenses` 揭示了镜头物理损伤的威胁。直接的研究机会是设计**对抗或鲁棒的光学硬件设计**，或是开发**在线检测与消除此类光学伪影的算法**。这将是连接光学、物理和算法的交叉方向。
+3.  **统一框架下的双向促进**：`Pano3D` 证明了几何和语义在统一框架中的互利。下一个机会是**将这种范式推广到时间维度（4D）**，例如在动态场景重建中，如何让时域运动和语义分割任务相互促进。
+4.  **新型基函数与场景表示架构的结合**：`Beyond Spherical Harmonics` 提出的新基函数可以立即应用于当前各类场景表示（如3D Gaussian Splatting、Tri-planes等），有望在不显著增加模型复杂度的情况下提升渲染质量。将其与**极端的压缩技术**或**实时渲染管线**结合是很有价值的方向。
+5.  **消除设计-现实鸿沟的持续学习**：`BIM-Loc` 只是在线检测与BIM的差异。进一步的研究可以是**利用这些差异信息进行在线地图更新**，即让机器人从未被设计图中预期的环境变化中学习，实现真正的持续学习与地图自适应。
 
-2.  **物理损伤感知的鲁棒视觉系统**：`Scratched Lenses`揭示了硬件损伤是潜在的攻击面。反向思考，是否可以研发一种算法，能够**主动检测并补偿**视觉系统中由灰尘、划痕或光学畸变引起的结构化的分布外噪声，从而提升系统的整体鲁棒性和安全性？
+#### 风险和不确定性
 
-3.  **神经渲染与经典几何/估计器的深度结合**：从`MooMIns`和`Leveraging NeRF-Rendered Images for 3DGS`中可以看到神经渲染与经典SfM或基于图像的渲染结合的潜力。未来的研究可以探索如何利用3DGS或NeRF的连续/显式表示，为传统的视觉里程计、SLAM或3D重建问题提供更鲁棒的中间表征（如深度、法向、梯度），或用于生成高质量的伪标注数据来训练其他模型。
-
-4.  **基于语义的、可交互的3D资产创建与
+-   **实验规模和对比基线**：所有论文的结论均基于**摘要**。`StereoGeo` 和 `MooMIns` 声称效果优于现有方法，但优势大小、对比基线的具体配置和数据集规模需要在**全文**中确认。`Pano3D` 和 `BIM-Loc` 在多个数据集上有结果，但具体指标和显著性检验需全文验证。
+-   **物理攻击的可重复性与泛化性**：`Scratched Lenses` 的SLASH攻击在真实实验里需要多大的划痕、在多强的光源下才能成功？其攻击效果对不同模型（
 
 ### interests.md 指令分析
 
@@ -338,55 +341,7 @@ Recent advances in 3D feedforward reconstruction neural networks have achieved r
 
 ## Neural Scene Representations & Rendering
 
-### 2026-06
-
-#### 2026-06-08 - Beyond Spherical Harmonics: Rethinking Appearance Models for Radiance Reconstruction
-
-**Authors:** Ewa Miazga, Jorge Condor, Piotr Didyk
-**Links:** [abs](https://arxiv.org/abs/2606.09794) - [pdf](https://arxiv.org/pdf/2606.09794)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** None
-**Matched keywords:** scene reconstruction, radiance field, novel view synthesis, view synthesis, radiance
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Beyond Spherical Harmonics: Rethinking Appearance Models for Radiance Reconstruction
-- 作者：Ewa Miazga, Jorge Condor, Piotr Didyk
-- 出版日期：2026-06-08
-- 分类：Neural Scene Representations & Rendering
-- 链接：https://arxiv.org/abs/2606.09794
-
-### 一句话总结
-本文系统评估了多种球面函数在场景重建中的表现，并提出一种名为Normalized Anisotropic Spherical Gabor的新型球面函数，以更高效、更紧凑的方式建模高频视角依赖的外观效果。
-
-### 研究问题
-如何在辐射场重建中高效且紧凑地建模高频视角依赖的外观（如镜面反射、闪烁），同时避免传统球谐函数（SH）带来的高内存开销和计算成本。
-
-### 核心思路/方法
-1. 系统评估多种球面函数在场景重建中的表现，其中部分函数是首次被引入图形学和计算机视觉领域。
-2. 基于实验洞察，提出Normalized Anisotropic Spherical Gabor函数，该函数能在保持紧凑表示的同时，高效建模和学习高频外观现象。
-
-### 主要贡献
-1. 首次系统评估并引入多种新的球面函数用于场景重建。
-2. 提出一种新型球面函数（Normalized Anisotropic Spherical Gabor），能高效建模高频视角依赖效应。
-3. 相比现有方法，该函数在重建质量（如闪烁效果）上更高，同时在内存使用上高效最多五倍，且计算效率更高。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-高。理由：该工作直接针对神经辐射场/场景重建中的关键瓶颈（高频外观建模与内存/计算效率的权衡），且提出了新颖的函数形式并报告了显著的效率提升（五倍内存节省），对相关领域研究者有较强的参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-View-dependent appearance modeling remains a challenging problem in novel-view synthesis and reconstruction. Accurately representing complex angular effects often requires substantial memory and computational resources. For new learning-based methods, a common approach is to rely on SH. However, capturing high-frequency phenomena such as specular reflections demands high-order expansions, which increase memory usage and computational cost. Consequently, most methods employ low-order SH, which limits the ability to model complex view-dependent effects, resulting in overly smooth or diffuse representations. To address these limitations, we systematically evaluate a wide range of spherical functions in the context of scene reconstruction. Some of them are introduced to graphics and computer vision for the first time in this paper. Based on the insights from the experiment, we develop a novel spherical formulation, the Normalized Anisotropic Spherical Gabor function that enables efficient modeling and learning of high-frequency appearance effects while maintaining compact representation. Compared to existing approaches, our function achieves higher-quality reconstruction of view-dependent phenomena such as glints, while being up to five times more memory-efficient and more efficient to evaluate. We validate its performance in radiance-field reconstruction tasks.
-
-</details>
+No papers in the current README window.
 
 ## Embodied / Robotics / AR Applications
 
