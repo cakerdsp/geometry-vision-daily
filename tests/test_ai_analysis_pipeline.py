@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from pathlib import Path
 
 from scripts.analysis_io import ensure_state_shape
@@ -152,6 +153,7 @@ def test_readme_includes_daily_report_and_brief_analysis() -> None:
     readme = render_readme(
         [_paper()],
         config,
+        now=datetime(2026, 6, 4, tzinfo=timezone.utc),
         processed_state=processed,
         daily_report_markdown="# 每日总览\n\n来源：测试。",
     )
