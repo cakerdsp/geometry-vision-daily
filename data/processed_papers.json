@@ -883,11 +883,11 @@
     "2606.17030": {
       "brief": {
         "status": "success",
-        "input_hash": "8ce450e909789911d96bd34e7f61cd2b15b05db4394d4082f8f890d6165c5c54",
+        "input_hash": "a59b1bf6deff1d1e524643451f1a4550604356f1361a359ae593b290dec68846",
         "prompt_version": "brief-v2-no-related-methods",
-        "updated_at": "2026-06-17T16:40:14Z",
+        "updated_at": "2026-06-18T16:33:15Z",
         "path": "summaries/brief/2606.17030.md",
-        "markdown": "### Metadata\n- 标题：Qwen-RobotWorld Technical Report: Unifying Embodied World Modeling through Language-Conditioned Video Generation\n- 作者：Jie Zhang, Xiaoyue Chen, Anzhe Chen, Deqing Li 等\n- 出版日期：2026-06-15（arXiv发布）\n- 分类：Embodied / Robotics / AR Applications\n- 链接：arxiv.org/abs/2606.17030\n\n### 一句话总结\n本文提出Qwen-RobotWorld，一个以自然语言为统一接口的语言条件视频世界模型，通过视觉轨迹生成统一涵盖机器人操作、自动驾驶、室内导航和人机迁移等多种具身场景。\n\n### 研究问题\n如何构建一个统一的具身世界模型，使其能够以自然语言作为动作接口，准确预测多种具身任务（如机器人操作、自动驾驶等）的未来视觉轨迹，从而支持策略训练、虚拟评估和下游控制。\n\n### 核心思路/方法\n- **双流MMDiT与MLLM动作编码**：采用60层双流扩散Transformer架构，将冻结的Qwen2.5-VL语义与视频-VAE潜在特征通过逐层联合注意力耦合。\n- **具身世界知识（EWK）**：构建包含860万视频-文本对（超2亿帧）的数据集，覆盖20余种具身形态和500余种动作类别，并配以动作-语言映射。\n- **通用+专家渐进式课程训练**：两阶段训练策略，先学习通用视觉先验，再注入具身专业化知识，共享语言接口。\n\n### 主要贡献\n- 提出统一、语言条件化的视频世界模型Qwen-RobotWorld，在多个具身基准上取得最优或竞争力强的结果（如EWMBench、DreamGen Bench排名第一；WorldModelBench、PBench超越所有开源模型）。\n- 展示了三种有前景的应用：合成数据生成以增强策略训练、可扩展虚拟环境用于策略评估、语言指导的规划信号用于下游机器人控制。\n- 在RoboTwin-IF基准上的零样本分析支持强泛化能力和多视角一致性。\n\n### 局限性\n摘要未提供足够信息（如模型规模、计算资源、失败案例分析、对特定场景的鲁棒性等）。\n\n### 阅读优先级\n**高**  \n理由：该工作提出大规模、统一的世界模型，在多个具身基准上取得领先结果，且应用方向明晰（数据增强、虚拟评估、控制信号），对具身AI和机器人领域研究者具有直接参考价值。摘要未提及严重缺陷，整体方法论清晰。"
+        "markdown": "### Metadata\n- 标题：Qwen-RobotWorld Technical Report: Unifying Embodied World Modeling through Language-Conditioned Video Generation\n- 作者：Jie Zhang, Xiaoyue Chen, 等（共37位作者）\n- 出版日期：2026-06-15\n- 分类：具身智能/机器人/增强现实应用\n- 链接：摘要: https://arxiv.org/abs/2606.17030 ；PDF: https://arxiv.org/pdf/2606.17030\n\n### 一句话总结\n本文提出Qwen-RobotWorld，一个以自然语言为统一接口的语言条件视频世界模型，用于预测多种具身任务（如机器人操作、自动驾驶等）的未来视觉轨迹。\n\n### 研究问题\n如何构建一个统一的、语言条件驱动的具身世界模型，使其能够在多种具身场景（机器人操作、自动驾驶、室内导航、人机转移）中生成物理上合理的未来视觉预测，并支持策略训练、策略评估和下游控制等应用。\n\n### 核心思路/方法\n论文提出三部分设计：\n1. **双流MMDiT与多模态大语言模型动作编码**：使用60层双流扩散Transformer，通过逐层联合注意力机制融合Qwen2.5-VL（冻结）的语义信息和视频-VAE的潜在表示。\n2. **具身世界知识库（Embodied World Knowledge, EWK）**：包含860万视频-文本对（超过2亿帧）的大规模语料库，覆盖20多种具身形态和500多个动作类别，并具有动作-语言映射。\n3. **通用+专家渐进课程（General+Expert Progressive Curriculum）**：两阶段训练策略，先学习通用视觉先验，再通过共享语言接口注入具身专业知识。\n\n### 主要贡献\n- 提出了统一的语言条件视频世界模型，在多个具身任务中表现优异。\n- 构建了大规模具身世界知识库（EWK），支持多形态多动作。\n- 在多个基准上取得领先结果：EWMBench和DreamGen Bench排名第一，WorldModelBench和PBench上优于所有开源模型，RoboTwin-IF上的零样本分析也展示了强大的泛化能力和多视角一致性。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**\n理由：该工作提出了一个统一的具身世界模型框架，在多个重要基准上取得了SOTA结果，且包含大规模数据构建和渐进训练策略，对具身智能、视频生成和世界模型方向的学者有较高参考价值。"
       }
     },
     "2606.16993": {
@@ -1259,6 +1259,166 @@
         "path": "summaries/brief/2606.17212.md",
         "markdown": "### Metadata\n- 标题：Renderable Partial Representations for Dynamic Gaussian Splatting under Incomplete Delivery\n- 作者：Faruk Alpay, Levent Sarioglu, Yaser Hadri\n- 出版日期：2026-06-15\n- 分类：动态/4D重建；神经场景表示与渲染\n- 链接：摘要: https://arxiv.org/abs/2606.17212, PDF: https://arxiv.org/pdf/2606.17212\n\n### 一句话总结\n本文提出一种面向动态高斯泼溅（Dynamic Gaussian Splatting）的渲染可用的部分表示方法，通过优化图像空间中的退化度，使不完整传输状态下的场景仍可直接渲染，并以反事实效用层指导自适应调度。\n\n### 研究问题\n在动态高斯压缩中，交互式渲染常面临部分表示：部分时空区域存在、部分缺失，且后期精炼无法影响已显示帧。本文研究如何在网络传输不完整时，使高斯表示状态仍然直接可渲染，并优化其图像空间退化。\n\n### 核心思路/方法\n1. 将高斯图元组织成可独立寻址的时空聚类，包含一个基础层和三个精炼层。\n2. 训练时采样部分依赖图，在一个GPU批次中渲染多个反事实状态。\n3. 优化目标包括：期望失真、尾部失真、时间不一致性、码率和前缀回归。\n4. 引入反事实效用层，测量每个完成组在不同接收方上下文中的边际渲染贡献。\n5. 具体传输实现基于MTU限制的熵编码块、截止时间感知调度和接收方依赖闭包。\n\n### 主要贡献\n1. 提出一种动态高斯表示，其不完整交付状态仍可渲染，且退化在图像空间优化。\n2. 建立反事实效用层，定量评估各完成组的渲染贡献，超越了标称精炼层顺序。\n3. 实验证明：在多个动态场景（D-NeRF、HyperNeRF）中，精细精炼层的边际效用为负；基于效用的顺序可在匹配字节预算下消除PSNR回归（broom2）或提升PSNR达3.03 dB（chicken）。\n\n### 局限性\n摘要未提供足够信息关于方法的计算开销、实时性能、对极端缺失率的鲁棒性或与其他动态高斯压缩方法的系统比较。\n\n### 阅读优先级：高\n**理由**：该工作直接针对交互式渲染中动态高斯表示的传输与渲染退化问题，提出反事实效用这一新颖思路，实验验证了标称层顺序的不足并带来显著性能提升（如3.03 dB）。方法紧密结合网络交付的分布视角，为动态场景的实时渲染优化提供重要方向。"
       }
+    },
+    "2606.19316": {
+      "brief": {
+        "status": "success",
+        "input_hash": "404f4ca893b4b40df9141f79d5cf9e10d016f23269376790b02a8a7563dc854b",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:31:30Z",
+        "path": "summaries/brief/2606.19316.md",
+        "markdown": "### Metadata\n- 标题：NeuMesh++: Towards Versatile and Efficient Volumetric Editing with Disentangled Neural Mesh-based Implicit Field\n- 作者：Chong Bao, Yuan Li, Bangbang Yang, Yujun Shen, Hujun Bao, Zhaopeng Cui, Yinda Zhang, Guofeng Zhang\n- 出版日期：2026-06-17T17:39:21Z\n- 分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2606.19316\n\n### 一句话总结\n本文提出一种基于网格顶点的解耦神经隐式场表示（NeuMesh++），通过在网格顶点上编码几何、纹理和语义信息，实现多种高效的体积编辑功能。\n\n### 研究问题\n现有神经渲染方法在编辑方面功能有限（如仅支持刚性变换或类别特定编辑），缺乏支持几何、纹理语义等综合且高效编辑的统一表示。\n\n### 核心思路/方法\n1. **表示设计**：在网格顶点上解耦编码神经辐射场的几何、纹理和语义代码。\n2. **关键技术**：\n   - 局部空间参数化：提升渲染质量和训练稳定性。\n   - 顶点可学习修改颜色：改善纹理编辑的真实感。\n   - 空间感知优化策略：实现精确纹理编辑。\n   - 语义辅助区域选择：简化隐式场编辑所需的人工标注。\n3. **编辑功能**：支持网格引导的几何编辑、指定纹理编辑（纹理交换、填充和涂绘）以及语义引导的编辑。\n\n### 主要贡献\n1. 提出一种新的基于网格的表示，将几何、纹理和语义解耦编码在网格顶点上，支持多种编辑操作。\n2. 开发了多种专用技术（局部空间参数化、可学习修改颜色、空间感知优化、语义辅助区域选择）以增强编辑效果与效率。\n3. 在真实与合成数据集上展示了该方法在表示质量和编辑能力上的优越性。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**\n理由：该方法面向神经隐式场编辑这一重要应用场景，提出了一种解耦表示并实现了多种高效编辑功能，且附带多技术改进。对于关注3D场景编辑、神经渲染应用的读者有较高参考价值。"
+      }
+    },
+    "2606.19314": {
+      "brief": {
+        "status": "success",
+        "input_hash": "8c79fd84e74c3f702dede7a38ae69d75af12927359e2b76dfee38f96c332d030",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:31:35Z",
+        "path": "summaries/brief/2606.19314.md",
+        "markdown": "### Metadata\n- 标题：Modeling Branches for Active Manipulation using Iterative Parameter Estimation\n- 作者：Madhav Rijal, Rashik Shrestha, Trevor Smith, Yu Gu\n- 出版日期：2026-06-17\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2606.19314\n\n### 一句话总结\n本文提出一种通过迭代估计材料参数来建模植物分支的方法，以支持精细的分支操作；实验表明，该方法在路径长度略有增加的情况下，显著减少了形变能量。\n\n### 研究问题\n如何对形态各异的植物分支进行精确建模，以支持农业机器人中精细、低损伤的分支操作（如重定位、稳定、清除视觉障碍）。\n\n### 核心思路/方法\n1. **分支建模**：从点云数据构建四面体分支模型，并利用有限元方法模拟其行为。\n2. **参数估计**：基于真实观测的形变数据，通过迭代估计分支的材料参数。\n3. **运动规划**：结合形变感知的运动规划器，计算最优路径以移动并稳定分支，使分支处于另一机器人的视野内。\n\n### 主要贡献\n- 提出了一种结合点云建模、有限元仿真和迭代参数估计的植物分支建模方法。\n- 通过30次不同几何和材料属性的分支试验验证：该方法平均减少形变能量35.69%，同时平均增加路径长度8.10%。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**中**。理由：该方法针对农业机器人中精细分支操作这一具体场景，结合了建模、仿真与规划，结果量化且有效。但该方法仅基于摘要无法判断其泛化能力或实现复杂度，对机器人操作领域研究者有一定参考价值；若对植物建模或软体操作不感兴趣，则优先级可降低。"
+      }
+    },
+    "2606.19253": {
+      "brief": {
+        "status": "success",
+        "input_hash": "fe2be9abb9131c68b8826e82ca55f923539303c2635a202e82d59e44a266a1f7",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:31:43Z",
+        "path": "summaries/brief/2606.19253.md",
+        "markdown": "### Metadata\n- 标题：OneCanvas: 3D Scene Understanding via Panoramic Reprojection\n- 作者：Bartłomiej Baranowski, Dave Zhenyu Chen, Matthias Nießner\n- 出版日期：2026-06-17\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2606.19253\n\n### 一句话总结\nOneCanvas 提出一种全景画布表示方法，将所有视角的图像块特征投影到单一等距柱面画布上，使预训练视觉语言模型无需复杂几何编码器即可直接理解3D场景，并在多个基准上取得最优结果。\n\n### 研究问题\n如何在不依赖复杂几何编码器和大量训练预算的情况下，让视觉语言模型（VLM）具备对3D场景的空间推理能力，同时支持从特定视角进行情境化推理（如机器人和具身AI所需）。\n\n### 核心思路/方法\n- **全景画布投影**：将每个视角的图像块特征，利用其深度和相机姿态反投影到3D世界坐标，再根据画布原点观察该点的连续经纬度放置到等距柱面画布上，不进行光栅化或跨视图特征聚合。\n- **3D位置嵌入**：在每个图像块特征中加入其度量坐标的3D位置嵌入，以恢复将世界坐标压缩到角度坐标时丢失的深度信息。\n- **无需模型修改**：所有帧的块特征共享同一个空间坐标系，无需对VLM骨干网络进行融合或重大架构修改，预训练VLM直接将其作为普通图像处理。\n- **空间预训练课程**：在空画布上从真实图像中提取物体块特征，程序化地放置在选定的3D世界位置，生成覆盖多种空间推理任务的即时监督，并控制答案分布以减少空间推理捷径。\n\n### 主要贡献\n1. 提出一种无需复杂几何编码器或大量训练修改的3D场景表示方法，使VLM能像处理普通图像一样理解3D场景。\n2. 引入空间预训练课程，通过程序化生成多样化的空间推理训练样本，减少推理捷径。\n3. 在SQA3D、VSI-Bench和SPBench上达到最先进精度，且训练计算量比最强竞争对手低一个数量级。\n\n### 局限性\n摘要未提供足够信息（如方法在动态场景或复杂光照下的表现、对深度和姿态精度的依赖程度、画布分辨率与场景规模的可扩展性等）。\n\n### 阅读优先级\n**高**\n理由：该方法在保持较高空间推理精度的同时显著降低了训练计算成本，且直接兼容现有预训练VLM，对具身智能、机器人等领域的3D场景理解具有重要实用价值。摘要中提到的创新性全景画布表示和预训练课程设计新颖，实验结果（SOTA）具有说服力。"
+      }
+    },
+    "2606.19176": {
+      "brief": {
+        "status": "success",
+        "input_hash": "a98f29ea3058114a5d5324933e759526b961c2ff4de2718452d9295c8fe35541",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:31:50Z",
+        "path": "summaries/brief/2606.19176.md",
+        "markdown": "### Metadata\n- 标题：Hardware- and Vision-in-the-Loop Validation of Deep Monocular Pose Estimation for Autonomous Maritime UAV Flight\n- 作者：Maneesha Wickramasuriya, Beomyeol Yu, Jaden Shin, Mason Huslig, Taeyoung Lee, Murray Snyder\n- 出版日期：2026-06-17T15:18:11Z\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2606.19176\n\n### 一句话总结\n本文提出一个硬件与视觉在环的验证框架，将逼真海事渲染视图输入深度单目位姿估计器，并结合延迟卡尔曼滤波与IMU数据融合，实现了面向自主海航UAV飞行的闭环室内测试。\n\n### 研究问题\n在船舶甲板上执行自主无人机起降时，如何规避高成本、受天气影响且风险大的实海验证，通过硬件在环手段可靠地测试基于视觉的相对位姿估计及闭环控制性能。\n\n### 核心思路/方法\n1. **硬件与视觉在环框架**：搭建全自主室内飞行环境，同时生成逼真（photorealistic）海事背景的渲染视图。\n2. **深度单目位姿估计**：在无人机上运行基于Transformer架构的单目位姿估计器，处理渲染视图。\n3. **延迟融合与控制**：利用延迟卡尔曼滤波器将滞后的视觉测量与高频IMU数据融合，为几何控制提供一致的状态估计。\n4. **实验验证**：开展自主起飞、轨迹跟踪与着陆实验，展示稳定闭环飞行。\n\n### 主要贡献\n- 提出了一个兼顾硬件与视觉在环的验证框架，能捕捉纯仿真中缺失的感知延迟、异步更新和计算约束等嵌入式效应。\n- 为发展海事UAV自主性提供了安全且硬件真实的中间测试阶段，降低了实际舰载部署前的验证风险。\n\n### 局限性\n摘要未提供关于方法在非海事场景或更复杂气象条件下的泛化能力、估计器精度量化、以及具体计算资源开销等信息。\n\n### 阅读优先级\n**中**。  \n理由：该方法面向特定场景（海事UAV）的软硬件联合验证，创新在于验证框架而非核心算法本身。若研究领域涉及无人机自主着陆、硬件在环仿真或视觉-惯性融合，则有参考价值；否则优先级可降低。"
+      }
+    },
+    "2606.19156": {
+      "brief": {
+        "status": "success",
+        "input_hash": "78428d1caad3bc684d6a46856eaccfbf722b934e719a1f9bbf73d8ddae4b72de",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:31:57Z",
+        "path": "summaries/brief/2606.19156.md",
+        "markdown": "### Metadata\n- 标题：Hand-4DGS: Feed-Forward 3D Gaussian Splatting for 4D Hand Reconstruction from Egocentric Videos\n- 作者：Jeongmin Bae, Seoha Kim, Marc Pollefeys, Mahdi Rad, Youngjung Uh, Taein Kwon\n- 出版日期：2026-06-17\n- 分类：Dynamic / 4D Reconstruction, Neural Scene Representations & Rendering\n- 链接：摘要: https://arxiv.org/abs/2606.19156, PDF: https://arxiv.org/pdf/2606.19156\n\n### 一句话总结\n本文提出Hand-4DGS，首个从第一人称视频中实现前馈式动态4D手部重建的框架，通过网格引导表示和时间卷积，在无需3D标注的情况下达到约60 FPS的推理速度与强泛化能力。\n\n### 研究问题\n从第一人称视频中重建动态4D手部，现有方法面临头部快速运动、手部剧烈动态、严重遮挡以及单视角观测固有的歧义性等挑战。\n\n### 核心思路/方法\n1. 采用前馈式（feed-forward）3D高斯泼溅（Gaussian Splatting）框架，直接从输入视频重建动态4D手部。\n2. 引入网格引导（mesh-guided）表示来提供结构先验，增强几何准确性。\n3. 使用时间卷积（temporal convolutions）建模手部的动态运动，处理时序变化。\n4. 利用高斯泼溅的可微渲染实现2D图像监督，从而避免依赖昂贵的3D手部姿态真值标注。\n\n### 主要贡献\n1. 首个前馈式动态4D手部重建框架，支持从第一人称视频中快速（~60 FPS）且泛化性强的推理。\n2. 提出网格引导表示与时间卷积相结合的方法，有效应对遮挡和动态歧义。\n3. 在H2O和ARCTIC两个挑战性数据集上取得优于基线的显著改进。\n\n### 局限性\n摘要未提供足够信息来明确指出方法的具体局限性。\n\n### 阅读优先级\n高  \n理由：该方法解决了第一人称视频中动态手部重建这一关键难题，同时实现了实时推理速度和良好泛化性，且无需3D标注，对AR/VR和AI眼镜等应用具有重要参考价值。论文发表在知名团队工作（含Marc Pollefeys）上，方法新颖且实效性经过数据集验证。"
+      }
+    },
+    "2606.19067": {
+      "brief": {
+        "status": "success",
+        "input_hash": "2c485f58411f2205ee712dbe812184f09de24428cf339e8a3f76f0efb6fcfcaf",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:32:04Z",
+        "path": "summaries/brief/2606.19067.md",
+        "markdown": "### Metadata\n- 标题：Sensor Configuration Matters: A Systematic Evaluation of Multimodal SLAM on Quadruped Robots\n- 作者：Roberto Corlito, Fabian Schmidt, Nils Seibert, Markus Enzweiler, Abhinav Valada, Arne Roennau\n- 出版日期：2026-06-17\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2606.19067\n\n### 一句话总结\n本文系统评估了不同硬件传感器配置（摄像头类型、快门技术、惯性传感器等级）对四足机器人多模态SLAM性能的影响，发现立体配置优于单目和RGB-D，全局快门优于卷帘快门，且标准惯性集成在激烈足式运动下反而可能降低视觉SLAM性能。\n\n### 研究问题\n四足机器人在激烈运动（如足部冲击震动、高频机械振动、快速角旋转）带来的独特传感器挑战下，硬件级别的传感器配置如何影响视觉、视觉-惯性及LiDAR-视觉-惯性SLAM方法的定位精度、算法鲁棒性和计算资源利用？\n\n### 核心思路/方法\n利用ANYmal D四足机器人上录制的GrandTour数据集，对不同状态最先进的视觉、视觉-惯性和LiDAR-视觉-惯性SLAM方法进行系统评估。通过隔离和量化摄像头模态（单目、立体、RGB-D）、快门技术（全局快门、卷帘快门）以及惯性传感器等级的影响，分析它们在定位精度、算法鲁棒性和计算资源利用方面的权衡。\n\n### 主要贡献\n1. 首次针对四足机器人激进运动动力学引发的传感器挑战，系统评估硬件传感器配置对多模态SLAM性能的影响。\n2. 实验揭示：立体配置显著优于单目和RGB-D；全局快门相机显著减少运动引发的跟踪失败；标准的惯性集成在激烈足式运动下可能降低基于视觉系统的性能。\n3. 为在敏捷四足系统上设计定制传感器负载以实现可靠感知，提供了具体的设计指南。\n\n### 局限性\n摘要未提供足够信息。摘要未提及实验范围之外的局限，例如是否在多种地形上验证、是否考虑不同四足机器人型号、是否存在计算资源或传感器成本方面的约束等。\n\n### 阅读优先级\n高。理由：该研究针对四足机器人领域的SLAM关键实际问题——传感器硬件配置对性能的影响进行系统评估，结果具有直接工程应用价值，可为实际机器人系统设计提供具体指导。"
+      }
+    },
+    "2606.19019": {
+      "brief": {
+        "status": "success",
+        "input_hash": "64fb51136c5793db912d17e48057a235c178e9f7ef076c2f8eaa998af3aad999",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:32:10Z",
+        "path": "summaries/brief/2606.19019.md",
+        "markdown": "### Metadata\n- 标题：FlowObject: Flow Steering for Bridging Generative Priors and Reconstruction Fidelity\n- 作者：Yuchen Rao, Xuqian Ren, Yinyu Nie, Sayan Deb Sarkar, Biao Zhang, Vincent Lepetit, Friedrich Fraundorfer\n- 出版日期：2026-06-17T12:42:09Z\n- 分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2606.19019\n\n### 一句话总结\nFlowObject提出了一种无训练引导框架，通过双空间引导策略和3D高斯泼溅（3DGS）优化，融合流匹配模型的生成先验与观测一致性，实现了从稀疏视角图像到完整3D对象的高质量重建。\n\n### 研究问题\n如何从少量随意拍摄的图像中恢复完整的3D物体表示，同时平衡生成先验（用于补全未见区域）与重建保真度（保持与真实观测一致）之间的矛盾。\n\n### 核心思路/方法\n1. 将稀疏视角3D重建重新定义为无训练的引导逆问题，通过双空间引导策略控制流匹配模型的常微分方程（ODE）轨迹。\n2. 利用生成先验补全被遮挡或未观测的区域，同时强制输出与真实观测严格一致。\n3. 引入3DGS精炼阶段，减少生成输出的“合成感”，弥合生成结果与逼真重建之间的差距。\n\n### 主要贡献\n- 提出首个将稀疏视角重建作为训练-free引导逆问题的框架，有效融合生成先验与观测一致性。\n- 引入双空间引导策略，在几何完整性和外观保真度之间取得平衡。\n- 在合成和真实数据集上，显著优于现有生成模型和优化方法，尤其在严重遮挡场景下表现更优。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n高。理由：针对稀疏视角3D重建的核心难题（生成先验与观测一致性冲突）提出了新颖的引导框架，方法简洁且性能显著优于现有方法，对计算机视觉领域的3D表征与渲染方向具有重要参考价值。"
+      }
+    },
+    "2606.18960": {
+      "brief": {
+        "status": "success",
+        "input_hash": "cd6dc1fdf4089de540080322ae81512d8a0a56285ef7fadb40eeaea9bf6aebfb",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:32:17Z",
+        "path": "summaries/brief/2606.18960.md",
+        "markdown": "### Metadata\n- 标题：Mem-World: Memory-Augmented Action-Conditioned World Models for Persistent Robot Manipulation\n- 作者：Zirui Zheng, Jiaqian Yu, Xiongfeng Peng, jun shi, Mingyi Li, Chao Zhang, Weiming Li, Dong Wang, Huchuan Lu, Xu Jia\n- 出版日期：2026-06-17\n- 分类：Embodied / Robotics / AR Applications\n- 链接：摘要: https://arxiv.org/abs/2606.18960, PDF: https://arxiv.org/pdf/2606.18960\n\n### 一句话总结\n提出记忆增强的世界模型 Mem-World，通过4D腕部视角表面元索引记忆（W-VMem）解决机器人持续操作任务中场景细节遗忘和幻觉问题，提升长时程预测与策略评估性能。\n\n### 研究问题\n在持续操作世界中模型的预测中，末端执行器频繁遮挡和腕部相机快速运动导致当前观测不足以预测未来视角，模型容易遗忘或幻觉先前帧的场景细节，而现有记忆检索策略难以在动态操作场景中识别信息丰富的历史帧。\n\n### 核心思路/方法\n提出 Mem-World，核心组件为 W-VMem——一种以腕部视角为中心的4D表面元索引记忆结构，将历史观测锚定到随时间演变的表面元素上。通过显式建模场景元素被观测的时间与空间位置，基于未来动作条件进行几何感知的历史帧检索。生成时，利用表面元渲染与评分策略选择信息丰富且不冗余的历史帧作为预测上下文。\n\n### 主要贡献\n1. 提出 Mem-World，一种记忆增强的多视图动作条件世界模型，实现复杂操作场景的持续预测。\n2. 提出 W-VMem，一种4D腕部视角表面元索引记忆，支持几何感知的历史帧检索。\n3. 实验表明：相比 Ctrl-World，Mem-World 在长短时程任务中生成更可靠的持续 rollout，策略评估的 Pearson 相关系数提升14.5%；通过合成数据增强，长时程任务成功率从58%提升至72%。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**。理由：该工作针对机器人操作中世界模型预测的持续性问题（遮挡与运动导致的遗忘/幻觉），提出创新的4D记忆结构，在策略评估和策略改进任务上均有显著量化提升（相关系数增长14.5%，成功率提升14个百分点），对具身智能领域有较大借鉴价值。"
+      }
+    },
+    "2606.18959": {
+      "brief": {
+        "status": "success",
+        "input_hash": "901248c86c5652df9727600a73ea3802edfb6741606ddc12b6eb149fab751eb7",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:32:23Z",
+        "path": "summaries/brief/2606.18959.md",
+        "markdown": "### Metadata\n- 标题：TactSpace: Learning a Physics-enriched Shared Latent Space for Tactile Sim-to-Real Transfer\n- 作者：Arunim Joarder, Arjun Bhardwaj, René Zurbrügg, Mayank Mittal, Florin Püntener, Sira Bielefeldt, Cosmin Roman, Vaishakh Patil, Marco Hutter\n- 出版日期：2026-06-17\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2606.18959\n\n### 一句话总结\n本文提出一个多模态表示学习框架，通过对齐模拟与真实触觉信号（如模拟穿透深度和真实电容）到一个共享潜在空间，实现零样本触觉模拟到真实迁移，并显著降低力预测和形状重建误差。\n\n### 研究问题\n当前模拟器无法精确建模触觉传感器的复杂形变和传导机制，阻碍了机器人学习中的触觉模拟到真实迁移。\n\n### 核心思路/方法\n构建一个多模态表示学习框架，使用模态特定编码器将异质触觉观测（如模拟穿透深度、真实电容）投影到一个共享潜在空间。训练时结合自重建、交叉重建目标和对比对齐，鼓励生成模态不变且信息丰富的表示。\n\n### 主要贡献\n1. 提出一种无需精确原始信号模拟的触觉模拟到真实迁移方法，仅需对齐共享潜在空间。\n2. 在压头形状识别、力预测和几何重建任务上实现了零样本模拟到真实迁移。\n3. 相比基线，力预测误差降低16.7%，形状重建误差降低45.8%。\n4. 发布一个基于Warp的、适用于Isaac Lab的惩罚性触觉模拟模型，支持可扩展触觉数据生成。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n高。理由：该论文提出了一种解决触觉模拟到真实迁移瓶颈的新框架，具有明确的跨模态对齐策略和显著的性能提升（如力预测和形状重建误差降低），且附带开源模拟工具，对机器人操控和触觉学习领域有实际应用价值。"
+      }
+    },
+    "2606.18826": {
+      "brief": {
+        "status": "success",
+        "input_hash": "600e469d934153fb44c91fd9c2fe49ed8f2c15c52ce698bedbbbeb24c6040825",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:32:29Z",
+        "path": "summaries/brief/2606.18826.md",
+        "markdown": "### Metadata\n- 标题：EDoF-NeRF: extended depth-of-field neural radiance fields using a coded aperture camera\n- 作者：Yoshiyuki Shirasaki, Ryoichi Horisaki\n- 出版日期：2026-06-17\n- 分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2606.18826\n\n### 一句话总结\n本文提出EDoF-NeRF方法，通过在相机瞳孔处放置编码光圈来扩展景深，从而构建高保真的神经辐射场。\n\n### 研究问题\n传统相机在采集NeRF所需的多视角图像时，存在景深与光通量之间的固有矛盾，导致NeRF渲染的视图在景深外区域保真度下降。\n\n### 核心思路/方法\n1. 在相机瞳孔处引入编码光圈，以在散焦条件下保留空间频率成分。\n2. 设计一种将编码光圈纳入NeRF的相机模型，使编码图像可直接输入网络。\n3. 通过该模型，网络能够从编码图像中学习并生成具有扩展景深的新视图。\n\n### 主要贡献\n1. 提出EDoF-NeRF，首次将编码光圈与NeRF结合以扩展景深。\n2. 开发了兼容编码图像的相机模型，直接处理编码图像输入。\n3. 通过仿真和实验验证，EDoF-NeRF在扩展景深的新视图渲染上优于传统光圈相机。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n中。\n理由：该方法从硬件（编码光圈）和模型（相机模型）两方面优化NeRF的景深问题，具有一定新颖性；但摘要未提供具体性能指标或典型场景对比，需要查看全文评估实际效果与复杂度。"
+      }
+    },
+    "2606.18787": {
+      "brief": {
+        "status": "success",
+        "input_hash": "1cdf31a942a64acb24bc5cd3dcb48d09012b16f033fd7fa0fda8a282c17cd580",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:32:34Z",
+        "path": "summaries/brief/2606.18787.md",
+        "markdown": "### Metadata\n- 标题：Learned Radius Estimation for UDF-Based Point Cloud Reconstruction\n- 作者：Eito Ogawa, Hiroshi Watanabe\n- 出版日期：2026-06-17\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2606.18787\n\n### 一句话总结\n提出一个基于学习的逐查询点支持半径选择器，用于提升局部补片无符号距离场（UDF）方法在点云重建中的精度。\n\n### 研究问题\n局部补片UDF方法依赖“支持半径”来定义每个点的局部邻域范围，传统上该半径为固定值或通过一维曲率启发式选取，无法适应局部几何变化，导致重建精度受限。\n\n### 核心思路/方法\n提出一个可学习的逐查询点半径选择器，该选择器预测连续的支持半径，并作为插件接入冻结的LoSF-UDF骨干网络。训练时，通过抛物线插值缓存UDF误差曲线，获取离网格的目标半径作为监督信号。\n\n### 主要贡献\n- 首次针对UDF点云重建提出可学习的支持半径估计方法。\n- 设计了一个可插拔的半径选择器，无需重新训练骨干网络。\n- 提出基于抛物线插值的离网格监督方式，从缓存UDF误差曲线获得目标半径。\n- 实验证明该方法在提高精细尺度重建精度方面的有效性。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n中  \n理由：该工作聚焦于UDF重建中的具体参数（支持半径）优化，属于技术改进型研究，对从事点云重建或隐式表面学习的读者有一定参考价值；但摘要未给出定量实验对比或消融结果，需进一步阅读全文评估实际增益。"
+      }
+    },
+    "2606.18646": {
+      "brief": {
+        "status": "success",
+        "input_hash": "5c78b3619304861d73a5960341c8a831b7c6103d2a2c558b265c6f1a60a827c2",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:32:40Z",
+        "path": "summaries/brief/2606.18646.md",
+        "markdown": "### Metadata\n- 标题：A Scalable Embodied Intelligence Platform for Seamless Real-to-Sim-to-Real Transfer of Household Mobile Manipulation Tasks  \n- 作者：Kui Yang, Xianlei Long, Haoxuan Li, Yan Ding, Chao Chen  \n- 出版日期：2026-06-17  \n- 分类：具身智能 / 机器人学 / AR应用  \n- 链接：https://arxiv.org/abs/2606.18646  \n\n### 一句话总结\n本文提出了BestMan，一个可扩展的“真实-仿真-真实”具身智能平台，通过自动化场景生成、仿真引导的任务形式化与技能学习架构、以及硬件无关的统一中间件，解决家庭移动操作任务在真实与仿真环境之间无缝迁移的关键挑战。\n\n### 研究问题\n如何在非结构化的家庭环境中，实现真实到仿真再到真实的低成本、高保真、可兼容的无缝迁移，从而高效开发、集成和部署移动操作策略。\n\n### 核心思路/方法\n1. **自动化场景生成模块**：从真实观测自动重建高保真仿真场景。  \n2. **仿真引导的任务形式化与技能学习架构**：支持在仿真中灵活集成和规模化评估混合技能策略。  \n3. **硬件无关的统一中间件**：确保跨异构移动操作机器人的兼容性，实现仿真到真实的无缝迁移。\n\n### 主要贡献\n- 提出BestMan平台，首次在真实-仿真-真实全周期中实现可扩展的无缝迁移。  \n- 设计自动化场景生成模块，降低仿真场景重建成本。  \n- 提出仿真引导的任务形式化与技能学习架构，支持混合策略的灵活集成与大规模评估。  \n- 开发硬件无关的统一中间件，提升真实部署的可扩展性与兼容性。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**  \n理由：该研究直面具身智能领域“真实-仿真-真实”迁移的核心瓶颈，提出的三大模块（自动化场景生成、仿真引导学习、硬件无关中间件）具有明确的工程创新和实用价值，且实验证明其在标准基准测试中表现优异。适合关注具身智能、机器人仿真迁移及家庭操作任务的读者优先阅读。"
+      }
+    },
+    "2606.18623": {
+      "brief": {
+        "status": "success",
+        "input_hash": "653167d330fca4b8f5011a83be3a37d92b2732e697f1b841498d1acd6eab4577",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:32:48Z",
+        "path": "summaries/brief/2606.18623.md",
+        "markdown": "### Metadata\n- 标题：Intrinsic 4D Gaussian Segmentation from Scene Cues\n- 作者：Hasan Yazar, Mohamed Rayan Barhdadi, Erchin Serpedin, Mehmet Tuncel, Hasan Kurban\n- 出版日期：2026-06-17\n- 分类：动态/4D重建；神经场景表示与渲染\n- 链接：摘要页 https://arxiv.org/abs/2606.18623；PDF https://arxiv.org/pdf/2606.18623\n\n### 一句话总结\n本文提出Intrinsic-GS，一种无需训练和掩码监督的动态4D高斯分割方法，仅从高斯原语自身的外观、方向、尺度、变形轨迹和渲染边界线索构建稀疏亲和图，通过社区划分实现对象分割。\n\n### 研究问题\n如何在无需外部基础模型（如SAM）生成的2D掩码的情况下，仅从4D高斯表示本身恢复场景中的对象级结构，实现高效、鲁棒的动态场景分割。\n\n### 核心思路/方法\n1. 从4D高斯原语中提取五种内在线索：外观、方向、尺度、变形轨迹和非学习的渲染边界。\n2. 基于这些线索构建稀疏亲和图，将高斯原语之间的相似性编码为图边权重。\n3. 应用Leiden社区检测算法对图进行划分，得到对象分组。\n4. 整个过程无需任何掩码监督或学习特征场，是训练无关、掩码无关的。\n\n### 主要贡献\n- 提出了Intrinsic-GS，首个不依赖外部掩码或特征场的学习的动态4D高斯分割方法。\n- 在Neu3D基准上以仅几何线索的变体达到0.902 mIoU，与受SAM监督的TRASE方法持平；在HyperNeRF上达到0.575 mIoU。\n- 在HyperNeRF上比基于掩码监督的管线快12.5倍，显著降低了计算开销。\n- 证明了4D高斯表示本身已编码了大量分割信号，为高效、鲁棒的动态分割提供了新方向。\n\n### 局限性\n摘要未提供足够信息（如对复杂运动或遮挡场景的适应性、社区检测参数敏感性、分割细粒度上限等）。\n\n### 阅读优先级\n高。理由：本文提出了一种新颖的无监督/无掩码的动态3D分割方法，在保持较高准确性的同时大幅提升效率（12.5倍加速），对计算机视觉中动态场景理解、编辑、运动分析等领域具有重要参考价值，且方法简洁、可复现性强。"
+      }
+    },
+    "2606.18588": {
+      "brief": {
+        "status": "success",
+        "input_hash": "e9801dbd6a28c191465ad77ceea6b59451c88d7dd3bbda933d14c9c1e8f4aa47",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:32:55Z",
+        "path": "summaries/brief/2606.18588.md",
+        "markdown": "### Metadata\n- 标题：Splaxel: Efficient Distributed Training of 3D Gaussian Splatting for Large-scale Scene Reconstruction via Pixel-level Communication\n- 作者：Wenqi Jia, Zhewen Hu, Ying Huang, Yu Gong, Stavros Kalafatis, Yuke Wang, Wei Niu, Chengming Zhang, Ang Li, Sheng Di, Yuede Ji, Bo Fang, Miao Yin\n- 出版日期：2026-06-17\n- 分类：3D Reconstruction & Multi-view Geometry（主分类）; Neural Scene Representations & Rendering（次分类）\n- 链接：摘要页 https://arxiv.org/abs/2606.18588 ；PDF https://arxiv.org/pdf/2606.18588\n\n### 一句话总结\nSplaxel 提出基于像素级通信的分布式3D高斯泼溅（3DGS）训练框架，通过局部渲染与全局合成避免高斯同步，在百万级高斯规模场景下实现最高7.6倍加速，同时保持高重建质量。\n\n### 研究问题\n现有分布式3DGS训练方法存在两大难题：要么将场景分割为孤立区域导致全局不一致，要么依赖全局高斯级交换导致通信量随场景规模急剧增长，迭代时间被通信主导。如何实现通信高效且数学一致的分布式大规模场景3DGS训练？\n\n### 核心思路/方法\n- **像素级局部渲染与全局合成**：每个GPU渲染自己负责的局部高斯子集，仅交换部分像素值，而非同步高斯参数。\n- **通信成本稳定**：该机制使得通信开销不随场景中高斯数量增加而增长。\n- **冗余减少策略**：通过几何与透射可见性预测（geometric and transmittance visibility prediction）降低像素级冗余。\n- **冲突避免的相机视角合并**：采用conflict-free camera-view consolidation提升GPU利用率。\n\n### 主要贡献\n1. 首次提出基于像素级通信的分布式3DGS训练框架Splaxel，避免高斯级同步带来的通信瓶颈。\n2. 在数学一致性的前提下，保持通信成本与场景规模无关，实现了可扩展的分布式训练。\n3. 融合可见性预测与视角合并的优化，进一步减少像素冗余并提升GPU利用效率。\n4. 在包含多达1.2亿个高斯的大规模数据集上，相比现有最优分布式3DGS框架获得最高7.6倍加速，且重建质量接近。\n\n### 局限性\n摘要未提供足够信息，未说明该方法在哪些场景或条件下效果不佳、内存消耗、收敛稳定性或对相机数量/视角分布的敏感性。\n\n### 阅读优先级\n**高**  \n理由：该工作直接针对分布式3DGS训练的关键瓶颈——通信效率，提出新颖的像素级通信范式，实验显示显著加速，适用于大规模场景重建，对相关领域研究者和工程人员具有明确参考价值。"
+      }
+    },
+    "2606.18439": {
+      "brief": {
+        "status": "success",
+        "input_hash": "6df6752991c6669c8bdca56c26daa071a107a24383021e7c181963891348b7b3",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:33:03Z",
+        "path": "summaries/brief/2606.18439.md",
+        "markdown": "### Metadata\n- 标题：RegimeVGGT: Layer-Wise Spatially Preserving Redundancy Removal for Visual Geometry Grounded Transformer\n- 作者：Jinhao You, Shuo Lyu, Zhuohang Lyu, Tanxuan Li, Zibo Zhao, Jiaxiang Hu, Kai Tang, Yichen Guo\n- 出版日期：2026-06-16\n- 分类：Geometry Foundation Models\n- 链接：摘要：https://arxiv.org/abs/2606.18439；PDF：https://arxiv.org/pdf/2606.18439\n\n### 一句话总结\nRegimeVGGT 提出一种无训练的分层加速方法，通过识别 VGGT 网络中三层不同的冗余模式并对其进行修剪，实现了6.7倍加速且不降低重建质量。\n\n### 研究问题\n如何在不经过额外训练的前提下，减少 VGGT 中二次交叉帧注意力的计算开销，同时保持多视图场景三维重建的准确性？\n\n### 核心思路/方法\n1. **诊断性分析**：通过频谱、探针和因果分析，发现 VGGT 网络中存在三种不同的层级行为模式（regime）——浅层缺乏跨视图结构、中层驱动跨视图对齐、深层对密集几何冗余但对姿态重要。\n2. **分轴压缩**：沿两层维度（token 空间和特征通道/时序维度）应用层级的 U 形压缩策略：\n   - **Saliency-Guided Banded Merging**：保护几何和边缘显著 token 的完整性。\n   - **Selectively Protected K/V Downsampling**：通过相位偏移空间网格、参考帧锚点和未压缩的相机/注册 token，保留跨帧空间覆盖和姿态关键路径。\n\n### 主要贡献\n- 揭示了 VGGT 网络中跨层冗余的非均匀分布，识别出三种不同的冗余处理机制。\n- 提出无训练、分层的 U 形压缩方法，同时沿两个轴线（token 和 K/V）进行选择性保留与压缩。\n- 实验表明，在匹配原始 VGGT* 重建质量的条件下，实现 6.7 倍速度提升。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n高。理由：该方法针对当前视觉几何基础模型（VGGT）的核心效率瓶颈提出解决方案，且无需重新训练，实用性较强；分层冗余分析视角具有理论启发性。对关注点云重建、多视图几何或高效 Transformer 部署的研究者具有直接参考价值。"
+      }
+    },
+    "2606.18952": {
+      "brief": {
+        "status": "success",
+        "input_hash": "a83e091b2796590b2dccf8596219cffca5a7715df3615b4fddd56d588663a52b",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-18T16:33:09Z",
+        "path": "summaries/brief/2606.18952.md",
+        "markdown": "### Metadata\n- 标题：SP-TransientBench: A Real-Captured Single Photon Perception Benchmark\n- 作者：Hongzhou Dong, Zili Zhang, Ziting Wen, Yiheng Qiang, Runrong Deng, Wenle Dong, Ziwen Jiang, Xinyang Li, Rui Lu, Shuoyao Sun, Wenyu Wang, Ziyi Xia, Haitao Zheng, Guodong Shi, Xiaoqiang Ren\n- 出版日期：2026-06-16\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2606.18952\n\n### 一句话总结\n本文提出了一个名为SP-TransientBench的真实拍摄单光子感知多任务基准测试集，包含10个场景、10297个视图，并提供了完整的飞行时间直方图、校准相机位姿和3D语义标注，旨在系统评估单光子LiDAR在深度估计、多视图重建和3D语义理解等难题上的性能。\n\n### 研究问题\n现有单光子感知研究多基于模拟数据或小规模受控采集，缺乏对真实世界单光子感知（包括深度估计、多视图重建和3D语义理解）的系统性评估基准。\n\n### 核心思路/方法\n构建一个真实采集的多任务基准测试集：\n1. 使用固态单光子LiDAR（分辨率为256×192）采集10个多样化场景，共10297个视图。\n2. 为每个视图提供包含多返回行为的完整飞行时间直方图、标准化元数据以及用于多视图评估的校准相机位姿。\n3. 为选定场景提供13类3D语义标注。\n4. 针对每个任务提供专用数据划分和评估协议，以实现可复现的基准测试。\n\n### 主要贡献\n1. 提出了第一个真实采集、面向多任务（深度估计、多视图重建、3D语义理解）的单光子感知基准测试集。\n2. 提供了覆盖10个场景、10297个视图的完整飞行时间直方图和多返回行为数据。\n3. 提供了校准相机位姿和13类3D语义标注，支持标准化和可复现的评估。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n高。理由：该基准测试直接填补了单光子感知领域缺乏真实世界系统性评估基准的空白，提供了大规模、多任务、标注完整的数据集，对从事单光子LiDAR、3D重建和语义理解的研究者具有重要参考价值。"
+      }
     }
   },
   "reports": {
@@ -1322,6 +1482,13 @@
       "status": "success",
       "updated_at": "2026-06-17T16:40:36Z",
       "path": "reports/daily/2026-06-17.md",
+      "tasks": [],
+      "ai_trend_report": true
+    },
+    "2026-06-18": {
+      "status": "success",
+      "updated_at": "2026-06-18T16:33:42Z",
+      "path": "reports/daily/2026-06-18.md",
       "tasks": [],
       "ai_trend_report": true
     }
