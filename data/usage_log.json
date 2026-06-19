@@ -1813,5 +1813,192 @@
     "total_tokens": 14782,
     "estimated_cost_usd": 0.00232148,
     "estimated_cost_cny": 0.016715
+  },
+  {
+    "timestamp": "2026-06-19T15:59:02Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.20542",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 551,
+    "completion_tokens": 484,
+    "total_tokens": 1035,
+    "estimated_cost_usd": 0.00021266,
+    "estimated_cost_cny": 0.001531
+  },
+  {
+    "timestamp": "2026-06-19T15:59:07Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.20531",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 580,
+    "completion_tokens": 488,
+    "total_tokens": 1068,
+    "estimated_cost_usd": 0.00021784,
+    "estimated_cost_cny": 0.001568
+  },
+  {
+    "timestamp": "2026-06-19T15:59:15Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.20515",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 662,
+    "completion_tokens": 696,
+    "total_tokens": 1358,
+    "estimated_cost_usd": 0.00028756,
+    "estimated_cost_cny": 0.00207
+  },
+  {
+    "timestamp": "2026-06-19T15:59:21Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.20426",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 552,
+    "completion_tokens": 584,
+    "total_tokens": 1136,
+    "estimated_cost_usd": 0.0002408,
+    "estimated_cost_cny": 0.001734
+  },
+  {
+    "timestamp": "2026-06-19T15:59:27Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.20424",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 536,
+    "completion_tokens": 560,
+    "total_tokens": 1096,
+    "estimated_cost_usd": 0.00023184,
+    "estimated_cost_cny": 0.001669
+  },
+  {
+    "timestamp": "2026-06-19T15:59:32Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.20322",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 406,
+    "completion_tokens": 410,
+    "total_tokens": 816,
+    "estimated_cost_usd": 0.00017164,
+    "estimated_cost_cny": 0.001236
+  },
+  {
+    "timestamp": "2026-06-19T15:59:36Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.20199",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 457,
+    "completion_tokens": 375,
+    "total_tokens": 832,
+    "estimated_cost_usd": 0.00016898,
+    "estimated_cost_cny": 0.001217
+  },
+  {
+    "timestamp": "2026-06-19T15:59:40Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.20103",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 478,
+    "completion_tokens": 382,
+    "total_tokens": 860,
+    "estimated_cost_usd": 0.00017388,
+    "estimated_cost_cny": 0.001252
+  },
+  {
+    "timestamp": "2026-06-19T15:59:45Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.20083",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 599,
+    "completion_tokens": 485,
+    "total_tokens": 1084,
+    "estimated_cost_usd": 0.00021966,
+    "estimated_cost_cny": 0.001582
+  },
+  {
+    "timestamp": "2026-06-19T15:59:50Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.19928",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 479,
+    "completion_tokens": 460,
+    "total_tokens": 939,
+    "estimated_cost_usd": 0.00019586,
+    "estimated_cost_cny": 0.00141
+  },
+  {
+    "timestamp": "2026-06-19T15:59:56Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.19874",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 578,
+    "completion_tokens": 497,
+    "total_tokens": 1075,
+    "estimated_cost_usd": 0.00022008,
+    "estimated_cost_cny": 0.001585
+  },
+  {
+    "timestamp": "2026-06-19T16:00:03Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.19813",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 556,
+    "completion_tokens": 620,
+    "total_tokens": 1176,
+    "estimated_cost_usd": 0.00025144,
+    "estimated_cost_cny": 0.00181
+  },
+  {
+    "timestamp": "2026-06-19T16:00:51Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.19776",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 553,
+    "completion_tokens": 531,
+    "total_tokens": 1084,
+    "estimated_cost_usd": 0.0002261,
+    "estimated_cost_cny": 0.001628
+  },
+  {
+    "timestamp": "2026-06-19T16:00:56Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.19609",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 582,
+    "completion_tokens": 569,
+    "total_tokens": 1151,
+    "estimated_cost_usd": 0.0002408,
+    "estimated_cost_cny": 0.001734
+  },
+  {
+    "timestamp": "2026-06-19T16:01:00Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.19586",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 497,
+    "completion_tokens": 396,
+    "total_tokens": 893,
+    "estimated_cost_usd": 0.00018046,
+    "estimated_cost_cny": 0.001299
+  },
+  {
+    "timestamp": "2026-06-19T16:01:05Z",
+    "task": "brief_summary",
+    "arxiv_id": "2606.19451",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 500,
+    "completion_tokens": 511,
+    "total_tokens": 1011,
+    "estimated_cost_usd": 0.00021308,
+    "estimated_cost_cny": 0.001534
+  },
+  {
+    "timestamp": "2026-06-19T16:01:21Z",
+    "task": "daily_trend_report",
+    "arxiv_id": null,
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 13160,
+    "completion_tokens": 1800,
+    "total_tokens": 14960,
+    "estimated_cost_usd": 0.0023464,
+    "estimated_cost_cny": 0.016894
   }
 ]

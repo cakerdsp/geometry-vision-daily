@@ -1419,6 +1419,166 @@
         "path": "summaries/brief/2606.18952.md",
         "markdown": "### Metadata\n- 标题：SP-TransientBench: A Real-Captured Single Photon Perception Benchmark\n- 作者：Hongzhou Dong, Zili Zhang, Ziting Wen, Yiheng Qiang, Runrong Deng, Wenle Dong, Ziwen Jiang, Xinyang Li, Rui Lu, Shuoyao Sun, Wenyu Wang, Ziyi Xia, Haitao Zheng, Guodong Shi, Xiaoqiang Ren\n- 出版日期：2026-06-16\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2606.18952\n\n### 一句话总结\n本文提出了一个名为SP-TransientBench的真实拍摄单光子感知多任务基准测试集，包含10个场景、10297个视图，并提供了完整的飞行时间直方图、校准相机位姿和3D语义标注，旨在系统评估单光子LiDAR在深度估计、多视图重建和3D语义理解等难题上的性能。\n\n### 研究问题\n现有单光子感知研究多基于模拟数据或小规模受控采集，缺乏对真实世界单光子感知（包括深度估计、多视图重建和3D语义理解）的系统性评估基准。\n\n### 核心思路/方法\n构建一个真实采集的多任务基准测试集：\n1. 使用固态单光子LiDAR（分辨率为256×192）采集10个多样化场景，共10297个视图。\n2. 为每个视图提供包含多返回行为的完整飞行时间直方图、标准化元数据以及用于多视图评估的校准相机位姿。\n3. 为选定场景提供13类3D语义标注。\n4. 针对每个任务提供专用数据划分和评估协议，以实现可复现的基准测试。\n\n### 主要贡献\n1. 提出了第一个真实采集、面向多任务（深度估计、多视图重建、3D语义理解）的单光子感知基准测试集。\n2. 提供了覆盖10个场景、10297个视图的完整飞行时间直方图和多返回行为数据。\n3. 提供了校准相机位姿和13类3D语义标注，支持标准化和可复现的评估。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n高。理由：该基准测试直接填补了单光子感知领域缺乏真实世界系统性评估基准的空白，提供了大规模、多任务、标注完整的数据集，对从事单光子LiDAR、3D重建和语义理解的研究者具有重要参考价值。"
       }
+    },
+    "2606.20542": {
+      "brief": {
+        "status": "success",
+        "input_hash": "1006e2fe4c757a39257b11988e4e69e19f3ddb9a9c1f49f77ce19812a1f5e564",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T15:59:02Z",
+        "path": "summaries/brief/2606.20542.md",
+        "markdown": "### Metadata\n- 标题：CalTennis: Large Multi-View Tennis Video Dataset and Benchmark of Monocular-to-3D Pose Estimation\n- 作者：Ilona Demler, Xinran Xie, Blake Werner, Anna Szczuka, Pietro Perona\n- 出版日期：2026-06-18\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2606.20542\n\n### 一句话总结\nCalTennis是一个大规模、多视角网球视频数据集与基准，用于评估野外从单目到三维的人体姿态估计，提供了比现有数据集大数倍的数据量，并揭示了模型在深度和足部接触方面的持续缺陷。\n\n### 研究问题\n如何构建一个大规模、低成本、可标准化的多视角视频基准，以评估和揭示单目到三维姿态估计方法在真实运动场景中的表现与不足。\n\n### 核心思路/方法\n- 收集超过1100万帧（51小时）的网球训练与比赛视频，覆盖40名选手，使用2-6台同步相机以60 Hz拍摄。\n- 提出简单标准化的数据采集协议，无需专用设备或专业知识，并实现全自动视频标定与同步。\n- 利用多视角设置实现低成本、无标签的评估，对比当前最先进的单目到三维姿态方法。\n- 引入两个新性能指标（footwork和stability），并从定性的身体形状不一致性角度分析失败模式。\n\n### 主要贡献\n1. 发布大规模多视角网球视频数据集CalTennis，比现有野外人体运动视频数据集大10倍，比有动作捕捉真值的数据集大3倍。\n2. 提供首个大规模同步多视角记录专业运动员动作的基准。\n3. 通过基准测试发现当前模型在深度估计和足部接触一致性方面普遍存在困难。\n4. 提出新的评估指标（footwork和stability），揭示之前未被充分探索的失败模式。\n\n### 局限性\n摘要未提供足够信息，无法明确描述该研究的具体局限性。\n\n### 阅读优先级\n高。理由：该工作贡献了显著超越现有规模的数据集和基准，针对单目到三维姿态估计这一活跃领域，揭示了现有模型的通用弱点并提出新评估指标，对后续研究和算法改进有重要参考价值。"
+      }
+    },
+    "2606.20531": {
+      "brief": {
+        "status": "success",
+        "input_hash": "93639fc2cf2b9dc04a04d3146ad2f23fcdcf443c884f250302a4216afa606a5b",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T15:59:07Z",
+        "path": "summaries/brief/2606.20531.md",
+        "markdown": "### Metadata\n- 标题：VisDom: Sparse Novel View Synthesis with Visible Domain Constraint\n- 作者：Mariia Gladkova*, Tarun Yenamandra*, Edmond Boyer, Robert Maier, Tony Tung, Daniel Cremers\n- 出版日期：2026-06-18\n- 分类：Neural Scene Representations & Rendering\n- 链接：论文摘要 https://arxiv.org/abs/2606.20531 | PDF https://arxiv.org/pdf/2606.20531\n\n### 一句话总结\nVisDom 提出一种无需学习的几何约束（可见域约束），通过最小多视图可见性要求，从稀疏输入中改进新视角合成的几何一致性。\n\n### 研究问题\n稀疏新视角合成（NVS）中，从少量输入视图恢复3D几何存在模糊性，现有NeRF和Gaussian Splatting方法在稀疏设置下易过拟合，产生漂浮伪影和不一致几何；仅使用轮廓一致性作为正则化仍不足够，因为轮廓一致区域可能超出真实物体几何。\n\n### 核心思路/方法\n- 定义“可见域”为至少被K个视图观测到的3D子空间，并将其作为额外过滤标准，叠加在标准基于轮廓的重建之上，以提供更强的空间先验。\n- 将VisDom集成到隐式（NeRF）和显式（GS）管线中，通过限制体素采样和指导高斯点优化时的放置。\n- 该方法无需学习参数，仅需轮廓图，作为简单补充组件。\n\n### 主要贡献\n1. 提出一种无学习的几何约束（可见域），增强经典视觉外壳重建，有效缓解稀疏视图下的几何模糊。\n2. 展示VisDom可无缝集成到NeRF和Gaussian Splatting两类管线中，提升稀疏NVS质量。\n3. 在三个挑战性数据集上，从仅4张输入图像实现高质量物体中心重建，并能在GaussianObject之上以22倍更低训练成本达到或超越其性能。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**  \n理由：该方法简洁（无学习参数、仅需轮廓图）且效果显著（在多个数据集和两种主流管线中稳定提升性能），对从事稀疏视图3D重建和新视角合成的研究者具有较高的实用参考价值。"
+      }
+    },
+    "2606.20515": {
+      "brief": {
+        "status": "success",
+        "input_hash": "cdae68ed3eedb424657735326f8f341fe4bc4f4fa6e0144459acf6ee485c81a3",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T15:59:15Z",
+        "path": "summaries/brief/2606.20515.md",
+        "markdown": "### Metadata\n- 标题：S-Agent: Spatial Tool-Use Elicits Reasoning for Spatial Intelligence\n- 作者：Yalun Dai, Hao Li, Shulin Tian, Runmao Yao, Yuhao Dong, Fangzhou Hong, Zhaoxi Chen, Fangfu Liu, Baoliang Tian, Dingwen Zhang, Tao Wang, Kim-Hui Yap, Ziwei Liu\n- 出版日期：2026-06-18\n- 分类：Embodied / Robotics / AR Applications\n- 链接：[摘要](https://arxiv.org/abs/2606.20515) | [PDF](https://arxiv.org/pdf/2606.20515)\n\n### 一句话总结\n本文提出 **S-Agent**，一种空间工具使用智能体范式，将空间推理建模为时空证据累积过程，通过层次化工具和记忆机制显著提升多视图和视频空间推理性能，并基于其生成的轨迹微调出紧凑型空间智能体S-Agent-8B。\n\n### 研究问题\n现有视觉语言模型(VLM)和工具增强智能体大多依赖静态、无状态推理，无法对持续演进的3D世界进行空间推理。本文试图解决如何实现连续多视图图像和视频中的空间智能问题。\n\n### 核心思路/方法\n1. **任务重定义**：将空间推理从孤立帧级预测重塑为**时空证据累积**的场景级理解。\n2. **语义规划与工具层级**：VLM作为语义规划器决定需何种证据；层次化空间工具和专家将2D对象提升为3D几何证据，并聚合为高级空间知识（如计数、测量、朝向、相对位置）。\n3. **时间记忆机制**：包括**场景记忆**（维护持续演进的场景状态）和**智能体记忆**（累积推理上下文），以跨帧和推理步骤整合证据。\n4. **训练与微调**：无训练地增强开源和闭源VLM；进一步对S-Agent生成的空间轨迹（S-300K）进行监督微调，得到紧凑模型S-Agent-8B。\n\n### 主要贡献\n1. 提出 **S-Agent** 范式，将空间推理转化为证据累积过程，突破静态推理限制。\n2. 引入层次化空间工具和双记忆机制（场景记忆+智能体记忆），实现跨时空证据整合。\n3. 在多项多视图和视频空间推理基准上，无需额外训练即可一致提升开源/闭源VLM性能。\n4. 通过微调S-Agent生成的轨迹，得到紧凑模型 **S-Agent-8B**，性能超越同尺度基线（如Qwen3-VL-8B），媲美先进闭源模型（如GPT-5.4、Gemini 3）。\n\n### 局限性\n摘要未提供足够信息，无法评估具体局限性（如计算开销、泛化边界、失败案例等）。\n\n### 阅读优先级\n**高**\n理由：该工作聚焦空间推理这一具身智能/机器人领域核心挑战，提出新颖的“证据累积+工具层级+记忆”范式，实验结果表明其既能无训练增强现有模型，又能通过微调获得紧凑高效模型，实用性和创新性均显著，对从事空间感知、VLM增强和多模态推理的研究者具有重要参考价值。"
+      }
+    },
+    "2606.20426": {
+      "brief": {
+        "status": "success",
+        "input_hash": "15ef245efd23efae818d293bc63bebc41aa57440f4039baa8b139a9c13988a13",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T15:59:21Z",
+        "path": "summaries/brief/2606.20426.md",
+        "markdown": "### Metadata\n- 标题：TaCauchy: An Extensible FEM Framework for Vision-Based Tactile Simulation\n- 作者：Hengfei Zhao, Yifan Xie, Junhao Gong, Yue Sun, Kai Zhu, Weihua He, Shoujie Li, Haohuan Fu, Wenbo Ding\n- 出版日期：2026-06-18\n- 分类：具身/机器人/增强现实应用（Embodied / Robotics / AR Applications）\n- 链接：https://arxiv.org/abs/2606.20426\n\n### 一句话总结\nTaCauchy是一个基于有限元法（FEM）的视觉触觉仿真框架，通过集成到Isaac Sim平台中，从第一性原理直接计算柯西应力张量以提供精准的力学场，并支持多种触觉传感器的快速集成。\n\n### 研究问题\n如何在高性能GPU加速的机器人仿真平台（如Isaac Sim）中，提供准确且物理一致的机械应力场，以支持基于视觉的触觉传感器的高保真仿真和强化学习任务。\n\n### 核心思路/方法\n- 基于统一增量势能接触（UIPC）求解器，利用超弹性本构定律直接计算柯西应力张量。\n- 将应力张量投影至接触表面，从而获取接触力矢量与压力分布，避免依赖经验估计。\n- 实现自动化网格生成（含几何感知自适应细化）和模块化传感器接口，支持GelSight Mini、DIGIT、9DTact等多种触觉传感器的快速扩展与配置。\n\n### 主要贡献\n1. 提出TaCauchy框架，首次将基于物理的有限元力计算无缝集成到Isaac Sim中，提供第一性原理的力学真值。\n2. 在单环境仿真中达到33.40 FPS，60个并行环境聚合吞吐量达555 FPS，且应力提取开销低于1毫秒，验证了实时性与可扩展性。\n3. 物理验证实验显示，在1.2556 N至4.7332 N的力范围内，模拟与真实触觉响应的结构相似性指数（SSIM）高于0.93，证明框架能够为下游机器人操作任务提供准确、物理基础的力监督信号。\n\n### 局限性\n摘要未提供足够信息。具体实验局限性（如特定材料模型的适用范围、网格细化对复杂几何的误差、或对超弹性本构参数的敏感度等）未在摘要中提及。\n\n### 阅读优先级\n高  \n理由：该工作解决了视觉触觉仿真中力学场准确性这一关键瓶颈，且提供了可直接部署在主流机器人仿真平台（Isaac Sim）上的开源自适应框架，对从事触觉传感、机器人操作和仿真到现实迁移的研究者具有较高的实用价值和参考意义。"
+      }
+    },
+    "2606.20424": {
+      "brief": {
+        "status": "success",
+        "input_hash": "7009014286d5aaccef48cdd248aff5151eed856c6141148a7987ec8fd346a10c",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T15:59:27Z",
+        "path": "summaries/brief/2606.20424.md",
+        "markdown": "### Metadata\n- 标题：LIT-GS: LiDAR-Inertial-Thermal Gaussian Splatting for Illumination-Robust Mapping\n- 作者：Shikuan Shi, Chunran Zheng, Jiaming Xu, Tianyong Ye, Tao Yu, Yukang Cui\n- 出版日期：2026-06-18\n- 分类：Neural Scene Representations & Rendering；Embodied / Robotics / AR Applications\n- 链接：摘要：https://arxiv.org/abs/2606.20424；PDF：https://arxiv.org/pdf/2606.20424\n\n### 一句话总结\nLIT-GS 提出一种融合 LiDAR、惯性和热成像数据的高斯泼溅建图框架，通过注入 LiDAR 平面几何约束来克服光照变化和低纹理场景下的结构漂移与渲染退化问题。\n\n### 研究问题\n现有的 LiDAR-惯性-视觉（LIV）高斯建图方法依赖 RGB 光度线索，在光照变化大或纹理缺乏的环境中脆弱易失效。本文旨在利用热成像通道替代视觉信息，解决弱光/无纹理条件下的几何精度和渲染质量下降问题。\n\n### 核心思路/方法\n1. **跨模态锚定**：将 LIV 视觉地图点作为置信度感知的跨模态锚点，建立可靠的热成像-LiDAR 关联。\n2. **联合光束法平差**：在弱热监督下，将加权 LiDAR 点到平面残差加入光束法平差中，联合优化相机位姿和 3D 点。\n3. **LiDAR 平面正则化渲染**：在优化后的结构基础上，引入 LiDAR 平面正则化的可微泼溅目标，约束渲染出的 3D 点与局部观测平面对齐，减少低对比度热成像中的表面增厚和结构漂移。\n\n### 主要贡献\n- 提出首个融合 LiDAR、惯性、热成像的高斯泼溅建图框架，增强对光照变化的鲁棒性。\n- 设计置信度感知的跨模态热成像-LiDAR 关联机制及 LiDAR 平面正则化的可微约束。\n- 在自有序列和公开数据集上，相比现有 LIV 高斯泼溅基线，在几何精度和渲染质量上取得一致提升，尤其在高挑战光照条件下表现突出。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**  \n理由：该工作针对现有 LIV 高斯泼溅方法在弱光和低纹理场景下的关键瓶颈提出了创新性融合方案，实验证明了显著提升，对机器人、自动驾驶及 AR 领域的视觉建图与渲染具有重要参考价值。"
+      }
+    },
+    "2606.20322": {
+      "brief": {
+        "status": "success",
+        "input_hash": "0ec2196e936609488aa15609b04b6a14e9e9e90d971f4b5969a3c65535fc9f2b",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T15:59:32Z",
+        "path": "summaries/brief/2606.20322.md",
+        "markdown": "### Metadata\n- 标题：Towards 3D karst underwater scene reconstruction from rotating sonar data  \n- 作者：Georgios Evangelos Margaritis, Lionel Lapierre, Simon Rohou, Zhi Yan, Andreas Nüchter, François Goulette  \n- 出版日期：2026-06-18  \n- 分类：3D Reconstruction & Multi-view Geometry  \n- 链接：摘要 https://arxiv.org/abs/2606.20322 | PDF https://arxiv.org/pdf/2606.20322  \n\n### 一句话总结\n本文提出了一套从旋转声纳数据重建水下岩溶三维场景的流水线，结合连续时间SLAM校正轨迹漂移与两阶段深度学习方法生成可漫游的3D网格。\n\n### 研究问题\n如何从稀疏、有噪声的声纳数据以及存在漂移的导航估计中，重建复杂且结构未知的水下岩溶管道的三维几何。\n\n### 核心思路/方法\n1. **轨迹校正**：采用连续时间SLAM方法纠正声纳探测过程中的轨迹漂移。  \n2. **表面重建**：提出一种新颖的两阶段深度学习方法，从校正后的稀疏点云生成沉浸式、可导航的3D网格。  \n\n### 主要贡献\n- 构建了一套完整的水下岩溶场景重建流水线，将SLAM与深度学习表面重建相结合。  \n- 提出两阶段深度学习方法，专门用于从稀疏声纳数据生成可用的3D网格。  \n\n### 局限性\n摘要未提供足够信息（例如：未说明方法在极端噪声或大规模场景下的表现，未提及与现有方法的定量对比结果，未分析实时性要求或计算成本）。\n\n### 阅读优先级\n**中**  \n理由：该方法针对特定应用场景（水下岩溶探测）具有实际价值，且结合了SLAM与深度学习，技术上具有一定创新性。但摘要未提供实验对比与量化指标，缺乏对方法性能的直接评估，故优先级适中。"
+      }
+    },
+    "2606.20199": {
+      "brief": {
+        "status": "success",
+        "input_hash": "5cff418cbf7bc7dd4b15258fe380223551fccf0924294eb29c5105aa882f5118",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T15:59:36Z",
+        "path": "summaries/brief/2606.20199.md",
+        "markdown": "### Metadata\n- 标题：Evaluation of Image Matching for Art Skills Assessment\n- 作者：Asaad Alghamdi, Michael Poor, Trung-Nghia Le, Tam V. Nguyen\n- 出版日期：2026-06-18\n- 分类：Geometry Foundation Models (主要) / 3D Reconstruction & Multi-view Geometry (次要)\n- 链接：https://arxiv.org/abs/2606.20199\n\n### 一句话总结\n本文提出通过图像匹配（SIFT特征与孪生网络）来评估手绘与模板之间的相似度，以衡量绘画技能水平。\n\n### 研究问题\n如何利用计算机视觉技术，通过比较手绘图像与原始模板的相似度，客观、高效地评估绘画技能。\n\n### 核心思路/方法\n1.  将手绘图像与原始模板进行匹配。\n2.  实现并对比两种图像相似度度量方法：基于SIFT特征的关键点匹配，以及基于孪生网络的方法。\n3.  通过分析特征匹配结果来推断绘画技能水平。\n\n### 主要贡献\n1.  提出了一种基于图像匹配的绘画技能评估方法，旨在简化传统繁琐的评估流程。\n2.  实验比较了SIFT特征与孪生网络在衡量手绘与模板图像相似度上的表现。\n3.  实验结果表明，SIFT特征的关键点匹配在检测绘画技能方面更为有效，从而验证了该方法评估艺术技能水平的可行性。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n中。理由：方法具有实际应用价值，且比较了经典（SIFT）与前沿（孪生网络）技术，但摘要未提供具体实验结果、评估指标、数据集规模等关键细节，且发表于未来时间，需谨慎核实。"
+      }
+    },
+    "2606.20103": {
+      "brief": {
+        "status": "success",
+        "input_hash": "0a7bdde6ac7ea9a0ac5d7ae5d445796af5f16d18dc233fcd75f0193f74a73fd5",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T15:59:40Z",
+        "path": "summaries/brief/2606.20103.md",
+        "markdown": "### Metadata\n- 标题：Geometry-Preserving in 3D Gaussian Splatting for LiDAR-Camera Extrinsic Calibration\n- 作者：Kyoleen Kwak, Daeho Kim, Jeong Woon Lee, Hyoseok Hwang\n- 出版日期：2026-06-18\n- 分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2606.20103\n\n### 一句话总结\n本文提出一种在3D高斯溅射框架中保留度量几何信息的方法，通过密集深度监督和阻止光度梯度更新高斯空间参数，提升了激光雷达与相机的外参标定精度。\n\n### 研究问题\n现有基于3D高斯溅射（3DGS）的激光雷达-相机无目标外参标定方法中，由于3DGS本身是为新视角合成设计的，代理几何结构容易偏离真实的激光雷达度量结构，导致标定精度受限。\n\n### 核心思路/方法\n1. 通过聚合多视角激光雷达观测数据，提供密集的深度监督，以保持高斯代理的度量几何一致性。\n2. 阻断来自光度（图像）重建的梯度对高斯空间参数的更新，从而防止渲染质量优先导致的几何漂移。\n\n### 主要贡献\n- 提出一种几何保持框架，确保3D高斯代理的度量结构与真实激光雷达结构一致。\n- 在公开驾驶数据集上，所提方法在标定精度上持续优于现有无目标标定方法。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n中。理由：该工作聚焦于自动驾驶中多模态传感器的标定问题，对从事激光雷达-相机融合感知的研究者具有直接参考价值；但需要读者对3D高斯溅射和标定框架有一定基础，非通用视觉论文。"
+      }
+    },
+    "2606.20083": {
+      "brief": {
+        "status": "success",
+        "input_hash": "00009b58559a5a376a44eb264f3bb4c681e6626f3e8e968561395669bbd66f59",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T15:59:45Z",
+        "path": "summaries/brief/2606.20083.md",
+        "markdown": "### Metadata\n- 标题：Holo-World: Unified Camera, Object and Weather Control for Video World Model\n- 作者：Xiangchen Yin, Wenzhang Sun, Jiahui Yuan, Zijie Liu, Yinda Chen, Wei Li, Dachun Kai, Chunfeng Wang, Xiaoyan Sun\n- 出版日期：2026-06-18T11:01:34Z\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2606.20083\n\n### 一句话总结\nHolo-World 提出了一种统一的视频世界模型，能够从单张图像出发，通过相机、物体控制和天气指令，生成保持世界状态或转换到目标天气状态的视频。\n\n### 研究问题\n如何从单张图像出发，实现统一的相机、物体和天气控制，并能够根据指令生成保持原始世界或转移到目标天气状态的视频。\n\n### 核心思路/方法\n1. 构建 HoloStateData 数据集：将多样的视频转换为统一的控制样本，提供相机、物体和天气的监督信号。\n2. 设计 Holo-World 模型：包含统一的场景适配器（Unified Scene Adapter），将世界保持和天气转移分解为不同的参数子空间，利用渲染背景、几何缓冲区和物体控制来维持场景结构，同时建模天气相关的表观和粒子效果。\n3. 提出 Scene-Weather Decomposed CFG：分别引导场景和天气残差，增强目标天气效果而不过度放大整个条件。\n\n### 主要贡献\n1. 提出首个从单张图像出发、支持相机、物体和天气统一控制的视频世界模型 Holo-World。\n2. 构建了 HoloStateData 数据集，用于大规模监督学习。\n3. 在保持精确相机和物体控制及场景结构的同时，能够将场景转移到多样目标天气状态，在天气状态生成上优于视频到视频的天气编辑基线。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**中**  \n理由：该工作聚焦于视频世界模型在统一控制（相机、物体、天气）方面的创新，对于研究可控视频生成、世界模型或多模态控制的研究者有一定参考价值。但摘要未提供详尽的实验对比结果和具体性能数据，实用性评估需进一步阅读原文。"
+      }
+    },
+    "2606.19928": {
+      "brief": {
+        "status": "success",
+        "input_hash": "ac97487347975458bd2c0c610f7b60e07f39bbf229488d5b36d9ff48c2eacf45",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T15:59:50Z",
+        "path": "summaries/brief/2606.19928.md",
+        "markdown": "### Metadata\n- 标题：SWAP: Symmetric Equivariant World-Model for Agile Robot Parkour\n- 作者：Kaixin Lan, Ze Wang, Hongyi Li, Lei Jiang, Chaojie Fu, Chengkai Su, Choi Lam Wong, Yongbin Jin, Hongtao Wang\n- 出版日期：2026-06-18\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2606.19928\n\n### 一句话总结\n本文提出一种内置对称等变性的端到端世界模型框架SWAP，使四足机器人在真实世界中完成破纪录的2.13米跨越和1.63米攀爬，并展现了良好的几何泛化和零样本迁移能力。\n\n### 研究问题\n如何通过结构先验（对称等变性）减少纯数据驱动潜世界模型在极端跑酷中冗余学习左右对称交互模式的负担，提升潜空间效率并增强下游策略的几何泛化能力。\n\n### 核心思路/方法\n将对称等变性直接嵌入世界模型和演员-评论家网络中。通过在模型架构层面显式编码左右对称的几何结构约束，使模型不必独立学习对称模式，从而更高效地捕获几何规律。在真实世界四足机器人跑酷任务上进行验证。\n\n### 主要贡献\n1. 提出SWAP框架，将对称等变性嵌入端到端的潜世界模型和策略网络。\n2. 在真实世界测试中，机器人实现跨越2.13米间隙和攀爬1.63米平台，创造四足机器人跑酷纪录。\n3. 展示了对未见镜像地形的强几何泛化能力，以及在多样化户外环境中的优异零样本迁移能力。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n中\n理由：该论文在四足机器人跑酷任务上取得了显著的实证突破（破纪录性能），并引入对称等变形作为结构先验，思路具有一定的启发性。但摘要未涉及方法细节、训练流程、实验设置等，需要阅读全文才能评估其技术贡献的完整性和可复现性。如果您关注机器人运动控制中的几何先验应用，可优先阅读。"
+      }
+    },
+    "2606.19874": {
+      "brief": {
+        "status": "success",
+        "input_hash": "8ffb4c6cc7eab5aaa08e79b091db365a0d8ea1b11a9dc6a50e67fed811c7487d",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T15:59:56Z",
+        "path": "summaries/brief/2606.19874.md",
+        "markdown": "### Metadata\n- 标题：MMD-SLAM: Structure-Enhanced Multi-Meta Gaussian Distribution-Guided Visual SLAM\n- 作者：Fan Zhu, Ziyu Chen, Peichen Liu, Yifan Zhao, Zhisong Xu, Hui Zhu, Hongxing Zhou, Sixun Liu, Chunmao Jiang\n- 出版日期：2026-06-18\n- 分类：3D Reconstruction & Multi-view Geometry; Neural Scene Representations & Rendering\n- 链接：摘要: https://arxiv.org/abs/2606.19874 ; PDF: https://arxiv.org/pdf/2606.19874\n\n### 一句话总结\nMMD-SLAM 是一种基于 3D 高斯泼溅的结构增强视觉 SLAM 框架，通过引入亚特兰大世界假设与多元高斯表征，在跟踪精度和建图质量上超越了现有方法（如 MonoGS）。\n\n### 研究问题\n现有 3DGS 驱动的视觉 SLAM 系统未能充分利用场景底层结构信息，导致渲染质量受限且建图结果不一致。\n\n### 核心思路/方法\n1. 采用亚特兰大世界假设，提取场景中的主导方向作为结构先验。\n2. 设计多元高斯表征，显式编码结构先验。\n3. 引入点-线融合策略进行位姿优化，利用 3D 线段提升跟踪鲁棒性并提供映射约束。\n4. 提出高斯演化策略，使高斯体适应场景几何，并将结构线索融入全局优化。\n\n### 主要贡献\n- 提出点-线融合策略，增强位姿优化与映射约束。\n- 设计基于亚特兰大世界假设的多元高斯表征，显式编码结构先验。\n- 提出高斯演化策略，动态适应场景几何并参与全局优化。\n- 在 ScanNet 上 ATE RMSE 降低 48.56%，在 Replica 上 PSNR 提升 5.71%，达到 SOTA 性能。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**中**。理由：论文在视觉 SLAM 与神经渲染交叉方向有明确创新点（结构增强与多高斯表征），且在公开数据集上取得显著性能提升。适合对该方向感兴趣的读者跟进，但对纯 SLAM 或纯渲染从业者而言，需进一步阅读原文评估方法的普适性。"
+      }
+    },
+    "2606.19813": {
+      "brief": {
+        "status": "success",
+        "input_hash": "ea15d23d7a8409149f5c68e5e10b4aea006d9ae14ea81f0d991de98839bcca19",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T16:00:03Z",
+        "path": "summaries/brief/2606.19813.md",
+        "markdown": "### Metadata\n- 标题：TIDY: Thermal Infrared Image Denoising via Wavelet Domain Entropy and Directional Stripe Index\n- 作者：Tai Hyoung Rhee, Dong-Guw Lee, Ayoung Kim\n- 出版日期：2026-06-18T05:42:50Z\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：摘要: https://arxiv.org/abs/2606.19813 ，PDF: https://arxiv.org/pdf/2606.19813\n\n### 一句话总结\nTIDY是一种轻量级的小波域热红外图像去噪方法，通过在真实数据上训练并引入小波熵和方向条纹指数作为损失项，在保持高推理速度（约34Hz）的同时实现了鲁棒的去噪效果，并提升了下游机器人任务（如热惯性里程计和单目深度估计）的性能。\n\n### 研究问题\n现有的热红外图像去噪方法存在精度与效率的权衡问题：要么因速度慢而无法满足机器人任务的在线部署需求，要么对严重噪声（尤其室内低热对比度下）鲁棒性不足，且通常依赖合成噪声进行训练。\n\n### 核心思路/方法\n1. 设计轻量级小波域去噪网络，在小波域中显式地将噪声与结构内容分离，从而降低空间复杂度并提升推理速度。\n2. 提出两个新的度量指标**小波熵**（Wavelet Entropy）和**小波方向条纹指数**（Wavelet Directional Stripe Index）作为互补的损失项，分别用于抑制随机噪声和条纹伪影。\n3. 使用真实的热红外清洁-配对数据（而非合成噪声）进行训练，并在室内严重退化场景与零样本设置下评估鲁棒性。\n\n### 主要贡献\n1. 提出轻量级小波域去噪器TIDY，在真实TIR数据上训练，推理速度达约34Hz，适合在线部署。\n2. 引入小波熵和方向条纹指数作为损失项，实现针对随机噪声和条纹噪声的显式抑制。\n3. 在室内严重退化及零样本场景下，验证了TIDY在下游机器人任务（热惯性里程计、单目深度估计）中的一致性提升。\n4. 开源了代码和数据集。\n\n### 局限性\n摘要未提供足够信息，例如在极端噪声水平、不同传感器类型或更长序列上的表现；也未提及对计算资源的具体需求或潜在的泛化限制。\n\n### 阅读优先级\n中。理由：该方法针对热红外图像去噪在机器人应用中的效率与鲁棒性瓶颈，提出了轻量级且创新的小波域解决方案，但摘要未提供与现有方法的详细数值对比，且作为2026年发表的工作，当前时效性一般。若读者关注机器人感知或热红外成像，可阅读；若对去噪通用方法更感兴趣，则优先级可降低。"
+      }
+    },
+    "2606.19776": {
+      "brief": {
+        "status": "success",
+        "input_hash": "f30ef9ebd637d2f50f70342ffa3ae68d46a1b8b57cf0c446538ca9fcfc46ae67",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T16:00:51Z",
+        "path": "summaries/brief/2606.19776.md",
+        "markdown": "### Metadata\n- 标题：Occ-VLM: Occupancy Grounded Vision Language Model for Indoor Scene Understanding\n- 作者：Jianing Li, Zhou Fang, Yijiang Liu, Li Du\n- 出版日期：2026-06-18\n- 分类：Embodied / Robotics / AR Applications\n- 链接：[摘要](https://arxiv.org/abs/2606.19776) | [PDF](https://arxiv.org/pdf/2606.19776)\n\n### 一句话总结\nOcc-VLM提出了一种仅依赖RGB图像和单个2D视觉编码器的3D场景理解框架，通过重建3D占用作为几何先验，实现无需显式3D输入的视觉-语言联合推理。\n\n### 研究问题\n现有3D视觉语言模型往往需显式3D输入（如点云、RGB-D序列）或引入额外的3D几何编码器，导致3D几何感知与2D视觉语言预训练之间的结构性解耦，阻碍了统一的3D视觉语言表示。本文旨在仅用2D图像实现3D场景的几何感知与语言推理的融合。\n\n### 核心思路/方法\n1. **输入**：仅使用带位姿的RGB图像，并采用单一2D视觉编码器。\n2. **3D占用重建**：作为辅助几何先验，从2D图像中重建3D场景占用信息。\n3. **空间关联**：利用3D占用将前景2D标记与3D空间进行空间关联。\n4. **语言解码**：关联后的标记由大语言模型（LLM）解码，实现统一的场景理解任务。\n\n### 主要贡献\n- 提出Occ-VLM，仅用2D图像输入即可实现3D几何感知与视觉语言推理的统一框架。\n- 在多视图占用预测任务上达到当前最优性能。\n- 在3D视觉问答（VQA）和3D密集描述基准上，性能与采用3D输入的VLM持平。\n\n### 局限性\n摘要未提供足够信息：未提及在极端遮挡、大尺度场景或实时推理能力上的局限性，也未讨论对训练数据规模或标注成本的要求。\n\n### 阅读优先级\n**中**。理由：该工作聚焦于3D室内场景理解，在仅用2D图像的情况下实现了与3D输入VLM相当的性能，且在多视图占用预测上达到SOTA，对嵌入式智能和机器人视觉领域有参考价值。但摘要未提供详细的实验设置和消融分析，约束了对其实际效果的全面评估。"
+      }
+    },
+    "2606.19609": {
+      "brief": {
+        "status": "success",
+        "input_hash": "c7854e457af4a3813b6f6bfd915a7a0df1df4ad341df63364e40b7835c07af93",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T16:00:56Z",
+        "path": "summaries/brief/2606.19609.md",
+        "markdown": "### Metadata\n- 标题：Building Drift: Documenting On-Site Construction Adaptations Across Material Lifecycles\n- 作者：Ritik Batra, Martin Tamke, Tom Svilans, Jan Hüls, Amritansh Kwatra, Steven J. Jackson, Thijs Roumen, Mette Ramsgaard Thomsen\n- 出版日期：2026-06-17\n- 分类：神经场景表示与渲染（Neural Scene Representations & Rendering）\n- 链接：摘要: https://arxiv.org/abs/2606.19609 | PDF: https://arxiv.org/pdf/2606.19609\n\n### 一句话总结\n本文提出“建筑漂移”（building drift）概念，描述回收材料建筑在现场施工中物理状态与数字模型的偏差，并开发了基于视频和3D高斯泼溅的文档工具Pentimento，用于记录和呈现现场适应过程以支持材料循环利用。\n\n### 研究问题\n如何系统性地记录、表征和传递回收材料建筑在现场施工中因不可预测性产生的物理适配（即“建筑漂移”），从而为材料在多个生命周期中的评估、传承和再利用提供必要信息。\n\n### 核心思路/方法\n1. **案例研究**：通过回收木材展馆ReShelter的建造实践，归纳出现场适应的分类法（Tending the Site, Foraging for Fit, Interpreting the Material, Marking Measurements, Coordinating Across Communities）。\n2. **工具开发**：提出名为Pentimento的文档工具，利用视频文档和3D高斯泼溅技术，在空间、时间和语义三个维度上，将现场适应与设计模型相关联，使各利益相关方能导航材料历史。\n\n### 主要贡献\n1. 提出“建筑漂移”概念，系统刻画回收材料建筑在生命周期中的物理状态与数字模型间的集体偏差。\n2. 建立建筑漂移的分类法，涵盖现场适应、材料解读、社区协调等五个关键类别。\n3. 开发Pentimento工具，将视频与3D高斯泼溅结合，实现现场适应的空间、时间与语义化记录，降低材料再利用障碍。\n\n### 局限性\n摘要未提及方法在规模扩展性、计算效率、不同材料类型或建筑场景下的适用性评估；也未说明工具对协作流程的量化影响或用户验证结果。\n\n### 阅读优先级\n**中**  \n理由：该工作聚焦可持续建筑中的材料记录与数字孪生，核心创新在于将计算机视觉技术（3D高斯泼溅）应用于建筑现场适应的文档化。若对循环经济、建筑信息建模或现场施工协作感兴趣，该文具有启发价值；但若需具体技术实现细节或实验评估，摘要内容有限。"
+      }
+    },
+    "2606.19586": {
+      "brief": {
+        "status": "success",
+        "input_hash": "e303bc5da5a6ae69288a17466a88f3607af3f310a1636aa1a149db67bbba1910",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T16:01:00Z",
+        "path": "summaries/brief/2606.19586.md",
+        "markdown": "### Metadata\n- 标题：One Demo is Worth a Thousand Trajectories: Action-View Augmentation for Visuomotor Policies\n- 作者：Chuer Pan, Litian Liang, Dominik Bauer, Eric Cousineau, Benjamin Burchfiel, Siyuan Feng, Shuran Song\n- 出版日期：2026-06-17T20:41:13Z\n- 分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2606.19586\n\n### 一句话总结\n本文提出一种数据增强框架，通过生成逼真的鱼眼图像序列和物理可行的动作轨迹，提升视觉运动策略在操作任务中的成功率和泛化能力。\n\n### 研究问题\n如何利用少量真实世界演示数据，生成增强的视觉和动作数据，以减轻视觉运动策略对初始配置和未见过障碍物的分布外失败问题。\n\n### 核心思路/方法\n1. 使用便携式平行夹爪和单个鱼眼相机捕获真实世界“眼在手”演示。\n2. 引入适用于大视场鱼眼相机的新型高斯溅射公式，重建并编辑包含未见过物体的3D场景。\n3. 通过轨迹优化生成平滑、无碰撞、利于视图渲染的动作轨迹，并从对应新视角渲染视觉观察。\n\n### 主要贡献\n提出一种有效的数据增强框架，无需大量数据收集，通过生成视觉真实的鱼眼图像序列和对应物理可行的动作轨迹，改善了同一场景和包含障碍物的增强场景下多种操作任务的成功率。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n中  \n理由：该工作针对视觉运动策略的分布外泛化问题提出了一种数据增强方法，创新性较强，但摘要未详述实验设置、基线对比和优势量化，因此适合对数据增强或场景理解方向感兴趣的读者进一步参考，但优先级中等。"
+      }
+    },
+    "2606.19451": {
+      "brief": {
+        "status": "success",
+        "input_hash": "4089aa68ed3cbbff4cbcf4c020d275a0f5d32528be93020f7ae42f038dd701e0",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-19T16:01:05Z",
+        "path": "summaries/brief/2606.19451.md",
+        "markdown": "### Metadata\n- 标题：3D-DLP: Self-Supervised 3D Object-Centric Scene Representation Learning\n- 作者：Ellina Zhang, Madhaven Iyengar, Amir Zadeh, Chuan Li, Deepak Pathak, David Held, Tal Daniel\n- 出版日期：2026-06-17T18:00:08Z\n- 分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2606.19451\n\n### 一句话总结\n本文提出3D-DLP模型，是一种自监督的3D以物体为中心的场景表示学习方法，通过将RGB-D或体素观测分解为可解释的3D潜粒子，实现场景重构和下游操控任务性能提升。\n\n### 研究问题\n如何从3D场景观测（RGB-D或体素）中学习一种以物体为中心、可解释且可控的潜表示，同时避免对密集3D输入的高内存消耗，并提升下游机器人操控任务的表现。\n\n### 核心思路/方法\n基于Deep Latent Particles (DLP)框架扩展至3D，将场景级RGB-D或体素观测分解为一组3D潜粒子。每个粒子编码解耦的属性，包括3D关键点位置、包围框尺寸和外观特征，代表场景中的一个不同实体。模型通过端到端的自监督重构目标学习每个粒子的可解释分割图。\n\n### 主要贡献\n1. 提出3D-DLP，一种自监督的3D以物体为中心的场景表示学习模型，能够将场景解耦为一组3D潜粒子。\n2. 每个潜粒子编码解耦的3D属性（位置、尺寸、外观），并学习可解释的逐粒子分割图。\n3. 在模拟和真实数据集上证明，通过操纵粒子位置和重构可生成新场景配置。\n4. 将紧凑的3D潜粒子用于下游机器人操控任务，性能优于缺乏明确3D信息或使用无物体结构密集3D输入的基线方法。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n中。理由：该工作结合了自监督学习、3D场景表示和机器人操控，但摘要中实验细节和量化结果（如具体性能提升幅度）未披露，仅通过定性描述展示优势。若读者对物体中心表示或自监督3D理解感兴趣，值得阅读；若需严格对比基线，需查阅全文。"
+      }
     }
   },
   "reports": {
@@ -1489,6 +1649,13 @@
       "status": "success",
       "updated_at": "2026-06-18T16:33:42Z",
       "path": "reports/daily/2026-06-18.md",
+      "tasks": [],
+      "ai_trend_report": true
+    },
+    "2026-06-19": {
+      "status": "success",
+      "updated_at": "2026-06-19T16:01:21Z",
+      "path": "reports/daily/2026-06-19.md",
       "tasks": [],
       "ai_trend_report": true
     }
