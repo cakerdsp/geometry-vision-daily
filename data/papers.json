@@ -30,7 +30,7 @@
     "abstract_url": "https://arxiv.org/abs/2606.20542",
     "pdf_url": "https://arxiv.org/pdf/2606.20542",
     "first_seen": "2026-06-19T11:41:11-04:00",
-    "last_seen": "2026-06-20T10:29:13-04:00"
+    "last_seen": "2026-06-21T10:32:31-04:00"
   },
   {
     "arxiv_id": "2606.20531",
@@ -73,7 +73,7 @@
     "abstract_url": "https://arxiv.org/abs/2606.20531",
     "pdf_url": "https://arxiv.org/pdf/2606.20531",
     "first_seen": "2026-06-19T11:41:11-04:00",
-    "last_seen": "2026-06-20T10:29:13-04:00"
+    "last_seen": "2026-06-21T10:32:31-04:00"
   },
   {
     "arxiv_id": "2606.20515",
@@ -115,7 +115,7 @@
     "abstract_url": "https://arxiv.org/abs/2606.20515",
     "pdf_url": "https://arxiv.org/pdf/2606.20515",
     "first_seen": "2026-06-19T11:41:11-04:00",
-    "last_seen": "2026-06-20T10:29:13-04:00"
+    "last_seen": "2026-06-21T10:32:31-04:00"
   },
   {
     "arxiv_id": "2606.20426",
@@ -156,7 +156,7 @@
     "abstract_url": "https://arxiv.org/abs/2606.20426",
     "pdf_url": "https://arxiv.org/pdf/2606.20426",
     "first_seen": "2026-06-19T11:41:11-04:00",
-    "last_seen": "2026-06-20T10:29:13-04:00"
+    "last_seen": "2026-06-21T10:32:31-04:00"
   },
   {
     "arxiv_id": "2606.20424",
@@ -203,7 +203,7 @@
     "abstract_url": "https://arxiv.org/abs/2606.20424",
     "pdf_url": "https://arxiv.org/pdf/2606.20424",
     "first_seen": "2026-06-19T11:41:11-04:00",
-    "last_seen": "2026-06-20T10:29:13-04:00"
+    "last_seen": "2026-06-21T10:32:31-04:00"
   },
   {
     "arxiv_id": "2606.20322",
@@ -243,7 +243,7 @@
     "abstract_url": "https://arxiv.org/abs/2606.20322",
     "pdf_url": "https://arxiv.org/pdf/2606.20322",
     "first_seen": "2026-06-19T11:41:11-04:00",
-    "last_seen": "2026-06-20T10:29:13-04:00"
+    "last_seen": "2026-06-21T10:32:31-04:00"
   },
   {
     "arxiv_id": "2606.20199",
@@ -3047,46 +3047,6 @@
     ],
     "abstract_url": "https://arxiv.org/abs/2606.15846",
     "pdf_url": "https://arxiv.org/pdf/2606.15846",
-    "first_seen": "2026-06-16T13:20:56-04:00",
-    "last_seen": "2026-06-16T13:20:56-04:00"
-  },
-  {
-    "arxiv_id": "2606.15659",
-    "version": "v1",
-    "title": "SpatialAvatar-0: High-Quality 4D Head Avatar with Multi-Stage Reconstruction",
-    "authors": [
-      "Yiran Wang",
-      "Zeyu Zhang",
-      "Yuanming Li",
-      "Ziming Wang",
-      "Yang Zhao"
-    ],
-    "abstract": "High-quality 4D head avatars from one or a few source portraits are central to telepresence, AR/VR, and digital-human interaction. 3D Gaussian Splatting (3DGS) has emerged as the dominant representation, with two complementary regimes (generalizable feed-forward predictors and per-subject refiners) maturing in parallel. However, existing feed-forward predictors are trained on a single dataset family with a hard-coded source count, inheriting the corresponding domain bias. Per-subject refiners require 300K--600K iterations and rely on adaptive densification that destroys upstream Gaussian layouts, preventing the two regimes from sharing a representation end-to-end. To bridge both regimes we propose SpatialAvatar-0 on a shared FLAME-mesh-bound Gaussian representation: a feed-forward generator with a parameter-free K-source mean-pool and a monocular-temporal to multi-view-spatial two-phase schedule that anchors against identity-prior collapse onto the smaller multi-view set. We further introduce a 10K-iter layout-preserving per-subject refinement loop that freezes the FLAME-binding and Gaussian count and replaces densification with a three-component anti-spike regularization. On VFHQ/HDTF cross-domain zero-shot we surpass the in-domain leader GAGAvatar by +1.5 dB PSNR despite never training on either test domain, and on the SplattingAvatar monocular benchmark we lead every reported metric, surpassing the 300K-iter GeoAvatar by +1.3 dB PSNR at up to 60x shorter per-subject schedule than common SOTA baselines. Website: https://spatialwalk.github.io/SpatialAvatar-0.",
-    "published": "2026-06-14T07:55:57Z",
-    "updated": "2026-06-14T07:55:57Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "Gaussian Splatting",
-      "3D Gaussian Splatting",
-      "3DGS",
-      "splatting",
-      "AR",
-      "VR"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: 3D Gaussian Splatting",
-      "Matched abstract keyword: 3DGS",
-      "Matched abstract keyword: splatting"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2606.15659",
-    "pdf_url": "https://arxiv.org/pdf/2606.15659",
     "first_seen": "2026-06-16T13:20:56-04:00",
     "last_seen": "2026-06-16T13:20:56-04:00"
   }
