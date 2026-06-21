@@ -11,9 +11,9 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：73
+- 当前滚动窗口论文数：72
 - 分类分布：
-  - Neural Scene Representations & Rendering: 25
+  - Neural Scene Representations & Rendering: 24
   - 3D Reconstruction & Multi-view Geometry: 20
   - Embodied / Robotics / AR Applications: 20
   - Geometry Foundation Models: 4
@@ -23,57 +23,57 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 科研趋势综合分析
 
-好的，这是基于您提供的论文列表生成的科研趋势综合分析报告。
+好的，作为你的科研趋势分析助手，我将根据你提供的论文列表，为你生成一份全面的中文科研趋势综合分析报告。
+
+---
 
 #### 今日主要趋势
 
-本次滚动窗口内的论文清晰地反映了以下几个核心趋势：
+基于今日滚动窗口内的论文，可以识别出以下几个主要科研趋势：
 
-1.  **结构性与物理先验的深度融合**：无论是3D场景理解还是传感器标定，研究者们正有意识地将显式的结构化先验注入到数据驱动的框架中。这体现在：
-    *   **几何先验**：如 `VisDom` 通过“可见域”将视觉外壳约束经典方法，`MMD-SLAM` 采用“亚特兰大世界假设”为SLAM提供主导方向，以及 `LIT-GS` 利用LiDAR平面约束优化高斯泼溅。
-    *   **物理先验**：如 `TaCauchy` 直接从有限元法（FEM）第一性原理计算力学场，`Modeling Branches` 则通过有限元仿真模拟植物软体的形变行为。
-    *   **对称性先验**：如 `SWAP` 将对称等变性作为网络架构的硬约束，以解决机器人跑酷中的学习效率问题。
-    **核心变化**：从单纯依赖数据量或网络容量，转向通过显式注入领域知识（几何、物理、对称性）来提升模型的泛化能力、数据效率和鲁棒性。
+1.  **高斯泼溅（3DGS）技术的深化与领域拓展（约40%论文涉及）**：3DGS不再仅仅是新视角合成的工具，而是被深度集成到更复杂的系统中。这主要表现为四大子趋势：
+    -   **作为几何代理的精确化**：多篇论文（LIT-GS, Geometry-Preserving for LiDAR-Camera Calibration， MMD-SLAM）不再满足于3DGS的渲染质量，而是致力于约束或优化其几何精度，使之能作为可靠的度量结构（metric geometry）或传感器标定（Calibration）的中间层。
+    -   **结构化先验的注入**：论文（MMD-SLAM， LIT-GS， VisDom）系统性地将经典几何假设（如Atlanta World假设、平面约束、可见域约束）注入3DGS或NeRF框架，以解决稀疏输入、光照变化等退化条件下的“幻觉”和几何漂移问题。
+    -   **跨模态传感器的融合**：3DGS正成为融合不同模态数据的强大工具。例如，LIT-GS融合了LiDAR-惯性-热成像，Geometry-Preserving标定框架融合了LiDAR-相机，表明GS是连接稀疏（LiDAR）与稠密（视觉/热）信息的理想桥梁。
+    -   **应用于非典型场景**：3DGS被创造性地应用于记录建筑现场“漂移”（Building Drift）和生成机器人操作训练数据（One Demo is Worth a Thousand Trajectories），显示出其作为通用场景表示方法的潜力。
 
-2.  **多模态融合从“拼接”走向“协同与解耦”**：多模态融合不再仅仅是简单的特征拼接，而是向着更深层次的、带约束的联合优化发展。
-    *   **协同优化**：`LIT-GS` 利用热成像替代视觉，并与LiDAR、惯性数据协同，通过跨模态锚点和联合BA来优化建图；`Geometry-Preserving 3DGS for Calibration` 则通过阻止光度梯度影响几何参数，保证了激光雷达度量的纯度。
-    *   **解耦表示**：`NeuMesh++` 在网格顶点上解耦几何、纹理和语义编码，支持独立的编辑；`3D-DLP` 则将场景学习为一组解耦的3D潜粒子（位置、尺寸、外观），以支持可控操作。
-    **核心变化**：融合的目标从“获得更丰富的特征”转变为“利用互补信息克服单一传感器的弱点，并保持各自信息的独特性与可解释性”。
+2.  **具身智能/机器人学中的空间推理与数据效率（约40%论文涉及）**：领域重心正从单一感知任务转移到具身环境下的决策和学习。这体现在：
+    -   **从二维感知到三维空间推理**：论文（S-Agent， Occ-VLM， OneCanvas）致力于让基础模型（VLM/LLM）具备“空间智能”，通过显式地构建3D几何先验（如占用网格、全景画布）或将推理过程重构为“时空证据累积”，来解决仅靠二维图像无法完成的计数、测量、相对位置判断等任务。
+    -   **提高数据效率**：面对机器人策略训练所需的海量数据，研究者正从结构和算法层面思考解决方案。SWAP通过引入对称性先验减少学习负担；One Demo is Worth a Thousand Trajectories通过3DGS生成合成数据实现数据增强；3D-DLP通过学习紧凑、解耦的3D物体表示来提升表征效率。
+    -   **高保真物理模拟**：对机器人操作任务，单纯视觉仿真已不足够。TaCauchy直接将有限元法（FEM）集成到主流仿真平台（Isaac Sim），实现从第一性原理计算力学真值，为触觉传感器和精细操作提供高保真训练环境。
 
-3.  **稀疏输入下的鲁棒性与泛化能力提升**：在少量视图或不完整数据条件下获得理想结果，已成为一个强驱动的挑战。
-    *   **稀疏重建**：`VisDom` 专门针对稀疏新视角合成，通过几何约束解决了过拟合和漂浮伪影问题。
-    *   **少量演示**：`One Demo is Worth a Thousand Trajectories` 通过数据增强，将一次真实演示转化为数千个可用于训练策略的虚拟轨迹，本质上是解决机器人学习中数据稀疏的问题。
-    *   **零样本/少样本泛化**：`SWAP` 展示了向未见过镜像地形和多样化户外环境的零样本迁移能力；`TIDY` 在零样本设置下评估其去噪泛化性能。
-    **核心变化**：研究重心正从“密集数据下的SOTA性能”向“稀疏、不完整、分布外情况下的鲁棒性”转移，追求更强的实用性和泛化能力。
-
-4.  **以物体/场景为中心的智能体认知范式兴起**：视觉与语言模型正从帧级的“感知”转向场景级别的“理解”和“推理”，形成智能体的核心认知模块。
-    *   **时空证据积累**：`S-Agent` 将空间推理建模为跨时间、跨视角的证据积累，超越了单帧预测。
-    *   **场景级占用与画布**：`Occ-VLM` 仅从2D图像重建3D占用作为先验，使VLM具备3D感知；`OneCanvas` 将所有视角特征投影到全景画布，使VLM能像理解2D图像一样理解3D场景。
-    *   **统一世界模型**：`Holo-World` 允许从单张图像出发，同时控制相机、物体和天气生成视频，体现了对世界动态的建模与理解。
-    **核心变化**：模型不再被动处理输入，而是主动构建和维护一个关于外部世界的统一、连续、可操作的内部表示（场景记忆、占用、画布），以此为基础进行推理和规划。
+3.  **大规模、特定场景数据集的构建与基准化**：高质量、大规模的数据集仍是推动领域进步的关键。CalTennis数据集（比现有MOCAP数据集大3倍）和S-Agent生成的S-300K轨迹数据集，共同展示了获取高质量3D标注或推理数据的新路径：
+    -   **无/低成本标注**：CalTennis利用多视角同步相机和自动化标定管线，实现“无标签”的真值生成，极大降低了数据获取门槛。
+    -   **合成数据训练**：S-Agent通过智能体生成高质量的空间推理轨迹（S-300K），再用此数据微调出更强的小模型（S-Agent-8B），证明“弱智能体生成数据->训练强模型”的可行性。
 
 #### 技术路线观察
 
-*   **3D Reconstruction & Multi-view Geometry**：本类论文呈现出“传统方法现代赋能”的特点。`CalTennis` 提供了大规模多视角基准，`TIDY` 和 `MMD-SLAM` 则分别在小波域和SLAM框架中融合了经典与深度学习技术。`Towards 3D karst underwater scene` 将SLAM与深度表面重建结合，解决特定领域的稀疏噪声问题。
-*   **Neural Scene Representations & Rendering**：此方向是本次论文的主力，技术路线呈现多元化。`VisDom` 和 `Geometry-Preserving 3DGS` 专注于优化高斯泼溅的几何保真度，解决其在稀疏或非视觉任务中的飘移问题。`3D-DLP` 和 `NeuMesh++` 则追求表示的**解耦与可编辑性**，前者学习物体级潜粒子，后者在网格上解耦属性。`One Demo is Worth a Thousand Trajectories` 则将渲染能力用于**数据增强**，服务于机器人学习。
-*   **Embodied / Robotics / AR Applications**：该方向侧重于将上述技术整合为**智能体的能力**。`S-Agent` 和 `OneCanvas` 构建场景理解与推理模块，`SWAP` 和 `Holo-World` 构建具备物理先验和世界动态模型的控制与生成模块。`TaCauchy` 和 `Modeling Branches` 则解决**物理交互的核心仿真问题**，服务于精细操作。
-*   **Geometry Foundation Models**：本批次中论文数量较少，`Evaluation of Image Matching for Art Skills Assessment` 属于较传统的应用评估，但反映了将几何特征（如SIFT）用于非标准任务（艺术评估）的尝试。
+这些论文在几何基础模型、3D/4D重建、神经场景表示、机器人/AR应用等方向上的技术侧重点呈现出显著差异：
+
+-   **感知与几何（专注于“理解是什么、在哪”）：**
+    -   **视觉SLAM与重建**：MMD-SLAM、CalTennis和Karst Underwater Reconstruction代表了这一经典研究方向。MMD-SLAM仍聚焦于提升重建精度；而CalTennis和Karst Reconstruction则更侧重于应用场景（体育分析、水下探测）的挑战。
+    -   **多模态传感器标定**：Geometry-Preserving for LiDAR-Camera Calibration 和 LIT-GS 都利用了GS作为跨模态桥梁，但前者侧重于纯几何标定，后者侧重于构建鲁棒的地图。
+    -   **图像匹配与去噪**：Evaluation of Image Matching 和 TIDY 属于较基础或辅助性的工作，为更高级的任务（如技能评估、后续估计）提供更稳定的输入。
+
+-   **场景表示与渲染（专注于“如何更好、更可控地呈现”）：**
+    -   **几何约束增强**：VisDom 和 MMD-SLAM 都致力于在NeRF/GS框架中引入经典几何约束（视觉外壳、结构线/面）来解决稀疏或退化问题，是提升鲁棒性的主流路径。
+    -   **解耦操控**：3D-DLP 和 NeuMesh++ 致力于将场景分解为解耦的（位置、纹理、语义）组件，以实现可控的场景生成和编辑，代表了从“被动渲染”向“主动操控”的转变。
+    -   **跨模态融合**：LIT-GS 是这一趋势的典型代表，它将热成像这一非可见光模态与传统的几何模态（LiDAR， IMU）结合，拓展了场景表示的鲁棒性和应用边界。
+
+-   **具身与智能体（专注于“如何利用”）：**
+    -   **代理与推理**：S-Agent 和 OneCanvas 代表了一条“工具化”或“轻量化”路线，即不修改VLM的骨干网络，而是通过外挂工具（空间专家、全景画布）来赋予其空间推理能力。这种方法更灵活，性价比高。
+    -   **模型内化结构**：SWAP 和 Occ-VLM 代表了一条“内化”路线，即将几何先验（对称性、占用）直接设计到模型架构或学习目标中，从根本上提升模型的几何感知和泛化能力。
+    -   **数据驱动与仿真**：HoloWorld、One Demo...、TaCauchy 侧重通过数据生成或仿真来增强模型。HoloWorld和One Demo...利用视频/场景生成模型进行数据增强；TaCauchy则通过提升仿真精度来提升机器人学习效果。
 
 #### 值得优先阅读的论文
 
-1.  **`VisDom: Sparse Novel View Synthesis with Visible Domain Constraint`**
-    *   **理由**：直接回应了当前3D视觉研究的核心痛点之一——稀疏输入下的重建。它是一种**无学习**的几何约束，可作为即插即用模块，理论普适性强。其思想源于经典的视觉外壳，但应用在最新的NeRF和GS框架中，体现了“旧瓶装新酒”的智慧，很可能成为后续稀疏重建工作的一个强基线。
+1.  **S-Agent**：本文极具启发性。它清晰地展示了如何通过“工具调用”+“记忆机制”将无空间推理能力的VLM打造成强大的空间智能体，代表了当前“大模型+外部工具”范式的成功案例。其对空间推理任务（计数、测量）的基准测试和生成的S-300K数据集具有很高的复现和迁移价值。
+2.  **SWAP**：本文在机器人领域取得了可验证的物理突破（世界纪录）。它将“对称等变性”这一抽象数学概念具体化为可操作的网络结构设计，并证明了其对模型泛化能力和学习效率的巨大提升。是“先验设计”路线极具说服力的证据。
+3.  **LIT-GS**：本文代表了3DGS走向“模态融合”和“鲁棒化”的前沿。它系统地解决了极弱光/无纹理环境下的建图难题，提出了跨模态锚定、联合BA、平面正则化渲染等一系列新思路，对于从事自动驾驶、全天候机器人作业的研究者具有标杆意义。
+4.  **MMD-SLAM**：这篇论文在经典SLAM任务上取得了巨大性能提升（ATE RMSE降低48.56%），表明结合结构先验（Atlanta World, 点-线融合）依然是提升3DGS-SLAM系统性能的有效且关键路径。它是3DGS-SLAM方向的重要进展。
+5.  **CalTennis**：除了数据集本身，本文提出的“低成本、标准化的多视角数据采集与评估协议”的价值可能不亚于数据集本身。它为如何构建真正的“野外（in-the-wild）”3D姿态估计基准提供了范本，解决了一直困扰该领域的真值获取难题。
 
-2.  **`S-Agent: Spatial Tool-Use Elicits Reasoning for Spatial Intelligence`**
-    *   **理由**：代表了将VLM用于空间智能的**新范式**。它不追求一个模型解决所有问题，而是将VLM作为“规划器”，调度一系列专业工具（2D检测、3D提升、几何推理）。这种“智能体+工具”的架构具有很强的**可扩展性**和**可解释性**，未来可以轻松集成新的工具。该论文提出的“时空证据累积”认知框架对后续研究很有启发性。
-
-3.  **`SWAP: Symmetric Equivariant World-Model for Agile Robot Parkour`**
-    *   **理由**：在机器人领域取得了**显著的实证突破**（破纪录的性能）。更重要的是，它展示了**在模型架构层面融入物理先验（对称性）** 的巨大潜力。这不仅节省了数据、提升了泛化能力，还提供了一种有效对抗样本的途径。对于关注机器人控制、几何深度学习的研究者来说，这是一篇必读论文。
-
-4.  **`LIT-GS: LiDAR-Inertial-Thermal Gaussian Splatting for Illumination-Robust Mapping`**
-    *   **理由**：是**多模态融合**、特别是如何利用“非传统”模态（热成像）解决典型弱视觉场景（光照变化、低纹理）的杰出范例。其“置信度感知跨模态锚定”和“LiDAR平面正则化”的思路非常巧妙，为在恶劣环境下的SLAM和建图提供了可行的技术路线。与 `Geometry-Preserving 3DGS for Calibration` 对比阅读，能更深入地理解3DGS在多模态系统中的几何扮演的角色。
-
-5.  **`OneCanvas: 3D Scene Understanding via Panoramic
+####
 
 ### interests.md 指令分析
 
@@ -2696,56 +2696,6 @@ Consumer-level applications require fast optimization of 3D Gaussian Splatting (
 
 </details>
 
-#### 2026-06-14 - EmoZone-Talker: Regional Semantic Control of Audio-Driven 3DGS Talking Heads via Facial Action Units
-
-**Authors:** Tingting Chen, Shaojun Wang, Huaye Zhang, Diqiong Jiang, Chenglizhao Chen
-**Links:** [abs](https://arxiv.org/abs/2606.15848) - [pdf](https://arxiv.org/pdf/2606.15848)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** None
-**Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, rendering, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：EmoZone-Talker: Regional Semantic Control of Audio-Driven 3DGS Talking Heads via Facial Action Units
-- 作者：Tingting Chen, Shaojun Wang, Huaye Zhang, Diqiong Jiang, Chenglizhao Chen
-- 出版日期：2026-06-14
-- 分类：Neural Scene Representations & Rendering
-- 链接：https://arxiv.org/abs/2606.15848
-
-### 一句话总结
-本文提出EmoZone-Talker框架，通过区域语义控制和面部动作单元（AU），解决音频驱动3DGS说话头在表情控制中的空间纠缠和时间不稳定问题，实现精细、可解释的面部动画。
-
-### 研究问题
-如何在高保真音频驱动的3DGS说话头合成中，实现精细、可编辑且时空稳定的面部表情控制，克服语音驱动动态与显式表情信号之间的内在冲突。
-
-### 核心思路/方法
-1. 提出 **Synergy Zones with Prioritized Attention Bias (SZ-PAB)**，利用解剖先验约束区域级模态贡献，显式解耦音频和表情信号的贡献。
-2. 提出 **Channel-Independent Temporal AU Encoder (CIT-AE)**，对动作单元（AU）的时序动态进行独立通道建模，保证时间一致性。
-3. 将上述解耦的区域AU表示集成到3D高斯变形中，实现精确、可解释的面部表情控制。
-
-### 主要贡献
-- 将音频驱动面部动画重新构造为跨模态冲突下的结构化时空协调问题。
-- 提出SZ-PAB和CIT-AE两种模块，实现显式的空间解耦和时序动态建模。
-- 实验表明，该方法在表情可控性、真实感、上脸精确度和时间一致性上均有提升，同时保持高渲染质量和准确唇同步。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-**高**
-理由：该工作针对3DGS说话头合成中的关键问题（表情控制的可解释性与时空稳定性），提出了结构化的新框架，实验效果显著，且代码将开源，对领域研究和应用有重要参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-3D Gaussian Splatting (3DGS) has shown strong potential for high-fidelity talking head synthesis. However, enabling fine-grained, interpretable, and editable facial expression control remains fundamentally challenging due to intrinsic conflicts between speech-driven facial dynamics and explicit expression signals. Existing methods rely on implicit multimodal fusion, leading to spatial entanglement and temporal instability. We present EmoZone-Talker, a novel framework that reformulates audio-driven facial animation as a structured spatial-temporal coordination problem under cross-modal conflicts. Our approach introduces an explicit spatial disentanglement and temporal dynamics modeling of facial motion. Specifically, we propose Synergy Zones with Prioritized Attention Bias (SZ-PAB) to explicitly decouple modality contributions via region-wise constraints guided by anatomical priors, and a Channel-Independent Temporal AU Encoder (CIT-AE) to model temporally coherent AU dynamics. By integrating these representations into 3D Gaussian deformation, EmoZone-Talker enables precise and interpretable control over facial expressions. Extensive experiments demonstrate that our method improves expression controllability and realism, with notable gains in upper-face accuracy and temporal coherence, while preserving high rendering quality and accurate lip synchronization. Code will be publicly released to facilitate reproducibility and further research.
-
-</details>
-
 ## Embodied / Robotics / AR Applications
 
 ### 2026-06
@@ -3702,54 +3652,6 @@ Registering two captures of the same indoor space taken at different times under
 <summary>Abstract</summary>
 
 Humans naturally understand object physics through everyday interactions, but faithfully predicting complex deformable dynamics, such as elastic materials and fabrics, remains a major challenge for computer vision and robotics. We present EgoPhys, a framework that constructs deformable physical digital twins from egocentric RGB-only video using generalizable priors. EgoPhys overcomes the limitations of existing methods to enable controllable deformable digital twin generation from egocentric videos by distilling per-object inverse-physics solutions into a compact codebook, enabling prediction of dense spring stiffness fields for unseen objects without per-spring test-time optimization. Trained with generalizable priors from diverse egocentric interactions, EgoPhys outperforms baselines in reconstruction, future prediction, and zero-shot generalization. To support training and evaluation, we curate an egocentric interaction dataset covering diverse deformable objects, scenes, and manipulation styles. We deploy EgoPhys on a real xArm6 robot, demonstrating that a digital twin initialized from a single egocentric human play video can serve as an internal world representation to aid in deformable-object planning, highlighting egocentric RGB observations as a scalable path toward real-to-sim pipelines.
-
-</details>
-
-#### 2026-06-14 - FlashNav: Ultra-Fast Policy Training for Robot Navigation within 20 Seconds
-
-**Authors:** Shanze Wang, Yiwei Qian, Xinming Zhang, Jun Xue, Siwei Cheng, Xianghui Wang, Qingyuan Hu, Xiaoyu Shen, Wei Zhang
-**Links:** [abs](https://arxiv.org/abs/2606.15846) - [pdf](https://arxiv.org/pdf/2606.15846)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** rendering, robot navigation, simulation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：FlashNav: Ultra-Fast Policy Training for Robot Navigation within 20 Seconds
-- 作者：Shanze Wang, Yiwei Qian, Xinming Zhang, Jun Xue, Siwei Cheng, Xianghui Wang, Qingyuan Hu, Xiaoyu Shen, Wei Zhang
-- 出版日期：2026-06-14
-- 分类：Embodied / Robotics / AR Applications
-- 链接：论文摘要 | 论文PDF
-
-### 一句话总结
-FlashNav提出一种GPU优先的深度强化学习导航训练框架，将策略训练时间缩短至20秒以内，并能在真实轮式和足式机器人上部署。
-
-### 研究问题
-如何大幅降低基于深度强化学习的机器人导航策略的训练时间（从数小时/天缩短至秒级），同时保持策略的可部署性和避障性能。
-
-### 核心思路/方法
-核心思路是让仿真环境紧密对齐导航马尔可夫决策过程（MDP），剥离不必要的渲染和高保真物理细节，只保留速度级导航必需组件（占据几何、范围传感、目标条件控制、机器人运动动力学、碰撞处理、终止和重置）。具体实现上，基于批量化位图仿真器和全GPU驻留训练流水线（FastDSAC学习器），完全在GPU上生成大规模并行导航转移样本。
-
-### 主要贡献
-1. 提出首个将基于DRL的机器人导航策略训练时间降至秒级的框架，最快部署策略训练时间少于20秒。
-2. 通过实验在TurtleBot2和Unitree Go2上展示：在RTX 5090上20秒内达到100%成功率；在多个桌面GPU上训练时间保持在几十秒内。
-3. 验证了学得的策略可直接迁移到物理轮式和足式机器人上，在静态和动态室内场景中均有效。
-
-### 局限性
-摘要未提供关于方法在复杂动态场景、多障碍物环境或不同传感器配置下的泛化能力；也未提及与其他基线方法的详细对比指标或失败案例。摘要未提供足够信息。
-
-### 阅读优先级
-**高**  
-理由：该工作显著降低了机器人导航中深度强化学习的训练时间瓶颈（从小时级到秒级），且进行了真实机器人部署验证，对机器人应用领域具有较强实用价值和启发性。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Deep reinforcement learning has shown strong potential for robot navigation, but its practical deployment is still limited by the long wall-clock cost of policy training. This paper presents FlashNav, a GPU-first framework for ultra-fast range-based robot navigation training. To the best of our knowledge, FlashNav is the first DRL-based robot navigation framework that reaches seconds-level policy training, with the fastest deployable policy trained in less than 20 seconds. The key idea is to align simulation with the navigation MDP: FlashNav preserves the essential components for velocity-level navigation, including occupancy geometry, range sensing, goal-conditioned control, robot motion dynamics, collision handling, termination, and reset, while removing unnecessary rendering and high-fidelity physical details from the training loop. Built on a batched bitmap simulator and a fully GPU-resident training pipeline with our FastDSAC learner, FlashNav generates massive parallel navigation transitions entirely on GPU. Experiments on TurtleBot2 and Unitree Go2 show that FlashNav achieves a 100\% success-rate below 20 seconds on an RTX 5090 and remains within tens of seconds across desktop GPUs. The learned policies further transfer to physical wheeled and legged robots in static and dynamic indoor scenes, demonstrating that DRL-based navigation can be trained at seconds-level speed while preserving deployable obstacle-avoidance behavior.
 
 </details>
 
