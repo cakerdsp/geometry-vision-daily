@@ -11,69 +11,58 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：72
+- 当前滚动窗口论文数：53
 - 分类分布：
-  - Neural Scene Representations & Rendering: 24
-  - 3D Reconstruction & Multi-view Geometry: 20
-  - Embodied / Robotics / AR Applications: 20
-  - Geometry Foundation Models: 4
+  - 3D Reconstruction & Multi-view Geometry: 16
+  - Neural Scene Representations & Rendering: 16
+  - Embodied / Robotics / AR Applications: 15
   - Dynamic / 4D Reconstruction: 4
+  - Geometry Foundation Models: 2
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-好的，作为你的科研趋势分析助手，我将根据你提供的论文列表，为你生成一份全面的中文科研趋势综合分析报告。
+好的，这是基于您提供的论文列表（今日滚动窗口）的中文科研趋势综合分析。
 
 ---
 
 #### 今日主要趋势
 
-基于今日滚动窗口内的论文，可以识别出以下几个主要科研趋势：
+1.  **探索“几何先验”与“结构注入”以克服数据稀疏性与环境退化**：多个工作表现出从纯数据驱动向融入强几何先验的明确转变。例如，**VisDom** 引入了无需学习的“可见域”约束来辅助稀疏视图重建，**MMD-SLAM** 利用“亚特兰大世界”假设和多元高斯表征来增强SLAM的结构一致性，而 **LIT-GS** 则注入LiDAR平面几何约束来克服光照和纹理缺失问题。这反映了社区正努力通过显式几何知识来弥补数据不足或质量不佳时的信息鸿沟。
 
-1.  **高斯泼溅（3DGS）技术的深化与领域拓展（约40%论文涉及）**：3DGS不再仅仅是新视角合成的工具，而是被深度集成到更复杂的系统中。这主要表现为四大子趋势：
-    -   **作为几何代理的精确化**：多篇论文（LIT-GS, Geometry-Preserving for LiDAR-Camera Calibration， MMD-SLAM）不再满足于3DGS的渲染质量，而是致力于约束或优化其几何精度，使之能作为可靠的度量结构（metric geometry）或传感器标定（Calibration）的中间层。
-    -   **结构化先验的注入**：论文（MMD-SLAM， LIT-GS， VisDom）系统性地将经典几何假设（如Atlanta World假设、平面约束、可见域约束）注入3DGS或NeRF框架，以解决稀疏输入、光照变化等退化条件下的“幻觉”和几何漂移问题。
-    -   **跨模态传感器的融合**：3DGS正成为融合不同模态数据的强大工具。例如，LIT-GS融合了LiDAR-惯性-热成像，Geometry-Preserving标定框架融合了LiDAR-相机，表明GS是连接稀疏（LiDAR）与稠密（视觉/热）信息的理想桥梁。
-    -   **应用于非典型场景**：3DGS被创造性地应用于记录建筑现场“漂移”（Building Drift）和生成机器人操作训练数据（One Demo is Worth a Thousand Trajectories），显示出其作为通用场景表示方法的潜力。
+2.  **以物体为中心的可控生成与场景理解成为核心驱动力**：许多论文致力于从单一的“重建”任务转向更具智能性的“理解”和“生成”。**Holo-World** 统一了相机、物体和天气控制，实现世界状态转移的视频生成；**3D-DLP** 通过自监督学习将场景分解为可操作、解耦的3D潜粒子；而 **S-Agent** 和 **OneCanvas** 则构建了能让大语言模型进行空间推理的新范式。这表明研究焦点正从“它长什么样”转向“它是什么、在哪里、怎么变”。
 
-2.  **具身智能/机器人学中的空间推理与数据效率（约40%论文涉及）**：领域重心正从单一感知任务转移到具身环境下的决策和学习。这体现在：
-    -   **从二维感知到三维空间推理**：论文（S-Agent， Occ-VLM， OneCanvas）致力于让基础模型（VLM/LLM）具备“空间智能”，通过显式地构建3D几何先验（如占用网格、全景画布）或将推理过程重构为“时空证据累积”，来解决仅靠二维图像无法完成的计数、测量、相对位置判断等任务。
-    -   **提高数据效率**：面对机器人策略训练所需的海量数据，研究者正从结构和算法层面思考解决方案。SWAP通过引入对称性先验减少学习负担；One Demo is Worth a Thousand Trajectories通过3DGS生成合成数据实现数据增强；3D-DLP通过学习紧凑、解耦的3D物体表示来提升表征效率。
-    -   **高保真物理模拟**：对机器人操作任务，单纯视觉仿真已不足够。TaCauchy直接将有限元法（FEM）集成到主流仿真平台（Isaac Sim），实现从第一性原理计算力学真值，为触觉传感器和精细操作提供高保真训练环境。
+3.  **多模态融合从“互补”走向“协同约束”**：传统的多模态融合多是特征层面的拼接或视角下的互补。当前趋势是让不同模态的数据（如LiDAR、热成像、惯性测量）在几何或物理层面形成联合约束。**LIT-GS** 让LiDAR的平面几何和热成像的视觉信息通过跨模态锚定和联合光束法平差相互校准；**Geometry-Preserving in 3DGS for Calibration** 则旨在让基于图像的3DGS代理几何与LiDAR的度量几何保持一致，而非各说各话。这种“协同约束”比简单的“数据堆叠”更具鲁棒性和物理一致性。
 
-3.  **大规模、特定场景数据集的构建与基准化**：高质量、大规模的数据集仍是推动领域进步的关键。CalTennis数据集（比现有MOCAP数据集大3倍）和S-Agent生成的S-300K轨迹数据集，共同展示了获取高质量3D标注或推理数据的新路径：
-    -   **无/低成本标注**：CalTennis利用多视角同步相机和自动化标定管线，实现“无标签”的真值生成，极大降低了数据获取门槛。
-    -   **合成数据训练**：S-Agent通过智能体生成高质量的空间推理轨迹（S-300K），再用此数据微调出更强的小模型（S-Agent-8B），证明“弱智能体生成数据->训练强模型”的可行性。
+4.  **从“仿真到现实”的精细化与低成本化**：具身智能的仿真需求正从“视觉真实”走向“物理真实”和“数据有效”。**TaCauchy** 在Isaac Sim中实现了基于第一性原理的精确触觉力场仿真，提升了仿真的物理保真度；**One Demo is Worth a Thousand Trajectories** 则反其道而行之，通过鱼眼高斯泼溅和轨迹优化，力求从单次演示中生成大量有效训练数据，降低数据采集成本。这代表了两种不同的方法论：一种是增强仿真保真度，另一种是提升真实数据的利用效率。
+
+5.  **针对“非理想”环境的专用鲁棒重建方法兴起**：通用方法在实验室场景表现优异，但在室内、水下等退化环境中失效。**TIDY** 专门针对热红外图像的低对比度和多类型噪声问题，提出了小波域去噪方法；**Towards 3D karst underwater scene reconstruction** 则针对声纳数据的稀疏、噪声和传感器漂移，开发了结合SLAM与深度学习的水下管道重建流水线。这标志着领域正从“针对数据集”的优化，转向应对实际部署中的具体、极端挑战。
 
 #### 技术路线观察
 
-这些论文在几何基础模型、3D/4D重建、神经场景表示、机器人/AR应用等方向上的技术侧重点呈现出显著差异：
+- **几何基础模型 (Geometry Foundation Models)**: 本日列表中相关论文较少。**Evaluation of Image Matching for Art Skills Assessment** 工作较为传统，主要对比了SIFT和孪生网络。这暗示该方向基础模型的影响力已经渗透到下游任务，而自身“基础性”的突破性工作可能并不在本次列表中。
 
--   **感知与几何（专注于“理解是什么、在哪”）：**
-    -   **视觉SLAM与重建**：MMD-SLAM、CalTennis和Karst Underwater Reconstruction代表了这一经典研究方向。MMD-SLAM仍聚焦于提升重建精度；而CalTennis和Karst Reconstruction则更侧重于应用场景（体育分析、水下探测）的挑战。
-    -   **多模态传感器标定**：Geometry-Preserving for LiDAR-Camera Calibration 和 LIT-GS 都利用了GS作为跨模态桥梁，但前者侧重于纯几何标定，后者侧重于构建鲁棒的地图。
-    -   **图像匹配与去噪**：Evaluation of Image Matching 和 TIDY 属于较基础或辅助性的工作，为更高级的任务（如技能评估、后续估计）提供更稳定的输入。
+- **3D/4D 重建与多视图几何**: 该方向的重心明显从“理论方法”转向“具体场景挑战”。**CalTennis** 和 **水下岩溶重建** 代表了两个极端：一个提供大规模高质量基准，聚焦于人体运动分析；另一个则聚焦于高度噪声和稀疏数据的科学勘探。两者都强调了SLAM或多视图几何与特定领域挑战（如运动员快速运动、水下环境）的结合。
 
--   **场景表示与渲染（专注于“如何更好、更可控地呈现”）：**
-    -   **几何约束增强**：VisDom 和 MMD-SLAM 都致力于在NeRF/GS框架中引入经典几何约束（视觉外壳、结构线/面）来解决稀疏或退化问题，是提升鲁棒性的主流路径。
-    -   **解耦操控**：3D-DLP 和 NeuMesh++ 致力于将场景分解为解耦的（位置、纹理、语义）组件，以实现可控的场景生成和编辑，代表了从“被动渲染”向“主动操控”的转变。
-    -   **跨模态融合**：LIT-GS 是这一趋势的典型代表，它将热成像这一非可见光模态与传统的几何模态（LiDAR， IMU）结合，拓展了场景表示的鲁棒性和应用边界。
+- **神经场景表示与渲染 (NeRF/3DGS)**: 这是今天最为活跃的方向之一，但焦点已从“新视角合成”转向了“面向下游任务的服务性表示”。**VisDom** 和 **Geometry-Preserving in 3DGS** 致力于让3DGS的几何更准确，服务于标定和重建；**MMD-SLAM** 将其作为SLAM建图的组件；**NeuMesh++** 则将其与网格结合，实现可编辑的表示；**3D-DLP** 将其分解为可用于机器人操控的“物体粒子”。3DGS几乎已成为“场景几何代理”的默认选项，研究者更多精力放在如何“捆绑”或“调整”这个代理以解决特定问题（如SLAM、标定、编辑、操控）。
 
--   **具身与智能体（专注于“如何利用”）：**
-    -   **代理与推理**：S-Agent 和 OneCanvas 代表了一条“工具化”或“轻量化”路线，即不修改VLM的骨干网络，而是通过外挂工具（空间专家、全景画布）来赋予其空间推理能力。这种方法更灵活，性价比高。
-    -   **模型内化结构**：SWAP 和 Occ-VLM 代表了一条“内化”路线，即将几何先验（对称性、占用）直接设计到模型架构或学习目标中，从根本上提升模型的几何感知和泛化能力。
-    -   **数据驱动与仿真**：HoloWorld、One Demo...、TaCauchy 侧重通过数据生成或仿真来增强模型。HoloWorld和One Demo...利用视频/场景生成模型进行数据增强；TaCauchy则通过提升仿真精度来提升机器人学习效果。
+- **具身 / 机器人 / AR 应用**: 该方向呈现出强烈的“端到端”和“智能体”倾向。**S-Agent** 和 **Holo-World** 都试图构建能从视觉信息推导并执行复杂空间推理的智能体。机器人工作如 **SWAP** 强调通过结构先验（对称性）提升样本效率和泛化能力。此外，**Occ-VLM** 和 **OneCanvas** 代表了两种为VLM注入空间感知的路径：前者通过重建3D占用作为中介，后者通过特征重投影将3D坐标“内化”到2D骨干中。
 
 #### 值得优先阅读的论文
 
-1.  **S-Agent**：本文极具启发性。它清晰地展示了如何通过“工具调用”+“记忆机制”将无空间推理能力的VLM打造成强大的空间智能体，代表了当前“大模型+外部工具”范式的成功案例。其对空间推理任务（计数、测量）的基准测试和生成的S-300K数据集具有很高的复现和迁移价值。
-2.  **SWAP**：本文在机器人领域取得了可验证的物理突破（世界纪录）。它将“对称等变性”这一抽象数学概念具体化为可操作的网络结构设计，并证明了其对模型泛化能力和学习效率的巨大提升。是“先验设计”路线极具说服力的证据。
-3.  **LIT-GS**：本文代表了3DGS走向“模态融合”和“鲁棒化”的前沿。它系统地解决了极弱光/无纹理环境下的建图难题，提出了跨模态锚定、联合BA、平面正则化渲染等一系列新思路，对于从事自动驾驶、全天候机器人作业的研究者具有标杆意义。
-4.  **MMD-SLAM**：这篇论文在经典SLAM任务上取得了巨大性能提升（ATE RMSE降低48.56%），表明结合结构先验（Atlanta World, 点-线融合）依然是提升3DGS-SLAM系统性能的有效且关键路径。它是3DGS-SLAM方向的重要进展。
-5.  **CalTennis**：除了数据集本身，本文提出的“低成本、标准化的多视角数据采集与评估协议”的价值可能不亚于数据集本身。它为如何构建真正的“野外（in-the-wild）”3D姿态估计基准提供了范本，解决了一直困扰该领域的真值获取难题。
+1.  **VisDom**：高度推荐。它提供了一种极其简洁且效果显著的方法（无学习的可见域约束），可以无缝集成到NeRF和3DGS中，为解决稀疏视图下的几何模糊性问题提供了新思路。其“无需学习”的特性具有很高的实用价值。
+2.  **MMD-SLAM**：推荐。它将结构先验（亚特兰大世界假设）与3DGS SLAM融合得非常深入，不仅用于建图，还用于姿态优化，实现了性能的大幅提升。这对于研究鲁棒SLAM的学者是必读工作。
+3.  **S-Agent**：推荐。它代表了一种非常有潜力的“VLM + 空间工具”范式，通过将空间推理分解为证据累积过程，有效弥补了VLM在3D空间认知上的短板。这是理解当前“空间智能”前沿的重要论文。
+4.  **Occ-VLM**：推荐。它提出了一个简洁优雅的框架，通过一个辅助的3D占用预测头，将3D空间感知“蒸馏”回2D视觉编码器的特征中，是解决“2D深度网络如何理解3D”问题的一个巧妙尝试。
+5.  **One Demo is Worth a Thousand Trajectories** ：推荐。它直击机器人学习中数据获取的痛点，利用3DGS和轨迹优化，从单次演示中生成大规模增强数据，对于从事机器人模仿学习和数据高效泛化的研究者极具启发价值。
 
-####
+#### 可能的研究机会
+
+1.  **动态对象与几何先验的结合**：**MMD-SLAM**和**VisDom**等证明了静态场景中几何先验的有效性。如何将此类显式或隐式几何约束（如结构线、平面、对称性）融合到**CalTennis**这类对动态人体进行重建的任务中，以解决深度估计不准和运动模糊问题，尚未被充分探索。
+2.  **稀疏感知下的多模态协同**：**LIT-GS**展示了LiDAR-热-惯性的协同约束在弱光环境下的威力。一个潜在方向是探索这种“协同约束”思想，例如结合WiFi、声纳、LiDAR等多种低成本传感器，在**稀疏视觉输入**（如单目、极少视角）下，实现对结构化场景（如室内、矿区）的鲁棒建图与重建。
+3.  **面向“操作”的物体表示学习**：**3D-DLP** 和 **One Demo...** 都表明，将场景表示为可操作的对象（粒子、轨迹）是赋能机器人泛化能力的关键。未来可以研究如何将 **NeuMesh++** 中的解耦编辑能力（几何、纹理、语义）与 **3D-DLP** 的学习框架结合，学习一个既可用于机器人抓取又能进行人机交互式场景编辑的“统一物体表示”。
+4.  **“
 
 ### interests.md 指令分析
 
@@ -2740,59 +2729,6 @@ Spatial generalization is critical for imitation-learned manipulation policies, 
 <summary>Abstract</summary>
 
 We introduce Qwen-RobotWorld, a language-conditioned video world model for embodied intelligence. With natural language as a unified action interface, it predicts physically grounded future visual trajectories from current observations across robotic manipulation, autonomous driving, indoor navigation, and human-to-robot transfer. This unified formulation provides three promising application directions: synthetic data generation for policy training augmentation, scalable virtual environments for policy evaluation, and language-guided planning signals for downstream robot control. This is achieved through a three-part design: a) Double-Stream MMDiT with MLLM Action Encoding, where a 60-layer double-stream diffusion transformer couples frozen Qwen2.5-VL semantics with video-VAE latents through layer-wise joint attention; b) Embodied World Knowledge (EWK), an 8.6M video-text corpus (200M+ frames) with action-language mapping over 20+ embodiments and 500+ action categories; and c) General+Expert Progressive Curriculum, a two-stage training strategy that first learns general visual priors and then injects embodied specialization under a shared language interface. Extensive results show strong competitiveness: ranks 1st overall on EWMBench and DreamGen Bench, outperforms all open-source models on WorldModelBench and PBench. Additional zero-shot analyses on RoboTwin-IF benchmark further support robust generalization and multi-view consistency.
-
-</details>
-
-#### 2026-06-15 - DreamX-World 1.0: A General-Purpose Interactive World Model
-
-**Authors:** DreamX Team, Yancheng Bai, Rui Chen, Xiangxiang Chu, Rujing Dang, Hao Dou, Bingjie Gao, Qiwen Gu, Siyu Hong, Jiachen Lei, Geng Li, Jifan Li, Ruimin Lin, Qingfeng Shi, Bingze Song, Lei Sun, Jing Tang, Ruitian Tian, Jun Wang, Jiahong Wu, Pengfei Zhang, Shen Zhang, Jiashu Zhu
-**Links:** [abs](https://arxiv.org/abs/2606.16993) - [pdf](https://arxiv.org/pdf/2606.16993)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** rendering, world model
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：DreamX-World 1.0: A General-Purpose Interactive World Model
-- 作者：DreamX Team, Yancheng Bai, Rui Chen, Xiangxiang Chu, Rujing Dang, Hao Dou, Bingjie Gao, Qiwen Gu, Siyu Hong, Jiachen Lei, Geng Li, Jifan Li, Ruimin Lin, Qingfeng Shi, Bingze Song, Lei Sun, Jing Tang, Ruitian Tian, Jun Wang, Jiahong Wu, Pengfei Zhang, Shen Zhang, Jiashu Zhu
-- 出版日期：2026-06-15
-- 分类：Embodied / Robotics / AR Applications
-- 链接：https://arxiv.org/abs/2606.16993
-
-### 一句话总结
-DreamX-World 1.0是一个通用的交互式文本/图像到视频世界模型，支持可控的长时序生成，在5秒基础评测中总体得分84.76，优于HY-WorldPlay 1.5和LingBot-World。
-
-### 研究问题
-如何构建一个通用、可控、支持长时序交互的世界模型，同时实现相机导航、事件控制、多域生成（逼真、游戏风格、风格化）和高帧率推理。
-
-### 核心思路/方法
-1. **数据引擎**：结合相机精确的Unreal Engine渲染、动作丰富的游戏录像和恢复相机几何的真实世界视频。
-2. **相机控制**：提出E-PRoPE，一种轻量级投影位置编码变体，在保持PRoPE投影几何的同时进行相机感知注意力。
-3. **自回归世界模型**：通过因果强制、DMD风格蒸馏和长序列训练，将双向视频生成器转化为几步自回归世界模型。
-4. **记忆条件场景持久性**：通过基于相机几何的检索恢复早期视图，减少跨自回归块的颜色漂移。
-5. **事件指令微调**：添加可组合的事件控制；强化学习对齐恢复蒸馏后的相机控制和视觉质量。
-6. **高效推理**：混合精度DiT、残差重用、75%剪枝VAE解码和异步流水线并行，在8块RTX 5090上达到16 FPS。
-
-### 主要贡献
-- 提出通用交互式世界模型，支持长时序、相机控制和事件指令。
-- 引入E-PRoPE编码和记忆条件场景持久性机制，提升长时序生成稳定性。
-- 通过训练和推理优化（蒸馏、残差重用、剪枝等）实现16 FPS实时推理。
-- 在5秒评测中取得84.76总分，优于对比方法。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-**中**。理由：该工作针对世界模型的可控生成和高效推理有明确技术贡献，适合关注交互式视频生成、世界模型或实时推理的读者；但摘要未列出具体实验设置和基线对比细节，作为应用方向的论文，重要程度中等。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-DreamX-World 1.0 is a general-purpose interactive text/image-to-video world model for controllable long-horizon generation. It supports camera navigation, revisits to previously observed regions, and promptable events across photorealistic, game-style, and stylized domains. Our data engine combines camera-accurate Unreal Engine rendering, action-rich gameplay recordings, and real-world videos with recovered camera geometry. For camera control, we introduce E-PRoPE, a lightweight variant of projective positional encoding that retains PRoPE's projective camera geometry while applying camera-aware attention to spatially reduced tokens. We convert a bidirectional video generator into a few-step autoregressive world model using causal forcing, DMD-style distillation, and long-rollout training. Training on self-generated long-horizon contexts exposes the model to its own generated history and reduces the style and color drift that accumulates across autoregressive chunks. Memory-Conditioned Scene Persistence retrieves earlier views through camera-geometry-based retrieval, while residual recycling makes the conditioning path less sensitive to imperfect memory latents. Event Instruction Tuning adds composable event control, and reinforcement learning alignment recovers camera control and visual quality after distillation. With mixed-precision DiT execution, residual reuse, 75\%-pruned VAE decoding, and asynchronous pipeline parallelism, DreamX-World 1.0 reaches up to 16\,FPS on eight RTX\,5090 GPUs. On our 5-second basic evaluation, DreamX-World 1.0 achieves a camera-control score of 73.75 and an overall score of 84.76, outperforming HY-WorldPlay 1.5 and LingBot-World in overall score, which achieve 80.79 and 80.45, respectively.
 
 </details>
 
