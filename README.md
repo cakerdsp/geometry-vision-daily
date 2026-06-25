@@ -11,71 +11,58 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：68
+- 当前滚动窗口论文数：61
 - 分类分布：
   - Embodied / Robotics / AR Applications: 24
-  - Neural Scene Representations & Rendering: 20
-  - 3D Reconstruction & Multi-view Geometry: 13
+  - Neural Scene Representations & Rendering: 16
+  - 3D Reconstruction & Multi-view Geometry: 11
   - Dynamic / 4D Reconstruction: 6
-  - Geometry Foundation Models: 5
+  - Geometry Foundation Models: 4
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-好的，这是基于您提供的今日论文列表生成的科研趋势综合分析。
+好的，这是基于您提供的论文列表生成的中文科研趋势综合分析。
 
 ---
 
 #### 今日主要趋势
 
-1.  **从“生成外观”到“生成精确几何与可交互资产”：** 多项工作不再满足于生成逼真的视觉效果，而是追求具有精确几何和物理可操作性的3D表示。
-    *   **佐证论文：** `FLAT` 直接解码出三角形泼溅（显式表面），`ArtiTwinSplat` 重建可交互的数字孪生，`MM-TRELLIS` 和 `3DCarGen` 聚焦于自动驾驶中高质量、几何一致的车辆网格生成。
+1.  **SLAM 的“上下文”与“语义”时代全面来临**：传统的几何 SLAM 正快速向整合高级语义推理的“上下文感知”方向演进。今天多篇论文不再满足于仅优化位姿和稀疏点云，而是强调系统对场景的理解、推理和自适应能力。例如，**RoboAtlas** 通过 VLM 驱动探索与语义导航的动态平衡；**DSP-SLAM++** 追求高保真度的多类物体级建图；**VLM Reasoning for Intralogistics** 直接构建包含物体可移动性等上下文属性的地图；而 **OpenReLoc** 则完全依赖物体级表示进行重定位。这标志着 SLAM 正从一个纯粹的“几何重建引擎”转变为一个“场景理解与交互平台”。
 
-2.  **“重建”作为“生成”的校准器与评估者：** 3D重建技术不再仅仅是终端任务，而是被用作核心模块来提升生成模型的3D一致性，或作为诊断工具来评估其他模型的空间合理性。
-    *   **佐证论文：** `OrbitForge` 将3D重建作为“锚点”来指导视频补全和最终场景生成；`GeoT2V-Bench` 则反向利用重建来评估文本到视频模型的3D一致性，形成“生成-重建-评估”闭环。
+2.  **大型生成模型（扩散模型/VLM）成为 3D 领域的“核心引擎”**：无论是生成、重建还是应用，大型预训练模型（特别是视频扩散模型和 VLM）正取代传统的端到端学习范式，成为驱动 3D 视觉技术发展的核心基础设施。**PRISM** 和 **FLAT** 尝试直接从视频扩散模型的潜在空间中解码出几何基元（网格、三角形）；**OrbitForge** 则利用视频扩散模型作为先验来补全视图，从而实现文本到 3D 场景的生成。在应用中，**fARfetch** 和 **RoboAtlas** 均使用 VLM 进行实时的内容自适应和推理决策。这表明，利用这些模型的强大先验知识，正从“提供能力”走向“集成到骨干网络”。
 
-3.  **“鲁棒性与效率”成为3DGS应用落地的关键瓶颈：** 尽管3D高斯泼溅（3DGS）是主流，但现有方法在内存消耗和面向特定应用的鲁棒性上存在显著不足，催生了针对性的优化方案。
-    *   **佐证论文：** `Pocket-SLAM` 专注于解决3DGS-SLAM在大规模场景下的显存爆炸问题；`SignNet-1M` 通过数据增强提升模型在现实分布偏移下的鲁棒性；`Geometry-Aware Style Transfer in 3DGS` 则在保持几何结构的同时进行风格迁移。
+3.  **任务驱动的“实用化”与“轻量化”成为鲜明趋势**：研究重心正从“如何做得更准”向“如何用得起来”倾斜。这体现在两个维度：一是针对特定任务（如灾后救援、内窥镜、自动驾驶风险理解）提出定制化解决方案；二是在算法层面进行极致的工程优化以提升效率和降低资源消耗。例如，**MIL-LC** 通过融合磁力计解决 GNSS 拒止环境下的定位难题；**Pocket-SLAM** 通过感知剪枝技术大幅降低 3DGS-SLAM 的内存消耗；**GeoT2V-Bench** 的出现也说明学界开始关心生成内容的“可重建性”这一实用性指标。从追求“最优”到追求“可行”是一个重要的信号。
 
-4.  **多模态融合与几何推理的深度整合：** 融合视觉、语言、几何（如点云、深度）等多模态信息，并在模型中内化几何推理能力，以解决更复杂的具身和感知任务。
-    *   **佐证论文：** `MM-TRELLIS` 融合图像和LiDAR点云生成车辆；`PointVG-R` 在MLLM中引入基于强化学习的几何推理；`UniDrive` 融合时间推理与高分辨率感知；`ForensicsTok` 将篡改定位问题重新定义为序列生成。
-
-5.  **物体级和实例级理解成为视觉与SLAM任务的核心：** 研究重点从像素级或场景级处理转向以物体为中心的结构化表示，以提升可解释性和任务驱动能力。
-    *   **佐证论文：** `OpenReLoc` 仅使用物体单元完成室内重定位；`ArtiTwinSplat` 重建物体的关节结构；`PointVG-R` 专注于指点点定位；`Contextual Semantic Mapping` 构建包含物体属性（如可移动性）的语义地图。
+4.  **“基础模型”的评价与可解释性受到关注**：随着越来越多的方法依赖生成模型或 MLLM，如何评估它们内部推理过程的可靠性和一致性成为了新的研究点。**PointVG-R** 在 MLLM 中引入显式的“视觉思维链 (Visual Chain of Thought)”，试图解释模型是如何基于空间关系进行定位的。而 **GeoT2V-Bench** 则提出了一个诊断基准，专门评估 T2V 模型生成的帧是否具有作为单一 3D 场景多视角证据的内在 3D 一致性，而非仅仅视觉上好看。这说明，在模型能力提升后，评估其内部机理和输出质量的可信度成为了下一个焦点。
 
 #### 技术路线观察
 
-| 技术方向 | 技术侧重点 | 代表论文 |
+| 技术方向 | 主要论文 | 技术侧重点 |
 | :--- | :--- | :--- |
-| **几何基础模型** | - **MLLM的几何推理能力增强**：通过强化学习或视觉思维链，让大模型学会“看”空间关系。<br>- **几何一致性评估基准**：设计基于重建的诊断基准。 | `PointVG-R`, `GeoT2V-Bench` |
-| **3D重建与多视图几何** | - **几何精确度**：追求结构化、有明确表面的表示（三角形泼溅vs 3D高斯）。<br>- **鲁棒性与效率**：针对SLAM等实时应用设计内存高效、鲁棒的算法。<br>- **去中心化与通信**：在弱通信条件下进行多机器人联合优化。 | `FLAT`, `Pocket-SLAM`, `Decentralized...SLAM` |
-| **神经场景表示与渲染** | - **3DGS的进化**：从简单的体素/高斯表示，转向可编辑、可交互、几何精确的方向。<br>- **生成范式**：利用扩散模型或视频先验，通过“重建锚点”实现可控的、高质量的3D场景生成。<br>- **风格化与数据增强**：利用3DGS进行风格迁移或生成新视角数据。 | `OrbitForge`, `ArtiTwinSplat`, `SignNet-1M`, `Geometry-Aware Style Transfer` |
-| **具身/机器人/AR应用** | - **任务驱动**：方法直接服务于具体任务（导航、定位、操控、风险理解）。<br>- **模块化整合**：结合SLAM、VLM、SAM等多种基础模型形成完整流水线。<br>- **从语义到物理属性**：不仅理解物体是什么，还推断其可移动性、关节结构等。 | `NavWM`, `OpenReLoc`, `UniDrive`, `Contextual Semantic Mapping` |
+| **几何基础模型 & 3D/4D 重建** | PRISM, FLAT, FLUX3D, PointVG-R, GeoT2V-Bench | - 探索从扩散模型潜在码直接解码显式几何的表达（PRISM: 网格, FLAT: 三角形）。<br>- 研究如何实现扩散对齐的高质量稀疏表示（FLUX3D）。<br>- 关注从“生成”到“重建”的评价和推理过程，追求内部一致性（GeoT2V-Bench, PointVG-R）。 |
+| **神经场景表示与渲染** | FLUX3D, ArtiTwinSplat, OrbitForge, GastroNVS | - 大量基于 3DGS 的工作，场景可操作性与逼真度并重（ArtiTwinSplat: 交互式数字孪生）。<br>- 利用视频生成模型作为场景先验，补全缺失视角（OrbitForge）。<br>- 开始为特定领域发布真实世界数据集（GastroNVS）。 |
+| **机器人/AR 应用** | RoboAtlas, DSP-SLAM++, MIL-LC, fARfetch, Pocket-SLAM, OpenReLoc, VLM for Intralogistics, UniDrive, ArtiTwinSplat | - SLAM 系统全面拥抱 3DGS、VLM、语义地图，追求“上下文感知”和“物体级理解”。<br>- 高度关注实际部署的挑战：内存效率（Pocket-SLAM）、环境退化（MIL-LC）、人机协作界面（fARfetch）。<br>- 应用领域更聚焦，如灾后救援、医疗、自动驾驶、内部物流。 |
+| **其他（如图像取证）** | ForensicsTok | 探索将图像篡改定位任务转化为 MLLM 的自回归序列生成问题，展示了 MLLM 技术在视觉任务中的泛化潜力。 |
 
 #### 值得优先阅读的论文
 
-1.  **`FLAT: Feedforward Latent Triangle Splatting for Geometrically Accurate Scene Generation`**
-    *   **理由：** 这篇论文挑战了当前3DGS范式，首次在单次前馈中从视频潜码解码出三角形泼溅，解决了梯度流难题。这直接关系到如何获得“可仿真”的显式几何，是连接生成与图形学管线的关键突破。
+1.  **RoboAtlas & DSP-SLAM++**：这两篇是理解 SLAM 技术如何与语义、生成模型结合的绝佳范例。**RoboAtlas** 演示了如何利用 VLM 实现高级决策（探索vs.导航），是“上下文SLAM”的典型代表。**DSP-SLAM++** 则针对物体级SLAM的性能瓶颈，提出了工程上优雅的异步解决方案。两者共同展示了 SLAM 进化的两个重要方向：智能化与实用化。
 
-2.  **`ArtiTwinSplat: Interactable Digital Twin Reconstruction via Gaussian Splatting from RGB-D videos`**
-    *   **理由：** 该工作将3DGS与无监督关节发现流水线结合，直接从RGB-D视频重建出可交互的、带关节的数字孪生。这是将3D重建从“静态模型”推向“动态可交互资产”的清晰示范，对机器人具身操作具有直接价值。
+2.  **PRISM & FLAT**：这两篇并列，因为它们共同指向了一个激动人心的方向：直接从生成模型的潜在空间中提取可导出的、有清晰定义的几何体。**PRISM** 代表了一种经典但高效的“先几何扭曲，再残差学习”的思路；**FLAT** 则标志着向更标准的图形学基元（三角形）迈出了重要一步。比较阅读这两篇，可以深入理解当前从“生成”到“3D资产”的不同技术路径及其权衡。
 
-3.  **`OrbitForge: Text-to-3D Scene Generation via Reconstruction-Anchored Video Synthesis`**
-    *   **理由：** 提出了一个优雅的“生成-重建-补全”管线，巧妙地将重建作为锚点，克服了文本到视频模型在3D一致性上的根本弱点。它为利用现有2D视频先验生成高质量、全覆盖的3D场景提供了新思路，是组合式创新的典范。
-
-4.  **`Pocket-SLAM: Rendering-Area-Aware Pruning for Memory-Efficient 3DGS-SLAM`**
-    *   **理由：** 该论文直击3DGS-SLAM大规模应用的致命弱点——内存消耗。提出的“渲染区域感知剪枝”策略非常直接且有效（60%+内存降低，2倍FPS提升），对于任何希望将3DGS SLAM部署到资源受限设备（如无人机、机器人）上的研究者都具有极高的参考价值。
-
-5.  **`GeoT2V-Bench: Benchmarking 3D Consistency in Text-to-Video Models via 3D Reconstruction`**
-    *   **理由：** 在无休止地刷榜文本到视频生成指标之前，我们需要一个可靠的诊断基准。这篇论文用3D重建来衡量生成的视频是否“物理上”一致，提供了宝贵的视角和量化工具，其结果可能揭示出当前模型本质上的局限性。
+3.  **ArtiTwinSplat**：此工作具有很强的示范意义。它仅用 RGB-D 视频就自动构建了具有关节、可交互的数字孪生，成果直接可用于机器人仿真和学习，打通了“真实世界观测”到“高质量模拟环境”的完整链路。对于从事机器人操作、交互式 AR/VR 的研究者来说，这不仅是方法的进步，更是能力的范式转变。
 
 #### 可能的研究机会
 
-*   **“可交互3D资产”的端到端生成管道：** 结合`FLAT`的精确几何生成能力和`ArtiTwinSplat`的无监督关节发现方法，可以构建一个直接从单张图片或视频生成可交互、可操作的物体数字孪生的全自动流水线。
-*   **“评估驱动”的生成模型训练：** 借鉴`GeoT2V-Bench`的思想，将“3D重建一致性”作为一个可微分的损失函数，直接用于指导文本到视频或多视图生成模型的训练，从根本上提升其几何保真度，而不是仅在推理后进行诊断。
-*   **为复杂任务设计的“稀疏+高效”表示：** 结合`Pocket-SLAM`的剪枝思想和`OpenReLoc`的物体级表示，可以探索一种既高度内存高效（经过剪枝），又富含语义信息（以物体为中心）的3D场景表示，用于持续学习和长期运行的机器人任务。
-*   **多模态信息在几何推理中的协同：** 以`MM-TRELLIS`和`PointVG-R`为榜样，研究如何
+1.  **融合大型生成模型与 SLAM 的联合优化框架**：当前方法多是将 VLM 作为上游模块（如 RoboAtlas 用于决策）或将扩散模型作为先验（如 OrbitForge）。一个潜在机会是设计一个端到端可微的框架，使得 SLAM 的位姿估计与场景建图能够反过来指导并优化生成模型的输出（例如，SLAM 的几何约束可以被回传到 VLM，用于修正其幻觉），形成闭环。
+
+2.  **面向特定模态的、极简的 3D 地图表征**：MIL-LC 的成功表明，在某些退化环境下，过度复杂的几何/语义表征可能不可靠。因此，探索如何构建一个“最小表示”的地图，例如仅利用物体的拓扑关系或精简的语义地标，并结合鲁棒的滤波或优化方法，可能是一个有价值的研究方向，尤其适用于资源受限或通信恶劣的场景。
+
+3.  **3D 生成资产的可信度与物理一致性评价**：GeoT2V-Bench 只评估了 3D 几何一致性。下一步可以扩展到评估生成的 3D 资产的物理合理性（如是否符合光照物理、刚体运动学等），并提出相应的 benchmark。这可以与 **ArtiTwinSplat** 等追求“可交互”数字孪生的工作结合，为具身 AI 提供更可靠的训练数据。
+
+4.  **可解释的、基于对象的地图与重定位**：OpenReLoc 证明了纯对象级的重定位是可能的。未来可以探索如何让 VLM 不仅输出语义类别
 
 ### interests.md 指令分析
 
@@ -656,6 +643,42 @@ Dynamic 3D Gaussian splatting faces a fundamental tension between motion consist
 **Matched keywords:** 3D reconstruction, robotics, virtual reality
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：PRISM: Feed-Forward Single-Image 3D Reconstruction via Geometric Warp-Residual Modeling
+- 作者：Zhijie Zheng, Xinhao Xiang, Jiawei Zhang
+- 出版日期：2026-06-24
+- 分类：主类别：3D Reconstruction & Multi-view Geometry；次类别：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2606.25430
+
+### 一句话总结
+本文提出PRISM，一种无需扩散采样、仅通过前馈几何扭曲和残差校正的单图三维重建框架，在保持与扩散方法相当的重建质量的同时大幅降低推理时间。
+
+### 研究问题
+如何从单张图像高效且高质量地重建三维场景，克服现有基于扩散模型的方法因迭代采样而推理慢的部署难题。
+
+### 核心思路/方法
+1. 观察到几何前向扭曲（geometric forward warping）即可覆盖目标视图的大部分内容，仅留下少量残差需要校正。
+2. 提出PRISM：将多视角潜在（latent）预测分解为**参数无关的几何先验**与**学习的残差校正**，推理时无需扩散采样。
+3. 设计两阶段训练策略：先通过潜在监督蒸馏（latent supervised distillation）学习几何泛化，再通过感知微调（perceptual fine-tuning）优化外观质量。
+
+### 主要贡献
+1. 提出纯前馈框架PRISM，实现从单图到多视图的快速三维重建，无需迭代扩散采样。
+2. 利用几何扭曲-残差建模分解任务，使大部分视图内容直接由几何变换完成，降低编码器负担。
+3. 设计两阶段训练策略，使模型能够在纯合成数据上泛化，并兼顾几何准确度与外观保真度。
+4. 在三个基准上达到与扩散方法可比的性能，同时将每个场景的推理时间大幅降至36秒。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**  
+理由：该工作针对三维重建中扩散模型推理慢的显著痛点，提出了一种高效的纯前馈替代方案，并在多个基准上验证了速度-质量的权衡优势。秒级推理时间（36秒/场景）对机器人、VR等实时或近实时应用具有重要意义，且两阶段训练策略对合成数据泛化有启发价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Reconstructing 3D scenes from a single image is a fundamental challenge in computer vision, with broad applications in virtual reality, robotics, and content creation. Recent methods achieve outstanding performance by leveraging camera-controlled video diffusion models, but rely on iterative diffusion sampling, which greatly limits their practical deployment. We observe that geometric forward warping alone can cover the majority of a target view directly from the input image, with only a compact residual left for the encoder to correct. Motivated by this observation, we propose PRISM, a feed-forward framework that decomposes multi-view latent prediction into a parameter-free geometric prior and a learned residual correction, with no diffusion sampling required at inference. To enable generalization from purely synthetic training data, we devise a two-stage training strategy combining latents supervised distillation for geometric generalization and perceptual fine-tuning for appearance quality optimization. Extensive experiments on three benchmarks demonstrate that PRISM achieves competitive reconstruction quality compared with diffusion-based methods, while reducing inference time dramatically to only 36 seconds per scene.
@@ -669,6 +692,41 @@ Reconstructing 3D scenes from a single image is a fundamental challenge in compu
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** pose estimation, robotics
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Invariant Kalman filtering for extended pose estimation in multi-IMU articulated rigid-body systems  
+- 作者：Sven Goffin, Cédric Schwartz, Silvère Bonnabel, Olivier Brüls, Pierre Sacré  
+- 出版日期：2026-06-23  
+- 分类：3D Reconstruction & Multi-view Geometry  
+- 链接：https://arxiv.org/abs/2606.25083  
+
+### 一句话总结
+本文提出一种基于不变卡尔曼滤波（IEKF）的迭代方法，用于多IMU铰接刚体系统的扩展位姿估计（方向、速度、位置），通过引入相对L-扩展位姿的Lie群表示，将关节运动学约束以不变形式融入滤波，显著提升估计精度与收敛性。
+
+### 研究问题
+如何为多IMU构成的铰接刚体系统（如机器人和人体）实现具有收敛保证和一致性的扩展位姿估计，同时处理跨刚体的位姿耦合与关节约束问题。
+
+### 核心思路/方法
+1. 定义**相对L-扩展位姿**（relative L-extended pose）作为运动链系统的Lie群表示，使系统动态具有群仿射性质。  
+2. 将关节运动学约束建模为**无噪声伪测量**，并嵌入迭代不变扩展卡尔曼滤波（IterIEKF）框架中，从而保留不变滤波的收敛性和一致性保证。  
+3. 在UR5e机器人和人体腿部数据集上验证，与标准EKF、迭代EKF及绝对位姿IterIEKF进行对比。
+
+### 主要贡献
+- 首次将不变卡尔曼滤波的收敛与一致性保证扩展至多IMU铰接系统；  
+- 提出一种将关节约束以不变形式显式融入滤波的有效方案；  
+- 实验显示，提出方法在所有场景中均取得最低RMSE，相比次优滤波器至少降低50%，且收敛更快、运行间变异性更低。
+
+### 局限性
+摘要未提供具体局限性信息（如传感器噪声假设、计算复杂度、对非线性约束的适应性等）。
+
+### 阅读优先级
+**高**  
+理由：该方法针对机器人运动跟踪与人体动作分析中的核心问题，提出理论严谨且实验效果显著的创新方案（RMSE降低50%以上），对从事滤波、位姿估计与惯性导航的研究者具有直接参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1140,6 +1198,39 @@ The Caltech Tennis Dataset (CalTennis) is a large-scale video benchmark for eval
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** NeRF, neural radiance field, radiance field, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, radiance, splatting, manipulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Gastroendoscopy View Synthesis: A New Real Dataset and Evaluation
+- 作者：Masaki Minai, Yusuke Monno, Masatoshi Okutomi, Sho Suzuki
+- 出版日期：2026-06-24
+- 分类：神经场景表示与渲染（Neural Scene Representations & Rendering）
+- 链接：摘要链接 https://arxiv.org/abs/2606.25427 ; PDF链接 https://arxiv.org/pdf/2606.25427
+
+### 一句话总结
+本文发布了首个用于胃内窥镜新型视角合成（NVS）的真实数据集GastroNVS，并基于多种3D高斯泼溅（3DGS）方法进行了评估，指出了该应用场景下的挑战。
+
+### 研究问题
+现有胃内窥镜场景下的新型视角合成研究缺乏足够的真实数据集，无法有效评估和推动相关方法（如NeRF和3DGS）在该领域的应用。
+
+### 核心思路/方法
+1. 创建并发布首个真实胃内窥镜NVS数据集GastroNVS，包含胃镜图像、相机位姿和点云数据。
+2. 利用该数据集，对多种3D高斯泼溅方法进行定量和定性评估，以验证数据集的适用性并分析当前方法的不足。
+
+### 主要贡献
+- 提出了首个用于胃内窥镜新型视角合成的真实数据集GastroNVS。
+- 基于该数据集对现有3DGS方法进行了系统评估，揭示了胃内窥镜场景下NVS的具体挑战，为未来研究提供基准和方向。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**
+理由：本文针对胃内窥镜这一特定医学应用，提供了首个真实NVS数据集，填补了现有数据资源的空白。对于从事医学影像分析、神经渲染或内窥镜图像处理的研究者具有直接参考价值，且数据集可申请获取，便于后续复现与拓展。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1916,6 +2007,41 @@ Gaussian Splatting has enabled real-time neural rendering, yet existing LiDAR-in
 **Matched keywords:** SLAM, mapping, simulation, scene understanding
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：RoboAtlas: Contextual Active SLAM
+- 作者：Alexander Schperberg, Shivam K. Panda, Abraham P. Vinod, M. K. Jawed, Stefano Di Cairano
+- 出版日期：2026-06-24
+- 分类：Embodied / Robotics / AR Applications（主要），3D Reconstruction & Multi-view Geometry（次要）
+- 链接：摘要 [https://arxiv.org/abs/2606.26046](https://arxiv.org/abs/2606.26046) | PDF [https://arxiv.org/pdf/2606.26046](https://arxiv.org/pdf/2606.26046)
+
+### 一句话总结
+RoboAtlas是一个上下文感知的主动SLAM框架，通过结合几何探索、全局语义地图推理和基于VLM的自我中心推理，并利用上下文多臂赌博机在探索与语义导航之间动态切换，实现了大规模真实场景下高效、鲁棒的语义导航任务。
+
+### 研究问题
+如何在大规模、多语义实例的真实环境中，使机器人自适应地平衡几何探索与语义推理，以实现基于上下文感知的高效主动SLAM？
+
+### 核心思路/方法
+1. **系统框架**：RoboAtlas结合了前沿探索、全局语义地图推理（基于OpenRoboVox 3D语义映射系统）和基于VLM的自我中心推理。
+2. **决策机制**：通过一个**上下文多臂赌博机**（contextual multi-armed bandit）来动态调整行为：当场景理解不足时偏向探索，随着语义理解提升，逐渐过渡到语义引导的导航。
+3. **评估**：在仿真和真实Unitree Go2机器人上测试（环境超过1800 m²，约3万语义实例），并在GOAT-Bench“Val Unseen”基准上对比，验证了高性能。
+
+### 主要贡献
+1. 提出了RoboAtlas，一种上下文主动SLAM框架，能自适应平衡几何探索与语义推理。
+2. 在GOAT-Bench“Val Unseen”基准上，使用GPT-4o时达到**90.6%的成功率（SR）**，比先前最强基线提升17.8个百分点；即使使用更小的Qwen2.5-VL-7B模型（88.8% SR），仍优于所有使用GPT-4o的基线，**揭示了3D语义映射框架带来的信息增益比单纯替换基础模型更为重要**。
+3. 在真实大规模环境（1800 m²，约3万语义实例）中实现**100%任务成功率**，验证了系统在现实世界中的鲁棒性和效率。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**  
+理由：该工作在主动SLAM领域提出了创新的上下文自适应框架，并在标准基准和大规模真实场景上取得了显著优于现有方法的性能（特别是揭示了语义地图框架对基础模型性能的关键提升作用），对机器人导航、语义推理领域的研究者具有重要参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 We present RoboAtlas, a contextual Active SLAM framework that adaptively balances geometric exploration and semantic reasoning using a scalable 3D semantic mapping system, OpenRoboVox. RoboAtlas integrates frontier exploration, global semantic-map reasoning, and egocentric VLM-based reasoning through a contextual multi-armed bandit that transitions from exploration to semantically guided navigation as scene understanding improves. We evaluate the system in simulation and on a Unitree Go2 robot in large-scale real-world environments exceeding 1800 m2 with approx. 30k mapped semantic instances, achieving a 100% task success rate. On the GOAT-Bench "Val Unseen" benchmark, RoboAtlas achieves state-of-the-art performance with highest reported success rate (SR) of 90.6%, using GPT-4o, improving over the strongest prior baseline by 17.8 percentage points in SR. Using the much smaller Qwen2.5-VL-7B model, it still achieves 88.8% SR, outperforming all baselines using GPT-4o in SR, and revealing the importance of the information gained by our semantic mapping framework over simply replacing the underlying foundation model. The results demonstrate that grounding foundation models with large-scale 3D semantic maps enables robust and efficient contextual Active SLAM.
@@ -1929,6 +2055,40 @@ We present RoboAtlas, a contextual Active SLAM framework that adaptively balance
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** mapping, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：From Rubble Simulation to Active Magnetic Mapping: Quantum Sensing for Disaster Response
+- 作者：Samuel Tovey, Stefan Prestel, Hiroshi Yamauchi
+- 出版日期：2026-06-24
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2606.25957
+
+### 一句话总结
+本文提出利用无人机搭载量子磁力计，通过仿真与主动采样重建坍塌建筑内部磁性结构，以辅助灾后搜救。
+
+### 研究问题
+如何在灾后72小时黄金救援期内，通过无人机搭载量子磁力计，有效感知坍塌建筑（钢混结构）内部的磁性结构，定位幸存者或空洞。
+
+### 核心思路/方法
+1. **仿真管道**：使用Unreal Engine生成钢混停车库坍塌场景，通过每个三角形的偶极子近似计算诱导磁场，验证在屋顶上方约1米处可恢复亚pT到亚nT量级的磁信号。
+2. **传感器部署**：评估不同传感器阵列（重点为三传感器阵列）在梯度分辨率与无人机载荷约束间的权衡。
+3. **主动重建**：采用高斯过程回归作为后端，结合贝叶斯主动采样策略，从稀疏多传感器样本中重建空间磁场结构，并用多个独立坍塌实例验证管道有效性。
+
+### 主要贡献
+1. 提出将量子级磁力计作为灾后搜救的补充传感模态，并构建完整的“坍塌仿真→传感器部署→主动重建”管道。
+2. 通过仿真证明，在约1米距离外可检测到有意义的磁性结构（亚pT至亚nT范围）。
+3. 三传感器阵列可在梯度分辨率与载荷约束间取得最优平衡，且主动采样在约100个样本点内达到峰值结构相关性。
+
+### 局限性
+摘要未提供足够信息。具体局限性包括但不限于：仿真环境与真实倒塌场景的差异、量子磁力计在户外实际部署的鲁棒性、对不同类型建筑废墟的适应性以及算法计算复杂度等均未在摘要中提及。
+
+### 阅读优先级
+**高**。理由：本文针对灾害救援这一紧迫应用场景，提出新颖的量子磁力计+主动采样方案，方法设计完整（仿真→部署→重建），且结果量化明确（三传感器最优、100样本收敛）。对于关注量子传感、搜救机器人或主动感知的研究者具有较高参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1946,6 +2106,40 @@ Locating survivors of building collapses within the first 72 hours is a critical
 **Matched keywords:** SLAM, manipulation, autonomous driving, mapping
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：DSP-SLAM++: A Unified Framework for Multi-Class, High-Fidelity Object SLAM in the Wild
+- 作者：Ahmad Kourani, Ghina Daoud, Daniel Asmar, Imad Elhajj
+- 出版日期：2026-06-24
+- 分类：Embodied / Robotics / AR Applications（主类），3D Reconstruction & Multi-view Geometry（次类）
+- 链接：摘要网址：https://arxiv.org/abs/2606.25953；PDF网址：https://arxiv.org/pdf/2606.25953
+
+### 一句话总结
+DSP-SLAM++ 通过异步建图流水线和传感器融合适配，在保持实时性的同时支持多类物体高保真建模，将物体SLAM推向实际应用。
+
+### 研究问题
+现有面向物体的SLAM系统在实时性能、多类别支持和高保真语义连贯物体模型生成之间存在权衡，缺乏统一的解决方案。
+
+### 核心思路/方法
+- 扩展 DSP-SLAM 框架，引入异步建图流水线，实现实时性能。
+- 针对单目鱼眼-激光雷达（monocular fisheye-LiDAR）组合进行专用传感器融合适配。
+- 通过异步处理消除建图线程瓶颈，显著降低物体处理延迟。
+
+### 主要贡献
+1. 提出统一框架DSP-SLAM++，同时支持多类别物体高保真建模和实时运行。
+2. 设计了异步建图流水线，将最大物体处理延迟相比现有最优基线降低70%，支持25Hz多类别数据集的鲁棒实时运行。
+3. 针对单目鱼眼-激光雷达传感器套件进行适配，使高保真多类物体SLAM在自动驾驶等室外场景中更实用，并开源代码。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该论文针对物体SLAM领域的关键权衡问题（实时性、多类支持、高保真度）提出了改进方案，量化指标明确（延迟降低70%，支持25Hz数据集），且开源代码，对从事机器人、自动驾驶等实际应用的读者有直接参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Existing object-aware SLAM systems force a trade-off between real-time performance, multi-class support, and the generation of high-fidelity, semantically coherent object models. To address this trade-off, we present DSP-SLAM++, which extends the DSP-SLAM framework with an asynchronous mapping pipeline for real-time performance and dedicated sensor fusion adaptations for a monocular fisheye-LiDAR suite. Experiments demonstrate that our system generates fine-grained, geometrically-complete shapes for multiple object classes while eliminating severe mapping thread bottlenecks by reducing maximum object processing latency by up to 70\% compared to the state-of-the-art baseline, enabling robust, real-time performance on a challenging 25 Hz multi-class datasets. This work makes high-fidelity, multi-class object SLAM more practical for real-world applications like autonomous driving and robotic manipulation by enabling its use on platforms with common fisheye-LiDAR sensor setups. The open-source code is available at: [github.com/AUBVRL/DSP-SLAMpp].
@@ -1961,6 +2155,38 @@ Existing object-aware SLAM systems force a trade-off between real-time performan
 **Matched keywords:** localization, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：MIL-LC: A Robust Magnetometer-Inertial-LiDAR Fusion Multimodal Localization Framework
+- 作者：Qiyang Lyu, Zhenyu Wu, Wei Wang, Hongming Shen, Danwei Wang
+- 出版日期：2026-06-24
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2606.25796
+
+### 一句话总结
+本文提出了一种磁力计-惯性-LiDAR融合的多模态定位框架MIL-LC，旨在解决GNSS拒止、几何重复或纹理缺失环境中自主移动机器人的鲁棒定位问题，通过引入环境磁场作为补充模态，在LiDAR退化或长期部署中磁场变化时仍能保持可靠定位。
+
+### 研究问题
+如何实现自主移动机器人在挑战性环境（如GNSS拒止、几何重复、纹理缺失的办公室、酒店、地下停车场）中的鲁棒定位，克服单模态传感器限制以及现有多模态融合框架对几何/纹理特征或基础设施信标的过度依赖。
+
+### 核心思路/方法
+提出MIL-LC框架，融合磁力计、惯性测量单元和LiDAR数据，并采用自定义传感器套件。利用环境磁场（AMF）作为不依赖几何/纹理特征、无需额外基础设施的互补模态，解决LiDAR几何退化或长期部署中磁图变化时的定位问题。通过仿真和真实环境实验验证框架的鲁棒性和准确性。
+
+### 主要贡献
+1. 提出首个面向自主移动机器人的磁力计-惯性-LiDAR融合定位框架MIL-LC，填补了该场景下AMF融合研究的空白。
+2. 设计自定义传感器套件，使框架在LiDAR几何退化或长期部署中磁图变化时仍能提供可靠定位。
+3. 通过仿真和真实环境实验证明MIL-LC框架的鲁棒且准确的定位性能。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+中。理由：该工作聚焦于机器人定位领域的实际工程难题（几何退化、磁图变化），方法新颖（AMF融合），但摘要中实验细节和性能量化数据不足，限于具体应用场景（AMR），对跨领域读者启发性有限。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Localization in challenging environments, such as GNSS-denied, geometrically repetitive, or textureless scenes commonly found in offices, hotels, and underground parking facilities, remains an open problem for reliable autonomous mobile robot (AMR) deployment. Single-modality localization methods are inherently limited by the constraints of individual sensors. Although multimodal fusion frameworks have shown improved robustness, most existing approaches still rely heavily on geometric or texture features, or on infrastructure-based beacons, which increase installation and maintenance costs while reducing deployment flexibility. Recently, ambient magnetic field (AMF)-based localization has attracted growing attention because it does not depend on geometric or texture features, nor does it require additional infrastructure, making it a promising complementary modality for AMR localization. However, existing studies have only explored such fusion in pedestrian scenarios using smartphone-mounted sensor suites, and practical solutions for AMR systems remain largely unexplored. To address this gap, this article proposes a magnetometer-inertial-LiDAR fused multimodal localization framework with a custom-designed sensor suite, termed MIL-LC, which provides reliable localization even when LiDAR suffers from geometric degeneration or when the magnetic map changes during long-term deployment. Extensive experiments in both simulation and real-world environments demonstrate that the proposed MIL-LC framework achieves robust and accurate localization performance.
@@ -1974,6 +2200,44 @@ Localization in challenging environments, such as GNSS-denied, geometrically rep
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** mapping, AR, augmented reality
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：fARfetch: Enabling Collocated AR-HRC in Large Visually Diverse Environments with VLM-Driven AR Content Adaptation
+- 作者：Christian Fronk, Hanting Ye, David Hunt, Miroslav Pajic, Maria Gorlatova
+- 出版日期：2026-06-23
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2606.25162
+
+### 一句话总结
+fARfetch 是一个面向大型、视觉多样环境的增强现实-人机协作（AR-HRC）系统，通过语义地图、缩微世界表示和视觉语言模型（VLM）驱动的AR内容自适应，显著提升了户外大空间内协作任务的效率和内容可读性。
+
+### 研究问题
+如何在大型、视觉多样（如户外）环境中，解决增强现实人机协作（AR-HRC）中因长距离和视线受阻导致的交互困难与虚拟内容可读性下降问题。
+
+### 核心思路/方法
+系统集成了三个关键组件：
+1. **共享语义环境地图**：AR头显与机器人共同构建并可视化检测到的地标，支持基于地标的“前往”指令。
+2. **上下文感知的缩微世界表示**：为精细路径规划提供共环境的小型化、全景式抽象视图。
+3. **VLM驱动的AR视图管理**：联合调整虚拟内容的颜色、大小和方向，以在大型视觉多样环境中保持内容可读性。
+
+系统基于Meta Quest 3头显和Unitree Go2四足机器人实现，并在真实户外大尺度（30.5米）巡检任务中开展了12名用户的受试者内实验。
+
+### 主要贡献
+- 提出一套完整的AR-HRC系统，整合了语义地图、缩微世界和VLM内容自适应，适用于大型、视觉多样环境。
+- 通过用户实验验证：相比无AR基线，fARfetch显著提升任务完成时间（快66%），并降低了脑力负荷（-43%）、时间需求（-34%）和挫败感（-66%）。
+- 定制可读性调查表明，系统在大尺度户外环境中能有效保持虚拟内容的可读性。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**  
+理由：该工作针对实际户外大空间人机协作的明确痛点（内容可读性、交互效率），提出了新颖的VLM驱动自适应方法，并附有显著量化的用户实验证据，对AR-HRC领域的研究者和从业者有直接参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>

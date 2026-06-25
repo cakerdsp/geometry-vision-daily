@@ -2059,6 +2059,86 @@
         "path": "summaries/brief/2606.24089.md",
         "markdown": "### Metadata\n- 标题：DynaWM: Dynamics-Aware Distillation with World Model and Momentum Targets for Smooth Locomotion over Continuous Stairs  \n- 作者：Haidong Hou, Zhangguo Yu, Hengbo Qi, Jianlin Zhang  \n- 出版日期：2026-06-23  \n- 分类：具身/机器人/AR应用 (Embodied / Robotics / AR Applications)  \n- 链接：摘要: https://arxiv.org/abs/2606.24089 | PDF: https://arxiv.org/pdf/2606.24089  \n\n### 一句话总结  \n本文提出DynaWM框架，通过引入世界模型正则化和动量目标编码器，提升双足轮式机器人在连续楼梯场景中的地形适应性与运动平滑性。\n\n### 研究问题  \n当前学生-教师（teacher-student）框架在双足轮式机器人长楼梯攀爬任务中，存在动力学感知表征弱化以及地形几何编码不完整的问题，导致机器人难以平滑遍历连续楼梯。\n\n### 核心思路/方法  \n1. 引入一个**世界模型**作为正则化器，强制编码器学习前向动力学感知，从而保留完整的地形几何信息，并支持分层编码可视化。  \n2. 采用**动量目标编码器**（momentum target encoder）为学生网络提供一致的蒸馏目标，防止因教师网络非平稳更新导致维度坍塌（dimensional collapse），稳定知识迁移过程。\n\n### 主要贡献  \n- 提出动力学感知表征学习框架DynaWM，增强地形几何编码能力，并通过PCA可视化与定量指标验证编码器能分层捕捉地形几何。  \n- 在仿真和真实硬件实验中，DynaWM使双足轮式机器人能够克服多种连续楼梯，实现了更高的地形适应性和运动平滑性。\n\n### 局限性  \n- 摘要未提供模型的泛化能力（例如是否适用于楼梯之外的其他复杂地形）的讨论。  \n- 摘要未提及计算开销或实时性分析，也未详细说明教师网络的训练过程或框架对硬件要求的限制。  \n\n### 阅读优先级  \n**高**  \n理由：该工作针对双足轮式机器人攀爬连续楼梯这一具体且具挑战性的实际问题，提出了明确的方法改进（世界模型正则化+动量目标蒸馏），并在仿真和实物上验证了效果。对于从事具身机器人学习、四足/双足运动控制的研究者具有直接参考价值。"
       }
+    },
+    "2606.26046": {
+      "brief": {
+        "status": "success",
+        "input_hash": "9535b0b2fbfcb89600d39fe8f2c0c4305caaf266835fdfc03c59700824fabe7c",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-25T15:39:42Z",
+        "path": "summaries/brief/2606.26046.md",
+        "markdown": "### Metadata\n- 标题：RoboAtlas: Contextual Active SLAM\n- 作者：Alexander Schperberg, Shivam K. Panda, Abraham P. Vinod, M. K. Jawed, Stefano Di Cairano\n- 出版日期：2026-06-24\n- 分类：Embodied / Robotics / AR Applications（主要），3D Reconstruction & Multi-view Geometry（次要）\n- 链接：摘要 [https://arxiv.org/abs/2606.26046](https://arxiv.org/abs/2606.26046) | PDF [https://arxiv.org/pdf/2606.26046](https://arxiv.org/pdf/2606.26046)\n\n### 一句话总结\nRoboAtlas是一个上下文感知的主动SLAM框架，通过结合几何探索、全局语义地图推理和基于VLM的自我中心推理，并利用上下文多臂赌博机在探索与语义导航之间动态切换，实现了大规模真实场景下高效、鲁棒的语义导航任务。\n\n### 研究问题\n如何在大规模、多语义实例的真实环境中，使机器人自适应地平衡几何探索与语义推理，以实现基于上下文感知的高效主动SLAM？\n\n### 核心思路/方法\n1. **系统框架**：RoboAtlas结合了前沿探索、全局语义地图推理（基于OpenRoboVox 3D语义映射系统）和基于VLM的自我中心推理。\n2. **决策机制**：通过一个**上下文多臂赌博机**（contextual multi-armed bandit）来动态调整行为：当场景理解不足时偏向探索，随着语义理解提升，逐渐过渡到语义引导的导航。\n3. **评估**：在仿真和真实Unitree Go2机器人上测试（环境超过1800 m²，约3万语义实例），并在GOAT-Bench“Val Unseen”基准上对比，验证了高性能。\n\n### 主要贡献\n1. 提出了RoboAtlas，一种上下文主动SLAM框架，能自适应平衡几何探索与语义推理。\n2. 在GOAT-Bench“Val Unseen”基准上，使用GPT-4o时达到**90.6%的成功率（SR）**，比先前最强基线提升17.8个百分点；即使使用更小的Qwen2.5-VL-7B模型（88.8% SR），仍优于所有使用GPT-4o的基线，**揭示了3D语义映射框架带来的信息增益比单纯替换基础模型更为重要**。\n3. 在真实大规模环境（1800 m²，约3万语义实例）中实现**100%任务成功率**，验证了系统在现实世界中的鲁棒性和效率。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**  \n理由：该工作在主动SLAM领域提出了创新的上下文自适应框架，并在标准基准和大规模真实场景上取得了显著优于现有方法的性能（特别是揭示了语义地图框架对基础模型性能的关键提升作用），对机器人导航、语义推理领域的研究者具有重要参考价值。"
+      }
+    },
+    "2606.25957": {
+      "brief": {
+        "status": "success",
+        "input_hash": "8f0be52ac2a6963a48019c1a68edbc52e16f238fc2886b1c978dfbeec983b2f5",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-25T15:39:50Z",
+        "path": "summaries/brief/2606.25957.md",
+        "markdown": "### Metadata\n- 标题：From Rubble Simulation to Active Magnetic Mapping: Quantum Sensing for Disaster Response\n- 作者：Samuel Tovey, Stefan Prestel, Hiroshi Yamauchi\n- 出版日期：2026-06-24\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2606.25957\n\n### 一句话总结\n本文提出利用无人机搭载量子磁力计，通过仿真与主动采样重建坍塌建筑内部磁性结构，以辅助灾后搜救。\n\n### 研究问题\n如何在灾后72小时黄金救援期内，通过无人机搭载量子磁力计，有效感知坍塌建筑（钢混结构）内部的磁性结构，定位幸存者或空洞。\n\n### 核心思路/方法\n1. **仿真管道**：使用Unreal Engine生成钢混停车库坍塌场景，通过每个三角形的偶极子近似计算诱导磁场，验证在屋顶上方约1米处可恢复亚pT到亚nT量级的磁信号。\n2. **传感器部署**：评估不同传感器阵列（重点为三传感器阵列）在梯度分辨率与无人机载荷约束间的权衡。\n3. **主动重建**：采用高斯过程回归作为后端，结合贝叶斯主动采样策略，从稀疏多传感器样本中重建空间磁场结构，并用多个独立坍塌实例验证管道有效性。\n\n### 主要贡献\n1. 提出将量子级磁力计作为灾后搜救的补充传感模态，并构建完整的“坍塌仿真→传感器部署→主动重建”管道。\n2. 通过仿真证明，在约1米距离外可检测到有意义的磁性结构（亚pT至亚nT范围）。\n3. 三传感器阵列可在梯度分辨率与载荷约束间取得最优平衡，且主动采样在约100个样本点内达到峰值结构相关性。\n\n### 局限性\n摘要未提供足够信息。具体局限性包括但不限于：仿真环境与真实倒塌场景的差异、量子磁力计在户外实际部署的鲁棒性、对不同类型建筑废墟的适应性以及算法计算复杂度等均未在摘要中提及。\n\n### 阅读优先级\n**高**。理由：本文针对灾害救援这一紧迫应用场景，提出新颖的量子磁力计+主动采样方案，方法设计完整（仿真→部署→重建），且结果量化明确（三传感器最优、100样本收敛）。对于关注量子传感、搜救机器人或主动感知的研究者具有较高参考价值。"
+      }
+    },
+    "2606.25953": {
+      "brief": {
+        "status": "success",
+        "input_hash": "c878d03a1dc86fbfcc4ce1e5fb4d27bc64c9950626986f086434d01327c648d5",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-25T15:39:55Z",
+        "path": "summaries/brief/2606.25953.md",
+        "markdown": "### Metadata\n- 标题：DSP-SLAM++: A Unified Framework for Multi-Class, High-Fidelity Object SLAM in the Wild\n- 作者：Ahmad Kourani, Ghina Daoud, Daniel Asmar, Imad Elhajj\n- 出版日期：2026-06-24\n- 分类：Embodied / Robotics / AR Applications（主类），3D Reconstruction & Multi-view Geometry（次类）\n- 链接：摘要网址：https://arxiv.org/abs/2606.25953；PDF网址：https://arxiv.org/pdf/2606.25953\n\n### 一句话总结\nDSP-SLAM++ 通过异步建图流水线和传感器融合适配，在保持实时性的同时支持多类物体高保真建模，将物体SLAM推向实际应用。\n\n### 研究问题\n现有面向物体的SLAM系统在实时性能、多类别支持和高保真语义连贯物体模型生成之间存在权衡，缺乏统一的解决方案。\n\n### 核心思路/方法\n- 扩展 DSP-SLAM 框架，引入异步建图流水线，实现实时性能。\n- 针对单目鱼眼-激光雷达（monocular fisheye-LiDAR）组合进行专用传感器融合适配。\n- 通过异步处理消除建图线程瓶颈，显著降低物体处理延迟。\n\n### 主要贡献\n1. 提出统一框架DSP-SLAM++，同时支持多类别物体高保真建模和实时运行。\n2. 设计了异步建图流水线，将最大物体处理延迟相比现有最优基线降低70%，支持25Hz多类别数据集的鲁棒实时运行。\n3. 针对单目鱼眼-激光雷达传感器套件进行适配，使高保真多类物体SLAM在自动驾驶等室外场景中更实用，并开源代码。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**。理由：该论文针对物体SLAM领域的关键权衡问题（实时性、多类支持、高保真度）提出了改进方案，量化指标明确（延迟降低70%，支持25Hz数据集），且开源代码，对从事机器人、自动驾驶等实际应用的读者有直接参考价值。"
+      }
+    },
+    "2606.25796": {
+      "brief": {
+        "status": "success",
+        "input_hash": "34b94ec16187ab80fd5781f2f79c5e3c21ea8be78c695cba98e23d046f6e9a36",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-25T15:40:01Z",
+        "path": "summaries/brief/2606.25796.md",
+        "markdown": "### Metadata\n- 标题：MIL-LC: A Robust Magnetometer-Inertial-LiDAR Fusion Multimodal Localization Framework\n- 作者：Qiyang Lyu, Zhenyu Wu, Wei Wang, Hongming Shen, Danwei Wang\n- 出版日期：2026-06-24\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2606.25796\n\n### 一句话总结\n本文提出了一种磁力计-惯性-LiDAR融合的多模态定位框架MIL-LC，旨在解决GNSS拒止、几何重复或纹理缺失环境中自主移动机器人的鲁棒定位问题，通过引入环境磁场作为补充模态，在LiDAR退化或长期部署中磁场变化时仍能保持可靠定位。\n\n### 研究问题\n如何实现自主移动机器人在挑战性环境（如GNSS拒止、几何重复、纹理缺失的办公室、酒店、地下停车场）中的鲁棒定位，克服单模态传感器限制以及现有多模态融合框架对几何/纹理特征或基础设施信标的过度依赖。\n\n### 核心思路/方法\n提出MIL-LC框架，融合磁力计、惯性测量单元和LiDAR数据，并采用自定义传感器套件。利用环境磁场（AMF）作为不依赖几何/纹理特征、无需额外基础设施的互补模态，解决LiDAR几何退化或长期部署中磁图变化时的定位问题。通过仿真和真实环境实验验证框架的鲁棒性和准确性。\n\n### 主要贡献\n1. 提出首个面向自主移动机器人的磁力计-惯性-LiDAR融合定位框架MIL-LC，填补了该场景下AMF融合研究的空白。\n2. 设计自定义传感器套件，使框架在LiDAR几何退化或长期部署中磁图变化时仍能提供可靠定位。\n3. 通过仿真和真实环境实验证明MIL-LC框架的鲁棒且准确的定位性能。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n中。理由：该工作聚焦于机器人定位领域的实际工程难题（几何退化、磁图变化），方法新颖（AMF融合），但摘要中实验细节和性能量化数据不足，限于具体应用场景（AMR），对跨领域读者启发性有限。"
+      }
+    },
+    "2606.25430": {
+      "brief": {
+        "status": "success",
+        "input_hash": "05560d52a3a546232fa7252f25acb536396e04486e30af830a0b4f1974ca4454",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-25T15:40:08Z",
+        "path": "summaries/brief/2606.25430.md",
+        "markdown": "### Metadata\n- 标题：PRISM: Feed-Forward Single-Image 3D Reconstruction via Geometric Warp-Residual Modeling\n- 作者：Zhijie Zheng, Xinhao Xiang, Jiawei Zhang\n- 出版日期：2026-06-24\n- 分类：主类别：3D Reconstruction & Multi-view Geometry；次类别：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2606.25430\n\n### 一句话总结\n本文提出PRISM，一种无需扩散采样、仅通过前馈几何扭曲和残差校正的单图三维重建框架，在保持与扩散方法相当的重建质量的同时大幅降低推理时间。\n\n### 研究问题\n如何从单张图像高效且高质量地重建三维场景，克服现有基于扩散模型的方法因迭代采样而推理慢的部署难题。\n\n### 核心思路/方法\n1. 观察到几何前向扭曲（geometric forward warping）即可覆盖目标视图的大部分内容，仅留下少量残差需要校正。\n2. 提出PRISM：将多视角潜在（latent）预测分解为**参数无关的几何先验**与**学习的残差校正**，推理时无需扩散采样。\n3. 设计两阶段训练策略：先通过潜在监督蒸馏（latent supervised distillation）学习几何泛化，再通过感知微调（perceptual fine-tuning）优化外观质量。\n\n### 主要贡献\n1. 提出纯前馈框架PRISM，实现从单图到多视图的快速三维重建，无需迭代扩散采样。\n2. 利用几何扭曲-残差建模分解任务，使大部分视图内容直接由几何变换完成，降低编码器负担。\n3. 设计两阶段训练策略，使模型能够在纯合成数据上泛化，并兼顾几何准确度与外观保真度。\n4. 在三个基准上达到与扩散方法可比的性能，同时将每个场景的推理时间大幅降至36秒。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**  \n理由：该工作针对三维重建中扩散模型推理慢的显著痛点，提出了一种高效的纯前馈替代方案，并在多个基准上验证了速度-质量的权衡优势。秒级推理时间（36秒/场景）对机器人、VR等实时或近实时应用具有重要意义，且两阶段训练策略对合成数据泛化有启发价值。"
+      }
+    },
+    "2606.25427": {
+      "brief": {
+        "status": "success",
+        "input_hash": "2d458a50d6da308dd58dd820f4b34ce59630eee05abbeaf6cc182367a0b1af3f",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-25T15:40:13Z",
+        "path": "summaries/brief/2606.25427.md",
+        "markdown": "### Metadata\n- 标题：Gastroendoscopy View Synthesis: A New Real Dataset and Evaluation\n- 作者：Masaki Minai, Yusuke Monno, Masatoshi Okutomi, Sho Suzuki\n- 出版日期：2026-06-24\n- 分类：神经场景表示与渲染（Neural Scene Representations & Rendering）\n- 链接：摘要链接 https://arxiv.org/abs/2606.25427 ; PDF链接 https://arxiv.org/pdf/2606.25427\n\n### 一句话总结\n本文发布了首个用于胃内窥镜新型视角合成（NVS）的真实数据集GastroNVS，并基于多种3D高斯泼溅（3DGS）方法进行了评估，指出了该应用场景下的挑战。\n\n### 研究问题\n现有胃内窥镜场景下的新型视角合成研究缺乏足够的真实数据集，无法有效评估和推动相关方法（如NeRF和3DGS）在该领域的应用。\n\n### 核心思路/方法\n1. 创建并发布首个真实胃内窥镜NVS数据集GastroNVS，包含胃镜图像、相机位姿和点云数据。\n2. 利用该数据集，对多种3D高斯泼溅方法进行定量和定性评估，以验证数据集的适用性并分析当前方法的不足。\n\n### 主要贡献\n- 提出了首个用于胃内窥镜新型视角合成的真实数据集GastroNVS。\n- 基于该数据集对现有3DGS方法进行了系统评估，揭示了胃内窥镜场景下NVS的具体挑战，为未来研究提供基准和方向。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**\n理由：本文针对胃内窥镜这一特定医学应用，提供了首个真实NVS数据集，填补了现有数据资源的空白。对于从事医学影像分析、神经渲染或内窥镜图像处理的研究者具有直接参考价值，且数据集可申请获取，便于后续复现与拓展。"
+      }
+    },
+    "2606.25162": {
+      "brief": {
+        "status": "success",
+        "input_hash": "e2a4d8db9b6d746dedc11a8de66c6d7c41bc7910e6b131d29dbaafa77c9e24b6",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-25T15:40:19Z",
+        "path": "summaries/brief/2606.25162.md",
+        "markdown": "### Metadata\n- 标题：fARfetch: Enabling Collocated AR-HRC in Large Visually Diverse Environments with VLM-Driven AR Content Adaptation\n- 作者：Christian Fronk, Hanting Ye, David Hunt, Miroslav Pajic, Maria Gorlatova\n- 出版日期：2026-06-23\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2606.25162\n\n### 一句话总结\nfARfetch 是一个面向大型、视觉多样环境的增强现实-人机协作（AR-HRC）系统，通过语义地图、缩微世界表示和视觉语言模型（VLM）驱动的AR内容自适应，显著提升了户外大空间内协作任务的效率和内容可读性。\n\n### 研究问题\n如何在大型、视觉多样（如户外）环境中，解决增强现实人机协作（AR-HRC）中因长距离和视线受阻导致的交互困难与虚拟内容可读性下降问题。\n\n### 核心思路/方法\n系统集成了三个关键组件：\n1. **共享语义环境地图**：AR头显与机器人共同构建并可视化检测到的地标，支持基于地标的“前往”指令。\n2. **上下文感知的缩微世界表示**：为精细路径规划提供共环境的小型化、全景式抽象视图。\n3. **VLM驱动的AR视图管理**：联合调整虚拟内容的颜色、大小和方向，以在大型视觉多样环境中保持内容可读性。\n\n系统基于Meta Quest 3头显和Unitree Go2四足机器人实现，并在真实户外大尺度（30.5米）巡检任务中开展了12名用户的受试者内实验。\n\n### 主要贡献\n- 提出一套完整的AR-HRC系统，整合了语义地图、缩微世界和VLM内容自适应，适用于大型、视觉多样环境。\n- 通过用户实验验证：相比无AR基线，fARfetch显著提升任务完成时间（快66%），并降低了脑力负荷（-43%）、时间需求（-34%）和挫败感（-66%）。\n- 定制可读性调查表明，系统在大尺度户外环境中能有效保持虚拟内容的可读性。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**  \n理由：该工作针对实际户外大空间人机协作的明确痛点（内容可读性、交互效率），提出了新颖的VLM驱动自适应方法，并附有显著量化的用户实验证据，对AR-HRC领域的研究者和从业者有直接参考价值。"
+      }
+    },
+    "2606.25083": {
+      "brief": {
+        "status": "success",
+        "input_hash": "182d84f50963938bba7b6162db261467e375948bc5d22cce4d40a15dc36013ff",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-25T15:40:26Z",
+        "path": "summaries/brief/2606.25083.md",
+        "markdown": "### Metadata\n- 标题：Invariant Kalman filtering for extended pose estimation in multi-IMU articulated rigid-body systems  \n- 作者：Sven Goffin, Cédric Schwartz, Silvère Bonnabel, Olivier Brüls, Pierre Sacré  \n- 出版日期：2026-06-23  \n- 分类：3D Reconstruction & Multi-view Geometry  \n- 链接：https://arxiv.org/abs/2606.25083  \n\n### 一句话总结\n本文提出一种基于不变卡尔曼滤波（IEKF）的迭代方法，用于多IMU铰接刚体系统的扩展位姿估计（方向、速度、位置），通过引入相对L-扩展位姿的Lie群表示，将关节运动学约束以不变形式融入滤波，显著提升估计精度与收敛性。\n\n### 研究问题\n如何为多IMU构成的铰接刚体系统（如机器人和人体）实现具有收敛保证和一致性的扩展位姿估计，同时处理跨刚体的位姿耦合与关节约束问题。\n\n### 核心思路/方法\n1. 定义**相对L-扩展位姿**（relative L-extended pose）作为运动链系统的Lie群表示，使系统动态具有群仿射性质。  \n2. 将关节运动学约束建模为**无噪声伪测量**，并嵌入迭代不变扩展卡尔曼滤波（IterIEKF）框架中，从而保留不变滤波的收敛性和一致性保证。  \n3. 在UR5e机器人和人体腿部数据集上验证，与标准EKF、迭代EKF及绝对位姿IterIEKF进行对比。\n\n### 主要贡献\n- 首次将不变卡尔曼滤波的收敛与一致性保证扩展至多IMU铰接系统；  \n- 提出一种将关节约束以不变形式显式融入滤波的有效方案；  \n- 实验显示，提出方法在所有场景中均取得最低RMSE，相比次优滤波器至少降低50%，且收敛更快、运行间变异性更低。\n\n### 局限性\n摘要未提供具体局限性信息（如传感器噪声假设、计算复杂度、对非线性约束的适应性等）。\n\n### 阅读优先级\n**高**  \n理由：该方法针对机器人运动跟踪与人体动作分析中的核心问题，提出理论严谨且实验效果显著的创新方案（RMSE降低50%以上），对从事滤波、位姿估计与惯性导航的研究者具有直接参考价值。"
+      }
     }
   },
   "reports": {
@@ -2171,6 +2251,13 @@
       "status": "success",
       "updated_at": "2026-06-24T15:35:26Z",
       "path": "reports/daily/2026-06-24.md",
+      "tasks": [],
+      "ai_trend_report": true
+    },
+    "2026-06-25": {
+      "status": "success",
+      "updated_at": "2026-06-25T15:40:53Z",
+      "path": "reports/daily/2026-06-25.md",
       "tasks": [],
       "ai_trend_report": true
     }
