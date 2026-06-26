@@ -70,9 +70,9 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 <!-- DAILY_REPORT_END -->
 
-**Last updated:** 2026-06-25T11:11:14-04:00
-**Total number of papers:** 61
-**Number of papers added in the latest update:** 8
+**Last updated:** 2026-06-26T10:46:20-04:00
+**Total number of papers:** 66
+**Number of papers added in the latest update:** 10
 **Categories tracked:** cs.CV, cs.GR, cs.RO, eess.IV
 
 Paper metadata is collected from the public arXiv API and stored as structured JSON. PDF files are not mirrored or redistributed; full-text analysis only downloads PDFs temporarily during the workflow run and deletes them afterward.
@@ -329,6 +329,21 @@ Structure from Motion (SfM) is essential for multi-view 3D reconstruction, howev
 ## Dynamic / 4D Reconstruction
 
 ### 2026-06
+
+#### 2026-06-25 - Look-Before-Move: Narrative-Grounded World Visual Attention in Dynamic 3D Story Worlds
+
+**Authors:** Jiaming Bian, Bingliang Li, Yuehao Wu, Pichao Wang, Zhi Wang, Hailan Ma, Huadong Mo, Zhenhong Sun
+**Links:** [abs](https://arxiv.org/abs/2606.26964) - [pdf](https://arxiv.org/pdf/2606.26964)
+**Primary category:** Dynamic / 4D Reconstruction
+**Secondary categories:** None
+**Matched keywords:** dynamic 3D, embodied AI
+
+<details>
+<summary>Abstract</summary>
+
+As embodied AI and world models increasingly operate in dynamic 3D environments, visual perception must move beyond passively interpreting given observations toward actively deciding what to observe. We study this problem through camera planning in dynamic 3D story worlds, where the camera must not only generate smooth motion, but also decide what visual evidence should be acquired before it moves. We formulate this capability as Narrative-Grounded World Visual Attention, where the camera acts as an embodied observer that determines what to observe, how to compose the observation, and how to shift attention over time under narrative intent and physical 3D constraints. To realize this capability, we propose Look-Before-Move, a camera planning framework that separates observation specification from motion execution. It first builds a Semantic Observation Contract to convert directorial intent into executable visual constraints, then performs Monte Carlo Viewpoint Search to find narrative-compliant and geometrically feasible viewpoints, and finally applies Semantic Trajectory Grounding to connect selected viewpoints into continuous, collision-aware, and temporally coherent camera motion. We further construct a dynamic 3D Story World Benchmark based on StoryBlender, covering 50 stories, 457 scenes, and 1585 shots with animated characters, semantic scene configurations, and executable 3D environments. Experiments show that our framework improves subject perception, intent consistency, and trajectory quality over representative baselines, demonstrating the importance of organizing visual attention before generating camera motion.
+
+</details>
 
 #### 2026-06-22 - Lift4D: Harmonizing Single-View 3D Estimation for 4D Reconstruction In-the-Wild
 
@@ -633,6 +648,36 @@ Dynamic 3D Gaussian splatting faces a fundamental tension between motion consist
 ## 3D Reconstruction & Multi-view Geometry
 
 ### 2026-06
+
+#### 2026-06-25 - PanoImager: Geometry-Guided Novel View Synthesis and Reconstruction from Sparse Panoramic Views
+
+**Authors:** Zhisong Xu, Takeshi Oishi
+**Links:** [abs](https://arxiv.org/abs/2606.27071) - [pdf](https://arxiv.org/pdf/2606.27071)
+**Primary category:** 3D Reconstruction & Multi-view Geometry
+**Secondary categories:** Neural Scene Representations & Rendering
+**Matched keywords:** 3D reconstruction, SfM, SLAM, 3DGS, novel view synthesis, view synthesis
+
+<details>
+<summary>Abstract</summary>
+
+Panoramic sensing offers wide field-of-view coverage, yet 3D reconstruction from sparse panoramas remains challenging under rotation-dominant, weak-parallax motion. In such regimes, SfM/SLAM initialization is often ill-conditioned and unreliable. We present PanoImager, an SfM-free framework that combines feed-forward pose/depth priors, geometry-conditioned diffusion view completion, and depth-guided 3DGS optimization. Given only a few panoramic images, PanoImager decomposes them into local perspective views, synthesizes auxiliary observations to enrich sparse evidence, and stabilizes Gaussian optimization for improved cross-view consistency. Experiments on multiple benchmarks show improved stability under extreme sparsity, suggesting PanoImager as an offline/background component for map refinement when SfM/SLAM fails to initialize.
+
+</details>
+
+#### 2026-06-25 - Rolling Shutter Relative Pose Estimation Made Practical
+
+**Authors:** Daniel Barath
+**Links:** [abs](https://arxiv.org/abs/2606.26863) - [pdf](https://arxiv.org/pdf/2606.26863)
+**Primary category:** 3D Reconstruction & Multi-view Geometry
+**Secondary categories:** None
+**Matched keywords:** pose estimation
+
+<details>
+<summary>Abstract</summary>
+
+Rolling shutter (RS) cameras equip virtually all consumer devices, yet RS-aware relative pose estimation has remained impractical: the state-of-the-art solver requires a minimum of 20 point correspondences, making RANSAC-based robust estimation prohibitively expensive due to the exponential dependence of the iteration count on the sample size. We make RS relative pose estimation practical by introducing affine correspondences (ACs) into the RS two-view geometry. We derive novel \emph{RS-corrected affine constraints} that account for the coupling between point perturbations and the row-dependent essential matrix, providing two equations per correspondence beyond the standard epipolar constraint. Building on these constraints, we develop a linearized algebraic solver that estimates pose and RS motion from only 7 ACs. The solver exploits the physical smallness of RS parameters to linearize the constraints, eliminates the 12 RS unknowns via null-space projection, and solves the remaining degree-20 system via action matrices in 1.2\,ms. On the TUM RS benchmark, our method achieves the best pose and RS parameter accuracy among all tested methods and, uniquely among RS solvers, provides accurate translational velocity estimates -- which are poorly conditioned from point correspondences alone due to a $\vec{v}$-$\vec{t}$ coupling. On the global-shutter EuRoC MAV dataset, the solver achieves comparable accuracy to the standard 5-point algorithm, demonstrating that it generalizes well to the GS setting. Code is at https://github.com/danini/rolling_shutter_made_practical.
+
+</details>
 
 #### 2026-06-24 - PRISM: Feed-Forward Single-Image 3D Reconstruction via Geometric Warp-Residual Modeling
 
@@ -1136,60 +1181,54 @@ Tactile sensing enables robots to perceive rich contact information at the grasp
 
 </details>
 
-#### 2026-06-18 - CalTennis: Large Multi-View Tennis Video Dataset and Benchmark of Monocular-to-3D Pose Estimation
+## Neural Scene Representations & Rendering
 
-**Authors:** Ilona Demler, Xinran Xie, Blake Werner, Anna Szczuka, Pietro Perona
-**Links:** [abs](https://arxiv.org/abs/2606.20542) - [pdf](https://arxiv.org/pdf/2606.20542)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
+### 2026-06
+
+#### 2026-06-25 - Sculpting NeRF Geometry: Human-Preference Fine-Tuning of a 3D-Aware Face GAN
+
+**Authors:** Archer Moore, Mingming Gong, Liam Hodgkinson
+**Links:** [abs](https://arxiv.org/abs/2606.27305) - [pdf](https://arxiv.org/pdf/2606.27305)
+**Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
-**Matched keywords:** pose estimation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：CalTennis: Large Multi-View Tennis Video Dataset and Benchmark of Monocular-to-3D Pose Estimation
-- 作者：Ilona Demler, Xinran Xie, Blake Werner, Anna Szczuka, Pietro Perona
-- 出版日期：2026-06-18
-- 分类：3D Reconstruction & Multi-view Geometry
-- 链接：https://arxiv.org/abs/2606.20542
-
-### 一句话总结
-CalTennis是一个大规模、多视角网球视频数据集与基准，用于评估野外从单目到三维的人体姿态估计，提供了比现有数据集大数倍的数据量，并揭示了模型在深度和足部接触方面的持续缺陷。
-
-### 研究问题
-如何构建一个大规模、低成本、可标准化的多视角视频基准，以评估和揭示单目到三维姿态估计方法在真实运动场景中的表现与不足。
-
-### 核心思路/方法
-- 收集超过1100万帧（51小时）的网球训练与比赛视频，覆盖40名选手，使用2-6台同步相机以60 Hz拍摄。
-- 提出简单标准化的数据采集协议，无需专用设备或专业知识，并实现全自动视频标定与同步。
-- 利用多视角设置实现低成本、无标签的评估，对比当前最先进的单目到三维姿态方法。
-- 引入两个新性能指标（footwork和stability），并从定性的身体形状不一致性角度分析失败模式。
-
-### 主要贡献
-1. 发布大规模多视角网球视频数据集CalTennis，比现有野外人体运动视频数据集大10倍，比有动作捕捉真值的数据集大3倍。
-2. 提供首个大规模同步多视角记录专业运动员动作的基准。
-3. 通过基准测试发现当前模型在深度估计和足部接触一致性方面普遍存在困难。
-4. 提出新的评估指标（footwork和stability），揭示之前未被充分探索的失败模式。
-
-### 局限性
-摘要未提供足够信息，无法明确描述该研究的具体局限性。
-
-### 阅读优先级
-高。理由：该工作贡献了显著超越现有规模的数据集和基准，针对单目到三维姿态估计这一活跃领域，揭示了现有模型的通用弱点并提出新评估指标，对后续研究和算法改进有重要参考价值。
-
-</details>
+**Matched keywords:** NeRF, neural radiance field, radiance field, rendering, radiance
 
 <details>
 <summary>Abstract</summary>
 
-The Caltech Tennis Dataset (CalTennis) is a large-scale video benchmark for evaluating monocular-to-3D pose estimation in the wild. CalTennis comprises over 11 million frames (51 hours) of tennis practice and match play from 40 players, captured with 2-6 synchronized cameras at 60 Hz. It is 10 times larger than existing in-the-wild human motion video datasets and 3 times larger than existing MOCAP-ground-truthed datasets, and it is the first large-scale benchmark to provide synchronized multi-view recordings of expert athletic motion. The multi-view setup enables inexpensive, label-free evaluation of monocular-to-3D pose estimation algorithms. We describe a simple, standardized protocol that enables data collection without specialized equipment or expertise, along with fully automated video calibration and synchronization. Benchmarking state-of-the-art monocular-to-3D pose methods on CalTennis, we find that while 3D joint angle recovery is now quite accurate, all models struggle to estimate depth and foot contact consistently. We further propose two novel performance metrics, footwork and stability, as well as qualitatively study body shape inconsistency. These metrics expose previously underexplored failure modes and point to concrete opportunities for improvement in pose estimation and action analysis.
+Reinforcement learning from human feedback (RLHF) for 3D generation is now established across a number of works, but most existing pipelines optimise explicit surface representations, often by converting radiance fields into meshes and training heavily on surface-supervised data. We instead fine-tune a pretrained 3D-aware generative model directly from a learned reward over radiance-field density ($σ$) values, with no externally supplied mesh or shape prior. The reward model requires no pretraining, trains easily on a small set of preference samples, and yields robust improvement in 3D geometry. Working on an unconditional 3D-aware face GAN (EG3D), our reward reads the continuous 3D density field of the neural radiance field (NeRF) directly and supplies a geometry-only learning signal, requiring neither text conditioning, mesh extraction, nor multi-view rendering. A density-consistency constraint keeps the 2D appearance qualitatively similar while the geometry is reshaped, at a measurable but bounded distributional cost (FID-50k rises from 4.09 to 6.66): the fine-tuned generator, trained from the preferences of a single annotator as a proof of concept, produces face geometries preferred by users in 74.4% of pairwise comparisons.
 
 </details>
 
-## Neural Scene Representations & Rendering
+#### 2026-06-25 - Vis4GS: A Visual Analytic Tool for 3D Gaussian Splatting Reconstruction
 
-### 2026-06
+**Authors:** Kai-Yuan Lin, Aryabima Mandala Putra, Jui-Chi Lee, Shih-Hsuan Hung
+**Links:** [abs](https://arxiv.org/abs/2606.26985) - [pdf](https://arxiv.org/pdf/2606.26985)
+**Primary category:** Neural Scene Representations & Rendering
+**Secondary categories:** None
+**Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, rendering, splatting
+
+<details>
+<summary>Abstract</summary>
+
+3D Gaussian Splatting (3DGS) supports fast training and real-time rendering, but its optimization process remains difficult to interpret. Existing viewers mainly expose the final reconstructed scene and offer limited support for explaining how Gaussian properties contribute to visible artifacts or evolve during training. We present Vis4GS, a multi-view visual analytics tool for primitive-level diagnosis of 3DGS reconstruction artifacts. Built on the original 3DGS viewer and training framework, Vis4GS links rendered artifacts to Gaussian properties, View Coverage, training progress, and Gaussian genealogy through four linked views: an interactive Gaussian analysis view, a property timeline view, a Gaussian densification tree view, and a log and control panel. The system supports Gaussian selection, blur and needle-like artifact scoring, View Coverage analysis, and multiscale genealogy exploration of clone, split, prune, and clone-split events. By connecting scene-level artifacts with primitive-level evidence and optimization history, Vis4GS enables a structured workflow for diagnosing reconstruction failures beyond final-image inspection and global metrics. A user study also shows that Vis4GS provides stronger support for usability and artifact understanding than the original 3DGS viewer.
+
+</details>
+
+#### 2026-06-25 - Capacity-Controlled Multi-View Stylization of 3D Gaussian Splatting
+
+**Authors:** Zhihao Wen, Yixin Yang, Bojian Wu, Yang Zhou, Dani Lischinski, Daniel Cohen-Or, Hui Huang
+**Links:** [abs](https://arxiv.org/abs/2606.26754) - [pdf](https://arxiv.org/pdf/2606.26754)
+**Primary category:** Neural Scene Representations & Rendering
+**Secondary categories:** None
+**Matched keywords:** feature matching, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, splatting
+
+<details>
+<summary>Abstract</summary>
+
+While 3D Gaussian Splatting (3DGS) provides an efficient and explicit representation for novel view synthesis, enforcing stylistic coherence across viewpoints remains challenging. Existing 3D stylization methods typically apply 2D feature-matching losses independently per rendered view, which leads to unstable style allocation, many-to-one feature reuse, and limited cross-view consistency. We propose a capacity-controlled framework for multi-view stylization of 3DGS, grounded in optimal transport. Specifically, we reformulate local style matching as a semi-balanced optimal transport problem. By introducing explicit column-capacity constraints with tunable strength, our formulation mitigates many-to-one matching and enables controllable allocation of style features. This transport-based objective provides a principled mechanism for balancing feature coverage and stylistic diversity while maintaining stable correspondences across viewpoints. To further enhance cross-view coherence, we incorporate a novel cross-view matching guidance to constrain correspondences between scene content and style patterns. In addition, we introduce several geometric regularizations to enhance the vanilla 3DGS, thereby enabling optimized Gaussian primitives to represent finer-grained textures during stylization. Extensive experiments demonstrate that our approach significantly improves multi-view stylistic consistency and produces stable, expressive 3D stylizations while preserving the core semantic structure of the scene.
+
+</details>
 
 #### 2026-06-24 - Gastroendoscopy View Synthesis: A New Real Dataset and Evaluation
 
@@ -1894,109 +1933,69 @@ Sparse-view computed tomography is a severely ill-posed inverse problem, where r
 
 </details>
 
-#### 2026-06-18 - VisDom: Sparse Novel View Synthesis with Visible Domain Constraint
-
-**Authors:** Mariia Gladkova*, Tarun Yenamandra*, Edmond Boyer, Robert Maier, Tony Tung, Daniel Cremers
-**Links:** [abs](https://arxiv.org/abs/2606.20531) - [pdf](https://arxiv.org/pdf/2606.20531)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** None
-**Matched keywords:** NeRF, Gaussian Splatting, novel view synthesis, view synthesis, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：VisDom: Sparse Novel View Synthesis with Visible Domain Constraint
-- 作者：Mariia Gladkova*, Tarun Yenamandra*, Edmond Boyer, Robert Maier, Tony Tung, Daniel Cremers
-- 出版日期：2026-06-18
-- 分类：Neural Scene Representations & Rendering
-- 链接：论文摘要 https://arxiv.org/abs/2606.20531 | PDF https://arxiv.org/pdf/2606.20531
-
-### 一句话总结
-VisDom 提出一种无需学习的几何约束（可见域约束），通过最小多视图可见性要求，从稀疏输入中改进新视角合成的几何一致性。
-
-### 研究问题
-稀疏新视角合成（NVS）中，从少量输入视图恢复3D几何存在模糊性，现有NeRF和Gaussian Splatting方法在稀疏设置下易过拟合，产生漂浮伪影和不一致几何；仅使用轮廓一致性作为正则化仍不足够，因为轮廓一致区域可能超出真实物体几何。
-
-### 核心思路/方法
-- 定义“可见域”为至少被K个视图观测到的3D子空间，并将其作为额外过滤标准，叠加在标准基于轮廓的重建之上，以提供更强的空间先验。
-- 将VisDom集成到隐式（NeRF）和显式（GS）管线中，通过限制体素采样和指导高斯点优化时的放置。
-- 该方法无需学习参数，仅需轮廓图，作为简单补充组件。
-
-### 主要贡献
-1. 提出一种无学习的几何约束（可见域），增强经典视觉外壳重建，有效缓解稀疏视图下的几何模糊。
-2. 展示VisDom可无缝集成到NeRF和Gaussian Splatting两类管线中，提升稀疏NVS质量。
-3. 在三个挑战性数据集上，从仅4张输入图像实现高质量物体中心重建，并能在GaussianObject之上以22倍更低训练成本达到或超越其性能。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-**高**  
-理由：该方法简洁（无学习参数、仅需轮廓图）且效果显著（在多个数据集和两种主流管线中稳定提升性能），对从事稀疏视图3D重建和新视角合成的研究者具有较高的实用参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Sparse novel view synthesis (NVS) remains challenging due to the ambiguity of recovering 3D geometry from few input views. While NeRF- and Gaussian Splatting (GS)-based methods perform well with dense supervision, they often overfit in sparse settings, producing floating artifacts and inconsistent geometry. Silhouette consistency is commonly used as a regularizer, but it remains insufficient, as silhouette-consistent regions can extend beyond the true object geometry. We introduce VisDom, a learning-free geometric constraint that augments classical carving-based visual hull reconstruction by enforcing a minimum multi-view visibility requirement. Specifically, we define a visible domain as the subset of 3D space observed by at least $K$ views and use it as an additional filtering criterion on top of standard silhouette-based reconstruction. This provides a stronger spatial prior in sparse-view settings. We integrate VisDom into both implicit (NeRF) and explicit (GS) pipelines by restricting volumetric sampling and guiding Gaussian placement during optimization. Experiments on three challenging datasets show consistent improvements in sparse-view NVS, enabling high-quality object-centric reconstruction from as few as four input images. Our method is domain-agnostic, requires only silhouettes, and introduces no learned parameters, making it a simple complement to existing approaches. Applying VisDom on top of GaussianObject further improves performance on Omni3D and MipNeRF360, while matching or surpassing it at 22 $\times$ lower training cost.
-
-</details>
-
-#### 2026-06-18 - LIT-GS: LiDAR-Inertial-Thermal Gaussian Splatting for Illumination-Robust Mapping
-
-**Authors:** Shikuan Shi, Chunran Zheng, Jiaming Xu, Tianyong Ye, Tao Yu, Yukang Cui
-**Links:** [abs](https://arxiv.org/abs/2606.20424) - [pdf](https://arxiv.org/pdf/2606.20424)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** Embodied / Robotics / AR Applications
-**Matched keywords:** bundle adjustment, Gaussian Splatting, neural rendering, rendering, splatting, mapping
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：LIT-GS: LiDAR-Inertial-Thermal Gaussian Splatting for Illumination-Robust Mapping
-- 作者：Shikuan Shi, Chunran Zheng, Jiaming Xu, Tianyong Ye, Tao Yu, Yukang Cui
-- 出版日期：2026-06-18
-- 分类：Neural Scene Representations & Rendering；Embodied / Robotics / AR Applications
-- 链接：摘要：https://arxiv.org/abs/2606.20424；PDF：https://arxiv.org/pdf/2606.20424
-
-### 一句话总结
-LIT-GS 提出一种融合 LiDAR、惯性和热成像数据的高斯泼溅建图框架，通过注入 LiDAR 平面几何约束来克服光照变化和低纹理场景下的结构漂移与渲染退化问题。
-
-### 研究问题
-现有的 LiDAR-惯性-视觉（LIV）高斯建图方法依赖 RGB 光度线索，在光照变化大或纹理缺乏的环境中脆弱易失效。本文旨在利用热成像通道替代视觉信息，解决弱光/无纹理条件下的几何精度和渲染质量下降问题。
-
-### 核心思路/方法
-1. **跨模态锚定**：将 LIV 视觉地图点作为置信度感知的跨模态锚点，建立可靠的热成像-LiDAR 关联。
-2. **联合光束法平差**：在弱热监督下，将加权 LiDAR 点到平面残差加入光束法平差中，联合优化相机位姿和 3D 点。
-3. **LiDAR 平面正则化渲染**：在优化后的结构基础上，引入 LiDAR 平面正则化的可微泼溅目标，约束渲染出的 3D 点与局部观测平面对齐，减少低对比度热成像中的表面增厚和结构漂移。
-
-### 主要贡献
-- 提出首个融合 LiDAR、惯性、热成像的高斯泼溅建图框架，增强对光照变化的鲁棒性。
-- 设计置信度感知的跨模态热成像-LiDAR 关联机制及 LiDAR 平面正则化的可微约束。
-- 在自有序列和公开数据集上，相比现有 LIV 高斯泼溅基线，在几何精度和渲染质量上取得一致提升，尤其在高挑战光照条件下表现突出。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-**高**  
-理由：该工作针对现有 LIV 高斯泼溅方法在弱光和低纹理场景下的关键瓶颈提出了创新性融合方案，实验证明了显著提升，对机器人、自动驾驶及 AR 领域的视觉建图与渲染具有重要参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Gaussian Splatting has enabled real-time neural rendering, yet existing LiDAR-inertial-visual (LIV) Gaussian mapping pipelines remain fragile under illumination changes and texture-deficient scenes due to their reliance on RGB photometric cues. We present LIT-GS, a LiDAR-inertial-thermal Gaussian Splatting framework that injects LiDAR-derived plane geometry as an explicit constraint in both pose/structure refinement and Gaussian optimization. Specifically, we exploit LIV visual map points as confidence-aware cross-modal anchors to establish reliable thermal-LiDAR associations, and incorporate weighted LiDAR point-to-plane residuals into bundle adjustment to jointly refine camera poses and 3D points under weak thermal supervision. Building on the refined structure, we further introduce a LiDAR-plane-regularized differentiable splatting objective that constrains rendered 3D points to align with locally observed planes, mitigating surface thickening and structural drift in low-contrast thermal imagery. Experiments on proprietary sequences and public datasets demonstrate that LIT-GS consistently improves geometric accuracy and rendering quality over state-of-the-art LIV-based Gaussian Splatting baselines, particularly in challenging lighting conditions.
-
-</details>
-
 ## Embodied / Robotics / AR Applications
 
 ### 2026-06
+
+#### 2026-06-25 - EO-WM: A Physically Informed World Model for Probabilistic Earth Observation Forecasting
+
+**Authors:** Junwei Luo, Shuai Yuan, Zhenya Yang, Yansheng Li, Zhe Liu, Hengshuang Zhao
+**Links:** [abs](https://arxiv.org/abs/2606.27277) - [pdf](https://arxiv.org/pdf/2606.27277)
+**Primary category:** Embodied / Robotics / AR Applications
+**Secondary categories:** None
+**Matched keywords:** world model, world modeling
+
+<details>
+<summary>Abstract</summary>
+
+Earth Observation (EO) forecasting aims to predict future Earth surface dynamics from satellite observations under changing meteorological conditions. In this paper, we view this task as a partially observed, weather-driven world modeling problem, in which weather acts as a conditioning signal, while forecasting remains uncertain due to sparse observations and unobserved land-surface states. However, existing methods do not fully capture this setting: deterministic models collapse uncertainty into a single future prediction, while diffusion-based methods typically treat weather variables as undifferentiated conditioning signals, and existing benchmarks focus mainly on reconstruction accuracy rather than whether forecasts respond correctly to changed weather forcing.We introduce EO-WM, a video diffusion transformer for multispectral EO forecasting. EO-WM incorporates a physically informed conditioning framework that represents meteorological forcing through a climatological baseline, weather anomalies, and cumulative physical stress signals. Specifically, it separates baseline and anomaly through distinct conditioning pathways, and accumulates anomalous forcing over time to capture sustained heat and drought stress. To evaluate weather-response behavior beyond standard metrics, we introduce two diagnostic benchmarks: an Extreme Summer Benchmark for severity-aware prediction of vegetation degradation under extreme weather, and a Seasonal Matched-Pair Benchmark for testing response fidelity under changed weather forcing. Experiments show that EO-WM reduces the error in predicted Normalized Difference Vegetation Index (NDVI) decline amplitude by a relative 5.63% and improves directional hit rate by a relative 7.80%, while remaining competitive on standard pixel-level metrics. The benchmarks and model will be made open-source at https://github.com/Luo-Z13/EO-WM.
+
+</details>
+
+#### 2026-06-25 - UAV-MapFusion: RTK-Aligned Uncertainty-Aware Coarse-to-Fine Multi-Session UAV Mapping
+
+**Authors:** Feng Pan, Chunran Zheng, Bing Xue, Yukang Cui, Jiayu Wen, Zhiyu Chen, Wei Wang
+**Links:** [abs](https://arxiv.org/abs/2606.26928) - [pdf](https://arxiv.org/pdf/2606.26928)
+**Primary category:** Embodied / Robotics / AR Applications
+**Secondary categories:** None
+**Matched keywords:** robotics, mapping, spatial intelligence
+
+<details>
+<summary>Abstract</summary>
+
+Large-scale point cloud maps are essential for robotics and spatial intelligence tasks. UAVs provide an efficient means for large-scale map acquisition; however, due to limited flight endurance and onboard storage, mapping a large-scale scene within a single flight remains difficult. Existing multi-session map merging methods can extend the mapping range, yet in UAV scenarios they still struggle to simultaneously suppress long-range drift and preserve local geometric accuracy. To address this issue, an uncertainty-aware multi-session point cloud map merging and coarse-to-fine optimization system is proposed. The proposed method first performs initial multi-session map merging based on a scene graph, and then incorporates RTK observations through an RTK spatiotemporal alignment module, where temporal offsets are estimated using Dynamic Time Warping (DTW), and continuous RTK constraints are recovered using Multi-Output Gaussian Processes (MOGP) under incomplete sampling and frame dropouts. On this basis, a unified uncertainty-aware factor graph is constructed, and local geometric accuracy is further improved through iterative plane-factor refinement. Experiments on real-world datasets validate the effectiveness and robustness of the proposed method. To facilitate further research and development in the community, our code and dataset will be publicly released.
+
+</details>
+
+#### 2026-06-25 - OSC2Runner: OpenSCENARIO 2.x Compliant High-Fidelity AV Simulation in CARLA
+
+**Authors:** Thoshitha Gamage, Lasanthi Gamage
+**Links:** [abs](https://arxiv.org/abs/2606.26533) - [pdf](https://arxiv.org/pdf/2606.26533)
+**Primary category:** Embodied / Robotics / AR Applications
+**Secondary categories:** None
+**Matched keywords:** mapping, simulation
+
+<details>
+<summary>Abstract</summary>
+
+Scenario-Based Testing predominantly relies on the legacy ASAM OpenSCENARIO 1.x XML standard because existing continuous simulation frameworks lack native execution support for the recently matured v2.x Domain-Specific Language (DSL). Adapting legacy interpreters to evaluate v2.x logic introduces spatiotemporal drift, asynchronous event latencies, and artificial kinematic snapping. Addressing this execution gap, OSC2Runner introduces the first orchestration framework capable of natively mapping the OpenSCENARIO v2.x DSL to CARLA. The framework achieves this by formalizing scenario translation as a compilation pipeline through a multi-pass transpiler architecture. Bypassing static trajectory playback, the architecture synthesizes type-safe Abstract Syntax Trees directly into dynamic deterministic behavior trees (py_trees) natively mapped to CARLA's atomic APIs. Empirical validation in highly concurrent adversarial case studies demonstrates tick-by-tick determinism, exact spatial trigger evaluation, and 100.0 ms cross-actor blackboard synchronization. Kinematic analysis proves the strict adherence to continuous environmental boundaries. This architecture transitions Scenario-Based Testing from approximate behavioral interpretation to mathematically rigorous execution, establishing the deterministic backend required for co-simulation, hardware-in-the-loop testing, and automated LLM-driven generation pipelines.
+
+</details>
+
+#### 2026-06-24 - KRVF: A Source-Aware Semantic Voxel World Representation for Edge Mobile Manipulation
+
+**Authors:** Runfeng Ling
+**Links:** [abs](https://arxiv.org/abs/2606.26321) - [pdf](https://arxiv.org/pdf/2606.26321)
+**Primary category:** Embodied / Robotics / AR Applications
+**Secondary categories:** None
+**Matched keywords:** rendering, manipulation, mapping
+
+<details>
+<summary>Abstract</summary>
+
+Mobile manipulators need world models that are current, queryable, semantically meaningful, and usable under edge-compute constraints. This technical report presents KRVF, a source-aware semantic voxel world representation for edge mobile manipulation. Unlike reconstruction-centric mapping pipelines that primarily optimize global geometric fidelity, KRVF represents local world state as task-oriented voxels that encode occupancy, color, semantic evidence, temporal freshness, and evidence source. The representation separates measured occupancy from semantic-prior hypotheses, enabling depth-failure-aware object reasoning without silently corrupting persistent geometry. KRVF also closes a feedback loop between mapping and sensing by rendering map-prior depth for repair, and exposes task-level query operators for semantic objects and grasp candidates. The report formalizes the KRVF representation and documents a ROS 2 implementation that turns online RGB-D observations into a task-facing robot memory.
+
+</details>
 
 #### 2026-06-24 - RoboAtlas: Contextual Active SLAM
 
@@ -3101,108 +3100,6 @@ DeformX 是一个将 Cosserat 杆物理引擎与 NVIDIA Isaac Sim 集成的联�
 <summary>Abstract</summary>
 
 Deformable linear objects (DLOs) such as wires, cables, and ropes are common in robotic manipulation tasks, yet simulating them with both visual realism and physical accuracy remains challenging. Existing visual simulation methods typically rely on procedural geometric primitives that lack physically grounded deformation behavior, while physics-based approaches with robot learning support often approximate DLOs as rigid-link chains or generic soft bodies, failing to accurately capture the bending, twisting, and shear mechanics of slender elastic structures. In this work, we introduce DeformX, a co-simulation framework that integrates a dedicated Cosserat rod physics engine with NVIDIA Isaac Sim, enabling DLO simulations that are both physically faithful and visually realistic. Our Cosserat rod engine simulates the dynamics and self-collisions of DLOs, and contact interactions with arbitrary free-form meshes. To achieve high-fidelity visualization, we employ mesh skinning to map discrete rod deformations onto imported CAD models. To the best of our knowledge, DeformX is the one of the first frameworks for DLO simulation that unifies realistic visualization, principled physics, and compatibility with robot learning pipelines. We demonstrate its versatility across synthetic data generation and policy learning for DLO manipulation, and validate visual and physical fidelity through comparisons against real-world experiments. Notably, fine-tuning Segment Anything Model 3 (SAM3) on DeformX-generated data yields a 10.2% mAP@75 improvement in real-image wire segmentation, and a rope-swinging policy trained entirely in DeformX achieves a mean target-hitting error of 6.6 cm on a UR5e manipulator in real-world trials, highlighting its strong sim-to-real transfer capability.
-
-</details>
-
-#### 2026-06-18 - S-Agent: Spatial Tool-Use Elicits Reasoning for Spatial Intelligence
-
-**Authors:** Yalun Dai, Hao Li, Shulin Tian, Runmao Yao, Yuhao Dong, Fangzhou Hong, Zhaoxi Chen, Fangfu Liu, Baoliang Tian, Dingwen Zhang, Tao Wang, Kim-Hui Yap, Ziwei Liu
-**Links:** [abs](https://arxiv.org/abs/2606.20515) - [pdf](https://arxiv.org/pdf/2606.20515)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** spatial intelligence
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：S-Agent: Spatial Tool-Use Elicits Reasoning for Spatial Intelligence
-- 作者：Yalun Dai, Hao Li, Shulin Tian, Runmao Yao, Yuhao Dong, Fangzhou Hong, Zhaoxi Chen, Fangfu Liu, Baoliang Tian, Dingwen Zhang, Tao Wang, Kim-Hui Yap, Ziwei Liu
-- 出版日期：2026-06-18
-- 分类：Embodied / Robotics / AR Applications
-- 链接：[摘要](https://arxiv.org/abs/2606.20515) | [PDF](https://arxiv.org/pdf/2606.20515)
-
-### 一句话总结
-本文提出 **S-Agent**，一种空间工具使用智能体范式，将空间推理建模为时空证据累积过程，通过层次化工具和记忆机制显著提升多视图和视频空间推理性能，并基于其生成的轨迹微调出紧凑型空间智能体S-Agent-8B。
-
-### 研究问题
-现有视觉语言模型(VLM)和工具增强智能体大多依赖静态、无状态推理，无法对持续演进的3D世界进行空间推理。本文试图解决如何实现连续多视图图像和视频中的空间智能问题。
-
-### 核心思路/方法
-1. **任务重定义**：将空间推理从孤立帧级预测重塑为**时空证据累积**的场景级理解。
-2. **语义规划与工具层级**：VLM作为语义规划器决定需何种证据；层次化空间工具和专家将2D对象提升为3D几何证据，并聚合为高级空间知识（如计数、测量、朝向、相对位置）。
-3. **时间记忆机制**：包括**场景记忆**（维护持续演进的场景状态）和**智能体记忆**（累积推理上下文），以跨帧和推理步骤整合证据。
-4. **训练与微调**：无训练地增强开源和闭源VLM；进一步对S-Agent生成的空间轨迹（S-300K）进行监督微调，得到紧凑模型S-Agent-8B。
-
-### 主要贡献
-1. 提出 **S-Agent** 范式，将空间推理转化为证据累积过程，突破静态推理限制。
-2. 引入层次化空间工具和双记忆机制（场景记忆+智能体记忆），实现跨时空证据整合。
-3. 在多项多视图和视频空间推理基准上，无需额外训练即可一致提升开源/闭源VLM性能。
-4. 通过微调S-Agent生成的轨迹，得到紧凑模型 **S-Agent-8B**，性能超越同尺度基线（如Qwen3-VL-8B），媲美先进闭源模型（如GPT-5.4、Gemini 3）。
-
-### 局限性
-摘要未提供足够信息，无法评估具体局限性（如计算开销、泛化边界、失败案例等）。
-
-### 阅读优先级
-**高**
-理由：该工作聚焦空间推理这一具身智能/机器人领域核心挑战，提出新颖的“证据累积+工具层级+记忆”范式，实验结果表明其既能无训练增强现有模型，又能通过微调获得紧凑高效模型，实用性和创新性均显著，对从事空间感知、VLM增强和多模态推理的研究者具有重要参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Real-world spatial intelligence requires reasoning over a continuous and evolving 3D world, yet existing VLMs and tool-augmented agents largely remain tied to static, stateless inference from isolated visual observations. We introduce \textbf{\textsc{S-Agent}}, a spatial tool-use agentic paradigm for understanding and reasoning over continuous multi-view images and videos. By formulating spatial reasoning as spatio-temporal evidence accumulation rather than isolated frame-level prediction, \textsc{S-Agent} reshapes spatial perception into scene-centric understanding beyond frame-centric recognition. Specifically, \textsc{S-Agent} casts the VLM as a semantic planner that decides what evidence is needed, while a hierarchy of spatial tools and experts grounds objects in 2D, lifts them into 3D geometric evidence, and aggregates this evidence into high-level spatial knowledge (\textit{e.g.}, counting, measurement, orientation, and relative position). Additionally, a temporal memory mechanism, including Scene Memory for maintaining the evolving scene state and Agent Memory for accumulating reasoning context, enables evidence integration across frames and reasoning steps. Comprehensive experiments on multi-view and video spatial reasoning benchmarks show that \textsc{S-Agent} consistently improves both open-source and closed-source VLMs in a training-free manner. Beyond inference-time augmentation, supervised fine-tuning (SFT) on \textsc{S-Agent}-generated spatial trajectories \textsc{S-300K} yields \textsc{S-Agent-8B}, a compact spatial agent that significantly surpasses similar-scale baselines (e.g., Qwen3-VL-8B) and performs comparably to advanced closed-source models (e.g., GPT-5.4 and Gemini 3).
-
-</details>
-
-#### 2026-06-18 - TaCauchy: An Extensible FEM Framework for Vision-Based Tactile Simulation
-
-**Authors:** Hengfei Zhao, Yifan Xie, Junhao Gong, Yue Sun, Kai Zhu, Weihua He, Shoujie Li, Haohuan Fu, Wenbo Ding
-**Links:** [abs](https://arxiv.org/abs/2606.20426) - [pdf](https://arxiv.org/pdf/2606.20426)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** robotics, manipulation, simulation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：TaCauchy: An Extensible FEM Framework for Vision-Based Tactile Simulation
-- 作者：Hengfei Zhao, Yifan Xie, Junhao Gong, Yue Sun, Kai Zhu, Weihua He, Shoujie Li, Haohuan Fu, Wenbo Ding
-- 出版日期：2026-06-18
-- 分类：具身/机器人/增强现实应用（Embodied / Robotics / AR Applications）
-- 链接：https://arxiv.org/abs/2606.20426
-
-### 一句话总结
-TaCauchy是一个基于有限元法（FEM）的视觉触觉仿真框架，通过集成到Isaac Sim平台中，从第一性原理直接计算柯西应力张量以提供精准的力学场，并支持多种触觉传感器的快速集成。
-
-### 研究问题
-如何在高性能GPU加速的机器人仿真平台（如Isaac Sim）中，提供准确且物理一致的机械应力场，以支持基于视觉的触觉传感器的高保真仿真和强化学习任务。
-
-### 核心思路/方法
-- 基于统一增量势能接触（UIPC）求解器，利用超弹性本构定律直接计算柯西应力张量。
-- 将应力张量投影至接触表面，从而获取接触力矢量与压力分布，避免依赖经验估计。
-- 实现自动化网格生成（含几何感知自适应细化）和模块化传感器接口，支持GelSight Mini、DIGIT、9DTact等多种触觉传感器的快速扩展与配置。
-
-### 主要贡献
-1. 提出TaCauchy框架，首次将基于物理的有限元力计算无缝集成到Isaac Sim中，提供第一性原理的力学真值。
-2. 在单环境仿真中达到33.40 FPS，60个并行环境聚合吞吐量达555 FPS，且应力提取开销低于1毫秒，验证了实时性与可扩展性。
-3. 物理验证实验显示，在1.2556 N至4.7332 N的力范围内，模拟与真实触觉响应的结构相似性指数（SSIM）高于0.93，证明框架能够为下游机器人操作任务提供准确、物理基础的力监督信号。
-
-### 局限性
-摘要未提供足够信息。具体实验局限性（如特定材料模型的适用范围、网格细化对复杂几何的误差、或对超弹性本构参数的敏感度等）未在摘要中提及。
-
-### 阅读优先级
-高  
-理由：该工作解决了视觉触觉仿真中力学场准确性这一关键瓶颈，且提供了可直接部署在主流机器人仿真平台（Isaac Sim）上的开源自适应框架，对从事触觉传感、机器人操作和仿真到现实迁移的研究者具有较高的实用价值和参考意义。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Vision-based tactile sensors require high-fidelity simulation for reinforcement learning, yet existing approaches struggle to provide accurate mechanical stress fields within GPU-accelerated robotics platforms. We present TaCauchy, an extensible Finite Element Method (FEM) framework that integrates rigorous physics-based force computation into Isaac Sim. Built on the Unified Incremental Potential Contact (UIPC) solver, TaCauchy directly computes Cauchy stress tensors from hyperelastic constitutive laws and projects them onto contact surfaces to obtain traction forces and pressure distributions, providing mechanical ground truth from first principles rather than empirical estimation. Our framework features automatic mesh generation with geometry-aware adaptive refinement and a modular sensor interface enabling rapid integration of diverse sensors (GelSight Mini, DIGIT, 9DTact) with minimal configuration. Performance benchmarks demonstrate 33.40 FPS for single environments and 555 FPS aggregate throughput across 60 parallel environments, with stress extraction overhead under 1 ms. Physical validation experiments show strong agreement between simulated and real tactile responses across force ranges from 1.2556 N to 4.7332 N, achieving SSIM above 0.93, confirming the framework's capability to provide accurate, physically-grounded force supervision for downstream robotic manipulation tasks.
 
 </details>
 
