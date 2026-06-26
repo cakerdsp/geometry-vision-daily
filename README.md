@@ -11,58 +11,70 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：61
+- 当前滚动窗口论文数：66
 - 分类分布：
-  - Embodied / Robotics / AR Applications: 24
-  - Neural Scene Representations & Rendering: 16
-  - 3D Reconstruction & Multi-view Geometry: 11
-  - Dynamic / 4D Reconstruction: 6
+  - Embodied / Robotics / AR Applications: 26
+  - Neural Scene Representations & Rendering: 17
+  - 3D Reconstruction & Multi-view Geometry: 12
+  - Dynamic / 4D Reconstruction: 7
   - Geometry Foundation Models: 4
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-好的，这是基于您提供的论文列表生成的中文科研趋势综合分析。
+## 中文科研趋势综合分析（2026-06-25/26 窗口）
 
----
+### 今日主要趋势
 
-#### 今日主要趋势
+#### 1. 从“重建”转向“理解与推理”：隐式/显式表示的诊断、优化与语义化
+近年来NeRF和3DGS等表示方法已趋于成熟，今日的多篇论文不再仅关注更高的PSNR/SOTA，而是**深入理解内部机制**：例如Vis4GS首次从基元级别诊断3DGS伪影，Sculpting NeRF Geometry直接将人类偏好反馈作用于NeRF密度场以改善几何，KRVF提出了任务导向且来源感知的体素表示。趋势表明，研究者将更多精力放在“如何调试/优化/信任”这些表示，以及如何将纯几何重建与高层语义任务（如机器人操作、叙事规划）连接。
 
-1.  **SLAM 的“上下文”与“语义”时代全面来临**：传统的几何 SLAM 正快速向整合高级语义推理的“上下文感知”方向演进。今天多篇论文不再满足于仅优化位姿和稀疏点云，而是强调系统对场景的理解、推理和自适应能力。例如，**RoboAtlas** 通过 VLM 驱动探索与语义导航的动态平衡；**DSP-SLAM++** 追求高保真度的多类物体级建图；**VLM Reasoning for Intralogistics** 直接构建包含物体可移动性等上下文属性的地图；而 **OpenReLoc** 则完全依赖物体级表示进行重定位。这标志着 SLAM 正从一个纯粹的“几何重建引擎”转变为一个“场景理解与交互平台”。
+#### 2. 前馈（Feed-Forward）方法加速替代迭代扩散采样
+在单图像3D重建领域，PRISM和FLAT两篇论文体现了强烈的前馈化倾向：PRISM利用几何扭曲-残差分解避开扩散采样；FLAT首次从视频扩散潜码直接解码三角形泼溅。这些方法在保持与扩散方法可比的视觉质量的同时，将推理时间从数分钟降至数十秒，显著提升了部署可行性。值得注意的是，它们都在“几何先验”上做文章，而非单纯压缩模型。
 
-2.  **大型生成模型（扩散模型/VLM）成为 3D 领域的“核心引擎”**：无论是生成、重建还是应用，大型预训练模型（特别是视频扩散模型和 VLM）正取代传统的端到端学习范式，成为驱动 3D 视觉技术发展的核心基础设施。**PRISM** 和 **FLAT** 尝试直接从视频扩散模型的潜在空间中解码出几何基元（网格、三角形）；**OrbitForge** 则利用视频扩散模型作为先验来补全视图，从而实现文本到 3D 场景的生成。在应用中，**fARfetch** 和 **RoboAtlas** 均使用 VLM 进行实时的内容自适应和推理决策。这表明，利用这些模型的强大先验知识，正从“提供能力”走向“集成到骨干网络”。
+#### 3. 多模态融合与“弱”传感器在具身场景中崛起
+多篇机器人/AR论文试图突破传统传感的局限：RoboAtlas融合几何探索、语义地图和VLM推理；MIL-LC将环境磁场作为互补定位模态；量子磁力计被提出用于灾后空洞重建。这反映出一个趋势：在GNSS拒止、几何退化、纹理缺失等挑战性环境中，单一传感器（LiDAR或视觉）不是万能解，研究者开始系统性地融合非常规传感器（磁力计、量子传感器）并利用VLM进行高层语义理解，实现更具鲁棒性的定位与导航。
 
-3.  **任务驱动的“实用化”与“轻量化”成为鲜明趋势**：研究重心正从“如何做得更准”向“如何用得起来”倾斜。这体现在两个维度：一是针对特定任务（如灾后救援、内窥镜、自动驾驶风险理解）提出定制化解决方案；二是在算法层面进行极致的工程优化以提升效率和降低资源消耗。例如，**MIL-LC** 通过融合磁力计解决 GNSS 拒止环境下的定位难题；**Pocket-SLAM** 通过感知剪枝技术大幅降低 3DGS-SLAM 的内存消耗；**GeoT2V-Bench** 的出现也说明学界开始关心生成内容的“可重建性”这一实用性指标。从追求“最优”到追求“可行”是一个重要的信号。
+#### 4. “故事化”与“可解释”的3D内容生成
+3D生成不再仅是“造一个模型”，而是朝向**叙事驱动**和**可控内容生成**发展。Look-Before-Move将相机规划与叙事意图结合，主动决定“看什么”而非被动生成运动；DSP-SLAM++在物体SLAM中追求多类高保真，强调语义连贯性而非纯精度。这表明3D场景生成正从像素级一致向语义级、意图级一致演进。
 
-4.  **“基础模型”的评价与可解释性受到关注**：随着越来越多的方法依赖生成模型或 MLLM，如何评估它们内部推理过程的可靠性和一致性成为了新的研究点。**PointVG-R** 在 MLLM 中引入显式的“视觉思维链 (Visual Chain of Thought)”，试图解释模型是如何基于空间关系进行定位的。而 **GeoT2V-Bench** 则提出了一个诊断基准，专门评估 T2V 模型生成的帧是否具有作为单一 3D 场景多视角证据的内在 3D 一致性，而非仅仅视觉上好看。这说明，在模型能力提升后，评估其内部机理和输出质量的可信度成为了下一个焦点。
+### 技术路线观察
 
-#### 技术路线观察
+| 方向 | 技术侧重点 | 代表论文 |
+|------|-----------|----------|
+| **几何基础模型** | 前馈化替代扩散；几何先验+残差校正；显式基元（三角形/高斯） | PRISM, FLAT, FLUX3D |
+| **3D/4D重建与SLAM** | 稀疏全景下的无SfM重建；物体级SLAM异步加速；滚动快门高效求解；多会话地图融合（RTK约束） | PanoImager, DSP-SLAM++, Rolling Shutter RS, UAV-MapFusion |
+| **神经场景表示** | 表示的可解释性/诊断；人类偏好微调；风格化容量控制；胃镜特定场景评估 | Vis4GS, Sculpting NeRF, Capacity-Controlled Stylization, GastroNVS |
+| **机器人/AR应用** | 多模态跨传感器融合；VLM驱动的语义理解与自适应；主动SLAM；叙事驱动的相机规划 | RoboAtlas, fARfetch, MIL-LC, KRVF, Look-Before-Move |
+| **仿真与工具链** | 将领域特定语言（v2.x DS）编译为确定性行为树；灾后废墟仿真管道 | OSC2Runner, Rubble Simulation to Active Magnetic Mapping |
 
-| 技术方向 | 主要论文 | 技术侧重点 |
-| :--- | :--- | :--- |
-| **几何基础模型 & 3D/4D 重建** | PRISM, FLAT, FLUX3D, PointVG-R, GeoT2V-Bench | - 探索从扩散模型潜在码直接解码显式几何的表达（PRISM: 网格, FLAT: 三角形）。<br>- 研究如何实现扩散对齐的高质量稀疏表示（FLUX3D）。<br>- 关注从“生成”到“重建”的评价和推理过程，追求内部一致性（GeoT2V-Bench, PointVG-R）。 |
-| **神经场景表示与渲染** | FLUX3D, ArtiTwinSplat, OrbitForge, GastroNVS | - 大量基于 3DGS 的工作，场景可操作性与逼真度并重（ArtiTwinSplat: 交互式数字孪生）。<br>- 利用视频生成模型作为场景先验，补全缺失视角（OrbitForge）。<br>- 开始为特定领域发布真实世界数据集（GastroNVS）。 |
-| **机器人/AR 应用** | RoboAtlas, DSP-SLAM++, MIL-LC, fARfetch, Pocket-SLAM, OpenReLoc, VLM for Intralogistics, UniDrive, ArtiTwinSplat | - SLAM 系统全面拥抱 3DGS、VLM、语义地图，追求“上下文感知”和“物体级理解”。<br>- 高度关注实际部署的挑战：内存效率（Pocket-SLAM）、环境退化（MIL-LC）、人机协作界面（fARfetch）。<br>- 应用领域更聚焦，如灾后救援、医疗、自动驾驶、内部物流。 |
-| **其他（如图像取证）** | ForensicsTok | 探索将图像篡改定位任务转化为 MLLM 的自回归序列生成问题，展示了 MLLM 技术在视觉任务中的泛化潜力。 |
+### 值得优先阅读的论文
 
-#### 值得优先阅读的论文
+1. **PRISM**：单图像3D重建推理时间大幅缩短（36秒 vs 扩散方法数分钟），几何先验+残差分解的思路具有极强通用性，且作者分析了扩散采样的瓶颈机制，对任何希望将3D生成推向实时部署的研究者都是必读。
 
-1.  **RoboAtlas & DSP-SLAM++**：这两篇是理解 SLAM 技术如何与语义、生成模型结合的绝佳范例。**RoboAtlas** 演示了如何利用 VLM 实现高级决策（探索vs.导航），是“上下文SLAM”的典型代表。**DSP-SLAM++** 则针对物体级SLAM的性能瓶颈，提出了工程上优雅的异步解决方案。两者共同展示了 SLAM 进化的两个重要方向：智能化与实用化。
+2. **FLAT**：首次证明可直接从视频扩散潜码解码显式三角形基元，解决了长期困扰3DGS领域的“表面定义缺失”问题。提出的射线居中旋转参数化和乘积窗函数是实质性贡献，对从事几何基元表示的研究者极具参考价值。
 
-2.  **PRISM & FLAT**：这两篇并列，因为它们共同指向了一个激动人心的方向：直接从生成模型的潜在空间中提取可导出的、有清晰定义的几何体。**PRISM** 代表了一种经典但高效的“先几何扭曲，再残差学习”的思路；**FLAT** 则标志着向更标准的图形学基元（三角形）迈出了重要一步。比较阅读这两篇，可以深入理解当前从“生成”到“3D资产”的不同技术路径及其权衡。
+3. **Sculpting NeRF Geometry**：开辟了“人类偏好直接微调隐式密度场”这一全新优化范式，无需网格、形状先验或文本条件。对于3D内容生成和生成模型微调领域，该方法具有方向性的启发性。
 
-3.  **ArtiTwinSplat**：此工作具有很强的示范意义。它仅用 RGB-D 视频就自动构建了具有关节、可交互的数字孪生，成果直接可用于机器人仿真和学习，打通了“真实世界观测”到“高质量模拟环境”的完整链路。对于从事机器人操作、交互式 AR/VR 的研究者来说，这不仅是方法的进步，更是能力的范式转变。
+4. **RoboAtlas**：在GOAT-Bench上提升了17.8个百分点的成功率，且用更小模型也能逼近大模型性能。它将“主动SLAM”从纯几何探索扩展到语义推理，并设计上下文多臂赌博机实现平滑切换，对机器人自主导航研究有直接指导意义。
 
-#### 可能的研究机会
+5. **Rolling Shutter Relative Pose Estimation Made Practical**：用7个仿射对应替代20个点对应，仅1.2毫秒求解，将滚动快门相对位姿从“理论可行”真正变为“实用”。这是经典的几何方法创新，对从事SfM、SLAM的工程和研究团队价值巨大。
 
-1.  **融合大型生成模型与 SLAM 的联合优化框架**：当前方法多是将 VLM 作为上游模块（如 RoboAtlas 用于决策）或将扩散模型作为先验（如 OrbitForge）。一个潜在机会是设计一个端到端可微的框架，使得 SLAM 的位姿估计与场景建图能够反过来指导并优化生成模型的输出（例如，SLAM 的几何约束可以被回传到 VLM，用于修正其幻觉），形成闭环。
+### 可能的研究机会
 
-2.  **面向特定模态的、极简的 3D 地图表征**：MIL-LC 的成功表明，在某些退化环境下，过度复杂的几何/语义表征可能不可靠。因此，探索如何构建一个“最小表示”的地图，例如仅利用物体的拓扑关系或精简的语义地标，并结合鲁棒的滤波或优化方法，可能是一个有价值的研究方向，尤其适用于资源受限或通信恶劣的场景。
+- **前馈几何基元解码的泛化性研究**：FLAT表明三角形可被解码，但能否推广到其他基元（如网格补丁、可变形曲面）？前馈方式下如何保持复杂拓扑？这是一个开放方向。
+- **弱传感器+VLM的联合SLAM**：RoboAtlas和MIL-LC分别展示了语义和磁场的价值，但尚未将VLM的高层语义与磁场等低层物理信号深度融合。建立一个“语义-物理”双通道的主动SLAM框架值得探索。
+- **面向“叙事意图”的3D内容诊断与编辑**：Vis4GS可诊断伪影，Look-Before-Move可规划叙事相机，但二者尚未结合。设计一个既能解释伪影来源又能按导演意图自动修复的工具链，是生成领域的新需求。
+- **实时3D风格化的跨视图一致性极限**：Capacity-Controlled Stylization通过最优运输控制风格分配，但风格迁移中语义保真度如何量化？“容量控制”的边界如何随场景复杂度变化？工程化后可适配动捕/虚拟制片。
+- **低样本偏好微调在3D以外的辐射场**：Sculpting NeRF的方法是否可推广到人体NeRF、场景NeRF？仅单标注者的偏好样本能否支持完全无条件的3D生成优化？这为数据匮乏的场景提供了新范式。
 
-3.  **3D 生成资产的可信度与物理一致性评价**：GeoT2V-Bench 只评估了 3D 几何一致性。下一步可以扩展到评估生成的 3D 资产的物理合理性（如是否符合光照物理、刚体运动学等），并提出相应的 benchmark。这可以与 **ArtiTwinSplat** 等追求“可交互”数字孪生的工作结合，为具身 AI 提供更可靠的训练数据。
+### 风险和不确定性
 
-4.  **可解释的、基于对象的地图与重定位**：OpenReLoc 证明了纯对象级的重定位是可能的。未来可以探索如何让 VLM 不仅输出语义类别
+- **摘要结论不可泛化**：例如Sculpting NeRF的FID下降（4.09→6.66）在全文中的严重程度、Rolling Shutter求解器在真实大倾角数据上的鲁棒性、KRVF缺乏任何实验量化对比，均需阅读全文确认。
+- **数据集和实验设置的隐蔽局限**：GastroNVS数据集仅包含少量内窥镜序列，无法代表全胃病变多样性；UAV-MapFusion的RTK对齐在高动态或遮蔽场景下可能失效；OSC2Runner的复杂性可能限制其跨仿真器迁移。
+- **前馈方法的构建代价**：PRISM和FLAT虽然推理快，但其训练依赖大规模合成数据/视频扩散潜码，预训练成本高昂，且零样本泛化（指任意外观数据）可能不如扩散模型稳定。
+- **表现与完整性的权衡**：部分论文（如KRVF）目前仅停留在报告阶段，方法设计完整但无实验背书；另一些论文（如Vis4GS）作为工具论文，其通用性和扩展性需在实际场景中检验。
 
 ### interests.md 指令分析
 
@@ -337,6 +349,44 @@ Structure from Motion (SfM) is essential for multi-view 3D reconstruction, howev
 **Primary category:** Dynamic / 4D Reconstruction
 **Secondary categories:** None
 **Matched keywords:** dynamic 3D, embodied AI
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Look-Before-Move: Narrative-Grounded World Visual Attention in Dynamic 3D Story Worlds
+- 作者：Jiaming Bian, Bingliang Li, Yuehao Wu, Pichao Wang, Zhi Wang, Hailan Ma, Huadong Mo, Zhenhong Sun
+- 出版日期：2026-06-25
+- 分类：Dynamic / 4D Reconstruction
+- 链接：https://arxiv.org/abs/2606.26964
+
+### 一句话总结
+本文提出一个名为 Look-Before-Move 的相机规划框架，该框架通过先构建语义观察契约、进行蒙特卡洛视点搜索，再执行语义轨迹接地，使动态3D故事世界中的智能体能够根据叙事意图主动决定观察内容，而非被动生成运动。
+
+### 研究问题
+在动态3D故事世界中，相机如何从被动生成平滑运动转向主动选择观察目标（即根据叙事意图和物理约束决定“看什么”、“如何构图”以及“如何转移注意力”）？
+
+### 核心思路/方法
+该方法将相机规划拆分为“观察指定”和“运动执行”两个阶段。具体包含三个步骤：
+1. **语义观察契约**：将导演意图（叙事目标）转化为可执行的视觉约束条件。
+2. **蒙特卡洛视点搜索**：在满足叙事要求和几何可行性的前提下，搜索符合约束的视点。
+3. **语义轨迹接地**：将选定视点连接成连续、无碰撞且时间一致的相机运动轨迹。
+
+### 主要贡献
+1. 提出“叙事接地世界视觉注意力”概念，将相机视为在动态3D故事世界中根据叙事意图和物理约束决定观察的具身观察者。
+2. 设计 Look-Before-Move 框架，创新性地分离观察指定与运动执行，生成叙事一致且几何可行的相机轨迹。
+3. 基于 StoryBlender 构建动态3D故事世界基准，包含50个故事、457个场景、1585个镜头，支持动画角色、语义配置和可执行3D环境。
+4. 实验表明，该框架在主体感知、意图一致性和轨迹质量上优于代表性基线方法，验证了在生成相机运动前组织视觉注意力的重要性。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+中
+
+理由：该工作专注于具身AI在动态3D环境中的视觉注意力与相机规划问题，属于较具体的交叉方向。若研究兴趣在于叙事驱动的智能体感知或动态场景中的运动规划，则本文有较高参考价值；若领域不涉及3D故事世界或具身视觉，则阅读优先级降低。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -658,6 +708,40 @@ Dynamic 3D Gaussian splatting faces a fundamental tension between motion consist
 **Matched keywords:** 3D reconstruction, SfM, SLAM, 3DGS, novel view synthesis, view synthesis
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：PanoImager: Geometry-Guided Novel View Synthesis and Reconstruction from Sparse Panoramic Views
+- 作者：Zhisong Xu, Takeshi Oishi
+- 出版日期：2026-06-25
+- 分类：3D Reconstruction & Multi-view Geometry（主分类）；Neural Scene Representations & Rendering（副分类）
+- 链接：摘要页（https://arxiv.org/abs/2606.27071），PDF（https://arxiv.org/pdf/2606.27071）
+
+### 一句话总结
+PanoImager 是一个无需 SfM 的框架，结合前馈深度/姿态先验、几何条件扩散视图补全和深度引导的 3DGS 优化，从稀疏全景图像中实现稳定的新视图合成与三维重建。
+
+### 研究问题
+如何在旋转主导、弱视差运动的极端稀疏全景视图输入下，实现稳定可靠的三维重建和新视图合成，克服传统 SfM/SLAM 初始化不稳定的问题。
+
+### 核心思路/方法
+1. **SfM-free 设计**：摒弃 SfM 流程，直接利用前馈任务提供姿态和深度先验。
+2. **视图分解与补全**：将稀疏全景图分解为局部透视视图，通过几何条件扩散模型合成辅助视图，以丰富稀疏证据。
+3. **深度引导的 3DGS 优化**：利用深度信息稳定高斯渲染优化，提升跨视图一致性。
+
+### 主要贡献
+- 提出 PanoImager 框架，在极端稀疏全景视角下实现更优的重建和合成稳定性，可作为 SfM/SLAM 初始化失败时的离线/背景组件，用于地图优化。
+- 在多个基准测试中，展现了在极稀疏输入下的鲁棒性提升。
+
+### 局限性
+摘要未提供足够信息，无法详细说明具体局限性。
+
+### 阅读优先级
+**高**。
+理由：该工作针对传统 SfM/SLAM 在稀疏全景场景下的核心痛点（初始化和弱视差）提出了创新的无 SfM 解决方案，结合了深度先验、扩散模型和 3DGS 优化，对实时建图、自主导航和 VR/AR 等领域具有潜在应用价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Panoramic sensing offers wide field-of-view coverage, yet 3D reconstruction from sparse panoramas remains challenging under rotation-dominant, weak-parallax motion. In such regimes, SfM/SLAM initialization is often ill-conditioned and unreliable. We present PanoImager, an SfM-free framework that combines feed-forward pose/depth priors, geometry-conditioned diffusion view completion, and depth-guided 3DGS optimization. Given only a few panoramic images, PanoImager decomposes them into local perspective views, synthesizes auxiliary observations to enrich sparse evidence, and stabilizes Gaussian optimization for improved cross-view consistency. Experiments on multiple benchmarks show improved stability under extreme sparsity, suggesting PanoImager as an offline/background component for map refinement when SfM/SLAM fails to initialize.
@@ -671,6 +755,42 @@ Panoramic sensing offers wide field-of-view coverage, yet 3D reconstruction from
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** pose estimation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Rolling Shutter Relative Pose Estimation Made Practical
+- 作者：Daniel Barath
+- 出版日期：2026-06-25T10:47:53Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2606.26863
+
+### 一句话总结
+本文通过引入仿射对应（ACs）并推导滚动快门校正的仿射约束，将滚动快门相对位姿估计所需匹配点数从20对降至7对，从而使其在RANSAC框架中变得实用。
+
+### 研究问题
+如何在不牺牲精度和效率的前提下，减少滚动快门相机相对位姿估计所需的最小匹配点数，从而使其在RANSAC等鲁棒估计中实际可用。
+
+### 核心思路/方法
+1. **引入仿射对应（ACs）**：将仿射对应融入滚动快门双视图几何，推导出“RS校正的仿射约束”，每个仿射对应在标准极线约束之外额外提供两个方程。
+2. **线性化代数求解器**：利用RS参数物理上的小量，线性化约束；通过零空间投影消除12个RS未知数；使用作用矩阵求解剩余20阶系统，整个求解耗时1.2毫秒。
+3. **仅需7个仿射对应**即可同时估计位姿和RS运动参数。
+
+### 主要贡献
+- 提出RS校正的仿射约束，将最小匹配点数从20降至7。
+- 实现一个高速（1.2毫秒）的线性化代数求解器。
+- 在TUM RS基准上，位姿和RS参数精度均优于所有测试方法，且能准确估计平移速度（该量从点对应中因v-t耦合而难以恢复）。
+- 在全局快门数据集EuRoC MAV上，精度与标准5点算法相当，表明其泛化能力。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**  
+理由：该工作解决了滚动快门相对位姿估计长期存在的实用性瓶颈（点数过多），提出了创新性的仿射约束和高效求解器，并在多个基准上验证了精度和泛化能力，对计算机视觉几何建图领域有重要参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1194,6 +1314,41 @@ Tactile sensing enables robots to perceive rich contact information at the grasp
 **Matched keywords:** NeRF, neural radiance field, radiance field, rendering, radiance
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Sculpting NeRF Geometry: Human-Preference Fine-Tuning of a 3D-Aware Face GAN
+- 作者：Archer Moore, Mingming Gong, Liam Hodgkinson
+- 出版日期：2026-06-25
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2606.27305
+
+### 一句话总结
+本文提出直接从人类偏好学习的奖励信号微调预训练3D感知生成对抗网络（EG3D）的NeRF密度场，无需网格或形状先验，即可改善人脸几何质量。
+
+### 研究问题
+如何在无外部网格、形状先验或文本条件的情况下，仅通过人类偏好反馈直接优化隐式3D表示（NeRF）的几何结构。
+
+### 核心思路/方法
+1. 基于预训练的3D感知人脸GAN（EG3D）进行微调。
+2. 奖励模型直接从NeRF的连续密度场（σ值）学习，无需预训练，仅需少量偏好样本。
+3. 使用密度一致性约束保持2D外观相似性，几何调整仅由密度场的奖励信号驱动。
+4. 作为概念验证，仅使用单个标注者的偏好进行训练。
+
+### 主要贡献
+1. 首次直接对NeRF密度场进行人类偏好微调，避免转换为网格或其他显式表示。
+2. 奖励模型简单易训练，无需预训练，在小样本偏好数据上有效。
+3. 在无条件3D人脸GAN上验证方法，用户偏好比较中胜率74.4%，同时量化了分布代价（FID-50k从4.09升至6.66）。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该方法提出了一种新颖的、无需网格/文本条件的3D几何优化框架，直接通过人类偏好调整NeRF密度场，具备实际应用潜力（如3D内容创作），且实验验证了用户偏好显著提升。尽管存在分布代价，但全文对NeRF社区和生成模型微调领域有参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Reinforcement learning from human feedback (RLHF) for 3D generation is now established across a number of works, but most existing pipelines optimise explicit surface representations, often by converting radiance fields into meshes and training heavily on surface-supervised data. We instead fine-tune a pretrained 3D-aware generative model directly from a learned reward over radiance-field density ($σ$) values, with no externally supplied mesh or shape prior. The reward model requires no pretraining, trains easily on a small set of preference samples, and yields robust improvement in 3D geometry. Working on an unconditional 3D-aware face GAN (EG3D), our reward reads the continuous 3D density field of the neural radiance field (NeRF) directly and supplies a geometry-only learning signal, requiring neither text conditioning, mesh extraction, nor multi-view rendering. A density-consistency constraint keeps the 2D appearance qualitatively similar while the geometry is reshaped, at a measurable but bounded distributional cost (FID-50k rises from 4.09 to 6.66): the fine-tuned generator, trained from the preferences of a single annotator as a proof of concept, produces face geometries preferred by users in 74.4% of pairwise comparisons.
@@ -1209,6 +1364,45 @@ Reinforcement learning from human feedback (RLHF) for 3D generation is now estab
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, rendering, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Vis4GS: A Visual Analytic Tool for 3D Gaussian Splatting Reconstruction
+- 作者：Kai-Yuan Lin, Aryabima Mandala Putra, Jui-Chi Lee, Shih-Hsuan Hung
+- 出版日期：2026-06-25
+- 分类：Neural Scene Representations & Rendering
+- 链接：摘要：https://arxiv.org/abs/2606.26985；PDF：https://arxiv.org/pdf/2606.26985
+
+### 一句话总结
+Vis4GS是一个用于3D高斯溅射重建的多视图可视化分析工具，通过连接伪影、高斯属性、视角覆盖度与训练历程，支持基元级别的重建故障诊断，并经过用户研究验证其易用性与理解能力优于原始3DGS查看器。
+
+### 研究问题
+3D高斯溅射（3DGS）虽支持快速训练与实时渲染，但其优化过程难以解释。现有查看器主要展示最终重建场景，无法解释高斯属性如何导致可见伪影或如何在训练过程中演变。
+
+### 核心思路/方法
+基于原始3DGS查看器与训练框架，构建了四个相互关联的可视化视图：
+1. 交互式高斯分析视图：支持高斯选择与伪影评分。
+2. 属性时间线视图：展示高斯属性随时间变化。
+3. 高斯稠密化树视图：可视化复制、分裂、剪枝等谱系事件。
+4. 日志与控制面板。
+系统还集成了视角覆盖度分析与多尺度谱系探索，通过将场景级伪影与基元级证据及优化历史相连，提供结构化诊断流程。
+
+### 主要贡献
+1. 提出Vis4GS工具，首次在基元级别对3DGS重建伪影进行可视化诊断。
+2. 设计四个联动视图，覆盖伪影评分、属性演化、稠密化谱系与视角覆盖度。
+3. 用户研究表明Vis4GS在可用性与伪影理解上优于原始3DGS查看器。
+4. 提供超越最终图像检查与全局指标的故障诊断工作流。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+中
+理由：该工具主要服务于3DGS实践中的调试与诊断，对关注3DGS内部分析或可视化系统设计的读者有参考价值；但摘要未提供定量性能比较或技术实现细节，理论贡献有限，适合中等优先级阅读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 3D Gaussian Splatting (3DGS) supports fast training and real-time rendering, but its optimization process remains difficult to interpret. Existing viewers mainly expose the final reconstructed scene and offer limited support for explaining how Gaussian properties contribute to visible artifacts or evolve during training. We present Vis4GS, a multi-view visual analytics tool for primitive-level diagnosis of 3DGS reconstruction artifacts. Built on the original 3DGS viewer and training framework, Vis4GS links rendered artifacts to Gaussian properties, View Coverage, training progress, and Gaussian genealogy through four linked views: an interactive Gaussian analysis view, a property timeline view, a Gaussian densification tree view, and a log and control panel. The system supports Gaussian selection, blur and needle-like artifact scoring, View Coverage analysis, and multiscale genealogy exploration of clone, split, prune, and clone-split events. By connecting scene-level artifacts with primitive-level evidence and optimization history, Vis4GS enables a structured workflow for diagnosing reconstruction failures beyond final-image inspection and global metrics. A user study also shows that Vis4GS provides stronger support for usability and artifact understanding than the original 3DGS viewer.
@@ -1222,6 +1416,40 @@ Reinforcement learning from human feedback (RLHF) for 3D generation is now estab
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** feature matching, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Capacity-Controlled Multi-View Stylization of 3D Gaussian Splatting
+- 作者：Zhihao Wen, Yixin Yang, Bojian Wu, Yang Zhou, Dani Lischinski, Daniel Cohen-Or, Hui Huang
+- 出版日期：2026-06-25T08:36:50Z（注：日期在论文输入中标记为2026年，可能为录入错误或未来日期，但按原信息输出）
+- 分类：Neural Scene Representations & Rendering
+- 链接：摘要URL: https://arxiv.org/abs/2606.26754；PDF: https://arxiv.org/pdf/2606.26754
+
+### 一句话总结
+本文提出一种基于最优运输的容量控制框架，通过半平衡最优运输问题约束风格特征的列容量，从而改善3D Gaussian Splatting的多视角风格化一致性与稳定性。
+
+### 研究问题
+如何在不牺牲场景语义结构的前提下，使3DGS在不同视角下稳定分配风格特征，避免多对一特征重用和跨视角不一致的问题。
+
+### 核心思路/方法
+1. 将局部风格匹配重新表述为半平衡最优运输问题，引入可调强度的显式列容量约束，以缓解多对一匹配并实现可控的风格特征分配。
+2. 提出新颖的跨视角匹配引导机制，约束场景内容与风格模式之间的对应关系，增强跨视角连贯性。
+3. 引入若干几何正则化方法改进基础3DGS，使其在风格化过程中能表示更精细的纹理。
+
+### 主要贡献
+1. 提出基于最优运输的容量控制框架，通过列容量约束实现多视角稳定的风格化。
+2. 设计跨视角匹配引导机制，提升风格化在视图间的一致性。
+3. 引入几何正则化增强3DGS，使其在风格化时保留细粒度纹理与语义结构。
+
+### 局限性
+摘要未提供足够信息，未讨论方法的计算开销、场景复杂度的适用边界，或可能的失败案例。
+
+### 阅读优先级
+中。理由：该方法针对3D风格化中多视角一致性的痛点提出了理论新颖的解决方案（最优运输+容量控制），但属于特定任务优化，对于不从事3D神经渲染或风格化的读者相关性较低；且摘要未提供定量比较或实验细节，需进一步阅读正文评估有效性。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1946,6 +2174,42 @@ Sparse-view computed tomography is a severely ill-posed inverse problem, where r
 **Matched keywords:** world model, world modeling
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：EO-WM: A Physically Informed World Model for Probabilistic Earth Observation Forecasting
+- 作者：Junwei Luo, Shuai Yuan, Zhenya Yang, Yansheng Li, Zhe Liu, Hengshuang Zhao
+- 出版日期：2026-06-25
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2606.27277
+
+### 一句话总结
+EO-WM 提出了一种物理信息引导的视频扩散Transformer模型，实现了在变化气象条件下对地球观测的多光谱概率预测，并通过两个诊断基准验证了其天气响应预测的准确性。
+
+### 研究问题
+如何在不完全观测、天气驱动的地球观测预测任务中，构建能捕捉预测不确定性并对气象强迫变化做出正确响应的世界模型。
+
+### 核心思路/方法
+1. **视角转换**：将EO预测视为部分观测、天气驱动的世界建模问题，气象信号作为条件，但由于观测稀疏和地表状态不可观测而存在不确定性。
+2. **物理信息条件框架**：将气象强迫分解为气候基线、天气异常和累积物理应力（如持续热浪或干旱应力）信号，并通过不同的条件路径注入模型。
+3. **模型架构**：采用视频扩散Transformer（Video Diffusion Transformer）作为基础，结合上述条件信号生成概率性多光谱预测。
+4. **诊断基准**：设计了极端夏季基准（评估极端天气下植被退化预测的严重程度感知）和季节匹配对基准（测试不同天气强迫下的响应保真度）。
+
+### 主要贡献
+1. 提出了EO-WM模型，将物理信息条件框架引入视频扩散Transformer，实现概率性EO预测。
+2. 引入两个新基准来评估模型对气象变化的正确响应行为，超越传统重建精度指标。
+3. 实验显示，在预测NDVI下降幅度误差上相对降低5.63%，方向命中率相对提升7.80%，同时保持标准像素级指标的竞争力。
+
+### 局限性
+摘要未提供关于计算资源、数据依赖、模型泛化性、失败案例或潜在偏差等信息。未能基于摘要确定模型在无极端天气或低质量数据下的表现。
+
+### 阅读优先级
+**高**
+理由：该论文针对地球观测预测中一个关键但未被充分建模的问题（天气驱动的不确定性响应），提出了有理论依据的方法和评估基准，并在核心指标上取得显著提升，对遥感与气候应用领域具有重要参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Earth Observation (EO) forecasting aims to predict future Earth surface dynamics from satellite observations under changing meteorological conditions. In this paper, we view this task as a partially observed, weather-driven world modeling problem, in which weather acts as a conditioning signal, while forecasting remains uncertain due to sparse observations and unobserved land-surface states. However, existing methods do not fully capture this setting: deterministic models collapse uncertainty into a single future prediction, while diffusion-based methods typically treat weather variables as undifferentiated conditioning signals, and existing benchmarks focus mainly on reconstruction accuracy rather than whether forecasts respond correctly to changed weather forcing.We introduce EO-WM, a video diffusion transformer for multispectral EO forecasting. EO-WM incorporates a physically informed conditioning framework that represents meteorological forcing through a climatological baseline, weather anomalies, and cumulative physical stress signals. Specifically, it separates baseline and anomaly through distinct conditioning pathways, and accumulates anomalous forcing over time to capture sustained heat and drought stress. To evaluate weather-response behavior beyond standard metrics, we introduce two diagnostic benchmarks: an Extreme Summer Benchmark for severity-aware prediction of vegetation degradation under extreme weather, and a Seasonal Matched-Pair Benchmark for testing response fidelity under changed weather forcing. Experiments show that EO-WM reduces the error in predicted Normalized Difference Vegetation Index (NDVI) decline amplitude by a relative 5.63% and improves directional hit rate by a relative 7.80%, while remaining competitive on standard pixel-level metrics. The benchmarks and model will be made open-source at https://github.com/Luo-Z13/EO-WM.
@@ -1959,6 +2223,42 @@ Earth Observation (EO) forecasting aims to predict future Earth surface dynamics
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** robotics, mapping, spatial intelligence
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：UAV-MapFusion: RTK-Aligned Uncertainty-Aware Coarse-to-Fine Multi-Session UAV Mapping
+- 作者：Feng Pan, Chunran Zheng, Bing Xue, Yukang Cui, Jiayu Wen, Zhiyu Chen, Wei Wang
+- 出版日期：2026-06-25T12:03:29Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：摘要: https://arxiv.org/abs/2606.26928, PDF: https://arxiv.org/pdf/2606.26928
+
+### 一句话总结
+本文提出一种利用RTK对准和不确定性感知因子图的多会话无人机点云地图粗到细优化系统，以解决大范围地图合并中长距离漂移与局部几何精度难以兼顾的问题。
+
+### 研究问题
+如何在大规模多会话无人机点云地图合并中，同时抑制长距离漂移并保持局部几何精度。
+
+### 核心思路/方法
+1. **初始合并**：基于场景图对多会话地图进行粗对齐。
+2. **RTK时空对齐**：使用动态时间规整（DTW）估计时间偏移，并利用多输出高斯过程（MOGP）在不完整采样和帧丢失下恢复连续RTK约束。
+3. **不确定性感知因子图**：将RTK约束与不确定性信息整合到统一的因子图中。
+4. **局部优化**：通过迭代平面因子优化提升局部几何精度。
+
+### 主要贡献
+- 提出一种面向无人机场景的多会话点云地图合并系统，结合RTK对准与粗到细优化。
+- 引入DTW和MOGP处理RTK数据的时空对齐问题，提升长距离稳定性。
+- 利用不确定性感知因子图和平面因子细化同时提高全局一致性与局部精度。
+
+### 局限性
+- 摘要未提供具体的实验场景参数（如数据集大小、飞行时长、对比基线等），也未详细说明失败案例或假设条件，因此局限性信息不足。
+
+### 阅读优先级
+阅读优先级：中。  
+理由：该方法针对无人机大范围地图合并的实用技术问题，思路明确且包含多种创新模块（如DTW、MOGP、不确定性因子图），适合对多传感器融合或地图建图感兴趣的读者；但摘要中未提供详细实验结果，若需深入评估效果需阅读全文。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1976,6 +2276,38 @@ Large-scale point cloud maps are essential for robotics and spatial intelligence
 **Matched keywords:** mapping, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：OSC2Runner: OpenSCENARIO 2.x Compliant High-Fidelity AV Simulation in CARLA
+- 作者：Thoshitha Gamage, Lasanthi Gamage
+- 出版日期：2026-06-25
+- 分类：具身/机器人/AR应用
+- 链接：arXiv abs: https://arxiv.org/abs/2606.26533
+
+### 一句话总结
+OSC2Runner是首个能在CARLA仿真器中原生执行OpenSCENARIO v2.x DSL的编排框架，通过多遍转译器将场景描述编译为行为树，实现了精确的确定性仿真。
+
+### 研究问题
+现有连续仿真框架缺乏对新兴ASAM OpenSCENARIO v2.x DSL的原生支持，导致基于场景的测试在运行v2.x逻辑时出现时空漂移、异步事件延迟及人工运动突变等问题，亟需一种能高保真执行v2.x场景的仿真方法。
+
+### 核心思路/方法
+该框架将场景翻译形式化为编译流水线，采用多遍转译器架构，将类型安全的抽象语法树直接合成为动态确定性行为树（基于py_trees），并将其原生映射到CARLA的原子API，从而绕过静态轨迹回放，实现实时交互式执行。
+
+### 主要贡献
+1. 提出首个原生映射OpenSCENARIO v2.x DSL到CARLA的编排框架，填补v2.x执行空白。
+2. 设计多遍转译器架构，实现从DSL到行为树的确定性编译。
+3. 在高并发对抗工况实验中验证了逐刻确定性、精确的空间触发评估及100.0毫秒级跨参与者黑板同步，且运动学分析证实严格遵循连续环境边界。
+
+### 局限性
+摘要未提供足够信息：未明确讨论框架的计算开销、对复杂场景的扩展性、与OpenSCENARIO其他版本或第三方仿真器的兼容性，以及未提供可复现性的详细实验配置。
+
+### 阅读优先级
+低。理由：论文聚焦于自动驾驶仿真工具链的特定执行一致性问题（OpenSCENARIO v2.x与CARLA集成），对于非该领域（如场景测试工具开发或高保真仿真技术）的读者，其技术贡献的泛化性有限；且摘要未提供充分的性能对比基准或开放实现细节，难以评估其实用价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Scenario-Based Testing predominantly relies on the legacy ASAM OpenSCENARIO 1.x XML standard because existing continuous simulation frameworks lack native execution support for the recently matured v2.x Domain-Specific Language (DSL). Adapting legacy interpreters to evaluate v2.x logic introduces spatiotemporal drift, asynchronous event latencies, and artificial kinematic snapping. Addressing this execution gap, OSC2Runner introduces the first orchestration framework capable of natively mapping the OpenSCENARIO v2.x DSL to CARLA. The framework achieves this by formalizing scenario translation as a compilation pipeline through a multi-pass transpiler architecture. Bypassing static trajectory playback, the architecture synthesizes type-safe Abstract Syntax Trees directly into dynamic deterministic behavior trees (py_trees) natively mapped to CARLA's atomic APIs. Empirical validation in highly concurrent adversarial case studies demonstrates tick-by-tick determinism, exact spatial trigger evaluation, and 100.0 ms cross-actor blackboard synchronization. Kinematic analysis proves the strict adherence to continuous environmental boundaries. This architecture transitions Scenario-Based Testing from approximate behavioral interpretation to mathematically rigorous execution, establishing the deterministic backend required for co-simulation, hardware-in-the-loop testing, and automated LLM-driven generation pipelines.
@@ -1989,6 +2321,39 @@ Scenario-Based Testing predominantly relies on the legacy ASAM OpenSCENARIO 1.x 
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** rendering, manipulation, mapping
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：KRVF: A Source-Aware Semantic Voxel World Representation for Edge Mobile Manipulation
+- 作者：Runfeng Ling
+- 出版日期：2026-06-24T19:07:42Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：摘要链接 https://arxiv.org/abs/2606.26321；PDF链接 https://arxiv.org/pdf/2606.26321
+
+### 一句话总结
+本文提出了KRVF，一种面向边缘端移动机械臂的、具有来源感知的语义体素世界表示方法，用于在线构建任务导向的机器人记忆。
+
+### 研究问题
+如何在边缘计算约束下，为移动机械臂构建一个当前、可查询、具有语义意义且可用于任务操作的世界模型，特别是解决传统重建导向方法在语义推理和传感器失效场景下的不足。
+
+### 核心思路/方法
+KRVF将局部世界状态表示为任务导向的体素，每个体素编码占用情况、颜色、语义证据、时间新鲜度和证据来源。该表示分离了测量占用与语义先验假设，实现了对深度失效敏感的物体推理，同时避免破坏持久几何。此外，KRVF通过渲染地图先验深度来修复缺失数据，形成建图与感知间的反馈回路，并暴露语义物体与抓取候选的任务级查询算子。
+
+### 主要贡献
+1. 提出了KRVF表示法，将体素明确记录证据来源（source-aware），区分了测量与语义先验，支持深度失效感知的物体推理。
+2. 设计了建图-感知反馈回路，通过地图先验深度修复提升感知鲁棒性。
+3. 提供了任务级查询接口，直接支持语义物体搜索与抓取候选生成。
+4. 在ROS 2中实现了在线RGB-D观测到任务导向机器人记忆的转换系统。
+
+### 局限性
+摘要未提供足够信息，未讨论实验验证、数据集、性能指标或与现有方法的定量对比。
+
+### 阅读优先级
+低。理由：该技术报告仅形式化提出了KRVF表示与系统设计，但摘要中缺乏实验评估和基线对比，无法判断方法在实际任务中的有效性与效率。若对边缘端机器人语义建图感兴趣可作参考，但需等待后续验证。
+
+</details>
 
 <details>
 <summary>Abstract</summary>

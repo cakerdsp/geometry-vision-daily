@@ -2139,6 +2139,106 @@
         "path": "summaries/brief/2606.25083.md",
         "markdown": "### Metadata\n- 标题：Invariant Kalman filtering for extended pose estimation in multi-IMU articulated rigid-body systems  \n- 作者：Sven Goffin, Cédric Schwartz, Silvère Bonnabel, Olivier Brüls, Pierre Sacré  \n- 出版日期：2026-06-23  \n- 分类：3D Reconstruction & Multi-view Geometry  \n- 链接：https://arxiv.org/abs/2606.25083  \n\n### 一句话总结\n本文提出一种基于不变卡尔曼滤波（IEKF）的迭代方法，用于多IMU铰接刚体系统的扩展位姿估计（方向、速度、位置），通过引入相对L-扩展位姿的Lie群表示，将关节运动学约束以不变形式融入滤波，显著提升估计精度与收敛性。\n\n### 研究问题\n如何为多IMU构成的铰接刚体系统（如机器人和人体）实现具有收敛保证和一致性的扩展位姿估计，同时处理跨刚体的位姿耦合与关节约束问题。\n\n### 核心思路/方法\n1. 定义**相对L-扩展位姿**（relative L-extended pose）作为运动链系统的Lie群表示，使系统动态具有群仿射性质。  \n2. 将关节运动学约束建模为**无噪声伪测量**，并嵌入迭代不变扩展卡尔曼滤波（IterIEKF）框架中，从而保留不变滤波的收敛性和一致性保证。  \n3. 在UR5e机器人和人体腿部数据集上验证，与标准EKF、迭代EKF及绝对位姿IterIEKF进行对比。\n\n### 主要贡献\n- 首次将不变卡尔曼滤波的收敛与一致性保证扩展至多IMU铰接系统；  \n- 提出一种将关节约束以不变形式显式融入滤波的有效方案；  \n- 实验显示，提出方法在所有场景中均取得最低RMSE，相比次优滤波器至少降低50%，且收敛更快、运行间变异性更低。\n\n### 局限性\n摘要未提供具体局限性信息（如传感器噪声假设、计算复杂度、对非线性约束的适应性等）。\n\n### 阅读优先级\n**高**  \n理由：该方法针对机器人运动跟踪与人体动作分析中的核心问题，提出理论严谨且实验效果显著的创新方案（RMSE降低50%以上），对从事滤波、位姿估计与惯性导航的研究者具有直接参考价值。"
       }
+    },
+    "2606.27305": {
+      "brief": {
+        "status": "success",
+        "input_hash": "8709b5f2f818abe5d0eae79cc0f577619ebbab5ed48b0ec650e5c09d613cbab5",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-26T15:23:37Z",
+        "path": "summaries/brief/2606.27305.md",
+        "markdown": "### Metadata\n- 标题：Sculpting NeRF Geometry: Human-Preference Fine-Tuning of a 3D-Aware Face GAN\n- 作者：Archer Moore, Mingming Gong, Liam Hodgkinson\n- 出版日期：2026-06-25\n- 分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2606.27305\n\n### 一句话总结\n本文提出直接从人类偏好学习的奖励信号微调预训练3D感知生成对抗网络（EG3D）的NeRF密度场，无需网格或形状先验，即可改善人脸几何质量。\n\n### 研究问题\n如何在无外部网格、形状先验或文本条件的情况下，仅通过人类偏好反馈直接优化隐式3D表示（NeRF）的几何结构。\n\n### 核心思路/方法\n1. 基于预训练的3D感知人脸GAN（EG3D）进行微调。\n2. 奖励模型直接从NeRF的连续密度场（σ值）学习，无需预训练，仅需少量偏好样本。\n3. 使用密度一致性约束保持2D外观相似性，几何调整仅由密度场的奖励信号驱动。\n4. 作为概念验证，仅使用单个标注者的偏好进行训练。\n\n### 主要贡献\n1. 首次直接对NeRF密度场进行人类偏好微调，避免转换为网格或其他显式表示。\n2. 奖励模型简单易训练，无需预训练，在小样本偏好数据上有效。\n3. 在无条件3D人脸GAN上验证方法，用户偏好比较中胜率74.4%，同时量化了分布代价（FID-50k从4.09升至6.66）。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**。理由：该方法提出了一种新颖的、无需网格/文本条件的3D几何优化框架，直接通过人类偏好调整NeRF密度场，具备实际应用潜力（如3D内容创作），且实验验证了用户偏好显著提升。尽管存在分布代价，但全文对NeRF社区和生成模型微调领域有参考价值。"
+      }
+    },
+    "2606.27277": {
+      "brief": {
+        "status": "success",
+        "input_hash": "4718d7b720234d368a66078012d734803465388b2d3bcfcb3cfea6afca1c3b5d",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-26T15:23:44Z",
+        "path": "summaries/brief/2606.27277.md",
+        "markdown": "### Metadata\n- 标题：EO-WM: A Physically Informed World Model for Probabilistic Earth Observation Forecasting\n- 作者：Junwei Luo, Shuai Yuan, Zhenya Yang, Yansheng Li, Zhe Liu, Hengshuang Zhao\n- 出版日期：2026-06-25\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2606.27277\n\n### 一句话总结\nEO-WM 提出了一种物理信息引导的视频扩散Transformer模型，实现了在变化气象条件下对地球观测的多光谱概率预测，并通过两个诊断基准验证了其天气响应预测的准确性。\n\n### 研究问题\n如何在不完全观测、天气驱动的地球观测预测任务中，构建能捕捉预测不确定性并对气象强迫变化做出正确响应的世界模型。\n\n### 核心思路/方法\n1. **视角转换**：将EO预测视为部分观测、天气驱动的世界建模问题，气象信号作为条件，但由于观测稀疏和地表状态不可观测而存在不确定性。\n2. **物理信息条件框架**：将气象强迫分解为气候基线、天气异常和累积物理应力（如持续热浪或干旱应力）信号，并通过不同的条件路径注入模型。\n3. **模型架构**：采用视频扩散Transformer（Video Diffusion Transformer）作为基础，结合上述条件信号生成概率性多光谱预测。\n4. **诊断基准**：设计了极端夏季基准（评估极端天气下植被退化预测的严重程度感知）和季节匹配对基准（测试不同天气强迫下的响应保真度）。\n\n### 主要贡献\n1. 提出了EO-WM模型，将物理信息条件框架引入视频扩散Transformer，实现概率性EO预测。\n2. 引入两个新基准来评估模型对气象变化的正确响应行为，超越传统重建精度指标。\n3. 实验显示，在预测NDVI下降幅度误差上相对降低5.63%，方向命中率相对提升7.80%，同时保持标准像素级指标的竞争力。\n\n### 局限性\n摘要未提供关于计算资源、数据依赖、模型泛化性、失败案例或潜在偏差等信息。未能基于摘要确定模型在无极端天气或低质量数据下的表现。\n\n### 阅读优先级\n**高**\n理由：该论文针对地球观测预测中一个关键但未被充分建模的问题（天气驱动的不确定性响应），提出了有理论依据的方法和评估基准，并在核心指标上取得显著提升，对遥感与气候应用领域具有重要参考价值。"
+      }
+    },
+    "2606.27071": {
+      "brief": {
+        "status": "success",
+        "input_hash": "c8ff1f1ea6128ceba2705d622476606387d002e78823f8dabcffa1c1a536c3dd",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-26T15:23:49Z",
+        "path": "summaries/brief/2606.27071.md",
+        "markdown": "### Metadata\n- 标题：PanoImager: Geometry-Guided Novel View Synthesis and Reconstruction from Sparse Panoramic Views\n- 作者：Zhisong Xu, Takeshi Oishi\n- 出版日期：2026-06-25\n- 分类：3D Reconstruction & Multi-view Geometry（主分类）；Neural Scene Representations & Rendering（副分类）\n- 链接：摘要页（https://arxiv.org/abs/2606.27071），PDF（https://arxiv.org/pdf/2606.27071）\n\n### 一句话总结\nPanoImager 是一个无需 SfM 的框架，结合前馈深度/姿态先验、几何条件扩散视图补全和深度引导的 3DGS 优化，从稀疏全景图像中实现稳定的新视图合成与三维重建。\n\n### 研究问题\n如何在旋转主导、弱视差运动的极端稀疏全景视图输入下，实现稳定可靠的三维重建和新视图合成，克服传统 SfM/SLAM 初始化不稳定的问题。\n\n### 核心思路/方法\n1. **SfM-free 设计**：摒弃 SfM 流程，直接利用前馈任务提供姿态和深度先验。\n2. **视图分解与补全**：将稀疏全景图分解为局部透视视图，通过几何条件扩散模型合成辅助视图，以丰富稀疏证据。\n3. **深度引导的 3DGS 优化**：利用深度信息稳定高斯渲染优化，提升跨视图一致性。\n\n### 主要贡献\n- 提出 PanoImager 框架，在极端稀疏全景视角下实现更优的重建和合成稳定性，可作为 SfM/SLAM 初始化失败时的离线/背景组件，用于地图优化。\n- 在多个基准测试中，展现了在极稀疏输入下的鲁棒性提升。\n\n### 局限性\n摘要未提供足够信息，无法详细说明具体局限性。\n\n### 阅读优先级\n**高**。\n理由：该工作针对传统 SfM/SLAM 在稀疏全景场景下的核心痛点（初始化和弱视差）提出了创新的无 SfM 解决方案，结合了深度先验、扩散模型和 3DGS 优化，对实时建图、自主导航和 VR/AR 等领域具有潜在应用价值。"
+      }
+    },
+    "2606.26985": {
+      "brief": {
+        "status": "success",
+        "input_hash": "4a8543560e972a473626670b337f4ff4a11b1436d0075931389611e4515f2f61",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-26T15:23:54Z",
+        "path": "summaries/brief/2606.26985.md",
+        "markdown": "### Metadata\n- 标题：Vis4GS: A Visual Analytic Tool for 3D Gaussian Splatting Reconstruction\n- 作者：Kai-Yuan Lin, Aryabima Mandala Putra, Jui-Chi Lee, Shih-Hsuan Hung\n- 出版日期：2026-06-25\n- 分类：Neural Scene Representations & Rendering\n- 链接：摘要：https://arxiv.org/abs/2606.26985；PDF：https://arxiv.org/pdf/2606.26985\n\n### 一句话总结\nVis4GS是一个用于3D高斯溅射重建的多视图可视化分析工具，通过连接伪影、高斯属性、视角覆盖度与训练历程，支持基元级别的重建故障诊断，并经过用户研究验证其易用性与理解能力优于原始3DGS查看器。\n\n### 研究问题\n3D高斯溅射（3DGS）虽支持快速训练与实时渲染，但其优化过程难以解释。现有查看器主要展示最终重建场景，无法解释高斯属性如何导致可见伪影或如何在训练过程中演变。\n\n### 核心思路/方法\n基于原始3DGS查看器与训练框架，构建了四个相互关联的可视化视图：\n1. 交互式高斯分析视图：支持高斯选择与伪影评分。\n2. 属性时间线视图：展示高斯属性随时间变化。\n3. 高斯稠密化树视图：可视化复制、分裂、剪枝等谱系事件。\n4. 日志与控制面板。\n系统还集成了视角覆盖度分析与多尺度谱系探索，通过将场景级伪影与基元级证据及优化历史相连，提供结构化诊断流程。\n\n### 主要贡献\n1. 提出Vis4GS工具，首次在基元级别对3DGS重建伪影进行可视化诊断。\n2. 设计四个联动视图，覆盖伪影评分、属性演化、稠密化谱系与视角覆盖度。\n3. 用户研究表明Vis4GS在可用性与伪影理解上优于原始3DGS查看器。\n4. 提供超越最终图像检查与全局指标的故障诊断工作流。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n中\n理由：该工具主要服务于3DGS实践中的调试与诊断，对关注3DGS内部分析或可视化系统设计的读者有参考价值；但摘要未提供定量性能比较或技术实现细节，理论贡献有限，适合中等优先级阅读。"
+      }
+    },
+    "2606.26964": {
+      "brief": {
+        "status": "success",
+        "input_hash": "d7dbef0cda71a463361b9b08a6029e20e020c7a655011c81948d4b820ebad3f0",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-26T15:24:00Z",
+        "path": "summaries/brief/2606.26964.md",
+        "markdown": "### Metadata\n- 标题：Look-Before-Move: Narrative-Grounded World Visual Attention in Dynamic 3D Story Worlds\n- 作者：Jiaming Bian, Bingliang Li, Yuehao Wu, Pichao Wang, Zhi Wang, Hailan Ma, Huadong Mo, Zhenhong Sun\n- 出版日期：2026-06-25\n- 分类：Dynamic / 4D Reconstruction\n- 链接：https://arxiv.org/abs/2606.26964\n\n### 一句话总结\n本文提出一个名为 Look-Before-Move 的相机规划框架，该框架通过先构建语义观察契约、进行蒙特卡洛视点搜索，再执行语义轨迹接地，使动态3D故事世界中的智能体能够根据叙事意图主动决定观察内容，而非被动生成运动。\n\n### 研究问题\n在动态3D故事世界中，相机如何从被动生成平滑运动转向主动选择观察目标（即根据叙事意图和物理约束决定“看什么”、“如何构图”以及“如何转移注意力”）？\n\n### 核心思路/方法\n该方法将相机规划拆分为“观察指定”和“运动执行”两个阶段。具体包含三个步骤：\n1. **语义观察契约**：将导演意图（叙事目标）转化为可执行的视觉约束条件。\n2. **蒙特卡洛视点搜索**：在满足叙事要求和几何可行性的前提下，搜索符合约束的视点。\n3. **语义轨迹接地**：将选定视点连接成连续、无碰撞且时间一致的相机运动轨迹。\n\n### 主要贡献\n1. 提出“叙事接地世界视觉注意力”概念，将相机视为在动态3D故事世界中根据叙事意图和物理约束决定观察的具身观察者。\n2. 设计 Look-Before-Move 框架，创新性地分离观察指定与运动执行，生成叙事一致且几何可行的相机轨迹。\n3. 基于 StoryBlender 构建动态3D故事世界基准，包含50个故事、457个场景、1585个镜头，支持动画角色、语义配置和可执行3D环境。\n4. 实验表明，该框架在主体感知、意图一致性和轨迹质量上优于代表性基线方法，验证了在生成相机运动前组织视觉注意力的重要性。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n中\n\n理由：该工作专注于具身AI在动态3D环境中的视觉注意力与相机规划问题，属于较具体的交叉方向。若研究兴趣在于叙事驱动的智能体感知或动态场景中的运动规划，则本文有较高参考价值；若领域不涉及3D故事世界或具身视觉，则阅读优先级降低。"
+      }
+    },
+    "2606.26928": {
+      "brief": {
+        "status": "success",
+        "input_hash": "512784b1e451d068b8bdc214b5a119905af7cfb2a5736e69d43415102fb02c9e",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-26T15:24:06Z",
+        "path": "summaries/brief/2606.26928.md",
+        "markdown": "### Metadata\n- 标题：UAV-MapFusion: RTK-Aligned Uncertainty-Aware Coarse-to-Fine Multi-Session UAV Mapping\n- 作者：Feng Pan, Chunran Zheng, Bing Xue, Yukang Cui, Jiayu Wen, Zhiyu Chen, Wei Wang\n- 出版日期：2026-06-25T12:03:29Z\n- 分类：Embodied / Robotics / AR Applications\n- 链接：摘要: https://arxiv.org/abs/2606.26928, PDF: https://arxiv.org/pdf/2606.26928\n\n### 一句话总结\n本文提出一种利用RTK对准和不确定性感知因子图的多会话无人机点云地图粗到细优化系统，以解决大范围地图合并中长距离漂移与局部几何精度难以兼顾的问题。\n\n### 研究问题\n如何在大规模多会话无人机点云地图合并中，同时抑制长距离漂移并保持局部几何精度。\n\n### 核心思路/方法\n1. **初始合并**：基于场景图对多会话地图进行粗对齐。\n2. **RTK时空对齐**：使用动态时间规整（DTW）估计时间偏移，并利用多输出高斯过程（MOGP）在不完整采样和帧丢失下恢复连续RTK约束。\n3. **不确定性感知因子图**：将RTK约束与不确定性信息整合到统一的因子图中。\n4. **局部优化**：通过迭代平面因子优化提升局部几何精度。\n\n### 主要贡献\n- 提出一种面向无人机场景的多会话点云地图合并系统，结合RTK对准与粗到细优化。\n- 引入DTW和MOGP处理RTK数据的时空对齐问题，提升长距离稳定性。\n- 利用不确定性感知因子图和平面因子细化同时提高全局一致性与局部精度。\n\n### 局限性\n- 摘要未提供具体的实验场景参数（如数据集大小、飞行时长、对比基线等），也未详细说明失败案例或假设条件，因此局限性信息不足。\n\n### 阅读优先级\n阅读优先级：中。  \n理由：该方法针对无人机大范围地图合并的实用技术问题，思路明确且包含多种创新模块（如DTW、MOGP、不确定性因子图），适合对多传感器融合或地图建图感兴趣的读者；但摘要中未提供详细实验结果，若需深入评估效果需阅读全文。"
+      }
+    },
+    "2606.26863": {
+      "brief": {
+        "status": "success",
+        "input_hash": "c739088b20a903c395cb6f61fe4bb825758fc02c5c074f353271641baf1a3908",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-26T15:24:11Z",
+        "path": "summaries/brief/2606.26863.md",
+        "markdown": "### Metadata\n- 标题：Rolling Shutter Relative Pose Estimation Made Practical\n- 作者：Daniel Barath\n- 出版日期：2026-06-25T10:47:53Z\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2606.26863\n\n### 一句话总结\n本文通过引入仿射对应（ACs）并推导滚动快门校正的仿射约束，将滚动快门相对位姿估计所需匹配点数从20对降至7对，从而使其在RANSAC框架中变得实用。\n\n### 研究问题\n如何在不牺牲精度和效率的前提下，减少滚动快门相机相对位姿估计所需的最小匹配点数，从而使其在RANSAC等鲁棒估计中实际可用。\n\n### 核心思路/方法\n1. **引入仿射对应（ACs）**：将仿射对应融入滚动快门双视图几何，推导出“RS校正的仿射约束”，每个仿射对应在标准极线约束之外额外提供两个方程。\n2. **线性化代数求解器**：利用RS参数物理上的小量，线性化约束；通过零空间投影消除12个RS未知数；使用作用矩阵求解剩余20阶系统，整个求解耗时1.2毫秒。\n3. **仅需7个仿射对应**即可同时估计位姿和RS运动参数。\n\n### 主要贡献\n- 提出RS校正的仿射约束，将最小匹配点数从20降至7。\n- 实现一个高速（1.2毫秒）的线性化代数求解器。\n- 在TUM RS基准上，位姿和RS参数精度均优于所有测试方法，且能准确估计平移速度（该量从点对应中因v-t耦合而难以恢复）。\n- 在全局快门数据集EuRoC MAV上，精度与标准5点算法相当，表明其泛化能力。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**  \n理由：该工作解决了滚动快门相对位姿估计长期存在的实用性瓶颈（点数过多），提出了创新性的仿射约束和高效求解器，并在多个基准上验证了精度和泛化能力，对计算机视觉几何建图领域有重要参考价值。"
+      }
+    },
+    "2606.26754": {
+      "brief": {
+        "status": "success",
+        "input_hash": "6b13f4e732b89166185bab4680d6c452c6ebf6008197e94adf56b6f95f304d2e",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-26T15:24:17Z",
+        "path": "summaries/brief/2606.26754.md",
+        "markdown": "### Metadata\n- 标题：Capacity-Controlled Multi-View Stylization of 3D Gaussian Splatting\n- 作者：Zhihao Wen, Yixin Yang, Bojian Wu, Yang Zhou, Dani Lischinski, Daniel Cohen-Or, Hui Huang\n- 出版日期：2026-06-25T08:36:50Z（注：日期在论文输入中标记为2026年，可能为录入错误或未来日期，但按原信息输出）\n- 分类：Neural Scene Representations & Rendering\n- 链接：摘要URL: https://arxiv.org/abs/2606.26754；PDF: https://arxiv.org/pdf/2606.26754\n\n### 一句话总结\n本文提出一种基于最优运输的容量控制框架，通过半平衡最优运输问题约束风格特征的列容量，从而改善3D Gaussian Splatting的多视角风格化一致性与稳定性。\n\n### 研究问题\n如何在不牺牲场景语义结构的前提下，使3DGS在不同视角下稳定分配风格特征，避免多对一特征重用和跨视角不一致的问题。\n\n### 核心思路/方法\n1. 将局部风格匹配重新表述为半平衡最优运输问题，引入可调强度的显式列容量约束，以缓解多对一匹配并实现可控的风格特征分配。\n2. 提出新颖的跨视角匹配引导机制，约束场景内容与风格模式之间的对应关系，增强跨视角连贯性。\n3. 引入若干几何正则化方法改进基础3DGS，使其在风格化过程中能表示更精细的纹理。\n\n### 主要贡献\n1. 提出基于最优运输的容量控制框架，通过列容量约束实现多视角稳定的风格化。\n2. 设计跨视角匹配引导机制，提升风格化在视图间的一致性。\n3. 引入几何正则化增强3DGS，使其在风格化时保留细粒度纹理与语义结构。\n\n### 局限性\n摘要未提供足够信息，未讨论方法的计算开销、场景复杂度的适用边界，或可能的失败案例。\n\n### 阅读优先级\n中。理由：该方法针对3D风格化中多视角一致性的痛点提出了理论新颖的解决方案（最优运输+容量控制），但属于特定任务优化，对于不从事3D神经渲染或风格化的读者相关性较低；且摘要未提供定量比较或实验细节，需进一步阅读正文评估有效性。"
+      }
+    },
+    "2606.26533": {
+      "brief": {
+        "status": "success",
+        "input_hash": "306808d0f33117e336cc7bd6900c6f98369ee0f49fde7e4cf0e8e4a1b5ce392f",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-26T15:24:23Z",
+        "path": "summaries/brief/2606.26533.md",
+        "markdown": "### Metadata\n- 标题：OSC2Runner: OpenSCENARIO 2.x Compliant High-Fidelity AV Simulation in CARLA\n- 作者：Thoshitha Gamage, Lasanthi Gamage\n- 出版日期：2026-06-25\n- 分类：具身/机器人/AR应用\n- 链接：arXiv abs: https://arxiv.org/abs/2606.26533\n\n### 一句话总结\nOSC2Runner是首个能在CARLA仿真器中原生执行OpenSCENARIO v2.x DSL的编排框架，通过多遍转译器将场景描述编译为行为树，实现了精确的确定性仿真。\n\n### 研究问题\n现有连续仿真框架缺乏对新兴ASAM OpenSCENARIO v2.x DSL的原生支持，导致基于场景的测试在运行v2.x逻辑时出现时空漂移、异步事件延迟及人工运动突变等问题，亟需一种能高保真执行v2.x场景的仿真方法。\n\n### 核心思路/方法\n该框架将场景翻译形式化为编译流水线，采用多遍转译器架构，将类型安全的抽象语法树直接合成为动态确定性行为树（基于py_trees），并将其原生映射到CARLA的原子API，从而绕过静态轨迹回放，实现实时交互式执行。\n\n### 主要贡献\n1. 提出首个原生映射OpenSCENARIO v2.x DSL到CARLA的编排框架，填补v2.x执行空白。\n2. 设计多遍转译器架构，实现从DSL到行为树的确定性编译。\n3. 在高并发对抗工况实验中验证了逐刻确定性、精确的空间触发评估及100.0毫秒级跨参与者黑板同步，且运动学分析证实严格遵循连续环境边界。\n\n### 局限性\n摘要未提供足够信息：未明确讨论框架的计算开销、对复杂场景的扩展性、与OpenSCENARIO其他版本或第三方仿真器的兼容性，以及未提供可复现性的详细实验配置。\n\n### 阅读优先级\n低。理由：论文聚焦于自动驾驶仿真工具链的特定执行一致性问题（OpenSCENARIO v2.x与CARLA集成），对于非该领域（如场景测试工具开发或高保真仿真技术）的读者，其技术贡献的泛化性有限；且摘要未提供充分的性能对比基准或开放实现细节，难以评估其实用价值。"
+      }
+    },
+    "2606.26321": {
+      "brief": {
+        "status": "success",
+        "input_hash": "a3352cff7a76ee4f57ce42429d5ae7bd11d413454e6b0a9b8bb1c45139dd28a8",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-26T15:24:29Z",
+        "path": "summaries/brief/2606.26321.md",
+        "markdown": "### Metadata\n- 标题：KRVF: A Source-Aware Semantic Voxel World Representation for Edge Mobile Manipulation\n- 作者：Runfeng Ling\n- 出版日期：2026-06-24T19:07:42Z\n- 分类：Embodied / Robotics / AR Applications\n- 链接：摘要链接 https://arxiv.org/abs/2606.26321；PDF链接 https://arxiv.org/pdf/2606.26321\n\n### 一句话总结\n本文提出了KRVF，一种面向边缘端移动机械臂的、具有来源感知的语义体素世界表示方法，用于在线构建任务导向的机器人记忆。\n\n### 研究问题\n如何在边缘计算约束下，为移动机械臂构建一个当前、可查询、具有语义意义且可用于任务操作的世界模型，特别是解决传统重建导向方法在语义推理和传感器失效场景下的不足。\n\n### 核心思路/方法\nKRVF将局部世界状态表示为任务导向的体素，每个体素编码占用情况、颜色、语义证据、时间新鲜度和证据来源。该表示分离了测量占用与语义先验假设，实现了对深度失效敏感的物体推理，同时避免破坏持久几何。此外，KRVF通过渲染地图先验深度来修复缺失数据，形成建图与感知间的反馈回路，并暴露语义物体与抓取候选的任务级查询算子。\n\n### 主要贡献\n1. 提出了KRVF表示法，将体素明确记录证据来源（source-aware），区分了测量与语义先验，支持深度失效感知的物体推理。\n2. 设计了建图-感知反馈回路，通过地图先验深度修复提升感知鲁棒性。\n3. 提供了任务级查询接口，直接支持语义物体搜索与抓取候选生成。\n4. 在ROS 2中实现了在线RGB-D观测到任务导向机器人记忆的转换系统。\n\n### 局限性\n摘要未提供足够信息，未讨论实验验证、数据集、性能指标或与现有方法的定量对比。\n\n### 阅读优先级\n低。理由：该技术报告仅形式化提出了KRVF表示与系统设计，但摘要中缺乏实验评估和基线对比，无法判断方法在实际任务中的有效性与效率。若对边缘端机器人语义建图感兴趣可作参考，但需等待后续验证。"
+      }
     }
   },
   "reports": {
@@ -2258,6 +2358,13 @@
       "status": "success",
       "updated_at": "2026-06-25T15:40:53Z",
       "path": "reports/daily/2026-06-25.md",
+      "tasks": [],
+      "ai_trend_report": true
+    },
+    "2026-06-26": {
+      "status": "success",
+      "updated_at": "2026-06-26T15:24:51Z",
+      "path": "reports/daily/2026-06-26.md",
       "tasks": [],
       "ai_trend_report": true
     }
