@@ -11,59 +11,65 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：66
+- 当前滚动窗口论文数：58
 - 分类分布：
-  - Embodied / Robotics / AR Applications: 26
-  - Neural Scene Representations & Rendering: 17
-  - 3D Reconstruction & Multi-view Geometry: 12
-  - Dynamic / 4D Reconstruction: 7
+  - Embodied / Robotics / AR Applications: 21
+  - Neural Scene Representations & Rendering: 16
+  - 3D Reconstruction & Multi-view Geometry: 11
+  - Dynamic / 4D Reconstruction: 6
   - Geometry Foundation Models: 4
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
+好的，以下是根据您提供的论文列表生成的中文科研趋势综合分析。
+
+---
+
 #### 今日主要趋势
 
-1.  **从全局优化到诊断与可控编辑：3D场景表示正从“黑盒”走向“可解释”与“可控”。** 过去，工作重心是提升NeRF/3DGS的重建精度和渲染速度。今天，我们看到一个明确的转向：研究者不再满足于获得一个“好”的场景，而是开始关注场景的内部机理和编辑能力。例如，**Vis4GS** 直接为3DGS重建过程提供基元级可视化诊断工具，链接伪影与高斯属性。而 **Sculpting NeRF Geometry** 和 **Capacity-Controlled Multi-View Stylization** 分别通过人类偏好和最优运输理论，对场景的几何形状和风格进行精细调控。这表明社区开始将“可解释性”和“可控性”视为与“保真度”同等重要的指标。
+今天的论文反映了三个相互交织的显著趋势：
 
-2.  **物理先验与感知反馈深度融合：机器人/AR系统从“感知-建图”的线性流程，转向“建图-感知-控制”的闭环主动系统。** 传统的SLAM和建图往往是“一次性”的，缺乏任务导向和主动适应能力。今日的多篇论文展示了深刻的范式转变。**KRVF** 通过引入“来源感知”的体素和建图-感知反馈回路，让地图能主动修复深度失效区域。**RoboAtlas** 通过上下文多臂赌博机，让机器人能动态平衡几何探索与语义推理，实现主动SLAM。**UAV-MapFusion** 利用不确定性感知因子图，在合并多会话地图时，既抑制长程漂移又保持局部精度。这些工作共同描绘了下一代机器人世界模型的雏形：它利用先验知识（物理、地理）来指导感知，并基于感知结果主动调整建图和规划策略。
+1.  **从“被动重建”走向“主动感知与决策”：** 大量工作不再满足于从给定的数据中重建3D场景，而是将感知系统置于一个更宏大的任务循环中，使其能主动决定“看什么”、“如何看”以及“何时看”。这体现在多个层面：
+    - **具身智能与机器人领域**，如 `RoboAtlas` 提出的上下文感知主动SLAM，在几何探索与语义引导的导航间动态平衡；`Look-Before-Move` 让动态3D故事世界中的相机根据叙事意图主动决定观察内容；`From Rubble Simulation to Active Magnetic Mapping` 通过主动贝叶斯采样优化对坍塌建筑内部结构的重建。
+    - **人机交互领域**，如 `fARfetch` 使用VLM驱动增强现实内容自适应，确保虚拟信息在大型动态环境中始终保持可读，这是一种对“用户体验”的主动感知与适应。
+    - **重建管线自身**，如 `PanoImager` 通过补全稀疏视角来主动“丰富证据”，而非被动接受输入的不足。
 
-3.  **实用主义导向的鲁棒性突破：解决极端或退化场景下的“最后一公里”问题。** 许多经典问题（如单目重建、相对位姿估计、多会话地图合并）在理想条件下已取得不错效果，但今天的论文致力于攻克这些任务的“阿喀琉斯之踵”。**PanoImager** 专注于无SfM的场景，解决极稀疏全景图下的旋转主导和弱视差问题。**Rolling Shutter Relative Pose Estimation Made Practical** 通过仿射对应将所需匹配点数从20降至7，使RS相机的位姿估计在RANSAC框架中变得可行。**MIL-LC** 另辟蹊径，利用环境磁场作为互补模态，解决LiDAR在几何重复或纹理缺失场景中的退化问题。这反映出研究前沿正从“如何做得更好”转向“如何在最坏条件下也能工作”。
+2.  **3D表示语言的“分化”与“融合”：** 以3D高斯泼溅（3DGS）和神经辐射场（NeRF）为代表的神经场景表示仍在快速发展，但出现了明显的分化与融合迹象。
+    - **分化**：一方面，`FLAT` 尝试从潜在空间直接解码出显式的**三角形面片**，旨在获得比高斯体素更“几何精确”的表示，这挑战了以体积渲染为核心的范式。另一方面，`Capacity-Controlled Multi-View Stylization` 等工作继续深挖3DGS在风格化等应用上的能力。
+    - **融合**：多个工作将传统几何方法与神经/生成模型结合。例如，`PRISM` 将多视图预测分解为**参数无关的几何先验**（前向扭曲）和学习的残差校正；`PanoImager` 融合了前馈深度/姿态先验、扩散模型和深度引导的3DGS优化；`FLUX3D` 则将扩散模型与稀疏体素表示对齐，以提升生成质量。
 
-4.  **跨模态对齐与表示学习：生成式3D模型的瓶颈从“生成式模型能力”转向“表示学习与跨模态对齐”。** 以 FLUX3D 为代表的工作强调，单图生成3D场景的核心障碍不仅仅是扩散模型的强大与否，更是如何构建一个能保留2D高频细节、且与扩散潜空间良好对齐的3D表示。同样，**FLAT** 直接证明，可以从视频扩散潜码解码出几何更精确的三角形基元，这需要对3D表示进行精巧的参数化（如射线居中的旋转参数化）和训练技巧（如乘积窗函数）。这表明，3D生成任务的未来突破点在于设计更智能的3D表示和学习目标，使其能“理解”并“利用”预训练2D模型中蕴含的丰富先验。
+3.  **解决“不可靠”与“难以解释”的工程化瓶颈：** 随着3D技术向实际应用迈进，解决传统方法的工程化缺陷成为研究热点。
+    - **几何稳定性**：`Rolling Shutter Relative Pose Estimation` 通过引入仿射对应，解决了滚动快门相机位姿估计长期以来的实用性问题（所需点数过多），使RANSAC变得可行。`UAV-MapFusion` 融合RTK和不确定性感知图优化，应对大规模地图中的长距离漂移。
+    - **可解释性与诊断**：`Vis4GS` 直接针对3DGS这一热门技术，开发了基元级别的可视化分析工具，帮助研究人员和开发者诊断伪影来源和优化过程，这体现了对模型“黑盒”问题的关注。
+    - **数据与标准化**：`GastroNVS Dataset` 提供了首个真实胃镜NVS数据集，填补了特定医学领域的空白。`OSC2Runner` 则解决了自动驾驶仿真中新兴标准（OpenSCENARIO v2.x）的执行兼容性问题，体现了对标准化和工具链的重视。
 
 #### 技术路线观察
 
-| 技术路线 | 主要论文 | 侧重点对比 |
+| 方向 | 技术侧重 | 代表论文 |
 | :--- | :--- | :--- |
-| **几何基础模型** | **Rolling Shutter Pose Estimation, DSP-SLAM++, Invariant Kalman Filter** | 侧重于经典几何问题的鲁棒求解。前者通过巧妙的数学推导增加信息量（仿射对应），后两者通过优雅的状态估计框架（不变卡尔曼滤波、异步建图流水线）解决多IMU或物体级SLAM的精度和实时性问题。 |
-| **3D/4D 重建** | **PanoImager, PRISM, FLAT, FLUX3D** | 全力冲刺“单图/极稀疏图”到3D的快速重建。它们都采用“先验+可学习模块”的解耦策略。**PanoImager** 依赖前馈深度/姿态先验；**PRISM** 显式分解为几何扭曲先验和残差校正；**FLAT/FLUX3D**则依靠预训练的视频扩散模型。关键差异在于：PRISM追求无扩散采样的速度，而FLUX3D和FLAT追求更高的几何/外观精度。 |
-| **神经场景表示** | **Vis4GS, Sculpting NeRF Geometry, Capacity-Controlled Stylization, GastroNVS** | 从“构建”转向“诊断、编辑与应用”。**Vis4GS** 是分析工具，**Sculpting NeRF**和**Stylization**是编辑方法，而**GastroNVS**则是特定应用（胃镜）的基准测试。它们不再是追求极致的渲染质量，而是赋予场景表示“可理解”和“可操作”的属性。 |
-| **机器人/AR应用** | **RoboAtlas, UAV-MapFusion, KRVF, MIL-LC, fARfetch, OSC2Runner** | 核心驱动力是“鲁棒性”和“实用性”。研究方向扩散，但都瞄准真实世界的痛点：**RoboAtlas** 处理语义探索与几何探索的平衡；**UAV-MapFusion** 解决大规模、多会话地图的漂移问题；**MIL-LC** 应对传感器退化；**fARfetch** 克服户外AR的视距限制。共同特点是融合多源信息（VLM、RTK、磁力计）来增强单一传感器的不足。 |
+| **几何基础模型** | 从纯几何算法向“几何+学习”融合过渡。大量工作使用预训练/前馈模型提供初始化（如深度、姿态），再用更精细的几何（如SfM、光束法平差）或物理约束（如RTK）进行优化。 | `PanoImager`， `UAV-MapFusion`， `Rolling Shutter Relative Pose Estimation`， `PRISM` |
+| **3D/4D 重建 (含新视角合成)** | 1. **扩散模型**成为主流生成框架，但正尝试绕过其迭代采样瓶颈（如`PRISM`）。<br>2. **3DGS** 仍是核心表示，但研究者对其“体积性”不满意，开始探索**表面基元**（如`FLAT`的三角面片）。<br>3. **稀疏输入**和**极端视角**下的鲁棒性是大问题，催生了`PanoImager`等“补全”策略。 | `PRISM`， `PanoImager`， `FLAT`， `FLUX3D`， `GastroNVS Dataset` |
+| **神经场景表示** | 1. 对人类偏好的利用更加直接，如`Sculpting NeRF Geometry`直接对NeRF密度场进行RLHF微调。<br>2. 风格化、可解释性等“后处理”或“分析”任务成为新热点。<br>3. **场景表示语义化**，如`KRVF`将体素设计为任务导向的语义单元。 | `Sculpting NeRF Geometry`， `Vis4GS`， `Capacity-Controlled Multi-View Stylization`， `KRVF` |
+| **机器人/AR应用** | 1. **多模态融合**是核心，通过融合激光雷达、IMU、磁力计等不同传感器应对退化环境。<br>2. **语义理解**（尤其是VLM）成为智能决策的关键驱动力，用于任务规划（`RoboAtlas`）、内容自适应（`fARfetch`）等。<br>3. 从“建图”到“世界模型”的认知转变，更强调在线、源感知和任务导向。 | `RoboAtlas`， `UAV-MapFusion`， `DSP-SLAM++`， `MIL-LC`， `fARfetch`， `KRVF` |
 
 #### 值得优先阅读的论文
 
-1.  **PRISM: Feed-Forward Single-Image 3D Reconstruction via Geometric Warp-Residual Modeling**
-    - **优先级最高**。它代表了一种极有前途的单图3D重建范式：通过巧妙的物理洞察（几何扭曲可以覆盖大部分内容），实现了无需迭代采样的前馈式重建，在质量和速度之间取得了新的平衡，是图到3D领域的一个潜在里程碑。
+1.  **`FLAT: Feedforward Latent Triangle Splatting for Geometrically Accurate Scene Generation`** - **高优先级**
+    - **理由**：它挑战了当前3DGS的体积渲染范式，直接回归显式的三角面片。如果成功，将极大推动“如何更好地从2D生成3D几何”这一核心问题，并可能开启一个新兴的研究方向（由潜在码生成三角形/网格）。其提出的射线居中参数化和乘积窗函数是解决梯度问题的新尝试。
 
-2.  **FLUX3D: High-Fidelity 3D Gaussian Generation with Diffusion-Aligned Sparse Representation**
-    - **优先级高**。它清晰指出了当前稀疏体素生成派方法的双瓶颈（表示瓶颈和跨模态对齐瓶颈），并提供了系统性的解决方案（DA-SLAT和SMDiT）。对于所有从事图像到3D资产生成的研究者来说，这篇论文的分析和解决方案具有很高的参考价值。
+2.  **`PRISM: Feed-Forward Single-Image 3D Reconstruction via Geometric Warp-Residual Modeling`** - **高优先级**
+    - **理由**：它切中了一个关键痛点：扩散模型虽然质量高但推理慢。通过将生成问题分解为“几何先验+学习残差”，实现了前馈式快速推理，性能接近扩散方法。这为单图3D重建的实际部署提供了极具前景的思路，其两阶段训练策略也值得借鉴。
 
-3.  **Rolling Shutter Relative Pose Estimation Made Practical**
-    - **优先级高**。这篇论文解决了一个长期悬而未决的工程痛点。理论推导（RS校正的仿射约束）扎实，配套的高速求解器（1.2毫秒）极具实用价值。对于SLAM、SfM和多视图几何领域的研究者，这是理解滚动快门相机几何的必读材料。
+3.  **`Rolling Shutter Relative Pose Estimation Made Practical`** - **高优先级**
+    - **理由**：这是一项“修管道”式的重要工作。它引入一个巧妙的数学技巧（仿射对应+线性化），将一个长期存在但难以实用的问题（滚动快门位姿估计）变得高效可行。这是3D视觉的基石，任何使用手机等消费级相机的人都会从中受益，理论贡献和工程价值都很高。
 
-4.  **RoboAtlas: Contextual Active SLAM**
-    - **优先级中到高**。这篇论文代表了机器人主动SLAM的最高水平，它巧妙地将底层几何探索、中层语义地图和高层VLM推理整合在一个统一的概率框架（上下文多臂赌博机）下，并在1800平方米的真实场景中取得了接近完美的成功率。对于机器人领域的学者，这是一个值得深入学习的集成系统。
+4.  **`Sculpting NeRF Geometry: Human-Preference Fine-Tuning of a 3D-Aware Face GAN`** - **中优先级**
+    - **理由**：该工作展示了将RLHF直接作用于隐式密度场的新思路，区别于转换为网格再优化的传统做法。这种直接性可能带来更细致和更少信息损失的几何优化。全文值得一读，以了解其在避免几何退化时采用的“密度一致性”等具体约束细节。
 
-5.  **Vis4GS: A Visual Analytic Tool for 3D Gaussian Splatting Reconstruction**
-    - **优先级中**。虽然它不是一个算法突破，但对3DGS社区非常有价值。它为开发者提供了调试和优化3DGS模型的强大工具，揭示了伪影与内部参数的关联，有助于推动3DGS的工程落地和学术研究。
-
-#### 可能的研究机会
-
-1.  **“诊断-编辑”一体化框架**：如果结合 **Vis4GS** 的诊断能力和 **Sculpting NeRF Geometry / Capacity-Controlled Stylization** 的编辑能力，可以构建一个闭环系统：先自动分析场景的几何或风格问题，然后据此自动生成编辑策略（如局部细化、风格迁移），实现3D资产的智能优化。
-
-2.  **面向退化SL
+5.  **`RoboAtlas: Contextual Active SLAM`** - **中优先级**
+    - **理由**：该论文出色地融合了多种技术（几何探索、语义地图、VLM），是当前具身智能趋向于“融合思辨”的一个范例。其提出的“上下文多臂赌博机”是一种优雅的、可在探索与利用间动态切换的决策机制，对于解决机器
 
 ### interests.md 指令分析
 
@@ -1946,56 +1952,6 @@ In this paper, we present a novel geometry-aware style transfer framework for 3D
 <summary>Abstract</summary>
 
 Feed-forward Gaussian splatting (FFGS) facilitates real-time novel view synthesis, yet current methods often remain tied to view-dependent predictions. As more input views are added, they may accumulate noisy or redundant evidence instead of converging to a stable scene representation. In this paper, we introduce CanonicalGS, a feed-forward pipeline that maps cluttered multi-view observations into a stable, scene-centric representation. CanonicalGS first extracts view-centric evidence from depth, semantic features, and uncertainty estimates, and then aggregates this evidence in a canonical latent world using uncertainty-aware fusion. By emphasizing reliable observations while suppressing uncertain or redundant ones, CanonicalGS produces representations that scale more effectively for novel view synthesis and transfer to downstream visual perception tasks. Experiments show up to a $2.5$ dB improvement in peak signal-to-noise ratio for synthesizing novel views and an $11\%$ gain in semantic segmentation accuracy.
-
-</details>
-
-#### 2026-06-21 - Projection-Volume Fidelity Divergence: Diagnosing and Controlling Optimization Drift in Sparse-View 3D Gaussian Tomography
-
-**Authors:** Yikuang Yuluo, Ao Wang, Shen Kuan, Yujie Liu, Wang Liao, Ying Chen, Shuangyang Zhong, Yixing Huang, Fuquan Wang
-**Links:** [abs](https://arxiv.org/abs/2606.22525) - [pdf](https://arxiv.org/pdf/2606.22525)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** None
-**Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Projection-Volume Fidelity Divergence: Diagnosing and Controlling Optimization Drift in Sparse-View 3D Gaussian Tomography
-- 作者：Yikuang Yuluo, Ao Wang, Shen Kuan, Yujie Liu, Wang Liao, Ying Chen, Shuangyang Zhong, Yixing Huang, Fuquan Wang
-- 出版日期：2026-06-21
-- 分类：Neural Scene Representations & Rendering
-- 链接：https://arxiv.org/abs/2606.22525
-
-### 一句话总结
-本文发现稀疏视角三维高斯断层重建中存在投影质量提升但体积重建恶化的“投影-体积保真度发散”问题，并提出名为LADES的无真值优化控制器来解决该漂移。
-
-### 研究问题
-稀疏视角计算机断层扫描重建是一个严重病态逆问题，近期3D高斯喷射方法提供了高效显式表示。但研究发现，在投影域优化可能产生误导：渲染投影可能不断改善，而重建的体积却在退化。如何诊断和控制这种表示层面的优化漂移？
-
-### 核心思路/方法
-1. 识别故障模式：提出投影-体积保真度发散（PVFD），一种由各向异性高斯变形和稀疏Radon约束下视图特定基元共适应引起的优化漂移。
-2. 诊断指标：引入几何和体积层级的诊断方法，测量针状高斯退化和体素化密度场的稳定性。
-3. 控制器LADES：包含两个无真值组件——线性退火丢弃（在早期训练时施加强随机掩蔽，破坏过早的基元共适应，再逐步恢复全容量进行结构巩固）和结构感知早停（根据高斯种群增长饱和而非验证PSNR来终止稠密化）。
-
-### 主要贡献
-- 识别并形式化了稀疏视角高斯层析中的投影-体积保真度发散（PVFD）故障模式。
-- 引入几何和体积层级的诊断工具，用于量化高斯退化与体密度场稳定性。
-- 提出无真值优化控制器LADES，能够提高体积保真度、抑制结构退化、大幅减少训练时间，同时保持有竞争力的投影精度。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-高  
-理由：该工作直接针对稀疏视角3D高斯重建中核心的优化漂移问题，提出新颖的诊断与无真值控制方案，实验显示在体积保真度、训练效率方面有显著改进。对于从事断层重建、神经场景表示或逆向渲染的研究者具有较重要的参考价值，且问题陈述清晰、方法简洁有力。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Sparse-view computed tomography is a severely ill-posed inverse problem, where recent 3D Gaussian Splatting methods offer an efficient explicit representation for tomographic reconstruction. However, we find that projection-domain optimization can be misleading in this setting: the rendered projections may continue to improve while the reconstructed volume deteriorates. We identify this failure mode as Projection-Volume Fidelity Divergence (PVFD), a representation-level optimization drift caused by anisotropic Gaussian deformation and view-specific primitive co-adaptation under sparse Radon constraints. To characterize this behavior, we introduce geometry- and volume-level diagnostics that measure needle-like Gaussian degeneration and the stability of the voxelized density field. Based on these observations, we propose LADES, a ground-truth-free optimization controller for sparse-view Gaussian tomography. LADES combines Linearly Annealed Dropout, which applies strong stochastic masking in early training to disrupt premature primitive co-adaptation and gradually restores full capacity for structural consolidation, with Structure-Aware Early Stopping, which terminates densification according to the saturation of Gaussian population growth rather than validation PSNR. Experiments on sparse-view CT reconstruction show that LADES improves volumetric fidelity, suppresses structural degeneration, and substantially reduces training time while maintaining competitive projection accuracy. These results suggest that robust Gaussian-based tomography requires monitoring and controlling volumetric structure, rather than optimizing projection fit alone.
 
 </details>
 
