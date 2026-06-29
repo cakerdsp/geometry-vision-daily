@@ -11,65 +11,55 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：58
+- 当前滚动窗口论文数：44
 - 分类分布：
-  - Embodied / Robotics / AR Applications: 21
-  - Neural Scene Representations & Rendering: 16
-  - 3D Reconstruction & Multi-view Geometry: 11
-  - Dynamic / 4D Reconstruction: 6
-  - Geometry Foundation Models: 4
+  - Embodied / Robotics / AR Applications: 17
+  - Neural Scene Representations & Rendering: 15
+  - 3D Reconstruction & Multi-view Geometry: 7
+  - Geometry Foundation Models: 3
+  - Dynamic / 4D Reconstruction: 2
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-好的，以下是根据您提供的论文列表生成的中文科研趋势综合分析。
+好的，这是基于您提供的论文列表生成的今日科研趋势综合分析。
 
 ---
 
 #### 今日主要趋势
 
-今天的论文反映了三个相互交织的显著趋势：
+1.  **从“场景优化”到“前馈泛化”的加速迁移**：传统的新视角合成与3D重建方法多依赖于针对单个场景的密集优化，而今日的多篇论文集中展示了向“前馈式”、“可泛化”框架的转变。这些方法试图在单一前向传播中直接生成3D表示，无需针对新场景进行重复优化。代表工作如 **StructSplat** 实现了无需相机参数的前馈3D高斯重建；**PRISM** 则通过几何扭曲-残差建模，实现了单图到多视图的纯前馈重建，避免了扩散模型的迭代采样。这表明，社区正在努力消除3D重建与渲染中的“优化瓶颈”，以追求更高的实时性与可部署性。
 
-1.  **从“被动重建”走向“主动感知与决策”：** 大量工作不再满足于从给定的数据中重建3D场景，而是将感知系统置于一个更宏大的任务循环中，使其能主动决定“看什么”、“如何看”以及“何时看”。这体现在多个层面：
-    - **具身智能与机器人领域**，如 `RoboAtlas` 提出的上下文感知主动SLAM，在几何探索与语义引导的导航间动态平衡；`Look-Before-Move` 让动态3D故事世界中的相机根据叙事意图主动决定观察内容；`From Rubble Simulation to Active Magnetic Mapping` 通过主动贝叶斯采样优化对坍塌建筑内部结构的重建。
-    - **人机交互领域**，如 `fARfetch` 使用VLM驱动增强现实内容自适应，确保虚拟信息在大型动态环境中始终保持可读，这是一种对“用户体验”的主动感知与适应。
-    - **重建管线自身**，如 `PanoImager` 通过补全稀疏视角来主动“丰富证据”，而非被动接受输入的不足。
+2.  **稀疏输入与极端条件下的鲁棒3D感知**：大量论文致力于解决传感器数据稀疏、退化或存在几何歧义等极端场景下的重建与定位问题。 **PanoImager** 和 **StructSplat** 均针对极稀疏视图 (sparse views) 下的不稳定重建；**Rolling Shutter Relative Pose Estimation** 解决了消费级卷帘快门相机在几何计算中的低效问题；而 **UAV-MapFusion** 和 **MIL-LC** 则专注于在GNSS拒止、几何重复或无纹理环境中的鲁棒定位与建图。这反映了研究正从理想实验环境转向更具挑战性的实际应用场景。
 
-2.  **3D表示语言的“分化”与“融合”：** 以3D高斯泼溅（3DGS）和神经辐射场（NeRF）为代表的神经场景表示仍在快速发展，但出现了明显的分化与融合迹象。
-    - **分化**：一方面，`FLAT` 尝试从潜在空间直接解码出显式的**三角形面片**，旨在获得比高斯体素更“几何精确”的表示，这挑战了以体积渲染为核心的范式。另一方面，`Capacity-Controlled Multi-View Stylization` 等工作继续深挖3DGS在风格化等应用上的能力。
-    - **融合**：多个工作将传统几何方法与神经/生成模型结合。例如，`PRISM` 将多视图预测分解为**参数无关的几何先验**（前向扭曲）和学习的残差校正；`PanoImager` 融合了前馈深度/姿态先验、扩散模型和深度引导的3DGS优化；`FLUX3D` 则将扩散模型与稀疏体素表示对齐，以提升生成质量。
+3.  **对3D表示“可解释性”与“结构性”的追求**：尽管3D高斯泼溅 (3DGS) 表现出色，但其优化过程的“黑箱”特性及与显式几何的割裂正受到关注。**Vis4GS** 直接开发可视化分析工具，试图解释高斯属性与伪影的成因，提升了模型的可诊断性。**StructSplat** 和 **FLAT** 则从模型结构入手，前者通过结构化表征解耦几何、语义与纹理，后者则直接从潜在空间解码出更显式的**三角形泼溅** (triangle splats) 而非体素化的高斯，旨在生成具有明确表面的、更适合下游仿真与图形应用的几何资产。
 
-3.  **解决“不可靠”与“难以解释”的工程化瓶颈：** 随着3D技术向实际应用迈进，解决传统方法的工程化缺陷成为研究热点。
-    - **几何稳定性**：`Rolling Shutter Relative Pose Estimation` 通过引入仿射对应，解决了滚动快门相机位姿估计长期以来的实用性问题（所需点数过多），使RANSAC变得可行。`UAV-MapFusion` 融合RTK和不确定性感知图优化，应对大规模地图中的长距离漂移。
-    - **可解释性与诊断**：`Vis4GS` 直接针对3DGS这一热门技术，开发了基元级别的可视化分析工具，帮助研究人员和开发者诊断伪影来源和优化过程，这体现了对模型“黑盒”问题的关注。
-    - **数据与标准化**：`GastroNVS Dataset` 提供了首个真实胃镜NVS数据集，填补了特定医学领域的空白。`OSC2Runner` 则解决了自动驾驶仿真中新兴标准（OpenSCENARIO v2.x）的执行兼容性问题，体现了对标准化和工具链的重视。
+4.  **传感器融合与多模态协同的深化**：机器人与AR领域的论文不再依赖单一传感器，而是通过精巧的框架融合多种互补模态。**DSP-SLAM++** 融合了单目鱼眼和LiDAR；**MIL-LC** 则引入了环境磁场作为几何/纹理特征的补充模态以提升定位鲁棒性。此外，**fARfetch** 和 **RoboAtlas** 将视觉-语言模型 (VLM) 与传统的建图、规划框架深度融合，前者用于自适应调整AR虚拟内容，后者则用于引导语义导航。这种跨模态、跨层次的融合策略正成为解决复杂环境问题的关键。
 
 #### 技术路线观察
 
-| 方向 | 技术侧重 | 代表论文 |
+| 方向 | 技术侧重点 | 代表论文 |
 | :--- | :--- | :--- |
-| **几何基础模型** | 从纯几何算法向“几何+学习”融合过渡。大量工作使用预训练/前馈模型提供初始化（如深度、姿态），再用更精细的几何（如SfM、光束法平差）或物理约束（如RTK）进行优化。 | `PanoImager`， `UAV-MapFusion`， `Rolling Shutter Relative Pose Estimation`， `PRISM` |
-| **3D/4D 重建 (含新视角合成)** | 1. **扩散模型**成为主流生成框架，但正尝试绕过其迭代采样瓶颈（如`PRISM`）。<br>2. **3DGS** 仍是核心表示，但研究者对其“体积性”不满意，开始探索**表面基元**（如`FLAT`的三角面片）。<br>3. **稀疏输入**和**极端视角**下的鲁棒性是大问题，催生了`PanoImager`等“补全”策略。 | `PRISM`， `PanoImager`， `FLAT`， `FLUX3D`， `GastroNVS Dataset` |
-| **神经场景表示** | 1. 对人类偏好的利用更加直接，如`Sculpting NeRF Geometry`直接对NeRF密度场进行RLHF微调。<br>2. 风格化、可解释性等“后处理”或“分析”任务成为新热点。<br>3. **场景表示语义化**，如`KRVF`将体素设计为任务导向的语义单元。 | `Sculpting NeRF Geometry`， `Vis4GS`， `Capacity-Controlled Multi-View Stylization`， `KRVF` |
-| **机器人/AR应用** | 1. **多模态融合**是核心，通过融合激光雷达、IMU、磁力计等不同传感器应对退化环境。<br>2. **语义理解**（尤其是VLM）成为智能决策的关键驱动力，用于任务规划（`RoboAtlas`）、内容自适应（`fARfetch`）等。<br>3. 从“建图”到“世界模型”的认知转变，更强调在线、源感知和任务导向。 | `RoboAtlas`， `UAV-MapFusion`， `DSP-SLAM++`， `MIL-LC`， `fARfetch`， `KRVF` |
+| **几何基础模型 (SfM/SLAM/位姿)** | 放弃传统的SfM/SLAM流程，转而使用前馈网络直接回归位姿和深度；利用代数方法（如仿射对应）减少RANSAC迭代所需的最小样本量；利用不变卡尔曼滤波处理多IMU的关节运动系统。 | **StructSplat**, **PanoImager**, **Rolling Shutter Relative Pose Estimation**, **Invariant Kalman filtering** |
+| **3D/4D 重建与场景生成** | 从单图/稀疏视图直接生成3D表示，包括3D高斯和三角形泼溅；利用视频扩散模型的隐空间作为强先验，并通过几何扭曲、残差学习等轻量级方式替代昂贵的迭代采样；强调几何精度和显式表面表征。 | **PRISM**, **FLAT**, **StructSplat**, **PanoImager** |
+| **神经场景表示与渲染** | 对3DGS的“黑箱”特性进行可视化诊断；将3DGS的风格化问题转化为最优传输问题以提升一致性；从人类偏好反馈中直接优化NeRF的密度场；针对特定应用（如胃镜）提供标准化评估基准。 | **Vis4GS**, **Capacity-Controlled Multi-View Stylization**, **Sculpting NeRF Geometry**, **Gastroendoscopy View Synthesis** |
+| **机器人/AR应用** | 构建主动SLAM框架，在几何探索与语义导航间自适应切换；提出能够处理大尺度、视觉多样环境的AR-HRC系统；融合磁力计、惯性、LiDAR等多模态信号实现鲁棒定位；设计面向边缘计算的、任务导向的语义体素表示。 | **RoboAtlas**, **fARfetch**, **MIL-LC**, **KRVF**, **UAV-MapFusion** |
 
 #### 值得优先阅读的论文
 
-1.  **`FLAT: Feedforward Latent Triangle Splatting for Geometrically Accurate Scene Generation`** - **高优先级**
-    - **理由**：它挑战了当前3DGS的体积渲染范式，直接回归显式的三角面片。如果成功，将极大推动“如何更好地从2D生成3D几何”这一核心问题，并可能开启一个新兴的研究方向（由潜在码生成三角形/网格）。其提出的射线居中参数化和乘积窗函数是解决梯度问题的新尝试。
+1.  **StructSplat** (高优先级): **理由**：它成功解耦了“无相机参数”和“前馈泛化”两大挑战，代表了可泛化3D重建的前沿。在DL3DV基准上5.67 dB的PSNR提升是极具说服力的性能指标，对于研究稀疏视图重建和可泛化渲染的学者来说是必读文献。
+2.  **PRISM** (高优先级): **理由**：它巧妙地将单图3D重建任务分解为“几何扭曲”+“残差学习”，从而规避了扩散模型的采样速度瓶颈。这种方法上的创新为快速、高质量的3D内容生成开辟了新路径，对3D生成领域的研究者具有重要启发。
+3.  **FLAT** (高优先级): **理由**：该工作首次从扩散模型潜在码中解码出**三角形泼溅**，这是一个关键的表示创新。它将隐式或体素化的3D表示推向与标准图形管线兼容的显式网格表示，对于连接计算机视觉与计算机图形学的研究具有重要意义。
+4.  **Rolling Shutter Relative Pose Estimation Made Practical** (高优先级): **理由**：解决了一个长期存在的“实用”瓶颈。通过引入仿射对应将最小匹配点从20降低到7，使卷帘快门相机的RS-aware位姿估计从“理论可行”变为“实用”，对SLAM和SfM领域具有直接且重要的推动作用。
+5.  **Sculpting NeRF Geometry: Human-Preference Fine-Tuning of a 3D-Aware Face GAN** (高优先级): **理由**：探索了将人类偏好直接作用于隐式NeRF密度场进行微调的新颖范式。虽然可能带来分布外代价，但这种方法为不使用网格或文本先验的3D几何优化提供了强大的反馈机制，对生成模型和3D内容创作领域具有启发性。
 
-2.  **`PRISM: Feed-Forward Single-Image 3D Reconstruction via Geometric Warp-Residual Modeling`** - **高优先级**
-    - **理由**：它切中了一个关键痛点：扩散模型虽然质量高但推理慢。通过将生成问题分解为“几何先验+学习残差”，实现了前馈式快速推理，性能接近扩散方法。这为单图3D重建的实际部署提供了极具前景的思路，其两阶段训练策略也值得借鉴。
+#### 可能的研究机会
 
-3.  **`Rolling Shutter Relative Pose Estimation Made Practical`** - **高优先级**
-    - **理由**：这是一项“修管道”式的重要工作。它引入一个巧妙的数学技巧（仿射对应+线性化），将一个长期存在但难以实用的问题（滚动快门位姿估计）变得高效可行。这是3D视觉的基石，任何使用手机等消费级相机的人都会从中受益，理论贡献和工程价值都很高。
-
-4.  **`Sculpting NeRF Geometry: Human-Preference Fine-Tuning of a 3D-Aware Face GAN`** - **中优先级**
-    - **理由**：该工作展示了将RLHF直接作用于隐式密度场的新思路，区别于转换为网格再优化的传统做法。这种直接性可能带来更细致和更少信息损失的几何优化。全文值得一读，以了解其在避免几何退化时采用的“密度一致性”等具体约束细节。
-
-5.  **`RoboAtlas: Contextual Active SLAM`** - **中优先级**
-    - **理由**：该论文出色地融合了多种技术（几何探索、语义地图、VLM），是当前具身智能趋向于“融合思辨”的一个范例。其提出的“上下文多臂赌博机”是一种优雅的、可在探索与利用间动态切换的决策机制，对于解决机器
+1.  **可泛化表示的“编辑性”与“控制性”研究**：当前的可泛化前馈模型（如StructSplat, FLAT）主要聚焦于重建的保真度。如何在保持其泛化能力的同时，引入更强的编辑能力（如语义级别的物体替换、属性修改）是一个空白。可以将**Optimal Transport (OT)**（来自**Capacity-Controlled Stylization**）与可泛化框架结合，或在**FLAT**的三角网格基础上开发参数化的编辑算子。
+2.  **为“Narrative-Grounded”类方法重建更丰富的环境表示**：**Look-Before-Move** 强调了生成动态相机轨迹的语义需求。其性能高度依赖于底层的3D场景表示。一个潜在的方向是，将今日论文中提升的几何精度（如FLAT的显式表面）与**Narrative-Grounded**的语义规划相结合，从而在更高保真度的动态世界中实现更精确的叙事驱动相机运动。
+3.  **在真实物理引擎中验证量子传感重构结果**：**From Rubble Simulation to Active Magnetic Mapping** 的工作完全基于仿真。与DSP-SLAM++等真实世界系统结合，或与机器人操纵框架（如KRVF）对接，在实际废墟场景中部署类似的主动量子磁力计测绘系统，是极具挑战但非常有价值的研究机会。
+4.  **构建面向特定医学应用的、赋予物理约束的渲染框架**：**Gastroendoscopy View Synthesis** 提供了真实医学数据集。可以结合该数据集，探索 **
 
 ### interests.md 指令分析
 
@@ -226,57 +216,6 @@ Camera-prompted text-to-video (T2V) models are increasingly used to synthesize v
 <summary>Abstract</summary>
 
 Pointing-based visual grounding requires models to precisely locate target objects by deciphering complex spatial relationships between the visual scene and pointing gestures. Traditional methods typically encode input images into static feature representations and perform reasoning primarily within the linguistic domain, often overlooking the rich perceptual cues and explicit spatial geometry inherent in images. In this study, we aim to mitigate the cognitive vulnerability of models in interpreting gestural spatial relations by proposing PointVG-R, a reasoning-guided Multi-modal Large Language Model (MLLM). PointVG-R introduces geometric-aware reasoning for pointing-based grounding, enabling the model to think with images through the strategic integration of Reinforcement Learning (RL) and cold-start data. Specifically, we design a novel geometric reasoning pipeline that simulates the iterative cognitive process humans employ when interpreting pointing gestures. Furthermore, we construct EgoPoint-CoT, a high-quality visual Chain-of-Thought (CoT) dataset featuring detailed reasoning trajectories to guide the model via Supervised Fine-Tuning (SFT) and RL. To address the varying quality of learning signals encountered during training, we further propose an Adaptive Importance Weighting strategy based on Group Variance, which dynamically adjusts reward signals to optimize the learning process. Experimental results demonstrate that PointVG-R achieves SOTA performance, outperforming the baseline by $\textbf{15.86}$ points in mIoU. Extensive ablation studies further validate the efficacy of our proposed modules. Code: https://github.com/lingli1724/PointVG-R.
-
-</details>
-
-#### 2026-06-22 - Dense Reward for Multi-View 3D Reasoning with Global Maps and Local Views
-
-**Authors:** Jiho Choi, Seonho Lee, Seojeong Park, Hyunjung Shim
-**Links:** [abs](https://arxiv.org/abs/2606.23557) - [pdf](https://arxiv.org/pdf/2606.23557)
-**Primary category:** Geometry Foundation Models
-**Secondary categories:** None
-**Matched keywords:** VGGT, scene representation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Dense Reward for Multi-View 3D Reasoning with Global Maps and Local Views
-- 作者：Jiho Choi, Seonho Lee, Seojeong Park, Hyunjung Shim
-- 出版日期：2026-06-22
-- 分类：Geometry Foundation Models
-- 链接：摘要: https://arxiv.org/abs/2606.23557, PDF: https://arxiv.org/pdf/2606.23557
-
-### 一句话总结
-本文提出DR-MV3D框架，通过密集且可验证的奖励来监督多视图3D问答中的推理过程，从而改善多模态大模型在跨视图推理和视角选择上的不一致与脆弱性问题。
-
-### 研究问题
-多视图3D视觉问答（MV3D-VQA）任务中，当前多模态大模型通常只使用稀疏的、答案级别的监督信号进行训练，这导致了推理过程中跨视图推理不一致和视角选择不稳健。
-
-### 核心思路/方法
-- 将MV3D-VQA分解为三个可学习的中间步骤：异中心全局地图构建、基于问题的视图轨迹规划、以及用于答案预测的自中心定位。
-- 引入两种密集奖励，使中间步骤无需人工标注即可学习：
-  - **全局一致性奖励**：将预测的地图与来自冻结的3D视觉基础模型（如VGGT + SAM3）的几何一致性伪目标进行对齐。
-  - **局部轨迹奖励**：监督有序的视角选择。
-- 使用轨迹级别的策略优化方法（GRPO）对整个流程进行优化。
-
-### 主要贡献
-- 提出了DR-MV3D，一个基于地图的学习框架，利用密集、可验证的奖励来监督MV3D-VQA的推理过程。
-- 通过分解任务并引入全局和局部两种密集奖励，使中间推理步骤变得可学习且无需人工标注。
-- 在MindCube、VSI-Bench和BLINK (MV)三个基准上的实验表明，DR-MV3D相比强多图像基线方法有持续改进，验证了过程级密集监督对多视图3D推理的有效性。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-**高**。理由：本文针对多视图3D推理中的监督稀疏性问题提出了一个创新且可行性高的密集奖励框架，实验覆盖多个基准且有显著提升，对几何基础模型和多模态大模型的结合研究有重要参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Multi-view 3D Visual Question Answering (MV3D-VQA) requires integrating partial observations into a coherent 3D scene representation and selecting informative viewpoints for multi-step spatial reasoning. However, current multimodal LLMs are typically trained with sparse, answer-level supervision, which often yields inconsistent cross-view reasoning and brittle view selection. We present DR-MV3D (Dense Reward for MV3D-VQA), a map-grounded learning framework that provides dense, verifiable rewards to supervise the reasoning process. Our approach decomposes MV3D-VQA into (i) allocentric global map construction, (ii) question-conditioned view-trajectory planning, and (iii) egocentric grounding for answer prediction. To make intermediate steps learnable without manual annotations, we introduce two rewards: a global consistency reward that aligns the predicted map with geometry-consistent pseudo targets from frozen 3D vision foundation models (e.g., VGGT + SAM3), and a local trajectory reward that supervises ordered viewpoint selection. We optimize the full pipeline with trajectory-level policy optimization (GRPO). Experiments on MindCube, VSI-Bench, and BLINK (MV) show that DR-MV3D consistently improves over strong multi-image baselines, supporting the effectiveness of process-level dense supervision for multi-view 3D reasoning.
 
 </details>
 
@@ -753,6 +692,42 @@ Existing head pose datasets predominantly feature subjects of Western or East As
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：StructSplat: Generalizable 3D Gaussian Splatting from Uncalibrated Sparse Views
+- 作者：Jia-Chen Zhao, Beiqi Chen, Xinyang Chen, Guangcong Wang, Liqiang Nie
+- 出版日期：2026-06-26
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2606.28321
+
+### 一句话总结
+StructSplat提出了一个无需相机参数的前馈式可泛化3D高斯重建框架，通过结构化表征分离几何、语义与纹理线索，在稀疏视图场景下显著提升渲染质量。
+
+### 研究问题
+如何在不依赖相机标定或场景级优化的前提下，从未标定的稀疏多视图图像中高效、高保真地重建可泛化的3D高斯辐射场。
+
+### 核心思路/方法
+1. **结构化表征**：将几何、语义和纹理线索赋予明确角色，组织为结构化表示，避免在统一骨干网络中纠缠。
+2. **像素对齐特征注入**：从2D观测中提取像素对齐特征，实现精确的纹理建模。
+3. **语义感知先验**：引入语义先验以增强全局一致性。
+4. **相机对齐策略**：设计防止信息泄漏的相机对齐机制，提升跨场景泛化能力。
+
+### 主要贡献
+- 首个在无相机参数条件下实现前馈式可泛化3D高斯重建的框架。
+- 提出结构化表征方法，将几何、语义与纹理线索解耦并显式建模。
+- 在DL3DV基准上PSNR达28.045，超越AnySplat（22.377）5.67 dB；跨数据集评测中，在ACID和RealEstate10K上分别比AnySplat高1.94 dB和1.72 dB。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+高  
+理由：该方法解决了现有可泛化新视角合成方法对相机参数和场景级优化的依赖，在稀疏无标定视图场景下取得显著性能提升（DL3DV上+5.67 dB PSNR），且具备跨数据集泛化能力，对3D场景理解与渲染领域有重要参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>

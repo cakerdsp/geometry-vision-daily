@@ -2239,6 +2239,16 @@
         "path": "summaries/brief/2606.26321.md",
         "markdown": "### Metadata\n- 标题：KRVF: A Source-Aware Semantic Voxel World Representation for Edge Mobile Manipulation\n- 作者：Runfeng Ling\n- 出版日期：2026-06-24T19:07:42Z\n- 分类：Embodied / Robotics / AR Applications\n- 链接：摘要链接 https://arxiv.org/abs/2606.26321；PDF链接 https://arxiv.org/pdf/2606.26321\n\n### 一句话总结\n本文提出了KRVF，一种面向边缘端移动机械臂的、具有来源感知的语义体素世界表示方法，用于在线构建任务导向的机器人记忆。\n\n### 研究问题\n如何在边缘计算约束下，为移动机械臂构建一个当前、可查询、具有语义意义且可用于任务操作的世界模型，特别是解决传统重建导向方法在语义推理和传感器失效场景下的不足。\n\n### 核心思路/方法\nKRVF将局部世界状态表示为任务导向的体素，每个体素编码占用情况、颜色、语义证据、时间新鲜度和证据来源。该表示分离了测量占用与语义先验假设，实现了对深度失效敏感的物体推理，同时避免破坏持久几何。此外，KRVF通过渲染地图先验深度来修复缺失数据，形成建图与感知间的反馈回路，并暴露语义物体与抓取候选的任务级查询算子。\n\n### 主要贡献\n1. 提出了KRVF表示法，将体素明确记录证据来源（source-aware），区分了测量与语义先验，支持深度失效感知的物体推理。\n2. 设计了建图-感知反馈回路，通过地图先验深度修复提升感知鲁棒性。\n3. 提供了任务级查询接口，直接支持语义物体搜索与抓取候选生成。\n4. 在ROS 2中实现了在线RGB-D观测到任务导向机器人记忆的转换系统。\n\n### 局限性\n摘要未提供足够信息，未讨论实验验证、数据集、性能指标或与现有方法的定量对比。\n\n### 阅读优先级\n低。理由：该技术报告仅形式化提出了KRVF表示与系统设计，但摘要中缺乏实验评估和基线对比，无法判断方法在实际任务中的有效性与效率。若对边缘端机器人语义建图感兴趣可作参考，但需等待后续验证。"
       }
+    },
+    "2606.28321": {
+      "brief": {
+        "status": "success",
+        "input_hash": "77e8bb54a53b12fcfef39a1e11e1e8d42aabc94db79988730cd34a542e4231c0",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-06-29T16:38:21Z",
+        "path": "summaries/brief/2606.28321.md",
+        "markdown": "### Metadata\n- 标题：StructSplat: Generalizable 3D Gaussian Splatting from Uncalibrated Sparse Views\n- 作者：Jia-Chen Zhao, Beiqi Chen, Xinyang Chen, Guangcong Wang, Liqiang Nie\n- 出版日期：2026-06-26\n- 分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2606.28321\n\n### 一句话总结\nStructSplat提出了一个无需相机参数的前馈式可泛化3D高斯重建框架，通过结构化表征分离几何、语义与纹理线索，在稀疏视图场景下显著提升渲染质量。\n\n### 研究问题\n如何在不依赖相机标定或场景级优化的前提下，从未标定的稀疏多视图图像中高效、高保真地重建可泛化的3D高斯辐射场。\n\n### 核心思路/方法\n1. **结构化表征**：将几何、语义和纹理线索赋予明确角色，组织为结构化表示，避免在统一骨干网络中纠缠。\n2. **像素对齐特征注入**：从2D观测中提取像素对齐特征，实现精确的纹理建模。\n3. **语义感知先验**：引入语义先验以增强全局一致性。\n4. **相机对齐策略**：设计防止信息泄漏的相机对齐机制，提升跨场景泛化能力。\n\n### 主要贡献\n- 首个在无相机参数条件下实现前馈式可泛化3D高斯重建的框架。\n- 提出结构化表征方法，将几何、语义与纹理线索解耦并显式建模。\n- 在DL3DV基准上PSNR达28.045，超越AnySplat（22.377）5.67 dB；跨数据集评测中，在ACID和RealEstate10K上分别比AnySplat高1.94 dB和1.72 dB。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n高  \n理由：该方法解决了现有可泛化新视角合成方法对相机参数和场景级优化的依赖，在稀疏无标定视图场景下取得显著性能提升（DL3DV上+5.67 dB PSNR），且具备跨数据集泛化能力，对3D场景理解与渲染领域有重要参考价值。"
+      }
     }
   },
   "reports": {
@@ -2379,6 +2389,13 @@
       "status": "success",
       "updated_at": "2026-06-28T14:48:32Z",
       "path": "reports/daily/2026-06-28.md",
+      "tasks": [],
+      "ai_trend_report": true
+    },
+    "2026-06-29": {
+      "status": "success",
+      "updated_at": "2026-06-29T16:38:44Z",
+      "path": "reports/daily/2026-06-29.md",
       "tasks": [],
       "ai_trend_report": true
     }
