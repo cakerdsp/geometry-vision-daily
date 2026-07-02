@@ -11,11 +11,11 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：74
+- 当前滚动窗口论文数：80
 - 分类分布：
-  - Neural Scene Representations & Rendering: 32
-  - 3D Reconstruction & Multi-view Geometry: 17
-  - Embodied / Robotics / AR Applications: 14
+  - Neural Scene Representations & Rendering: 36
+  - 3D Reconstruction & Multi-view Geometry: 21
+  - Embodied / Robotics / AR Applications: 12
   - Dynamic / 4D Reconstruction: 8
   - Geometry Foundation Models: 3
 - 当前兴趣方向：未指定
@@ -23,51 +23,51 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 科研趋势综合分析
 
-好的，遵照您的要求，以下是对今日论文列表的科研趋势综合分析。
+好的，这是基于您提供的论文列表生成的科研趋势综合分析。
 
 ---
 
 #### 今日主要趋势
 
-1.  **3D高斯泼溅 (3D Gaussian Splatting, 3DGS) 进入深度实用化与物理化阶段**：3DGS已从早期的新视角渲染工具，演变为一个可被编辑、分解、加速和与其他技术（如光线追踪和物理模拟）深度融合的平台。本日出现了大量针对3DGS的改进工作，覆盖了**渲染加速** (`GRay`)、**物理基编辑** (`Editable Physically-based Reflections`, `Intrinsic decomposition`)、**稀疏视图增强** (`AugSplat`)、**紧凑人体表示** (`PointSplat`) 和**与神经辐射场互补** (`AugSplat`)。这标志着该领域正从“能做”转向“做得好、用得活、可物理化”。
+1.  **从“重建”走向“生成与预测”的范式迁移**：传统的三维/四维重建正从依赖多视角或密集采样的“被动重建”，转向利用生成先验或预测模型的“主动生成”。例如，`World from Motion` 和 `Pano2World` 通过视频/全景扩散模型，直接从单目输入生成完整的动态或静态三维场景，而非逐步补全。这种趋势同样体现在机器人领域，`Structured 4D Latent Predictive Model` 通过预测未来场景的 3D 结构来规划行动，将重建内化于预测过程。
 
-2.  **数据驱动的范式转变：从人工构建到自动生成与合成**。传统的3D/4D重建和视觉应用严重依赖手工特征或人工采集的数据集。本日多篇论文利用**基础模型**（如视觉语言模型、扩散模型、深度基础模型）作为先验或数据生成器，绕过传统管线的瓶颈。例如，`MV-GEL` 利用VLM进行语言驱动的定位，`AnyMatch` 利用扩散模型和单目深度估计合成多模态训练数据，`DrivingDepth` 利用深度基础模型的几何先验，`WarpHammer` 利用3D生成先验进行视图合成，`Diffusion-Based Material Regularization` 则用扩散模型作为物理正则化器。这预示着一个“基础模型即新数据源”的趋势。
+2.  **高斯泼溅（3DGS）作为核心表征的范式溢出**：3DGS 的应用已超越单纯的场景渲染，成为解决多个任务的基础。它不仅用于生成高质量的动态人体（`PointSplat`, `GaussianEmoTalker`），还被直接应用于机器人安全滤波（`FastBridge`）、场景图生成（`DeWorldSG`）和稀疏视角泛化研究（`Improving Sparse-View 3DGS`）。这表明 3DGS 正在快速演变为一种通用的“场景表示层”，支撑复用的上层智能任务。
 
-3.  **从“可绘制”到“可交互”：追求物理一致性与可模拟的4D世界**。研究目标不再满足于视觉上逼真的渲染，而是追求可用于物理模拟、具身智能和数字孪生的、具有物理属性的3D/4D表示。`OVOW` 直接声称重建“物理可模拟的4D场景”，`Editable Physically-based Reflections` 旨在实现物理正确的反射编辑，`Intrinsic decomposition of 3D Gaussian splats` 通过分解材质和光照支持可编辑性，`CasaMaestro` 输出用于导航的度量级3D点云，`DriveWeaver` 和 `Knowledge-Driven Dimension Estimation` 则直接服务于仿真和数字孪生。这种趋势将视觉重建与下游物理/仿真应用紧密耦合。
+3.  **鲁棒性与部署导向的实用主义回归**：多篇论文将提升系统在实际、复杂条件下的鲁棒性和效率作为明确目标，而非单纯追求学术指标。`FastBridge` 关注真实四旋翼飞行器的执行器约束和抖动；`FlexDepth` 针对计算资源受限的自动驾驶边缘设备；`VOCA` 则专门处理视频压缩带来的伪影；`EPO` 通过免特征跟踪的优化提升基础模型的实用几何精度。这反映了研究正在从理想实验室环境向真实世界部署场景转变。
 
-4.  **对抗“退化场景”与“数据稀疏性”成为核心挑战**。许多工作专门针对具有挑战性的输入条件。`Planar-SfM` 针对传统SfM失效的平面场景，`WarpHammer` 针对极端视角变化，`AugSplat` 针对稀疏输入，`Planar-SfM` 针对平面场景，`DriveWeaver` 解决了插入资产与背景光照不一致的问题。这表明社区正致力于提升主流方法的鲁棒性和泛化性，向更真实、更极端、更少约束的应用场景迈进。
+4.  **空间智能与多模态模型的深度耦合**：多模态大语言模型（MLLM）和 3D 世界模型正在融合。`OmniView-Space` 直接设计框架强化 MLLM 的空间推理能力，`DeWorldSG` 利用世界模型（V-JEPA）的上下文先验来改善场景图生成。这种趋势旨在弥补语言/视觉模型在自身体验层面的感知缺陷，通过融入 3D 几何和结构信息，构建更“具身”的智能体。
 
 #### 技术路线观察
 
-| 研究方法 | 代表性论文 | 技术侧重点 | 核心思想 |
-| :--- | :--- | :--- | :--- |
-| **几何基础模型** | `Planar-SfM`, `DrivingDepth`, `AnyMatch` | 提升几何推断的鲁棒性与精度，处理退化场景和数据稀缺问题 | 利用图嵌入 (`Planar-SfM`) 或提示校正 (`DrivingDepth`) 方法来增强几何管道；或合成大规模伪数据 (`AnyMatch`) 来训练通用匹配模型。 |
-| **3D/4D重建** | `CasaMaestro`, `OVOW`, `JacobianAvatar`, `NURBS Splatting` | 强调大规模、高保真、动态和特定领域的重建，并追求实例级别和物理接口 | 采用全景图 (`CasaMaestro`) 实现房屋尺度；结合VLM、生成模型迭代优化 (`OVOW`) 实现物理可模拟4D；或使用神经雅可比场 (`JacobianAvatar`) 实现动态化身。 |
-| **神经场景表示与渲染** | (绝大多数论文) `PointSplat`, `GRay`, `AugSplat`, `Intrinsic decomposition`, `Editable Physically-based Reflections`, `Diffusion-Based Material Regularization` | 深度优化3DGS的效率、可控性和物理保真度；并探索与经典图形学方法的融合 | 核心是围绕3DGS进行各种改进：加速光线追踪 (`GRay`)，利用辐射场增强稀疏视图 (`AugSplat`)，分解为可编辑材质 (`Intrinsic decomposition`)，或结合物理渲染 (`Editable Physically-based Reflections`) 与扩散模型正则化 (`Diffusion-Based Material Regularization`)。 |
-| **机器人/AR 应用** | `DriveWeaver`, `MV-GEL`, `Knowledge-Driven Dimension Estimation`, `Practical High-Fidelity Novel-View Synthesis` | 解决特定应用场景（自动驾驶仿真、CAD、数字孪生、数字化博物馆）中的实际工程问题 | 方法偏整体解决方案：设计特定管线来处理输入（如`DriveWeaver`的点云条件修复和`Practical High-Fidelity...`的镜面系统），并集成知识或大模型来提升实用性。 |
+| 技术方向 | 核心侧重点 | 代表论文 |
+| :--- | :--- | :--- |
+| **几何基础模型** | **鲁棒性与效率**：通过边缘对齐（EPO）、单应性图嵌入（Planar-SfM）、利用编解码信息（VOCA）等新颖的优化手段，在不牺牲速度或依赖复杂特征提取的前提下，提升传统 SfM/VO 在退化场景（平面、压缩）下的鲁棒性。 | `EPO`, `Planar-SfM`, `VOCA`, `PRISM-VO` |
+| **3D/4D重建** | **生成式与实例感知**：两条并行的路线：1）利用生成模型（扩散模型）从高度稀疏输入（单目、单张全景图）生成完整的 3D/4D 场景（`World from Motion`, `Pano2World`）；2）利用实例级锚点（`LIST3R`）或解耦策略（`Progressive Pose-Guided...`）处理长序列、大尺度变形等传统难题，提升重建的鲁棒性和泛化性。 | `World from Motion`, `Pano2World`, `LIST3R`, `Progressive Pose-Guided...` |
+| **神经场景表示（3DGS）** | **泛化、压缩与情感表达**：技术上从“如何渲染得好”转向“如何用得好”。具体包括：1）**泛化**：通过平坦极值（`Improving Sparse-View 3DGS`）或可变形聚合（`GADA`）提升稀疏输入下的泛化能力；2）**压缩**：直接预测紧凑的 3D 属性（`PointSplat`）以减少表示冗余；3）**功能化**：将高斯表示应用于具体任务，如情感化头像（`GaussianEmoTalker`）、安全滤波（`FastBridge`）和场景图生成（`DeWorldSG`）。 | `Improving Sparse-View 3DGS`, `GADA`, `PointSplat`, `GaussianEmoTalker`, `FastBridge`, `DeWorldSG` |
+| **机器人/AR应用** | **规划、安全与仿真**：核心词是“可控性”和“合理性”。1）**规划**：通过结构化 4D 潜在空间（`Structured 4D...`）或测试时验证器（`DriveVer`）实现更智能、更安全的规划；2）**安全**：将模型（3DGS）与控制理论（CBF）结合（`FastBridge`）；3）**仿真**：利用视频修复（`DriveWeaver`）生成可控、视觉一致的训练数据。 | `Structured 4D...`, `FastBridge`, `DriveWeaver`, `DriveVer` |
 
 #### 值得优先阅读的论文
 
-1.  **OVOW (One Video, One World)**
-    - **为何优先读**：该论文提出了一个宏大而明确的目标——从单目视频生成“可物理模拟的4D场景”，并给出了一个优雅的“四阶段”全自动、无需训练的管线。它不仅定义了新的问题，还提供了高屋建瓴的解决方案，将4D重建、计算机视觉和具身AI连接起来，启发性极强。它是趋势3的最佳代表。
+1.  **World from Motion (2607.01202)**
+    - **理由**：该工作代表了从单目视频进行动态 3D 重建的最前沿水平，通过生成模型修正伪影并填补缺失区域，思路新颖且取得了 SOTA 效果。对于任何对动态场景重建设感兴趣的研究者，这是必读之作，它提出了一个完整的“重建-生成”框架。
 
-2.  **AugSplat**
-    - **为何优先读**：直接点出了当前高斯泼溅（3DGS）的核心痛点之一：对初始几何高度敏感，在稀疏视图下效果差。其思路巧妙——用大算力但稳健的神经辐射场（NeRF）来“喂养”快速但挑剔的高斯泼溅（3DGS），形成优势互补。这是一个非常清晰、实用且易于理解的路线，代表了混合模型的趋势，对研究者和工程师都极有参考价值。
+2.  **Pano2World (2607.00832)**
+    - **理由**：针对单张全景图生成可探索 3D 场景这一特定但极有应用价值的问题，提出了一个优雅的端到端方案。其“视角感知注意力路由”和“潜在特征适配器”的设计很有启发性，避开了传统迭代方法的错误累积问题，是生成式 3D 重建方法的典范。
 
-3.  **GRay**
-    - **为何优先读**：这篇论文挑战了社区的一个“常识”：光线追踪必然比光栅化慢。它利用两者算法上的本质差异（光线追踪对基元数量的对数级缩放 vs. 光栅化的线性级缩放），并结合“密集初始化”的巧妙现象，实现了速度上的逆袭。对于想深入理解3DGS底层性能瓶颈和寻找突破口的读者，这是必读论文。
+3.  **IMproving Sparse-View 3DGS Generalization via Flat Minima Optimization (2607.00885)**
+    - **理由**：解决了 3DGS 的核心痛点——稀疏视角下的过拟合。将“平坦极小值”这一深度学习优化理论成功适配到 3DGS 领域，方法不用修改架构，具有很强的普适性和实战价值，是值得深入理解和借鉴的技术。
 
-4.  **Diffusion-Based Material Regularization for Physics-Based Inverse Rendering**
-    - **为何优先读**：本文提出了一个极具潜力的方法论，即如何优雅地结合“黑箱”数据驱动先验（扩散模型）和“白箱”物理模型（渲染方程）。它没有简单地将扩散模型的输出作为目标，而是创造性地将其用作一个“相似性核”来约束物理优化过程。该方法范式新颖，理论动机明确，在多个基准上取得了显著提升，为解决其他高度欠定的逆问题提供了宝贵思路。
+4.  **DeWorldSG (2607.00889)**
+    - **理由**：在新兴的“3D语义场景图”任务上取得了巨大性能提升（三元组召回率提升 77%），方法是稳健且明确的。它将实例级 3DGS 表示与世界模型先验结合起来，是机器人/AR 中结构化环境理解的标杆性工作，代码开源更增加了其价值。
 
-5.  **MV-GEL (Multi-View Geometric Entity Localization)**
-    - **为何优先读**：该工作为“语言驱动的3D理解”这个热门领域开辟了一个新且具有实际价值的子问题——定位细粒度几何实体（如边、面）。它巧妙地利用了多视图信息来解决单视角下的遮挡和形变问题，其视角排名模块（GELviews）是核心创新。对于从事CAD、机器人操作和3D感知的研究人员，这是高度相关且启发性的工作。
+5.  **EPO (2607.00579) / FastBridge (2607.01200)**
+    - **理由**：这两篇并列第五，体现了“实用主义”。**EPO** 巧妙地在不重建特征轨道的前提下精细化 3D 基础模型的输出，对落地应用价值巨大；**FastBridge** 则完美展示了如何将理论（控制障碍函数 CBF）与新兴场景表示（3DGS）结合，解决真实机器人面临的挑战（抖动、模型不匹配）。二者都是“小”但“巧”的工作。
 
 #### 可能的研究机会
 
-1.  **基础模型与物理模型的深层耦合**：`Diffusion-Based Material Regularization` 提供了一种范式。未来是否可以将更强的基础模型（如更大的扩散模型、视频预测模型）嵌入到更广泛的逆问题（例如动态重建、流体模拟、光照估计）中？如何设计更通用的“正则化核”而非特定领域的损失函数？
+1.  **结合生成先验与物理一致性**：`World from Motion` 和 `Pano2World` 依赖生成模型填补信息，但生成内容可能违反物理规律（例如，生成物不应存在于重力约束下的空间中）。如何将物理引擎或先验知识（如刚性、流体力学）引入生成式重建，确保生成结果的物理合理性，是一个有潜力的方向。
 
-2.  **“可物理模拟的”4D世界重建与控制**：`OVOW` 重建了可模拟的场景。一个直接的研究机会是：如何将这个静态的可模拟场景扩展
+2.  **鲁棒高效的 4D 场景理解与交互基元**：`DeWorldSG` 和 `Structured 4D Latent Model` 都试图从 4D 数据中提取高层语义。未来可探索如何将 3DGS 的 4D 表示直接与“可交互对象”、“功能性属性”等任务基元对齐。例如，能否直接从一个动态 3DGS 序列中学会“推动”、“抓取”等交互的
 
 ### interests.md 指令分析
 
@@ -288,6 +288,41 @@ Gaze target estimation aims to predict the semantic object an observer fixates u
 **Primary category:** Dynamic / 4D Reconstruction
 **Secondary categories:** Neural Scene Representations & Rendering
 **Matched keywords:** 4D reconstruction, dynamic 3D, dynamic Gaussian, 3DGS, novel view synthesis, view synthesis, rendering
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：World from Motion: Generative Dynamic Gaussian Reconstruction from Monocular Video
+- 作者：Liyuan Zhu, Shengyu Huang, Amrita Mazumdar, Tianye Li, Zan Gojcic, Gordon Wetzstein, Iro Armeni, Shalini De Mello, Alex Trevithick
+- 出版日期：2026-07-01
+- 分类：Dynamic / 4D Reconstruction (主), Neural Scene Representations & Rendering (副)
+- 链接：摘要: https://arxiv.org/abs/2607.01202 ; PDF: https://arxiv.org/pdf/2607.01202
+
+### 一句话总结
+本文提出一种从单目视频生成可自由渲染的动态3D高斯表征的方法，通过将视频模型条件化在密集、像素对齐的渲染结果上，修正初始重建的伪影并填补缺失区域，在4D重建任务上达到了新SOTA。
+
+### 研究问题
+如何从单目视频中重建高质量的动态3D高斯表征，以解决初始重建中出现的渲染伪影和缺失区域问题，并同时提升新视角合成与底层3D运动质量。
+
+### 核心思路/方法
+1.  **条件视频模型**：将视频模型条件化在密集、像素对齐的渲染结果上，这些渲染结果编码了外观、几何和3D场景运动，覆盖输入和目标相机轨迹。
+2.  **数据集构建**：构建一个由对齐的多视角视频对和动态3DGS表征组成的训练数据集，并模拟单目重建特有的伪影。
+3.  **测试时蒸馏**：在测试阶段，将模型生成的包含新观测区域和运动的结果，蒸馏回一个单一、一致且高质量的动态3DGS中，从而同时改进新视角合成和底层3D运动。
+
+### 主要贡献
+1.  提出了一种从单目视频生成自由可渲染的动态3D高斯表征的新方法。
+2.  构建了包含对齐多视角视频对和模拟伪影的数据集，以训练条件视频模型。
+3.  在4D重建任务上达到了新的最优性能（SOTA），并能够无缝泛化到具有大视角变化和动态运动的野外视频。
+
+### 局限性
+摘要未提供关于局限性的具体信息。
+
+### 阅读优先级
+**高**
+理由：该方法在4D重建任务上声称达到新SOTA，并且能够处理具有大视角变化的野外动态视频，这对于从单目视频进行动态场景重建这一重要研究方向具有显著价值。方法设计包含条件视频模型、模拟伪影和蒸馏流程，结构完整且新颖。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -663,6 +698,40 @@ Uncalibrated volumetric video streaming for human reconstruction is essential fo
 **Matched keywords:** depth estimation, monocular depth
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Towards Robust Driving Perception: A Flexible Scale-Driven Family for Self-Supervised Monocular Depth Estimation
+- 作者：Zhaowen Zhu, Li Zhang, Yujie Chen, Tian Zhang, Yingjie Wang, Mingxia Zhan
+- 出版日期：2026-07-01
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：摘要页: https://arxiv.org/abs/2607.00736；PDF: https://arxiv.org/pdf/2607.00736
+
+### 一句话总结
+本文提出FlexDepth，一个面向复杂驾驶场景的、基于尺度驱动的自监督单目深度估计模型家族，通过两阶段静态-动态解耦训练和可动态选择组件的解码器，在任意尺度下实现低计算开销和高精度。
+
+### 研究问题
+现有自监督单目深度估计模型在复杂驾驶环境中性能下降明显，且针对动态交通参与者的专用网络过于复杂，难以部署在资源受限的汽车边缘设备上。
+
+### 核心思路/方法
+1. 提出FlexDepth，一个尺度驱动的自监督单目深度估计模型家族。
+2. 采用两阶段静态-动态解耦训练策略，独立评估静态背景和动态道路目标的置信度。
+3. 设计尺度驱动解码器（Scale-Driven Decoder, SDD），根据尺度大小动态选择组件，实现高效特征融合并输出高精度深度图。
+
+### 主要贡献
+1. 提出FlexDepth，在无需任何辅助信息的情况下，在标准驾驶基准上实现任意尺度的最先进性能，且计算开销极低。
+2. 最小模型Flex-Nano仅需0.7 GFLOPs，在移动平台上达到37.6 FPS，确保了可靠的实时感知和优秀的零样本泛化能力。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+高
+- 理由：该工作针对自动驾驶中实际部署的关键问题（计算资源受限与复杂动态场景），提出了一个轻量级且高效的解决方案（0.7 GFLOPs），并在标准基准上取得先进结果，对于从事自动驾驶感知和边缘部署的研究者具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Self-Supervised Monocular Depth Estimation (MDE) has garnered attention in recent years due to its independence from ground truth. However, most existing models are limited to a single scale and exhibit considerable performance degradation in complex driving environments. Networks specifically designed to handle dynamic traffic participants tend to be overly complex, hindering their deployment on resource-constrained automotive edge devices. To address these limitations and move towards robust driving perception, we propose FlexDepth, a scale-driven and flexible family of self-supervised MDE models tailored for challenging road scenarios. FlexDepth employs a two-stage static-dynamic decoupled training strategy, enabling the independent assessment of confidence for both static backgrounds and dynamic road objects. Furthermore, it introduces a meticulously designed Scale-Driven Decoder (SDD) to dynamically select components based on scale size, facilitating efficient feature fusion and the output of high-precision depth maps. Extensive experiments on standard driving benchmarks demonstrate that without any auxiliary information, our model achieves state-of-the-art performance across arbitrary scales with minimal computational overhead. Our smallest model, Flex-Nano, requires only 0.7 GFLOPs and achieves 37.6 FPS on mobile platforms, ensuring reliable real-time perception while maintaining excellent zero-shot generalization.Our source code is avalible: https://github.com/startnew/flexdepth
@@ -676,6 +745,40 @@ Self-Supervised Monocular Depth Estimation (MDE) has garnered attention in recen
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** depth estimation, monocular depth
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Active Spatial Guidance: Eliminating Injected Positional Mechanisms in Vision Transformers
+- 作者：Cong Liu, Xiaofang Li, Simon X. Yang
+- 出版日期：2026-07-01
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2607.00580
+
+### 一句话总结
+本文提出一种训练时使用的辅助目标（Active Spatial Guidance），在视觉Transformer中无需注入位置编码，通过坐标回归损失隐式地将空间归纳偏置引入模型，并在多个视觉任务中超越了传统位置注入方法。
+
+### 研究问题
+视觉Transformer（ViT）通常需要显式注入位置编码来打破自注意力的排列不变性，但自然图像本身带有空间规律性；本文研究是否可以通过训练过程而非架构设计来诱导空间组织性。
+
+### 核心思路/方法
+提出Active Spatial Guidance（简称Guidance），该方法在训练时禁用所有位置编码机制，并在最后一层patch token上施加一个额外的2D坐标回归损失（guidance head），该head仅在训练阶段使用，推理时移除；部署模型由无位置注入的ViT编码器与任务专用预测模块组成。
+
+### 主要贡献
+1. 提出一种仅用于训练阶段的辅助目标，无需在ViT架构中注入任何位置编码。
+2. 在ImageNet-100分类、ADE20K语义分割和Hypersim单目深度估计任务上，基于DINOv3 ViT骨干网络，该方法一致优于学习型绝对位置编码和旋转位置编码等强基线。
+3. 在ImageNet-100上，与多种常见位置编码设计对比，进一步验证Guidance的有效性。
+4. 该方法在分辨率迁移下表现更鲁棒，且多分辨率训练可进一步提升不同输入尺寸下的准确性。
+
+### 局限性
+摘要未提供足够信息（如Guidance在更大规模数据集或极端低分辨率下的表现、训练收敛速度、对预训练模型的迁移性等）。
+
+### 阅读优先级
+**中**  
+理由：该工作验证了训练监督可替代架构位置注入的观点，方法简洁且结果正面；但实验仅基于DINOv3和中等规模数据集，目前摘要未展示与SOTA复杂位置机制的全面对比或大规模验证，适合对ViT位置编码设计感兴趣的研究者参考。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -693,6 +796,39 @@ Vision Transformers (ViTs) commonly rely on injected positional mechanisms to ad
 **Matched keywords:** structure from motion, bundle adjustment
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：EPO: Boosting 3D Foundation Models with Edge-based Pose Optimization
+- 作者：Mattia D'Urso, Christian Sormann, Mattia Rossi, Friedrich Fraundorfer
+- 出版日期：2026-07-01T08:02:17Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：摘要：https://arxiv.org/abs/2607.00579，PDF：https://arxiv.org/pdf/2607.00579
+
+### 一句话总结
+本文提出了一种名为边缘位姿优化（EPO）的框架，通过无需特征跟踪的边缘图对齐，在低内存和低运行时条件下，显著提升3D基础模型的运动恢复结构（SfM）几何精度。
+
+### 研究问题
+3D基础模型在快速推理时，几何精度低于传统SfM管线；而使用传统的捆绑调整（Bundle Adjustment）后处理来提升精度需要重新提取特征轨迹，从而丧失了速度优势。本文旨在解决如何在避免特征提取和轨道构建的前提下，提升3D基础模型的几何重建精度。
+
+### 核心思路/方法
+提出完全可微的**边缘位姿优化（EPO）**框架，使用**边缘图对齐**作为几何优化的代理指标，完全避免了显式特征提取和特征轨迹的构建。该方法不需要像捆绑调整那样建立3D点与多图像之间的对应关系（即轨道），而是通过优化边缘图的一致性来改善位姿和重建质量。
+
+### 主要贡献
+1. 提出了EPO，一种无需轨道、完全可微的几何优化框架，专为提升3D基础模型的SfM重建质量而设计。
+2. 在多个数据集和任务上的实验表明，EPO在匹配或超越传统捆绑调整方法的精度的同时，显著降低了运行时和内存需求。
+3. 由于内存占用量小，EPO能够在消费级硬件上运行，而其他竞争的精化方法则无法在此类硬件上执行。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**  
+理由：该方法专门针对当前3D基础模型几何精度不足且后处理复杂的痛点，提出了一个轻量级、可微且无需特征提取的优化方案。实验数据扎实（多个数据集、任务），且展示了在消费级硬件上的可用性，对实际部署具有重要价值。属于三维重建与基础模型交叉方向的新颖技术。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 We introduce \textbf{Edge-based Pose Optimization (EPO)}, a trackless geometric optimization framework specifically designed to boost the Structure-from-Motion reconstructions generated by 3D Foundation Models. These models achieve rapid inference by bypassing the time-consuming feature extraction and matching stages of traditional pipelines, where explicit correspondences between each 3D point and multiple images, referred to as tracks, are established. However, their geometric accuracy currently falls short of traditional pipelines. While this can be addressed in a post-processing step via Bundle Adjustment-like refinement, doing so requires extracting feature tracks, thus defeating the original speed advantage. Instead, our fully differentiable framework uses edge map alignment as a proxy for geometric optimization, avoiding feature extraction and track construction entirely. Through extensive evaluation across multiple datasets and tasks, we demonstrate that EPO matches or outperforms Bundle Adjustment-like methods while requiring significantly lower runtime and memory. Notably, its reduced memory footprint makes EPO suitable for consumer-grade hardware, where competing refinement methods cannot run.
@@ -706,6 +842,44 @@ We introduce \textbf{Edge-based Pose Optimization (EPO)}, a trackless geometric 
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** 3D reconstruction
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：LIST3R: Long-sequence Instance-aware 3D Reconstruction
+- 作者：Jing Gao, Wei Wang, Feiran Wang, Yan Yan
+- 出版日期：2026-07-01
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：摘要页: https://arxiv.org/abs/2607.00375，PDF: https://arxiv.org/pdf/2607.00375
+
+### 一句话总结
+本文提出一种名为 LIST3R 的实例感知框架，通过将长序列视频分解为子序列，并利用持久化的实例锚点（instance anchors）来匹配与对齐碎片化子序列，从而生成连贯的全局3D场景。
+
+### 研究问题
+如何针对长视频序列，在缺乏全局视觉锚点的情况下，实现准确且稳定的 3D 重建，特别是处理子序列碎片间的匹配与对齐问题。
+
+### 核心思路/方法
+受人类空间记忆组织方式启发，LIST3R 通过以下步骤进行长序列重建：
+1.  **视频分割**：将长视频切分成有重叠的子序列。
+2.  **局部重建与实例库构建**：对每个子序列进行部分重建，并构建结构化的局部实例库，库中包含具有语义和几何证据的持久化可追踪锚点。
+3.  **跨子序列锚点匹配**：在不同子序列的锚点间进行匹配，以识别被重复扫描的区域。
+4.  **对象感知约束对齐**：利用匹配的锚点提供对象感知约束，将碎片化子序列对齐，消除漂移。
+5.  **全局实例库整合**：在迭代过程中，随着几何证据的更新，逐步将局部实例库整合为统一的全局实例库。
+
+### 主要贡献
+- 提出了一种实例感知的长序列 3D 重建框架，利用实例锚点来组织全局场景。
+- 通过持久化锚点在子序列间进行匹配，有效恢复被重复扫描的区域，并为碎片对齐提供对象感知约束。
+- 在长序列基准测试上的实验表明，该方法能生成更准确的相机轨迹和更高质量的3D重建。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。
+理由：该方法直接针对长视频序列3D重建中常见的漂移和碎片化对齐难题，提出了一个新颖的实例感知组织方案（持久化锚点匹配）。实验在标准长序列基准上取得了更优结果，具有明确的实用价值和启发性。代码已开源，便于复现和进一步研究。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -725,6 +899,39 @@ We present LIST3R, an instance-aware framework for long-sequence 3D reconstructi
 **Matched keywords:** simultaneous localization and mapping, SLAM, camera pose estimation, pose estimation, mapping, localization
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：VOCA: Visual Odometry with Codec Awareness
+- 作者：Nouri Alexander Hilscher, Mateo de Mayo, Dominik Muhle, Christoph Otten genannt Hermes, Daniel Cremers
+- 出版日期：2026-06-30
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2607.00189
+
+### 一句话总结
+VOCA是一种利用视频编解码信息提升压缩视频流中立体视觉里程计跟踪性能的方法，在因果视觉里程计任务上达到了最先进水平。
+
+### 研究问题
+如何利用广泛可用的视频编解码信息，减少视频压缩带来的视觉伪影对传统视觉里程计系统（尤其是立体视觉里程计）性能的影响。
+
+### 核心思路/方法
+提出一种因果（causal）立体视觉里程计方法，该方法显式地利用视频流中的编解码信息（codec information），从而在压缩视频流中提高跟踪性能。
+
+### 主要贡献
+- 首次利用了视频编解码信息来改进压缩视频流中的视觉里程计跟踪。
+- 在因果视觉里程计任务上，针对相对轨迹误差、效率和绝对轨迹误差指标均达到了最先进性能。
+- 展示了利用广泛可用的视频编解码信息在视觉任务中的潜力。
+
+### 局限性
+摘要未提供局限性信息。
+
+### 阅读优先级
+**高**
+理由：该工作针对实际系统中广泛存在的视频压缩问题，提出了一种新颖的利用编解码信息的方法，并在多个指标上取得最优结果。对于关注视觉里程计、同时定位与建图以及硬件效率的研究者具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Camera pose estimation from image streams is a critical component of spatial world models that integrate perception into planning and decision-making. Nearly all Visual Odometry (VO) and Simultaneous Localization and Mapping (V-SLAM) systems have focused on datasets containing raw, uncompressed videos. Many working systems instead use ubiquitous hardware units to efficiently compress and decode video streams, saving orders of magnitude in storage and bandwidth. However, this lossy compression introduces visual artifacts that hinder the performance of traditional tracking systems. We present VOCA, a causal stereo visual-odometry method that exploits codec information to improve tracking performance. We achieve state-of-the-art performance on causal VO for relative trajectory error, efficiency, and absolute trajectory error on compressed streams. This work highlights the potential of leveraging widely available video codec information for vision tasks.
@@ -738,6 +945,38 @@ Camera pose estimation from image streams is a critical component of spatial wor
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** SLAM, bundle adjustment
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：PRISM-VO: Scale-Aware Visual Odometry Using Photometric Plenoptic Bundle Adjustment
+- 作者：Aymeric Fleith, Julian Zirbel, Daniel Cremers, Niclas Zeller
+- 出版日期：2026-06-30
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：abstract: https://arxiv.org/abs/2607.00176 ; pdf: https://arxiv.org/pdf/2607.00176
+
+### 一句话总结
+本文提出了一种基于纯优化的稀疏光度全向视觉里程计框架PRISM-VO，通过联合优化相机位姿与逆深度，实现了尺度感知且抗漂移的位姿估计。
+
+### 研究问题
+如何在仅使用单个全向传感器的情况下，克服单目SLAM的尺度模糊性，并获得准确、抗漂移的视觉里程计结果。
+
+### 核心思路/方法
+核心是提出了一种新颖的光度全向光束法平差方法，在滑动窗口内联合优化相机位姿和点的逆深度。该方法利用全向相机单次成像能直接计算几何深度先验的特性，结合时间域多视图约束，从而显式建模全向投影并恢复公制尺度，避免复杂初始化。
+
+### 主要贡献
+1. 提出了PRISM-VO，一种纯优化的稀疏光度视觉里程计框架，专为聚焦全向相机设计。
+2. 提出了新颖的光度全向光束法平差方法，实现尺度感知的位姿和深度联合优化。
+3. 仅依赖单一全向传感器，无需复杂初始化，通过直接计算深度先验解决单目SLAM的尺度模糊问题。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+高。理由：该方法在室内外场景中均超越了当前最先进的全向视觉里程计方法，并与其他基于优化和学习的方案相媲美，同时确切恢复公制尺度，对3D重建与多视图几何领域具有显著的实际意义。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1504,6 +1743,41 @@ Visual SLAM performance often deteriorates in complex real-world applications. S
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, scene representation, splatting, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：FastBridge: Closing the Model-Based Realization Gap in Safety Filters on 3D Gaussian Splatting for Fast Quadrotor Flight
+- 作者：Tscholl Dario, Nakka Yashwanth Kumar, Gunter Brian
+- 出版日期：2026-07-01T17:33:01Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2607.01200
+
+### 一句话总结
+本文提出了一种基于全四旋翼动力学、考虑执行器约束的非线性安全滤波器（FastBridge），用于在3D高斯泼溅（3DGS）场景表示下实现快速、低抖动且计算高效的避障飞行。
+
+### 研究问题
+现有基于3DGS的安全滤波器采用简化模型（如单/双积分器），忽略执行器极限和加速度实时性，导致实际飞行中存在模型误差和抖动问题。
+
+### 核心思路/方法
+1. 基于3DGS的解析碰撞锥障碍物模型，引入非线性、考虑执行器的安全滤波器，并整合全四旋翼动力学。
+2. 推导高相对度碰撞锥指数型控制障碍函数（CBF）以及备份CBF，利用前向模拟的备份策略在输入约束下保持二次规划（QP）可行性。
+3. 通过仿真和硬件实验，在杂乱、感知衍生的环境中进行实时导航验证。
+
+### 主要贡献
+1. 提出了首个结合全四旋翼动力学的3DGS安全滤波器，弥合了模型简化带来的现实差距。
+2. 在相同场景下，与最先进的3DGS安全滤波器相比，轨迹抖动降低47%，运行速度提升2.25倍。
+3. 在仿真和真实硬件上验证了方法的实时性与有效性。
+
+### 局限性
+摘要未提供关于方法在极端环境（如高速、高动态干扰）下的鲁棒性、对3DGS重建质量的依赖程度以及计算资源需求的具体信息。
+
+### 阅读优先级
+高  
+理由：该方法直接解决了3DGS安全滤波器在现实部署中的模型不匹配和性能瓶颈（抖动大、计算慢），实验增益显著（抖动降47%，快2.25倍），对视觉导向的无人机自主飞行和神经场景表示应用有明确实用价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Fast quadrotor flight requires safe obstacle avoidance under tight onboard compute limits. While 3D Gaussian Splatting (3DGS) provides a continuous, geometry-aware scene representation for perception-driven navigation, existing 3DGS safety filters use reduced-order models such as single- and double-integrators that ignore actuator limits and assume commanded accelerations are realized instantaneously. Building on an analytic collision cone barrier for 3DGS, we introduce a nonlinear, actuator-aware safety filter enforced through the full quadrotor dynamics. We derive a high-relative-degree collision cone exponential CBF and a backup CBF that preserves QP feasibility under input constraints using a forward-simulated backup policy. Compared with a state-of-the-art 3DGS safety filter, our approach reduces trajectory jerk by 47% and runs 2.25 times faster. We validate the method in simulation and on hardware for real-time navigation in cluttered, perception-derived environments.
@@ -1517,6 +1791,42 @@ Fast quadrotor flight requires safe obstacle avoidance under tight onboard compu
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, rendering, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GaussianEmoTalker: Real-Time Emotional Talking Head Synthesis with Audio-Driven and Blendshape-Based 3D Gaussian Splatting
+- 作者：Haijie Yang, Zhenyu Zhang, Yixuan Dong, Jianjun Qian, Jian Yang
+- 出版日期：2026-07-01
+- 分类：神经场景表示与渲染
+- 链接：https://arxiv.org/abs/2607.00959
+
+### 一句话总结
+本文提出GaussianEmoTalker，一种基于3D高斯泼溅的实时音频驱动的情绪化说话头合成框架，通过将情绪动画建模为中性与情绪之间的残差变形问题，实现了可控的情绪表达和实时渲染。
+
+### 研究问题
+如何在实时约束下，从语音中合成具有可控情绪强度、高唇同步精度和逼真视觉质量的说话头表情动画？
+
+### 核心思路/方法
+1. 使用高斯混合形变模型构建身份特定的中性说话空间，提供高保真高斯属性和音素同步的中性运动。
+2. 将情绪动画形式化为中性到情绪的残差变形问题，结合网格位移线索、音频特征、情绪类别和强度编码，预测情绪条件化的残差变形。
+3. 引入空间-音频-情绪注意力模块，融合异构信号，估计高斯属性的偏移量，实现富有表现力和时间稳定的渲染。
+
+### 主要贡献
+- 提出一种基于3D高斯泼溅的实时情绪化说话头合成框架GaussianEmoTalker。
+- 将情绪动画建模为中性到情绪的残差变形问题，而非直接预测最终情绪化头像。
+- 设计空间-音频-情绪注意力模块，有效融合音频、情绪和强度等多源信息。
+- 在视频质量、唇同步、可控情绪表达和实时渲染方面，相比近期方法取得了有竞争力的结果。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+高
+理由：该工作针对实时情绪化说话头合成这一具有挑战性的任务，提出了新颖的残差变形建模思路和特征融合模块，在情绪可控性和实时性方面具有明显亮点，适合对音频驱动虚拟人、3D高斯渲染及情绪动画感兴趣的研究者优先阅读。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1534,6 +1844,40 @@ Audio-driven talking head synthesis has achieved impressive progress in lip sync
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, neural rendering, novel view synthesis, view synthesis, rendering, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Improving Sparse-View 3DGS Generalization via Flat Minima Optimization
+- 作者：Kangmin Seo, Sangeek Hyun, MinKyu Lee, Jae-Pil Heo
+- 出版日期：2026-07-01T12:52:57Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：abstract: https://arxiv.org/abs/2607.00885, pdf: https://arxiv.org/pdf/2607.00885
+
+### 一句话总结
+本文提出通过平坦极小值优化（Flat Minima Optimization）和周期性重初始化方法，改善3D高斯溅射（3DGS）在稀疏视角输入下的泛化能力，无需修改模型架构即可提升新视角合成质量。
+
+### 研究问题
+当3DGS模型的监督仅来自稀疏视角图像时，模型容易对观测图像过拟合，导致对未见过视角的泛化性能差。如何在不改变算法架构的前提下提升稀疏视角下的泛化能力？
+
+### 核心思路/方法
+1. **平坦极小值优化**：将高斯参数视为可训练权重，引入适应各向异性高斯几何和训练动态的受控扰动，使优化解更稳定，保留细节的同时缓解过拟合。
+2. **周期性重初始化**：在训练过程中短期地将非位置参数重置回初始状态，以进一步稳定平坦极小值优化过程。
+3. 方法可无缝集成到现有3DGS流水线中，无需架构改动。
+
+### 主要贡献
+- 将平坦极小值优化概念首次适配到3DGS模型，专门处理稀疏视角过拟合问题。
+- 提出周期性重初始化技术，增强优化稳定性。
+- 在LLFF和Mip-NeRF360数据集上，方法在稀疏视角监督下实现了更优的量化指标和感知质量，生成更清晰、稳定且泛化更好的新视角重建。
+
+### 局限性
+摘要未提供足够信息。例如未讨论对不同稀疏程度的量化敏感性、计算开销、对噪声的鲁棒性或对特定场景类型的适用性。
+
+### 阅读优先级
+**高**。理由：该工作针对3DGS在少样本场景下的关键技术瓶颈（过拟合与泛化差），提出了与架构解耦的轻量级优化策略，实验提升明显，且方法通用性强。对该方向感兴趣的读者可快速获取潜在改进思路。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Recent advances in neural rendering have established 3D Gaussian Splatting (3DGS) as a highly efficient representation for novel view synthesis, enabling fast training and real-time rendering with strong fidelity. However, when supervision is limited to sparse input views, 3DGS tends to overfit to the observed images and generalize poorly to unseen viewpoints. We address this challenge from the perspective of flat minima (FM) optimization, which seeks solutions that remain stable under small parameter perturbations. Viewing Gaussian parameters as trainable weights, we adapt FM principles to the geometric and dynamic nature of 3DGS with a lightweight training framework. Our method regularizes optimization with controlled Gaussian perturbations that account for each Gaussian's anisotropy and the training progress, preserving fine details while improving robustness to sparse-view overfitting. To further stabilize this flat minima optimization process, we introduce periodic reinitialization, which temporarily returns non-positional parameters to their initial states for a short window. Together, these techniques integrate seamlessly into existing 3DGS pipelines without architectural changes. Experiments on LLFF and Mip-NeRF360 datasets demonstrate improved quantitative metrics and perceptual quality under sparse-view supervision, producing reconstructions that are sharper, more stable, and better generalized to novel viewpoints.
@@ -1547,6 +1891,41 @@ Recent advances in neural rendering have established 3D Gaussian Splatting (3DGS
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** novel view synthesis, view synthesis
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Pano2World: End-to-End 3D Generation via Unified Multi-View Sequences
+- 作者：Zhenjia Li, Jinrang Jia, Yifeng Shi
+- 出版日期：2026-07-01T11:54:02Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2607.00832
+
+### 一句话总结
+Pano2World提出一种端到端方法，以单张室内全景图为输入，直接生成可探索的3D高斯场景，利用全景扩散模型和视角感知注意力路由实现多视图一致性，并通过潜在特征适配器避免信息损失。
+
+### 研究问题
+如何从单张室内全景图直接生成可自由探索的3D场景，以克服现有迭代方法（误差累积、流程繁琐）和视频生成模型（轨迹约束、限制多方向覆盖）的局限性。
+
+### 核心思路/方法
+1. **粗3D高斯代理重建**：从单张全景图重建初始3D高斯代理，并在自适应采样的邻近视角渲染出几何对齐的引导全景图。
+2. **全景扩散模型+视角感知注意力路由**：所有目标视图通过视角感知注意力路由联合去噪，每个目标视图同时接收引导全景图的几何约束和源全景图的全局语义引导，强制跨视图一致性。
+3. **潜在特征适配器**：设计几何感知桥梁模块，将联合去噪过程中形成的多视图隐藏特征直接蒸馏为场景潜在表示，避免通过VAE解码回像素域造成的信息损失，最终解码为3D高斯场景。
+
+### 主要贡献
+- 提出端到端框架Pano2World，从单张全景图直接输出可探索的3D高斯场景，无需迭代多步流程。
+- 引入视角感知注意力路由，在联合去噪中同时利用几何与语义约束，增强跨视图一致性。
+- 设计潜在特征适配器，减少多视图隐藏特征解码过程中的信息损失。
+
+### 局限性
+摘要未提供关于方法局限性（如复杂度、泛化性、潜在假设等）的讨论。
+
+### 阅读优先级
+**高**  
+理由：该工作针对单张全景图到3D场景生成这一前沿问题，方法具有创新性（结合扩散模型、注意力路由与特征适配器），并在基准测试中显著超越现有方法，对神经场景表示和3D生成领域研究者有重要参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1564,6 +1943,39 @@ A single panorama captures the full visual sphere from one camera center, yet co
 **Matched keywords:** Gaussian Splatting, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GADA: Geometry-Aware Deformable Aggregation for Image-Based Gaussian Splatting
+- 作者：Siwoo Lim, Sunjae Yoon, Gwanhyeong Koo, Chang D. Yoo
+- 出版日期：2026-07-01
+- 分类：Neural Scene Representations & Rendering
+- 链接：arXiv:2607.00595
+
+### 一句话总结
+针对基于扭曲（warping）的高斯泼溅方法中因几何不确定性导致像素级空间错位的问题，提出几何感知可变形聚合模块（GADA），通过可变形偏移迭代校正错位并融合隐式置信权重，在保持高频细节质量的同时实现2.13倍速度提升。
+
+### 研究问题
+现有基于扭曲的高斯泼溅方法在像素级精度上存在空间错位，尤其是薄结构和高频细节区域，导致残差学习和校正效果受限。
+
+### 核心思路/方法
+1. 提出迭代精炼模块，利用可变形偏移（deformable offsets）主动校正扭曲图像中的空间错位，恢复位移后丢失的视觉线索。
+2. 引入隐式置信度加权机制，替代标准流程中基于阈值裁剪的可见性检查和简单均值融合，自适应抑制不可靠的证据。
+
+### 主要贡献
+1. 首次将可变形聚合与隐式置信度加权引入基于图像的高斯泼溅，主动解决几何不确定性引起的空间错位问题。
+2. 在保持高频质量的前提下，实现2.13倍于先前扭曲类高斯泼溅方法的FPS，兼顾精度与效率。
+
+### 局限性
+摘要未提供足够信息。例如未讨论方法在复杂遮挡场景、大规模场景或不同光照条件下的表现，也未提及其计算开销或存储需求。
+
+### 阅读优先级
+高  
+理由：该论文针对高斯泼溅领域中的几何错位痛点提出新方法，在性能（高频细节保持）和效率（2.13倍加速）上均有显著改进，且方法模块设计具有启发性，适合关注神经渲染或可变形对齐的研究者。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Gaussian Splatting has achieved significant improvements by incorporating warping-based techniques. However, such methods suffer from pixel-level inaccuracies due to uncertain geometry. This uncertainty leads to spatial misalignments in the warped images, which disrupt residual learning used in warping-based methods and fundamentally limit the gains of correction, particularly on thin structures and high-frequency details. Driven by our insight that useful visual cues are not lost but locally preserved under slight displacement, we propose Geometry-Aware Deformable Aggregation (GADA). This method introduces an iterative refinement module with deformable offsets to actively correct spatial misalignments and recover these displaced cues. Furthermore, to address the limitations of standard pipelines where visibility checks (i.e., thresholding) often discard valid pixels and multi-view warped image fusion relies on naive mean aggregation, our module is coupled with an implicit confidence weighting mechanism that selectively suppresses unreliable evidence. Consequently, our approach outperforms prior warping-based Gaussian Splatting, preserving high-frequency quality while achieving 2.13 times faster FPS.
@@ -1579,6 +1991,43 @@ Gaussian Splatting has achieved significant improvements by incorporating warpin
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Progressive Pose-Guided 4D Animal Reconstruction from Monocular Video
+- 作者：Siyuan Li, Weiying Chen, Yilin Wang, Xinxin Zuo, Xingyu Li, Li Cheng
+- 出版日期：2026-06-30T20:32:29Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：[摘要](https://arxiv.org/abs/2607.00157) | [PDF](https://arxiv.org/pdf/2607.00157)
+
+### 一句话总结
+本文提出了一种基于3D高斯泼溅的渐进式测试时优化框架，用于从单目视频中高质量重建4D动物，通过解耦关节点位姿与非刚性形变，实现了跨物种的稳健泛化。
+
+### 研究问题
+如何从单目视频中实现对不同物种、复杂姿态的动物进行高保真4D重建，同时避免依赖严格的类别先验或牺牲输入保真度。
+
+### 核心思路/方法
+- 采用**渐进式测试时优化**框架，基于3D高斯泼溅实现重建。
+- 核心思想：**粗糙的形状先验**结合渐进策略，将**关节点位姿**与**非刚性形变**解耦。
+- 具体机制：
+  - **对称感知的时间编码**：利用双边线索，同时吸收相机估计漂移。
+  - **条件形变机制**：基于可学习的**部位锚点**和**蒙皮场**引导。
+
+### 主要贡献
+- 提出一种无需严格类别先验的4D动物重建方法，仅需单目视频。
+- 通过解耦策略和对称感知编码，有效处理物种间差异、复杂关节运动和非刚性形变。
+- 实验表明，本方法在几何精度、时间一致性和视觉保真度上优于现有基线，即使在先验严重不匹配时也能鲁棒泛化。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**
+理由：该工作针对单目视频4D动物重建这一挑战性问题，提出了一种新颖的渐进式优化框架，在泛化性和保真度方面有显著提升，适合对神经场景表示、动物模型重建或测试时优化感兴趣的读者。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -3091,6 +3540,41 @@ Reinforcement learning from human feedback (RLHF) for 3D generation is now estab
 **Matched keywords:** robotics, manipulation, scene understanding
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Structured 4D Latent Predictive Model for Robot Planning
+- 作者：Zhiyi Li, Peilin Wu, Xiaoshen Han, Ruojin Cai, Yilun Du
+- 出版日期：2026-07-01
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2607.01166
+
+### 一句话总结
+本文提出一种结构化的4D潜在预测模型，用于机器人规划，该模型在结构化潜空间中预测场景3D结构的演化，从而生成具有强3D一致性的未来场景，并最终通过逆动力学模块转化为执行动作。
+
+### 研究问题
+现有基于2D视频的预测模型缺乏3D几何理解，难以进行精确的空间推理和保持物理一致性，因此需要一种能够生成3D一致未来场景的预测模型以提升机器人规划性能。
+
+### 核心思路/方法
+1. 构建一种结构化的4D潜在预测模型，在结构化潜空间中预测场景3D结构的演化，该表示以观测和文本指令为条件。
+2. 该表示可解码为多种3D格式，实现完整且3D一致的场景理解。
+3. 模型作为规划器生成未来场景，再通过目标条件的逆动力学模块将这些场景转化为可执行动作。
+
+### 主要贡献
+- 提出结构化4D潜在预测模型，能预测场景3D结构演化，并解码为多种3D格式。
+- 生成具有强视觉质量、显著优于现有基于视频规划器的3D一致性和多视角连贯性的未来场景。
+- 在复杂操作任务上取得优异表现，展现出对新型视觉条件的鲁棒泛化能力，并在真实机器人平台上验证有效性。
+
+### 局限性
+摘要未提供关于模型计算复杂度、训练数据需求、失败案例或与现有方法在更广泛场景下对比的具体信息，因此局限性无法从摘要中得出。
+
+### 阅读优先级
+优先级：**中**
+理由：该工作在机器人规划中引入结构化4D潜在空间表示，在3D一致性和多视角连贯性上相比2D视频方法有明确提升，且提供了真实机器人实验验证，值得关注。但摘要未深入说明方法的具体实现细节或定量对比，需阅读全文以评估其工程实用性和可复现性。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Video predictive models are emerging as a powerful paradigm in robotics, offering a promising path toward task generalization, long-horizon planning, and flexible decision-making. However, prevailing approaches often operate on 2D video sequences, inherently lacking the 3D geometric understanding necessary for precise spatial reasoning and physical consistency. We introduce a Structured 4D Latent Predictive Model, which predicts the evolution of a scene's 3D structure in a structured latent space conditioned on observations and textual instructions. Our representation encodes the scene holistically and can be decoded into diverse 3D formats, enabling a more complete and 3D consistent scene understanding. This structured 4D latent predictive model serves as a planner, generating future scenes that are translated into executable actions by a goal-conditioned inverse dynamics module. Experiments demonstrate that our model generates futures with strong visual quality, substantially better 3D consistency and multi-view coherence compared to state-of-the-art video-based planners. Consequently, our full planning pipeline achieves superior performance on complex manipulation tasks, exhibits robust generalization to novel visual conditions, and proves effective on real-world robotic platforms. Our website is available at https://structured-4d-model.github.io/.
@@ -3104,6 +3588,40 @@ Video predictive models are emerging as a powerful paradigm in robotics, offerin
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** manipulation, AR, world model
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：DeWorldSG: Depth-Aware 3D Semantic Scene Graph Generation via World-Model Priors
+- 作者：Seok-Young Kim, Abdelrahman Elkhawky, Taewook Ha, Dooyoung Kim, Eunjae Shin, Benjamin Busam, Woontack Woo
+- 出版日期：2026-07-01T12:55:09Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2607.00889
+
+### 一句话总结
+本文提出DeWorldSG框架，利用深度引导滤波与世界模型先验，从RGB-D序列中生成时空鲁棒的3D语义场景图，在3DSSG和ReplicaSSG数据集上达到最先进水平。
+
+### 研究问题
+现有3D语义场景图生成方法因不稳定的3D对象表示和帧级推理导致的缺失关系，难以构建可靠的3D场景图。
+
+### 核心思路/方法
+1. 通过深度引导滤波估计实例级几何3D高斯分布，将每个对象表示为概率3D节点，而非单个投影点，以提升对象表示稳定性。
+2. 跨对象对聚合时空证据，并利用世界模型（V-JEPA 2）导出的上下文先验来细化关系，缓解帧级推理带来的关系稀疏性。
+
+### 主要贡献
+1. 提出DeWorldSG框架，在3DSSG和ReplicaSSG数据集上，对象和谓词预测均达到最先进性能，并生成时间一致性的场景结构。
+2. 相比先前最先进方法，三元组召回率提升77.4%，谓词召回率提升23.2%，适用于机器人操作和AR应用。
+3. 代码和模型开源。
+
+### 局限性
+摘要未提供足够信息来明确本文方法的局限性，例如计算复杂度、对特定场景的依赖性或潜在失败案例。
+
+### 阅读优先级
+**高**
+理由：该工作在新兴的3D语义场景图生成任务上取得了显著的性能提升（三元组召回率提升77.4%），并且直接面向机器人操作和AR等具体应用，同时开源代码，对从事相关领域的研究者和工程师具有较高参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -3121,6 +3639,41 @@ We present DeWorldSG, a novel framework that generates spatio-temporally robust 
 **Matched keywords:** 3D reconstruction, mapping, spatial intelligence
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：OmniView-Space: Reinforcing Spatial Reasoning via Multi-Perspective Spatial Mapping
+- 作者：Xudong Li, Mengdan Zhang, Peixian Chen, Jiaxi Tan, Zihao Huang, Jingyuan Zheng, Yan Zhang, Xiawu Zheng, Xing Sun, Rongrong Ji
+- 出版日期：2026-07-01
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2607.00881
+
+### 一句话总结
+本文提出OmniView-Space框架，通过多视角空间映射和工具引导的自我中心推理，增强多模态大语言模型在空间推理中的一致性，并利用认知地图蒸馏减少对外部几何管线的依赖。
+
+### 研究问题
+多模态大语言模型在空间推理任务中，难以维持连贯的场景表示，尤其在多步推理中无法动态地将证据重新锚定到查询所需的视角（如相机中心、物体中心或方向中心）。
+
+### 核心思路/方法
+1. **多视角空间映射（MPSM）**：将重建的几何信息重新锚定到查询对齐的视觉认知地图和文本空间图。
+2. **工具引导的自我中心推理**：训练一个交错策略，主动选择查询所需的自我锚点，并请求对应的MPSM证据。
+3. **认知地图蒸馏**：利用MPSM生成的轨迹和自我帧奖励，训练模型使用自生成的认知地图进行推理，减少对外部几何管线依赖。
+
+### 主要贡献
+1. 提出OmniView-Space框架，在单图和多图空间推理基准上达到最先进性能。
+2. 通过认知地图蒸馏，在保持性能的同时降低对外部几何管线的依赖。
+3. 设计了多视角空间映射与工具引导推理机制，提升了多步空间推理的动态锚定能力。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**  
+理由：该工作针对多模态大语言模型在空间推理中的核心难点（多视角锚定与一致性）提出系统框架，并展示了性能提升与管线简化，对于从事空间智能、具身智能或多模态推理的研究者具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Spatial intelligence remains a persistent challenge for Multimodal Large Language Models (MLLMs), as it requires coherent spatial scene representations beyond basic object recognition. Existing methods typically build such representations through textual reasoning or 3D reconstruction. However, they often falter during multi-step reasoning, particularly when required to dynamically re-anchor evidence to the specific camera-, object-, or direction-centric reference frames demanded by complex queries. To address this, we propose OmniView-Space, a framework designed to maintain spatial consistency through multimodal egocentric evidence. Our approach consists of three core components: (1) Multi-Perspective Spatial Mapping (MPSM), which re-anchors reconstructed geometry into a query-aligned visual cognitive map and a textual spatial graph; (2) Tool-Guided Egocentric Reasoning, an interleaved policy trained to actively select the ego anchor required by the query and request the corresponding MPSM evidence; and (3) Cognitive-Map Distillation, which uses MPSM-generated trajectories and ego-frame rewards to train the model to reason with self-generated cognitive maps. Experiments on single- and multi-image spatial reasoning benchmarks show that OmniView-Space achieves state-of-the-art performance. Furthermore, the distilled model maintains this performance while reducing reliance on external geometry pipelines.
@@ -3134,6 +3687,40 @@ Spatial intelligence remains a persistent challenge for Multimodal Large Languag
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** autonomous driving
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：DriveVer: Lightweight Trajectory Evaluator as Test-Time Verifier for Autonomous Driving
+- 作者：Chong He, Yuechen Luo, Fang Li, Shaoqing Xu, Fuxi Wen
+- 出版日期：2026-07-01
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2607.00399
+
+### 一句话总结
+DriveVer 是一个轻量级、即插即用的测试时验证器，通过双头架构融合轨迹与感知特征，在推理阶段对自动驾驶轨迹进行安全评分和几何修正，以较小计算开销提升基线规划器性能。
+
+### 研究问题
+端到端自动驾驶模型在训练时存在计算成本高、边际收益递减的问题，且现有规划器采用一次生成范式，缺乏推理阶段的二次验证与主动修正机制，导致无法检测和修正次优或不安全的轨迹。
+
+### 核心思路/方法
+1. 构建专用轨迹数据集：基于 NAVSIM 基准，通过条件驱动聚类和依据自车状态与导航指令的平衡采样方法生成。
+2. 双头架构：融合候选轨迹与多视图视觉表示、自车运动学特征，同时预测安全置信度分数和绝对几何修正向量（从而同时实现轨迹评估与修正）。
+3. 测试时缩放（Test-Time Scaling）范式：在不依赖大量且昂贵训练的前提下，通过推理阶段验证与精炼轨迹来提升性能。
+
+### 主要贡献
+1. 提出 DriveVer，一种轻量级（仅34M参数）、即插即用的测试时验证器，用于自动驾驶轨迹的后验证与修正。
+2. 设计了基于条件驱动聚类与平衡采样的专用轨迹数据集构建方法。
+3. 在 NAVSIM 基准上的实验表明，DriveVer 能以极小的计算开销显著提升基线规划模型性能，同时保持实时推理效率。
+
+### 局限性
+摘要未提供足够信息。具体局限性（如可能存在的泛化性、对特定场景的失败案例、计算资源要求等）未在摘要中说明。
+
+### 阅读优先级
+高。理由：该方法针对自动驾驶中轨迹验证的实用问题提出了一种轻量级且高效的解决方案，双头架构设计新颖，实验在公开基准上展示了性能提升与实时性，对部署场景有较强参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
