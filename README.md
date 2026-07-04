@@ -80,7 +80,7 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 <!-- DAILY_REPORT_END -->
 
 **Last updated:** 2026-07-03T10:30:48-04:00
-**Total number of papers:** 103
+**Total number of papers:** 102
 **Number of papers added in the latest update:** 25
 **Categories tracked:** cs.CV, cs.GR, cs.RO, eess.IV
 
@@ -4471,57 +4471,6 @@ MoPe通过引入“运动持久性”原则，利用历史动态先验与当前�
 <summary>Abstract</summary>
 
 Robust robot autonomy depends on scene representations that remain stable enough to support localization, navigation, and downstream decision making in dynamic environments. Monocular Gaussian Splatting SLAM provides high-fidelity mapping, but current uncertainty-aware methods still treat dynamic regions largely as per-frame observations. This makes the representation effectively memoryless: when a pedestrian slows, pauses, or reappears after occlusion, the current frame may look static, allowing dynamic content to be absorbed into the map and leaving persistent ghosting artifacts. We argue that this failure reflects a representation-level mismatch. Dynamic-ness is not an instantaneous appearance property, but a temporal property defined by motion history. Building on this view, we introduce Motion Permanence: the principle that an object's dynamic identity should persist over time rather than be re-decided from each frame independently. We realize this principle in MoPe, a memory-aware uncertainty filter for monocular Gaussian mapping. MoPe propagates the historical dynamic posterior through geometry-consistent SE(3) warping and fuses it with current-frame evidence using bounded Bayesian log-odds updates. The resulting persistent posterior guides tracking, mapping, dynamic-aware Gaussian insertion, and Gaussian-level post-cleanup. On Wild-SLAM, Bonn, and TUM sequences, MoPe improves tracking robustness and reduces residual ghosting, with the strongest gains on dynamic-human scenes that most directly violate the memoryless assumption. These results show that maintaining temporal dynamic state inside the scene representation is a practical step toward more reliable representation-centric autonomy in changing real-world environments.
-
-</details>
-
-#### 2026-06-26 - StructSplat: Generalizable 3D Gaussian Splatting from Uncalibrated Sparse Views
-
-**Authors:** Jia-Chen Zhao, Beiqi Chen, Xinyang Chen, Guangcong Wang, Liqiang Nie
-**Links:** [abs](https://arxiv.org/abs/2606.28321) - [pdf](https://arxiv.org/pdf/2606.28321)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** None
-**Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：StructSplat: Generalizable 3D Gaussian Splatting from Uncalibrated Sparse Views
-- 作者：Jia-Chen Zhao, Beiqi Chen, Xinyang Chen, Guangcong Wang, Liqiang Nie
-- 出版日期：2026-06-26
-- 分类：Neural Scene Representations & Rendering
-- 链接：https://arxiv.org/abs/2606.28321
-
-### 一句话总结
-StructSplat提出了一个无需相机参数的前馈式可泛化3D高斯重建框架，通过结构化表征分离几何、语义与纹理线索，在稀疏视图场景下显著提升渲染质量。
-
-### 研究问题
-如何在不依赖相机标定或场景级优化的前提下，从未标定的稀疏多视图图像中高效、高保真地重建可泛化的3D高斯辐射场。
-
-### 核心思路/方法
-1. **结构化表征**：将几何、语义和纹理线索赋予明确角色，组织为结构化表示，避免在统一骨干网络中纠缠。
-2. **像素对齐特征注入**：从2D观测中提取像素对齐特征，实现精确的纹理建模。
-3. **语义感知先验**：引入语义先验以增强全局一致性。
-4. **相机对齐策略**：设计防止信息泄漏的相机对齐机制，提升跨场景泛化能力。
-
-### 主要贡献
-- 首个在无相机参数条件下实现前馈式可泛化3D高斯重建的框架。
-- 提出结构化表征方法，将几何、语义与纹理线索解耦并显式建模。
-- 在DL3DV基准上PSNR达28.045，超越AnySplat（22.377）5.67 dB；跨数据集评测中，在ACID和RealEstate10K上分别比AnySplat高1.94 dB和1.72 dB。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-高  
-理由：该方法解决了现有可泛化新视角合成方法对相机参数和场景级优化的依赖，在稀疏无标定视图场景下取得显著性能提升（DL3DV上+5.67 dB PSNR），且具备跨数据集泛化能力，对3D场景理解与渲染领域有重要参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-We present StructSplat, a feed-forward and generalizable 3D Gaussian reconstruction framework that operates directly on uncalibrated images without requiring camera parameters. Existing methods either rely on per-scene optimization or assume known camera poses, and often entangle geometry and appearance within a unified backbone, limiting reconstruction fidelity and generalization. Our key idea is to adopt a structured representation that organizes geometry, semantic, and texture cues with explicit roles in the reconstruction process. Specifically, we introduce a pixel-aligned feature injection mechanism to enable accurate texture modeling from 2D observations, incorporate semantic-aware priors to improve global consistency, and design a camera alignment strategy to prevent information leakage and improve generalization. Experiments show that our method significantly outperforms prior approaches on challenging benchmarks. On DL3DV, our method achieves 28.045 PSNR, surpassing AnySplat (22.377) by +5.67 dB. In cross-dataset evaluation, our method achieves +1.94 dB over AnySplat on ACID and +1.72 dB on RealEstate10K. Project page: https://structsplat.github.io Code: https://github.com/J-C-Zhao/StructSplat
 
 </details>
 
