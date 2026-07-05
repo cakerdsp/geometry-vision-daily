@@ -37,7 +37,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.02515",
     "pdf_url": "https://arxiv.org/pdf/2607.02515",
     "first_seen": "2026-07-03T10:30:48-04:00",
-    "last_seen": "2026-07-04T09:56:33-04:00"
+    "last_seen": "2026-07-05T10:07:59-04:00"
   },
   {
     "arxiv_id": "2607.02494",
@@ -73,7 +73,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.02494",
     "pdf_url": "https://arxiv.org/pdf/2607.02494",
     "first_seen": "2026-07-03T10:30:48-04:00",
-    "last_seen": "2026-07-04T09:56:33-04:00"
+    "last_seen": "2026-07-05T10:07:59-04:00"
   },
   {
     "arxiv_id": "2607.02372",
@@ -111,7 +111,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.02372",
     "pdf_url": "https://arxiv.org/pdf/2607.02372",
     "first_seen": "2026-07-03T10:30:48-04:00",
-    "last_seen": "2026-07-04T09:56:33-04:00"
+    "last_seen": "2026-07-05T10:07:59-04:00"
   },
   {
     "arxiv_id": "2607.02371",
@@ -146,7 +146,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.02371",
     "pdf_url": "https://arxiv.org/pdf/2607.02371",
     "first_seen": "2026-07-03T10:30:48-04:00",
-    "last_seen": "2026-07-04T09:56:33-04:00"
+    "last_seen": "2026-07-05T10:07:59-04:00"
   },
   {
     "arxiv_id": "2607.02301",
@@ -199,7 +199,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.02301",
     "pdf_url": "https://arxiv.org/pdf/2607.02301",
     "first_seen": "2026-07-03T10:30:48-04:00",
-    "last_seen": "2026-07-04T09:56:33-04:00"
+    "last_seen": "2026-07-05T10:07:59-04:00"
   },
   {
     "arxiv_id": "2607.02074",
@@ -3831,348 +3831,5 @@
     "pdf_url": "https://arxiv.org/pdf/2606.29453",
     "first_seen": "2026-06-30T10:42:28-04:00",
     "last_seen": "2026-07-01T11:11:42-04:00"
-  },
-  {
-    "arxiv_id": "2606.29379",
-    "version": "v1",
-    "title": "DR-GS: Physically-Based Deformable and Relightable 2D Gaussians",
-    "authors": [
-      "Jiaxin Li",
-      "Tong Wu",
-      "Yi Wei",
-      "Tailin Wu",
-      "Li Zhang"
-    ],
-    "abstract": "Gaussian splatting (GS) has garnered significant attention in VR/AR and digital content creation due to its explicit parameterization and efficient rendering capabilities. However, existing GS-based methods for deformable objects face two key limitations: (i) illumination is erroneously baked into textures, causing physically inconsistent responses under dynamic deformations and lighting changes; (ii) snapshot-based reconstruction restricts post-reconstruction material editing. To address these challenges, we propose Deformable and Relightable GS (DR-GS), a unified Gaussian framework that integrates physically-based inverse rendering, relighting, and deformation-aware manipulation. Through explicitly disentangling geometry, illumination, and material representations, DR-GS overcomes the limitations of static snapshots, resolving unrealistic appearance under varying conditions while enabling post-reconstruction parameter editing. Extensive experiments show that DR-GS achieves leading visual quality across static reconstruction, dynamic deformation, and relighting, reliably preserving reflections and specular highlights on glossy surfaces. It further establishes a fully decoupled geometry-illumination-material pipeline, enabling high-quality 3D asset creation and comprehensive post-editing.",
-    "published": "2026-06-28T13:03:13Z",
-    "updated": "2026-06-28T13:03:13Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.AI",
-      "cs.GR"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [
-      "Embodied / Robotics / AR Applications"
-    ],
-    "matched_keywords": [
-      "Gaussian Splatting",
-      "inverse rendering",
-      "relighting",
-      "rendering",
-      "splatting",
-      "manipulation",
-      "AR",
-      "VR"
-    ],
-    "classification_score": 7,
-    "classification_reasons": [
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: inverse rendering",
-      "Matched abstract keyword: relighting",
-      "Matched abstract keyword: rendering",
-      "Matched abstract keyword: splatting",
-      "Matched abstract keyword: manipulation",
-      "Matched abstract keyword: AR",
-      "Matched abstract keyword: VR"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2606.29379",
-    "pdf_url": "https://arxiv.org/pdf/2606.29379",
-    "first_seen": "2026-06-30T10:42:28-04:00",
-    "last_seen": "2026-06-30T10:42:28-04:00"
-  },
-  {
-    "arxiv_id": "2606.29374",
-    "version": "v1",
-    "title": "L2D2-GS: Learning to Densify for Feedforward Dynamic Gaussian Scene Reconstruction",
-    "authors": [
-      "Zetian Song",
-      "Chenming Wu",
-      "Junnan Liu",
-      "Chitian Sun",
-      "Liangliang He",
-      "Hangjun Ye",
-      "Jiaqi Zhang",
-      "Siwei Ma",
-      "Wen Gao"
-    ],
-    "abstract": "High-fidelity reconstruction of dynamic urban environments is a cornerstone of autonomous driving simulation and large-scale world modeling. While 3D Gaussian Splatting (3DGS) has established a new standard for real-time rendering, its reliance on expensive per-scene optimization limits scalability. Conversely, recent feedforward methods that infer Gaussian parameters offer faster speed but face fundamental bottlenecks: they are memory-prohibitive at high resolutions and struggle to fuse dense multi-view observations consistently. This paper presents L2D2-GS, a unified framework that reformulates generalizable reconstruction not as a one-shot regression, but as a robust iterative process of optimization and densification. To resolve the ambiguity of supervision in primitive generation, we propose a self-supervised densification policy that derives explicit reward signals from global reconstruction gains to guide local densification. Furthermore, we mitigate irreversible early-stage artifacts through a geometric regularization mechanism, utilizing reparameterization to constrain the optimization manifold and prevent convergence to poor local optima. Extensive experiments on the PandaSet and Waymo datasets demonstrate that our method achieves state-of-the-art reconstruction fidelity and strong zero-shot generalization, while using fewer primitives than competing baselines.",
-    "published": "2026-06-28T12:51:17Z",
-    "updated": "2026-06-28T12:51:17Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.GR"
-    ],
-    "primary_category": "Dynamic / 4D Reconstruction",
-    "secondary_categories": [
-      "3D Reconstruction & Multi-view Geometry",
-      "Neural Scene Representations & Rendering",
-      "Embodied / Robotics / AR Applications"
-    ],
-    "matched_keywords": [
-      "generalizable reconstruction",
-      "dynamic Gaussian",
-      "scene reconstruction",
-      "Gaussian Splatting",
-      "3D Gaussian Splatting",
-      "3DGS",
-      "rendering",
-      "splatting",
-      "autonomous driving",
-      "simulation",
-      "world modeling"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched title phrase: dynamic Gaussian",
-      "Matched title phrase: scene reconstruction",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: 3D Gaussian Splatting",
-      "Matched abstract keyword: 3DGS",
-      "Matched abstract keyword: rendering",
-      "Matched abstract keyword: splatting",
-      "Matched abstract phrase: autonomous driving",
-      "Matched abstract keyword: simulation",
-      "Matched abstract phrase: world modeling"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2606.29374",
-    "pdf_url": "https://arxiv.org/pdf/2606.29374",
-    "first_seen": "2026-06-30T10:42:28-04:00",
-    "last_seen": "2026-06-30T10:42:28-04:00"
-  },
-  {
-    "arxiv_id": "2606.29334",
-    "version": "v1",
-    "title": "Multi-scale Object-Aware Gaze Estimation via Geometric Reasoning",
-    "authors": [
-      "Jiajie Mi",
-      "Xinyu Liu",
-      "Mengke Song",
-      "Chenglizhao Chen"
-    ],
-    "abstract": "Gaze target estimation aims to predict the semantic object an observer fixates upon within an image, a task deeply rooted in the object-oriented nature of human gaze. Observers tend to select a specific semantic entity as the attentional target, rather than responding randomly across arbitrary regions of the image. However, existing methods typically model this task as a direct mapping from global features to gaze heatmaps, essentially treating it as a pixel-level regression problem. This approach fails to explicitly represent the gazed object as a distinct entity, making it difficult to produce stable and semantically consistent predictions in complex scenes. To address this, we propose a two-stage gaze estimation framework guided by object semantics, reformulating gaze target estimation as a hierarchical reasoning process. Our method incorporates object-level representations during feature encoding to align image features with discrete semantic entities, then introduces multi-scale feature fusion and geometric constraints from head pose and gaze direction for fine-grained localization and object-level discrimination. Extensive experiments on GazeFollow, VideoAttentionTarget, ChildPlay, and GOO-Real demonstrate that our method achieves AUC of 0.961, 0.948, 0.987, and 0.977 respectively, delivering strong performance across all benchmarks while maintaining a compact parameter size of 7.1M.",
-    "published": "2026-06-28T11:02:21Z",
-    "updated": "2026-06-28T11:02:21Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Geometry Foundation Models",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "geometric reasoning",
-      "mapping",
-      "localization"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched title phrase: geometric reasoning"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2606.29334",
-    "pdf_url": "https://arxiv.org/pdf/2606.29334",
-    "first_seen": "2026-06-30T10:42:28-04:00",
-    "last_seen": "2026-06-30T10:42:28-04:00"
-  },
-  {
-    "arxiv_id": "2606.29333",
-    "version": "v1",
-    "title": "HiReFF: High-Resolution Feedforward Human Reconstruction from Uncalibrated Sparse-View Video",
-    "authors": [
-      "Yiming Jiang",
-      "Hanzhang Tu",
-      "Wenfeng Song",
-      "Siyou Lin",
-      "Liang An",
-      "Shuai Li",
-      "Aimin Hao",
-      "Yebin Liu"
-    ],
-    "abstract": "Uncalibrated volumetric video streaming for human reconstruction is essential for holographic communication and AR/VR, yet remains challenging due to the need for temporal consistency and computational efficiency from sparse-view inputs. Existing methods rely on per-scene optimization or calibrated cameras, while recent feed-forward models are limited to low-resolution (0.5K) single-frame synthesis. We present HiReFF, a feed-forward method for 2K-resolution 360° human video reconstruction from uncalibrated sparse-view videos. Our framework decomposes the problem into two key tasks: foreground 3D Gaussian reconstruction from sparse-view videos (four views separated by 90°) and computationally efficient high-resolution synthesis. To enable the former, we propose Scale-synchronized Camera Calibration to resolve scale ambiguity for multi-view supervision, and Gaussian-wise Foreground Masking to reconstruct clean foregrounds by modulating Gaussian parameters. For efficient high-resolution synthesis, our High-resolution Side-tuning achieves 2K rendering by augmenting the Gaussian head with supplementary features while keeping the backbone at 0.5K, drastically reducing computational overhead. Experiments demonstrate that HiReFF significantly outperforms existing methods in high-resolution streaming volumetric video reconstruction. https://iridescentjiang.github.io/HiReFF",
-    "published": "2026-06-28T11:01:36Z",
-    "updated": "2026-06-28T11:01:36Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Dynamic / 4D Reconstruction",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "video reconstruction",
-      "human reconstruction",
-      "camera calibration",
-      "rendering",
-      "AR",
-      "VR"
-    ],
-    "classification_score": 8,
-    "classification_reasons": [
-      "Matched abstract phrase: video reconstruction",
-      "Matched title phrase: human reconstruction",
-      "Matched abstract phrase: human reconstruction"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2606.29333",
-    "pdf_url": "https://arxiv.org/pdf/2606.29333",
-    "first_seen": "2026-06-30T10:42:28-04:00",
-    "last_seen": "2026-06-30T10:42:28-04:00"
-  },
-  {
-    "arxiv_id": "2606.29329",
-    "version": "v1",
-    "title": "RAGA: Real Time Ray Traced Gaussian Shadow Casting for 3DGS Avatar-Scene Interaction",
-    "authors": [
-      "Aymen Mir",
-      "Riza Alp Guler",
-      "Jian Wang",
-      "Peter Wonka",
-      "Bing Zhou",
-      "Gerard Pons-Moll"
-    ],
-    "abstract": "We study the problem of physically plausible shadow casting when animating 3D Gaussian Splatting (3DGS) avatars, either individually or in multi-avatar and object-interaction scenarios, within existing 3DGS scenes. In contrast to prior methods that rely on binary hit tests and mesh-based shadow casters, our method performs shadow computation entirely in Gaussian space, without requiring any mesh reconstruction. We introduce RAGA, a Ray-Traced Gaussian Shadow Casting formulation based on exact ray-Gaussian line integrals. For each occluding Gaussian, we integrate the opacity profile along the shadow ray and normalize by the theoretical maximum integral, producing a weight that captures how the ray traverses the occluder rather than merely whether an intersection occurred. To reduce temporal variance from clothing deformations in animated avatars, we further introduce an avatar proxy representation that stabilizes shadow casting while preserving visual fidelity. We implement RAGA using custom CUDA kernels integrated with the NVIDIA OptiX framework; as such, our shadow tracer runs at rates of about 50 FPS. We evaluate on single-avatar, multi-avatar, and avatar-object interaction scenarios across multiple datasets, demonstrating substantially improved shadow realism, temporal stability, and scene coherence. Our project page is available at https://miraymen.github.io/raga/.",
-    "published": "2026-06-28T10:55:32Z",
-    "updated": "2026-06-28T10:55:32Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "mesh reconstruction",
-      "Gaussian Splatting",
-      "3D Gaussian Splatting",
-      "3DGS",
-      "splatting"
-    ],
-    "classification_score": 8,
-    "classification_reasons": [
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: 3D Gaussian Splatting",
-      "Matched title keyword: 3DGS",
-      "Matched abstract keyword: 3DGS",
-      "Matched abstract keyword: splatting"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2606.29329",
-    "pdf_url": "https://arxiv.org/pdf/2606.29329",
-    "first_seen": "2026-06-30T10:42:28-04:00",
-    "last_seen": "2026-06-30T10:42:28-04:00"
-  },
-  {
-    "arxiv_id": "2606.29303",
-    "version": "v1",
-    "title": "Occlusion-Robust Multi-Object Decoupling for Physics-Based Interaction",
-    "authors": [
-      "Xin Dong",
-      "Wenfeng Deng",
-      "Yansong Tang"
-    ],
-    "abstract": "We propose a mask-free method for lossless multi-object 3D reconstruction from sparse and occluded real-world views, enabling physically plausible interaction via Material Point Method (MPM) simulation. Our key insight is that object coupling stems from occlusion and limited viewpoints, which we address by formulating multi-object decoupling as a sparse-view reconstruction problem. Using 3D Gaussian Splatting as base representation, we first obtain coarse instance partitions with a SAM2-trained segmentation field. Rather than relying on masks, we reconstruct fragmented geometries by leveraging a joint Score Distillation Sampling (SDS) process, which integrates reference-view supervision with novel-view synthesis guided by 2D and 3D diffusion priors to enforce both texture fidelity and 3D consistency. Furthermore, we incorporate geometry-aware priors such as intra-object and inter-object similarity to regularize geometric reasoning. Experimental results demonstrate that our method produces complete, simulation-ready 3D objects without requiring manual masks, enabling realistic dynamic interactions on both synthetic and real-world datasets.",
-    "published": "2026-06-28T09:50:46Z",
-    "updated": "2026-06-28T09:50:46Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "geometric reasoning",
-      "3D reconstruction",
-      "Gaussian Splatting",
-      "3D Gaussian Splatting",
-      "novel view synthesis",
-      "view synthesis",
-      "splatting",
-      "simulation"
-    ],
-    "classification_score": 9,
-    "classification_reasons": [
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: 3D Gaussian Splatting",
-      "Matched abstract phrase: novel view synthesis",
-      "Matched abstract phrase: view synthesis",
-      "Matched abstract keyword: splatting"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2606.29303",
-    "pdf_url": "https://arxiv.org/pdf/2606.29303",
-    "first_seen": "2026-06-30T10:42:28-04:00",
-    "last_seen": "2026-06-30T10:42:28-04:00"
-  },
-  {
-    "arxiv_id": "2606.29237",
-    "version": "v1",
-    "title": "MoPe: Motion Permanence for Robust Monocular Gaussian Mapping in Dynamic Environments",
-    "authors": [
-      "Qixin Xiao"
-    ],
-    "abstract": "Robust robot autonomy depends on scene representations that remain stable enough to support localization, navigation, and downstream decision making in dynamic environments. Monocular Gaussian Splatting SLAM provides high-fidelity mapping, but current uncertainty-aware methods still treat dynamic regions largely as per-frame observations. This makes the representation effectively memoryless: when a pedestrian slows, pauses, or reappears after occlusion, the current frame may look static, allowing dynamic content to be absorbed into the map and leaving persistent ghosting artifacts. We argue that this failure reflects a representation-level mismatch. Dynamic-ness is not an instantaneous appearance property, but a temporal property defined by motion history. Building on this view, we introduce Motion Permanence: the principle that an object's dynamic identity should persist over time rather than be re-decided from each frame independently. We realize this principle in MoPe, a memory-aware uncertainty filter for monocular Gaussian mapping. MoPe propagates the historical dynamic posterior through geometry-consistent SE(3) warping and fuses it with current-frame evidence using bounded Bayesian log-odds updates. The resulting persistent posterior guides tracking, mapping, dynamic-aware Gaussian insertion, and Gaussian-level post-cleanup. On Wild-SLAM, Bonn, and TUM sequences, MoPe improves tracking robustness and reduces residual ghosting, with the strongest gains on dynamic-human scenes that most directly violate the memoryless assumption. These results show that maintaining temporal dynamic state inside the scene representation is a practical step toward more reliable representation-centric autonomy in changing real-world environments.",
-    "published": "2026-06-28T06:51:17Z",
-    "updated": "2026-06-28T06:51:17Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO",
-      "cs.AI"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [
-      "Embodied / Robotics / AR Applications"
-    ],
-    "matched_keywords": [
-      "SLAM",
-      "Gaussian Splatting",
-      "scene representation",
-      "splatting",
-      "mapping",
-      "localization"
-    ],
-    "classification_score": 5,
-    "classification_reasons": [
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: scene representation",
-      "Matched abstract keyword: splatting",
-      "Matched title keyword: mapping",
-      "Matched abstract keyword: mapping",
-      "Matched abstract keyword: localization"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2606.29237",
-    "pdf_url": "https://arxiv.org/pdf/2606.29237",
-    "first_seen": "2026-06-30T10:42:28-04:00",
-    "last_seen": "2026-06-30T10:42:28-04:00"
-  },
-  {
-    "arxiv_id": "2606.29059",
-    "version": "v1",
-    "title": "Flow Matching in Feature Space for Stochastic World Modeling",
-    "authors": [
-      "Francois Porcher",
-      "Nicolas Carion",
-      "Karteek Alahari",
-      "Shizhe Chen"
-    ],
-    "abstract": "World modeling requires forecasting uncertain futures while preserving information useful for downstream perception. Existing visual world models often struggle to satisfy both goals: VAE-based stochastic models operate in low-dimensional reconstruction latents, which can limit perception performance, while deterministic predictors using strong pretrained features collapse multimodal futures into a single blurry mean. In this work, we propose FlowWM, a stochastic world model that performs flow matching directly within pretrained feature space (e.g., DINOv3). This is challenging because pretrained features are substantially high-dimensional, making standard diffusion recipes suboptimal. To address this, we investigate the design choices needed for feature-space flow matching and introduce a differentiable one-step projection mechanism that enables efficient training with temporal consistency and task-driven objectives. We evaluate FlowWM on two benchmarks: a synthetic benchmark for systematic evaluation of accuracy and diversity, and a real-world benchmark FuturePerception. FlowWM improves perception performance, mode coverage, and horizon robustness, validating our proposed design for stochastic world modeling in high-dimensional feature spaces.",
-    "published": "2026-06-27T19:35:27Z",
-    "updated": "2026-06-27T19:35:27Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.AI"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "world model",
-      "world modeling"
-    ],
-    "classification_score": 8,
-    "classification_reasons": [
-      "Matched abstract phrase: world model",
-      "Matched title phrase: world modeling",
-      "Matched abstract phrase: world modeling"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2606.29059",
-    "pdf_url": "https://arxiv.org/pdf/2606.29059",
-    "first_seen": "2026-06-30T10:42:28-04:00",
-    "last_seen": "2026-06-30T10:42:28-04:00"
   }
 ]
