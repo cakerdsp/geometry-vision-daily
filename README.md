@@ -11,63 +11,60 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：94
+- 当前滚动窗口论文数：68
 - 分类分布：
-  - Neural Scene Representations & Rendering: 37
-  - 3D Reconstruction & Multi-view Geometry: 31
-  - Embodied / Robotics / AR Applications: 14
-  - Dynamic / 4D Reconstruction: 7
-  - Geometry Foundation Models: 5
+  - Neural Scene Representations & Rendering: 27
+  - 3D Reconstruction & Multi-view Geometry: 21
+  - Embodied / Robotics / AR Applications: 12
+  - Geometry Foundation Models: 4
+  - Dynamic / 4D Reconstruction: 4
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-好的，这是基于您提供的论文列表生成的中文科研趋势综合分析。
-
----
+好的，基于今日提供的论文列表，以下是中文科研趋势综合分析。
 
 #### 今日主要趋势
 
-本批论文反映了计算机视觉与三维重建领域的几个关键趋势，不再是简单的方法迭代，而是展现出更深层次的范式转变和跨领域融合。
+1.  **场景理解从静态迈向动态与环境感知**：多篇论文不再满足于静态场景的重建，而是深入探讨动态环境下的鲁棒性问题。这体现在两个层面：一是场景本身包含运动物体，如 `OCD SLAM` 和 `DL-SLAM` 致力于在动态环境中实现稳定的SLAM和高质量地图构建；二是模型需要应对动态变化的输入质量，如 `LLM-Empowered Multimodal Fusion Framework` 处理动态变化的传感器噪声和遮挡。这反映出研究正从受控环境向真实世界、非结构化场景迁移。
 
-1.  **“简化”与“泛化”成为基础模型的新追求：** 以往基础模型追求“大而全”的复杂架构，但本批论文如 PointDiT 和 Diversity-aware View Partitioning 显示出一种趋势：研究者开始反思并简化模型结构，追求在更简约框架下的强泛化能力。PointDiT 证明了像素空间扩散Transformer无需复杂组件即可超越隐空间扩散模型；而 Diversity-aware View Partitioning 则通过算法创新（视图组织）而非模型设计，来解决已有大模型（VGGT）的扩展瓶颈。
+2.  **前馈式（Feed-Forward）与训练免费（Training-Free）方法成为效率提升主流**：为了摆脱传统优化方法（如COLMAP）或逐场景微调的低效，大量工作探索前馈式预测或零训练推理。`InvSplat` 提出了前馈式逆渲染框架，`NeoMap` 通过流形优化实现免训练的新视角合成，`The Turning Point of 3D Plant Phenotyping` 用3D基础模型实现了秒级跨作物重建，而 `Diversity-aware View Partitioning for Scalable VGGT` 也是无需训练的即插即用框架。这种追求效率的趋势在3D重建、新视角合成和具身智能等计算密集型领域尤为突出。
 
-2.  **3D/4D重建从“可看”走向“可用”，与物理、具身智能深度耦合：** 多篇论文不再满足于视觉上真实的重建结果，而是强调其与物理世界交互的可行性。InvSplat 追求物理上合理的材质与光照分离，PhysMani 将物理约束（无散度速度场）引入世界模型以支持动态物体操控，而 Personalized 4D Whole-Heart Mesh Reconstruction 直接将4D重建用于下游生理仿真。这标志着重建任务正进入“重建即服务”的实质应用阶段。
+3.  **大模型与基础模型的深度融合与知识蒸馏**：大语言模型（LLM）和基础模型正被系统地引入视觉和3D任务，作为强大的先验知识来源。例如，`FoundDP` 融合单目深度基础模型以弥补双像素深度估计的不足，`ICDepth` 驯服预训练的视频扩散模型用于深度估计。同时，这些大型模型的高昂成本也催生了知识蒸馏的需求，`Geometric Foundation Model Distillation for Efficient Lunar 3D Reconstruction` 直接研究了如何将复杂基础模型压缩为轻量级学生模型，以适应资源受限的部署场景（如太空探索）。
 
-3.  **数据困境的化解：从“多而贵”到“少而精”再到“无中生有”：** 解决数据瓶颈的思路呈现多元化。面对昂贵/稀缺的非常规模态数据，SPoILeR 用RGB引导多模态新视图合成；面对动态场景中的冗余动态物体，DL-SLAM 和 OCD SLAM 通过“选择性利用”而非“丢弃”来提升SLAM质量；面对大规模场景，Structure-Aware Gaussian Splatting 通过在信号层面理解稀疏性来优化重建效率。这些方法共同指向对有限数据/计算资源的高效利用。
+4.  **3D高斯泼溅（3DGS）的持续演进：从渲染走向综合场景表示与动态处理**：3DGS已经从单纯的新视角渲染工具，演变为集几何、语义、动态于一体的综合场景表示核心。`InvSplat` 用带材质属性的3DGS实现逆渲染，`Bridging 3D Gaussians and Semantic Occupancy` 将其与语义占用场耦合。`DL-SLAM` 和 `Structure-Aware Gaussian Splatting` 则分别针对动态场景和大规模静态场景进行优化，展示了3DGS在不同应用场景下的适应性和潜力。
 
-4.  **视频模型“下凡”与基础模型“升维”：** 传统上，视频生成模型与 3D/深度估计各有分工。ICDepth 和 NeoMap 的工作表明，预训练的视频扩散模型内部存储了强大的“空间-时间先验”，通过巧妙设计（如 In-Context Conditioning 或流形交替投影），无需或仅需少量微调，即可直接“下凡”到视频深度估计和新视图合成任务。这说明视频模型正成为 3D 感知的强大先验来源。同时，像 FoundDP 这样的工作展示了如何“升维”，即用单目深度基础模型的全局先验来增强双像素深度传感器的局部分辨率。
+5.  **面向特定领域应用的工程化系统集成**：除了核心算法创新，将多种模型整合成端到端的实用系统也成为趋势。`VisionAId` 将单目深度、实例分割、人脸识别等6个端侧模型打包成一个面向视障人士的安卓应用，而 `OCD SLAM` 和 `PhysMani` 等则将感知、预测和决策模块耦合，以实现完整的机器人系统。这表明研究重心正从单一模型性能优化转向系统级的鲁棒性和实用性。
 
 #### 技术路线观察
 
--   **几何基础模型**：这一方向正出现分化。一派追求“极简”（PointDiT），挑战现有复杂架构的合理性；另一派则关注“如何用”（Diversity-aware View Partitioning），即如何将已有的强大但昂贵的模型（如VGGT、MASt3R）部署和应用到大规模或资源受限的场景中（Geometric Foundation Model Distillation on Lunar）。
--   **3D/4D Reconstruction & Neural Scene Representation**：3D Gaussian Splatting 依旧占主导，但改进方向已从单纯提升渲染质量转向解决其结构性缺陷。例如，处理稀疏观测的 Structure-Aware GS、处理动态环境的 DL-SLAM、追求物理属性解耦的 InvSplat，以及将GS与语义占用场结合的 COVScene。同时，NeRF类方法（如 SPoILeR）仍在特定多模态领域找到应用。
--   **Embodied/Robotics/AR**：该方向的论文高度务实，专注于解决现实世界中的具体挑战。鲁棒性（Typographic Attack, LiDAR 检测鲁棒性）、数据融合（LLM 驱动的雷达视觉融合）、动态物体操控（PhysMani）和低延迟应用（VisionAId）是核心关注点。SLAM也在从静态假设中“毕业”，OCD SLAM 和 DL-SLAM 是这一方面的典型代表。
--   **跨领域融合**：最显著的趋势是视频生成模型与3D估计的交叉。ICDepth 和 NeoMap 代表了“生成先验→感知任务”的技术路线，它们完全不同于传统的判别式或基于优化的方法，开辟了全新的可能性。
+-   **几何基础模型**：主要趋势是 **简化与高效**。`PointDiT` 挑战了复杂架构的必要性，提出极简的像素空间扩散模型；而 `Diversity-aware View Partitioning for Scalable VGGT` 和 `Geometric Foundation Model Distillation` 则从推理和部署的角度，分别通过视图组织和知识蒸馏来解决大模型的可扩展性瓶颈。技术侧重点从“如何构建更强大的模型”转向“如何更聪明地使用和压缩现有强大模型”。
+-   **3D/4D 重建 & 神经场景表示**：呈现 **多模态融合、物理感知、应用驱动** 的趋势。`InvSplat` 和 `Learning Spectral and Polarimetric Clues` 展示了将传统RGB建模拓展到材质属性（粗糙度、金属度等）及非常规模态（红外、偏振）的融合。`PhysMani` 强调物理先验（无散度速度场）在预测动态中的重要性。`Structure-Aware Gaussian Splatting` 关注大规模应用的效率问题，`Personalized 4D Whole-Heart Mesh Reconstruction` 则直接服务于医疗数字化转型。技术侧重点是从“生成照片级真实感图像”扩展到“生成可用于仿真、分析和交互的物理或语义世界模型”。
+-   **具身智能/机器人/AR应用**：**鲁棒性、安全性与传感器融合** 是核心关切。`Comprehensive Robustness Analysis of LiDAR-based 3D Object Detection` 和 `Towards Robustness against Typographic Attack` 系统地分析了现有模型在对抗攻击下的脆弱性，并提出全面的评估框架和防御手段。`LLM-Empowered Multimodal Fusion Framework` 和 `PhysMani` 分别从高层语义推理和物理规律预测两个角度，提升机器人在复杂、动态、不确定性环境中的决策可靠性。技术侧重点是从“功能实现”向“可靠实现”转变，关注边缘情况（corner cases）和系统容错。
 
 #### 值得优先阅读的论文
 
-1.  **PointDiT**：**阅读优先级最高**。它挑战了当前主流的“更复杂=更好”的认知，为单目几何估计提供了一个极简而高效的 baseline。理解其“为什么不需要复杂组件”是洞察未来趋势的关键。
+1.  **PointDiT** (ID: 2607.02515)
+    -   **理由**：该论文挑战了领域内“隐空间扩散+复杂架构”的惯性思维，以极简的像素空间扩散方法在单目几何估计任务上超越复杂模型。其“少即是多”的思路可能启发多个相关方向的架构简化研究，是挑战现有范式的关键工作。
 
-2.  **NeoMap 与 ICDepth**：**并列第二**。两者共同代表了“视频生成模型”赋能“3D感知”这一前沿趋势。NeoMap 提供的是一种“训练零成本”的通用框架，而ICDepth 则更专注于视频深度估计，并展示了如何用远少于传统方法的数据实现最佳性能。对比阅读两者，可以清晰理解不同技术路线的优劣。
+2.  **NeoMap** (ID: 2607.01962)
+    -   **理由**：提出了一种全新且优雅的研究视角——将新视角合成问题转化为预训练模型内部流形上的优化问题，并实现了免训练、高质量的结果。该工作揭示了预训练模型内在的潜力，其流形交替投影方法可能被广泛应用于其他“从外部条件生成”的图像/视频任务。
 
-3.  **PhysMani & InvSplat**：**并列第三**。这两篇代表了3D场景表示走向“物理合理性”的方向。PhysMani 将物理约束引入机器人操作的动态世界模型；InvSplat 则在静态场景中解构材质与光照。两者分别从动态和静态角度，架起了视觉重建与物理/交互应用之间的桥梁。
+3.  **InvSplat** (ID: 2607.02301)
+    -   **理由**：该工作是3DGS向前馈式、可解释场景表示演进的重要一步。它不仅实现了前馈逆渲染，还将材质属性（albedo, roughness, metallic）编码进高斯基元中，这对实现场景重光照、材质编辑等下游应用至关重要，代表了3DGS从“渲染工具”向“场景理解框架”的发展方向。
 
-4.  **Structure-Aware Gaussian Splatting (SIG)**：**阅读优先级第四**。它精准诊断了3DGS在大规模场景下的一个根本性问题（低频稀疏点vs高频图像监督），并给出了优雅的、基于信号理论的解决方案。这对于任何使用或扩展3DGS的研究者都具有启发意义。
+4.  **Bridging 3D Gaussians and Semantic Occupancy** (ID: 2607.01633)
+    -   **理由**：该工作将渲染性3DGS与可空间推理的占用场结合起来，实现了“一鱼多吃”（新视角合成+开放词汇语义+占用预测），且无需相机位姿。完美地解决了3DGS在未观测区域缺乏约束的固有问题，为无位姿、稀疏视图下的综合场景理解提供了一个高质量基线。
+
+5.  **PhysMani** (ID: 2607.01938)
+    -   **理由**：该工作是“物理知识”与“3D世界模型”结合的优秀实例，它通过在线优化一个无散度高斯速度场，实现了对动态目标的物理合理预测。其构建的Benchmark和未来感知的动作策略模型，对具身智能中动态物体操控这一难题提供了非常有价值的技术路线。
 
 #### 可能的研究机会
 
-1.  **“简化”哲学下的基础模型设计**：PointDiT的成功暗示，我们可能过度设计了。可以探索其他3D/2D任务（如光流、法线估计）能否也通过类似的极简像素空间扩散方式实现。同时，如何将这种“极简”思想与 Foundation Model Distillation 结合，产生更为高效的小模型？
-2.  **视频生成模型的“三维潜力”挖掘**：NeoMap和ICDepth展示了冰山一角。可以系统性地探究：预训练视频模型中，哪些层/模块编码了强大的 3D/几何先验？能否设计更通用的“提示”（prompting）或“适配器”（adapter）来激发其在动态重建、4D生成等更复杂任务上的潜力？
-3.  **物理与感知的闭环**：将InvatSplat的材质估计、PhysMani的物理动态预测与FoundDP的鲁棒深度估计结合，能否构建一个“感知-预测-操控”的完整闭环系统？如何让3DGS或NeRF学习到物体的物理属性（如质量、弹性、摩擦系数），从而直接用于机器人操作和仿真？
-4.  **“选择性”鲁棒SLAM**：OCD SLAM和DL-SLAM在动态SLAM上取得了进展，但都依赖于特定的检测或分割模块。能否设计一个完全自监督的、能够选择性利用动态场景中“可利用线索”的SLAM框架？例如，通过在线学习区分“破坏性动态”和“有益动态（如行人刚好为静态区域提供了更多视角）”。
-5.  **极端条件下的多模态融合**：LLM-Empowered Multimodal Fusion 将LLM作为核心推理单元来处理动态质量的数据。未来可以探索，如何将LLM的常识推理与物理模型（如雷达信号模型、光照模型）结合，在极端天气、传感器故障等“超出训练分布”的情况下，依然能做出鲁棒的感知决策。
+1.  **“极简范式”的推广**：`PointDiT` 和 `NeoMap` 的成功暗示，在设计3D/场景理解的神经网络时，或许应该优先考虑“能否利用现有模型或简化架构解决问题”，而不是默认构建更复杂的系统。研究者可以探索将这种“像素空间扩散”或“流形优化”的思想应用到手部姿态估计、人体重建、4D场景流估计等更多任务中。
 
-#### 风险和不确定性
-
--   **性能边界与失败案例**：几乎所有论文的摘要都突出优点，而对失败案例、性能边界（如低光、快速运动、极度稀疏视角）轻描淡写或根本未提。例如，PointDiT“在高度歧义区域更鲁棒”具体指什么？NeoMap 的“流形交替投影”在输入质量极差时是否会发散？**这些都需要阅读全文的实验部分来验证。**
--   **计算开销与实时性**：摘要中常提及“效率提升”，但完整的计算成本（模型推理时间、内存占用、训练所需算力）往往需要详细实验图表。VisionAId
+2.  **“3DGS + 物理/语义”的深度融合**：当前的工作要么是3DGS+材质属性（`InvSplat`），要么是3DGS+语义占用（`COVScene`），或是3DGS+动态预测（`DL-SLAM`, `PhysMani`）。一个明显的机会是**将三者或更多要素整合进一个统一的3DGS框架**，实现一个能够同时表示几何、外观、语义、材质和物理属性的通用世界模型
 
 ### interests.md 指令分析
 
