@@ -11,68 +11,62 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：58
+- 当前滚动窗口论文数：68
 - 分类分布：
-  - Embodied / Robotics / AR Applications: 22
-  - 3D Reconstruction & Multi-view Geometry: 19
-  - Neural Scene Representations & Rendering: 9
-  - Geometry Foundation Models: 7
-  - Dynamic / 4D Reconstruction: 1
+  - 3D Reconstruction & Multi-view Geometry: 26
+  - Embodied / Robotics / AR Applications: 23
+  - Neural Scene Representations & Rendering: 10
+  - Geometry Foundation Models: 6
+  - Dynamic / 4D Reconstruction: 3
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-好的，基于你提供的论文列表，以下是中文科研趋势综合分析。
-
----
+好的，这是基于您提供的论文列表生成的科研趋势综合分析。
 
 #### 今日主要趋势
 
-基于今日的论文，可以归纳出以下几条显著趋势：
+1.  **“去标注化”与知识蒸馏成为提升模型实用性的关键路径**：大量工作致力于减少对大规模、高质量标注数据的依赖，以扩展模型在稀缺场景（如水下）或资源受限设备（如移动端）的应用。典型代表包括：**Wat3R** 在水下3D重建中提出完全无需标注的半监督学习框架；**ZipDepth** 通过从大型基础模型蒸馏知识至轻量级网络，实现零样本泛化；同时也包括利用“过时”几何先验（如DEM）的 **LTM**，以及利用VR遥操作收集少量演示的 **DexVerse**。这种从“依赖标注”到“利用先验/知识迁移”的范式转变非常显著。
 
-1.  **从“通用模型”走向“物理一致性”与“可交互仿真”**：许多工作不再仅仅追求重建的视觉保真度，而是强调生成内容与物理世界规律的一致性。这体现在：
-    -   **自动驾驶仿真**：`CARLA-GS` 提出解耦视觉、推理与物理仿真，专为生成物理可行的边缘案例。
-    -   **机器人交互**：`RoboSnap` 和 `OrchardBench` 专注于将真实场景转化为可交互、有物理属性的仿真环境。`OrchardBench` 甚至精确模拟了树枝的力学特性（断裂、弹性）和苹果果梗的拉力。
-    -   **重建鲁棒性**：`NoDrift3R` 直接针对长序列重建中的位姿漂移，该问题本质上是几何一致性（而非外观一致性）的退化。
-    -   **水下机器人**：`Disturbance-aware Motion Planning` 从“执行器扰动”这一物理层面出发优化重建质量，是感知与执行物理耦合的直接体现。
+2.  **场景表示的分化与专业化**：3D高斯泼溅（3DGS）及其变体仍是绝对主流，但其内部正出现明确的分化：
+    -   **向大型/室外场景扩展**：**PanoLOG** 专门针对全景图像和大规模室外场景提出了分区策略；**LTM** 则聚焦于野火多发区域的超大地形重建。
+    -   **向4D/动态场景深化**：**LongE2V** 和 **On the Design of Mixture-of-Experts for Dynamic Gaussian Splatting** 从不同角度研究了动态场景的表示。前者利用视频扩散先验解决长时序列的漂移问题，后者则系统性地探讨了多变形专家模型的设计空间。
+    -   **向物理仿真/机器人应用对齐**：**HoloTetSphere** 直接重建拓扑连贯的四面体网格，旨在绕过传统两阶段流程（表面重建->四面体化）的错误传播，使重建结果“开箱即用”于物理仿真。而 **Track2Map** 和 **GeoGS-SLAM** 则将3DGS与SLAM结合，侧重于从视频中在线、实时地重建可用的几何地图。
 
-2.  **“本体感觉-环境感知”的深度融合**：机器人领域论文正试图打破本体状态（Proprioception）与环境视觉感知（Vision）之间的隔阂，通过显式的几何映射或统一的世界模型来提升策略性能。
-    -   `GeoProp` 直接将机器人关节状态投影到图像平面采样特征，构建显式的视觉-本体对应关系。
-    -   `RynnWorld-4D` 提出 RGB-DF（RGB+深度+光流）四维世界模型，认为这种多模态协同的表征更接近机器人末端的动作空间，从而缩小预测与规划之间的鸿沟。
-    -   `TouchWorld` 则从另一个维度切入，将触觉信号作为关键变量，通过层级架构将高层规划、触觉世界模型预测与触觉反馈精化进行分离，实现了触觉的预测性与反应性的统一。
+3.  **多模态融合从“输入”走向“决策”**：机器人/具身智能领域不再满足于简单地融合视觉、语言等输入信号，而是开始设计层次化架构，让不同模态在决策的不同阶段发挥作用。**TouchWorld** 提出的层次化策略清晰地展示了这一点：视觉语言负责高层规划与子目标设定，触觉则在低层负责预测性参考和反应性精化。类似地，**WCog-VLA** 的双层次世界认知框架也区分了语义层（推理）和生成层（预测），并结合了博弈论思维链。这种模态角色分工是提升系统鲁棒性和适应性的关键。
 
-3.  **“生成式”与“判别式”任务的界限进一步模糊**：传统上认为生成模型（如扩散模型）擅长渲染，而判别模型（如分类器）擅长理解。现在的趋势是利用生成模型的内部表征来直接服务理解任务。
-    -   `Gen4U` 是这一趋势的直接体现。它系统地分析了视频扩散模型的中间表征，发现其在低层几何（如深度、位姿）和高层语义（如分类）上都极具潜力，从而通过单次前向传播的方式，在不进行微调的情况下，实现了生成与理解的统一。
-    -   `ProxyPose` 则将 6-DoF 姿态跟踪这种典型的3D理解任务，转化为“视频到视频”的生成任务（生成一个代理多面体视频），然后从代理视频中解析姿态。这本质上是将复杂理解任务“外包”给强大的生成模型。
-
-4.  **对“场景理解”维度的扩展：从单场景、静态到跨场景、动态和4D**。
-    -   **跨场景推理**：`CAIRN` 专门针对多房间、有拓扑结构的3D场景理解。它不再将每个房间独立处理，而是建模房间间的连接关系。
-    -   **城市级尺度**：`WildCity` 挑战了城市尺度的重建与空间智能，将场景理解推向了与人类认知相当的规模。
-    -   **时间与交互维度**：`RynnWorld-4D` 和 `Point as Skeleton` 将预测扩展到了未来时间步，不仅理解“现在是什么”，还要预测“下一步会变成什么样”。这在自动驾驶和机器人操作中尤为关键。
+4.  **从“感知世界”到“干预/交互世界”的能力闭环**：论文显示出强烈的从被动感知到主动交互的倾向，尤其是在机器人/自动驾驶领域：
+    -   **从SLAM到可控仿真**：**CARLA-GS** 将真实场景的3DGS重建与大语言模型的场景推理、物理仿真器的运动控制结合，实现了可控的自动驾驶边缘案例生成与“干预”。
+    -   **从深度估计到避障/抓取**：**Track2Map** 的SLAM管线直接用于手术中的解剖结构重建；基于单目深度估计和特征匹配的 **Time-to-Collision Based Dynamic Obstacle Avoidance** 直接服务于机器人避障；**Monocular Vision Based Control Framework for Grasping** 则利用视觉信息直接反馈控制机械手的抓取策略。这些工作都体现了“感知”服务于“行动”的直接闭环。
 
 #### 技术路线观察
 
-| 技术方向 | 论文/方法 | 技术侧重点 |
-| :--- | :--- | :--- |
-| **几何基础模型** | `NoDrift3R` | 聚焦于无位姿前馈重建的**几何漂移**问题。核心创新不在于建模方法本身，而在于通过“几何-外观”显式耦合（Raymap）和课程式训练策略解决长序列下的几何退化。 |
-| **3D/4D 重建与表示** | `CARLA-GS`, `GeoGS-SLAM`, `WildCity`, `Disturbance-aware Motion Planning` | 呈现**多元化**发展：<br> - **与仿真深度绑定** (`CARLA-GS`, `WildCity`)：重建服务于仿真，强调 **可编辑性** 和 **物理属性**。<br> - **极简表征** (`GeoGS-SLAM`)：专为下游任务优化，舍弃外观参数，只保留 **纯几何** 的高斯泼溅，显著压缩存储和计算。<br> - **与环境感知耦合** (`Disturbance-aware Motion Planning`)：重建质量被作为下游优化目标，而非上游独立任务。 |
-| **神经场景表示与渲染** | `SoccerNet 2026`, `RoboSnap`, `Gen4U`, `ProxyPose` | **应用驱动**特征明显：<br> - **体育分析** (`SoccerNet 2026`)：新视角渲染是任务之一，更关注其作为体育视频理解基准的一部分。<br> - **机器人仿真** (`RoboSnap`)：使用3DGS作为 **视觉背景层**，以分离物理交互区域，展示了3DGS作为模块化工具的价值。<br> - **模型表征复用** (`Gen4U`, `ProxyPose`)：不再将扩散模型/渲染模型视为最终输出，而是将其内部表征和解码能力作为 **分析工具或预处理步骤**。 |
-| **机器人/AR应用** | `HumAIN`, `TouchWorld`, `GeoProp`, `RynnWorld-4D`, `CAIRN`, `OrchardBench` | **多层次、多模态融合**是核心主线：<br> - **社会线索融合** (`HumAIN`)：将隐式人体骨架 cues 融入导航规划。<br> - **触觉与视觉分层融合** (`TouchWorld`)：层次化架构，解耦不同信号的时间尺度和功能。<br> - **本体与视觉几何融合** (`GeoProp`)：显式几何投影，轻量高效。<br> - **4D动态融合** (`RynnWorld-4D`)：未来状态预测，在时间维度上扩展感知。<br> - **拓扑与语义融合** (`CAIRN`)：3D-LLM 中加入房间拓扑信息。<br> - **专用物理仿真** (`OrchardBench`)：为特定任务（农业采摘）构建高保真物理仿真，强调域随机化和可重复性。 |
+-   **几何基础模型**：主流是 **3D高斯泼溅 (3DGS)**，但设计方向多元化。一是“瘦身”，如 **ZipDepth** 追求轻量高效；二是“场景适应”，如 **PanoLOG**、**LTM**，通过分区策略或引入先验来应对大尺度/特殊环境；三是“功能重构”，如 **HoloTetSphere** (改变输出类型为四面体网格)、**GeoGS-SLAM** (舍弃外观，只保留几何参数)。
+-   **3D/4D 重建**：核心挑战转向 **长时稳定性**和 **动态建模**。由于扩散模型在时间一致性上的优势，**视频扩散模型** 正在被引入作为强先验来处理动态/长时序序列（**LongE2V**, **LightCrafter**）。同时，混合专家系统（MoE）的思想被用于组合多种运动模型，以应对复杂动态场景（**On the Design of Mixture-of-Experts...**）。
+-   **神经场景表示**：在保留高质量渲染的同时，与下游任务的 **物理/几何对齐** 成为共识。无论是直接输出仿真可用网格（**HoloTetSphere**），还是在SLAM中以几何为中心（**GeoGS-SLAM**），或是在手术场景中联合优化变形与位姿（**Track2Map**），都体现了这种技术侧重点的转移。
+-   **机器人/AR 应用**：技术路线呈现明显的 **层次化和模块化**。大型基础模型（VLM, VLA）负责高层的语义理解和规划，而底层的快速反馈和精确控制则依赖专用模块（如触觉、光流、TTC计算）。**TouchWorld**、**WCog-VLA**、**HumAIN** 都是这一路线的典型代表。同时，这些应用开始更多地利用**低成本、消费级硬件**（如无人机、单目相机）进行数据采集和推理，体现了从实验室环境向真实世界部署的追求。
 
 #### 值得优先阅读的论文
 
-1.  **`NoDrift3R`**：
-    -   **理由**：该工作直接针对当前无位姿前馈3D重建（如DUSt3R系列）的 **核心瓶颈——长序列漂移** 提出解决方案。`Raymap-Guided Coupling` 模块和双频率训练策略的设计思路，对于理解如何稳定大规模、端到端的3D重建模型具有重要的方法论意义。
+1.  **《On the Design of Mixture-of-Experts for Dynamic Gaussian Splatting》** (2607.08250)
+    -   **优先理由**：该工作并非提出一个具体的解决方案，而是从“混合专家”角度 **系统地研究了动态3DGS的设计空间**。它对比了两种不同的集成约束，揭示了专家交互的时机和方式对模型行为和性能的影响。对于任何希望在该领域取得算法进展的研究者来说，这是必须阅读的“设计手册”。
 
-2.  **`TouchWorld`**：
-    -   **理由**：它提出了一种 **层次化** 的多模态基础模型架构，将“高层语义规划”、“预测性世界模型”和“反应式反馈控制”分离。这种架构设计思路非常清晰，为解决具身智能中“慢思考”与“快反应”的矛盾提供了可操作的范式，且触觉信号的引入是处理精细操作的关键。
+2.  **《Wat3R: Underwater 3D Geometry Learning without Annotations》** (2607.08772)
+    -   **优先理由**：提出了一种 **全新的无标注半监督学习范式** 应用于3D重建，其创新性地利用跨视图一致性损失和教师-学生架构，使其能够适应数据稀缺的极端环境。这不仅解决了水下这一特定难题，其思路对自动驾驶、工业检测等任何标注成本高昂的场景都具有重要参考价值。
 
-3.  **`RynnWorld-4D`**：
-    -   **理由**：它提出了 **RGB-DF（RGB + 深度 + 光流）** 这一物理上更接地气的世界模型表征。从问题定义、模型设计到大规模数据集，论文工作非常完整。对于研究“如何让世界模型真正服务于机器人控制”的读者，此工作是必读的参考基准。
+3.  **《HoloTetSphere: Unified TetSphere Mesh Reconstruction for Physical Simulations》** (2607.08398)
+    -   **优先理由**：这篇论文在技术路线上具有很强的 **前瞻性和应用价值**。它直接瞄准了当前3DGS应用中的一个关键断点：重建结果无法直接用于仿真。通过端到端输出拓扑连贯的四面体网格，它有望在计算机视觉与物理仿真、机器人学之间架起桥梁，值得密切关注。
 
-4.  **`GeoProp`**：
-    -   **理由**：看似简单，却直击当前视觉-语言-动作模型（VLA）中一个 **普遍被忽视的痛点**——本体感觉与视觉的对齐。其“几何投影+特征采样”的方案极其轻量、即插即用且有效。这不仅是技术贡献，更是对社区研究方向的有力提醒。
+4.  **《Track2Map: Online Deformable SLAM with Motion-Aware Pose Optimization in Robotic Surgery》** (2607.08408)
+    -   **优先理由**：这项工作代表了 **3DGS从“离线重建”向“在线SLAM”转变** 的典型范例。它很好地展示了如何通过设计（如2D轨迹锚定初始化、运动感知位姿优化）来克服动态场景中的优化不稳定性，且应用场景（微创手术）极具挑战性和实际意义。
+
+5.  **《ZipDepth: Bringing Lightweight Zero-Shot Monocular Depth Anywhere, on Any Device》** (2607.08771)
+    -   **优先理由**：本文是 **模型轻量化与性能兼顾** 的优秀实践。虽然思路不算颠覆性创新（知识蒸馏），但结果非常扎实：仅6.1M参数就取得了与大规模模型相媲美的零样本性能，且能在移动端实时运行。对于关注部署和落地的工程人员和研究者，这篇论文是必读的。
+
+#### 可能的研究机会
+
+-   **极端数据缺失条件下的通用重建框架**：**Wat3R** 只专注于水下。能否将其核心思想（跨域半监督、跨视图一致性）抽象为一个通用框架，使其能适应多种“标注缺失”的环境（如高动态范围、低光照、透明物体）？这将是
 
 ### interests.md 指令分析
 
@@ -450,6 +444,43 @@ Monocular depth foundations predict domain-general relative depth but lack absol
 **Matched keywords:** video reconstruction
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：LongE2V: Long-Horizon Event-based Video Reconstruction, Prediction, and Frame Interpolation with Video Diffusion Models
+- 作者：Cheng-De Fan, Chun-Wei Tuan Mu, Chen-Wei Chang, Chin-Yang Lin, Kun-Ru Wu, Yu-Chee Tseng, Yu-Lun Liu
+- 出版日期：2026-07-09
+- 分类：Dynamic / 4D Reconstruction
+- 链接：https://arxiv.org/abs/2607.08770
+
+### 一句话总结
+本文提出LongE2V，利用预训练视频扩散模型，通过自回归展开、自适应上下文切换和重编码对齐等技术，统一实现事件数据的高质量视频重建、预测和帧插值，尤其在长时序列中保持稳定性。
+
+### 研究问题
+如何从稀疏事件流中恢复高质量、长时稳定的视频，并同时解决重建、预测和帧插值三个任务中的纹理模糊、时间漂移和双向一致性问题。
+
+### 核心思路/方法
+1. **预训练视频扩散先验**：微调基础视频模型，利用其生成先验实现高数据效率和优越感知质量。
+2. **自回归展开与自适应上下文切换**：通过逐步展开生成并动态切换上下文，缓解极长序列中的时间漂移。
+3. **重编码对齐与交叉残差校正**：在帧插值任务中，通过对齐隐空间编码和残差校正，确保精确的双向一致性。
+4. **事件体素密度增强**：增强对不同传感器分辨率的鲁棒性。
+
+### 主要贡献
+- 首个统一处理事件视频重建、预测和帧插值的扩散方法，实现三任务协同。
+- 提出自回归展开和自适应上下文切换，解决长序列时间漂移问题。
+- 提出重编码对齐与交叉残差校正，提升帧插值的双向一致性。
+- 提出事件体素密度增强，提高模型对不同传感器分辨率的泛化性。
+- 在真实世界基准上，三个任务均超越现有方法，表现出优异的时间一致性和零样本泛化能力。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该工作首次将视频扩散模型统一应用于三个关键事件视觉任务，且重点解决了长时序列稳定性这一核心挑战，方法设计系统（多个原创模块），实验结果全面，理论基础与工程实践价值均较高，适合关注事件相机、视频生成和时序建模的研究者优先阅读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Recovering high-quality video from sparse event streams is a challenging task. Regression methods often blur textures, while existing generative models struggle with long-term stability. We propose LongE2V, a novel approach that leverages pre-trained video diffusion priors to jointly handle event-based video reconstruction, prediction, and frame interpolation. By fine-tuning a foundational video model, our approach achieves high data efficiency and superior perceptual quality. We introduce Autoregressive Unrolling and Adaptive Context Switching to mitigate temporal drift in extremely long sequences. We also propose Reencoding Alignment with Cross Residual Correction to ensure precise bidirectional consistency during frame interpolation. Furthermore, Event Voxel Density Augmentation ensures robustness across varying sensor resolutions. Extensive experiments on real-world benchmarks demonstrate that LongE2V outperforms state-of-the-art methods across all three tasks, exhibiting exceptional temporal coherence and zero-shot generalization. Project page: https://cdfan0627.github.io/LongE2V-page/
@@ -463,6 +494,46 @@ Recovering high-quality video from sparse event streams is a challenging task. R
 **Primary category:** Dynamic / 4D Reconstruction
 **Secondary categories:** Neural Scene Representations & Rendering
 **Matched keywords:** dynamic scene reconstruction, dynamic 3D, dynamic Gaussian, scene reconstruction, Gaussian Splatting, 3D Gaussian Splatting, novel view synthesis, view synthesis, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：On the Design of Mixture-of-Experts for Dynamic Gaussian Splatting
+- 作者：In-Hwan Jin, Hyeongju Mun, Joonsoo Kim, Kugjin Yun, Kyeongbo Kong
+- 出版日期：2026-07-09
+- 分类：Dynamic / 4D Reconstruction（主要）、Neural Scene Representations & Rendering（次要）
+- 链接：摘要页 https://arxiv.org/abs/2607.08250 ；PDF https://arxiv.org/pdf/2607.08250
+
+### 一句话总结
+本文从混合专家（MoE）视角出发，研究了动态3D高斯表示中多变形建模的设计问题，提出了两种不同集成约束下的变形专家组合策略：MoDE（联合优化）和MoE-GS（独立优化后经路由组合）。
+
+### 研究问题
+如何有效设计多变形模型，以提升动态3D高斯表示在多样化动态场景下的鲁棒性和泛化能力。
+
+### 核心思路/方法
+- 基于混合专家（MoE）框架，将多变形建模视为在统一3D表示中组合多个专用变形专家。
+- 提出两种方案：
+    - **MoDE（Mixture of Deformation Experts）**：多个变形专家与可变形高斯泼溅管线联合优化，作用于共享的规范高斯表示，不引入额外训练阶段。
+    - **MoE-GS**：变形专家独立优化，通过独立的路由阶段进行组合，专家交互发生在非规范高斯表示上。
+- 两种方案对比揭示了不同集成约束如何塑造动态3D表示中变形专家的设计与行为。
+
+### 主要贡献
+- 从MoE视角系统研究了动态3D高斯表示中的多变形建模问题。
+- 提出两种互补的集成策略（MoDE和MoE-GS），分别对应不同的专家交互时机与表示形式。
+- 为动态场景重建中如何灵活部署多变形模型提供了设计空间分析。
+
+### 局限性
+摘要未提供足够信息，无法判断具体实验局限性（如计算成本、场景规模限制等）。
+
+### 阅读优先级
+**高**
+- **理由**：
+    - 主题前沿：动态场景重建和3D高斯泼溅是当前热门的视觉研究方向。
+    - 方法新颖：将MoE思想系统性地引入多变形建模，并明确提出两种差异化设计方案，具有方法论贡献。
+    - 作者团队公布了代码，便于复现与扩展。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -533,6 +604,42 @@ Real-time, text-promptable 4D reconstruction is indispensable for autonomous sur
 **Matched keywords:** feed-forward 3D reconstruction, 3D reconstruction, depth estimation, point cloud reconstruction
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Wat3R: 无标注水下3D几何学习
+- 作者：Jiangwei Ren, Xingyu Jiang, Zijie Song, Wei Xu, Hongkai Lin, Dingkang Liang, Xiang Bai
+- 出版日期：2026-07-09
+- 分类：3D重建与多视图几何
+- 链接：arXiv:2607.08772
+
+### 一句话总结
+本文提出一个名为Wat3R的半监督学习框架，无需任何水下标注数据，仅利用无标注水下视频，通过教师-学生架构适应空气到水下场景的前馈3D重建模型。
+
+### 研究问题
+如何在水下环境（存在光衰减、散射及缺少大规模高质量3D标注）中，有效估计3D几何结构。
+
+### 核心思路/方法
+1. 构建一个交叉域半监督学习框架，采用教师-学生架构，无需任何标注水下数据。
+2. 利用大量无标注真实水下视频，让模型学习鲁棒的几何表示。
+3. 设计跨视图一致性损失函数：从其他视图提取几何线索，补偿当前视图因水衰减和散射导致的信息退化。
+4. 构建了用于几何评估的Water3D数据集，涵盖多样水体与水下场景。
+
+### 主要贡献
+1. 提出了首个无需水下标注数据的交叉域半监督3D重建方法（Wat3R）。
+2. 设计了跨视图一致性损失，有效缓解水下信息退化问题。
+3. 构建了Water3D数据集，填补水下几何评估基准的空白。
+4. 在水下多视图深度估计和点云重建任务上，Wat3R超越了当前最优方法。
+
+### 局限性
+- 摘要未提供具体局限性信息（如对极暗水体、强浑浊环境的鲁棒性，或训练计算成本等）。
+
+### 阅读优先级
+**高**。理由：该工作解决了水下3D重建中标注数据稀缺的关键痛点，提出的无标注半监督学习思路具有较强创新性和实用性，且包含了新构建的评估基准数据集。若您关注水下视觉、无监督/半监督3D重建领域，该论文有重要参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Estimating 3D geometry in underwater environments presents unique challenges due to light attenuation, scattering, and the absence of large-scale, high-quality 3D annotations. Pioneering methods rely on massive dense annotations that are impractical in underwater settings. In this paper, we propose Wat3R, a cross-domain semi-supervised learning framework designed to adapt feed-forward 3D reconstruction models from air to underwater scenes. Uniquely, our method eliminates the need for any annotated underwater data following a teacher-student architecture, that learns robust geometry representations merely on abundant unlabeled real underwater video footage. We also design a cross-view consistency loss that leverages geometric cues from other views to compensate for the information degradation in the current view caused by water attenuation and scattering. Furthermore, considering the lack of comprehensive evaluation benchmarks, we construct Water3D, a diverse dataset covering various water bodies and underwater scenarios, designed for geometric task evaluation. Experimental results demonstrate that Wat3R outperforms current state-of-the-art methods in underwater multi-view depth estimation and point cloud reconstruction. The dataset and code are available at https://github.com/LSXI7/Wat3R .
@@ -546,6 +653,39 @@ Estimating 3D geometry in underwater environments presents unique challenges due
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** depth estimation, monocular depth
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：ZipDepth: Bringing Lightweight Zero-Shot Monocular Depth Anywhere, on Any Device
+- 作者：Fabio Tosi, Luca Bartolomei, Matteo Poggi, Stefano Mattoccia
+- 出版日期：2026-07-09
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2607.08771
+
+### 一句话总结
+ZipDepth是一种仅6.1M参数、可在各类设备上实时运行的轻量级零样本单目深度估计网络，通过高效编码器-解码器与大规模知识蒸馏，在零样本精度与部署效率间取得了最佳平衡。
+
+### 研究问题
+如何构建一种轻量级、能在嵌入式和移动平台上实时运行，同时具备零样本泛化能力（即应对跨领域场景）的单目深度估计模型。
+
+### 核心思路/方法
+- 设计一个可重参数化的高效编码器-解码器架构。
+- 利用大规模多域训练集，从基础模型（foundation model）中执行大规模知识蒸馏，将庞大模型的知识迁移至紧凑网络。
+
+### 主要贡献
+- 提出了ZipDepth网络，仅包含6.1M参数，可在从服务器GPU到功耗受限设备上以实时速率运行。
+- 在五个基准测试上，ZipDepth在轻量级模型中实现了零样本准确度与部署效率之间的最佳权衡。
+- 显著缩小了与参数多50倍的基础模型在精度上的差距。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+高 — 该工作直接面向嵌入式/移动设备上的实时零样本深度估计，具有明确的部署价值，且方法简洁有效，适合关注轻量级计算机视觉和移动端部署的研究者。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -563,6 +703,39 @@ Monocular depth estimation has seen remarkable progress through foundation model
 **Matched keywords:** scene reconstruction, monocular depth, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, rendering, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Geometry and Gradient-based Partitioning for Panoramic Outdoor Reconstruction
+- 作者：Weijian Chen, Weibo Yao, Yuhang Zhang, Xiaolin Tang, Guo Wang, Weijun Zhang, Xitong Gao, Yihao Chen, Hongde Qin, Lu Qi
+- 出版日期：2026-07-09
+- 分类：3D Reconstruction & Multi-view Geometry, Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2607.08769
+
+### 一句话总结
+本工作提出了PanoLOG，一个结合几何与梯度启发的分区策略（G²PS），专门用于基于全景图像的大规模室外场景3D高斯溅射重建，在保证渲染质量的同时实现可扩展的块并行训练。
+
+### 研究问题
+如何高效地将3D高斯溅射（3DGS）扩展到大型室外场景重建，特别是当使用全景图像（ERP格式）时，解决其全向可见性导致现有局部相机视锥分区策略失效、块优化退化为全局训练的问题。
+
+### 核心思路/方法
+提出一个两阶段粗到细框架PanoLOG：1）全局粗阶段：利用天球建模和全景单目深度监督获得可靠的初始几何。2）细化阶段：采用G²PS分区策略，通过视差驱动的不确定性构建自适应包围体，并基于梯度的重要性评分分配相机，从而实现块并行优化。
+
+### 主要贡献
+1. 提出了PanoLOG，首个针对大规模全景室外场景3DGS重建的两阶段框架。
+2. 设计了G²PS分区策略，解决了全景图像全向可见性带来的分区困难。
+3. 构建了Pano360，第一个大规模室外场景重建的全景数据集。
+4. 实验表明G²PS在保持可扩展块并行训练的同时，取得了最先进的渲染质量；代码、模型和数据集已公开。
+
+### 局限性
+摘要未提供足够信息。未提及计算资源需求、对极端光照或动态物体的处理能力、以及分割边界处的伪影或一致性评价等。
+
+### 阅读优先级
+高。理由：该工作针对全景图像在大规模室外重建中的关键挑战（分区退化）提出了原创性方法，并贡献了首个专用数据集，方法在渲染质量和可扩展性上均表现优异，对全景3D重建领域有重要推进意义。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Scaling 3D Gaussian Splatting (3DGS) to large outdoor scenes is costly in both data acquisition and computation. Adopting panoramic images with equirectangular projection (ERP) can reduce capture effort via their full $360^{\circ}$ field of view, yet the resulting omnipresent visibility invalidates existing partitioning strategies that rely on local camera frustums, causing block-wise optimization to degenerate into global training. Thus, we propose PanoLOG, a two-stage coarse-to-fine framework equipped with a Geometry and Gradient-based Partitioning Strategy tailored for large-scale panoramic 3DGS reconstruction. In the global coarse stage, PanoLOG leverages sky-sphere modeling and panoramic monocular depth supervision for reliable geometry, while in the refinement stage, G$^2$PS builds adaptive bounding volumes via parallax-driven uncertainty and assigns cameras via gradient-based importance scoring. Furthermore, we construct Pano360, the first benchmark on large-scale panoramic dataset for outdoor scene reconstruction. Extensive experiments demonstrate that G$^2$PS achieves state-of-the-art rendering quality while maintaining scalable, block-parallel training. Our models, training code, and dataset are publicly available.
@@ -576,6 +749,40 @@ Scaling 3D Gaussian Splatting (3DGS) to large outdoor scenes is costly in both d
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** 3D reconstruction, feature matching
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：LTM: Large-scale Terrain Model for Wildfire-prone Landscapes
+- 作者：Xiao Fu, Yue Hu, Meida Chen, Peter Anthony Beerel, Barath Raghavan
+- 出版日期：2026-07-09
+- 分类：3D Reconstruction & Multi-view Geometry（3D重建与多视图几何）
+- 链接：摘要页 https://arxiv.org/abs/2607.08711 | PDF https://arxiv.org/pdf/2607.08711
+
+### 一句话总结
+该文提出一种多模态重建框架，利用过时数字高程模型（DEM）作为几何先验，通过物理驱动的像素-像素对齐，实现野火易发区域大尺度地形的低成本、高保真三维重建。
+
+### 研究问题
+如何利用低成本的图像数据，并结合过时的数字高程模型，高效准确地重建野火易发区域的大尺度三维地形，以克服传统方法成本高、更新慢或视觉特征稀疏的问题。
+
+### 核心思路/方法
+提出一种多模态重建框架，核心创新在于：采用物理驱动的像素-像素对齐方法，将图像与数字高程模型（DEM）数据直接对齐，从而跳过昂贵且易失败的图像间特征匹配步骤，大幅降低计算复杂度。该框架以DEM作为几何先验，为基于图像的三维重建提供约束，最终生成高保真深度图。
+
+### 主要贡献
+1. 提出了一种基于多模态（图像+DEM）的框架，用于大尺度野火易发地形的高效重建。
+2. 创新性地引入物理驱动的像素-像素对齐，无需显式特征匹配，显著降低计算开销。
+3. 构建了一个基于真实野火区域的大尺度地形仿真器，用于生成包含真实场景的图像数据，支撑算法评估。
+4. 实验表明，在给定有姿态图像和过时DEM的情况下，方法在重建精度和计算效率上均显著优于现有技术，且支持实时性能。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**
+理由：该工作面向野火应急场景下的大规模地形重建，具有明确的应用价值。核心方法（物理驱动像素对齐替代特征匹配）在计算效率和精度上展现出优势，且通过仿真器进行了系统验证。对于从事3D重建、遥感与应急响应研究的读者，具有直接参考意义。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -593,6 +800,42 @@ Accurate 3D terrain maps are essential for emergency response when assessing wil
 **Matched keywords:** 3D reconstruction, mesh reconstruction, rendering, splatting, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：HoloTetSphere: Unified TetSphere Mesh Reconstruction for Physical Simulations
+- 作者：YaQiao Dai, Renjiao Yi, Zhirui Gao, Wei Chen, Kai Xu, Chenyang Zhu
+- 出版日期：2026-07-09
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2607.08398
+
+### 一句话总结
+本文提出HoloTetSphere，一种通过端到端拓扑与几何优化直接构建统一且拓扑连贯的四面体网格的方法，旨在替代传统易出错的表面重建加四面体化流程，以支持物理仿真。
+
+### 研究问题
+现有物理仿真就绪的三维重建方法主要依赖分离的两阶段范式（先提取表面几何，再进行易出错的四面体化），而近期Lagrangian方法如TetSphere Splatting虽尝试直接优化体积基元，但其同胚约束限制了拓扑自适应优化，导致生成不连贯的离散四面体，无法用于进一步的物理仿真。本文致力于解决如何直接重建拓扑连贯、统一的四面体网格，且适用于物理仿真的问题。
+
+### 核心思路/方法
+1. **拓扑自适应优化框架**：通过端到端的拓扑和几何优化实现整体四面体网格重建。
+2. **可微分元素剪枝**：将高斯球与四面体元素耦合，并利用边连接关系估计连续不透明度场，以实现可微分的元素剪枝。
+3. **交替几何细化**：联合最小化网格平滑能量与多视图高斯渲染误差，驱动交替的几何细化，同时保持拓扑自适应性。
+4. **输出**：构建统一的、拓扑连贯的四面体网格，绕过传统表面网格四面体化步骤。
+
+### 主要贡献
+- 提出了一种拓扑自适应的框架，直接从多视图输入重建四面体网格，克服了传统方法拓扑固定且产生离散元素的问题。
+- 通过可微元素剪枝与交替几何优化，在保持拓扑适应性的同时实现了几何精度提升。
+- 实验表明，该方法在几何精度上超越现有技术，并生成连贯、单一连接的四面体网格，从而简化下游物理仿真流程。
+
+### 局限性
+摘要未提供足够信息。摘要中未讨论方法在复杂拓扑、计算效率、鲁棒性或在极端稀疏视图条件下的表现，也未提及任何失败的案例或潜在的应用限制。
+
+### 阅读优先级
+**高**  
+理由：该方法直接解决三维重建到物理仿真流程中的关键瓶颈（传统四面体化易出错、Lagrangian方法拓扑不连贯），且通过端到端优化实现了拓扑自适应的四面体网格重建，在几何精度和网格连贯性上超越现有技术，对计算机图形学与物理仿真领域具有重要潜在价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Standard pipelines for physics-ready 3D reconstruction rely on a decoupled two-stage paradigm: extracting surface geometry followed by an error-prone tetrahedralization process. While recent Lagrangian methods like TetSphere Splatting attempt to bypass this by directly optimizing volumetric primitives, their homeomorphic constraints prevent topology-adaptive optimization. Consequently, they produce disjoint tetrahedra rather than a single connected mesh, rendering the structures unsuitable for further physical simulations. To address this, we propose a topology-adaptive framework for holistic tetrahedral mesh reconstruction through end-to-end topological and geometric optimization. First, by coupling Gaussian spheres to tetrahedral elements and leveraging edge connections, we estimate a continuous opacity field for differentiable element pruning. Next, jointly minimizing mesh smoothing energy and multi-view Gaussian rendering error drives alternating geometric refinement while preserving topological adaptivity. Consequently, our approach effectively constructs a unified and topologically coherent tetrahedral mesh. Extensive experiments demonstrate that our method outperforms state-of-the-art techniques by achieving superior geometric accuracy and producing coherent, single-connected tetrahedral meshes, thereby effectively bypassing the error-prone conventional tetrahedralization step for reconstructed surface meshes and streamlining downstream physical simulation.
@@ -606,6 +849,42 @@ Standard pipelines for physics-ready 3D reconstruction rely on a decoupled two-s
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** 3D reconstruction, photogrammetry
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：3D Reconstruction of deciduous Trees using low-cost UAV- and Crane-based Photogrammetry for Monitoring Shoot Elongation across entire Canopies  
+- 作者：Stephan Nebiker, Micha Tschanz, Nando Amport, Frederik Baumgarten  
+- 出版日期：2026-07-08  
+- 分类：3D Reconstruction & Multi-view Geometry  
+- 链接：https://arxiv.org/abs/2607.07905  
+
+### 一句话总结
+本文探索利用低成本无人机（UAV）和吊车多相机系统进行摄影测量，以重建落叶乔木三维模型，从而监测整个树冠的枝条伸长（初级生长）。
+
+### 研究问题
+如何通过低成本摄影测量技术（UAV与CraneCam）在真实条件下获取落叶乔木高精度、高完整性的三维点云，以支持整个生长季内枝条伸长的连续监测。
+
+### 核心思路/方法
+1. 使用重量不足250g的消费级UAV和一套多相机CraneCam系统，在整个生长季内采集两个研究区的数据。  
+2. 采用摄影测量数据采集与处理策略，重点分析三维点云的精度、分辨率和完整性。  
+3. 引入一种创新的3D打印“地面真值”枝条，用于评估重建细部结构（如细枝条）的能力。  
+
+### 主要贡献
+1. 证明了消费级UAV（<250g）即可实现整棵树5-6 mm的点云精度。  
+2. 不同无人机型号的三维重建完整性达到92%至98%。  
+3. 提出了利用3D打印人造枝条作为基准，评估对细薄枝条等精细结构的重建效果。  
+4. 探讨了基于摄影测量点云进行整树骨架化的初步实验与操作挑战。  
+
+### 局限性
+摘要未提供足够信息，无法明确说明该方法的适用场景限制、无法重建的枝条类型、不同天气或季节的影响，以及与其他传感器（如激光雷达）的对比结果。
+
+### 阅读优先级
+中  
+**理由**：该研究针对树木初级生长监测这一特定生态学需求，方法上具有创新性（低成本、轻量化设备、高精度），并展示了实用结果。但摘要未涉及算法细节、实验对比或后续骨架化方法的具体效果，对于非生态遥感领域或无硬件部署计划的研究者可能参考价值有限。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -623,6 +902,40 @@ Tree growth determines how much CO2 is sequestered from the atmosphere and tempo
 **Matched keywords:** depth estimation, monocular depth, manipulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Monocular Vision Based Control Framework for Grasping
+- 作者：Shail Jadav, Dongheui Lee
+- 出版日期：2026-07-08
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：[论文摘要页](https://arxiv.org/abs/2607.07897) | [PDF](https://arxiv.org/pdf/2607.07897)
+
+### 一句话总结
+本文提出一种仅使用单目RGB视觉和位置控制夹爪的统一抓取框架，通过语言估计物体刚度并适应性地抓取软硬物体，在真实实验中验证了对多种食品及家庭物品的稳定抓取。
+
+### 研究问题
+如何在非结构化环境中，仅依靠单目视觉（无需触觉、物体模型或专用夹爪）实现对软性（可变形）和刚性物体的统一抓取控制。
+
+### 核心思路/方法
+框架融合多项计算机视觉技术：开放词汇目标检测、图像分割、边界感知点分配、实时点跟踪、单目深度估计，以及一个基于语言描述的刚度估计模型。该模型利用物体的语义信息预判其柔顺性，从而在接触前选择抓取策略。对于可变形物体，使用Procrustes距离（基于跟踪关键点）作为形变视觉代理来调整抓取；对于刚性物体，则通过跟踪点距离的缩放调节夹爪宽度。全部控制仅依赖RGB输入和位置控制夹爪。
+
+### 主要贡献
+1. 提出一个统一的单目视觉抓取框架，能同时处理软性（可变形）和刚性物体，无需专用传感器或物体模型。
+2. 引入语言基础刚度估计模型，从物体语义推断其预期柔顺性，提供接触前的抓取策略先验。
+3. 针对可变形物体设计基于Procrustes度量的抓取自适应方法，作为形变的视觉代理信号。
+4. 在真实Franka Emika Research 3臂上，用多种软硬物体（生菜、马苏里拉奶酪、牛角包、纸巾、硬塑料瓶）验证了框架的有效性和泛化性。
+
+### 局限性
+摘要未提供足够信息评估局限性，例如在极端光照、遮挡、高速运动或完全透明物体上的表现。
+
+### 阅读优先级
+中  
+理由：该方法将视觉与语言结合实现软硬物体统一抓取，具有传感器高效性和实际应用潜力，尤其适合食品处理等场景。但实验物体种类有限，且未评估极端情况下的鲁棒性，对于追求工程落地的读者可能有参考价值，理论创新性为中等。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Grasping in unstructured environments requires handling objects with widely different mechanical properties, from soft and deformable items to rigid everyday objects. Most existing approaches address these categories separately and often rely on tactile sensing, object-specific models, or specialized grippers. In this paper, we present a unified monocular vision-based grasping framework that targets both soft and rigid objects within a single control pipeline, using only RGB input and a position-controlled gripper. The proposed system combines open-vocabulary object detection, image segmentation, boundary-aware point assignment, real-time point tracking, and monocular depth estimation to recover object motion and geometry from visual observations. A key component of the framework is a language-based stiffness estimation model that infers an object's expected compliance from its semantic description and provides an object-level prior for selecting the grasping strategy before contact. For deformable objects, grasp adaptation is governed by a Procrustes-based dissimilarity measure computed from tracked keypoints, which acts as a visual proxy for deformation. For rigid objects, the gripper width is regulated through the scaling of tracked point distances. We validate the proposed method in real-world pick-and-place experiments on a Franka Emika Research 3 arm using objects with substantially different mechanical properties, including lettuce, fresh mozzarella cheese, croissants, paper towels, and hard plastic bottles. Results demonstrate that the framework achieves stable grasping across both soft and rigid objects using visual feedback alone, highlighting a practical, sensor-efficient, and generalizable approach for food handling and household manipulation.
@@ -636,6 +949,43 @@ Grasping in unstructured environments requires handling objects with widely diff
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** bundle adjustment, depth estimation, monocular depth, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Time-to-Collision Based Dynamic Obstacle Avoidance Using Pretrained Vision Models for Robots in Unstructured Environments
+- 作者：Erik Jagnandan, Mulugeta Haile, Gregory Barber, Pratik Chaudhari
+- 出版日期：2026-07-08
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2607.07885
+
+### 一句话总结
+本文提出一种基于碰撞时间（TTC）的视觉动态避障方法，利用预训练深度估计和特征匹配模型，无需训练即可实现非结构化环境中的机器人避障，并在真实数据集上验证了数据高效性和可解释性。
+
+### 研究问题
+如何在非结构化户外环境中实现动态障碍物避障，同时避免大规模机器人专用训练数据和仿真策略带来的数据效率低、仿真到现实迁移困难等问题。
+
+### 核心思路/方法
+- 利用预训练单目深度估计模型 UniDepth 从 RGB 视频生成稠密深度图，无需立体相机或激光雷达。
+- 扩展 SuperPoint 和 SuperGlue 特征匹配管线，在长帧序列中跟踪关键点，并通过相机内参和预测深度将2D像素投影到3D。
+- 对3D关键点进行束调整（bundle adjustment）以优化位姿，计算每个关键点的碰撞时间（TTC）。
+- 在地平面选择2D运动基元，使机器人远离最小TTC关键点的最近接近点。
+
+### 主要贡献
+1. 提出一种完全基于真实世界数据、无需模型训练的视觉动态避障方法，避免了仿真到现实的迁移问题。
+2. 利用预训练模型（UniDepth、SuperPoint、SuperGlue）实现数据高效性，仅需74秒数据用于超参数调优，无需数千小时训练数据。
+3. 在M3ED数据集上验证性能：识别TTC<1秒帧的精确率0.49、召回率0.38；正确避障方向生成率为84%；对22个物理障碍中的20个检测到至少一个TTC<1秒的帧。
+4. 方法保持可解释性和泛化性，适用于多种障碍物类型。
+
+### 局限性
+摘要未提供足够信息。未提及方法在复杂场景（如密集障碍物、高速运动）下的鲁棒性、实时性表现，或对光照、纹理等环境因素的敏感性。
+
+### 阅读优先级
+**高**
+理由：本文针对动态避障这一机器人领域核心难题，提出了一种无需训练、数据高效的解决方案，并使用了预训练视觉模型，具有较强的实用价值和可迁移性。实验结果在真实数据集上表现合理，且方法可解释性强，适合关注自主导航、避障与计算机视觉交叉研究的读者。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1547,6 +1897,41 @@ Recent research has achieved remarkable novel view rendering and scene reconstru
 **Matched keywords:** SLAM, Gaussian Splatting, 3D Gaussian Splatting, scene representation, splatting, mapping
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Track2Map: Online Deformable SLAM with Motion-Aware Pose Optimization in Robotic Surgery
+- 作者：Tianyi Song, Sierra Bonilla, Xinwei Ju, Evangelos Mazomenos, Danail Stoyanov, Adam Schmidt, Omid Mohareri, Sophia Bano, Francisco Vasconcelos
+- 出版日期：2026-07-09
+- 分类：Neural Scene Representations & Rendering；3D Reconstruction & Multi-view Geometry
+- 链接：摘要：https://arxiv.org/abs/2607.08408 ；PDF：https://arxiv.org/pdf/2607.08408
+
+### 一句话总结
+Track2Map是一种在线、可变形3D高斯溅射SLAM管线，能够从手术视频中联合优化相机轨迹与三维可变形场景，无需依赖机器人运动学先验。
+
+### 研究问题
+如何在机器人辅助微创手术（RAMIS）中，从手术视频在线进行稠密、可变形三维解剖重建，并在缺少或带有噪声的相机轨迹先验下实现鲁棒的定位与建图（SLAM）。
+
+### 核心思路/方法
+1. **在线联合优化**：构建一个在线3D高斯溅射管线，同时优化相机轨迹和三维可变形场景。
+2. **轨迹锚定变形初始化**：使用密集的二维点轨迹进行变形初始化，以稳定存在组织运动和模糊视觉线索时的优化过程。
+3. **运动感知位姿优化**：利用点轨迹统计信息，通过检测静态相机时期来分离相机运动与场景变形，并在增量建图过程中减少漂移。
+
+### 主要贡献
+- 提出Track2Map，一种在线的可变形SLAM方法，能直接从未知或带噪的相机轨迹先验的术中视频中联合优化相机位姿和场景。
+- 引入轨迹锚定变形初始化策略，利用密集2D点轨迹稳定优化。
+- 利用点轨迹统计实现运动感知位姿优化，有效分离相机运动与组织变形，减少漂移。
+- 在StereoMIS数据集上的实验表明，Track2Map在重建质量和相机轨迹估计上优于现有SLAM方法，甚至可与使用轨迹先验的非SLAM方法竞争。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该工作针对手术机器人视觉中的核心问题（缺少相机先验时的在线可变形SLAM）提出了新颖的联合优化管线，并展示了优于现有方法的实验性能。对于从事手术机器人、SLAM或可变形场景重建的研究者具有直接参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Gaussian splatting is the current state-of-the-art for dense, deformable 3D anatomy reconstruction in robot-assisted minimally invasive surgery (RAMIS); however, most pipelines are offline and depend on accurate camera trajectory priors (often from robotic kinematics), limiting applicability when priors are missing or noisy. To address these limitations, we propose Track2Map, an online 3D Gaussian Splatting pipeline that jointly optimizes camera trajectory and 3D deformable scene representation directly from surgical video. Track2Map is therefore capable of robust 3D reconstructions when camera trajectory priors are either absent or noisy, and due to its online nature it effectively works as a Simultaneous Localisation and Mapping (SLAM) method. To stabilize optimization in the presence of tissue motion and ambiguous visual cues, we introduce a track-anchored deformation initialization using dense 2D point tracks. Track statistics are further utilized to disentangle camera motion from scene deformation by detecting static camera periods and reducing drift during incremental mapping. Experiments on StereoMIS show improved reconstruction quality and camera trajectory against competing SLAM methods, as well as compared to non-SLAM methods that utilize camera trajectory priors. The code is available at https://track2map.github.io/.
@@ -1560,6 +1945,39 @@ Gaussian splatting is the current state-of-the-art for dense, deformable 3D anat
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** inverse rendering, relighting, rendering
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：LightCrafter: PBR-Conditioned Video Diffusion Refinement for Controllable and Consistent Relighting
+- 作者：Zixin Guo, Yehonathan Litman, Yifeng He, John Miller, Chuhan Chen, Deva Ramanan
+- 出版日期：2026-07-09
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2607.08016
+
+### 一句话总结
+LightCrafter 提出一种混合流水线，通过将视频重光照转化为对基于物理渲染（PBR）代理视频的翻译，利用视频扩散模型精细调整以实现可控且时间一致的重光照。
+
+### 研究问题
+如何在长视频中实现既保持时间一致性、又符合物理光照规律（如全局光照）的可控重光照，同时克服传统逆渲染方法噪声大、生成式方法控制受限的缺陷。
+
+### 核心思路/方法
+核心思路是构建一个混合流水线：不为直接从输入视频翻译到目标光照下的视频，而是先通过逆渲染和PBR生成输入视频在目标光照下的代理渲染视频，然后使用经过合成视频对和真实无配对视频微调的CogVideoX扩散模型，将该PBR代理视频翻译为最终的重光照结果。这样，光照目标已被“烘培”进PBR代理中，扩散模型无需学习环境映射等光照概念，从而提升控制精度和长时一致性。
+
+### 主要贡献
+1. 提出LightCrafter混合流水线，结合PBR渲染和视频扩散模型，实现可控且一致的重光照。
+2. 通过将光照目标嵌入PBR代理，简化扩散模型的输入空间，增强光照控制灵活性并自然保持长时间一致性。
+3. 在现有真实世界重光照基准上超越此前最优方法，并贡献了用于进一步分析的合成基准。
+4. 将公开发布数据集、基准、评估指标和代码。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+高。理由：该工作针对视频重光照中的关键难题（时间一致性与物理真实性）提出了新颖的混合方法，在基准上取得超越结果，且涉及当前热门的扩散模型与物理渲染结合，方法具有实用潜力。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1977,6 +2395,44 @@ We present a real-time LiDAR-based framework for Gaussian Splatting SLAM that ti
 **Matched keywords:** manipulation, VR
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：DexVerse: A Modular Benchmark for Multi-Task, Multi-Embodiment Dexterous Manipulation
+- 作者：Yunchao Yao, Zhuxiu Xu, Tianqi Zhang, Zixian Liu, Sikai Li, Zhenyu Wei, Feng Chen, Dihong Huang, Kechang Wan, Chenyang Ma, Shuqi Zhao, Shenghua Gao, Masayoshi Tomizuka, Yi Ma, Mingyu Ding
+- 出版日期：2026-07-09
+- 分类：具身智能/机器人/AR应用
+- 链接：https://arxiv.org/abs/2607.08751
+
+### 一句话总结
+该论文提出了DexVerse，一个大规模模块化灵巧操作基准，包含100项任务、多种机器人构型、可配置视觉变化和3,180条演示数据，并评测了多种代表性方法，揭示了任务泛化和视觉运动鲁棒性方面的显著挑战。
+
+### 研究问题
+现有灵巧操作基准在任务多样性、数据覆盖范围、机器人构型支持以及可控视觉变化方面存在局限，难以系统性地评估策略在跨任务和跨构型下的泛化能力。
+
+### 核心思路/方法
+构建一个模块化基准，具体包括：
+1. 集成100项涵盖抓取、重定位、交互式物体操作、工具使用、双手协调、非抓取控制、接触丰富行为、多目标执行以及长时多阶段任务等多种技能的任务。
+2. 支持3种机器人臂和6种灵巧手，并具备可扩展性。
+3. 提供可配置的纹理、背景、光照和相机视角等视觉变化，用于评估视觉运动泛化。
+4. 提供一个基于VR的遥操作接口，并收集3,180条包含本体感受、RGB、深度、点云和状态观测的同步演示数据。
+5. 选取Diffusion Policy、DP3、OpenVLA和π₀.₅四种代表性方法在19项任务上进行基准测试。
+
+### 主要贡献
+1. 提出了一个大规模、模块化的灵巧操作基准DexVerse，包含丰富的任务、构型及视觉变化。
+2. 提供了3,180条多模态同步演示数据及VR遥操作接口，便于获取高质量演示。
+3. 在19项任务上对多种代表性方法进行了系统基准测试，揭示了跨任务泛化与视觉运动鲁棒性方面的显著挑战，验证了DexVerse作为通用灵巧操作测试平台的价值。
+
+### 局限性
+摘要未提供关于DexVerse基准在真实机器人部署、计算成本、任务难度分布、数据收集成本以及所测试方法在其他任务上的性能上限等具体实验细节或局限性信息。
+
+### 阅读优先级
+中
+理由：该论文提供了一个综合性的基准和评测结果，对于研究灵巧操作泛化问题、需要多任务多构型评估资源的领域具有直接参考价值；但摘要未深入分析算法性能差异或具体实验结果，故优先级设为中等。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Building general-purpose dexterous manipulation policies requires benchmarks that go beyond isolated tasks to systematically evaluate policies across diverse interaction modes, sensory conditions, and robot embodiments. However, existing benchmarks remain limited in task and data diversity, embodiment coverage, or controllable visual variation, hindering studies of cross-task and cross-embodiment generalization. We present DexVerse, a large-scale and modular benchmark for dexterous manipulation. DexVerse includes 100 tasks spanning a broad range of manipulation skills, including object grasping and relocation, articulated-object interaction, functional tool use, bimanual coordination, non-prehensile control, contact-rich behaviors, multi-goal execution, and long-horizon multi-stage task completion. It supports 3 robot arms and 6 dexterous hands, and is extensible to new tasks, assets, and embodiments. To evaluate visuomotor generalization, DexVerse provides configurable visual variations in textures, background, lighting, and camera viewpoints. We further provide a VR-based teleoperation interface and 3,180 demonstrations with synchronized proprioceptive, RGB, depth, point-cloud, and state observations. We benchmark representative methods, including Diffusion Policy, DP3, OpenVLA, and $π_{0.5}$, across 19 tasks. Results reveal substantial challenges in task generalization and visuomotor robustness, establishing DexVerse as a promising testbed for general-purpose dexterous manipulation. Project page: https://ycyao216.github.io/DexVerse.site
@@ -1990,6 +2446,45 @@ Building general-purpose dexterous manipulation policies requires benchmarks tha
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** scene representation, autonomous driving, world model
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：WCog-VLA: A Dual-Level World-Cognitive Vision-Language-Action Model for End-to-End Autonomous Driving
+- 作者：Xuerun Yan, Zhexi Lian, Nuoheng Zhang, Shiyu Fang, Haoran Wang, Chen Lv, Jia Hu, Binyang Song
+- 出版日期：2026-07-09
+- 分类：Embodied / Robotics / AR Applications（主要类别）；未提供次要类别
+- 链接：摘要链接: https://arxiv.org/abs/2607.08375；PDF链接: https://arxiv.org/pdf/2607.08375
+
+### 一句话总结
+本文提出WCog-VLA，一种双层次世界认知视觉-语言-动作模型，通过结合语义世界预测与生成世界演化，在NAVSIM基准上实现PDMS评分92.9的领先性能，推动端到端自动驾驶从被动驾驶向主动驾驶转变。
+
+### 研究问题
+现有视觉-语言-动作（VLA）模型在端到端自动驾驶中缺乏全面的世界认知，或存在碎片化的世界预见能力，导致模型只能进行被动驾驶（reactive driving），无法实现主动驾驶（proactive driving）。
+
+### 核心思路/方法
+- **双层次世界认知框架（Dual-Level World-Cognitive）**：
+  - **语义层次**：通过集成3D空间感知和注入代理令牌（agent tokens）来捕捉世界动态，并实现面向博弈论链式思考（Game-theoretic Chain-of-Thought, Game-CoT）推理，统一世界认知与推理。
+  - **生成层次**：引入对齐的解耦扩散Transformer（Aligned Decoupled Diffusion Transformer, ADDT）作为生成世界模型，合成物理上合理的多智能体联合轨迹；通过场景表示对齐减少去噪步骤，显著加速推理。
+- **数据集构建**：创建包含85,000个Game-CoT注释的大规模数据集，支持策略推理训练。
+- **实验验证**：在NAVSIM基准上进行了广泛实验，结果达到SOTA（PDMS评分92.9）。
+
+### 主要贡献
+1. 提出WCog-VLA，首个将语义世界预测与生成世界演化结合的双层次世界认知VLA框架，实现主动驾驶。
+2. 提出Game-CoT推理机制，将博弈论思想融入视觉-语言推理链。
+3. 提出ADDT生成模型，通过场景表示对齐减少去噪步骤，加速推理。
+4. 构建包含85k Game-CoT注释的大规模数据集，促进策略推理研究。
+5. 在NAVSIM基准上取得SOTA性能（PDMS评分92.9）。
+
+### 局限性
+摘要未提供足够信息（例如未提及模型的计算开销、在不同场景下的泛化能力、对异常或边缘情况的鲁棒性等）。
+
+### 阅读优先级
+**高**  
+理由：该论文针对自动驾驶中VLA模型缺乏世界认知的核心问题，提出了兼具语义推理与生成预测的双层次框架，并在权威基准上取得SOTA结果。方法创新性较强（如Game-CoT、ADDT对齐策略），且附带大规模数据集，对主动驾驶和端到端自动驾驶领域具有重要参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
