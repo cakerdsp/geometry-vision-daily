@@ -36,7 +36,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.08772",
     "pdf_url": "https://arxiv.org/pdf/2607.08772",
     "first_seen": "2026-07-10T10:50:07-04:00",
-    "last_seen": "2026-07-11T09:51:47-04:00"
+    "last_seen": "2026-07-12T09:54:36-04:00"
   },
   {
     "arxiv_id": "2607.08771",
@@ -70,7 +70,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.08771",
     "pdf_url": "https://arxiv.org/pdf/2607.08771",
     "first_seen": "2026-07-10T10:50:07-04:00",
-    "last_seen": "2026-07-11T09:51:47-04:00"
+    "last_seen": "2026-07-12T09:54:36-04:00"
   },
   {
     "arxiv_id": "2607.08770",
@@ -105,7 +105,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.08770",
     "pdf_url": "https://arxiv.org/pdf/2607.08770",
     "first_seen": "2026-07-10T10:50:07-04:00",
-    "last_seen": "2026-07-11T09:51:47-04:00"
+    "last_seen": "2026-07-12T09:54:36-04:00"
   },
   {
     "arxiv_id": "2607.08769",
@@ -156,7 +156,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.08769",
     "pdf_url": "https://arxiv.org/pdf/2607.08769",
     "first_seen": "2026-07-10T10:50:07-04:00",
-    "last_seen": "2026-07-11T09:51:47-04:00"
+    "last_seen": "2026-07-12T09:54:36-04:00"
   },
   {
     "arxiv_id": "2607.08751",
@@ -201,7 +201,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.08751",
     "pdf_url": "https://arxiv.org/pdf/2607.08751",
     "first_seen": "2026-07-10T10:50:07-04:00",
-    "last_seen": "2026-07-11T09:51:47-04:00"
+    "last_seen": "2026-07-12T09:54:36-04:00"
   },
   {
     "arxiv_id": "2607.08711",
@@ -236,7 +236,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.08711",
     "pdf_url": "https://arxiv.org/pdf/2607.08711",
     "first_seen": "2026-07-10T10:50:07-04:00",
-    "last_seen": "2026-07-11T09:51:47-04:00"
+    "last_seen": "2026-07-12T09:54:36-04:00"
   },
   {
     "arxiv_id": "2607.08408",
@@ -2521,331 +2521,6 @@
     ],
     "abstract_url": "https://arxiv.org/abs/2607.04330",
     "pdf_url": "https://arxiv.org/pdf/2607.04330",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-07T11:12:40-04:00"
-  },
-  {
-    "arxiv_id": "2607.04256",
-    "version": "v1",
-    "title": "AdaptiveSplat:Texture Aware Controllable 3D Gaussian Allocation for Feed-Forward Reconstruction",
-    "authors": [
-      "Badrinath Singhal",
-      "Srihari K G",
-      "Sreehari Iyer",
-      "Ankit Dhiman",
-      "Venkatesh Babu Radhakrishnan"
-    ],
-    "abstract": "Current feed-forward 3D reconstruction methods predict pixel aligned Gaussian primitives, resulting in highly redundant representations. A natural solution is to prune the redundant Gaussians, but naive pruning introduces severe artifacts and often requires inference time fine-tuning, breaking the feed-forward paradigm. Based on previous works, high frequency regions require more Gaussian primitives, while low frequency regions can be represented with significantly fewer primitives. Motivated by this, we propose a novel approach to explicitly control the number of Gaussians by leveraging local texture information. Our approach achieves this through three key components: (1) texture estimation to capture spatial variation in scene detail, (2) texture-aware pruning that removes redundant Gaussians from low frequency regions, and (3) an adaptive Gaussian head that predicts the modified attributes of the retained primitives without breaking the feed-forward paradigm. Experiments on RE10K, ACID, DL3DV, Tanks and Temples, and DTU demonstrate the effectiveness of our approach, while ablation studies validate the contributions of its key components.",
-    "published": "2026-07-05T12:12:59Z",
-    "updated": "2026-07-05T12:12:59Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Geometry Foundation Models",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "feed-forward reconstruction",
-      "feed-forward 3D reconstruction",
-      "3D reconstruction"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched title phrase: feed-forward reconstruction",
-      "Matched abstract phrase: feed-forward 3D reconstruction"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04256",
-    "pdf_url": "https://arxiv.org/pdf/2607.04256",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-07T11:12:40-04:00"
-  },
-  {
-    "arxiv_id": "2607.04243",
-    "version": "v1",
-    "title": "HeartVolMesh: Cardiac Volumetric Mesh Reconstruction via Covariance-Guided Graph Deformation",
-    "authors": [
-      "Fengming Lin",
-      "Arezoo Zakeri",
-      "Haoran Dou",
-      "Zherui Zhou",
-      "Shaokun Lan",
-      "Jinming Duan",
-      "Alejandro Frangi"
-    ],
-    "abstract": "Accurate patient-specific tetrahedral cardiac meshes are essential for in-silico trials, yet common segmentation-then-modelling pipelines can blur thin-wall anatomy and offer limited cross-case correspondence. We propose HeartVolMesh, which lifts each template vertex to an anisotropic Gaussian kernel and uses a 3D CNN-GNN to predict per-vertex displacements and Cholesky-parameterized covariances from volumetric images. Training is guided by a covariance-aware negative log-likelihood loss with lightweight mesh regularization. For volumetric meshing, we warp a fixed tetrahedral template to the reconstructed surface via staged alignment, non-rigid registration, and deformation propagation, preserving connectivity and correspondence by construction, with resolution controlled by template density. Experiments show consistent gains over deformation-based baselines in surface mesh accuracy and volumetric mesh fidelity.",
-    "published": "2026-07-05T11:42:37Z",
-    "updated": "2026-07-05T11:42:37Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "mesh reconstruction"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched title phrase: mesh reconstruction"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04243",
-    "pdf_url": "https://arxiv.org/pdf/2607.04243",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-07T11:12:40-04:00"
-  },
-  {
-    "arxiv_id": "2607.04169",
-    "version": "v1",
-    "title": "Neural LiDAR Bundle Adjustment",
-    "authors": [
-      "Chin Yung Anson Hon",
-      "Kaicheng Zhang",
-      "Sen Wang"
-    ],
-    "abstract": "Recent research has achieved remarkable novel view rendering and scene reconstruction results with Neural Radiance Field (NeRF), including extensions to the LiDAR modality. Few studies have, however, explored the key design differences between RGB NeRFs and LiDAR NeRFs, particularly considering their underlying working principles. In this work, we provide both theoretical and empirical evidence suggesting that the density of volume sampling plays a significant role in LiDAR NeRF. Based on this finding, we propose a novel Neural LiDAR Bundle Adjustment (NeLD-BA) algorithm, which is tailored using efficient volume sampling of LiDAR rays for joint optimization of LiDAR map and poses. Extensive experiments are performed using the Newer College and FusionPortable datasets to demonstrate the proposed NeLD-BA's state-of-the-art performance in multi-view point cloud registration and 3D mapping. We will open-source our code for the community.",
-    "published": "2026-07-05T08:16:45Z",
-    "updated": "2026-07-05T08:16:45Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [
-      "Neural Scene Representations & Rendering"
-    ],
-    "matched_keywords": [
-      "scene reconstruction",
-      "bundle adjustment",
-      "3D mapping",
-      "NeRF",
-      "neural radiance field",
-      "radiance field",
-      "rendering",
-      "radiance",
-      "mapping"
-    ],
-    "classification_score": 10,
-    "classification_reasons": [
-      "Matched abstract phrase: scene reconstruction",
-      "Matched title phrase: bundle adjustment",
-      "Matched abstract phrase: bundle adjustment",
-      "Matched abstract phrase: 3D mapping",
-      "Matched abstract keyword: NeRF",
-      "Matched abstract phrase: neural radiance field",
-      "Matched abstract phrase: radiance field",
-      "Matched abstract keyword: rendering",
-      "Matched abstract keyword: radiance"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04169",
-    "pdf_url": "https://arxiv.org/pdf/2607.04169",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-07T11:12:40-04:00"
-  },
-  {
-    "arxiv_id": "2607.04162",
-    "version": "v1",
-    "title": "ACE: Agentic Control for Embodied Manipulation via Zero-shot Workflow Reasoning",
-    "authors": [
-      "Iok Tong Lei",
-      "QianZhi Li",
-      "Ying Jie Yap",
-      "Yujie Zhang",
-      "Rui Zhong",
-      "Haichao Gui",
-      "Xiaolong Liu",
-      "Zhidong Deng"
-    ],
-    "abstract": "Open-ended tabletop manipulation requires agents to not only understand natural language but also adapt to dynamic environments and execution failures. We present ACE (Agentic Control for Embodied Manipulation), a zero-shot workflow reasoning framework for tabletop pick-and-place from natural language. Rather than relying on direct low-level action mapping, ACE combines agentic workflow reasoning with two robot-facing executable skills: a visual grounding interface and a reusable pick-and-place primitive. To bridge semantic reasoning and physical control, the active sub-goal is grounded into a mask-mediated vision-action interface. This unified mask specifies the target object and destination, is tracked over time, exposed for human verification, and ultimately passed to a task-agnostic downstream policy for execution. Crucially, ACE operates in a closed loop supported by a multi-timescale memory. After an action is executed, the system automatically verifies whether the intended sub-goal succeeded, using the outcome to advance, retry, repair, or replan. This enables online adaptation to user corrections, scene changes, and physical failures. We evaluate ACE on logically complex, long-horizon tasks, including zero-shot multi-step equation formation with number cubes and constraint-based object retrieval. ACE demonstrates task-level zero-shot generalization on novel semantic constraints and randomized tabletop scenes without task-specific retraining. Specifically, while standard end-to-end baselines struggle to complete these logically demanding tasks, ACE achieves a 50% success rate in equation formation and a 70% success rate in constraint retrieval. This contrast demonstrates that explicit workflow reasoning and mask-mediated control offer a robust, practical route toward adaptable robotic manipulation.",
-    "published": "2026-07-05T08:07:42Z",
-    "updated": "2026-07-05T08:07:42Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO",
-      "cs.LG"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "manipulation",
-      "mapping"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched title keyword: manipulation",
-      "Matched abstract keyword: manipulation",
-      "Matched abstract keyword: mapping"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04162",
-    "pdf_url": "https://arxiv.org/pdf/2607.04162",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-07T11:12:40-04:00"
-  },
-  {
-    "arxiv_id": "2607.04144",
-    "version": "v1",
-    "title": "Semantic-Guided Progressive Object Removal with Gaussian Splatting",
-    "authors": [
-      "Xianliang Huang",
-      "Chen Xiao",
-      "Yuanxiang Ni",
-      "Guanming Liu",
-      "Mingkai Liu",
-      "Dikai Fan",
-      "Xiao Liu",
-      "Hao Zhang"
-    ],
-    "abstract": "Removing unwanted objects from reconstructed 3D scenes is an important task in computer vision, supporting applications in AR/VR, robotics, and digital content creation. Existing methods typically complete the entire masked region in a single step and without effectively utilizing semantic information from other views, leading to difficulties in handling complex geometric details and textures. In this work, we propose a novel framework that integrates Semantic-guided Block Matching (SBM) and Region-Wise Progressive Refinement (RPR) for high-quality 3D object removal. First, we leverage DINOv2 to encode semantic guidance from multi-view observations, and the best match tokens are decoded to complete missing regions in the target view while maintaining cross-view consistency. Second, we introduce a RPR strategy that segments the target mask into multiple subregions and selectively refines those with poor visual quality. Our method is built upon Gaussian Splatting, ensuring high-fidelity scene reconstruction with efficient computation. Experimental results demonstrate that our approach outperforms existing Gaussian-based methods in terms of perceptual quality and coherence in 3D object removal.",
-    "published": "2026-07-05T07:11:48Z",
-    "updated": "2026-07-05T07:11:48Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [
-      "Embodied / Robotics / AR Applications"
-    ],
-    "matched_keywords": [
-      "scene reconstruction",
-      "Gaussian Splatting",
-      "splatting",
-      "robotics",
-      "AR",
-      "VR"
-    ],
-    "classification_score": 9,
-    "classification_reasons": [
-      "Matched title phrase: Gaussian Splatting",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched title keyword: splatting",
-      "Matched abstract keyword: splatting",
-      "Matched abstract keyword: robotics",
-      "Matched abstract keyword: AR",
-      "Matched abstract keyword: VR"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04144",
-    "pdf_url": "https://arxiv.org/pdf/2607.04144",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-07T11:12:40-04:00"
-  },
-  {
-    "arxiv_id": "2607.04127",
-    "version": "v1",
-    "title": "Real-Time LiDAR Gaussian Splatting SLAM",
-    "authors": [
-      "Seungjun Tak",
-      "Yewon Jeon",
-      "Jaeik Hwang",
-      "SukMin Hwang",
-      "Seongbo Ha",
-      "Hyeonwoo Yu"
-    ],
-    "abstract": "We present a real-time LiDAR-based framework for Gaussian Splatting SLAM that tightly couples fast G-ICP registration with spherical rasterization-based dense mapping for large-scale sequences. Leveraging LiDAR geometry rather than appearance, we reuse tracking-estimated local covariances to initialize Gaussians with range-aware scales and to derive surface normals for geometry-aware map optimization. We further introduce a covariance-derived geometry score that measures local complexity and drives pruning in planar regions and selective densification in structurally rich areas, while optimized Gaussians and LiDAR-specific confidence cues are fed back to improve tracking robustness. On the Newer College dataset, our method achieves an F-score of 86.78\\% using purely online trajectories at real-time speed ($>$20 FPS), and additional experiments on other datasets confirm its stability and scalability.",
-    "published": "2026-07-05T05:55:32Z",
-    "updated": "2026-07-05T05:55:32Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.RO"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [
-      "3D Reconstruction & Multi-view Geometry"
-    ],
-    "matched_keywords": [
-      "SLAM",
-      "Gaussian Splatting",
-      "splatting",
-      "mapping"
-    ],
-    "classification_score": 9,
-    "classification_reasons": [
-      "Matched title phrase: Gaussian Splatting",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched title keyword: splatting",
-      "Matched abstract keyword: splatting",
-      "Matched title keyword: SLAM",
-      "Matched abstract keyword: SLAM"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04127",
-    "pdf_url": "https://arxiv.org/pdf/2607.04127",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-07T11:12:40-04:00"
-  },
-  {
-    "arxiv_id": "2607.04101",
-    "version": "v1",
-    "title": "The Multipath Blind Spot: $K$-Agnostic Robust Calibration for Sparse-Anchor Metric Depth from Frozen Foundations",
-    "authors": [
-      "Sohag Roy",
-      "Rajesh Misra",
-      "Swami Shastravidyananda",
-      "Tamal Maharaj"
-    ],
-    "abstract": "Monocular depth foundations predict domain-general relative depth but lack absolute scale; a handful of sparse metric anchors from a range sensor can calibrate them to metric depth, an attractive alternative to metric-supervised training. Existing sparse-anchor calibration methods, however, assume the anchors are clean, whereas real sensors produce outliers that are present with the wrong value -- time-of-flight multipath, mixed pixels -- not merely missing. We show that the established residual-on-CFA calibration recipe collapses under such outliers, and that the strongest publicly deployed method, VI-Depth, has a structural multipath blind spot: robust to missing anchors, it falls behind an unprotected baseline on three of four datasets when anchors are present but wrong. We propose Multipath-Robust Anchor Calibration (MRAC), a parameter-free, inference-time wrapper that gates anchors by foundation consistency -- a Theil--Sen fit and a median-absolute-deviation test against the foundation's own relative-depth ordering -- before a single call to the calibration head. MRAC adds no learned parameters, runs its selection in $\\approx 50\\,μ$s on CPU, and serves anchor budgets $K \\in [5,200]$ from one checkpoint. On a $320$-cell benchmark with a same-backbone, same-architecture control, MRAC strictly wins $84\\%$ of same-backbone cells across all four outlier families and, against VI-Depth, wins all twelve corrupted multipath cells and all sixteen KITTI cells, reducing KITTI multipath AbsRel by $3.2\\times$ ($0.489$ to $0.151$) at zero retraining.",
-    "published": "2026-07-05T03:42:21Z",
-    "updated": "2026-07-05T03:42:21Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Geometry Foundation Models",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "metric depth",
-      "monocular depth"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched title phrase: metric depth",
-      "Matched abstract phrase: metric depth"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04101",
-    "pdf_url": "https://arxiv.org/pdf/2607.04101",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-07T11:12:40-04:00"
-  },
-  {
-    "arxiv_id": "2607.03941",
-    "version": "v1",
-    "title": "WSA$_1$: a 3D-Centric World-Spatial-Action Model for Generalizable Robot Control",
-    "authors": [
-      "Jiahao Jiang",
-      "Jianing Zhang",
-      "Zhenhan Yin",
-      "Ruidong Chen",
-      "Sen Wang",
-      "Zhaoshu Yu",
-      "Pengpeng Zeng",
-      "Xiaofeng Cao",
-      "Xuanhan Wang",
-      "Jingkuan Song",
-      "Heng Tao Shen"
-    ],
-    "abstract": "Recent advances in embodied AI have established robot foundation models (RFMs) as the dominant approach for generalist robotic systems to date. By leveraging imitation learning on extensive robot demonstrations, RFMs have achieved impressive capabilities in mapping visual observations and language instructions to continuous robotic actions. However, current RFMs lack an inherent ability to reason about physical dynamics and the causal effects of robot behaviors on the 3D physical world. This creates a fundamental mismatch between 2D-centric visual perception and 3D-centric embodied interaction, severely limiting the generalization ability of RFMs in real-world tasks.To address this gap, we present WSA$_1$, a novel RFM built upon proposed 3D-Centric World-Spatial-Action modeling paradigm. It not only learns 3D world-aware visual thought for future robot behaviors, but also models mutual constraints between 3D world state transitions and robotic actions to enhance behavior generalization. Notably, WSA$_1$ achieves highly data-efficient pre-training with 6k hours of expert demonstration data (only 1k hours from real robot), while delivering competitive manipulation performance (93% success rate) on RoboTwin2.0 simulation benchmark and achieving +20% average boosted performance over state-of-the-art RFMs on real-world robot control tasks. These results reveal that generalizable RFM can be attained without large-scale real robot data when paired with 3D-centric world-action joint modeling, which offers a practical and affordable pathway to generalist robotic systems.",
-    "published": "2026-07-04T16:26:39Z",
-    "updated": "2026-07-04T16:26:39Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "embodied AI",
-      "manipulation",
-      "mapping",
-      "simulation"
-    ],
-    "classification_score": 5,
-    "classification_reasons": [
-      "Matched abstract phrase: embodied AI",
-      "Matched abstract keyword: manipulation",
-      "Matched abstract keyword: mapping",
-      "Matched abstract keyword: simulation"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.03941",
-    "pdf_url": "https://arxiv.org/pdf/2607.03941",
     "first_seen": "2026-07-07T11:12:40-04:00",
     "last_seen": "2026-07-07T11:12:40-04:00"
   }
