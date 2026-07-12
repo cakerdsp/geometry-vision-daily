@@ -11,68 +11,57 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：68
+- 当前滚动窗口论文数：60
 - 分类分布：
-  - 3D Reconstruction & Multi-view Geometry: 26
-  - Embodied / Robotics / AR Applications: 23
-  - Neural Scene Representations & Rendering: 10
-  - Geometry Foundation Models: 6
+  - 3D Reconstruction & Multi-view Geometry: 24
+  - Embodied / Robotics / AR Applications: 21
+  - Neural Scene Representations & Rendering: 8
+  - Geometry Foundation Models: 4
   - Dynamic / 4D Reconstruction: 3
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-好的，这是根据您提供的论文列表生成的中文科研趋势综合分析。
-
----
+好的，以下是对今日论文列表的科研趋势综合分析。
 
 #### 今日主要趋势
 
-1.  **领域适应与无监督/半监督学习的深化：** 传统上依赖大量标注数据的3D重建任务正明显转向利用弱监督或无标注数据。例如，**Wat3R** 通过半监督框架在无标注水下视频中学习3D几何，而 **LTM** 则利用过时的数字高程模型（DEM）作为几何先验，避免了依赖大量精确配准的图像对。这种趋势反映了从“数据驱动”向“先验驱动”和“任务自适应”的转变。
+1.  **从“基础模型蒸馏”到“领域自适应与轻量化”**：计算机视觉领域对大规模基础模型的依赖日益加深，但今日论文体现了两个关键转向：**其一是轻量化**，例如 `ZipDepth` 通过知识蒸馏将零样本单目深度估计模型压缩至6.1M参数，使其可在移动端实时运行，直接回应了基础模型部署困难的问题；**其二是领域自适应**，`Wat3R` 和 `LTM` 展示了如何利用半监督学习、跨域迁移或多模态先验（如过时DEM）将基础模型（如空气域3D重建模型、通用特征提取模型）适配到数据稀缺或条件苛刻的场景（如水下、野火地形），生成可用的高保真输出。这表明研究正从“设计更大模型”转向“如何让大模型更便宜、更普适地应用”。
 
-2.  **高效部署与轻量化成为核心目标：** 实现高质量的3D感知在资源受限设备（如嵌入式、移动端、机器人）上的实时运行是当前研究的重点。**ZipDepth** 通过知识蒸馏和高效网络设计，将参数量压缩至6.1M，实现从服务器到嵌入式设备的零样本深度估计。同时，**GeoGS-SLAM** 通过剔除外观参数，专注于纯几何表达，显著减少了计算开销。这表明在追求精度的同时，模型效率和部署可行性已上升为研究的核心考量。
+2.  **3D高斯泼溅（3DGS）进入“后成熟期”的系统级优化**：3DGS已有大量研究，今日论文不再只是简单的场景重建，而是将其与**具体任务深度耦合**，进行系统级优化：
+    -   **针对任务定制表征**：`GeoGS-SLAM` 发现SLAM任务更需几何而非外观，于是直接去除颜色参数，仅保留空间参数（参数减少80%+），创建了“纯几何”高斯。
+    -   **在线/物理仿真整合**：`HoloTetSphere` 优化3DGS以直接生成可用于物理仿真的拓扑连贯四面体网格；`Track2Map` 将3DGS与可变形SLAM结合，实现在线的相机轨迹与场景联合优化。
+    -   **场景级重建**：`PanoLOG` 解决户外全景图下的3DGS分区问题，`CARLA-GS` 则将重建的3DGS场景用于自动驾驶边缘案例的物理仿真视频合成。这表明3DGS的重心正从“静态、离线、外观优先”转向“动态、在线、任务驱动”。
 
-3.  **混合专家框架与多模态建模：** 单一模型难以应对所有复杂场景，因此“混合专家”思想开始渗透。**MoDE/MoE-GS** 从混合专家视角设计动态3D高斯变形模型，以提升在多样化动态场景下的鲁棒性。在机器人领域，**HumAIN** 将多模态隐式社会线索通过知识蒸馏注入导航规划，**TouchWorld** 则引入层级触觉基础模型，分离高层规划与底层反应式控制。这预示着更复杂、更模块化的系统架构正在成为主流。
+3.  **动态场景建模的“扩散模型 + 结构先验”融合**：`LongE2V` 和 `LightCrafter` 都利用视频/图像扩散模型的强大生成先验来处理动态内容。但趋势不是直接端到端生成，而是与一个**物理或几何代理（proxy）** 相结合。`LightCrafter` 不直接学重光照，而是先利用逆渲染生成一个PBR代理视频，再让扩散模型在代理视频上进行精修，从而保证物理合理性。`LongE2V` 引入自回归展开和重编码对齐等结构先验来约束扩散模型，解决长序列时域漂移。这体现了“生成模型（灵活）+ 物理模型（可靠）”的协同趋势。
 
-4.  **面向闭环与因果推理的仿真与生成：** 不仅仅追求视觉逼真，更强调生成内容的可行动性和物理一致性。**CARLA-GS** 将视觉表示、语义推理和物理仿真解耦，生成物理可行的自动驾驶边缘案例。**WCog-VLA** 引入博弈论链式思考，让模型在生成动作前进行“世界认知”的推理。这表明研究正从单纯的“感知”向“感知-推理-行动”的闭环系统迈进。
-
-5.  **从稀疏、静态传感器向事件相机、全景相机等新兴传感器渗透：** 传统RGB相机的局限性催生了新兴传感器的应用。**LongE2V** 利用事件相机的高时间分辨率进行长时序视频重建、预测和插值。**PanoLOG** 利用全景相机的360度视野解决大场景重建问题。**PLED-VINS** 则结合事件相机与点线特征，解决动态环境下的SLAM问题。这预示着3D视觉正在拥抱更丰富的传感器输入方式。
+4.  **具身智能中的“模块化解耦”与“多感官融合”**：机器人/具身智能相关论文（`WCog-VLA`, `TouchWorld`, `HumAIN`, `DexVerse`, `CARLA-GS`）表现出强烈的解耦倾向，试图将复杂的操作任务拆解为更可管理的子模块：
+    -   **模型解耦**：`WCog-VLA` 将任务解耦为语义层（世界感知与推理）和生成层（轨迹生成）；`TouchWorld` 将灵巧操作解耦为高层规划、触觉世界模型预测和触觉残差精化三个层次。
+    -   **感官解耦与融合**：`HumAIN` 通过知识蒸馏将隐式社会线索（来自骨骼点）显式融入导航规划。`TouchWorld` 强调触觉作为“预测性”和“反应性”双重角色的重要性，并尝试分离视觉语言任务规划与触觉快速反馈。这表明随着任务复杂度提升，纯端到端方法遇到瓶颈，模块化、可解释且能有效利用多模态（视觉、触觉、语言）的架构正在成为主流。
 
 #### 技术路线观察
 
-- **几何基础模型与通用表示：** 呈现 **“蒸馏轻量化”** 和 **“纯几何化简”** 的两极分化。
-    - **轻量级蒸馏：** `ZipDepth` 将大模型蒸馏到小模型，实现零样本泛化。
-    - **纯几何化简：** `GeoGS-SLAM` 剥离外观，只保留空间参数，强调几何对于SLAM的核心作用。
-    - **先验驱动：** `LTM` 利用对任务而言低成本的几何先验（DEM）来替代昂贵的特征匹配。
-
-- **3D/4D重建与动态场景：** 从 **“单一表示”** 向 **“动态混合专家”** 进化。
-    - **动态高斯专家：** `MoDE/MoE-GS` 不再使用单一的变形模型，而是通过多个专家（MoE）的组合来处理空间上异质的运动。
-    - **长时序漂移挑战：** `LongE2V` 和 `PanoLOG` 都明确提出了长时序或大场景下的全局一致性问题，并设计了专门的策略（如自回归展开、自适应上下文切换、基于梯度的分区）来应对。
-
-- **神经场景表示与渲染：** 通用扩散模型与3DGS进行深度融合。
-    - **扩散模型作为精调器：** `LightCrafter` 和 `LongE2V` 不再让扩散模型从零生成，而是将其作为“精调”或“优化”步骤，利用其强大的先验知识来提升PBR渲染或稀疏事件数据的感知质量。
-    - **现实场景的工程化适配：** `PanoLOG` 和 `GeoGS-SLAM` 聚焦于如何将3DGS“落地”到特定场景（户外、SLAM），解决全景图的全向可见性、外观-几何冲突等实际工程问题。
-
-- **机器人/AR应用：** 从 **“感知-规划”** 到 **“感知-认知-行动”** 的体系结构演进。
-    - **层次化架构：** `TouchWorld`、`HumAIN`、`WCog-VLA` 和 `CARLA-GS` 普遍采用层次化或解耦的架构，将高层推理（语义、社会线索、战术规划）与底层控制（触觉反馈、避障指令生成、物理模拟）分离。
-    - **统一性尝试：** `DexVerse` 基准和多篇抓取相关论文强调从“多样性”和“统一性”中寻找鲁棒性。
-    - **常识与先验引入：** `Monocular Vision Based Control Framework for Grasping` 引入语言模型估计物体刚度，将常识性物理知识（软/硬）融入视觉闭环，这是具身智能的重要方向。
+| 研究方向 | 技术侧重点 | 代表论文 | 观察评论 |
+| :--- | :--- | :--- | :--- |
+| **几何基础模型** | **知识蒸馏与零样本泛化** | `ZipDepth`, `Wat3R` | 核心在于如何将大模型能力高效迁移到特定场景或轻量平台上。`ZipDepth`聚焦于模型压缩，`Wat3R`聚焦于跨域知识迁移（空气→水下）。 |
+| **3D/4D 场景重建** | **大规模、动态、物理一致** | `PanoLOG`, `GeoGS-SLAM`, `HoloTetSphere`, `LTM`, `LightCrafter`, `CARLA-GS` | 3DGS正向**大规模户外**（PanoLOG）、**在线SLAM**（GeoGS-SLAM）、**物理仿真就绪**（HoloTetSphere）、**复杂光照**（LTM, LightCrafter）和**场景编辑**（CARLA-GS）发展，普遍采用“优化+先验/约束”范式。 |
+| **动态/4D 重建** | **扩散模型与结构约束** | `LongE2V`, `On the Design of MoE for Dynamic Gaussian Splatting` | 动态场景建模分为两派：一是利用扩散模型的生成能力（`LongE2V`），二是通过多变形专家混合（MoE）等结构化方法（`MoE for Dynamic GS`）。前者灵活但需要精心设计约束防漂移，后者结构紧密但泛化性受限。 |
+| **神经场景表示** | **基础模型编辑和物理仿真** | `LightCrafter`, `CARLA-GS` | 场景表示（如NeRF, 3DGS）不再是终点，而是作为中间代理（proxy），服务于**重光照、编辑和物理仿真**等高级应用。 |
+| **机器人/AR应用** | **模块化、层次化与多感官融合** | `WCog-VLA`, `TouchWorld`, `HumAIN`, `DexVerse`, `Monocular Grasping` | 核心趋势是**解耦**：将规划（语言/语义）、感知（视觉/触觉）、控制（动作）分离。强调利用大模型（LLM/GPT）进行高层推理，同时利用轻量化模型或物理先验进行低层快速响应。 |
 
 #### 值得优先阅读的论文
 
-1.  **ZipDepth**：**优先级最高**。它直击“在资源受限设备上实现高性能3D感知”这一核心工程挑战，提供了一个清晰、高效的解决方案。对于任何考虑模型部署的研究者和工程师，本文都是必读。
-2.  **MoDE/MoE-GS**：**动态场景理解的关键**。它系统性地分析和解决了动态3DGS中运动异质性这一基础问题，提出的混合专家思路具有很高的启发性，可能成为动态场景重建领域的里程碑式工作。
-3.  **Wat3R**：**非理想环境下的先锋**。针对水下环境的数据匮乏问题提出了一个可行的无标注半监督框架。其“跨域适应”和“跨视图一致性损失”的设计思想，可以轻松迁移到其他标注稀缺的3D视觉任务（如夜间、恶劣天气、医疗场景）。
-4.  **LongE2V**：**长时序视觉的突破**。它利用扩散模型和创新的时间一致性技术，统一了稀疏事件流的多种任务，解决了困扰学界已久的“长时序稳定性”问题。对于关注事件相机或视频生成模型的读者，极具价值。
-5.  **CARLA-GS**：**自动驾驶闭环仿真新范式**。它明确地解耦了视觉、推理和物理仿真，解决了端到端生成方法难以保证物理一致性的痛点。对于自动驾驶安全评估和仿真生成领域，这是一篇重要的参考论文。
+1.  **ZipDepth**：理由：直接回应了基础模型高效部署的现实需求，从工程和学术角度都有很高价值。方法清晰，实验结果明确，对关注嵌入式/移动端视觉和模型压缩的研究者有重要参考意义。
+2.  **Wat3R**：理由：巧妙解决了水下3D重建中最棘手的标注数据稀缺问题。其“空气→水下”的跨域半监督学习思路具有很强的创新性和可借鉴性，且构建了新的评估基准，对领域有实际推动作用。
+3.  **Track2Map (或 GeoGS-SLAM)**：理由：代表了3DGS在SLAM领域的两种前沿尝试。`Track2Map` 将3DGS与可变形SLAM结合，具备更强的实用性（手术场景）；`GeoGS-SLAM` 则从原理上挑战了3DGS对“外观”的依赖，思路新颖，对理解3DGS的本质有启发。两者都代表了技术从离线到在线的转型。
+4.  **LightCrafter**：理由：其“PBR代理 + 扩散精修”的混合流水线思想具有范式意义。它为将不可靠的物理模型（逆渲染）与灵活但可能不一致的生成模型结合提供了一个很好的范例。该方法对视频编辑、智能内容生成领域影响可能较大。
+5.  **TouchWorld**：理由：对灵巧操作中的触觉作用进行了深刻思考，提出的层次化解耦架构（预测性+反应性）极有可能是解决复杂接触任务的有效途径。它展示了如何将高级语义规划与低级物理交互优雅地统一。
 
 #### 可能的研究机会
 
-1.  **通用先验的自适应微调（结合ZipDepth & Wat3R）：** 将大模型的知识蒸馏到特定领域（水下、动态场景）的轻量级网络，并融入该领域的物理先验（如水的光学模型、动态物体的运动模型），这是一种极具潜力的通用范式。目前的工作多是单域或通用域，跨领域自适应微调的准则和机制值得深入研究。
-2.  **对运动异质性问题的统一理论框架（从MoDE出发）：** MoDE将运动视为不同“专家”的组合。未来可以研究是否能建立一个统一的、可学习的“运动基元”空间，让模型动态地选择和组合这些基元来描述任意复杂的运动模式，而不是依赖预定义的专家数量。
-3.  **融合触觉、视觉与语言的高效基础模型：** `TouchWorld` 引入了触觉，但其架构仍然较为复杂。一个挑战是，能否构建一个更统一、更轻量级的基础模型，能同时处理视觉、触觉、本体感和语言指令，实现真正的跨模态操作灵巧性？
-4.  **面向真实部署的‘纯算法’SLAM系统（参考PLED-VINS & GeoGS-SLAM）：** 现有SLAM高度依赖精确的惯性测量单元（IMU）或机器人运动学。如何发展完全基于视觉和事件相机，但达到厘米级甚至毫米级
+1.  **实验和泛化边界**：`Wat3R` 的跨域方法是否能推广到其他极端环境（如太空、核反应堆）？`ZipDepth` 的零样本能力在真实极端部署场景下（如雨夜、遮挡严重）的退化程度如何未被探索。
+2.
 
 ### interests.md 指令分析
 
@@ -3116,56 +3105,6 @@ Camera-radar (CR) fusion is a practical sensing configuration for autonomous dri
 <summary>Abstract</summary>
 
 With the proliferation of AI-generated content, sophisticated multimedia manipulation has raised critical concerns about malicious applications such as opinion manipulation and evidence fabrication, making Audio-Visual Temporal Forgery Localization (AV-TFL) an urgent research frontier. Existing TFL methods have progressed along two main paradigms: Transformer-based temporal modeling and channel-wise multimodal fusion. While these approaches capture temporal dependencies and cross-modal correlations, they process all frequency components indiscriminately, leading to overfitting on high-frequency noise and limited robustness under real-world data degradation. Through systematic frequency domain analysis, we find that forgery-discriminative patterns concentrate in the low/mid-frequency range (normalized frequency 0-0.15), while high-frequency components primarily introduce noise, removing them even improves detection performance by +1.4%. Based on this phenomenon, we propose UniSkip-Mamba, a frequency-aware State Space Model framework that incorporates Unified Multimodal Sequence Fusion to preserve cross-modal phase relationships, and Skip-Scanning Mamba Blocks that implement frequency-aware regularization through a novel Group-Scan-Merge mechanism, naturally biasing learning toward discriminative low/mid-frequency patterns (0-0.15) while maintaining representational completeness. We achieve state-of-the-art (SOTA) performance: 63.4% AP@0.95 on LAV-DF (+9.8% improvement) and 63.58% mAP on AV-Deepfake1M (+14.32% improvement), with 6x faster inference. Our frequency-domain analysis provides theoretical justification from a signal processing perspective for why skip-scanning inherently improves both accuracy and robustness.
-
-</details>
-
-#### 2026-07-05 - Framework and Multi-modal Dataset for Roadwork Zone Detection and Geo-localization
-
-**Authors:** Zhiran Yan, Yutong Xin, S Shyam Shenoi, Rui Song, Gordon Elger
-**Links:** [abs](https://arxiv.org/abs/2607.04330) - [pdf](https://arxiv.org/pdf/2607.04330)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** autonomous driving, localization
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Framework and Multi-modal Dataset for Roadwork Zone Detection and Geo-localization
-- 作者：Zhiran Yan, Yutong Xin, S Shyam Shenoi, Rui Song, Gordon Elger
-- 出版日期：2026-07-05
-- 分类：Embodied / Robotics / AR Applications
-- 链接：https://arxiv.org/abs/2607.04330
-
-### 一句话总结
-本文提出了一个用于自动驾驶中道路施工区域检测与地理定位的多模态数据集（RZDG），并基于AB3DMOT设计了一个跟踪式管道，实验表明该方法在真实和模拟数据上均达到较高召回率。
-
-### 研究问题
-自动驾驶车辆依赖高清地图导航，但地图更新频率低，缺乏临时施工区域这类半静态信息，现有公开数据集缺失导致难以评估相关检测与地理定位模型。
-
-### 核心思路/方法
-1. **数据集（RZDG）**：包含模拟数据和真实数据，提供多模态传感器输入及全面标注，支持图像语义分割、3D目标检测和物体地理定位等任务。  
-2. **检测与定位管道（RZDG pipeline）**：基于AB3DMOT的扩展，用于将物体从局部坐标系转换到全局坐标系，实现准确的施工区域地理定位。  
-3. **评估标准**：以预测位置与真值距离小于1米视为真阳性（TP）。
-
-### 主要贡献
-- 公开了一个多模态道路施工区域检测与地理定位数据集（RZDG），填补了该领域的空白。  
-- 提出一个基于AB3DMOT的跟踪式管道，实现施工区域检测与全局坐标定位。  
-- 在真实和模拟数据上进行了基准测试，精度分别为0.565（真实）和0.615（模拟），召回率分别为0.898和0.809，F1-score分别为0.597和0.665。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-**高**  
-理由：该论文切中自动驾驶中高清地图更新慢、缺乏半静态施工区域标注数据的实际痛点，提出了首个相关多模态数据集和基准管道，实验显示召回率较高（超过0.8），对自动驾驶安全性和地图动态更新有直接应用价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Autonomous vehicles often rely on high-definition (HD) maps for navigation; however, these maps are not frequently updated and often lack semi-static information, such as temporary roadwork zones, which can significantly alter the road network. This limitation underscores the urgent need for an accurate global position of roadwork zones. However, the absence of publicly available datasets for evaluating roadwork zone detection and geo-localization models has hindered the development of reliable autonomous driving systems. To address this challenge, we propose the Roadwork Zone Detection and Geo-localization (RZDG) dataset, which includes both simulated and real-world data, providing multimodal sensor inputs along with comprehensive annotations. The dataset supports multiple perception tasks, including image semantic segmentation, 3D object detection, and object geo-localization. In addition, we introduce a tracker-based roadwork zone detection and geo-localization (RZDG) pipeline, an extension of AB3DMOT, for accurate object geo-localization in roadwork zones. We benchmark our approach on the RZDG dataset, demonstrating its effectiveness in detecting roadwork zones and transforming object positions from the local coordinate system to the global coordinate system. A prediction is considered a true positive (TP) if its estimated position falls within one meter of the ground truth. Our experimental results show that our approach achieves high accuracy on both real and simulated data. Specifically, we report: Precision: 0.565 (real) / 0.615 (simulated) Recall: 0.898 (real) / 0.809 (simulated) F1-score: 0.597 (real) / 0.665 (simulated).
 
 </details>
 
