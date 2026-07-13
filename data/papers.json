@@ -1,5 +1,87 @@
 [
   {
+    "arxiv_id": "2607.09507",
+    "version": "v1",
+    "title": "DGSfM: Depth-Guided Scale-Aware Global Structure-from-Motion",
+    "authors": [
+      "Sithu Aung",
+      "Viktor Kocur",
+      "Yaqing Ding",
+      "Torsten Sattler",
+      "Zuzana Kukelova"
+    ],
+    "abstract": "Global Structure-from-Motion (SfM) is an efficient paradigm for recovering camera poses and sparse 3D structure from unordered images. However, its reliance on scale-ambiguous epipolar geometry makes global positioning sensitive to noisy baseline estimates and weak view-graph constraints, while false edges from visually ambiguous pairs can further degrade reconstruction. We propose DGSfM, a depth-aware global SfM pipeline that uses monocular depth maps as a scalable prior while preserving explicit multi-view optimization. For each image pair, we use a depth-aware relative pose solver to convert scale-ambiguous epipolar constraints into scale-aware relative pose constraints. We further improve robustness through view-graph filtering and depth-consistency-based correspondence pruning, which suppress false edges and matches that remain plausible under epipolar geometry alone. Finally, global scale averaging and depth-guided pose-point initialization align monocular depth maps into a common reconstruction scale and provide stable initialization for global positioning and bundle adjustment. Experiments on ETH3D and IMC2021 show that DGSfM consistently improves over strong global SfM baselines across sparse and dense matching front-ends, achieving substantial gains in pose accuracy. Code is available at https://github.com/sithu31296/DGSfM.",
+    "published": "2026-07-10T15:18:37Z",
+    "updated": "2026-07-10T15:18:37Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "3D Reconstruction & Multi-view Geometry",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "structure from motion",
+      "SfM",
+      "bundle adjustment",
+      "monocular depth"
+    ],
+    "classification_score": 11,
+    "classification_reasons": [
+      "Matched title phrase: structure from motion",
+      "Matched abstract phrase: structure from motion",
+      "Matched abstract keyword: SfM",
+      "Matched abstract phrase: bundle adjustment",
+      "Matched abstract phrase: monocular depth"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2607.09507",
+    "pdf_url": "https://arxiv.org/pdf/2607.09507",
+    "first_seen": "2026-07-13T11:09:40-04:00",
+    "last_seen": "2026-07-13T11:09:40-04:00"
+  },
+  {
+    "arxiv_id": "2607.09503",
+    "version": "v1",
+    "title": "What VGGT Knows About Overlap: Probing Geometric Foundation Models for Co-Visibility",
+    "authors": [
+      "Filippo Ziliotto",
+      "Luciano Serafini",
+      "Lamberto Ballan",
+      "Tommaso Campari"
+    ],
+    "abstract": "A fundamental challenge in 3D reconstruction and robotic localization is co-visibility: determining which image pairs share overlapping visible surfaces, particularly in scenarios with minimal overlap. We demonstrate that VGGT implicitly encodes co-visibility as an emergent behavior: without any supervision for this task, its internal representations exhibit a clear hierarchical structure mirroring that of large language models, i.e. early layers build a 3D-aware scene representation, while late layers act as dedicated co-visibility reasoners. In particular, we identify layer L17 as a negative anchor that consistently routes non-co-visible pairs for this backbone, regardless of the evaluation setting, providing task-grounded evidence of layer specialization in a geometry-grounded foundation model. Building on this, we introduce Co-VGGT, which freezes VGGT and trains only a lightweight layer-wise mixture-of-experts head (less than 7.5M parameters) to classify co-visibility from RGB alone, treating each layer as a specialized expert whose geometric abstraction is adaptively weighted per input pair. On the Co-VisiON benchmark, Co-VGGT surpasses the human annotation baseline and improves over prior work by more than 25% pairwise and 10% multiview. Pairwise predictions are well-calibrated (ECE=0.030), enabling direct use as edge weights in visibility graphs for downstream SfM and SLAM pipelines without post-hoc correction. Code and data are available.",
+    "published": "2026-07-10T15:17:02Z",
+    "updated": "2026-07-10T15:17:02Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV",
+      "cs.AI"
+    ],
+    "primary_category": "Geometry Foundation Models",
+    "secondary_categories": [
+      "3D Reconstruction & Multi-view Geometry"
+    ],
+    "matched_keywords": [
+      "VGGT",
+      "3D reconstruction",
+      "SfM",
+      "SLAM",
+      "scene representation",
+      "localization"
+    ],
+    "classification_score": 14,
+    "classification_reasons": [
+      "Matched representative model name in title: VGGT",
+      "Matched representative model name in abstract: VGGT",
+      "Matched abstract phrase: 3D reconstruction",
+      "Matched abstract keyword: SfM",
+      "Matched abstract keyword: SLAM"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2607.09503",
+    "pdf_url": "https://arxiv.org/pdf/2607.09503",
+    "first_seen": "2026-07-13T11:09:40-04:00",
+    "last_seen": "2026-07-13T11:09:40-04:00"
+  },
+  {
     "arxiv_id": "2607.08772",
     "version": "v1",
     "title": "Wat3R: Underwater 3D Geometry Learning without Annotations",
@@ -1995,533 +2077,5 @@
     "pdf_url": "https://arxiv.org/pdf/2607.05243",
     "first_seen": "2026-07-07T11:12:40-04:00",
     "last_seen": "2026-07-09T11:32:37-04:00"
-  },
-  {
-    "arxiv_id": "2607.04940",
-    "version": "v1",
-    "title": "Closing the Reality Gap: Zero-Shot Sim-to-Real Deployment for Dexterous Force-Based Grasping and Manipulation",
-    "authors": [
-      "Zhe Zhao",
-      "Zhibin Li",
-      "Yilin Ou",
-      "Mengshi Qi"
-    ],
-    "abstract": "Human-like dexterous hands with multiple fingers offer human-level manipulation capabilities but remain difficult to train the control policies that can deploy on real hardware due to contact-rich physics and imperfect actuation. We present a sim-to-real reinforcement learning method that leverages dense tactile feedback combined with joint torque sensing to explicitly regulate physical interactions. To enable effective sim-to-real transfer, we introduce (i) a computationally fast tactile simulation that computes distances between dense virtual tactile units and the object via parallel forward kinematics, providing high-rate, high-resolution touch signals needed by RL; (ii) a current-to-torque calibration that eliminates the need for torque sensors on dexterous hands by mapping motor current to joint torque; and (iii) actuator dynamics modeling with randomization to account for non-ideal torque-speed effects and bridge the actuation gaps. Using an asymmetric actor-critic PPO pipeline, we train policies entirely in simulation and deploy them directly to a five-finger hand. The resulting policies demonstrate two essential human-hand skills: (1) command-based controllable grasp force tracking and (2) reorientation of objects in the hand, both of which are robustly executed without fine-tuning on the robot. By combining tactile and torque in the observation space with scalable sensing and actuation modeling, our system provides a practical solution to achieve reliable dexterous manipulation. To our knowledge, this is the first demonstration of controllable grasping on a multi-finger dexterous hand trained entirely in simulation and transferred zero-shot on real hardware.",
-    "published": "2026-07-06T11:15:36Z",
-    "updated": "2026-07-06T11:15:36Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "manipulation",
-      "mapping",
-      "simulation"
-    ],
-    "classification_score": 5,
-    "classification_reasons": [
-      "Matched title keyword: manipulation",
-      "Matched abstract keyword: manipulation",
-      "Matched abstract keyword: mapping",
-      "Matched abstract keyword: simulation"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04940",
-    "pdf_url": "https://arxiv.org/pdf/2607.04940",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-08T10:39:56-04:00"
-  },
-  {
-    "arxiv_id": "2607.04930",
-    "version": "v1",
-    "title": "MemPose: Category-level Object Pose Estimation with Memory",
-    "authors": [
-      "Xiao Lin",
-      "Minghao Zhu",
-      "Yun Peng",
-      "Liuyi Wang",
-      "Qiyi Wang",
-      "Chengju Liu",
-      "Qijun Chen"
-    ],
-    "abstract": "In the pursuit of robust and generalizable category-level object pose estimation, most existing methods adopt parametric formulations that learn effective representations from data, yet they primarily encode category-level patterns into fixed shape priors or static parameter weights, which limits their scalability to highly diverse instances. In this paper, we rethink category-level pose estimation from a memory-centric perspective and present MemPose, a memory-augmented framework that explicitly incorporates category-level geometric memory into the pose estimation pipeline. We introduce an external memory buffer that stores and dynamically updates structural representations from previously observed instances, enabling the model to leverage accumulated experience to support current perception. Extensive experiments on four challenging benchmarks (REAL275, CAMERA25, Housecat6D and Wild6D) demonstrate the superiority of our proposed method over previous state-of-the-art approaches.",
-    "published": "2026-07-06T11:02:54Z",
-    "updated": "2026-07-06T11:02:54Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.AI"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "pose estimation"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched title phrase: pose estimation",
-      "Matched abstract phrase: pose estimation"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04930",
-    "pdf_url": "https://arxiv.org/pdf/2607.04930",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-08T10:39:56-04:00"
-  },
-  {
-    "arxiv_id": "2607.04812",
-    "version": "v1",
-    "title": "TGRIP: A Text-Guided Approach to Vehicle Instance Prediction in Autonomous Driving",
-    "authors": [
-      "Miguel Antunes-García",
-      "Santiago Montiel-Marín",
-      "Fabio Sánchez-García",
-      "Rodrigo Gutiérrez-Moreno",
-      "Rafael Barea",
-      "Luis M. Bergasa"
-    ],
-    "abstract": "Bird's-Eye View (BEV) end-to-end instance prediction has emerged as a robust paradigm for autonomous driving perception, effectively mitigating the error propagation inherent in traditional modular pipelines. However, current state-of-the-art approaches rely predominantly on geometric supervision, such as occupancy regression and optical flow, effectively treating scene agents as generic moving obstacles. This absence of explicit semantic awareness imposes limitations on the capacity of the model to solve ambiguities in complex scenarios, particularly those where object-specific behavior is essential for accurate forecasting (e.g. overtaking, intersections). In this paper, we introduce Text-Guided Representation for Instance Prediction (TGRIP), a novel framework that bridges this gap by injecting rich semantic priors into the instance prediction loop. The proposed teacher-student pipeline employs Vision-Language Foundation Models to generate dense, semantic-enhanced BEV maps from multi-camera images. These maps serve as auxiliary supervision during training, guiding the network to learn spatio-temporal representations that are not only geometrically consistent but also semantically discriminative. To the best of our knowledge, this represents the first attempt to unify semantic guidance with the temporal task of future instance prediction. The experimental results demonstrate that TGRIP surpasses existing state-of-the-art models in nuScenes, validating the hypothesis that semantic enrichment is a fundamental element for robust, end-to-end motion prediction. Code is available on https://github.com/miguelag99/TGRIP.",
-    "published": "2026-07-06T08:47:56Z",
-    "updated": "2026-07-06T08:47:56Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "autonomous driving"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched title phrase: autonomous driving",
-      "Matched abstract phrase: autonomous driving"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04812",
-    "pdf_url": "https://arxiv.org/pdf/2607.04812",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-08T10:39:56-04:00"
-  },
-  {
-    "arxiv_id": "2607.04811",
-    "version": "v1",
-    "title": "Hybrid Deep Learning for Traceability and Classification of Industrial Slate Tiles",
-    "authors": [
-      "Soren Antebi",
-      "Stefan Eickeler",
-      "Sandra Halscheidt",
-      "Rene Schmitz",
-      "Michael Muellers",
-      "Dirk Hecker",
-      "Rafet Sifa"
-    ],
-    "abstract": "Applying deep learning to instance-aware reidentification of slate tiles and extraction site classification can improve production efficiency and quality control in the slate tile industry. These tasks are particularly important for handling natural materials where visual variability can make manual inspection costly and error-prone. We present a lightweight, hybrid deep learning approach that combines image matching and classification within a single framework. The system integrates a feature-matching branch based on XFeat with a MobileNetV3- based classification branch. The XFeat branch, combined with a LightGlue matching head, improves instance matching performance by +15.4% AUC. For classification, features from both backbones are shared and fused, resulting in a +10.9% accuracy improvement over a standard MobileNetV3 model. Our approach is evaluated on a newly created industrial dataset consisting of 2,610 slate tile images from six extraction sites. The results demonstrate the effectiveness of the proposed approach for object re-identification and classification in an industrial setting.",
-    "published": "2026-07-06T08:47:45Z",
-    "updated": "2026-07-06T08:47:45Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "image matching",
-      "feature matching"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched abstract phrase: feature matching",
-      "Matched abstract phrase: image matching"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04811",
-    "pdf_url": "https://arxiv.org/pdf/2607.04811",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-08T10:39:56-04:00"
-  },
-  {
-    "arxiv_id": "2607.04761",
-    "version": "v1",
-    "title": "DeGenseGS: Geometrically and Semantically Decoupled Surgical Scene Understanding in 4D Gaussian Splatting",
-    "authors": [
-      "Yimo Wang",
-      "Bin Kang",
-      "Shuojue Yang",
-      "Yueming Jin"
-    ],
-    "abstract": "Real-time, text-promptable 4D reconstruction is indispensable for autonomous surgical interaction. Severe misalignment between semantic meaning and physical anatomy still persists, largely because existing solutions integrate Vision-Language Models into deformable fields via a rigid coupling scheme that tightly binds semantic features to geometric warping. In this paper, we propose DeGenseGS, Geometrically and Semantically Decoupled Surgical Scene Understanding in 4D Gaussian Splatting, a novel framework that independently models semantic evolution and geometric deformation. Specifically, we propose a HexPlane-based spatiotemporal entanglement module that uses shared kinematic latents to synchronize semantic mutations with scene dynamics, while explicitly disentangling semantic updates from geometric deformation. To further ensure robustness against reconstruction artifacts, we devise a Rasterization-Native Semantic Extraction mechanism that infers semantics from topologically continuous feature maps. Additionally, we incorporate an angular-aligned optimization strategy that conforms to the native hyperspherical latent space, thereby preventing semantic distortion. Extensive evaluations on the CholecSeg8k and EndoVis18 datasets demonstrate that DeGenseGS achieves state-of-the-art performance. Our framework yields enhanced geometric completeness and robust semantic-anatomic alignment, enabling spatially continuous segmentation despite drastic tissue deformation and topological transitions.",
-    "published": "2026-07-06T07:56:17Z",
-    "updated": "2026-07-06T07:56:17Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Dynamic / 4D Reconstruction",
-    "secondary_categories": [
-      "Neural Scene Representations & Rendering",
-      "Embodied / Robotics / AR Applications"
-    ],
-    "matched_keywords": [
-      "4D reconstruction",
-      "4D Gaussian",
-      "Gaussian Splatting",
-      "splatting",
-      "scene understanding"
-    ],
-    "classification_score": 8,
-    "classification_reasons": [
-      "Matched abstract phrase: 4D reconstruction",
-      "Matched title phrase: 4D Gaussian",
-      "Matched abstract phrase: 4D Gaussian",
-      "Matched title phrase: Gaussian Splatting",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched title keyword: splatting",
-      "Matched abstract keyword: splatting",
-      "Matched title phrase: scene understanding",
-      "Matched abstract phrase: scene understanding"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04761",
-    "pdf_url": "https://arxiv.org/pdf/2607.04761",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-08T10:39:56-04:00"
-  },
-  {
-    "arxiv_id": "2607.05468",
-    "version": "v1",
-    "title": "Learning 4D Geometric Priors for Inference-Efficient World Action Models",
-    "authors": [
-      "Jianjun Zhang",
-      "Jian Zhu",
-      "Taiyi Su",
-      "Chong Ma",
-      "Zitai Huang",
-      "Yi Xu",
-      "Hanli Wang"
-    ],
-    "abstract": "World Action Models (WAMs) have shown strong potential for robotic manipulation by jointly modeling visual future dynamics and executable action sequences. However, existing video-action co-training methods primarily optimize appearance-oriented video latents, which may insufficiently capture the temporally evolving geometry required for precise manipulation. We propose MECo-WAM, a Multi-Expert Co-Training World Action Model that injects action-relevant 4D geometric priors into video-action representations while preserving the original lightweight inference graph. During training, MECo-WAM combines video and action experts with a lightweight 4D expert supervised by relational targets from a frozen VGGT encoder. Asymmetric expert visibility prevents non-causal shortcuts from auxiliary geometry to action generation. To transfer geometric knowledge into the deployed video-action pathway, we introduce decayed 4D read-mask attention, which provides restricted current-frame geometric guidance early in training and progressively removes this dependency. We further propose action-aware temporal geometric distillation, which aligns within-frame geometric relations and their temporal evolution while emphasizing visual regions most relevant to robot actions. At deployment, all auxiliary 4D components are removed. Experiments on LIBERO (98.2%), RoboTwin 2.0 (92.6%), and challenging real-world manipulation tasks show that MECo-WAM improves manipulation performance without increasing inference cost.",
-    "published": "2026-07-06T07:10:22Z",
-    "updated": "2026-07-06T07:10:22Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO",
-      "cs.AI"
-    ],
-    "primary_category": "Geometry Foundation Models",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "VGGT",
-      "manipulation"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched representative model name in abstract: VGGT"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.05468",
-    "pdf_url": "https://arxiv.org/pdf/2607.05468",
-    "first_seen": "2026-07-08T10:39:56-04:00",
-    "last_seen": "2026-07-08T10:39:56-04:00"
-  },
-  {
-    "arxiv_id": "2607.05467",
-    "version": "v1",
-    "title": "A Task-Driven Evaluation of UAV Detection and Tracking under Synthetic Fog",
-    "authors": [
-      "Amir Pouladi",
-      "Vesal Ahsani",
-      "Haijun Li",
-      "Homayoun Najjaran",
-      "Afzal Suleman"
-    ],
-    "abstract": "Fog severely degrades the visibility of small unmanned aerial vehicles (UAVs) in skydominant, long-range imagery, reducing the reliability of downstream detection and tracking. This paper presents a task-driven evaluation framework that links depth-aware synthetic fog generation, image restoration, object detection, and tracking within a unified pipeline. Given the practical difficulty of collecting and annotating foggy UAV scenes, synthetic fog is generated from real clear-weather outdoor images containing UAV targets using monocular depth estimation and the atmospheric scattering model. Representative restoration methods from classical, convolutional neural network (CNN)-based, and transformer-based families are first compared, after which the selected restoration model is integrated into the downstream perception pipeline. Detection is evaluated under both clean-only and fog-inclusive training regimes using multiple detector variants, while tracking-by-detection is assessed on clean, foggy, and restored video sequences. Beyond image-level restoration metrics, the study evaluates how fog and restoration affect detection robustness and tracking performance. The results show that fog substantially degrades both detection and tracking, primarily through increased missed detections. Fog-inclusive training provides the most consistent improvement in robustness, whereas test-time restoration is most beneficial when the detector has been trained only on clean imagery. These findings show that restoration quality does not necessarily translate into proportional gains in downstream perception and therefore should be evaluated jointly with detection and tracking performance.",
-    "published": "2026-07-06T07:06:37Z",
-    "updated": "2026-07-06T07:06:37Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.LG",
-      "eess.IV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "depth estimation",
-      "monocular depth"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Rescued from exclusion by geometry keywords: depth estimation",
-      "Matched abstract phrase: depth estimation",
-      "Matched abstract phrase: monocular depth"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.05467",
-    "pdf_url": "https://arxiv.org/pdf/2607.05467",
-    "first_seen": "2026-07-08T10:39:56-04:00",
-    "last_seen": "2026-07-08T10:39:56-04:00"
-  },
-  {
-    "arxiv_id": "2607.04722",
-    "version": "v1",
-    "title": "Reference-Induced Consensus for Selective Posed-Reference Visual Localization",
-    "authors": [
-      "Wonseok Kang",
-      "Jaehyun Kim",
-      "Jeongmin Lee",
-      "Tae-Wan Kim"
-    ],
-    "abstract": "We present RIC-Loc (Reference-Induced Consensus localization), a scene-training-free posed-reference localizer that is SfM-point-map-free in its main estimator: it uses known reference poses, but not precomputed SfM 3D map points, query-to-map 2D-3D matches, or query-to-map PnP. A frozen VGGT pass predicts local camera poses, depth, and query-reference tracks for a query and selected references. Each reference induces one map-frame SE(3) query-pose hypothesis, robust consensus estimates the pose, and the preserved hypothesis structure yields two reliability scores: spatial dispersion and a track-conditioned covariance score. On the covariance-eligible set, the two scores are complementary for held-out, ground-truth-free failure detection across indoor, outdoor, and large-scale low-texture benchmarks: the joint policy is strongest in textured scenes and the covariance score in the low-texture regime, and the hypothesis-derived scores consistently outperform the standard retrieval-score gap and random rankings. Without per-scene training the consensus estimator remains accurate -- competitive with structure-based localization indoors and improving over a comparable feed-forward baseline -- giving an effective selective operating regime for posed-reference localization. Code is available at https://github.com/SNU-DLLAB/ric_loc.",
-    "published": "2026-07-06T06:48:34Z",
-    "updated": "2026-07-06T06:48:34Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Geometry Foundation Models",
-    "secondary_categories": [
-      "Embodied / Robotics / AR Applications"
-    ],
-    "matched_keywords": [
-      "VGGT",
-      "point map",
-      "SfM",
-      "localization"
-    ],
-    "classification_score": 8,
-    "classification_reasons": [
-      "Matched representative model name in abstract: VGGT",
-      "Matched abstract phrase: point map",
-      "Matched title keyword: localization",
-      "Matched abstract keyword: localization"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04722",
-    "pdf_url": "https://arxiv.org/pdf/2607.04722",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-08T10:39:56-04:00"
-  },
-  {
-    "arxiv_id": "2607.04689",
-    "version": "v1",
-    "title": "A Reliable Context-Aware and Temporal Planning Framework for Autonomous Driving",
-    "authors": [
-      "Argho Dey",
-      "Yunfei Yin",
-      "Swachha Ray",
-      "Md Minhazul Islam",
-      "Zheng Yuan",
-      "Sijing Xiong",
-      "Hongyu Liu",
-      "Zhiqiu Huang"
-    ],
-    "abstract": "Safe operation of autonomous vehicles in dense urban traffic depends on perception and planning that remain reliable when onboard sensing is degraded. In real driving conditions, camera observations are frequently corrupted by occlusion, motion blur, illumination change, and sensor noise, and when such degraded observations are aggregated indiscriminately over time, trajectory planning becomes unstable and collision risk rises for both the ego vehicle and surrounding road users. Recent Bird's-Eye-View (BEV) approaches unify perception and planning through a shared spatial representation, but most fuse temporal information across frames without assessing the reliability of the underlying observations. We present a Reliable Context-Aware and Temporal Planning framework for Autonomous Driving (RCT-AD) that explicitly models feature quality and temporal consistency to support safer, more consistent planning. A Reliable Context Awareness module scores per-frame reliability and selectively retains trustworthy features through a quality-gated First-In-Last-Out (FILO) memory mechanism, reconstructing degraded observations from reliable historical context so that corrupted inputs do not destabilize the scene representation. A Temporal Trajectory Planner captures long-term dependencies and multi-agent interactions to produce smoother, safety-aware trajectories, while a joint detection-and-segmentation head injects semantic and motion cues into the shared BEV space to strengthen scene understanding. Experiments on the nuScenes autonomous driving benchmark show that RCT-AD improves perception accuracy, motion prediction, and planning robustness over recent end-to-end baselines, achieving 61.5 nuScenes Detection Score, 52.9 mean Average Precision, and 52.3 mean Intersection over Union, while maintaining competitive computational efficiency suitable for real-time deployment.",
-    "published": "2026-07-06T05:32:48Z",
-    "updated": "2026-07-06T05:32:48Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO",
-      "cs.CV"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "scene representation",
-      "autonomous driving",
-      "scene understanding"
-    ],
-    "classification_score": 8,
-    "classification_reasons": [
-      "Matched title phrase: autonomous driving",
-      "Matched abstract phrase: autonomous driving",
-      "Matched abstract phrase: scene understanding"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04689",
-    "pdf_url": "https://arxiv.org/pdf/2607.04689",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-08T10:39:56-04:00"
-  },
-  {
-    "arxiv_id": "2607.04661",
-    "version": "v1",
-    "title": "Targeted Structure Completion for Sparse-View 3D Reconstruction in Autonomous Driving",
-    "authors": [
-      "Guoqing Wang",
-      "Pin Tang",
-      "Xiangxuan Ren",
-      "Liping Hou",
-      "Chao Ma"
-    ],
-    "abstract": "Reconstructing 3D scene structures from sparse, low-overlap observations remains a fundamental challenge in autonomous driving. Recent state-of-the-art frameworks achieve promising results by incorporating voxel-based Gaussians, but incur substantial computational redundancy due to a uniform volumetric processing strategy. To bridge the gap between the efficiency of pixel-based Gaussian methods and the structural completeness of voxel-based Gaussian approaches, we propose FocusGS, a simple yet effective framework that shifts the paradigm from global densification to targeted structural completion. Our central insight is that structural completion should be decoupled from deterministic regions, with computation concentrated exclusively on areas exhibiting geometric ambiguity. Specifically, FocusGS addresses the localization challenge by deriving a 3D Geometric Ambiguity Manifold to accurately isolate localized areas prone to occlusion and high geometric uncertainty. To overcome the subsequent manifold completion challenge, we design a lightweight targeted structure completion module that selectively instantiates and optimizes continuous Gaussian queries strictly within this unstructured, sparse topological subspace. Extensive experiments demonstrate that FocusGS achieves a superior efficiency-quality trade-off, advancing state-of-the-art performance on driving-centric benchmarks while naturally reducing the total number of Gaussians by ~74% and decreasing rendering time by ~34%.",
-    "published": "2026-07-06T04:31:45Z",
-    "updated": "2026-07-06T04:31:45Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.AI"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [
-      "Embodied / Robotics / AR Applications"
-    ],
-    "matched_keywords": [
-      "3D reconstruction",
-      "rendering",
-      "autonomous driving",
-      "localization"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched title phrase: 3D reconstruction",
-      "Matched title phrase: autonomous driving",
-      "Matched abstract phrase: autonomous driving",
-      "Matched abstract keyword: localization"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04661",
-    "pdf_url": "https://arxiv.org/pdf/2607.04661",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-08T10:39:56-04:00"
-  },
-  {
-    "arxiv_id": "2607.04652",
-    "version": "v1",
-    "title": "KAM-WM: Kinematic Affordance Maps from Latent World Models for Robot Manipulation",
-    "authors": [
-      "Xinyu Shao",
-      "Keru Zhou",
-      "Guowei Huang",
-      "Yajun Gao",
-      "Tongtong Cao",
-      "Xiu Li"
-    ],
-    "abstract": "Learning manipulation from few demonstrations requires visual priors that capture not only where to interact, but also how the interaction should begin; static priors such as segmentation masks encode only the former. We present KAM-WM, a framework that extracts a coarse directional interaction cue from a frozen latent video world model without rollout or world-model fine-tuning. KAM-WM queries a Flow Matching image-to-video backbone once and interprets its single-step latent velocity as a Kinematic Affordance Map (KAM), which provides task-conditioned interaction regions and coarse motion structure. A lightweight Perceiver compresses KAM into tokens that condition a diffusion policy together with RGB observations and proprioception. Across LIBERO and RoboTwin2.0, KAM-WM reaches 90.6% average success on LIBERO and achieves 65.7% and 22.4% success rates in the Easy and Hard settings on RoboTwin2.0, respectively. Controlled comparisons against a zero-order mask prior suggest that part of the gains comes from directional information beyond spatial localization alone. These results indicate that, in the evaluated settings, a frozen video model can provide a useful first-order visual prior for control without the test-time cost of future rollout.",
-    "published": "2026-07-06T04:17:15Z",
-    "updated": "2026-07-06T04:17:15Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "manipulation",
-      "localization",
-      "world model"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched title keyword: manipulation",
-      "Matched abstract keyword: manipulation",
-      "Matched abstract keyword: localization",
-      "Matched abstract phrase: world model"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04652",
-    "pdf_url": "https://arxiv.org/pdf/2607.04652",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-08T10:39:56-04:00"
-  },
-  {
-    "arxiv_id": "2607.04541",
-    "version": "v1",
-    "title": "CRISP: A Spatiotemporal Camera-Radar Backbone for Driving via Forecasting-Based World-Model Pretraining",
-    "authors": [
-      "Jingyu Song",
-      "Yi Liu",
-      "Katherine A. Skinner"
-    ],
-    "abstract": "Camera-radar (CR) fusion is a practical sensing configuration for autonomous driving, but existing models are typically trained with task-specific supervision, limiting reusable representation learning. We present CRISP, a spatiotemporal CR backbone pretrained through forecasting-based representation learning. Given historical multi-view images and radar sweeps, CRISP learns a unified bird's-eye-view (BEV) representation by predicting future LiDAR point clouds. LiDAR is used only as privileged supervision during pretraining; the deployed model requires only camera and radar. To make forecasting-based pretraining effective for CR fusion, CRISP introduces an enhanced radar encoder, radar-enhanced temporal self-attention, and multimodal feature rendering with modality innovation gating. These components inject radar range and Doppler cues into BEV temporal propagation and allow BEV tokens to selectively incorporate camera and radar evidence. Experiments on nuScenes show that CRISP improves long-horizon point cloud forecasting and transfers effectively to downstream tasks, including 3D detection, tracking, online mapping, motion forecasting, future occupancy prediction, and planning, suggesting that predictive CR pretraining is a promising path toward scalable driving representations under practical sensor configurations. The project website is https://umfieldrobotics.github.io/CRISP.",
-    "published": "2026-07-05T23:07:45Z",
-    "updated": "2026-07-05T23:07:45Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.AI",
-      "cs.LG",
-      "cs.RO"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "rendering",
-      "autonomous driving",
-      "mapping",
-      "world model"
-    ],
-    "classification_score": 7,
-    "classification_reasons": [
-      "Matched abstract phrase: autonomous driving",
-      "Matched abstract keyword: mapping",
-      "Matched title phrase: world model"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04541",
-    "pdf_url": "https://arxiv.org/pdf/2607.04541",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-08T10:39:56-04:00"
-  },
-  {
-    "arxiv_id": "2607.04498",
-    "version": "v1",
-    "title": "UniSkip-Mamba: A Frequency-Aware State Space Model for Audio-Visual Temporal Forgery Localization",
-    "authors": [
-      "Cangjin Qiu",
-      "Quan Zhang",
-      "Dan Jiang",
-      "Ke Zhang"
-    ],
-    "abstract": "With the proliferation of AI-generated content, sophisticated multimedia manipulation has raised critical concerns about malicious applications such as opinion manipulation and evidence fabrication, making Audio-Visual Temporal Forgery Localization (AV-TFL) an urgent research frontier. Existing TFL methods have progressed along two main paradigms: Transformer-based temporal modeling and channel-wise multimodal fusion. While these approaches capture temporal dependencies and cross-modal correlations, they process all frequency components indiscriminately, leading to overfitting on high-frequency noise and limited robustness under real-world data degradation. Through systematic frequency domain analysis, we find that forgery-discriminative patterns concentrate in the low/mid-frequency range (normalized frequency 0-0.15), while high-frequency components primarily introduce noise, removing them even improves detection performance by +1.4%. Based on this phenomenon, we propose UniSkip-Mamba, a frequency-aware State Space Model framework that incorporates Unified Multimodal Sequence Fusion to preserve cross-modal phase relationships, and Skip-Scanning Mamba Blocks that implement frequency-aware regularization through a novel Group-Scan-Merge mechanism, naturally biasing learning toward discriminative low/mid-frequency patterns (0-0.15) while maintaining representational completeness. We achieve state-of-the-art (SOTA) performance: 63.4% AP@0.95 on LAV-DF (+9.8% improvement) and 63.58% mAP on AV-Deepfake1M (+14.32% improvement), with 6x faster inference. Our frequency-domain analysis provides theoretical justification from a signal processing perspective for why skip-scanning inherently improves both accuracy and robustness.",
-    "published": "2026-07-05T20:51:24Z",
-    "updated": "2026-07-05T20:51:24Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.SD"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "manipulation",
-      "localization"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched abstract keyword: manipulation",
-      "Matched title keyword: localization",
-      "Matched abstract keyword: localization"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04498",
-    "pdf_url": "https://arxiv.org/pdf/2607.04498",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-08T10:39:56-04:00"
-  },
-  {
-    "arxiv_id": "2607.04330",
-    "version": "v1",
-    "title": "Framework and Multi-modal Dataset for Roadwork Zone Detection and Geo-localization",
-    "authors": [
-      "Zhiran Yan",
-      "Yutong Xin",
-      "S Shyam Shenoi",
-      "Rui Song",
-      "Gordon Elger"
-    ],
-    "abstract": "Autonomous vehicles often rely on high-definition (HD) maps for navigation; however, these maps are not frequently updated and often lack semi-static information, such as temporary roadwork zones, which can significantly alter the road network. This limitation underscores the urgent need for an accurate global position of roadwork zones. However, the absence of publicly available datasets for evaluating roadwork zone detection and geo-localization models has hindered the development of reliable autonomous driving systems. To address this challenge, we propose the Roadwork Zone Detection and Geo-localization (RZDG) dataset, which includes both simulated and real-world data, providing multimodal sensor inputs along with comprehensive annotations. The dataset supports multiple perception tasks, including image semantic segmentation, 3D object detection, and object geo-localization. In addition, we introduce a tracker-based roadwork zone detection and geo-localization (RZDG) pipeline, an extension of AB3DMOT, for accurate object geo-localization in roadwork zones. We benchmark our approach on the RZDG dataset, demonstrating its effectiveness in detecting roadwork zones and transforming object positions from the local coordinate system to the global coordinate system. A prediction is considered a true positive (TP) if its estimated position falls within one meter of the ground truth. Our experimental results show that our approach achieves high accuracy on both real and simulated data. Specifically, we report: Precision: 0.565 (real) / 0.615 (simulated) Recall: 0.898 (real) / 0.809 (simulated) F1-score: 0.597 (real) / 0.665 (simulated).",
-    "published": "2026-07-05T14:24:42Z",
-    "updated": "2026-07-05T14:24:42Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "autonomous driving",
-      "localization"
-    ],
-    "classification_score": 5,
-    "classification_reasons": [
-      "Rescued from exclusion by geometry keywords: localization",
-      "Matched abstract phrase: autonomous driving",
-      "Matched title keyword: localization",
-      "Matched abstract keyword: localization"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.04330",
-    "pdf_url": "https://arxiv.org/pdf/2607.04330",
-    "first_seen": "2026-07-07T11:12:40-04:00",
-    "last_seen": "2026-07-07T11:12:40-04:00"
   }
 ]
