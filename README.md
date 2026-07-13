@@ -11,57 +11,66 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：60
+- 当前滚动窗口论文数：48
 - 分类分布：
-  - 3D Reconstruction & Multi-view Geometry: 24
-  - Embodied / Robotics / AR Applications: 21
+  - 3D Reconstruction & Multi-view Geometry: 21
+  - Embodied / Robotics / AR Applications: 14
   - Neural Scene Representations & Rendering: 8
-  - Geometry Foundation Models: 4
-  - Dynamic / 4D Reconstruction: 3
+  - Geometry Foundation Models: 3
+  - Dynamic / 4D Reconstruction: 2
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-好的，以下是对今日论文列表的科研趋势综合分析。
+好的，作为您的计算机视觉和三维重建方向科研趋势分析助手，以下是根据您今日提供的论文列表生成的科研趋势综合分析。
+
+---
 
 #### 今日主要趋势
 
-1.  **从“基础模型蒸馏”到“领域自适应与轻量化”**：计算机视觉领域对大规模基础模型的依赖日益加深，但今日论文体现了两个关键转向：**其一是轻量化**，例如 `ZipDepth` 通过知识蒸馏将零样本单目深度估计模型压缩至6.1M参数，使其可在移动端实时运行，直接回应了基础模型部署困难的问题；**其二是领域自适应**，`Wat3R` 和 `LTM` 展示了如何利用半监督学习、跨域迁移或多模态先验（如过时DEM）将基础模型（如空气域3D重建模型、通用特征提取模型）适配到数据稀缺或条件苛刻的场景（如水下、野火地形），生成可用的高保真输出。这表明研究正从“设计更大模型”转向“如何让大模型更便宜、更普适地应用”。
+1.  **基础模型深度赋能与轻量化部署并行**：几何基础模型（如VGGT、3DGS相关）的隐式能力被深入挖掘，同时大型基础模型（如扩散模型、单目深度估计模型）正向轻量、高效、可实时运行的方向迅猛发展，两者共同推动技术从“能否做”向“在哪做”转变。代表论文：`What VGGT Knows About Overlap`、`ZipDepth`、`LongE2V`、`Time-to-Collision`。
 
-2.  **3D高斯泼溅（3DGS）进入“后成熟期”的系统级优化**：3DGS已有大量研究，今日论文不再只是简单的场景重建，而是将其与**具体任务深度耦合**，进行系统级优化：
-    -   **针对任务定制表征**：`GeoGS-SLAM` 发现SLAM任务更需几何而非外观，于是直接去除颜色参数，仅保留空间参数（参数减少80%+），创建了“纯几何”高斯。
-    -   **在线/物理仿真整合**：`HoloTetSphere` 优化3DGS以直接生成可用于物理仿真的拓扑连贯四面体网格；`Track2Map` 将3DGS与可变形SLAM结合，实现在线的相机轨迹与场景联合优化。
-    -   **场景级重建**：`PanoLOG` 解决户外全景图下的3DGS分区问题，`CARLA-GS` 则将重建的3DGS场景用于自动驾驶边缘案例的物理仿真视频合成。这表明3DGS的重心正从“静态、离线、外观优先”转向“动态、在线、任务驱动”。
+2.  **从“静态世界”走向“动态与可形变场景”**：研究热点明显从静态场景重建，转向更具挑战性的动态场景、可形变物体（手术、抓取）以及长时间视频处理。这包括对运动先验、时间一致性、物理真实性的极致追求。代表论文：`LongE2V`、`Track2Map`、`On the Design of Mixture-of-Experts for Dynamic Gaussian Splatting`、`LightCrafter`。
 
-3.  **动态场景建模的“扩散模型 + 结构先验”融合**：`LongE2V` 和 `LightCrafter` 都利用视频/图像扩散模型的强大生成先验来处理动态内容。但趋势不是直接端到端生成，而是与一个**物理或几何代理（proxy）** 相结合。`LightCrafter` 不直接学重光照，而是先利用逆渲染生成一个PBR代理视频，再让扩散模型在代理视频上进行精修，从而保证物理合理性。`LongE2V` 引入自回归展开和重编码对齐等结构先验来约束扩散模型，解决长序列时域漂移。这体现了“生成模型（灵活）+ 物理模型（可靠）”的协同趋势。
+3.  **低资源与特定领域重建的范式创新**：在标注数据稀缺或领域特性显著（如水下、野火、手术、树木生长）的场景下，研究工作不再依赖大规模标注，而是转向利用先验知识、自/半监督学习、跨域适应等创新范式，并同时构建配套的评估基准。代表论文：`Wat3R`、`LTM`、`Track2Map`、`3D Reconstruction of deciduous Trees`。
 
-4.  **具身智能中的“模块化解耦”与“多感官融合”**：机器人/具身智能相关论文（`WCog-VLA`, `TouchWorld`, `HumAIN`, `DexVerse`, `CARLA-GS`）表现出强烈的解耦倾向，试图将复杂的操作任务拆解为更可管理的子模块：
-    -   **模型解耦**：`WCog-VLA` 将任务解耦为语义层（世界感知与推理）和生成层（轨迹生成）；`TouchWorld` 将灵巧操作解耦为高层规划、触觉世界模型预测和触觉残差精化三个层次。
-    -   **感官解耦与融合**：`HumAIN` 通过知识蒸馏将隐式社会线索（来自骨骼点）显式融入导航规划。`TouchWorld` 强调触觉作为“预测性”和“反应性”双重角色的重要性，并尝试分离视觉语言任务规划与触觉快速反馈。这表明随着任务复杂度提升，纯端到端方法遇到瓶颈，模块化、可解释且能有效利用多模态（视觉、触觉、语言）的架构正在成为主流。
+4.  **SLAM与机器人应用的鲁棒性与社会性融合**：SLAM和机器人抓取/导航正从理想环境走向动态、非结构化的真实世界。研究不仅关注定位与建图的鲁棒性（如对抗动态物体、大尺度、弱纹理），还开始融合语义、人体社会线索等高层认知信息，以提升系统的智能性和社会适应性。代表论文：`PLED-VINS`、`Track2Map`、`HumAIN`、`Monocular Vision Based Control Framework for Grasping`、`Time-to-Collision`、`WCog-VLA`、`CARLA-GS`。
 
 #### 技术路线观察
 
-| 研究方向 | 技术侧重点 | 代表论文 | 观察评论 |
+| 技术方向 | 核心关注点 | 代表论文 | 技术侧重点 |
 | :--- | :--- | :--- | :--- |
-| **几何基础模型** | **知识蒸馏与零样本泛化** | `ZipDepth`, `Wat3R` | 核心在于如何将大模型能力高效迁移到特定场景或轻量平台上。`ZipDepth`聚焦于模型压缩，`Wat3R`聚焦于跨域知识迁移（空气→水下）。 |
-| **3D/4D 场景重建** | **大规模、动态、物理一致** | `PanoLOG`, `GeoGS-SLAM`, `HoloTetSphere`, `LTM`, `LightCrafter`, `CARLA-GS` | 3DGS正向**大规模户外**（PanoLOG）、**在线SLAM**（GeoGS-SLAM）、**物理仿真就绪**（HoloTetSphere）、**复杂光照**（LTM, LightCrafter）和**场景编辑**（CARLA-GS）发展，普遍采用“优化+先验/约束”范式。 |
-| **动态/4D 重建** | **扩散模型与结构约束** | `LongE2V`, `On the Design of MoE for Dynamic Gaussian Splatting` | 动态场景建模分为两派：一是利用扩散模型的生成能力（`LongE2V`），二是通过多变形专家混合（MoE）等结构化方法（`MoE for Dynamic GS`）。前者灵活但需要精心设计约束防漂移，后者结构紧密但泛化性受限。 |
-| **神经场景表示** | **基础模型编辑和物理仿真** | `LightCrafter`, `CARLA-GS` | 场景表示（如NeRF, 3DGS）不再是终点，而是作为中间代理（proxy），服务于**重光照、编辑和物理仿真**等高级应用。 |
-| **机器人/AR应用** | **模块化、层次化与多感官融合** | `WCog-VLA`, `TouchWorld`, `HumAIN`, `DexVerse`, `Monocular Grasping` | 核心趋势是**解耦**：将规划（语言/语义）、感知（视觉/触觉）、控制（动作）分离。强调利用大模型（LLM/GPT）进行高层推理，同时利用轻量化模型或物理先验进行低层快速响应。 |
+| **几何基础模型** | 模型内部表征与能力挖掘、知识蒸馏 | `What VGGT Knows About Overlap` | 通过探针实验和轻量级训练头发掘预训练模型（VGGT）的隐式能力（共可见性），理解模型行为。 |
+| **3D/4D 重建** | 尺度感知、动态/形变、拓扑、大规模场景 | `DGSfM`、`On the Design of MoE for Dynamic GS`、`HoloTetSphere`、`PanoLOG`、`LTM` | **DGSfM** 侧重利用先验（深度图）提升鲁棒性；**MoE** 探索多专家模型处理复杂动态；**HoloTetSphere** 突破拓扑限制；**PanoLOG** 解决全景图大规模场景分区问题；**LTM** 利用多模态先验（DEM）降低计算成本。 |
+| **神经场景表示与渲染** | 视频时间一致性、物理真实感、几何优先 | `LightCrafter`、`LongE2V`、`GeoGS-SLAM` | **LightCrafter** 和 **LongE2V** 侧重于生成式模型（扩散模型）在视频上的时间一致性与控制性；**GeoGS-SLAM** 则反其道而行，抛弃外观重建，专攻纯几何的SLAM，强调效率与实用性。 |
+| **机器人/AR应用** | 动态环境、隐性社会线索、端到端驾驶 | `PLED-VINS`、`HumAIN`、`WCog-VLA`、`Time-to-Collision`、`DexVerse`、`CARLA-GS` | **PLED-VINS** 和 **Time-to-Collision** 关注系统鲁棒性与数据效率；**HumAIN** 引入社会维度（人）；**WCog-VLA** 和 **CARLA-GS** 构建更高级的认知和仿真框架（世界模型、大模型、物理仿真），实现主动驾驶和复杂场景生成。 |
 
 #### 值得优先阅读的论文
 
-1.  **ZipDepth**：理由：直接回应了基础模型高效部署的现实需求，从工程和学术角度都有很高价值。方法清晰，实验结果明确，对关注嵌入式/移动端视觉和模型压缩的研究者有重要参考意义。
-2.  **Wat3R**：理由：巧妙解决了水下3D重建中最棘手的标注数据稀缺问题。其“空气→水下”的跨域半监督学习思路具有很强的创新性和可借鉴性，且构建了新的评估基准，对领域有实际推动作用。
-3.  **Track2Map (或 GeoGS-SLAM)**：理由：代表了3DGS在SLAM领域的两种前沿尝试。`Track2Map` 将3DGS与可变形SLAM结合，具备更强的实用性（手术场景）；`GeoGS-SLAM` 则从原理上挑战了3DGS对“外观”的依赖，思路新颖，对理解3DGS的本质有启发。两者都代表了技术从离线到在线的转型。
-4.  **LightCrafter**：理由：其“PBR代理 + 扩散精修”的混合流水线思想具有范式意义。它为将不可靠的物理模型（逆渲染）与灵活但可能不一致的生成模型结合提供了一个很好的范例。该方法对视频编辑、智能内容生成领域影响可能较大。
-5.  **TouchWorld**：理由：对灵巧操作中的触觉作用进行了深刻思考，提出的层次化解耦架构（预测性+反应性）极有可能是解决复杂接触任务的有效途径。它展示了如何将高级语义规划与低级物理交互优雅地统一。
+1.  **`ZipDepth`** - **优先理由**：高度务实，直击“模型部署到边缘设备”这一核心产业痛点。它展示了如何通过知识蒸馏，将笨重的零样本深度估计模型压缩到一个仅6.1M参数、可实时运行的小模型上。这对于关注落地和工程化的研究者极具参考价值。
+
+2.  **`LightCrafter`** - **优先理由**：视频重光照是一个高难度、高应用价值的任务。该工作巧妙地结合了基于物理渲染（PBR）的“确定性”优势与基于扩散模型的“生成式”优势，提出了一种混合流水线，在保持物理真实感的同时，实现了长视频的时间一致性。其设计思路对类似问题（如视频编辑、增强现实）有很强的借鉴意义。
+
+3.  **`HoloTetSphere`** - **优先理由**：这项工作直接挑战了传统的“重建+四面体化”两步走范式。通过端到端的可微分拓扑与几何优化，直接生成可用于物理仿真的连贯四面体网格。这为计算机图形学、VR/AR和科学计算中的物理仿真工作流带来了革新的可能性。
+
+4.  **`Wat3R`** - **优先理由**：水下3D重建是典型的标注匮乏领域。`Wat3R`提出的无标注跨域半监督学习方法（教师-学生架构加上精巧的跨视图一致性损失）是一种强大且通用的方法论。任何面临类似数据瓶颈（如医疗、遥感）的研究者都能从中获得启发。
+
+5.  **`On the Design of Mixture-of-Experts for Dynamic Gaussian Splatting`** - **优先理由**：该工作不是提出一个具体的SOTA方法，而是从“混合专家”（MoE）的角度，系统性地研究了动态3DGS中多变形建模的设计空间。它提供了两种互补的集成策略和深入的分析，具有很高的理论价值，为后续设计更鲁棒的动态3DGS方法奠定了基础。
 
 #### 可能的研究机会
 
-1.  **实验和泛化边界**：`Wat3R` 的跨域方法是否能推广到其他极端环境（如太空、核反应堆）？`ZipDepth` 的零样本能力在真实极端部署场景下（如雨夜、遮挡严重）的退化程度如何未被探索。
-2.
+1.  **动态场景中的“几何+外观”解耦重建与高效渲染**：`GeoGS-SLAM` 证明了纯几何GS的可行性，`LightCrafter` 尝试将物理与生成结合。未来是否可在4D重建中，将动态物体的几何、刚性与非刚性运动、外观纹理解耦，分别用最高效的方式表示，并通过一个统一的框架整合？
+
+2.  **通用“共可见性”先验的SLAM与重建**：`What VGGT Knows About Overlap` 证明了从基础模型中提取共可见性先验的可行性。这可以作为一个通用的“智能”视图选择器或初始化模块，提升现有全局SfM或基于学习的SLAM系统在大规模、弱纹理场景下的性能和鲁棒性。
+
+3.  **知识蒸馏与特定领域重建的结合**：`ZipDepth` 和 `HumAIN` 都采用了知识蒸馏。这一思路可以推广。例如，将大仿真模型（如`DexVerse`、`CARLA-GS`）中习得的、针对特定任务（如灵巧操作、边缘案例）的“世界知识”，蒸馏到一个轻量级的感知-控制模型中，实现高效部署。
+
+4.  **基于物理先验的可微渲染与重建**：`LTM` 利用DEM作为几何先验，`HoloTetSphere` 是可微四面体网格。可进一步研究将其他物理先验（如光照模型、材料属性、流体动力学）直接引入可微渲染管线，实现从稀疏观测中重建出物理上更准确、更可编辑的3D场景。
+
+#### 风险和不确定性
+
+*   **通用性与局限性**：许多论文的“贡献”和“性能”在摘要中通常被概括为“超越了SOTA”。但摘要很少提及方法的**失败案例、计算开销、对超参数的敏感性**以及在极端退化
 
 ### interests.md 指令分析
 
@@ -131,6 +140,41 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 **Primary category:** Geometry Foundation Models
 **Secondary categories:** 3D Reconstruction & Multi-view Geometry
 **Matched keywords:** VGGT, 3D reconstruction, SfM, SLAM, scene representation, localization
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：What VGGT Knows About Overlap: Probing Geometric Foundation Models for Co-Visibility  
+- 作者：Filippo Ziliotto, Luciano Serafini, Lamberto Ballan, Tommaso Campari  
+- 出版日期：2026-07-10  
+- 分类：Geometry Foundation Models（主），3D Reconstruction & Multi-view Geometry（次）  
+- 链接：摘要 https://arxiv.org/abs/2607.09503 | PDF https://arxiv.org/pdf/2607.09503  
+
+### 一句话总结
+本文发现VGGT内部表征隐式编码了共可见性（co-visibility），并通过引入轻量级逐层混合专家头（Co-VGGT）在Co-VisiON基准上超越人类标注基线，性能提升超过25%。
+
+### 研究问题
+如何利用几何基础模型VGGT的内部表征，在没有显式监督的情况下，判断图像对之间是否存在共可见重叠区域（尤其在低重叠场景中）？
+
+### 核心思路/方法
+1. 通过探针实验揭示VGGT的层级结构：早期层构建3D感知场景表征，晚期层（特别是L17层）充当共可见性推理器，且层L17对非共可见对具有一致路由行为。  
+2. 提出Co-VGGT：冻结VGGT，仅训练一个小于7.5M参数的逐层混合专家头（layer-wise MoE），将每层视为一个专家，根据输入对自适应加权每层的几何抽象，以便从单张RGB图像中分类共可见性。  
+3. 在Co-VisiON基准上评估，并与先前方法及人类标注基线对比。
+
+### 主要贡献
+1. 首次证明VGGT能够隐式编码共可见性，其内部表征呈现类似LLM的层级结构，且存在问题导向的层级专化证据（负锚点层L17）。  
+2. 提出Co-VGGT方法，仅训练轻量级MoE头，以分类RGB图像对的共可见性。  
+3. 在Co-VisiON基准上，Co-VGGT的成对预测和多重视图预测分别超越先前最佳方法25%以上和10%，并且超过人类标注基线。  
+4. 成对预测校准良好（ECE=0.030），可直接作为可见性图的边权重用于下游SfM和SLAM流水线，无需后处理纠正。
+
+### 局限性
+摘要未提供足够信息，例如方法在极端场景下的性能、对错误预测的鲁棒性、计算效率的详细分析，以及是否依赖特定训练数据集等。
+
+### 阅读优先级：高  
+理由：该工作首次揭示VGGT的共可见性推理能力，基于此设计的轻量头方法显著超越现有技术和人类基线，性能提升幅度大（>25%）。方法直接服务于3D重建与SLAM的实际下游任务，且提供代码和数据，实用性强。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -360,6 +404,40 @@ Dynamic scene reconstruction remains challenging due to the heterogeneous and sp
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** structure from motion, SfM, bundle adjustment, monocular depth
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：DGSfM: Depth-Guided Scale-Aware Global Structure-from-Motion
+- 作者：Sithu Aung, Viktor Kocur, Yaqing Ding, Torsten Sattler, Zuzana Kukelova
+- 出版日期：2026-07-10
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2607.09507
+
+### 一句话总结
+DGSfM 是一种深度感知的全局运动恢复结构（SfM）流水线，通过引入单目深度图作为先验，将传统尺度模糊的对极几何约束转换为尺度感知的约束，并结合视图图过滤与深度一致性剪枝，显著提升了位姿精度。
+
+### 研究问题
+全局 SfM 方法依赖尺度模糊的对极几何，易受噪声基线估计和弱视图图约束的影响，同时视觉模糊对之间的假边会降低重建质量。本文旨在解决这些鲁棒性和尺度模糊性问题。
+
+### 核心思路/方法
+1. **深度感知相对位姿求解器**：对每对图像，利用深度图将尺度模糊的对极约束转换为尺度感知的相对位姿约束。
+2. **视图图过滤与深度一致性剪枝**：通过视图图过滤和基于深度一致性的对应点剪枝，抑制仅在对极几何下看似合理的假边和误匹配。
+3. **全局尺度平均与深度引导初始化**：进行全局尺度平均，并用深度引导的位姿-点初始化将单目深度图对齐到公共重建尺度，为全局位姿估计和光束法平差提供稳定初始化。
+
+### 主要贡献
+- 提出一种深度感知的全局 SfM 流水线 DGSfM，利用单目深度图作为可扩展先验，同时保持显式多视图优化。
+- 通过深度引导的位姿求解、视图图过滤和对应剪枝，在稀疏和稠密匹配前端均显著提升位姿精度。
+- 在 ETH3D 和 IMC2021 数据集上，优于强全局 SfM 基线方法。
+
+### 局限性
+摘要未提供足够信息。摘要未提及模型对深度图质量的敏感度、计算开销、在极端场景（如纹理缺失或动态场景）下的表现等局限性。
+
+### 阅读优先级
+**高**。理由：该工作针对全局 SfM 中的核心尺度模糊和鲁棒性问题，提出了简洁有效的深度引导方案，在标准数据集上取得了明显改进，且代码已开源。对于从事 3D 重建、多视图几何研究的读者具有直接参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>

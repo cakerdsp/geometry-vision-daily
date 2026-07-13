@@ -3949,6 +3949,26 @@
         "path": "summaries/brief/2607.07885.md",
         "markdown": "### Metadata\n- 标题：Time-to-Collision Based Dynamic Obstacle Avoidance Using Pretrained Vision Models for Robots in Unstructured Environments\n- 作者：Erik Jagnandan, Mulugeta Haile, Gregory Barber, Pratik Chaudhari\n- 出版日期：2026-07-08\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2607.07885\n\n### 一句话总结\n本文提出一种基于碰撞时间（TTC）的视觉动态避障方法，利用预训练深度估计和特征匹配模型，无需训练即可实现非结构化环境中的机器人避障，并在真实数据集上验证了数据高效性和可解释性。\n\n### 研究问题\n如何在非结构化户外环境中实现动态障碍物避障，同时避免大规模机器人专用训练数据和仿真策略带来的数据效率低、仿真到现实迁移困难等问题。\n\n### 核心思路/方法\n- 利用预训练单目深度估计模型 UniDepth 从 RGB 视频生成稠密深度图，无需立体相机或激光雷达。\n- 扩展 SuperPoint 和 SuperGlue 特征匹配管线，在长帧序列中跟踪关键点，并通过相机内参和预测深度将2D像素投影到3D。\n- 对3D关键点进行束调整（bundle adjustment）以优化位姿，计算每个关键点的碰撞时间（TTC）。\n- 在地平面选择2D运动基元，使机器人远离最小TTC关键点的最近接近点。\n\n### 主要贡献\n1. 提出一种完全基于真实世界数据、无需模型训练的视觉动态避障方法，避免了仿真到现实的迁移问题。\n2. 利用预训练模型（UniDepth、SuperPoint、SuperGlue）实现数据高效性，仅需74秒数据用于超参数调优，无需数千小时训练数据。\n3. 在M3ED数据集上验证性能：识别TTC<1秒帧的精确率0.49、召回率0.38；正确避障方向生成率为84%；对22个物理障碍中的20个检测到至少一个TTC<1秒的帧。\n4. 方法保持可解释性和泛化性，适用于多种障碍物类型。\n\n### 局限性\n摘要未提供足够信息。未提及方法在复杂场景（如密集障碍物、高速运动）下的鲁棒性、实时性表现，或对光照、纹理等环境因素的敏感性。\n\n### 阅读优先级\n**高**\n理由：本文针对动态避障这一机器人领域核心难题，提出了一种无需训练、数据高效的解决方案，并使用了预训练视觉模型，具有较强的实用价值和可迁移性。实验结果在真实数据集上表现合理，且方法可解释性强，适合关注自主导航、避障与计算机视觉交叉研究的读者。"
       }
+    },
+    "2607.09507": {
+      "brief": {
+        "status": "success",
+        "input_hash": "c576fccf1f4baae3ecf31f157211bbe533c1389ff06ce18b030423af1e08d7d0",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-13T15:45:02Z",
+        "path": "summaries/brief/2607.09507.md",
+        "markdown": "### Metadata\n- 标题：DGSfM: Depth-Guided Scale-Aware Global Structure-from-Motion\n- 作者：Sithu Aung, Viktor Kocur, Yaqing Ding, Torsten Sattler, Zuzana Kukelova\n- 出版日期：2026-07-10\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2607.09507\n\n### 一句话总结\nDGSfM 是一种深度感知的全局运动恢复结构（SfM）流水线，通过引入单目深度图作为先验，将传统尺度模糊的对极几何约束转换为尺度感知的约束，并结合视图图过滤与深度一致性剪枝，显著提升了位姿精度。\n\n### 研究问题\n全局 SfM 方法依赖尺度模糊的对极几何，易受噪声基线估计和弱视图图约束的影响，同时视觉模糊对之间的假边会降低重建质量。本文旨在解决这些鲁棒性和尺度模糊性问题。\n\n### 核心思路/方法\n1. **深度感知相对位姿求解器**：对每对图像，利用深度图将尺度模糊的对极约束转换为尺度感知的相对位姿约束。\n2. **视图图过滤与深度一致性剪枝**：通过视图图过滤和基于深度一致性的对应点剪枝，抑制仅在对极几何下看似合理的假边和误匹配。\n3. **全局尺度平均与深度引导初始化**：进行全局尺度平均，并用深度引导的位姿-点初始化将单目深度图对齐到公共重建尺度，为全局位姿估计和光束法平差提供稳定初始化。\n\n### 主要贡献\n- 提出一种深度感知的全局 SfM 流水线 DGSfM，利用单目深度图作为可扩展先验，同时保持显式多视图优化。\n- 通过深度引导的位姿求解、视图图过滤和对应剪枝，在稀疏和稠密匹配前端均显著提升位姿精度。\n- 在 ETH3D 和 IMC2021 数据集上，优于强全局 SfM 基线方法。\n\n### 局限性\n摘要未提供足够信息。摘要未提及模型对深度图质量的敏感度、计算开销、在极端场景（如纹理缺失或动态场景）下的表现等局限性。\n\n### 阅读优先级\n**高**。理由：该工作针对全局 SfM 中的核心尺度模糊和鲁棒性问题，提出了简洁有效的深度引导方案，在标准数据集上取得了明显改进，且代码已开源。对于从事 3D 重建、多视图几何研究的读者具有直接参考价值。"
+      }
+    },
+    "2607.09503": {
+      "brief": {
+        "status": "success",
+        "input_hash": "40d5004c3ff3b5a37371854853150c256729140d49d838c9bbc93dd656156693",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-13T15:45:09Z",
+        "path": "summaries/brief/2607.09503.md",
+        "markdown": "### Metadata\n- 标题：What VGGT Knows About Overlap: Probing Geometric Foundation Models for Co-Visibility  \n- 作者：Filippo Ziliotto, Luciano Serafini, Lamberto Ballan, Tommaso Campari  \n- 出版日期：2026-07-10  \n- 分类：Geometry Foundation Models（主），3D Reconstruction & Multi-view Geometry（次）  \n- 链接：摘要 https://arxiv.org/abs/2607.09503 | PDF https://arxiv.org/pdf/2607.09503  \n\n### 一句话总结\n本文发现VGGT内部表征隐式编码了共可见性（co-visibility），并通过引入轻量级逐层混合专家头（Co-VGGT）在Co-VisiON基准上超越人类标注基线，性能提升超过25%。\n\n### 研究问题\n如何利用几何基础模型VGGT的内部表征，在没有显式监督的情况下，判断图像对之间是否存在共可见重叠区域（尤其在低重叠场景中）？\n\n### 核心思路/方法\n1. 通过探针实验揭示VGGT的层级结构：早期层构建3D感知场景表征，晚期层（特别是L17层）充当共可见性推理器，且层L17对非共可见对具有一致路由行为。  \n2. 提出Co-VGGT：冻结VGGT，仅训练一个小于7.5M参数的逐层混合专家头（layer-wise MoE），将每层视为一个专家，根据输入对自适应加权每层的几何抽象，以便从单张RGB图像中分类共可见性。  \n3. 在Co-VisiON基准上评估，并与先前方法及人类标注基线对比。\n\n### 主要贡献\n1. 首次证明VGGT能够隐式编码共可见性，其内部表征呈现类似LLM的层级结构，且存在问题导向的层级专化证据（负锚点层L17）。  \n2. 提出Co-VGGT方法，仅训练轻量级MoE头，以分类RGB图像对的共可见性。  \n3. 在Co-VisiON基准上，Co-VGGT的成对预测和多重视图预测分别超越先前最佳方法25%以上和10%，并且超过人类标注基线。  \n4. 成对预测校准良好（ECE=0.030），可直接作为可见性图的边权重用于下游SfM和SLAM流水线，无需后处理纠正。\n\n### 局限性\n摘要未提供足够信息，例如方法在极端场景下的性能、对错误预测的鲁棒性、计算效率的详细分析，以及是否依赖特定训练数据集等。\n\n### 阅读优先级：高  \n理由：该工作首次揭示VGGT的共可见性推理能力，基于此设计的轻量头方法显著超越现有技术和人类基线，性能提升幅度大（>25%）。方法直接服务于3D重建与SLAM的实际下游任务，且提供代码和数据，实用性强。"
+      }
     }
   },
   "reports": {
@@ -4187,6 +4207,13 @@
       "status": "success",
       "updated_at": "2026-07-12T14:27:19Z",
       "path": "reports/daily/2026-07-12.md",
+      "tasks": [],
+      "ai_trend_report": true
+    },
+    "2026-07-13": {
+      "status": "success",
+      "updated_at": "2026-07-13T15:45:33Z",
+      "path": "reports/daily/2026-07-13.md",
       "tasks": [],
       "ai_trend_report": true
     }
