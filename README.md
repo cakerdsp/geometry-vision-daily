@@ -11,11 +11,11 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：49
+- 当前滚动窗口论文数：54
 - 分类分布：
-  - 3D Reconstruction & Multi-view Geometry: 22
-  - Neural Scene Representations & Rendering: 10
-  - Embodied / Robotics / AR Applications: 9
+  - 3D Reconstruction & Multi-view Geometry: 21
+  - Neural Scene Representations & Rendering: 14
+  - Embodied / Robotics / AR Applications: 11
   - Dynamic / 4D Reconstruction: 5
   - Geometry Foundation Models: 3
 - 当前兴趣方向：未指定
@@ -23,54 +23,50 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 科研趋势综合分析
 
-## 今日科研趋势综合分析（基于 2026-07-13/14 论文列表）
+好的，这是基于您提供的论文列表生成的中文科研趋势综合分析。
 
-### 今日主要趋势
+#### 今日主要趋势
 
-#### 1. 3D Gaussian Splatting 的全面深化与细分应用
-3DGS 已经不再是单一的新场景表示方法，而是迅速演变成了各个应用方向的“底板技术”。今天的论文显示，3DGS 被广泛集成到 SLAM（`DiffRadar`, `GeoGS-SLAM`）、视频表示（`HyperGS`）、内窥镜视角外推（`ExtraGS`）、无线 VR 通信优化（`GeoFovea-GS`）以及跨视角场景构建（`ABot-3DWorld`, `VistaVLA`）中。这一趋势表明，研究重点正从“如何表示场景”转向“如何基于这种表示高效解决特定领域的核心瓶颈”。
+1.  **从“表征”到“交互”：物理与语义的深度耦合成为新焦点**
+    本日论文清晰地展示了计算机视觉与三维重建研究正从单纯追求视觉质量的“静态表征”，转向服务于具身智能和机器人操作的“动态交互”领域。多篇论文致力于填补“感知”与“行动”之间的鸿沟，例如通过解耦语义与空间流（**S-squared-VLA**）提升自动驾驶控制精度，或为3D资产自动赋予物理语义（**UniPhysGen**），使其可用于仿真。此外，物理引导的残差动力学（**PGRD**）和基于单次演示合成大规模训练数据（**WANDA**）的工作，都旨在为机器人策略学习提供更真实、更高效的数据与环境。这一趋势表明，让模型“理解”并“适应”物理世界规则，比单纯“看懂”更为重要。
 
-#### 2. 从“基于学习”到“物理与几何感知”的回归
-尽管深度学习仍然是主流引擎，但越来越多的论文在模型中显式注入物理规律或几何先验，而不是纯粹依赖数据驱动。例如，`DiffRadar` 用可微高斯场来建模雷达的物理传播过程；`GeoGS-SLAM` 从预训练视觉模型中提取几何先验来辅助单目SLAM；`ExtraGS` 使用不确定性引导的虚拟相机采样来主动覆盖几何盲点。这种趋势体现了领域对“可解释、鲁棒、少样本外性能”的追求，尤其是在安全敏感场景（手术、自动驾驶、水下作业）中。
+2.  **3D高斯泼溅（3DGS）进入“高速、高质量、高保真”应用深化阶段**
+    3DGS依然是本日最活跃的研究方向之一，但重点已从架构创新转向特定场景下的性能优化与应用拓展。技术上，出现了追求极致渲染速度（**Bake It Till You Make It**），实现高达5倍加速和4K 60 FPS输出；追求高质量外推，如结合扩散模型增强内窥镜视图外推（**ExtraGS**）；以及为无线VR场景设计结合通信约束的几何感知跨层框架（**GeoFovea-GS**）。此外，3DGS还作为高效的世界基底，用于合成机器人操作训练数据（**WANDA**）。这显示出3DGS正在从实验室基准走向解决特定领域（如手术、VR、机器人模拟）的工程难题。
 
-#### 3. 自回归与生成式方法逐步渗透几何任务
-传统上，深度估计、SLAM 和场景重建依赖确定性回归或迭代优化。今天的工作开始引入自回归和扩散生成范式：`ARDepth` 将单目深度估计重新定义为跨尺度的自回归生成过程；`ExtraGS` 和 `MetaView` 利用扩散模型来“补全”或“外推”未观测的视图；`Xiaomi-Robotics-U0` 和 `ABot-3DWorld` 则把世界建模本身当作一种多模态生成任务。这预示着几何任务可能迎来生成式革新，但同时也带来了几何一致性与幻觉控制的新挑战。
+3.  **联合逆渲染：物理模型与神经网络的融合走向精细化**
+    从图像中恢复场景的材质、光照和几何属性（逆渲染）正朝着更物理精准、更通用的方向发展。本日的几篇工作不再依赖端到端的黑盒学习，而是巧妙地融合了经典物理模型与神经网络。例如，**Volumetric Inverse Rendering** 直接将辐射传输方程（RTE）的微分形式作为残差目标，指导神经场优化；**Differentiable Polarized Path Tracing** 则通过引入偏振信息，在可微渲染框架中解决了传统梯度估计的数值不稳定问题；**FreeLit** 则用物理先验引导扩散模型，实现了无需配对数据的高控制性重打光。这种做法在保留了物理模型的解释性和约束能力的同时，利用了神经网络的强大拟合能力。
 
-#### 4. 异构传感器泛化与跨模态对齐的加速
-近几天的论文显示出强烈的“跨传感器、跨模态”泛化野心。`X-Lens` 专门解决鱼眼与针孔相机混合配置下的实时度量深度估计问题；`DiffRadar` 专为雷达信号设计；`GHOST` 专门处理透明物体的光学异常；`WiFi-JEPA` 甚至尝试用 WiFi 信号进行自监督的三维人体姿态估计。这反映了社区对“通用感知”的追求——不再只依赖单一传感器，而是力求算法能处理多种模态、多种域的场景，而不必针对每种场景重新训练。
+4.  **数据效率革命：从“大规模标注”到“单样本学习”与“零样本自博弈”**
+    针对监督学习对大规模、高质量数据（尤其是配对数据或人工标注）的依赖，本日论文展示了多种数据效率极高的解决方案。**Human4K** 这类传统大规模数据集依然重要（提供高分辨率、高精度标注），但更引人注目的是 **WANDA** 提出的“单次演示”引擎，通过程序化合成和轨迹重排，从一次人类演示生成海量训练数据。同时，**TerraZero** 通过程序化生成的模拟器和完全基于强化学习的自博弈方法，在零人类演示和零后备规划器的情况下，从头训练出达到顶尖安全性的自动驾驶策略。这表明，利用物理或几何先验进行数据合成，是打破数据瓶颈的关键路径。
 
-### 技术路线观察
+#### 技术路线观察
 
-| 方向 | 技术侧重点 | 代表论文 |
-|------|------------|----------|
-| **几何基础模型** | 混合相机建模、可微分前向渲染、几何先验注入 | `X-Lens`（可学习校准令牌）、`DiffRadar`（雷达正向模型）、`GHOST`（法线先验解耦） |
-| **3D/4D 重建** | 端到端 SfM-to-3DGS、大帧间位移处理、流式重建、闭环检测 | `SalientGS`（MCMC高斯分配）、`SPIN-4DGS`（隐式时空网络）、`IBPA`（增量球旋转）、`GeoGS-SLAM`（几何先验闭环） |
-| **神经场景表示与渲染** | 扩散引导外推、自回归生成、高斯视频表示、注视点感知渲染 | `ExtraGS`（扩散引导）、`ARDepth`（自回归）、`HyperGS`（前馈高斯视频）、`GeoFovea-GS`（注视点几何感知） |
-| **机器人/AR 应用** | 具身世界模型、跨视图理解、无标记跟踪、零演示训练 | `VistaVLA`（3D高斯VLA）、`CROSS`（跨视图语义几何）、`TerraZero`（自博弈模拟）、`roboreg`（外科机器人跟踪） |
+-   **几何基础模型**：本日仅**X-Lens**属于此类。其技术路线是构建紧凑的、**几何感知**的前馈网络，通过**可学习校准令牌**和**雅可比畸变偏置**等创新模块，解决异构相机（鱼眼+针孔）的实时度量深度估计问题，强调**跨相机泛化能力**。
+-   **3D/4D重建**：这一方向呈现出两大分支。一是**主动式**（**COLMAR**），通过强化学习优化多机器人协同的视点规划，目标是在有限预算下最大化重建质量。二是**从稀疏/不完整数据中补全**，例如从稀疏触觉重建可变形物体网格（**Topology-Agnostic Mesh...**）和用视觉几何先验补全遮挡区域的体占用（**GPOcc++**）。**CASA-SDF** 则代表了隐式神经表示向**空间自适应**的演进，通过课程学习和曲率指导处理室内场景的几何异质性。
+-   **神经场景表示与渲染**：这是本日论文数量最多的方向，技术路线多元化。
+    - **速度优化**：**Bake It Till You Make It** 通过将高频纹理烘焙到纹理图集，并采用2D曲面元素（Surfels）和稀疏化优化，大幅提升了渲染速度。
+    - **物理/偏振扩展**：**Differentiable Polarized Path Tracing** 和 **Volumetric Inverse Rendering** 分别向可微渲染中引入了偏振和体辐射传输方程，提升了逆渲染的物理准确性。
+    - **跨领域应用**：**ExtraGS** 和 **GeoFovea-GS** 代表了3DGS向医学（内窥镜）和通信（无线VR）领域的应用探索，各自设计了针对领域问题的解决方案（如扩散引导外推、几何感知跨层优化）。
+    - **混合仿真**：**PGRD** 采用了“可优化物理模拟器 + 神经网络残差校正”的混合路线，是物理模型与数据驱动结合的典型案例。
+-   **机器人/AR应用**：这个方向的论文更侧重于**闭环系统**和**数据生成**。
+    - **端到端控制**：**S-squared-VLA** 关注如何在VLA模型中保持空间信息，以生成精确轨迹。
+    - **仿真数据生成**：**WANDA** 和 **TerraZero** 代表了两种数据生成范式：前者从单次演示中合成多样化数据，后者在程序化模拟器中通过自博弈产生数据。
+    - **物理属性附加**：**UniPhysGen** 致力于为现有3D资产附加统一的物理语义，使其可直接用于机器人仿真。
+    - **AR辅助**：**Marker-free deformable registration...** 解决了手术中标记点从标本到病灶床的准确映射，代表了AR在精准医疗中的应用。
 
-**关键发现**：3DGS 在机器人/AR领域的渗透尤为深入，不再只是渲染工具，而是被用作VLA模型的“认知骨架”（`VistaVLA`）或 SLAM 系统的“可微地图”（`GeoGS-SLAM`）。
+#### 值得优先阅读的论文
 
-### 值得优先阅读的论文
+1.  **S-squared-VLA**：作为“Embodied/Robotics”方向的核心论文，它深刻剖析了当前VLA模型的根本缺陷（空间表征崩溃），并提出了一个极具可解释性的解耦方案。不仅适用于自动驾驶，其思想对整个具身智能领域都有启发。
+2.  **Bake It Till You Make It**：这篇论文代表了当前3DGS在渲染速度上的极致追求，其“烘焙-纹理图集”的加速思路非常具有工程价值。对于任何从事实时或交互式渲染的研究者来说，都是必读之作。
+3.  **UniPhysGen**：该工作直击了“仿真就绪3D资产”这一核心痛点，为具身AI和机器人研究提供了一个关键基础设施。其提出的自动化框架、大规模数据集和联合推理模型，使得这项工作既有方法论贡献，也有实用价值。
+4.  **WANDA**：这篇论文在数据效率方面的突破令人瞩目。其“单次演示合成海量数据”的路线，为破解机器人学习中的数据瓶颈问题提供了一个极具潜力的范式，对整个社区的训练数据生成策略有重要参考意义。
+5.  **Differentiable Polarized Path Tracing**：该工作将偏振信息引入可微渲染，直接挑战了一个长期存在的数值稳定性难题。为逆渲染领域开辟了一个新的提升维度（利用偏振先验），对于从事材质和光照估计的研究者是必读文献。
 
-1. **`ARDepth`** — 将深度估计从扩散去噪范式转向自回归生成范式，思路独特，可能开辟新的研究方向。对单一任务提出根本性不同的方法论，阅读价值极高。
-2. **`ExtraGS`** — 结合扩散模型与 3DGS 解决极具挑战的内窥镜视角外推问题，其不确定性引导采样策略具有通用性，可启发其他“少视角”或“大外推”场景。
-3. **`DiffRadar`** — 在雷达SLAM中提出可微高斯场，不仅展示了物理感知建模的优势，还达到了 70 FPS，证明物理可微分模型在实际系统中的可用性。
-4. **`VistaVLA`** — 它是当前 VLA 模型向显式3D认知空间演进的重要案例，其 MtQ 令牌压缩机制很有工程参考价值，并将3DGS从视觉工具提升为推理骨架。
-5. **`HyperGS`** — 首次展示无优化、前馈式高斯视频表示，编码速度提升 4-5 个数量级。这改变了高斯泼溅必须逐视频优化的认知，具备高泛化潜力和实际部署前景。
+#### 可能的研究机会
 
-### 可能的研究机会
-
-1. **自回归/扩散生成的三维几何一致性保证**：`ARDepth` 和 `ExtraGS` 分别引入了自回归和扩散方法，但如何在无显式约束的条件下保证生成结果的全局一致性（例如缩放、姿态一致性）仍是开放问题。结合可微渲染或物理模型的混合路线是一个可跟进的方向。
-2. **“可微分物理感知”在更多传感器的推广**：`DiffRadar` 的成功表明将传感器物理模型纳入可微框架极具潜力。类似的思路可扩展到声纳、热成像、毫米波雷达等其他少见或“非视觉”传感器。
-3. **几何先验的“即插即用”模块化设计**：`GHOST` 展示了预处理式几何引导，`GeoGS-SLAM` 展示了在线几何先验融合。设计一个通用、轻量、前端无关的“几何增强插件”是当前空白的。这种插件可以嵌入到任何单目 SLAM 或 MVS 系统中，直接提升鲁棒性。
-4. **水下/极端的全自主实时重建**：`IBPA` 的增量球旋转算法很适合嵌入到极端环境下（水下、采矿）的低算力平台。结合不确定性感知的高斯表示，或许能实现不需要任何3D预训练的自主探索和建图。
-5. **跨传感器基础模型**：今天出现了针对 WiFi、雷达、鱼眼、RGB 各自设计的专用模型。一个有趣的方向是构建一个“模态无关”的基础模型，通过解耦传感器特性（几何畸变、分辨率和物理模型）与场景内容，使模型能够在任意传感器组合上零样本泛化。
-
-### 风险和不确定性
-
-- **多段实验依赖未公开的数据集**：`X-Lens` 依赖其自研的 `OmniScene` 数据集中，文中提及的“在多个公开数据集+OmniScene 上大规模训练”可能引入仅在特定数据分布上有效的风险，读者需要关注其在纯公开数据上的表现。
-- **摘要未提供清晰消融实验**：多数论文（如 `ARDepth`, `ExtraGS`, `GeoGS-SLAM` ）的摘要未报告关键的消融实验或与最新基线（如 ZoeDepth, DUSt3R 等）的直接对比。性能声明需在全文核实后才可完全相信。
-- **实时性声明需谨慎对待**：`HyperGS` 宣称“4-5个数量级速度提升”，但这是指**编码**阶段，而不是实时推理。`GeoFovea-GS` 提到“显著降低传输成本”，但没有给出端到端延迟。阅读时需区分“实验
+1.  **“物理引导的3D/4D表示”的泛化与自动化**：
+    - **机会**：**PGRD** 和 **Volumetric Inverse Rendering** 等工作展示了物理模型与神经表示结合的优势。一个有趣的方向是，能否开发一种通用框架，自动为不同场景（如布料、流体、刚体）选择和参数化物理先验，并将其无缝嵌入到神经隐式或显式表示（如3DGS）的优化中，从而无需人工设计特定混合模型。
+    - **组合**：将 **B
 
 ### interests.md 指令分析
 
@@ -299,6 +295,41 @@ A fundamental challenge in 3D reconstruction and robotic localization is co-visi
 **Matched keywords:** human reconstruction
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Human4K: A Large-Scale 4K Multi-View Mocap Dataset for Whole-Body 3D Human Reconstruction
+- 作者：Tianshun Han, Ziyu Shi, Lijian Liu, Ajian Liu, Benjia Zhou, Hugo Jair Escalante, Yanyan Liang, Sergio Escalera, Zhen Lei, Jun Wan
+- 出版日期：2026-07-15
+- 分类：Dynamic / 4D Reconstruction
+- 链接：https://arxiv.org/abs/2607.13646
+
+### 一句话总结
+本文提出了Human4K，一个包含超600万张4K多视角图像、配备动作捕捉精确SMPL-X标注的大规模全身人体重建数据集，旨在提升复杂真实场景下的3D人体重建鲁棒性。
+
+### 研究问题
+现有3D人体重建模型在最具挑战性的真实场景（如深度模糊、自遮挡、肢体关节复杂动作）中表现不佳，关键原因在于已有数据集缺乏高分辨率图像、高精度标注和多样化全身动作的组合。
+
+### 核心思路/方法
+1. **数据集构建**：使用八视角高分辨率相机系统配合专业Vicon动作捕捉设备，采集11位受试者执行复杂、高度关节化且强自遮挡的全身运动，获得超600万张4K图像。
+2. **标注处理**：通过“动作重定向与精炼模块”（MRRM）处理所有序列，确保全身及四肢的精确定位。
+3. **实验验证**：在标准基准上使用Human4K进行训练，结果显示全身重建性能持续提升，尤其在手、脚和深度模糊肢体构型方面表现显著。
+
+### 主要贡献
+- 提供了首个大规模、4K分辨率、多视角、带动作捕捉精确SMPX-X标注的全身人体重建数据集（Human4K），覆盖复杂全身运动。
+- 使用MRRM模块实现高质量动作标注对齐。
+- 实验证明该数据集能有效提升标准基准上的全身重建质量，尤其改善手脚及深度模糊肢体构型的重建效果。
+
+### 局限性
+摘要未提供足够信息。未提及数据集的潜在偏差、是否涵盖不同体型或运动模式，以及模型在旋转或极端光照下的表现等。
+
+### 阅读优先级
+**高**  
+理由：该数据集直接针对当前3D人体重建中的关键瓶颈（复杂真实场景下的不稳定几何与肢体关节不精确），且提供了大规模、高分辨率、高精度标注的资源，对提升相关模型性能具有重要实践价值，适合从事人体重建、动作捕捉或多视角三维视觉的研究者优先阅读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Recent advances in 3D human reconstruction have improved overall performance, yet current models still fail in the most challenging real-world scenarios. They often produce unstable geometry, inaccurate limb articulation and unreliable predictions under depth ambiguity or self-occlusion. A key reason is that existing datasets still lack the combination of high-resolution images, high-precision annotations and diverse whole-body motions required to support robust reconstruction. To address this gap, we present Human4K, a large-scale 4K multi-view whole-body human reconstruction dataset with mocap-accurate SMPL-X annotations. Human4K contains over six million 4K images captured by an eight-view high-resolution camera system synchronized with a professional Vicon motion capture setup, covering 11 subjects performing complex, highly articulated and strongly self-occluded full-body motions. All sequences are processed by a Motion-Retargeting and Refinement Module (MRRM) to ensure precise alignment for the full body and extremities. Experimental results show that training with Human4K consistently improves whole-body reconstruction on standard benchmarks, with particularly large gains for hands, feet and depth-ambiguous limb configurations.
@@ -524,6 +555,43 @@ Recovering high-quality video from sparse event streams is a challenging task. R
 **Matched keywords:** 3D reconstruction, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：COLMAR: Cooperative View Policy Learning for Multi-Agent Active 3D Reconstruction
+- 作者：Phu Pham, Damon Conover, Aniket Bera
+- 出版日期：2026-07-15
+- 分类：3D Reconstruction & Multi-view Geometry；Neural Scene Representations & Rendering
+- 链接：[摘要](https://arxiv.org/abs/2607.13524) | [PDF](https://arxiv.org/pdf/2607.13524)
+
+### 一句话总结
+本文提出COLMAR，一个基于共享策略学习的多智能体协同视点规划框架，通过重建感知目标优化主动三维重建的质量与覆盖。
+
+### 研究问题
+多智能体主动三维重建中，因协调不足（如冗余观测、空间聚类）导致重建质量下降，如何设计有效的协同视点政策以在有限传感预算下提升重建精度与覆盖。
+
+### 核心思路/方法
+1. 将视点分配建模为基于地图中心观测的**共享策略优化**问题。
+2. 引入**重建感知目标函数**，包含重叠感知覆盖、团队级新区域发现、碰撞安全探索三项指标。
+3. 利用增量重建更新生成密集反馈，将探索行为与下游几何质量对齐。
+4. 采用参数共享的**近端策略优化（PPO）**训练策略，部署时各智能体独立执行动作，基于融合团队地图决策，无需智能体间消息传递。
+5. 选定视点通过**3D高斯泼溅（3DGS）**重建，实现高保真光度评估。
+
+### 主要贡献
+- 提出多智能体协同视点学习框架COLMAR，通过重建感知目标优化协调策略。
+- 设计无需在线通信的共享策略机制，降低部署复杂度。
+- 在GLEAM和Replica数据集上，相比启发式和非协同基线，在相同传感预算下实现高达**54%的重建精度提升**和**49%的覆盖增加**。
+
+### 局限性
+摘要未提供足够信息（如失败场景、计算开销、泛化至复杂场景的瓶颈等）。
+
+### 阅读优先级
+**高**  
+理由：该工作针对多智能体主动三维重建中的关键协调难题，提出了结合强化学习与3DGS的新框架，实验提升显著（精度/覆盖均超50%），且属于近期的前沿方向（2026年发表）。适合关注多机器人重建、视点规划及神经渲染的读者优先阅读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Active 3D reconstruction requires selecting informative viewpoints under limited sensing budgets. In multi-agent settings, coordination inefficiencies such as redundant observations and spatial clustering can significantly reduce reconstruction quality. We present COLMAR, a cooperative view policy learning framework for multi-agent active 3D reconstruction. COLMAR formulates viewpoint allocation as a shared policy optimization over map-centric observations and introduces a reconstruction-aware objective that promotes overlap-aware coverage, team-level discovery, and collision-safe exploration. Dense feedback derived from incremental reconstruction updates aligns exploration behavior with downstream geometric quality. The policy is trained using parameter-sharing Proximal Policy Optimization (PPO) with independent per-agent action selection at deployment, conditioned on a fused team map and without inter-agent message passing for decision making. Selected viewpoints are then reconstructed with 3D Gaussian Splatting (3DGS) for high-fidelity photometric evaluation. Experiments on GLEAM and Replica demonstrate consistent improvements over heuristic and non-cooperative baselines, achieving up to 54% higher reconstruction accuracy and 49% greater coverage under matched sensing budgets.
@@ -537,6 +605,41 @@ Active 3D reconstruction requires selecting informative viewpoints under limited
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** 3D reconstruction, surface reconstruction, mapping
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：CASA-SDF: Curriculum-Aware Spatial Adaptation with Curvature-Guided Density for Neural Implicit Surface Reconstruction
+- 作者：Lei Yang, Weiqing Li, Zhiyong Su, Liang Xiao
+- 出版日期：2026-07-15
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：摘要: https://arxiv.org/abs/2607.13492 | PDF: https://arxiv.org/pdf/2607.13492
+
+### 一句话总结
+本文提出CASA-SDF框架，通过课程感知的空间自适应监督和曲率引导的密度变换，同时提升室内场景中平面区域的平滑性和薄结构的细节重建精度。
+
+### 研究问题
+室内场景由于几何异质性（大面积无纹理平面与精细薄结构并存），现有隐式神经表示方法难以同时实现平面平滑（避免高频伪影）和薄结构细节保留（克服MLP的光谱偏置），通常导致过平滑或伪影。
+
+### 核心思路/方法
+1. **混合空间自适应不确定度退火（SAUA）**：融合语义和光度不确定度，构建像素级课程，在训练初期抑制不可靠的单目先验监督，保留可靠区域的正则化，后期允许数据驱动的光度优化。
+2. **曲率感知局部自适应密度变换（CALADT）**：通过曲率代理逐步调节SDF到密度的映射锐度，增强对薄结构的表示能力，同时不破坏平面稳定性。
+
+### 主要贡献
+- 提出了统一框架CASA-SDF，通过监督和表示能力的空间自适应互补适配，解决室内重建中几何异质性的挑战。
+- 设计SAUA策略，基于像素级不确定度实现单目先验的课程式监督，平衡可靠性和灵活性。
+- 设计CALADT机制，利用曲率代理动态调整密度变换锐度，改善高频结构的表示。
+- 在基准室内数据集上验证，相比现有方法提高了表面完整性和高频结构细节恢复，且未牺牲平面稳定性。
+
+### 局限性
+摘要未提供足够信息，例如对极端噪声/缺失区域的鲁棒性、计算开销或与其他方法的定量对比细节。
+
+### 阅读优先级
+高
+- 理由：该工作直接针对室内场景重建中的核心难点（平面与薄结构平衡），提出创新的监督和表示适应机制（SAUA和CALADT），实验证明有显著提升。对于从事3D重建、隐式表示或室内场景理解的研究者具有直接参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -554,6 +657,41 @@ Neural implicit representations have emerged as a powerful paradigm for 3D recon
 **Matched keywords:** mesh reconstruction
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Topology-Agnostic Mesh Reconstruction of Deformable Objects from Sparse Touch
+- 作者：Everest Yang
+- 出版日期：2026-07-15T06:17:35Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2607.13479
+
+### 一句话总结
+论文提出一种拓扑无关的单一估计器，仅通过少量触觉信号（无视觉）即可重建可变形物体的完整网格，并利用深度集成不确定性指导触觉采样位置以降低重建误差。
+
+### 研究问题
+如何在无视觉条件下（如黑暗、遮挡等场景），仅依赖稀疏的触觉接触点重建可变形物体的完整三维网格形状，并优化触觉采样策略以提升重建精度。
+
+### 核心思路/方法
+- 使用**单一置换不变交叉注意力架构**，统一处理1D绳索、2D布料和3D体积软体三种拓扑结构，无需针对不同拓扑分别设计模型。
+- 训练**深度集成估计器**，从少量触觉输入直接输出物体完整网格，并产生不确定性估计。
+- 利用不确定性估计指导下一次触觉采样位置（主动触觉策略），在给定触觉预算下降低误差。
+
+### 主要贡献
+- 提出第一个拓扑无关的稀疏触觉网格重建方法，单一架构适用于绳索、布料、体积软体。
+- 相比非学习的几何网格补全和高斯过程曲面基线，重建误差降低约三分之二。
+- 基于深度集成的不确定性主动采样策略在低预算下优于随机触摸和高斯过程主动基线，尤其在自遮挡和误差尾部分表现更明显。
+- 当视觉可用时，触觉采样位置影响不大，凸显无视觉场景的研究价值。
+
+### 局限性
+摘要未提供足够信息（如对高度自变形、多物体交互或真实物理接触数据的测试结果，以及计算复杂度等）。
+
+### 阅读优先级
+**中**：该工作针对无视觉环境下的可变形物体重建问题，方法新颖（拓扑无关、主动触觉），但领域较为专精，适合从事触觉感知、机器人操作或非刚性重建的研究者阅读。对于通用3D重建社区，参考价值相对有限。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Estimating the full shape of a deformable object is especially challenging when vision is unavailable: in the dark, inside an opaque bag, behind the manipulating hand, or under heavy self-occlusion. Touch is the natural sensor in these settings, but touches are sparse and local. We present a single topology-agnostic estimator that reconstructs the full mesh of a deformable object from only a few touches and no vision, using one permutation-invariant cross-attention architecture that handles a 1D rope, a 2D cloth, and a 3D volumetric soft body. The learned estimator reduces reconstruction error by roughly two-thirds relative to non-learned geometric mesh completion and a Gaussian-process surface baseline, and it outperforms a simpler global-pool set encoder, with the gap growing as more touches are observed. We then show that the estimator's deep-ensemble uncertainty can be used to learn where to touch next, which lowers error further and beats both random touching and a Gaussian-process active baseline at sparse budgets. This gain is modest on average but grows with self-occlusion and on the error tail. When vision is also available, where to touch barely matters, motivating the vision-free setting we study.
@@ -567,6 +705,41 @@ Estimating the full shape of a deformable object is especially challenging when 
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** pose estimation, feature matching
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：DreamSat-Pose: Spacecraft Pose Estimation from Single-View 3D Reconstructions and Learned 2D-3D Feature Matching
+- 作者：Josiane Uwumukiza, Jocelyn Zhao, Giovanni Lavezzi, Giacomo Battaglia, Paolo Panicucci, Minduli C. Wijayatunga, Victor Rodriguez-Fernandez, Richard Linares
+- 出版日期：2026-07-15T05:12:48Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2607.13449
+
+### 一句话总结
+本文提出DreamSat-Pose框架，通过单张图像重建未知航天器的3D形状模型并学习2D-3D对应关系，实现6自由度姿态估计，在SPE3R数据集上达到0.157度的平均指向误差。
+
+### 研究问题
+如何在未知目标航天器的情况下，通过单张图像同时实现目标三维形状重建和准确的6自由度姿态估计。
+
+### 核心思路/方法
+1. **单视图三维重建**：首先从单张输入图像重建目标的3D形状模型（点云）。  
+2. **特征提取与匹配**：使用冻结的DINOv3视觉Transformer提取图像特征，用可训练的动态图卷积神经网络（DGCNN）编码器从重建点云中提取几何特征。  
+3. **双流Transformer匹配器**：通过交替自注意力和交叉注意力机制精炼描述符，生成软对应关系。  
+4. **姿态恢复**：将软对应关系输入Perspective-n-Point求解器，计算最终6自由度姿态。
+
+### 主要贡献
+1. 提出一个端到端框架，联合实现未知航天器的单视图三维重建与6自由度姿态估计。  
+2. 设计双流Transformer匹配器，通过交替注意力机制实现2D-3D特征匹配。  
+3. 在SPE3R数据集上验证了有效性，仅使用单张图像和重建几何即可达到0.157度平均指向误差，展现了良好的泛化能力。
+
+### 局限性
+摘要未提供足够信息：未提及具体失败案例、计算复杂度、对遮挡或光照变化的鲁棒性分析，以及重建几何质量对姿态估计精度的直接影响。
+
+### 阅读优先级
+**高**。理由：该研究针对航天器自主交会中的关键问题（未知目标形状与姿态联合估计），方法设计新颖（融合视觉Transformer、图神经网络和双流匹配器），且实验指标（0.157度指向误差）具有吸引力，对3D重建与姿态估计领域具有参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1432,6 +1605,41 @@ Accurate 3D terrain maps are essential for emergency response when assessing wil
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, rendering, radiance, splatting, mapping
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Bake It Till You Make It: Ultrafast Spatial Texture-Atlas Splatting
+- 作者：Neel Kelkar, Simon Niedermayr, Kaloian Petkov, Klaus Engel, Rüdiger Westermann
+- 出版日期：2026-07-15T13:12:31Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2607.13808
+
+### 一句话总结
+本文提出一种将高频纹理烘焙到紧凑纹理图集的快速渲染方法，通过解耦低频几何与高频外观，在保持高视觉保真度的同时将3DGS渲染速度提升至5倍，并支持60 FPS的4K实时渲染。
+
+### 研究问题
+如何克服3D高斯泼溅（3DGS）在基于哈希网格的外观参数化中片段渲染阶段的高计算开销，同时保持高频纹理细节和实时渲染速度。
+
+### 核心思路/方法
+1. 采用解耦的辐射表示：用2D surfels建模低频几何和视角相关外观特征，通过视角无关的空间哈希网格表示高频纹理。
+2. 将空间哈希网格“烘焙”成一个紧凑的纹理图集（texture atlas）。
+3. 引入稀疏性增强优化：惩罚半透明度和每个原语的衰减，从而激进地剪枝不重要的surfels，实现比先前工作更快、更稀疏的重建。
+4. 利用几何稀疏性和高效GPU纹理映射来加速渲染。
+
+### 主要贡献
+- 提出一种解耦辐射表示，分离低频几何/视角相关外观与高频纹理，并采用烘焙纹理图集技术。
+- 通过稀疏性增强优化显著减少surfels数量，实现更快的重建和更稀疏的表示。
+- 相比3DGS获得高达5倍的渲染速度提升，同时保持最先进的视觉保真度，在消费级硬件上实现60 FPS的4K实时渲染。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+高。理由：论文显著提升了3DGS的渲染速度（最高5倍），且直接展示了4K 60 FPS的实时性能，在神经渲染领域具有实际应用潜力；方法结构清晰（解耦表示+烘焙纹理图集+稀疏优化），是近期工作方向中针对效率瓶颈的直观改进，值得深入参考。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Recent extensions of 3D Gaussian Splatting (3DGS) capture fine color details using hash-grid-based appearance parameterization but incur high computational cost during fragment rendering. We introduce a decoupled radiance representation that models low-frequency geometry and view dependent appearance features with 2D surfels while representing high-frequency textures via a view-independent spatial hash grid that is baked into a compact texture atlas. By including sparsity-enhancing optimizations that penalize semi-transparency and per-primitive falloff, our method aggressively prunes insignificant surfels and achieves significantly faster and sparser reconstructions than prior work. Exploiting geometric sparsity and efficient GPU texture mapping, our approach achieves up to a fivefold speedup over 3DGS while preserving state-of-the-art visual fidelity, enabling real-time 4K rendering at 60 FPS on consumer hardware.
@@ -1445,6 +1653,42 @@ Recent extensions of 3D Gaussian Splatting (3DGS) capture fine color details usi
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** inverse rendering, rendering, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Volumetric Inverse Rendering via Neural Radiative Transfer  
+- 作者：Ntumba Elie Nsampi, Adarsh Djeacoumar, Hans-Peter Seidel, Tobias Ritschel, Thomas Leimkühler  
+- 出版日期：2026-07-15  
+- 分类：Neural Scene Representations & Rendering  
+- 链接：arXiv:2607.13695 (摘要: https://arxiv.org/abs/2607.13695, 论文: https://arxiv.org/pdf/2607.13695)
+
+### 一句话总结
+本文提出一种基于神经辐射传输的体积逆渲染方法，通过联合优化神经网络场表示的光学属性和光场，并利用辐射传输方程的局部微分形式作为残差目标来强制执行全局光照，从而实现从多视图图像中重建参与介质的散射、吸收和相位函数参数。
+
+### 研究问题
+如何从多视图图像中高效且准确地恢复参与介质的体光学属性（如散射、吸收和相位函数），同时兼顾物理完整的全局光照建模与通用神经优化的简便性。
+
+### 核心思路/方法
+- 将介质的光学属性和完整光场表示为**神经场**（neural fields）。  
+- 通过**联合优化过程**同时估计光学参数和光场。  
+- 利用**辐射传输方程（RTE）的局部微分形式**构建残差目标，以强制模型满足全局光照约束。  
+- 沿主视角光线添加**体渲染项**以缓解低频偏差。  
+- 最终从多视图图像中重建**空间变化、颜色分辨的散射、吸收和相位函数参数**。
+
+### 主要贡献
+- 提出一种**兼顾物理完整性与通用神经优化的体逆渲染框架**，无需依赖可微分随机光传输模拟的复杂算法。  
+- 通过微分形式的RTE残差目标**实现全局光照建模**，同时利用体渲染项抑制低频偏差。  
+- 支持从多视图图像重建**空间变化的散射、吸收和相位函数**，并可用于学习具有物理光学属性的生成模型。
+
+### 局限性
+摘要未提供任何关于实验局限性的信息。
+
+### 阅读优先级
+**中**。理由：该工作聚焦于体渲染中的逆问题，方法上结合了神经场与辐射传输方程，对从事神经渲染、体积光学属性重建或物理仿真领域的研究者有参考价值；但由于摘要未提供实验对比或性能数据，且属于较新的预印本（出版于2026年），实用性尚待验证。非相关领域读者可暂缓阅读。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1462,6 +1706,43 @@ Volumetric inverse rendering seeks to recover the optical properties of particip
 **Matched keywords:** inverse rendering, relighting, rendering
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：FreeLit: Paired-Free Indoor Relighting via Physics-Guided Diffusion
+- 作者：Chi-En Yen, Duy-Khanh Ngo, Wen-Wei Tang, Huu-Phu Do, Wen-Hsiao Peng, Ching-Chun Huang
+- 出版日期：2026-07-15
+- 分类：Neural Scene Representations & Rendering
+- 链接：摘要: https://arxiv.org/abs/2607.13656 | PDF: https://arxiv.org/pdf/2607.13656
+
+### 一句话总结
+FreeLit 提出了一种无需配对训练数据的室内场景重打光框架，通过物理引导的扩散模型和内在稳定性策略，实现对光源位置、颜色和强度的可控调整，尤其在低照度场景中表现鲁棒。
+
+### 研究问题
+如何在不依赖昂贵的配对多光照数据集的情况下，实现对室内场景的可控重打光（包括光源位置、颜色和强度的显式操控），并提升在低照度等挑战条件中的稳定性和物理一致性。
+
+### 核心思路/方法
+1. **无配对框架**：利用物理先验构建照明先验，从内在场景属性生成结构化的光照图（lightmap）和伪重打光图像。
+2. **物理引导扩散**：以上述光照图和伪图像作为引导信号，驱动扩散模型合成最终重打光结果。
+3. **重打光引导的内在稳定性策略**：针对内在属性估计在低光场景中的不稳定性，通过结构感知蒸馏和一致性约束，强制保持反射率在光照变化下的不变性。
+4. **可控制性评估指标**：提出新的评价指标，量化重打光结果与用户指定光照颜色和强度的对齐程度。
+
+### 主要贡献
+- 提出了无需配对监督的可控室内重打光框架 FreeLit。
+- 设计了物理引导的扩散合成流程，利用内在属性构建照明先验。
+- 提出重打光引导的内在稳定化策略，提升低光场景下内在估计的鲁棒性。
+- 引入面向可控性的评估指标，用以衡量与用户光照参数的一致性。
+
+### 局限性
+摘要未提供足够信息，因此未说明实验中的具体局限性（如计算开销、对极端几何的适应性等）。
+
+### 阅读优先级
+中  
+理由：该方法针对室内重打光中配对数据稀缺和低光鲁棒性问题，提出了一套无监督且物理约束的解决方案，对从事图像合成、神经渲染或照明估计的研究者有一定参考价值。但摘要未详细介绍与现有方法的定量对比或消融实验细节，需阅读全文验证其有效性。若您关注扩散模型与物理先验结合的重打光方向，可优先阅读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Image-based indoor scene relighting remains challenging due to the complex interplay between cluttered geometry and local illumination, requiring precise modeling of light position, color, and intensity. Existing data-driven methods implicitly learn this relationship via paired multi-illumination datasets. Nevertheless, this data is costly and fails to scale, which is essential for accurate light-source-level control. Conversely, inverse-rendering methods reduce the data dependency by incorporating physical priors; however, they lack the robustness of intrinsic estimation in challenging conditions. In this paper, we present FreeLit, a paired-free framework for controllable indoor relighting that explicitly manipulates light-source location, color, and intensity. Instead of relying on paired supervision, we construct a physics-guided illumination prior from intrinsic scene properties, generating a structured lightmap along with a pseudo-relit image to guide diffusion-based synthesis. To address instability in intrinsic estimation, especially in low-light scenes, we introduce a relighting-guided intrinsic stabilization strategy that enforces illumination-invariant reflectance through structure-aware distillation and consistency constraints. Furthermore, we propose controllability-oriented evaluation metrics to quantify alignment with user-specified illumination color and intensity. Experimental results demonstrate that FreeLit achieves stable, physically consistent, and controllable relighting, with improved robustness in low-light indoor scenes, without requiring paired supervision.
@@ -1475,6 +1756,41 @@ Image-based indoor scene relighting remains challenging due to the complex inter
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** Embodied / Robotics / AR Applications
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, splatting, manipulation, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Learning Physics-Guided Residual Dynamics for Deformable Object Simulation
+- 作者：Shivansh Patel, Kaifeng Zhang, Sanjay Pokkali, Svetlana Lazebnik, Yunzhu Li
+- 出版日期：2026-07-15T05:15:43Z
+- 分类：主要类别：神经场景表示与渲染；次要类别：具身/机器人/AR应用
+- 链接：摘要：https://arxiv.org/abs/2607.13451 ；PDF：https://arxiv.org/pdf/2607.13451
+
+### 一句话总结
+提出物理引导残差动力学（PGRD）混合框架，将可优化的弹簧-质点物理模拟器与学习残差校正的神经网络结合，在真实世界可变形物体模拟中取得比纯物理或纯学习方法更准确的结果。
+
+### 研究问题
+如何准确模拟可变形物体的动力学行为，克服纯物理方法精度不足和纯学习方法泛化性弱的局限。
+
+### 核心思路/方法
+1. **混合框架**：以可优化的弹簧-质点模拟器作为基础物理骨干，叠加一个学习残差校正的神经网络。
+2. **速度基础公式**：采用基于速度的公式确保模拟稳定性。
+3. **滑动窗口Transformer**：使用滑动窗口Transformer架构捕捉时间依赖性。
+4. **应用扩展**：将PGRD用于基于模型预测控制的操控规划（包括语言条件设置下的目标图像生成），以及通过3D高斯喷溅进行动作条件视频预测的交互式模拟。
+
+### 主要贡献
+- 提出了PGRD混合模拟框架，融合物理模拟与学习残差校正。
+- 在多种真实世界可变形物体上展示了优于纯物理和纯学习方法的准确性。
+- 展示了PGRD在操控规划（含语言条件）和交互式模拟两个应用中的实用价值。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+高。理由：该工作针对机器人操控中可变形物体模拟这一关键难题，提出了新颖且实用的混合方法，并在真实数据上验证了有效性，同时展示了在语言条件操控等前沿应用场景的潜力。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1492,6 +1808,39 @@ Simulating deformable objects is essential for a wide range of robotic manipulat
 **Matched keywords:** 3D reconstruction, inverse rendering, differentiable rendering, rendering, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Differentiable Polarized Path Tracing  
+- 作者：Pramod Rao, Jérémy Riviere, Xilong Zhou, Abhijeet Ghosh, Abhimitra Meka, Thabo Beeler, Marc Habermann, Christian Theobalt, Delio Vicini  
+- 出版日期：2026-07-14  
+- 分类：Neural Scene Representations & Rendering  
+- 链接：https://arxiv.org/abs/2607.13265  
+
+### 一句话总结  
+本文提出一种基于偏振感知的可微分路径追踪方法，通过结合路径回放与局部缓存估计无偏梯度，解决了偏振算子导致的数值不稳定问题，从而支持复杂场景下的材质与光照逆渲染。
+
+### 研究问题  
+现有基于物理的可微分渲染方法大多忽略偏振信息，而偏振线索能约束场景几何与材质属性，但偏振算子（如线性偏振器、漫反射）的秩亏特性破坏了标准梯度估计器（如路径回放反向传播）的可逆性假设，导致数值不稳定。
+
+### 核心思路/方法  
+- 采用基于Mueller-Stokes微分的偏振光前向仿真方法。  
+- 在反向传播中，通过路径回放与局部缓存相结合的方案估计无偏梯度，避免偏振算子秩亏导致的算法失效，实现稳定优化。
+
+### 主要贡献  
+1. 提出一种鲁棒、偏振感知的可微分路径追踪算法。  
+2. 解决了偏振光反向扩散中梯度估计的数值不稳定问题。  
+3. 扩展了基于物理的逆渲染在复杂材质与光照优化中的适用性。
+
+### 局限性  
+摘要未提供足够信息（如实验设置、计算开销、对场景或偏振类型的限制等）。
+
+### 阅读优先级  
+**高**。理由：该工作填补了可微分渲染中偏振信息利用的空白，针对关键数值稳定性问题提出新方案，对逆渲染领域（如3D重建、材质估计）具有潜在实用价值，且方法描述清晰。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Physically based differentiable rendering has proven to be a powerful tool for inverse rendering problems (e.g., 3D reconstruction, reflectance estimation, lighting estimation). However, most existing methods operate solely on radiometric intensity, discarding valuable polarization cues that constrain scene geometry and material properties. While forward simulation of polarized light is well-defined via Mueller-Stokes calculus, extending reverse-mode differentiation to this domain presents significant challenges. The rank-deficient nature of common polarimetric operators, such as linear polarizers and diffuse reflections, violates the invertibility assumptions of standard gradient estimators like path replay backpropagation and results in numerical instability. We address this by proposing a robust, polarization-aware differentiable path tracing method. Our approach estimates unbiased gradients through a combination of path replay and local caching. This formulation enables efficient and stable optimization of material and lighting parameters in complex scenes, broadening the applicability of physically based inverse rendering. Project page: https://vcai.mpi-inf.mpg.de/projects/DPPT/
@@ -1505,6 +1854,42 @@ Physically based differentiable rendering has proven to be a powerful tool for i
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** Embodied / Robotics / AR Applications
 **Matched keywords:** Gaussian Splatting, rendering, splatting, manipulation, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Worlds in One Demo: A Synthetic Data Engine for Learning Open-World Mobile Manipulation
+- 作者：Lingxiao Guo, Huanyu Li, Guanya Shi
+- 出版日期：2026-07-14
+- 分类：Neural Scene Representations & Rendering (主要), Embodied / Robotics / AR Applications (次要)
+- 链接：摘要: https://arxiv.org/abs/2607.13154 ; PDF: https://arxiv.org/pdf/2607.13154
+
+### 一句话总结
+本文提出WANDA，一个从单次人类演示中合成大规模训练数据的数据引擎，通过重建场景与轨迹、重排交互片段、纠正状态扩展和跨环境合成，使机器人能从一次演示学习具备空间泛化、长时程鲁棒性和跨环境泛化的开放世界移动操作策略。
+
+### 研究问题
+如何用最少的人类演示数据（单次演示）为开放世界移动操作策略提供足够量的训练数据，以实现空间泛化、长时程鲁棒性和跨场景泛化，同时避免传统遥操作和UMI方法的高人力成本。
+
+### 核心思路/方法
+1. **场景与轨迹重建**：从单次RGBD观测中重建背景高斯溅射（Gaussian splats）和机器人-物体交互轨迹，作为后续规划和渲染的世界基质。
+2. **轨迹重排与扩展**：将交互片段按多种空间配置重新排列，利用全身运动规划将它们连接成新轨迹；并通过纠正状态扩展（Corrective State Expansion）增加机器人和物体在不同移动操作阶段的状态多样性。
+3. **跨环境合成**：基于日常照片生成多样化的3D世界，在此类世界中合成新轨迹，解锁跨环境泛化能力。
+4. **观测合成**：通过将渲染的机器人/物体网格与高斯溅射背景合成，生成逼真的观测数据。
+
+### 主要贡献
+1. 提出WANDA数据引擎，仅需一次人类演示即可大规模合成训练数据，显著降低数据收集成本。
+2. 方法在仿真和真实任务中验证，使策略达到长时程鲁棒性、广泛空间泛化和跨环境泛化。
+3. 自然支持跨形态数据生成，通过零样本部署到不同形态的移动操作机器人得到验证。
+
+### 局限性
+摘要未提供足够信息。例如：未说明在不同场景中的具体性能指标、真实世界实验的失败案例、计算开销或与基线方法的量化对比等。
+
+### 阅读优先级
+**高**
+理由：该论文针对开放世界移动操作中的数据瓶颈问题，提出从单次演示合成大量数据的创新方法，同时涉及神经场景表示、机器人学习和跨场景泛化等前沿领域，对低数据驱动机器人研究具有重要启发。结果在仿真和真实任务中均得到验证，且展示了跨形态迁移能力，实用性较强。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1528,30 +1913,33 @@ Learning open-world mobile manipulation policies requires vast data to achieve s
 - 标题：ExtraGS: Enhancing Endoscopic View Extrapolation via Diffusion-Guided 3D Gaussian Splatting  
 - 作者：Cheng-Tai Hsieh, Jiwei Shan, Han Fang, Jianshu Hu, Tao Ni, Lijun Han, Yutong Ban, Shing Shin Cheng, Hesheng Wang  
 - 出版日期：2026-07-14  
-- 分类：Neural Scene Representations & Rendering  
-- 链接：摘要URL: https://arxiv.org/abs/2607.12785 ; PDF: https://arxiv.org/pdf/2607.12785  
+- 分类：Neural Scene Representations & Rendering（神经场景表示与渲染）  
+- 链接：[arXiv:2607.12785](https://arxiv.org/abs/2607.12785)  
 
 ### 一句话总结
-ExtraGS提出一种基于扩散模型引导的3D高斯泼溅框架，用于增强内窥镜视角外推，在多个公开数据集上达到最新性能。
+ExtraGS 通过引导扩散模型生成伪观测数据并采用置信度加权微调，增强了基于 3D 高斯溅射的内窥镜视图外推能力，显著减少了外推伪影。
 
 ### 研究问题
-传统内窥镜视野有限，且基于神经渲染的视角合成方法在超出训练轨迹的外推场景中会产生严重伪影。如何提升内窥镜视角外推质量、减少外推伪影是该文的核心研究问题。
+如何在机器人辅助微创手术中，利用有限的观察数据（内窥镜视频）实现高质量的视图外推（extrapolation），即合成训练轨迹之外的新视角，并减少伪影。
 
 ### 核心思路/方法
-1. 从初始的3D高斯泼溅重建出发，采用**不确定性引导的虚拟相机采样策略**主动探索盲点并最大化信息增益。  
-2. 利用**扩散模型**对虚拟采样位置生成的渲染视图进行细化，恢复合理的解剖结构，产生用于引导进一步优化的伪观测数据。  
-3. 通过**置信度加权微调策略**，在引入伪观测数据时防止生成内容退化可靠区域。
+1. **初始重建**：使用 3D 高斯溅射（3D Gaussian Splatting）从内窥镜视频进行初始场景重建。  
+2. **不确定性引导的虚拟相机采样**：主动探索观察盲区，最大化信息增益，生成可能包含未知区域的虚拟视角。  
+3. **扩散模型细化**：使用扩散模型对虚拟视角的渲染结果进行精细化，恢复合理的解剖结构，产生“伪观测”数据。  
+4. **置信度加权微调**：在将伪观测数据融入优化时，采用置信度加权策略，避免生成内容退化已有可靠区域。
 
 ### 主要贡献
-- 提出了ExtraGS，一种结合扩散引导与3D高斯泼溅的内窥镜视角外推框架。  
-- 设计了不确定性引导的虚拟相机采样策略和置信度加权微调策略，以有效利用扩散模型生成的伪观测数据。  
-- 在多个公共内窥镜数据集上，ExtraGS显著减少了外推伪影，并取得了最高水平的视角合成性能。
+- 提出了 ExtraGS 框架，结合 3D 高斯溅射与扩散模型，用于增强内窥镜视图外推。  
+- 设计了不确定性引导的虚拟相机采样策略，以主动探索盲区。  
+- 实现了置信度加权的微调策略，在引入伪观测时保持可靠区域的质量。  
+- 在多个公开内窥镜数据集上达到了最先进的新视图合成性能，显著减少了外推伪影。
 
 ### 局限性
 摘要未提供足够信息。
 
 ### 阅读优先级
-**高**。理由：该工作针对微创手术中内窥镜视野受限的实际挑战，提出了创新性方法（扩散模型引导3D高斯泼溅），在多个数据集上验证了性能，且与当前NeRF/3DGS热点的神经渲染方向高度相关，对医学图像计算及机器人手术感知领域具有较强参考价值。
+**高**  
+理由：该工作聚焦于手术机器人内窥镜感知这一实际医疗应用，提出了一种结合 3D 高斯溅射与扩散模型的创新思路，增强了视图外推能力。摘要明确展示了问题定义、方法设计和实验验证，且实现了 state-of-the-art 性能，对手术场景中的神经渲染研究有重要参考价值。
 
 </details>
 
@@ -1934,6 +2322,40 @@ Recent generalizable 3D Gaussian Splatting models have advanced long-sequence no
 **Matched keywords:** autonomous driving
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：S-squared-VLA: Decoupling Semantic and Spatial Streams in Vision-Language-Action Models for Autonomous Driving
+- 作者：Jianguo Yu, Rukang Wang, Duanfeng Chu, Chen Wang, Renju Feng, Liping Lu
+- 出版日期：2026-07-15
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2607.13926
+
+### 一句话总结
+本文提出S-squared-VLA框架，通过解耦视觉-语言-动作模型中的语义流与空间流，缓解了传统VLA模型因空间表征崩溃导致的低层级控制精度不足问题，在NAVSIM闭环基准上取得新最优性能。
+
+### 研究问题
+传统视觉-语言-动作（VLA）模型在自动驾驶中因离散语言标记与连续轨迹规划之间的语义-物理鸿沟，导致空间表征崩溃，从而难以生成精确的低层级控制动作。如何有效解耦语义与空间信息流，提升VLA模型的细粒度空间感知与轨迹规划能力。
+
+### 核心思路/方法
+1. **双流解耦架构**：显式分离语义流与空间流。
+   - 语义流：采用层级桥接提取多尺度VLM特征，用于鲁棒的意图推理。
+   - 空间流：独立绕过自回归语言瓶颈，直接保留来自视觉编码器的未压缩空间特征，并引入辅助感知监督以增强几何先验。
+2. **双流规划适配器**：通过级联注意力机制融合高层语义意图与精确空间约束，生成最终控制动作。
+
+### 主要贡献
+- 提出S-squared-VLA，首次在VLA模型中显式解耦语义与空间流，解决空间表征崩溃问题。
+- 在NAVSIM闭环基准上，S-squared-VLA在纯监督微调（SFT）设置下达到PDMS 87.1，创下VLA模型新最优；No Collision（NC）率达到98.4，超越所有评估方法。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该论文直面自动驾驶VLA模型的关键瓶颈（空间表征崩溃），提出新颖的显式解耦架构，并在标准闭环基准上取得显著领先性能。对于从事自动驾驶、视觉-语言动作模型或多模态控制的研究者具有直接参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Vision-Language Models (VLMs) have demonstrated remarkable potential for high-level reasoning in autonomous driving, yet they fundamentally struggle to generate precise, low-level control actions. This limitation is rooted in a semantic-physical gap caused by the inherent mismatch between discrete language tokens and continuous trajectory planning. While Vision-Language-Action (VLA) architectures attempt to bridge this gap by unifying perception and control into a single policy, this entanglement creates a new bottleneck. Standard VLAs experience a severe spatial representation collapse, which irreversibly degrades the fine-grained spatial and geometric priors essential for safe, boundary-aware navigation. To address this limitation, we propose the S-squared-VLA, which explicitly decouples the semantic and spatial streams in Vision-Language-Action models. The semantic stream leverages hierarchical bridging to extract multi-scale VLM features for robust intent reasoning. In parallel, an independent spatial stream bypasses the autoregressive language bottleneck, directly preserving uncompressed spatial features from the visual encoder. By integrating auxiliary perception supervision, this stream explicitly equips the model with rich spatial and geometric priors. Finally, a dual-stream planning adapter fuses high-level semantic intent with precise spatial constraints via cascaded attention mechanisms. Evaluations on the NAVSIM closed-loop benchmark show that S-squared-VLA achieves a Predictive Driver Model Score (PDMS) of 87.1, establishing a new state-of-the-art for VLA models under a purely supervised fine-tuning (SFT) setting. By mitigating the spatial representation collapse of traditional VLMs, our framework significantly outperforms baselines, achieving the highest No Collision (NC) rate of 98.4 among all evaluated methods.
@@ -1947,6 +2369,42 @@ Vision-Language Models (VLMs) have demonstrated remarkable potential for high-le
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** embodied AI, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：UniPhysGen: Unified Physical Grounding for Simulation-Ready 3D Assets
+- 作者：Xian Li, Rong Wei, Lujie Yang, Haolin Huang, Junyuan Fang, Siliang Tang, Jun Xiao, Rui Tang, Juncheng Li
+- 出版日期：2026-07-15
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2607.13586
+
+### 一句话总结
+本文提出UniPhysGen框架，利用UniPhys方法自动将原始3D资产转换为具备统一物理语义（关节语义与内在物理属性）的仿真就绪资产，并构建了大规模数据集与基准。
+
+### 研究问题
+如何使现有3D资产自动获得统一的物理语义（包括关节语义和内在物理属性），从而支持具身AI与机器人仿真中的真实交互。
+
+### 核心思路/方法
+- 提出UniPhys，一个可扩展的框架，用于自动将原始3D资产转换为具有统一物理语义的仿真就绪资产。
+- 基于UniPhys构建了大规模物理语义数据集UniPhys-40K和验证基准UniPhys-Bench。
+- 引入UniPhysGen模型，联合推理关节语义和内在物理属性。
+- 通过几何鲁棒的关节语义推理，减轻异质部件分解下的几何捷径偏差。
+
+### 主要贡献
+1. 提出UniPhys框架，自动化将原始3D资产转换为具备统一物理语义的仿真就绪资产。
+2. 构建大规模物理语义数据集UniPhys-40K及验证基准UniPhys-Bench。
+3. 提出UniPhysGen模型，在关节语义推理和内在物理属性估计任务上达到最优性能，所得资产可直接部署在机器人仿真环境中。
+
+### 局限性
+摘要未提供有关局限性或失败案例的足够信息。
+
+### 阅读优先级
+高  
+理由：该工作针对具身AI和机器人仿真中3D资产物理语义缺失的关键问题，提供了自动化、可扩展的解决方案，并构建了大规模数据集与基准，实验性能达到最优。对于从事仿真、机器人学或3D场景理解的读者具有重要参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1964,6 +2422,41 @@ Physically grounded 3D assets are increasingly important for embodied AI and rob
 **Matched keywords:** autonomous driving, scene understanding
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GPOcc++: Unified Sparse Gaussian Occupancy Prediction with Visual Geometry Priors
+- 作者：Changqing Zhou, Yueru Luo, Yulan Guo, Bing Wang, Jie Qin, Changhao Chen
+- 出版日期：2026-07-15
+- 分类：Embodied / Robotics / AR Applications
+- 链接：abstract: https://arxiv.org/abs/2607.13481, pdf: https://arxiv.org/pdf/2607.13481
+
+### 一句话总结
+GPOcc++提出一种统一稀疏高斯占用预测框架，利用视觉几何先验，将表面中心输出转化为体素占用感知表示，并在室内外场景中实现高效、泛化强的占用预测。
+
+### 研究问题
+如何利用视觉几何先验（其输出本质是表面中心）来补全视觉观测中遮挡和未观察区域的3D占用（需要推理体素内部和自由空间），实现准确的3D场景理解。
+
+### 核心思路/方法
+- **GPOcc基础**：将视觉几何先验转换为占用感知的稀疏高斯表示，用于高效表达体场景建模。
+- **GPOcc++扩展**：将多视角观测和时间序列以统一框架建模，使用相同表示处理空间和时间证据。
+- **场景延伸**：从室内场景扩展至室外占用预测。
+- **验证**：在室内外基准上对多视角和时间设置进行实验，验证性能、效率和泛化性。
+
+### 主要贡献
+1. 引入GPOcc，将视觉几何先验转化为占用感知的稀疏高斯表示，弥合表面中心输出与体占用推理之间的差距。
+2. 提出GPOcc++，在多视角和时间序列设置下实现统一框架，支持空间和时间证据的同表示处理。
+3. 将方法从室内扩展到室外占用预测，并在多个基准上展示一致强性能、效率和泛化性。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：论文研究了3D占用预测中的关键挑战（从表面到体积的转换），并提出统一、高效的框架，适用于室内外场景，且实验显示跨设置一致性表现。对于致力于3D场景理解、自动驾驶和具身智能的研究者具有直接参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Accurate 3D scene understanding is fundamental to embodied intelligence and autonomous driving, where 3D occupancy provides a unified representation of objects, structures, and free space. However, recovering such a complete volumetric representation from visual observations remains challenging, particularly in occluded and unobserved regions. Visual geometry priors offer strong and generalizable geometric cues for addressing this challenge, but their outputs are inherently surface-centric, whereas occupancy prediction requires reasoning about volumetric interiors and free space. To bridge this gap, we introduce GPOcc, which transforms visual geometry priors into occupancy-aware sparse Gaussian representations for efficient and expressive volumetric scene modeling. Building on GPOcc, GPOcc++ models multi-view observations and temporal sequences within a unified framework, allowing spatial and temporal evidence to be handled through the same representation. We further extend GPOcc++ from indoor scenes to outdoor occupancy prediction. Extensive experiments on both indoor and outdoor benchmarks demonstrate consistently strong performance across both multi-view and temporal settings, together with favorable efficiency and generalization. Code will be released at https://github.com/JuIvyy/GPOcc.
@@ -1977,6 +2470,45 @@ Accurate 3D scene understanding is fundamental to embodied intelligence and auto
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** mapping, localization, AR, augmented reality
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Marker-free deformable registration and fusion for augmented reality-guided positive margin localization during tumor resection surgery
+- 作者：Yue Yang, Annie Benson, Matthieu Chabanas, Jason Slagle, Thomas Myles, Matthew B. Weinger, Jon S. Heiselman, Michael I. Miga, Michael Topf, Jie Ying Wu
+- 出版日期：2026-07-15T00:06:52Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2607.13343
+
+### 一句话总结
+本文提出了一种无标记增强现实(AR)工作流，用于在头颈肿瘤切除手术中，将样本切片的阳性边缘定位映射到患者切除床，并在尸体实验中展示了比传统口头指导更低的定位误差。
+
+### 研究问题
+如何在没有外部标记物的情况下，将标本病理切片上的阳性边缘标记准确映射到手术切除床，并配合AR显示减小定位误差，改善头颈肿瘤手术中阴阳性边缘的定位精度。
+
+### 核心思路/方法
+该方法结合了多个步骤：
+1. 对切除后的三维标本扫描进行轮廓约束变形。
+2. 将变形后的标本与切除床的深度扫描进行残差对齐。
+3. 通过无标记表面配准将信息融合到头戴显示器中。
+4. 目标投影到重建的切除床上。利用缝合线对应点估计标本变形；患者与显示器的融合不依赖外部标记。
+5. 在尸体实验中将本方法与口头指导、口头指导加标本检查进行对比，评估变形误差、融合误差和端到端边缘定位误差。
+
+### 主要贡献
+- 提出并验证了一个无标记的AR工作流，成功将阳性边缘从标本扫描映射到患者切除床。
+- 在尸体实验中，端到端边缘定位误差从口头指导的21.40 mm和标本检查的16.09 mm显著降低至AR指导的6.19 mm（p < 0.001）。
+- 无标记融合误差为2.15 ± 0.87 mm，与有标记方法无显著差异；在线融合仅需5.23秒。
+- 展示了该工作流在更精确肿瘤切除方面的临床潜力。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+高。
+理由：该方法直接解决临床头颈肿瘤手术中阳性边缘定位的痛点，实验结果（误差降低至6.19 mm）显示出显著改进，且无标记设计增强了临床应用便利性。属于应用导向的优质工作，对于从事AR手术导航、医学图像配准和肿瘤外科研究的读者具有高参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
