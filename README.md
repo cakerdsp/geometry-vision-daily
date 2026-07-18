@@ -73,7 +73,7 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 <!-- DAILY_REPORT_END -->
 
 **Last updated:** 2026-07-17T10:01:09-04:00
-**Total number of papers:** 62
+**Total number of papers:** 60
 **Number of papers added in the latest update:** 14
 **Categories tracked:** cs.CV, cs.GR, cs.RO, eess.IV
 
@@ -279,56 +279,6 @@ MAC-Splat 提出一种基于多属性一致性损失（MAC loss）的训练框�
 <summary>Abstract</summary>
 
 Reconstructing high-fidelity 3D scenes from sparse-views remains a central problem in generalizable neural rendering. Existing generalizable 3D Gaussian Splatting (3DGS) methods often exhibit geometric artifacts in sparse-view settings, since supervision based solely on 2D photometric losses cannot resolve depth and correspondence ambiguities. To address this issue, we propose MAC-Splat, a training framework built around direct 3D consistency supervision. MAC-Splat builds on the MASt3R geometric backbone and a frozen DINOv3 encoder to obtain semantically informed 2D correspondences, which serve as geometric anchors for 3D supervision. Using these anchors, we define the Multi-Attribute Consistency (MAC) loss. This objective jointly regularizes the 3D attributes of matched Gaussians, including their position, shape, and appearance, by enforcing agreement in a common world coordinate frame. The formulation is robust to outliers and respects the geometry of covariance matrices, which leads to stable training under sparse-view conditions. Experiments on ScanNet++ show that MAC-Splat outperforms strong baselines, with particularly large gains under different overlap regimes. In particular, it improves average PSNR over Splatt3R by more than 4.5 dB, reduces LPIPS, and maintains performance as the camera pose gap increases. These results indicate that a direct, multi-attribute 3D consistency objective, when combined with high-quality correspondences, is effective for addressing the ill-posed sparse-view reconstruction problem.
-
-</details>
-
-#### 2026-07-10 - What VGGT Knows About Overlap: Probing Geometric Foundation Models for Co-Visibility
-
-**Authors:** Filippo Ziliotto, Luciano Serafini, Lamberto Ballan, Tommaso Campari
-**Links:** [abs](https://arxiv.org/abs/2607.09503) - [pdf](https://arxiv.org/pdf/2607.09503)
-**Primary category:** Geometry Foundation Models
-**Secondary categories:** 3D Reconstruction & Multi-view Geometry
-**Matched keywords:** VGGT, 3D reconstruction, SfM, SLAM, scene representation, localization
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：What VGGT Knows About Overlap: Probing Geometric Foundation Models for Co-Visibility  
-- 作者：Filippo Ziliotto, Luciano Serafini, Lamberto Ballan, Tommaso Campari  
-- 出版日期：2026-07-10  
-- 分类：Geometry Foundation Models（主），3D Reconstruction & Multi-view Geometry（次）  
-- 链接：摘要 https://arxiv.org/abs/2607.09503 | PDF https://arxiv.org/pdf/2607.09503  
-
-### 一句话总结
-本文发现VGGT内部表征隐式编码了共可见性（co-visibility），并通过引入轻量级逐层混合专家头（Co-VGGT）在Co-VisiON基准上超越人类标注基线，性能提升超过25%。
-
-### 研究问题
-如何利用几何基础模型VGGT的内部表征，在没有显式监督的情况下，判断图像对之间是否存在共可见重叠区域（尤其在低重叠场景中）？
-
-### 核心思路/方法
-1. 通过探针实验揭示VGGT的层级结构：早期层构建3D感知场景表征，晚期层（特别是L17层）充当共可见性推理器，且层L17对非共可见对具有一致路由行为。  
-2. 提出Co-VGGT：冻结VGGT，仅训练一个小于7.5M参数的逐层混合专家头（layer-wise MoE），将每层视为一个专家，根据输入对自适应加权每层的几何抽象，以便从单张RGB图像中分类共可见性。  
-3. 在Co-VisiON基准上评估，并与先前方法及人类标注基线对比。
-
-### 主要贡献
-1. 首次证明VGGT能够隐式编码共可见性，其内部表征呈现类似LLM的层级结构，且存在问题导向的层级专化证据（负锚点层L17）。  
-2. 提出Co-VGGT方法，仅训练轻量级MoE头，以分类RGB图像对的共可见性。  
-3. 在Co-VisiON基准上，Co-VGGT的成对预测和多重视图预测分别超越先前最佳方法25%以上和10%，并且超过人类标注基线。  
-4. 成对预测校准良好（ECE=0.030），可直接作为可见性图的边权重用于下游SfM和SLAM流水线，无需后处理纠正。
-
-### 局限性
-摘要未提供足够信息，例如方法在极端场景下的性能、对错误预测的鲁棒性、计算效率的详细分析，以及是否依赖特定训练数据集等。
-
-### 阅读优先级：高  
-理由：该工作首次揭示VGGT的共可见性推理能力，基于此设计的轻量头方法显著超越现有技术和人类基线，性能提升幅度大（>25%）。方法直接服务于3D重建与SLAM的实际下游任务，且提供代码和数据，实用性强。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-A fundamental challenge in 3D reconstruction and robotic localization is co-visibility: determining which image pairs share overlapping visible surfaces, particularly in scenarios with minimal overlap. We demonstrate that VGGT implicitly encodes co-visibility as an emergent behavior: without any supervision for this task, its internal representations exhibit a clear hierarchical structure mirroring that of large language models, i.e. early layers build a 3D-aware scene representation, while late layers act as dedicated co-visibility reasoners. In particular, we identify layer L17 as a negative anchor that consistently routes non-co-visible pairs for this backbone, regardless of the evaluation setting, providing task-grounded evidence of layer specialization in a geometry-grounded foundation model. Building on this, we introduce Co-VGGT, which freezes VGGT and trains only a lightweight layer-wise mixture-of-experts head (less than 7.5M parameters) to classify co-visibility from RGB alone, treating each layer as a specialized expert whose geometric abstraction is adaptively weighted per input pair. On the Co-VisiON benchmark, Co-VGGT surpasses the human annotation baseline and improves over prior work by more than 25% pairwise and 10% multiview. Pairwise predictions are well-calibrated (ECE=0.030), enabling direct use as edge weights in visibility graphs for downstream SfM and SLAM pipelines without post-hoc correction. Code and data are available.
 
 </details>
 
@@ -1441,55 +1391,6 @@ Incremental scene reconstruction is essential for real-world applications. Altho
 <summary>Abstract</summary>
 
 The evolution from 5G towards 6G reinforces interest in connected robotics, where mobile robots offload compute-intensive tasks to edge servers over ultra-reliable low-latency communication (URLLC) links. Simultaneous localization and mapping (SLAM), a fundamental yet demanding robotics function, is increasingly considered for edge deployment within mobile edge computing (MEC) frameworks. In parallel, integrated sensing and communications (ISAC) enables the use of radio channel information, such as channel state information (CSI), as an additional sensing modality in radio-based SLAM. In this paper, we design and implement a CSI-assisted Edge SLAM testbed integrating a custom unmanned ground vehicle (UGV), a ROS2-based SLAM framework, and a 5G Open Radio Access Network (O-RAN) system. The proposed architecture provides an end-to-end, cross-layer view of ROS2 sensor data streaming over 5G, explicitly enabling CSI exposure and integration into the SLAM pipeline. We analyze ROS2 DDS communication, RTPS packetization, and 5G user-plane transport, and discuss mechanisms for CSI extraction and delivery via O-RAN components. The platform enables realistic experimentation with communication-aware SLAM and reveals key challenges related to latency, data streaming, synchronization, and cross-system integration, providing insights for future 6G-enabled robotic platforms.
-
-</details>
-
-#### 2026-07-10 - DGSfM: Depth-Guided Scale-Aware Global Structure-from-Motion
-
-**Authors:** Sithu Aung, Viktor Kocur, Yaqing Ding, Torsten Sattler, Zuzana Kukelova
-**Links:** [abs](https://arxiv.org/abs/2607.09507) - [pdf](https://arxiv.org/pdf/2607.09507)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** None
-**Matched keywords:** structure from motion, SfM, bundle adjustment, monocular depth
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：DGSfM: Depth-Guided Scale-Aware Global Structure-from-Motion
-- 作者：Sithu Aung, Viktor Kocur, Yaqing Ding, Torsten Sattler, Zuzana Kukelova
-- 出版日期：2026-07-10
-- 分类：3D Reconstruction & Multi-view Geometry
-- 链接：https://arxiv.org/abs/2607.09507
-
-### 一句话总结
-DGSfM 是一种深度感知的全局运动恢复结构（SfM）流水线，通过引入单目深度图作为先验，将传统尺度模糊的对极几何约束转换为尺度感知的约束，并结合视图图过滤与深度一致性剪枝，显著提升了位姿精度。
-
-### 研究问题
-全局 SfM 方法依赖尺度模糊的对极几何，易受噪声基线估计和弱视图图约束的影响，同时视觉模糊对之间的假边会降低重建质量。本文旨在解决这些鲁棒性和尺度模糊性问题。
-
-### 核心思路/方法
-1. **深度感知相对位姿求解器**：对每对图像，利用深度图将尺度模糊的对极约束转换为尺度感知的相对位姿约束。
-2. **视图图过滤与深度一致性剪枝**：通过视图图过滤和基于深度一致性的对应点剪枝，抑制仅在对极几何下看似合理的假边和误匹配。
-3. **全局尺度平均与深度引导初始化**：进行全局尺度平均，并用深度引导的位姿-点初始化将单目深度图对齐到公共重建尺度，为全局位姿估计和光束法平差提供稳定初始化。
-
-### 主要贡献
-- 提出一种深度感知的全局 SfM 流水线 DGSfM，利用单目深度图作为可扩展先验，同时保持显式多视图优化。
-- 通过深度引导的位姿求解、视图图过滤和对应剪枝，在稀疏和稠密匹配前端均显著提升位姿精度。
-- 在 ETH3D 和 IMC2021 数据集上，优于强全局 SfM 基线方法。
-
-### 局限性
-摘要未提供足够信息。摘要未提及模型对深度图质量的敏感度、计算开销、在极端场景（如纹理缺失或动态场景）下的表现等局限性。
-
-### 阅读优先级
-**高**。理由：该工作针对全局 SfM 中的核心尺度模糊和鲁棒性问题，提出了简洁有效的深度引导方案，在标准数据集上取得了明显改进，且代码已开源。对于从事 3D 重建、多视图几何研究的读者具有直接参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Global Structure-from-Motion (SfM) is an efficient paradigm for recovering camera poses and sparse 3D structure from unordered images. However, its reliance on scale-ambiguous epipolar geometry makes global positioning sensitive to noisy baseline estimates and weak view-graph constraints, while false edges from visually ambiguous pairs can further degrade reconstruction. We propose DGSfM, a depth-aware global SfM pipeline that uses monocular depth maps as a scalable prior while preserving explicit multi-view optimization. For each image pair, we use a depth-aware relative pose solver to convert scale-ambiguous epipolar constraints into scale-aware relative pose constraints. We further improve robustness through view-graph filtering and depth-consistency-based correspondence pruning, which suppress false edges and matches that remain plausible under epipolar geometry alone. Finally, global scale averaging and depth-guided pose-point initialization align monocular depth maps into a common reconstruction scale and provide stable initialization for global positioning and bundle adjustment. Experiments on ETH3D and IMC2021 show that DGSfM consistently improves over strong global SfM baselines across sparse and dense matching front-ends, achieving substantial gains in pose accuracy. Code is available at https://github.com/sithu31296/DGSfM.
 
 </details>
 
