@@ -41,7 +41,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.15271",
     "pdf_url": "https://arxiv.org/pdf/2607.15271",
     "first_seen": "2026-07-17T10:01:09-04:00",
-    "last_seen": "2026-07-17T10:01:09-04:00"
+    "last_seen": "2026-07-19T09:51:46-04:00"
   },
   {
     "arxiv_id": "2607.15211",
@@ -82,7 +82,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.15211",
     "pdf_url": "https://arxiv.org/pdf/2607.15211",
     "first_seen": "2026-07-17T10:01:09-04:00",
-    "last_seen": "2026-07-17T10:01:09-04:00"
+    "last_seen": "2026-07-19T09:51:46-04:00"
   },
   {
     "arxiv_id": "2607.15048",
@@ -119,7 +119,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.15048",
     "pdf_url": "https://arxiv.org/pdf/2607.15048",
     "first_seen": "2026-07-17T10:01:09-04:00",
-    "last_seen": "2026-07-17T10:01:09-04:00"
+    "last_seen": "2026-07-19T09:51:46-04:00"
   },
   {
     "arxiv_id": "2607.14997",
@@ -2305,208 +2305,5 @@
     "pdf_url": "https://arxiv.org/pdf/2607.10792",
     "first_seen": "2026-07-14T10:11:38-04:00",
     "last_seen": "2026-07-15T10:07:33-04:00"
-  },
-  {
-    "arxiv_id": "2607.10754",
-    "version": "v1",
-    "title": "TriCons-Pose: Triangle-Invariant Geometric Consistency Learning for Category-Level Object Pose Estimation",
-    "authors": [
-      "Zuzhi Yang",
-      "Shuai Wang",
-      "Mounir Kaaniche",
-      "Ziwei Li",
-      "Zhiming Cheng",
-      "Zhidong Zhao",
-      "Chenggang Yan"
-    ],
-    "abstract": "Category-level object pose estimation is a crucial yet challenging task in both academia and industry, and has achieved remarkable success by leveraging keypoint-based correspondence paradigms. However, most existing methods increasingly rely on stronger feature learning while overlooking whether the established correspondences are geometrically stable across diverse perturbations. This often results in fragile pose recovery under intra-class shape variations and occlusions. To tackle this challenge, we develop a novel Triangle-Invariant Geometric Consistency Learning for Category-Level Object Pose Estimation (TriCons-Pose) to anchor stable keypoints and aggregate pose-invariant cues, yielding reliable canonical mapping and accurate pose estimation. Specifically, a Structure-Consistent Keypoint Detector (SCKD) is designed to identify robust keypoints by enforcing cross-view structural consistency via normalized pairwise distance matching. Moreover, we propose a Pose-Invariant Geometric Aggregator (PIGA) to augment keypoint representations by injecting triangle-based pose-invariant descriptors into a local-to-global attention mechanism. The proposed framework is optimized using standard objective functions while incorporating an additional geometry consistency loss. Extensive experiments on REAL275, CAMERA25, and HouseCat6D datasets demonstrate the effectiveness of the proposed approach.",
-    "published": "2026-07-12T13:05:12Z",
-    "updated": "2026-07-12T13:05:12Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "pose estimation",
-      "mapping"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched title phrase: pose estimation",
-      "Matched abstract phrase: pose estimation"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.10754",
-    "pdf_url": "https://arxiv.org/pdf/2607.10754",
-    "first_seen": "2026-07-14T10:11:38-04:00",
-    "last_seen": "2026-07-14T10:11:38-04:00"
-  },
-  {
-    "arxiv_id": "2607.10690",
-    "version": "v1",
-    "title": "Incremental Online Scene Reconstruction by 3D Gaussian Triangulation",
-    "authors": [
-      "Yanjin Zhu",
-      "Shaofan Liu",
-      "Jianke Zhu"
-    ],
-    "abstract": "Incremental scene reconstruction is essential for real-world applications. Although 3D Gaussian Splatting shows strong potential, most existing approaches require offline conversion of the optimized Gaussians into an intermediate implicit field for explicit mesh extraction, which hinders seamless integration with downstream tasks. To address this limitation, we propose a novel online framework that incrementally reconstructs and updates high-fidelity explicit meshes by directly triangulating a dense geometric Gaussian representation, which supports both high-quality rendering and incremental surface reconstruction. Moreover, we present a direct meshing algorithm that efficiently extracts and updates the mesh from the Gaussian set. To ensure mesh accuracy, we enforce a plane-based pulling constraint that dynamically aligns 3D Gaussian primitives to the approximated local surface. Furthermore, our framework significantly reduces memory and computational overhead during long-sequence processing by dynamically freezing fully optimized historical regions. Experiments on public datasets demonstrate that our method outperforms conventional Gaussian-based methods on both rendering quality and reconstruction accuracy.",
-    "published": "2026-07-12T10:22:18Z",
-    "updated": "2026-07-12T10:22:18Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [
-      "Neural Scene Representations & Rendering"
-    ],
-    "matched_keywords": [
-      "scene reconstruction",
-      "surface reconstruction",
-      "Gaussian Splatting",
-      "3D Gaussian Splatting",
-      "rendering",
-      "splatting"
-    ],
-    "classification_score": 8,
-    "classification_reasons": [
-      "Matched title phrase: scene reconstruction",
-      "Matched abstract phrase: scene reconstruction",
-      "Matched abstract phrase: surface reconstruction",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: 3D Gaussian Splatting",
-      "Matched abstract keyword: rendering",
-      "Matched abstract keyword: splatting"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.10690",
-    "pdf_url": "https://arxiv.org/pdf/2607.10690",
-    "first_seen": "2026-07-14T10:11:38-04:00",
-    "last_seen": "2026-07-14T10:11:38-04:00"
-  },
-  {
-    "arxiv_id": "2607.10489",
-    "version": "v1",
-    "title": "Grassmannian Splatting I: Moving rank-2 Spacetime Surfels for Dynamic Scene Rendering",
-    "authors": [
-      "Aaron Maurice Berman",
-      "Shantanu Dave"
-    ],
-    "abstract": "We introduce Grassmannian splatting, a dynamic scene representation whose primitives are Gaussians supported on 3-planes in spacetime $\\R^4$: generically, spatial 2-planes in uniform translation along their normals. Each primitive carries a unit normal $n \\in \\mathbb S^3/\\{\\pm 1\\} \\cong \\mathrm{Gr}(3,4)$ and an unconstrained factor $L \\in \\mathbb R^{4 \\times 3}$, with covariance \\[ Σ_{4\\mathrm{D}} = (P_n L)(P_n L)^T, \\qquad P_n = I - n n^T. \\] For generic $L$ and $n \\neq \\pm e_0$, conditioning on time returns a rank-2 surfel at every frame. The normal of the disk and its velocity along that normal are read off from $n$; the disk shape and the tangential drift of its center are set by $L$. Existing native 4D Gaussian splatting methods [\\it{Yang et. al. 2023,Duan et. al. 2024}] slice full-rank spacetime covariances, so their per-frame primitive is a volumetric ellipsoid; since conditioning lowers rank by exactly one, a rank-2 surfel in the slice requires a rank-3 spacetime covariance, and the parameterization above realizes exactly these. The motion model is closed form, i.e. no deformation field is learned, and no custom CUDA is required: the conditioned disk feeds a standard 3DGS rasterizer through its precomputed-covariance interface. A soft clamp in the Schur denominator regularizes the static orientation and continuously bridges rank-3 static and rank-2 dynamic behavior, so static and moving primitives form a single continuous family. On the 17 HyperNeRF scenes of MonoDyGauBench, training is fastest among all compared methods (4.9 to 5.6 times faster than the strongest quality baselines), while ranking second in PSNR, MS-SSIM, and LPIPS. Code: https://github.com/PaulCelanCoding/grassmannian-splatting",
-    "published": "2026-07-11T21:51:32Z",
-    "updated": "2026-07-11T21:51:32Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Dynamic / 4D Reconstruction",
-    "secondary_categories": [
-      "Neural Scene Representations & Rendering"
-    ],
-    "matched_keywords": [
-      "dynamic scene representation",
-      "4D Gaussian",
-      "Gaussian Splatting",
-      "3DGS",
-      "scene representation",
-      "rendering",
-      "splatting"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched abstract phrase: dynamic scene representation",
-      "Matched abstract phrase: 4D Gaussian",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract keyword: 3DGS",
-      "Matched abstract phrase: scene representation",
-      "Matched title keyword: rendering",
-      "Matched title keyword: splatting",
-      "Matched abstract keyword: splatting"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.10489",
-    "pdf_url": "https://arxiv.org/pdf/2607.10489",
-    "first_seen": "2026-07-14T10:11:38-04:00",
-    "last_seen": "2026-07-14T10:11:38-04:00"
-  },
-  {
-    "arxiv_id": "2607.10394",
-    "version": "v1",
-    "title": "CSI-Assisted Edge SLAM Testbed Platform for 5G Connected Unmanned Autonomous Vehicles",
-    "authors": [
-      "Boris Radovanovic",
-      "Sasa Talosi",
-      "Srdjan Sobot",
-      "Dejan Vukobratovic"
-    ],
-    "abstract": "The evolution from 5G towards 6G reinforces interest in connected robotics, where mobile robots offload compute-intensive tasks to edge servers over ultra-reliable low-latency communication (URLLC) links. Simultaneous localization and mapping (SLAM), a fundamental yet demanding robotics function, is increasingly considered for edge deployment within mobile edge computing (MEC) frameworks. In parallel, integrated sensing and communications (ISAC) enables the use of radio channel information, such as channel state information (CSI), as an additional sensing modality in radio-based SLAM. In this paper, we design and implement a CSI-assisted Edge SLAM testbed integrating a custom unmanned ground vehicle (UGV), a ROS2-based SLAM framework, and a 5G Open Radio Access Network (O-RAN) system. The proposed architecture provides an end-to-end, cross-layer view of ROS2 sensor data streaming over 5G, explicitly enabling CSI exposure and integration into the SLAM pipeline. We analyze ROS2 DDS communication, RTPS packetization, and 5G user-plane transport, and discuss mechanisms for CSI extraction and delivery via O-RAN components. The platform enables realistic experimentation with communication-aware SLAM and reveals key challenges related to latency, data streaming, synchronization, and cross-system integration, providing insights for future 6G-enabled robotic platforms.",
-    "published": "2026-07-11T16:50:54Z",
-    "updated": "2026-07-11T16:50:54Z",
-    "primary_arxiv_category": "cs.NI",
-    "arxiv_categories": [
-      "cs.NI",
-      "cs.RO"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [
-      "Embodied / Robotics / AR Applications"
-    ],
-    "matched_keywords": [
-      "simultaneous localization and mapping",
-      "SLAM",
-      "robotics",
-      "mapping",
-      "localization"
-    ],
-    "classification_score": 5,
-    "classification_reasons": [
-      "Matched abstract phrase: simultaneous localization and mapping",
-      "Matched title keyword: SLAM",
-      "Matched abstract keyword: SLAM",
-      "Matched abstract keyword: robotics",
-      "Matched abstract keyword: mapping",
-      "Matched abstract keyword: localization"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.10394",
-    "pdf_url": "https://arxiv.org/pdf/2607.10394",
-    "first_seen": "2026-07-14T10:11:38-04:00",
-    "last_seen": "2026-07-14T10:11:38-04:00"
-  },
-  {
-    "arxiv_id": "2607.10336",
-    "version": "v1",
-    "title": "PrismAD: Decoupled Planning via Semantic Mixture-of-Planners for End-to-End Autonomous Driving",
-    "authors": [
-      "Kang Ding",
-      "Zhigui Lin",
-      "Hongsong Wang",
-      "Jie Gui",
-      "Qi Liu",
-      "Zhe Wang",
-      "Luqi Tang",
-      "Lei He"
-    ],
-    "abstract": "This letter presents PrismAD, a decoupled end-to-end autonomous driving framework based on a Semantic Mixture-of-Planners. Existing planners usually aggregate heterogeneous scene tokens into a coupled representation space, forcing a single planning branch to jointly model agent interaction, road geometry, and driving intention. Such coupling may weaken factor-specific reasoning and obscure the contribution of different planning cues. To address this limitation, PrismAD partitions scene tokens into interaction, geometry, and intent groups, and assigns them to independent planning experts with the same architecture but separate parameters. Each expert learns a specialized motion-planning representation, while a semantics-aware router adaptively aggregates expert predictions with separate routing weights for motion prediction and ego planning. Sparse top-$K$ activation with noisy gating is further introduced to improve routing robustness and reduce unnecessary expert computation. Extensive experiments on the nuScenes open-loop dataset and NeuroNCAP closed-loop benchmark demonstrate that PrismAD exhibits competitive performance. Our code will be released soon.",
-    "published": "2026-07-11T14:36:40Z",
-    "updated": "2026-07-11T14:36:40Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO",
-      "cs.CV"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "autonomous driving"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched title phrase: autonomous driving",
-      "Matched abstract phrase: autonomous driving"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.10336",
-    "pdf_url": "https://arxiv.org/pdf/2607.10336",
-    "first_seen": "2026-07-14T10:11:38-04:00",
-    "last_seen": "2026-07-14T10:11:38-04:00"
   }
 ]

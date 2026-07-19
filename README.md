@@ -72,7 +72,7 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 <!-- DAILY_REPORT_END -->
 
 **Last updated:** 2026-07-17T10:01:09-04:00
-**Total number of papers:** 60
+**Total number of papers:** 55
 **Number of papers added in the latest update:** 14
 **Categories tracked:** cs.CV, cs.GR, cs.RO, eess.IV
 
@@ -434,58 +434,6 @@ Recent 4D Gaussian Splatting (4DGS) methods often fail under fast motion with la
 <summary>Abstract</summary>
 
 Previous feed-forward 4D reconstruction methods either predict per-frame static point clouds, ignoring foreground motion, or estimate point cloud trajectories while being limited to small camera motions. This restricts their ability to aggregate observations over time and reconstruct complete dynamic scenes under large viewpoint changes. To address this limitation, we propose OmniX, a feed-forward 4D reconstruction framework that predicts dense 3D point trajectories for every pixel from videos with large camera motion. OmniX decouples dynamic motion modeling from static geometry prediction and represents motion using a compact set of dynamic tokens. By leveraging the sparse and low-rank structure of 3D motion, these tokens generate trajectory fields for all pixels across all images while efficiently preserving global interactions. To facilitate training, we further build an automatic UE5-based 4D data engine and introduce a large-scale dataset containing 80K scenes and 1.28M multi-view videos with full geometric annotations. OmniX achieves state-of-the-art performance on dense 3D point trajectory prediction and 3D point tracking, while also demonstrating competitive results on video depth estimation and camera pose estimation.
-
-</details>
-
-#### 2026-07-11 - Grassmannian Splatting I: Moving rank-2 Spacetime Surfels for Dynamic Scene Rendering
-
-**Authors:** Aaron Maurice Berman, Shantanu Dave
-**Links:** [abs](https://arxiv.org/abs/2607.10489) - [pdf](https://arxiv.org/pdf/2607.10489)
-**Primary category:** Dynamic / 4D Reconstruction
-**Secondary categories:** Neural Scene Representations & Rendering
-**Matched keywords:** dynamic scene representation, 4D Gaussian, Gaussian Splatting, 3DGS, scene representation, rendering, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Grassmannian Splatting I: Moving rank-2 Spacetime Surfels for Dynamic Scene Rendering
-- 作者：Aaron Maurice Berman, Shantanu Dave
-- 出版日期：2026-07-11
-- 分类：Dynamic / 4D Reconstruction; Neural Scene Representations & Rendering
-- 链接：摘要URL: https://arxiv.org/abs/2607.10489 ; PDF: https://arxiv.org/pdf/2607.10489
-
-### 一句话总结
-该论文提出一种基于时序-空间四维Grassmannian splatting的动态场景表示方法，利用秩-2时空surfels实现无需变形场的高效动态渲染，在HyperNeRF数据集上训练速度最快且质量排名第二。
-
-### 研究问题
-如何用一种简洁、封闭形式的运动表示，替代现有4D Gaussian splatting方法中通过学习变形场或使用全秩四维协方差来渲染动态场景的方式，从而降低训练开销并保持高质量渲染。
-
-### 核心思路/方法
-1. 表示设计：每个图元是一个在四维时空中由高斯函数支持的三维平面（即均匀运动的二维空间表面），其协方差矩阵由单位法向量\(n\)和自由矩阵\(L\)参数化，保证在时间切片后得到秩-2的surfel（带速度信息）。
-2. 运动建模：封闭形式，无需学习变形场；运动参数（法线方向、沿法线速度、磁盘形状和中心切向漂移）直接从参数中读出。
-3. 硬件兼容：秩-2磁盘通过预计算协方差接口直接输入标准3DGS光栅化器，无需自定义CUDA。
-4. 静态-动态统一：使用软夹钳（Schur分母中的正则化）使静态秩-3图元和动态秩-2图元连续，形成统一参数族。
-
-### 主要贡献
-- 提出一种新型动态场景图元（Grassmannian splatting），在四维时空上实现秩-2 surfel，每个图元对应一个均匀运动的二维空间表面。
-- 运动模型是封闭形式的，无需变形场或额外网络，降低了训练复杂度。
-- 不需要自定义CUDA内核，可直接利用预计算协方差接口和标准3DGS光栅化器。
-- 在MonoDyGauBench的17个HyperNeRF场景上，训练速度比最优质基线快4.9–5.6倍，并在PSNR、MS-SSIM和LPIPS上排名第二。
-
-### 局限性
-摘要未提供足够信息：未提及多视角处理、动态场景中复杂遮挡或拓扑变化、以及在大规模场景或非HyperNeRF类数据集上的表现。
-
-### 阅读优先级
-**高**  
-理由：该方法在动态场景渲染领域实现了显著的训练速度提升（4.9–5.6倍），同时保持了顶级质量（第二），且避免了自定义CUDA和变形场，工程实现简洁；摘要显示其发布在2026年（即使时间戳存疑），但内容新颖，对关注动态辐射场高效表示的读者有较高价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-We introduce Grassmannian splatting, a dynamic scene representation whose primitives are Gaussians supported on 3-planes in spacetime $\R^4$: generically, spatial 2-planes in uniform translation along their normals. Each primitive carries a unit normal $n \in \mathbb S^3/\{\pm 1\} \cong \mathrm{Gr}(3,4)$ and an unconstrained factor $L \in \mathbb R^{4 \times 3}$, with covariance \[ Σ_{4\mathrm{D}} = (P_n L)(P_n L)^T, \qquad P_n = I - n n^T. \] For generic $L$ and $n \neq \pm e_0$, conditioning on time returns a rank-2 surfel at every frame. The normal of the disk and its velocity along that normal are read off from $n$; the disk shape and the tangential drift of its center are set by $L$. Existing native 4D Gaussian splatting methods [\it{Yang et. al. 2023,Duan et. al. 2024}] slice full-rank spacetime covariances, so their per-frame primitive is a volumetric ellipsoid; since conditioning lowers rank by exactly one, a rank-2 surfel in the slice requires a rank-3 spacetime covariance, and the parameterization above realizes exactly these. The motion model is closed form, i.e. no deformation field is learned, and no custom CUDA is required: the conditioned disk feeds a standard 3DGS rasterizer through its precomputed-covariance interface. A soft clamp in the Schur denominator regularizes the static orientation and continuously bridges rank-3 static and rank-2 dynamic behavior, so static and moving primitives form a single continuous family. On the 17 HyperNeRF scenes of MonoDyGauBench, training is fastest among all compared methods (4.9 to 5.6 times faster than the strongest quality baselines), while ranking second in PSNR, MS-SSIM, and LPIPS. Code: https://github.com/PaulCelanCoding/grassmannian-splatting
 
 </details>
 
@@ -1239,157 +1187,6 @@ WiFi Channel State Information (CSI) enables privacy-preserving human pose sensi
 <summary>Abstract</summary>
 
 This paper presents a framework for multi-session mapping of underwater environments utilizing an affordable action camera. The Visual-Inertial data are augmented by water depth recordings from a dive computer. SVIn2, an open-source VI-SLAM framework, is utilized to generate a trajectory and a sparse reconstruction for each session. Utilizing the keyframes extracted from SVIn2 and the estimated camera poses, a Structure-from-Motion (SfM) framework, COLMAP, is employed for global optimization and to produce a dense reconstruction of the target environment. The presence of calibration targets at fixed locations, when available, is used to estimate the coordinate transformation between different data collection sessions, thus transforming the different sessions into the same coordinate frame. The proposed pipeline is employed for the mapping of a shipwreck off the coast of Barbados. For the first time, both the exterior and the accessible interior parts of the wreck were mapped in two sessions, while a third session employed two cameras with different fields of view.
-
-</details>
-
-#### 2026-07-12 - TriCons-Pose: Triangle-Invariant Geometric Consistency Learning for Category-Level Object Pose Estimation
-
-**Authors:** Zuzhi Yang, Shuai Wang, Mounir Kaaniche, Ziwei Li, Zhiming Cheng, Zhidong Zhao, Chenggang Yan
-**Links:** [abs](https://arxiv.org/abs/2607.10754) - [pdf](https://arxiv.org/pdf/2607.10754)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** None
-**Matched keywords:** pose estimation, mapping
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：TriCons-Pose: Triangle-Invariant Geometric Consistency Learning for Category-Level Object Pose Estimation
-- 作者：Zuzhi Yang, Shuai Wang, Mounir Kaaniche, Ziwei Li, Zhiming Cheng, Zhidong Zhao, Chenggang Yan
-- 出版日期：2026-07-12
-- 分类：3D Reconstruction & Multi-view Geometry
-- 链接：https://arxiv.org/abs/2607.10754
-
-### 一句话总结
-本文提出了一种基于三角形不变几何一致性学习的类别级物体姿态估计方法，通过检测结构一致的关键点并聚合姿态不变特征，在REAL275、CAMERA25和HouseCat6D数据集上验证了有效性。
-
-### 研究问题
-现有基于关键点对应范式的类别级物体姿态估计方法，往往依赖更强的特征学习，却忽视了所建立对应关系在不同扰动下的几何稳定性，导致在类内形状变化和遮挡场景下姿态恢复不稳健。
-
-### 核心思路/方法
-- 提出三角形不变几何一致性学习框架。
-- 设计结构一致关键点检测器（SCKD），通过归一化成对距离匹配强制跨视角结构一致性，以定位稳健关键点。
-- 提出姿态不变几何聚合器（PIGA），通过将基于三角形的姿态不变描述子注入局部到全局注意力机制，增强关键点表示。
-- 在标准目标函数基础上，额外引入几何一致性损失进行训练。
-
-### 主要贡献
-- 开发了TriCons-Pose框架，通过三角形不变几何一致性学习获得可靠的关键点和姿态不变线索，从而实现精确的规范映射和姿态估计。
-- 提出SCKD和PIGA两个核心模块，分别用于稳定关键点检测和姿态不变特征聚合。
-- 在REAL275、CAMERA25和HouseCat6D三个数据集上进行实验，证明了方法的有效性。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-中。理由：该工作针对类别级物体姿态估计中的几何稳定性问题，方法设计具有明确的理论动机（三角形不变性），且在多个基准数据集上验证了性能。适合从事3D视觉、姿态估计相关领域的研究者阅读，但对于不涉及该方向的研究者则优先级不高。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Category-level object pose estimation is a crucial yet challenging task in both academia and industry, and has achieved remarkable success by leveraging keypoint-based correspondence paradigms. However, most existing methods increasingly rely on stronger feature learning while overlooking whether the established correspondences are geometrically stable across diverse perturbations. This often results in fragile pose recovery under intra-class shape variations and occlusions. To tackle this challenge, we develop a novel Triangle-Invariant Geometric Consistency Learning for Category-Level Object Pose Estimation (TriCons-Pose) to anchor stable keypoints and aggregate pose-invariant cues, yielding reliable canonical mapping and accurate pose estimation. Specifically, a Structure-Consistent Keypoint Detector (SCKD) is designed to identify robust keypoints by enforcing cross-view structural consistency via normalized pairwise distance matching. Moreover, we propose a Pose-Invariant Geometric Aggregator (PIGA) to augment keypoint representations by injecting triangle-based pose-invariant descriptors into a local-to-global attention mechanism. The proposed framework is optimized using standard objective functions while incorporating an additional geometry consistency loss. Extensive experiments on REAL275, CAMERA25, and HouseCat6D datasets demonstrate the effectiveness of the proposed approach.
-
-</details>
-
-#### 2026-07-12 - Incremental Online Scene Reconstruction by 3D Gaussian Triangulation
-
-**Authors:** Yanjin Zhu, Shaofan Liu, Jianke Zhu
-**Links:** [abs](https://arxiv.org/abs/2607.10690) - [pdf](https://arxiv.org/pdf/2607.10690)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** Neural Scene Representations & Rendering
-**Matched keywords:** scene reconstruction, surface reconstruction, Gaussian Splatting, 3D Gaussian Splatting, rendering, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Incremental Online Scene Reconstruction by 3D Gaussian Triangulation  
-- 作者：Yanjin Zhu, Shaofan Liu, Jianke Zhu  
-- 出版日期：2026-07-12  
-- 分类：3D Reconstruction & Multi-view Geometry / Neural Scene Representations & Rendering  
-- 链接：[摘要](https://arxiv.org/abs/2607.10690) | [PDF](https://arxiv.org/pdf/2607.10690)
-
-### 一句话总结
-本文提出一种在线增量式重建框架，直接对三维高斯点集进行三角化，以同时实现高质量渲染和增量式表面网格重建。
-
-### 研究问题
-现有的三维高斯泼溅方法多依赖离线将优化后的高斯转化为隐式场来提取网格，无法与下游任务无缝集成。本文旨在解决如何在线、增量地重建并更新高保真显式网格的问题。
-
-### 核心思路/方法
-- 设计一种密集几何高斯表示，通过直接三角化该表示来重建显式网格，支持增量更新与高质量渲染。
-- 提出一种直接网格化算法，从高斯集中高效提取并更新网格。
-- 引入基于平面的牵引约束，动态将三维高斯基元对齐到近似局部表面，以提高网格精度。
-- 通过动态冻结已充分优化的历史区域，降低长序列处理中的内存与计算开销。
-
-### 主要贡献
-- 提出一种新颖的在线框架，能增量重建并更新高保真显式网格，避免离线隐式转换。
-- 实现直接网格化算法，从高斯表示中高效提取和更新网格。
-- 引入平面牵引约束以保证网格准确性。
-- 在公共数据集上，该方法在渲染质量和重建精度上均优于传统基于高斯的方法。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-高。理由：该工作针对3D高斯泼溅在在线增量重建中的关键瓶颈（必须离线转换隐式场）提出了直接三角化显式网格的新思路，方法创新性较强，且公开实验结果显示性能领先，对实时场景重建和下游任务集成有潜在应用价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Incremental scene reconstruction is essential for real-world applications. Although 3D Gaussian Splatting shows strong potential, most existing approaches require offline conversion of the optimized Gaussians into an intermediate implicit field for explicit mesh extraction, which hinders seamless integration with downstream tasks. To address this limitation, we propose a novel online framework that incrementally reconstructs and updates high-fidelity explicit meshes by directly triangulating a dense geometric Gaussian representation, which supports both high-quality rendering and incremental surface reconstruction. Moreover, we present a direct meshing algorithm that efficiently extracts and updates the mesh from the Gaussian set. To ensure mesh accuracy, we enforce a plane-based pulling constraint that dynamically aligns 3D Gaussian primitives to the approximated local surface. Furthermore, our framework significantly reduces memory and computational overhead during long-sequence processing by dynamically freezing fully optimized historical regions. Experiments on public datasets demonstrate that our method outperforms conventional Gaussian-based methods on both rendering quality and reconstruction accuracy.
-
-</details>
-
-#### 2026-07-11 - CSI-Assisted Edge SLAM Testbed Platform for 5G Connected Unmanned Autonomous Vehicles
-
-**Authors:** Boris Radovanovic, Sasa Talosi, Srdjan Sobot, Dejan Vukobratovic
-**Links:** [abs](https://arxiv.org/abs/2607.10394) - [pdf](https://arxiv.org/pdf/2607.10394)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** Embodied / Robotics / AR Applications
-**Matched keywords:** simultaneous localization and mapping, SLAM, robotics, mapping, localization
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：CSI-Assisted Edge SLAM Testbed Platform for 5G Connected Unmanned Autonomous Vehicles
-- 作者：Boris Radovanovic, Sasa Talosi, Srdjan Sobot, Dejan Vukobratovic
-- 出版日期：2026-07-11
-- 分类：3D Reconstruction & Multi-view Geometry (主要), Embodied / Robotics / AR Applications (次要)
-- 链接：arXiv:2607.10394
-
-### 一句话总结
-本文设计并实现了一个集成5G O-RAN、CSI辅助的Edge SLAM测试平台，用于评估面向6G的机器人系统在通信与感知融合中的性能与挑战。
-
-### 研究问题
-如何构建一个端到端的、支持CSI（信道状态信息）数据暴露与融合的Edge SLAM测试平台，以在5G URLLC环境下实现通信感知协同，并揭示其在延迟、同步和系统集成方面的关键难题。
-
-### 核心思路/方法
-- 构建一个集成的测试平台：包含自定义无人地面车（UGV）、基于ROS2的SLAM框架，以及5G O-RAN（开放无线接入网）系统。
-- 提供端到端的跨层视图，让ROS2传感器数据流经5G网络传输，并明确将CSI作为额外感知模态暴露并集成到SLAM流水线中。
-- 分析ROS2 DDS（数据分发服务）通信、RTPS（实时发布订阅协议）分包及5G用户面传输，探讨通过O-RAN组件提取和交付CSI的机制。
-
-### 主要贡献
-- 设计并实现了首个整合UGV、ROS2 SLAM与5G O-RAN的CSI辅助Edge SLAM测试平台。
-- 提供了完整的端到端、跨层数据流分析，涵盖从ROS2层到5G用户面的传输细节。
-- 揭示了通信感知SLAM在实际系统中的关键挑战，包括延迟、数据流、同步及跨系统集成，为未来6G机器人平台提供了实验洞察。
-
-### 局限性
-摘要未提供足够信息（例如未讨论测试规模、具体性能指标或是否存在试验结果中的失败案例）。
-
-### 阅读优先级
-中
-理由：该论文侧重于系统架构设计与平台实现，核心价值在于工程整合与实验观察，而非提出全新算法。对于关注5G/6G与机器人SLAM交叉领域、需要构建类似测试平台的读者具有直接参考意义，但对纯算法或理论研究者价值相对有限。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-The evolution from 5G towards 6G reinforces interest in connected robotics, where mobile robots offload compute-intensive tasks to edge servers over ultra-reliable low-latency communication (URLLC) links. Simultaneous localization and mapping (SLAM), a fundamental yet demanding robotics function, is increasingly considered for edge deployment within mobile edge computing (MEC) frameworks. In parallel, integrated sensing and communications (ISAC) enables the use of radio channel information, such as channel state information (CSI), as an additional sensing modality in radio-based SLAM. In this paper, we design and implement a CSI-assisted Edge SLAM testbed integrating a custom unmanned ground vehicle (UGV), a ROS2-based SLAM framework, and a 5G Open Radio Access Network (O-RAN) system. The proposed architecture provides an end-to-end, cross-layer view of ROS2 sensor data streaming over 5G, explicitly enabling CSI exposure and integration into the SLAM pipeline. We analyze ROS2 DDS communication, RTPS packetization, and 5G user-plane transport, and discuss mechanisms for CSI extraction and delivery via O-RAN components. The platform enables realistic experimentation with communication-aware SLAM and reveals key challenges related to latency, data streaming, synchronization, and cross-system integration, providing insights for future 6G-enabled robotic platforms.
 
 </details>
 
@@ -3120,56 +2917,6 @@ Recent foundation image and video generation models offer strong generalization 
 <summary>Abstract</summary>
 
 Imitation learning enables robots to acquire manipulation skills from demonstrations by mapping observations to actions. Existing approaches predict either short-horizon continuous action sequences or discrete keyposes. However, continuous prediction methods suffer from compounding errors due to short prediction horizons and struggle with multi-modal action distributions, whereas keypose-based methods necessitate an external planner, constraining real-time applicability. To address these challenges, we introduce SegDiff, a closed-loop visuomotor policy that integrates the strengths of both paradigms. SegDiff decomposes demonstrations into motion segments between keyposes and learns to predict the continuous trajectory from the current state to the next keypose, enabling long-horizon prediction with real-time refinement. Furthermore, we leverage the capability of diffusion models and DDIM inversion to propose a Dynamic Temporal Ensembling mechanism, which allows the policy to efficiently respond to dynamic environments and mitigate discontinuities caused by inconsistent multi-modal sampling. SegDiff demonstrates significant performance gains over existing approaches across various simulated and real-world scenarios, indicating its strong ability to reason over extended temporal dependencies while maintaining real-time adaptability and control stability.
-
-</details>
-
-#### 2026-07-11 - PrismAD: Decoupled Planning via Semantic Mixture-of-Planners for End-to-End Autonomous Driving
-
-**Authors:** Kang Ding, Zhigui Lin, Hongsong Wang, Jie Gui, Qi Liu, Zhe Wang, Luqi Tang, Lei He
-**Links:** [abs](https://arxiv.org/abs/2607.10336) - [pdf](https://arxiv.org/pdf/2607.10336)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** autonomous driving
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：PrismAD: Decoupled Planning via Semantic Mixture-of-Planners for End-to-End Autonomous Driving
-- 作者：Kang Ding, Zhigui Lin, Hongsong Wang, Jie Gui, Qi Liu, Zhe Wang, Luqi Tang, Lei He
-- 出版日期：2026-07-11
-- 分类：Embodied / Robotics / AR Applications
-- 链接：https://arxiv.org/abs/2607.10336
-
-### 一句话总结
-PrismAD 提出一种基于语义混合规划器的解耦式端到端自动驾驶框架，通过将场景token按语义分组并分配给独立专家，提升运动规划和自我规划效果。
-
-### 研究问题
-现有端到端规划器将异构场景token聚合到耦合表示空间，迫使单一规划分支联合建模智能体交互、道路几何和驾驶意图，这削弱了各因素具体推理能力，并模糊了不同规划线索的贡献。
-
-### 核心思路/方法
-- 将场景token划分为交互、几何、意图三组，分别分配给参数独立但架构相同的专家。
-- 每个专家学习特定规划子任务（运动预测或自我规划）的表示。
-- 引入语义感知路由器，自适应地为运动预测和自我规划分配不同的路由权重，聚合专家预测。
-- 采用稀疏Top-K激活和噪声门控，提升路由鲁棒性并减少不必要的专家计算。
-
-### 主要贡献
-- 提出解耦规划范式，通过语义分组和独立专家增强各规划线索的专用推理。
-- 设计混合专家路由机制，在运动预测和自我规划间动态分配权重，实现自适应聚合。
-- 在nuScenes开放循环数据集和NeuroNCAP闭合循环基准上展示出竞争性能。
-
-### 局限性
-摘要未提供关于模型局限性、失败案例或计算复杂度的具体信息。
-
-### 阅读优先级
-中。理由：该工作聚焦端到端自动驾驶规划中的表示解耦问题，方法设计清晰（混合专家架构），但性能仅描述为“竞争性”，未给出量化对比细节；同时摘要长度较短，缺少充分的实验验证说明，适合对解耦规划范式感兴趣的读者初步了解，但需阅读全文才能评估实际效果优势。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-This letter presents PrismAD, a decoupled end-to-end autonomous driving framework based on a Semantic Mixture-of-Planners. Existing planners usually aggregate heterogeneous scene tokens into a coupled representation space, forcing a single planning branch to jointly model agent interaction, road geometry, and driving intention. Such coupling may weaken factor-specific reasoning and obscure the contribution of different planning cues. To address this limitation, PrismAD partitions scene tokens into interaction, geometry, and intent groups, and assigns them to independent planning experts with the same architecture but separate parameters. Each expert learns a specialized motion-planning representation, while a semantics-aware router adaptively aggregates expert predictions with separate routing weights for motion prediction and ego planning. Sparse top-$K$ activation with noisy gating is further introduced to improve routing robustness and reduce unnecessary expert computation. Extensive experiments on the nuScenes open-loop dataset and NeuroNCAP closed-loop benchmark demonstrate that PrismAD exhibits competitive performance. Our code will be released soon.
 
 </details>
 
