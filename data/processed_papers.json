@@ -4569,6 +4569,66 @@
         "path": "summaries/brief/2607.14183.md",
         "markdown": "### Metadata\n- 标题：Open-AoE: An Open Egocentric Manipulation Dataset and Toolchain for Embodied Learning\n- 作者：Zishuo Li, Bowen Yang, Changtao Miao, Kai Zhu, Hao Chen, Qingze Guan, Zhengxing Wu, Wanke Zhan, Yang Sun, Zhiyi Huang, Zitong Shan, Zhenchao Jin, Jiadong Hong, Taowen Wang, Yushi Feng, You Liu, Yibo Wang, Yifan Yang, Zhaowen Zhou, Man Luo, Hao Cheng, Bo Zhang, Jianshu Li, Jiansheng Cai, Guocai Yao, Jize Zhang, Chenhao Lin, Renjing Xu, Lequan Yu, Chao Shen, Chunhua Shen, Zhe Li\n- 出版日期：2026-07-15\n- 分类：Embodied / Robotics / AR Applications\n- 链接：摘要：https://arxiv.org/abs/2607.14183 | PDF：https://arxiv.org/pdf/2607.14183\n\n### 一句话总结\nOpen-AoE是一个面向具身学习的开放、社区导向的自我中心操作数据集与工具链，包含约2000小时的自然环境人体操作视频及从数据采集到模型训练的完整流水线。\n\n### 研究问题\n当前缺乏一种结合低成本连续采集、操作级结构化标注和可复用工具的具身智能资源，以支持从人类视频到机器人学习的高效转化。\n\n### 核心思路/方法\n1. **数据集构建**：利用500+名贡献者使用400+部智能手机在自然环境中采集约2000小时的自我中心操作视频。\n2. **结构化标注**：为视频提供文本描述、基于MANO的手部姿态、相机轨迹以及时间上局域化的原子动作标注。\n3. **数据处理流水线**：包含时间动作分割、语义标注、手部重建和相机轨迹重建，将原始录像转化为结构化样本。\n4. **下游工具链**：支持可视化、跨本体重新定位、特定模型数据转换，并提供VLA策略、WAMs和世界模型的训练方案。\n\n### 主要贡献\n1. 提供了一个大规模（约2000小时）、低成本、由社区贡献的自我中心操作数据集。\n2. 建立了一套从智能手机采集到模型训练、具有完整标注和工具链的开放基础设施。\n3. 整合了可扩展数据采集、结构化处理和下游适应，降低了数据贡献与复用的门槛。\n\n### 局限性\n摘要未提供足够信息。未提及数据集的具体覆盖动作类型、标注质量验证、训练模型性能评估结果或与现有数据集的对比分析细节。\n\n### 阅读优先级\n高。该工作为具身学习领域提供了大规模、开放且实用的基础设施，并结合了从数据到模型训练的全流程工具链，对需要低成本数据资源的研究者或从事人机迁移、世界模型研究的团队具有直接参考价值。"
       }
+    },
+    "2607.16192": {
+      "brief": {
+        "status": "success",
+        "input_hash": "fd8edb0e0742cda4f9b465c5532c3fc3e3f8c589ff4f06d402339e9c34230ac8",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-20T15:10:58Z",
+        "path": "summaries/brief/2607.16192.md",
+        "markdown": "### Metadata\n- 标题：MotionForesight: Re-purposing Video Models for Future 3D Scene-Flow Prediction\n- 作者：Homanga Bharadhwaj, Yash Jangir\n- 出版日期：2026-07-17\n- 分类：Dynamic / 4D Reconstruction\n- 链接：https://arxiv.org/abs/2607.16192\n\n### 一句话总结\n本文提出MotionForesight方法，通过重新利用视频预测模型中的先验知识，仅从观察到的单目视频帧预测未来物体在3D空间中的轨迹流，无需语言或物体属性假设。\n\n### 研究问题\n如何从普通的单目人类-物体交互视频中，学习预测被操作物体上点的未来3D运动轨迹？\n\n### 核心思路/方法\n1. 利用预训练视频模型中的密集3D跟踪器，从完整视频片段生成伪真实轨迹。\n2. 仅使用观察到的帧，训练一个轻量适配器，将回溯式跟踪表示转换为前向预测，同时冻结视频和跟踪组件。\n3. 通过学习掩码潜变量替代未来的RGB和几何信息，实现从像素预测到未来3D场景流的重定向。\n\n### 主要贡献\n1. 提出了一种从被动视频观察中预测未来3D物体运动轨迹的方法，无需物体属性假设。\n2. 证明了视频预测模型中的先验知识可被高效重用于3D运动预测，仅需4万个人类视频即可训练。\n3. 该模型对分布外的物体、环境、视角和交互具有泛化能力，且性能优于使用百万级视频训练的更大模型。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n高。理由：该方法在少量数据下实现了跨领域泛化，且直接输出3D轨迹预测，对机器人学、具身智能等领域的互动规划具有潜在价值；方法设计简洁，重用预训练模型，实用性强。"
+      }
+    },
+    "2607.16146": {
+      "brief": {
+        "status": "success",
+        "input_hash": "3b69bbc6530fbdce6b761d1b1feb4e6784e8dff3f943bb5e7019cae8c5a1c03b",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-20T15:11:03Z",
+        "path": "summaries/brief/2607.16146.md",
+        "markdown": "### Metadata\n- 标题：VTLoc: Learning-based Tactile Contact Localization in Visual Point Clouds\n- 作者：Zhiyuan Wu, Zhuo Chen, Shan Luo\n- 出版日期：2026-07-17T17:27:08Z\n- 分类：Embodied / Robotics / AR Applications\n- 链接：[摘要](https://arxiv.org/abs/2607.16146) | [PDF](https://arxiv.org/pdf/2607.16146)\n\n### 一句话总结\n本文提出VTLoc，一种利用视觉点云和触觉读数进行接触点定位的视觉-触觉融合框架。\n\n### 研究问题\n如何将触觉数据与视觉几何进行精确的空间对齐，以实现从触觉读数预测接触点在物体表面位置的任务（接触定位）。\n\n### 核心思路/方法\n1.  提出VTLoc框架，以3D点云作为视觉输入，结合触觉读数进行接触点定位。\n2.  引入**几何多模态对齐模块**：从融合的视觉-触觉特征中重建伪点云，并将此伪点云与原始视觉点云对齐，以强制跨模态的空间一致性。\n3.  引入**迭代定位更新器**：利用融合的视觉-触觉特征，通过迭代方式不断优化预测的接触点位置。\n\n### 主要贡献\n- 提出VTLoc，一种新颖的视觉-触觉框架，用于从触觉读数和3D点云中定位接触点。\n- 设计了两个关键组件：几何多模态对齐模块和迭代定位更新器，以解决跨模态空间对齐问题。\n- 在包含100个真实物体的新基准上评估，表明VTLoc通过减少局部到全局的对应歧义，提升了单次触觉接触定位性能。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**中**。该论文提供了一个有明确评估基准的视觉-触觉定位方法，对于从事机器人抓取、对象感知或多模态融合方向的研究者有一定参考价值。但它发表于近期（2026年），尚未有广泛的讨论或复现验证，且摘要未提供与现有具体方法的性能对比数值，其实际效果需进一步查看完整论文。"
+      }
+    },
+    "2607.16128": {
+      "brief": {
+        "status": "success",
+        "input_hash": "3ac91ca562926fdf31ab28ddc158711551231eac2fafca030d4a2b474c96353e",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-20T15:11:10Z",
+        "path": "summaries/brief/2607.16128.md",
+        "markdown": "### Metadata\n- 标题：Toward Semantic Communication for Real-time Mobile 3D Reconstruction\n- 作者：Fangzhou Zhao, Yao Sun, Xuesong Liu, Runze Cheng, Shang Kai, Yi Sun\n- 出版日期：2026-07-17T17:07:40Z\n- 分类：3D Reconstruction & Multi-view Geometry（主分类），Embodied / Robotics / AR Applications（次分类）\n- 链接：摘要链接：https://arxiv.org/abs/2607.16128；PDF链接：https://arxiv.org/pdf/2607.16128\n\n### 一句话总结\n本文提出一种针对实时移动3D重建的语义通信框架，通过传输语义信息并输出像素级置信度地图，指导几何估计，从而在噪声信道下提升位姿估计精度和3D结构一致性。\n\n### 研究问题\n如何在实时移动3D重建场景中，利用语义通信（SemCom）缓解通信引起的图像失真对几何估计（如位姿计算和场景结构重建）的敏感性影响。\n\n### 核心思路/方法\n- 设计一个语义收发机（semantic transceiver），能够输出重建图像以及每个像素的置信度地图（pixel-wise confidence map），量化各区域的重建可靠性。\n- 提出置信度引导的几何估计方法：在基于RANSAC的位姿初始化和集束调整（bundle adjustment）中融入置信度信息，减少不可靠区域的影响，从而增强在噪声信道下的鲁棒性。\n\n### 主要贡献\n- 首次将语义通信框架应用于实时移动3D重建，支持任务相关的可靠传输。\n- 提出包含像素级置信度地图的语义收发机，为几何估计提供明确的可靠性信息。\n- 设计置信度引导的几何估计流程，改进传统RANSAC和集束调整，显著提升位姿估计准确性和3D结构一致性（通过模拟实验验证）。\n\n### 局限性\n摘要未提供足够信息。例如，未讨论框架的计算复杂度对移动平台实时性的影响、置信度地图的生成机制细节、实际硬件实现中的延迟或功耗，以及除模拟外是否在真实移动平台上进行测试。\n\n### 阅读优先级\n**中**。\n理由：该工作融合了语义通信与3D重建两个方向，对于从事实时移动3D重建、无线通信与计算机视觉交叉领域的研究者有参考价值。但由于摘要未提供实验细节和具体数值比较，且属于较新发表的论文（2026年），若需评估其实际效果和可复现性，需进一步阅读全文。对于仅关注传统3D重建或通信的读者，优先级可适当降低。"
+      }
+    },
+    "2607.16123": {
+      "brief": {
+        "status": "success",
+        "input_hash": "23385d33d49087f4d2df88cf71c9ef96bfea711c7248096e0df49cd1b2d371e5",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-20T15:11:17Z",
+        "path": "summaries/brief/2607.16123.md",
+        "markdown": "### Metadata\n- 标题：BayesContact: Uncertain Pose Estimation via Visuo-Tactile Proposals and Simulation-based Inference\n- 作者：Aditya Kamireddypalli, Matias Mattamala, Joao Moura, Russell Buchanan, Sethu Vijayakumar, Subramanian Ramamoorthy\n- 出版日期：2026-07-17\n- 分类：3D Reconstruction & Multi-view Geometry (主要)；Embodied / Robotics / AR Applications (次要)\n- 链接：https://arxiv.org/abs/2607.16123\n\n### 一句话总结\n本文提出BayesContact，一种基于仿真的推理框架，通过融合视觉和触觉信息，实现对插销-孔装配任务中物体姿态的不确定性估计，相比纯视觉方法将插装成功率提升了30%。\n\n### 研究问题\n如何在接触密集型操作中，利用模拟驱动的视觉-触觉融合方法，无需离线训练，准确估计物体姿态并处理不确定性。\n\n### 核心思路/方法\n1. **粒子滤波信念**：使用一系列粒子维持对物体姿态的后验信念。\n2. **仿真前向模型**：对每个姿态假设，渲染器预测深度测量值，物理仿真器在防护探测动作下预测接触结果。\n3. **多模态融合**：将真实深度观测和力/力矩接触证据，与仿真预测结果进行评分对比，在线更新粒子信念。\n4. **主动探测**：基于信息增益选择探测动作，主动消除姿态歧义。\n\n### 主要贡献\n1. 提出一个无需离线训练的视觉-触觉姿态估计框架，适用于新环境和新几何形状。\n2. 利用仿真前向模型近似观测似然，融合深度与力/力矩信息。\n3. 在模拟和真实机器人实验中，相比纯视觉推理，姿态可观测性和插装成功率提升30%。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**中**。\n理由：该方法针对特定装配任务（插销-孔插入），提出了新颖的在线推理思路，无离线训练负担。实验效果有明确提升（30%），但属于领域专用方法，若您的兴趣不在接触密集型操作或机器人装配，则可降为低优先级。"
+      }
+    },
+    "2607.16077": {
+      "brief": {
+        "status": "success",
+        "input_hash": "a219a2a1193455c680f3525b8ca10dec8788b98961805486579f6790bcd92298",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-20T15:11:24Z",
+        "path": "summaries/brief/2607.16077.md",
+        "markdown": "### Metadata\n- 标题：Adaptive Contrast Enhancement and Optimised Feature Matching for RootSIFT-Based Palm-Vein Recognition\n- 作者：Kaveen Perera, Fouad Khelifi, Ammar Belatreche\n- 出版日期：2026-07-17\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2607.16077\n\n### 一句话总结\n本文提出一种名为ILACS-BGOT的自适应对比度增强方法，并结合RootSIFT特征与优化匹配策略，显著提升了掌静脉识别性能。\n\n### 研究问题\n掌静脉图像因近红外光散射和传感器限制导致的低对比度问题，影响识别准确率。\n\n### 核心思路/方法\n1. 提出ILACS-BGOT方法，在原有ILACS-LGOT基础上，用双向高斯加权重叠分块（BGOT）来减轻分块伪影，实现局部对比度自适应增强。\n2. 将RootSIFT特征与KNN+RT（一种匹配策略）结合，并引入先前提出的MMD（均值与中值距离）滤波器。\n3. 在CASIA、PolyU、PUT三个基准数据集上，使用42种MMD阈值与RT值的组合进行系统评估，分析参数变化对识别性能的影响。\n\n### 主要贡献\n1. 提出ILACS-BGOT增强算法，有效改善低对比度掌静脉图像质量。\n2. 将RootSIFT与KNN+RT及MMD滤波器整合，并系统分析了参数变化对性能的影响。\n3. 在三个公开数据集上取得更优的等错误率（EER）和准确率，证明方法具有良好的泛化能力。\n4. 指出ILACS-BGOT机制可能适用于其他低对比度图像增强任务（如指静脉、掌纹识别）。\n\n### 局限性\n摘要未提供足够信息。未讨论方法的计算复杂度、实时性、对极端低质量图像的鲁棒性，以及与其他深度学习方法的直接对比。\n\n### 阅读优先级\n中。理由：方法在掌静脉识别领域有明确创新（对比度增强+特征匹配优化），实验结果在多个数据集上表现优异，但未涉及与当前主流深度学习方法的对比，且应用场景相对专一，适合对该方向有具体需求的读者优先阅读。"
+      }
+    },
+    "2607.16015": {
+      "brief": {
+        "status": "success",
+        "input_hash": "ecebba7e80b394ecd95c7a532b16921398bd4a1bd81d6914ceb02179ca6efafe",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-20T15:11:30Z",
+        "path": "summaries/brief/2607.16015.md",
+        "markdown": "### Metadata\n- 标题：PIXIE: A Zero-Shot texture-invariant 6D pose estimation framework for unseen objects with assembly defects\n- 作者：Leon Jungemeyer, Alejandro Magaña, Gautham Mohan, Matthias Karl, Daniel Werdehausen\n- 出版日期：2026-07-17\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：摘要链接：https://arxiv.org/abs/2607.16015；PDF链接：https://arxiv.org/pdf/2607.16015\n\n### 一句话总结\nPIXIE是一个零样本的6D位姿估计框架，仅使用无纹理3D模型和RGB图像，通过几何一致性实现对未见物体（含装配缺陷）的鲁棒位姿估计。\n\n### 研究问题\n如何在仅有未纹理3D模型且物体存在几何偏差（如损伤或装配缺陷）的情况下，零样本地从RGB图像估计物体的6D位姿，同时克服光照和纹理变化的影响。\n\n### 核心思路/方法\n1. 从采样参考视角渲染物体的合成深度图与法线图。\n2. 利用预训练的跨模态特征匹配器，将查询RGB图像的特征与合成深度/法线图进行匹配。\n3. 将匹配的关键点反投影到3D空间，获得2D-3D对应关系。\n4. 通过Perspective-n-Point (PnP) 算法求解6D位姿。\n5. 引入对应关系过滤机制，处理模型与物理物体之间的几何偏差。\n\n### 主要贡献\n- 提出PIXIE，一种零样本、纹理无关的6D位姿估计方法，仅需无纹理3D模型。\n- 通过仅依赖几何信息，实现对照明和纹理变化的内在鲁棒性。\n- 在公开基准上对无纹理物体取得当时最优结果（无需物体特定训练）。\n- 提出一个包含装配缺陷、纹理变化和遮挡的新数据集，展示实际应用能力。\n\n### 局限性\n摘要未提供足够信息说明具体局限性，例如计算效率、对极端几何偏差的鲁棒性边界或未测试物体的类别范围等。\n\n### 阅读优先级\n高。理由：该方法针对工业场景下纹理缺失、几何缺陷和零样本需求等实际挑战，提出了简洁高效的解决方案，并在标准基准上取得最优结果，对机器人和计算机视觉领域有直接应用价值。"
+      }
     }
   },
   "reports": {
@@ -4856,6 +4916,13 @@
       "status": "success",
       "updated_at": "2026-07-19T14:23:30Z",
       "path": "reports/daily/2026-07-19.md",
+      "tasks": [],
+      "ai_trend_report": true
+    },
+    "2026-07-20": {
+      "status": "success",
+      "updated_at": "2026-07-20T15:11:55Z",
+      "path": "reports/daily/2026-07-20.md",
       "tasks": [],
       "ai_trend_report": true
     }
