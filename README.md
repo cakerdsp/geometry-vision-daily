@@ -11,59 +11,74 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：55
+- 当前滚动窗口论文数：49
 - 分类分布：
-  - 3D Reconstruction & Multi-view Geometry: 18
-  - Embodied / Robotics / AR Applications: 14
+  - 3D Reconstruction & Multi-view Geometry: 14
   - Neural Scene Representations & Rendering: 14
+  - Embodied / Robotics / AR Applications: 13
   - Geometry Foundation Models: 6
-  - Dynamic / 4D Reconstruction: 3
+  - Dynamic / 4D Reconstruction: 2
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-好的，基于您提供的论文列表，以下是今日的科研趋势综合分析。
+好的，基于您提供的论文列表，以下是针对今天科研趋势的综合分析。
 
 ---
 
 #### 今日主要趋势
 
-1.  **从“静态捕捉”迈向“动态预测与理解”**：当前研究重心正从静态场景重建显著转向动态场景的时间维度处理。这体现在两个层面：一是对**未来状态的预测**，如 `FutureSurf` 基准专门评估动态场景在观测窗口外的几何重建；二是对**复杂动态的解耦与建模**，如 `SDM` 将视频运动分解为相机运动和物体运动，`GrainGS` 则致力于在动态场景中平衡运动细节与结构稳定性。`FA-LAM` 更是将这一趋势延伸到数字人领域，实现了单次可驱动的人头4D重建。
+1.  **从静态重建到动态与未来预测的范式迁移**：一个明显的趋势是，研究不再满足于静态场景的3D重建，而是深入探索动态场景的建模、合成，甚至超越观测窗口进行未来预测。代表性论文包括：
+    - **GrainGS** 和 **FA-LAM** 专注于动态/4D场景的高效与新视角合成，后者更关注可动画化的人头模型。
+    - **FutureSurf** 直接提出了一个关于“未来表面重建”的基准和数据集，明确将评估指标从当前观测窗口延伸到未来时刻，标志着该领域评估范式的转变。
 
-2.  **前馈式（Feed-forward）架构与高效计算的结合**：为了满足机器人、自动驾驶和AR等实时应用的需求，高效的3D重建与新视角合成成为核心追求。`WAT3R` 和 `ATSplat` 代表了前馈式3D重建的进展，它们不再需要逐场景的优化迭代，能直接从输入图像/视频中快速输出结果。同时，`SubSplat` 和 `ATSplat` 都专注于通过新颖的表示方法（如亚像素重参数化、自适应Token扩展）来减少计算冗余，在保持甚至提升质量的同时大幅提高效率和降低存储需求。`RealVDeblur` 则通过蒸馏实现了高效的视频预处理。
+2.  **高斯泼溅（3DGS）作为核心支柱，持续演化与融合**：3DGS已从单纯的渲染技术演变为诸多任务的基石和工具。论文展示了其在**前馈式重建**、**动态重建**、**SLAM**、**数据合成（用于去模糊）** 以及**混合现实比较**等方向上的广泛适应性和深度融合。代表性论文包括：
+    - **ATSplat** 和 **SubSplat** 分别从自适应容量分配和亚像素分辨率两个角度改进前馈式3DGS。
+    - **GLAM-SLAM** 将3DGS与SLAM结合，解决大规模室外场景的实时性问题。
+    - **RealVDeblur** 利用3DGS构建物理真实的数据合成管道，服务于视频去模糊任务。
+    - **MR-Compare** 则利用3DGS进行混合现实环境下的重建质量对比。
 
-3.  **鲁棒性与泛化性成为首要考量**：越来越多的工作开始强调在真实世界、非理想条件下的泛化能力。论文列表中的多篇工作都直接挑战了经典假设（如光照、天气、视角、传感器限制）的失效问题。例如，`DAPM` 专注于无人机在剧烈姿态变化下的深度估计，`GLAM-SLAM` 解决了大规模室外长序列SLAM的实时和内存问题，`WAT3R` 针对水下环境的视觉退化，`Boosting Robustness` 则专门应对恶劣天气下的自监督深度估计。`3D-GIMP` 和 `RealVDeblur` 也分别解决场景编辑中的视图一致性和视频去模糊中的真实世界退化问题。
+3.  **鲁棒性与泛化性：应对恶劣条件与特定领域挑战**：多个工作针对特定领域或恶劣条件，提出了增强鲁棒性的解决方案，推动了从理想环境到真实世界的应用。代表性论文包括：
+    - **WAT3R** 专门解决水下环境的光学衰减和散射问题，实现前馈式水下3D重建。
+    - **DAPM** 针对无人机航拍中高度动态的视角（高度、俯仰、翻滚角）设计，提升单目深度估计的泛化能力。
+    - **Boosting Robustness for All-Weather...** 则专门应对自动驾驶在雨、雾等恶劣天气下自监督深度估计的鲁棒性问题。
 
-4.  **具身智能（机器人）与数据基础设施的强协同**：机器人应用是该批次论文的另一个主要落脚点，但重点从算法本身转向了支撑算法的数据和质量评估。`TableVerse` 展示了如何构建大规模、高保真、物理真实的机器人操作训练数据。`KineBench` 则提供了一个更可靠的方法来评估具身世界模型的物理一致性，避免了传统逆动力学模型的瓶颈。`MR-Compare` 框架则首次允许在混合现实中对不同重建方法进行空间对齐的视觉比较，为评估和验证提供了新工具。这体现了领域内对“数据+评估”闭环的重视。
+4.  **解耦表征与知识蒸馏：破解复杂任务中的“纠缠”问题**：面对复杂任务（如视频动态、多任务学习），研究者倾向于通过解耦、路由和蒸馏等技术，将复杂问题分解或转移知识，从而提升模型效率与性能。代表性论文包括：
+    - **Self-Supervised Learning of Structured Dynamics from Videos** 的目标就是解耦视频中的相机运动与物体运动。
+    - **PerceptDrive** 采用自适应专家路由机制，从冻结的感知基础模型中蒸馏先验知识，服务于端到端驾驶规划。
+    - **FA-LAM** 通过双阶段训练显式地解耦重建与动画任务的目标冲突。
+    - **Boosting Robustness for All-Weather...** 通过多教师蒸馏（Multi-Teacher Distillation）在恶劣天气下提供鲁棒的深度估计先验。
 
 #### 技术路线观察
 
-| 技术方向 | 代表性论文 | 侧重点 | 技术路线特征 |
-| :--- | :--- | :--- | :--- |
-| **几何基础模型** | `SDM` | 运动表征学习、动态解耦 | 利用预训练视觉大模型（ViT）的冻结特征，通过未来特征预测实现自监督运动解耦，探索了“弱监督+自监督”的结合路线。 |
-| **3D/4D 重建** | `GrainGS`, `FA-LAM`, `FutureSurf`, `WAT3R` | 动态场景、未来预测、水下环境 | `GrainGS`和`FA-LAM`代表了3DGS在动态场景（4D）的演进，前者强调效率与细节平衡（梯度解耦），后者专注于特定类别（人头）的可驱动重建。`FutureSurf`另辟蹊径，创建了针对“未来几何”的评估标准。`WAT3R`展示了前馈式方法在解决极端视觉条件下的潜力。 |
-| **神经场景表示与渲染** | `SubSplat`, `ATSplat`, `3D-GIMP`, `MR-Compare` | 高效渲染、场景编辑、评估框架 | 核心是围绕3DGS的改进。`SubSplat`和`ATSplat`分别从亚像素精细化和自适应稀疏化两个角度优化3DGS的效率与内存。`3D-GIMP`探索了将传统算法（PatchMatch）与生成模型（diffusion）结合的编辑新范式。`MR-Compare`则将3DGS置于最接近应用的MR环境中进行评估。 |
-| **机器人/AR 应用** | `DAPM`, `GLAM-SLAM`, `HGeo-TopoMap`, `TableVerse`, `KineBench`, `PerceptDrive` | 感知系统、交互决策、数据与评估 | 技术路线高度多样化，服务于不同子任务。感知方面，`DAPM`和`GLAM-SLAM`解决了特定场景（无人机、大规模SLAM）下的鲁棒性问题。决策方面，`A Real-Time Generalized Nash Equilibrium Framework`将博弈论引入自动驾驶。数据与评估方面，`TableVerse`的Real2Sim管道和`KineBench`的IDM-free基准测试是两大亮点，反映了领域对高质量数据和可靠评估的迫切需求。 |
+- **Geometry Foundation Models / 3D Reconstruction & Multi-view Geometry**: 这批论文技术高度务实，针对特定传感器（平面Lidar, 单目UAV）和特定环境（水下）设计轻量级或专用网络。**变分推断被弱监督与自监督策略取代**，例如**DAPM**利用几何先验间接监督、**WAT3R**的退化适配模块、**Factorized Spatio-Temporal Convolutions**的跨模态自监督。**核心创新在于从数据表征或网络结构入手，而非模型架构本身的革命性突破**。
+
+- **Dynamic / 4D Reconstruction**: 与静态场景不同，动态重建的核心难题是**运动建模与结构稳定性的平衡**。**GrainGS**采用了**层级锚定+每高斯形变**的结构，并通过**梯度解耦**来巧妙分离两者，代表了动态重建中一种精细化控制的趋势。**FA-LAM**则从**重构与动画任务的冲突**这一更抽象的角度切入，提出解耦式训练流水线，显示出对系统级瓶颈的深入洞察。
+
+- **Neural Scene Representations & Rendering**: **前馈式3DGS**成为一个重要子方向（**ATSplat**、**SubSplat**）。它们的共同目标是克服优化式3DGS效率低、泛化性差的缺点。**ATSplat**的亮点在于恢复了“自适应容量分配”这一核心能力；**SubSplat**则巧妙地在计算复杂度和渲染分辨率之间找到新的平衡点，**亚像素重参数化**提供了一种节省计算量的思路。**3D-GIMP**展示了**混合范式**的竞争力——用一次生成+确定性传播取代多次迭代的神经渲染，在效率和一致性之间取得了优势。
+
+- **Embodied / Robotics / AR Applications**: 研究热点明显集中在**真实世界数据与仿真环境的桥梁构建**上。**TableVerse**的*Real2Sim*管道直接处理无约束图像生成物理真实的仿真数据，**KineBench**则通过**显式运动学接地**解决评估中的归因模糊问题。同时，**交互式决策**（**A Real-Time Generalized Nash Equilibrium...**）和**多模态先验融合**（**PerceptDrive**）代表了自动驾驶规划层面的两种主流技术路线。
 
 #### 值得优先阅读的论文
 
-1.  **ATSplat (2607.20417)**：**高优先级**。该工作直接挑战了前馈式3DGS的核心瓶颈——固定分配导致的冗余。其提出的“自适应Token扩展”思想优雅且有效，实现了5.7倍的效率提升，并取得了SOTA质量，对于推动3DGS走向实时应用具有重要意义。
+1.  **FutureSurf (arXiv:2607.21471)**: **高优先级**。它不仅仅是提出了一个新的基准，而是定义了一个全新的评估范式——“未来表面重建”。这项工作指出了现有动态重建评估的根本盲点，对任何从事动态场景理解与重建的研究者都极具启发性。
 
-2.  **GrainGS (2607.21448)**：**高优先级**。对于从事动态重建的研究者，本文提供了一个平衡细节与效率的优秀范例。其“梯度解耦”和“双阶段训练”的设计思路具有很强的启发性，并在合成和真实数据上都达到了极佳的效果（36.98 dB PSNR, 435.6 FPS）。
+2.  **ATSplat (arXiv:2607.20417)** & **SubSplat (arXiv:2607.20813)**: **高优先级**。这两篇代表了前馈式3DGS的两个重要进展。ATSplat解决了自适应容量分配问题，SubSplat解决了低计算成本下的高分辨率渲染问题。对比着读，可以全面了解前馈式3DGS的核心挑战和解决方案。
 
-3.  **KineBench (2607.19876)**：**高优先级**。该论文直击具身世界模型评估的核心痛点，并提出了一套优雅的解决方案。对于所有从事视频生成、世界模型和机器人规划的研究者，这篇文章都是必读的，它提供了一种更可靠的评估范式，对推动领域健康发展至关重要。
+3.  **Self-Supervised Learning of Structured Dynamics from Videos (arXiv:2607.21576)**: **高优先级**。该工作试图从自监督角度解决视频理解中的核心难题——解耦相机和物体运动。它提出的结构化动力学模型（SDM）与纯监督方法（如VGGT）的性能对比，揭示了自监督学习的巨大潜力，是对比学习与运动表征的重要工作。
 
-4.  **3D-GIMP (2607.20789)**：**中-高优先级**。这是3DGS场景编辑领域的一篇令人耳目一新的文章。它没有盲目追逐最复杂的生成模型，而是巧妙地结合了经典的PatchMatch算法，大幅提升了编辑的效率和视图一致性，为场景编辑提供了新的思路。
-
-5.  **FA-LAM (2607.20922)**：**中-高优先级**。对于关注数字人/可驱动化身的研究者，本文深入剖析了现有方法的两个根本问题（注意力噪声、重建与动画任务冲突），并提出了系统性的解决方案。其“双阶段训练”和“对称语义注意力”策略具有较强的通用性。
+4.  **GrainGS (arXiv:2607.21448)**: **高优先级**。在动态3DGS领域，GrainGS的**梯度解耦**思想非常巧妙，解决了动态重建中“树欲静而风不止”的问题。方法设计优雅且效果显著，是该方向的标杆性工作。
 
 #### 可能的研究机会
 
-1.  **为前馈式方法注入“自适应”能力**：`ATSplat`的成功表明，前馈式方法同样可以实现类似优化方法的容量分配。未来可以探索如何将类似的自适应分配机制引入其他前馈式架构（如3D重建网络、场景流预测网络），实现更高效的资源利用。
-2.  **构建更通用的“未来状态”预测基准**：`FutureSurf`针对几何表面，但“未来预测”的场景更广。可以借鉴其“控制变量+证伪”的思想，构建针对场景外观、光照、物体交互等更广泛的未来状态预测基准，推动更通用的时序建模研究。
-3.  **融合经典的几何算法与现代学习框架**：`3D-GIMP`将PatchMatch与3DGS结合是一个绝佳的范例。除了PatchMatch，还有许多经典的、具有理论保证的几何算法（如MVS、PnP、BA）值得与当前强大的学习表示（如3DGS、NeRF、Diffusion）相结合，以解决数据驱动的盲区或提高一致性。
-4.  **探索“零样本”或“跨场景”的动态解耦**：`SDM`在受控环境下实现了运动解耦，但其依赖预训练模型特征。如何摆脱对特定场景的弱监督，实现零样本的、跨场景的相机与物体运动分离，是更具挑战性的方向，可结合大规模视频数据和对比学习等
+1.  **“未来预测”基准驱动的动态重建方法**：FutureSurf的出现为动态重建方法提出了新目标。如何设计能够显式或隐式预测未来几何的模型，将成为新的研究热点。可以探索将**神经微分方程**或**物理先验**融入4D重建框架中，以更好地泛化到未见过的未来时间点。
+
+2.  **融合前馈与优化的混合3DGS系统**：前馈式（ATSplat、SubSplat）速度快但精度上限受限于特征，优化式（传统3DGS）精度高但慢。一个明显的机会是：**用前馈方法提供高质量初始化，再辅以轻量级微调**。GLAM-SLAM的“前端轻量追踪+后端精细建图”的解耦设计也可以为这一方向提供借鉴。
+
+3.  **从“感知”到“行动”的无缝闭环**：KineBench精确地指出了当前世界模型评估的归因模糊问题。基于此，可以研究**将显式运动学接地直接作为世界模型输出的一部分**。KineBench的**存在即合理**——既然评估时需要显示解耦，那为什么不把它融入模型中，从而实现直接对接物理仿真器的生成模型？
+
+4.  **基于对抗/自适应数据合成的鲁棒重建**：RealVDeblur和TableVerse都展示了合成数据的巨大价值。未来的方向是构建**对抗式退化网络**，自动生成对当前
 
 ### interests.md 指令分析
 
@@ -1882,55 +1897,6 @@ Recent breakthroughs in 3D Gaussian Splatting (3DGS) have advanced neural render
 <summary>Abstract</summary>
 
 Projector-camera (ProCams) systems achieve active scene perception and controllable appearance manipulation via structured illumination, serving as a core infrastructure for spatial augmented reality, projection mapping, and surface reflectance acquisition. Existing inverse-rendering methods for ProCams deliver high-fidelity results but rely on time-consuming per-scene optimization, while mainstream feed-forward 3D reconstruction models produce baked appearance that cannot adapt to spatially varying projector illumination. To resolve this accuracy-efficiency trade-off, we propose FF-ProCams, a Feed-Forward 3D Gaussian inverse-rendering framework for ProCams. A hybrid Mamba2-Transformer encoder aggregates cross-view geometric and photometric cues from sparse multi-view observations, and lightweight heads predict a relightable Gaussian representation in a single forward pass. We further design a projector-aware differentiable renderer to synthesize camera observations under arbitrary active illumination and ProCams poses. To enable feed-forward training, we construct a large-scale synthetic ProCams dataset covering diverse object geometries and surface materials. Experiments show FF-ProCams achieves high-fidelity projector-aware rendering, generalizes to unseen patterns, and supports novel projector-camera poses. Using only 8 input views, it outperforms optimization-based baselines with 297 views while reducing test-time reconstruction to 0.13 seconds (a three-to-five-order-of-magnitude speedup). The code and data are available at https://github.com/CPREgroup/FF-ProCams/.
-
-</details>
-
-#### 2026-07-18 - TopoGS: Planar Reconstruction via Topology-aware 3D Gaussian Splatting
-
-**Authors:** Shanshan Pan, Jiale Chen, Yilin Liu, Hui Huang
-**Links:** [abs](https://arxiv.org/abs/2607.16838) - [pdf](https://arxiv.org/pdf/2607.16838)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** None
-**Matched keywords:** geometric reasoning, 3D reconstruction, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, rendering, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：TopoGS: 基于拓扑感知的3D高斯泼溅的平面重建
-- 作者：Shanshan Pan, Jiale Chen, Yilin Liu, Hui Huang
-- 出版日期：2026-07-18T14:27:49Z
-- 分类：Neural Scene Representations & Rendering
-- 链接：[摘要](https://arxiv.org/abs/2607.16838) | [PDF](https://arxiv.org/pdf/2607.16838)
-
-### 一句话总结
-TopoGS通过显式集成平面约束和拓扑约束，解决了现有3D高斯泼溅方法中平面重建碎片化和边界不对齐的问题，在ScanNet++数据集上实现了最先进的性能。
-
-### 研究问题
-如何从原始图像中提取结构化的、参数化的3D平面重建，并克服现有方法因缺乏拓扑连接性导致的碎片化重建和边界不对齐问题。
-
-### 核心思路/方法
-1. 从多视图图像分割中提取全局2D拓扑关系。
-2. 将高斯基元锚定到这些拓扑结构元素上，实现平面参数、渲染保真度和拓扑邻接性的联合优化。
-3. 强制执行多视图一致性并结合拓扑约束，从而减少几何不对齐，产生连贯的结构化3D模型。
-
-### 主要贡献
-1. 提出首个在3D高斯泼溅框架中显式集成平面和拓扑约束的方法（TopoGS），用于连贯的3D重建。
-2. 通过全局2D拓扑关系提取和锚定，实现了平面参数、渲染和拓扑的联合优化。
-3. 在ScanNet++数据集上达到最先进性能，生成精确、拓扑正确且视觉保真的场景表示。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-高。理由：该方法针对3D高斯泼溅中平面重建拓扑缺失这一关键问题，提出了显式的拓扑约束联合优化方案，在主流数据集上取得SOTA，对结构化三维重建和场景编辑领域具有显著参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Extracting structured, parametric 3D representations from raw images remains a fundamental challenge in computer vision and graphics. While recent advancements in the 3D Gaussian Splatting (3DGS) pipeline integrate planar primitives to yield compact and editable geometry, these approaches typically treat planes as isolated, discrete sets. This lack of topological connectivity hinders robust geometric reasoning, leading to fragmented reconstructions and misaligned boundaries that fall short of the precision for rigorous spatial analysis and professional design workflows. To address this, we introduce TopoGS, the first 3DGS framework to explicitly integrate both planar and topological constraints for coherent 3D reconstruction. Specifically, we extract global 2D topological relationships from multi-view image segmentations and anchor Gaussian primitives to these structural elements. This formulation enables the joint optimization of plane parameters, rendering fidelity, and topological adjacency. By enforcing strict multi-view consistency alongside these topological constraints, our method significantly mitigates geometric misalignments and produces connected, structured 3D models. Extensive evaluations on the ScanNet++ dataset demonstrate that TopoGS achieves state-of-the-art performance, providing a highly robust solution for generating accurate, topologically sound, and visually faithful scene representations.
 
 </details>
 
