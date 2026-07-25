@@ -72,7 +72,7 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 <!-- DAILY_REPORT_END -->
 
 **Last updated:** 2026-07-24T10:09:43-04:00
-**Total number of papers:** 55
+**Total number of papers:** 49
 **Number of papers added in the latest update:** 27
 **Categories tracked:** cs.CV, cs.GR, cs.RO, eess.IV
 
@@ -528,55 +528,6 @@ FA-LAM 是一个用于单次生成可动画化高斯头部模型的焦点感知�
 <summary>Abstract</summary>
 
 We propose FA-LAM, a Focus-Aware Large Avatar Model for one-shot animatable Gaussian head creation, while simultaneously enabling static 3D and dynamic 4D full-head recovery. The core of our method lies in a thorough analysis of the attention mechanisms and the entangled reconstruction and animation training pipeline adopted by prior state-of-the-art approaches. Our analysis identifies two main factors that compromise the quality of 3D full-head generation: (1) incorrect and noisy attention activations, and (2) conflicts between the tasks of reconstruction and animation. To address the first issue, we introduce a symmetric and semantic attention regularization strategy that leverages the inherent semantics and structural symmetry of human heads. To disentangle the objectives of reconstruction and animation, we develop a novel dual-phase training pipeline that separates the model's capabilities for large-view hallucination and animation into distinct modules. Moreover, we enhance our model to support multi-view and streaming 4D reconstruction in an efficient and memory-friendly manner through a core autoregressive modification with tailored visibility-aware token fusion. Collectively, these innovations enable FA-LAM to reconstruct animatable Gaussian full heads with superior quality, particularly in fine facial regions and large viewing angles.
-
-</details>
-
-#### 2026-07-17 - MotionForesight: Re-purposing Video Models for Future 3D Scene-Flow Prediction
-
-**Authors:** Homanga Bharadhwaj, Yash Jangir
-**Links:** [abs](https://arxiv.org/abs/2607.16192) - [pdf](https://arxiv.org/pdf/2607.16192)
-**Primary category:** Dynamic / 4D Reconstruction
-**Secondary categories:** None
-**Matched keywords:** scene flow
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：MotionForesight: Re-purposing Video Models for Future 3D Scene-Flow Prediction
-- 作者：Homanga Bharadhwaj, Yash Jangir
-- 出版日期：2026-07-17
-- 分类：Dynamic / 4D Reconstruction
-- 链接：https://arxiv.org/abs/2607.16192
-
-### 一句话总结
-本文提出MotionForesight方法，通过重新利用视频预测模型中的先验知识，仅从观察到的单目视频帧预测未来物体在3D空间中的轨迹流，无需语言或物体属性假设。
-
-### 研究问题
-如何从普通的单目人类-物体交互视频中，学习预测被操作物体上点的未来3D运动轨迹？
-
-### 核心思路/方法
-1. 利用预训练视频模型中的密集3D跟踪器，从完整视频片段生成伪真实轨迹。
-2. 仅使用观察到的帧，训练一个轻量适配器，将回溯式跟踪表示转换为前向预测，同时冻结视频和跟踪组件。
-3. 通过学习掩码潜变量替代未来的RGB和几何信息，实现从像素预测到未来3D场景流的重定向。
-
-### 主要贡献
-1. 提出了一种从被动视频观察中预测未来3D物体运动轨迹的方法，无需物体属性假设。
-2. 证明了视频预测模型中的先验知识可被高效重用于3D运动预测，仅需4万个人类视频即可训练。
-3. 该模型对分布外的物体、环境、视角和交互具有泛化能力，且性能优于使用百万级视频训练的更大模型。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-高。理由：该方法在少量数据下实现了跨领域泛化，且直接输出3D轨迹预测，对机器人学、具身智能等领域的互动规划具有潜在价值；方法设计简洁，重用预训练模型，实用性强。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Humans can infer how objects are likely to move from passive observation: a cup may be lifted, a drawer may slide, and a lid may rotate shut. Such predictions expose the physical consequences of interaction needed to act in the real world. We study how to learn this anticipation from ordinary monocular videos of human-object interaction. Given a short observed video context, MotionForesight predicts future 3D trajectories for points on the manipulated object. This casts interaction prediction as object-centered 3D motion forecasting without any assumptions on the object properties. Our key insight is that video prediction models already encode rich priors about how objects move during human interactions. We redirect these priors from pixel prediction toward future 3D scene flow. We start from a dense 3D tracker built on a pretrained video model, generate pseudo-ground-truth tracks from complete clips, and train the forecaster using only the observed frames. We replace future RGB and geometry with learned mask latents and train a lightweight adapter to turn the retrospective tracking representation into a forward predictor, while freezing the large video and tracking components. Using just 40k human videos and no auxiliary inputs such as language, MotionForesight generalizes across diverse out-of-distribution objects, environments, viewpoints, and interactions. It also outperforms substantially larger models that use over a million training videos. These results show that we can efficiently re-purpose video priors into explicit geometric forecasts for embodied intelligence. https://motionforesight.github.io/
 
 </details>
 
@@ -1284,156 +1235,6 @@ We propose a splat-based 3D scene reconstruction method from RGB-D input that ef
 <summary>Abstract</summary>
 
 With the growing demand for robotics, autonomous drones, and wearable extended reality systems, the deployment of Visual SLAM on embedded devices remains challenging. Tracking must sustain high frame rates while preserving compute resources for map extension and maintenance. This paper presents GLidE-SLAM, a monocular hybrid indirect-direct framework that addresses this by architectural separation: the system performs GPU-accelerated direct tracking on intermediate frames, while reserving the full indirect pipeline for map extension and global consistency. We leverage highly parallel image-alignment operations for pose-only estimation without depth optimization or map point creation, making the workload suitable for GPU offloading and freeing CPU resources for backend tasks. We implement the direct tracker using vendor-agnostic OpenGL ES~3.1 compute shaders, enabling deployment across a broader range of commodity embedded platforms without requiring CUDA support. To our knowledge, this is the first complete direct photometric pose estimator realized via compute shaders for embedded-class devices. Experiments on target platforms demonstrate up to 9$\times$ higher frame rates than the CPU-only baseline while maintaining trajectory accuracy and improving practical deployment across commodity resource-constrained hardware.
-
-</details>
-
-#### 2026-07-17 - Toward Semantic Communication for Real-time Mobile 3D Reconstruction
-
-**Authors:** Fangzhou Zhao, Yao Sun, Xuesong Liu, Runze Cheng, Shang Kai, Yi Sun
-**Links:** [abs](https://arxiv.org/abs/2607.16128) - [pdf](https://arxiv.org/pdf/2607.16128)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** Embodied / Robotics / AR Applications
-**Matched keywords:** 3D reconstruction, pose estimation, bundle adjustment, rendering, digital twin, scene understanding
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Toward Semantic Communication for Real-time Mobile 3D Reconstruction
-- 作者：Fangzhou Zhao, Yao Sun, Xuesong Liu, Runze Cheng, Shang Kai, Yi Sun
-- 出版日期：2026-07-17T17:07:40Z
-- 分类：3D Reconstruction & Multi-view Geometry（主分类），Embodied / Robotics / AR Applications（次分类）
-- 链接：摘要链接：https://arxiv.org/abs/2607.16128；PDF链接：https://arxiv.org/pdf/2607.16128
-
-### 一句话总结
-本文提出一种针对实时移动3D重建的语义通信框架，通过传输语义信息并输出像素级置信度地图，指导几何估计，从而在噪声信道下提升位姿估计精度和3D结构一致性。
-
-### 研究问题
-如何在实时移动3D重建场景中，利用语义通信（SemCom）缓解通信引起的图像失真对几何估计（如位姿计算和场景结构重建）的敏感性影响。
-
-### 核心思路/方法
-- 设计一个语义收发机（semantic transceiver），能够输出重建图像以及每个像素的置信度地图（pixel-wise confidence map），量化各区域的重建可靠性。
-- 提出置信度引导的几何估计方法：在基于RANSAC的位姿初始化和集束调整（bundle adjustment）中融入置信度信息，减少不可靠区域的影响，从而增强在噪声信道下的鲁棒性。
-
-### 主要贡献
-- 首次将语义通信框架应用于实时移动3D重建，支持任务相关的可靠传输。
-- 提出包含像素级置信度地图的语义收发机，为几何估计提供明确的可靠性信息。
-- 设计置信度引导的几何估计流程，改进传统RANSAC和集束调整，显著提升位姿估计准确性和3D结构一致性（通过模拟实验验证）。
-
-### 局限性
-摘要未提供足够信息。例如，未讨论框架的计算复杂度对移动平台实时性的影响、置信度地图的生成机制细节、实际硬件实现中的延迟或功耗，以及除模拟外是否在真实移动平台上进行测试。
-
-### 阅读优先级
-**中**。
-理由：该工作融合了语义通信与3D重建两个方向，对于从事实时移动3D重建、无线通信与计算机视觉交叉领域的研究者有参考价值。但由于摘要未提供实验细节和具体数值比较，且属于较新发表的论文（2026年），若需评估其实际效果和可复现性，需进一步阅读全文。对于仅关注传统3D重建或通信的读者，优先级可适当降低。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Real-time mobile 3D reconstruction is fundamental to many emerging applications such as autonomous navigation and digital twin construction, where a moving platform continuously captures an image stream and transmit to a computing server for scene understanding. Unlike offline reconstruction, camera poses and scene geometry are estimated on-the-fly during acquisition, making multi-view consistency a real-time requirement and rendering geometric estimation highly sensitive to communication-induced distortions. Semantic communication (SemCom) transmits compact semantic information, offering a promising way to preserve task-critical data over unreliable links. However, existing designs are optimized at the image or single-view level and without providing explicit reliability information for geometric estimation, limiting their applicability to real-time mobile 3D reconstruction. In this context, we propose a SemCom framework for real-time mobile 3D reconstruction. The framework includes a semantic transceiver that outputs a reconstructed image alongside a pixel-wise confidence map, quantifying the reliability of each region. We further introduce a confidence-guided geometric estimation method, incorporating confidence into RANSAC-based pose initialization and bundle adjustment to reduce the influence of unreliable regions and enhance robustness under noisy channels. Simulations show that, compared to existing SemCom and traditional seperate source and channel coding, our framework maintains high image quality while significantly improving pose estimation accuracy and 3D structural consistency.
-
-</details>
-
-#### 2026-07-17 - BayesContact: Uncertain Pose Estimation via Visuo-Tactile Proposals and Simulation-based Inference
-
-**Authors:** Aditya Kamireddypalli, Matias Mattamala, Joao Moura, Russell Buchanan, Sethu Vijayakumar, Subramanian Ramamoorthy
-**Links:** [abs](https://arxiv.org/abs/2607.16123) - [pdf](https://arxiv.org/pdf/2607.16123)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** Embodied / Robotics / AR Applications
-**Matched keywords:** pose estimation, manipulation, simulation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：BayesContact: Uncertain Pose Estimation via Visuo-Tactile Proposals and Simulation-based Inference
-- 作者：Aditya Kamireddypalli, Matias Mattamala, Joao Moura, Russell Buchanan, Sethu Vijayakumar, Subramanian Ramamoorthy
-- 出版日期：2026-07-17
-- 分类：3D Reconstruction & Multi-view Geometry (主要)；Embodied / Robotics / AR Applications (次要)
-- 链接：https://arxiv.org/abs/2607.16123
-
-### 一句话总结
-本文提出BayesContact，一种基于仿真的推理框架，通过融合视觉和触觉信息，实现对插销-孔装配任务中物体姿态的不确定性估计，相比纯视觉方法将插装成功率提升了30%。
-
-### 研究问题
-如何在接触密集型操作中，利用模拟驱动的视觉-触觉融合方法，无需离线训练，准确估计物体姿态并处理不确定性。
-
-### 核心思路/方法
-1. **粒子滤波信念**：使用一系列粒子维持对物体姿态的后验信念。
-2. **仿真前向模型**：对每个姿态假设，渲染器预测深度测量值，物理仿真器在防护探测动作下预测接触结果。
-3. **多模态融合**：将真实深度观测和力/力矩接触证据，与仿真预测结果进行评分对比，在线更新粒子信念。
-4. **主动探测**：基于信息增益选择探测动作，主动消除姿态歧义。
-
-### 主要贡献
-1. 提出一个无需离线训练的视觉-触觉姿态估计框架，适用于新环境和新几何形状。
-2. 利用仿真前向模型近似观测似然，融合深度与力/力矩信息。
-3. 在模拟和真实机器人实验中，相比纯视觉推理，姿态可观测性和插装成功率提升30%。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-**中**。
-理由：该方法针对特定装配任务（插销-孔插入），提出了新颖的在线推理思路，无离线训练负担。实验效果有明确提升（30%），但属于领域专用方法，若您的兴趣不在接触密集型操作或机器人装配，则可降为低优先级。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Contact-rich manipulation requires pose estimates that are often more accurate than what depth-only sensing provides. Existing methods, relying on vision and contact, employ costly offline training procedures that need to be retrained for new environments and geometries. We propose BayesContact, a Simulation-Based Inference framework for visuo-tactile pose estimation in peg-in-hole insertion. BayesContact maintains a particle belief over object pose and fuses depth observations with force/torque-derived contact evidence. We employ simulation based forward models to approximate these observation likelihoods. For each pose hypothesis, a renderer predicts depth measurements and a physics simulator predicts contact outcomes under guarded probing actions; both are scored against real observations to update the belief. The resulting multimodal belief also enables information-gain-based probing for active disambiguation. Across simulated geometries and real-robot experiments, BayesContact improves pose observability and insertion success over vision-only inference by 30%
-
-</details>
-
-#### 2026-07-17 - Adaptive Contrast Enhancement and Optimised Feature Matching for RootSIFT-Based Palm-Vein Recognition
-
-**Authors:** Kaveen Perera, Fouad Khelifi, Ammar Belatreche
-**Links:** [abs](https://arxiv.org/abs/2607.16077) - [pdf](https://arxiv.org/pdf/2607.16077)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** None
-**Matched keywords:** feature matching
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Adaptive Contrast Enhancement and Optimised Feature Matching for RootSIFT-Based Palm-Vein Recognition
-- 作者：Kaveen Perera, Fouad Khelifi, Ammar Belatreche
-- 出版日期：2026-07-17
-- 分类：3D Reconstruction & Multi-view Geometry
-- 链接：https://arxiv.org/abs/2607.16077
-
-### 一句话总结
-本文提出一种名为ILACS-BGOT的自适应对比度增强方法，并结合RootSIFT特征与优化匹配策略，显著提升了掌静脉识别性能。
-
-### 研究问题
-掌静脉图像因近红外光散射和传感器限制导致的低对比度问题，影响识别准确率。
-
-### 核心思路/方法
-1. 提出ILACS-BGOT方法，在原有ILACS-LGOT基础上，用双向高斯加权重叠分块（BGOT）来减轻分块伪影，实现局部对比度自适应增强。
-2. 将RootSIFT特征与KNN+RT（一种匹配策略）结合，并引入先前提出的MMD（均值与中值距离）滤波器。
-3. 在CASIA、PolyU、PUT三个基准数据集上，使用42种MMD阈值与RT值的组合进行系统评估，分析参数变化对识别性能的影响。
-
-### 主要贡献
-1. 提出ILACS-BGOT增强算法，有效改善低对比度掌静脉图像质量。
-2. 将RootSIFT与KNN+RT及MMD滤波器整合，并系统分析了参数变化对性能的影响。
-3. 在三个公开数据集上取得更优的等错误率（EER）和准确率，证明方法具有良好的泛化能力。
-4. 指出ILACS-BGOT机制可能适用于其他低对比度图像增强任务（如指静脉、掌纹识别）。
-
-### 局限性
-摘要未提供足够信息。未讨论方法的计算复杂度、实时性、对极端低质量图像的鲁棒性，以及与其他深度学习方法的直接对比。
-
-### 阅读优先级
-中。理由：方法在掌静脉识别领域有明确创新（对比度增强+特征匹配优化），实验结果在多个数据集上表现优异，但未涉及与当前主流深度学习方法的对比，且应用场景相对专一，适合对该方向有具体需求的读者优先阅读。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Palm-vein recognition is a highly secure biometric modality due to the uniqueness and subcutaneous nature of vein patterns. However, low contrast in palm-vein images, caused by NIR light scattering and sensor limitations, remains a significant challenge. To address this, we propose the Intensity-Limited Adaptive Contrast Stretching with Bidirectional Gaussian-weighted Overlapping Tiles (ILACS-BGOT) method, an enhancement of the previously developed ILACS with Layered Gaussian-weighted Overlapping Tiles (ILACS-LGOT) technique. ILACS enhances local contrast, while BGOT mitigates blocky artefacts. This study further integrates RootSIFT features with KNN+RT and incorporates the previously introduced Mean and Median Distance (MMD) filter to investigate the parameter variations of both MMD and RT, and their impact on recognition performance. A comprehensive analysis was conducted across three benchmark datasets (CASIA, PolyU, and PUT), using 42 combinations of MMD filter thresholds and RT values. Results were evaluated using EER and Accuracy. Findings reveal that higher template sizes improve performance, while varying MMD thresholds reflect dataset-specific rotational variations. The proposed system demonstrates superior generalisability, achieving significant improvements in both EER and Accuracy over existing methods. Furthermore, the underlying ILACS-BGOT mechanism suggests potential applicability beyond palm vein recognition to other biometric modalities such as finger vein and palmprint recognition, and more generally to low-contrast image enhancement across computer vision applications.
 
 </details>
 
@@ -2783,55 +2584,6 @@ Autonomous driving requires both safe and efficient planning decisions in dynami
 <summary>Abstract</summary>
 
 Indoor robots are increasingly employed for facility management tasks such as cleaning and inspection. These applications primarily rely on navigation and can be effectively supported by predefined routes or perception-driven Simultaneous Localization and Mapping (SLAM) techniques. However, more complex tasks, such as locating and repairing leaking pipes, require not only navigation but also access to building information, including the location, geometry, material, and operational attributes of components. Existing navigation approaches provide only limited environmental understanding and cannot readily supply such information. In contrast, Building Information Modeling (BIM) contains rich geometric, semantic, and operational information that remains largely underutilized in robotic applications. This study proposes a BIM-enabled, agent-based simulation platform for knowledge-driven indoor robot navigation and operation planning. Within the framework, indoor environments are discretized into grid cells that are mapped to graph nodes and classified as target, obstacle, or regular nodes according to their spatial relationships with building elements. Traversal costs are assigned to edges connecting neighboring nodes, enabling graph-theoretic algorithms to compute efficient and collision-free navigation paths while avoiding obstacles. Simulation results demonstrate that the proposed graph representation enables efficient and collision-free navigation. A key limitation associated with coarse discretization, namely overlap between target-occupied and obstacle-occupied cells, is identified and mitigated through grid refinement, improving spatial accuracy and path feasibility. The proposed platform supports virtual evaluation of robotic operations prior to deployment and provides a foundation for BIM-informed robotic systems in facility management.
-
-</details>
-
-#### 2026-07-17 - VTLoc: Learning-based Tactile Contact Localization in Visual Point Clouds
-
-**Authors:** Zhiyuan Wu, Zhuo Chen, Shan Luo
-**Links:** [abs](https://arxiv.org/abs/2607.16146) - [pdf](https://arxiv.org/pdf/2607.16146)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** manipulation, localization
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：VTLoc: Learning-based Tactile Contact Localization in Visual Point Clouds
-- 作者：Zhiyuan Wu, Zhuo Chen, Shan Luo
-- 出版日期：2026-07-17T17:27:08Z
-- 分类：Embodied / Robotics / AR Applications
-- 链接：[摘要](https://arxiv.org/abs/2607.16146) | [PDF](https://arxiv.org/pdf/2607.16146)
-
-### 一句话总结
-本文提出VTLoc，一种利用视觉点云和触觉读数进行接触点定位的视觉-触觉融合框架。
-
-### 研究问题
-如何将触觉数据与视觉几何进行精确的空间对齐，以实现从触觉读数预测接触点在物体表面位置的任务（接触定位）。
-
-### 核心思路/方法
-1.  提出VTLoc框架，以3D点云作为视觉输入，结合触觉读数进行接触点定位。
-2.  引入**几何多模态对齐模块**：从融合的视觉-触觉特征中重建伪点云，并将此伪点云与原始视觉点云对齐，以强制跨模态的空间一致性。
-3.  引入**迭代定位更新器**：利用融合的视觉-触觉特征，通过迭代方式不断优化预测的接触点位置。
-
-### 主要贡献
-- 提出VTLoc，一种新颖的视觉-触觉框架，用于从触觉读数和3D点云中定位接触点。
-- 设计了两个关键组件：几何多模态对齐模块和迭代定位更新器，以解决跨模态空间对齐问题。
-- 在包含100个真实物体的新基准上评估，表明VTLoc通过减少局部到全局的对应歧义，提升了单次触觉接触定位性能。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-**中**。该论文提供了一个有明确评估基准的视觉-触觉定位方法，对于从事机器人抓取、对象感知或多模态融合方向的研究者有一定参考价值。但它发表于近期（2026年），尚未有广泛的讨论或复现验证，且摘要未提供与现有具体方法的性能对比数值，其实际效果需进一步查看完整论文。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Vision and touch are complementary modalities essential for robotic perception and manipulation. While vision provides global object context, touch offers precise local information at contact points. Integrating these modalities for contact localization, i.e., predicting the location of touch on an object's surface, poses significant challenges due to the need for accurate spatial alignment between tactile data and visual geometry. To address this challenge, we propose VTLoc, a novel visual-tactile framework that localizes contact points from tactile readings using a 3D point cloud as visual input. VTLoc introduces two key components: a geometric multi-modal alignment module, which reconstructs a pseudo-point cloud from fused visual-tactile features and aligns it with the visual point cloud to enforce spatial consistencies across modalities; and an iterative localizing updater, which iteratively refines the predicted contact location using fused visual-tactile features. Evaluated on a new benchmark of 100 real-world objects, VTLoc improves single-touch contact localization by reducing local-to-global correspondence ambiguity.
 
 </details>
 
