@@ -27,7 +27,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.21576",
     "pdf_url": "https://arxiv.org/pdf/2607.21576",
     "first_seen": "2026-07-24T10:09:43-04:00",
-    "last_seen": "2026-07-25T10:00:09-04:00"
+    "last_seen": "2026-07-26T09:54:13-04:00"
   },
   {
     "arxiv_id": "2607.21526",
@@ -64,7 +64,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.21526",
     "pdf_url": "https://arxiv.org/pdf/2607.21526",
     "first_seen": "2026-07-24T10:09:43-04:00",
-    "last_seen": "2026-07-25T10:00:09-04:00"
+    "last_seen": "2026-07-26T09:54:13-04:00"
   },
   {
     "arxiv_id": "2607.21471",
@@ -109,7 +109,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.21471",
     "pdf_url": "https://arxiv.org/pdf/2607.21471",
     "first_seen": "2026-07-24T10:09:43-04:00",
-    "last_seen": "2026-07-25T10:00:09-04:00"
+    "last_seen": "2026-07-26T09:54:13-04:00"
   },
   {
     "arxiv_id": "2607.21448",
@@ -164,7 +164,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.21448",
     "pdf_url": "https://arxiv.org/pdf/2607.21448",
     "first_seen": "2026-07-24T10:09:43-04:00",
-    "last_seen": "2026-07-25T10:00:09-04:00"
+    "last_seen": "2026-07-26T09:54:13-04:00"
   },
   {
     "arxiv_id": "2607.21438",
@@ -207,7 +207,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.21438",
     "pdf_url": "https://arxiv.org/pdf/2607.21438",
     "first_seen": "2026-07-24T10:09:43-04:00",
-    "last_seen": "2026-07-25T10:00:09-04:00"
+    "last_seen": "2026-07-26T09:54:13-04:00"
   },
   {
     "arxiv_id": "2607.21416",
@@ -257,7 +257,7 @@
     "abstract_url": "https://arxiv.org/abs/2607.21416",
     "pdf_url": "https://arxiv.org/pdf/2607.21416",
     "first_seen": "2026-07-24T10:09:43-04:00",
-    "last_seen": "2026-07-25T10:00:09-04:00"
+    "last_seen": "2026-07-26T09:54:13-04:00"
   },
   {
     "arxiv_id": "2607.21309",
@@ -1723,300 +1723,6 @@
     ],
     "abstract_url": "https://arxiv.org/abs/2607.17521",
     "pdf_url": "https://arxiv.org/pdf/2607.17521",
-    "first_seen": "2026-07-21T10:19:48-04:00",
-    "last_seen": "2026-07-21T10:19:48-04:00"
-  },
-  {
-    "arxiv_id": "2607.17171",
-    "version": "v1",
-    "title": "VIDAR: Visual-Inertial Dense Alignment and Reconstruction via a Geometric Foundation Model",
-    "authors": [
-      "Diyari Mohammed Salih",
-      "Lingxiang Hu",
-      "Naima AitOufroukh-Mammar",
-      "Fabien Bonardi"
-    ],
-    "abstract": "Monocular foundation models provide dense geometry but usually lack a stable metric scale. This paper presents VIDAR, a visual-inertial dense reconstruction framework that couples SVO+IMU odometry with Depth Anything 3. VIDAR uses the visual-inertial front end as a metric anchor: it provides camera poses, scale, and a consistent world frame for aligning dense foundation-model predictions across time. The foundation model then contributes detailed local geometry that is fused into a global reconstruction. We study both pose-conditioned DA3 and a decoupled alignment strategy. On EuRoC, pose injection reduces scale error to about 1\\% and reaches 0.463 mean F@0.10; the decoupled hybrid improves this to 0.676 without ground-truth poses. Results on EuRoC and TUM RGB-D show that VIDAR is a practical route to metric dense monocular reconstruction.",
-    "published": "2026-07-19T10:12:09Z",
-    "updated": "2026-07-19T10:12:09Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO"
-    ],
-    "primary_category": "Geometry Foundation Models",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "geometric foundation model",
-      "dense reconstruction"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched title phrase: geometric foundation model"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.17171",
-    "pdf_url": "https://arxiv.org/pdf/2607.17171",
-    "first_seen": "2026-07-21T10:19:48-04:00",
-    "last_seen": "2026-07-21T10:19:48-04:00"
-  },
-  {
-    "arxiv_id": "2607.17099",
-    "version": "v1",
-    "title": "DepthART: Scaling Foundation Monocular Depth to Tiny Models",
-    "authors": [
-      "Feng Xue",
-      "Wu Chen",
-      "Mingshuai Zhao",
-      "Guofeng Zhong",
-      "Anlong Ming",
-      "Haozhe Wang",
-      "Dianqiao Lei",
-      "Zhaowen Lin",
-      "Haiyang Zhang",
-      "Nicu Sebe"
-    ],
-    "abstract": "Recent geometric foundation models (e.g., Metric3D, Depth Anything and UniDepth) have substantially improved monocular depth estimation (MDE) in both cross-scene generalization and metric-scale prediction, yet these gains have not translated to tiny models. We bridge this gap with DepthART (Depth Anything Rethought for Tiny Models), which is a compact MDE model for on-device deployment across diverse scenes. We first identify two capacity-driven bottlenecks in tiny models: (i) overfitting to dataset-specific distribution bias and (ii) unstable metric adaptation under camera shift, where full fine-tuning easily damages transferable geometry. Accordingly, DepthART combines two simple but effective strategies: a bias-resistant data sampling scheme to reduce distribution bias under the same training budget, and a camera-conditioned fine-tuning protocol that freezes the distilled encoder and adjusts metric scale conditioned on intrinsics while better preserving cross-dataset generalization. Across datasets, DepthART consistently surpasses previous tiny baselines in both zero-shot generalization and metric accuracy (e.g., zero-shot $δ_1$=0.964 for DepthART-S on NYUD v2), and in some cases approaches heavy models. We further provide a scalable model family, with DepthART-S reaching 347/245 FPS (strict FP32) on an RTX A6000 at $224^2/448^2$, 102 FPS (TF32) on a Orin NX 8GB, and over 15 FPS (FP32) on a Jetson Nano 4GB.",
-    "published": "2026-07-19T06:54:52Z",
-    "updated": "2026-07-19T06:54:52Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.AI"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "depth estimation",
-      "monocular depth"
-    ],
-    "classification_score": 8,
-    "classification_reasons": [
-      "Matched abstract phrase: depth estimation",
-      "Matched title phrase: monocular depth",
-      "Matched abstract phrase: monocular depth"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.17099",
-    "pdf_url": "https://arxiv.org/pdf/2607.17099",
-    "first_seen": "2026-07-21T10:19:48-04:00",
-    "last_seen": "2026-07-21T10:19:48-04:00"
-  },
-  {
-    "arxiv_id": "2607.17058",
-    "version": "v1",
-    "title": "DROID-ANCHOR: Odometry-Anchored Recurrent Metric Depth Estimation",
-    "authors": [
-      "Yuxuan Chen",
-      "Brook Du"
-    ],
-    "abstract": "Precise metric depth estimation is fundamental for autonomous robot navigation, yet monocular systems inherently suffer from scale ambiguity and scale drift. While recent recurrent flow-based SLAM systems have demonstrated state-of-the-art robustness, they remain scale-ambiguous. In this paper, we propose Metric-DROID, an end-to-end recurrent architecture that anchors visual SLAM to physical reality by integrating proprioceptive odometry. Our framework introduces the following innovations: (1) A LSTM Update Operator that encodes high-frequency odometry sequences into spatial feature maps, providing a persistent metric bias for iterative refinement. (2) An Uncertainty-Aware Metric Backend ($BA_{odom}$) that treats odometry as a geometric anchor with learned heteroscedastic covariance. By regressing a time-varying metric uncertainty $Σ_{o}$, our system intelligently balances visual re-projection and metric translation residuals, effectively mitigating the impact of wheel-slip and sensor noise. (3) We further propose a selective residual fine-tuning strategy to preserve pre-trained geometric priors while enabling zero-shot metric alignment.",
-    "published": "2026-07-19T04:03:34Z",
-    "updated": "2026-07-19T04:03:34Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO",
-      "cs.CV"
-    ],
-    "primary_category": "Geometry Foundation Models",
-    "secondary_categories": [
-      "3D Reconstruction & Multi-view Geometry"
-    ],
-    "matched_keywords": [
-      "metric depth",
-      "SLAM",
-      "visual SLAM",
-      "depth estimation",
-      "robot navigation"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched title phrase: metric depth",
-      "Matched abstract phrase: metric depth",
-      "Matched abstract keyword: SLAM",
-      "Matched abstract phrase: visual SLAM",
-      "Matched title phrase: depth estimation",
-      "Matched abstract phrase: depth estimation"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.17058",
-    "pdf_url": "https://arxiv.org/pdf/2607.17058",
-    "first_seen": "2026-07-21T10:19:48-04:00",
-    "last_seen": "2026-07-21T10:19:48-04:00"
-  },
-  {
-    "arxiv_id": "2607.16926",
-    "version": "v1",
-    "title": "Splat-based 3D Scene Reconstruction with Extreme Motion-blur",
-    "authors": [
-      "Hyeonjoong Jang",
-      "Dongyoung Choi",
-      "Donggun Kim",
-      "Woohyun Kang",
-      "Min H. Kim"
-    ],
-    "abstract": "We propose a splat-based 3D scene reconstruction method from RGB-D input that effectively handles extreme motion blur, a frequent challenge in low-light environments. Under dim illumination, RGB frames often suffer from severe motion blur due to extended exposure times, causing traditional camera pose estimation methods, such as COLMAP, to fail. This results in inaccurate camera pose and blurry color input, compromising the quality of 3D reconstructions. Although recent 3D reconstruction techniques like Neural Radiance Fields and Gaussian Splatting have demonstrated impressive results, they rely on accurate camera trajectory estimation, which becomes challenging under fast motion or poor lighting conditions. Furthermore, rapid camera movement and the limited field of view of depth sensors reduce point cloud overlap, limiting the effectiveness of pose estimation with the ICP algorithm. To address these issues, we introduce a method that combines camera pose estimation and image deblurring using a Gaussian Splatting framework, leveraging both 3D Gaussian splats and depth inputs for enhanced scene representation. Our method first aligns consecutive RGB-D frames through optical flow and ICP, then refines camera poses and 3D geometry by adjusting Gaussian positions for optimal depth alignment. To handle motion blur, we model camera movement during exposure and deblur images by comparing the input with a series of sharp, rendered frames. Experiments on a new RGB-D dataset with extreme motion blur show that our method outperforms existing approaches, enabling high-quality reconstructions even in challenging conditions. This approach has broad implications for 3D mapping applications in robotics, autonomous navigation, and augmented reality. Both code and dataset are publicly available on https://github.com/KAIST-VCLAB/gs-extreme-motion-blur.",
-    "published": "2026-07-18T18:41:02Z",
-    "updated": "2026-07-18T18:41:02Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [
-      "Neural Scene Representations & Rendering",
-      "Embodied / Robotics / AR Applications"
-    ],
-    "matched_keywords": [
-      "3D reconstruction",
-      "scene reconstruction",
-      "camera pose estimation",
-      "pose estimation",
-      "3D mapping",
-      "Gaussian Splatting",
-      "scene representation",
-      "radiance",
-      "splatting",
-      "robotics",
-      "mapping",
-      "augmented reality"
-    ],
-    "classification_score": 14,
-    "classification_reasons": [
-      "Matched abstract phrase: 3D reconstruction",
-      "Matched title phrase: scene reconstruction",
-      "Matched abstract phrase: scene reconstruction",
-      "Matched abstract phrase: camera pose estimation",
-      "Matched abstract phrase: pose estimation",
-      "Matched abstract phrase: 3D mapping",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: scene representation",
-      "Matched abstract keyword: radiance",
-      "Matched abstract keyword: splatting",
-      "Matched abstract keyword: robotics",
-      "Matched abstract keyword: mapping",
-      "Matched abstract phrase: augmented reality"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.16926",
-    "pdf_url": "https://arxiv.org/pdf/2607.16926",
-    "first_seen": "2026-07-21T10:19:48-04:00",
-    "last_seen": "2026-07-21T10:19:48-04:00"
-  },
-  {
-    "arxiv_id": "2607.16920",
-    "version": "v1",
-    "title": "A BIM-enabled, Agent-based Discrete-event Simulation Platform for Robotic Studies: A Method based on Graph Theory",
-    "authors": [
-      "Ping Xu",
-      "Xinghua Gao"
-    ],
-    "abstract": "Indoor robots are increasingly employed for facility management tasks such as cleaning and inspection. These applications primarily rely on navigation and can be effectively supported by predefined routes or perception-driven Simultaneous Localization and Mapping (SLAM) techniques. However, more complex tasks, such as locating and repairing leaking pipes, require not only navigation but also access to building information, including the location, geometry, material, and operational attributes of components. Existing navigation approaches provide only limited environmental understanding and cannot readily supply such information. In contrast, Building Information Modeling (BIM) contains rich geometric, semantic, and operational information that remains largely underutilized in robotic applications. This study proposes a BIM-enabled, agent-based simulation platform for knowledge-driven indoor robot navigation and operation planning. Within the framework, indoor environments are discretized into grid cells that are mapped to graph nodes and classified as target, obstacle, or regular nodes according to their spatial relationships with building elements. Traversal costs are assigned to edges connecting neighboring nodes, enabling graph-theoretic algorithms to compute efficient and collision-free navigation paths while avoiding obstacles. Simulation results demonstrate that the proposed graph representation enables efficient and collision-free navigation. A key limitation associated with coarse discretization, namely overlap between target-occupied and obstacle-occupied cells, is identified and mitigated through grid refinement, improving spatial accuracy and path feasibility. The proposed platform supports virtual evaluation of robotic operations prior to deployment and provides a foundation for BIM-informed robotic systems in facility management.",
-    "published": "2026-07-18T18:25:56Z",
-    "updated": "2026-07-18T18:25:56Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO",
-      "cs.SE"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [
-      "3D Reconstruction & Multi-view Geometry"
-    ],
-    "matched_keywords": [
-      "simultaneous localization and mapping",
-      "SLAM",
-      "robot navigation",
-      "mapping",
-      "localization",
-      "simulation"
-    ],
-    "classification_score": 7,
-    "classification_reasons": [
-      "Matched abstract phrase: robot navigation",
-      "Matched abstract keyword: mapping",
-      "Matched abstract keyword: localization",
-      "Matched title keyword: simulation",
-      "Matched abstract keyword: simulation",
-      "Matched abstract phrase: simultaneous localization and mapping",
-      "Matched abstract keyword: SLAM"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.16920",
-    "pdf_url": "https://arxiv.org/pdf/2607.16920",
-    "first_seen": "2026-07-21T10:19:48-04:00",
-    "last_seen": "2026-07-21T10:19:48-04:00"
-  },
-  {
-    "arxiv_id": "2607.16897",
-    "version": "v1",
-    "title": "GLidE-SLAM: GL-Accelerated Indirect-Direct Embedded SLAM",
-    "authors": [
-      "Carlos A. Pinheiro de Sousa",
-      "Heiko Hamann",
-      "Oliver Deussen"
-    ],
-    "abstract": "With the growing demand for robotics, autonomous drones, and wearable extended reality systems, the deployment of Visual SLAM on embedded devices remains challenging. Tracking must sustain high frame rates while preserving compute resources for map extension and maintenance. This paper presents GLidE-SLAM, a monocular hybrid indirect-direct framework that addresses this by architectural separation: the system performs GPU-accelerated direct tracking on intermediate frames, while reserving the full indirect pipeline for map extension and global consistency. We leverage highly parallel image-alignment operations for pose-only estimation without depth optimization or map point creation, making the workload suitable for GPU offloading and freeing CPU resources for backend tasks. We implement the direct tracker using vendor-agnostic OpenGL ES~3.1 compute shaders, enabling deployment across a broader range of commodity embedded platforms without requiring CUDA support. To our knowledge, this is the first complete direct photometric pose estimator realized via compute shaders for embedded-class devices. Experiments on target platforms demonstrate up to 9$\\times$ higher frame rates than the CPU-only baseline while maintaining trajectory accuracy and improving practical deployment across commodity resource-constrained hardware.",
-    "published": "2026-07-18T17:32:40Z",
-    "updated": "2026-07-18T17:32:40Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "SLAM",
-      "visual SLAM",
-      "robotics"
-    ],
-    "classification_score": 5,
-    "classification_reasons": [
-      "Matched title keyword: SLAM",
-      "Matched abstract keyword: SLAM",
-      "Matched abstract phrase: visual SLAM"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.16897",
-    "pdf_url": "https://arxiv.org/pdf/2607.16897",
-    "first_seen": "2026-07-21T10:19:48-04:00",
-    "last_seen": "2026-07-21T10:19:48-04:00"
-  },
-  {
-    "arxiv_id": "2607.16838",
-    "version": "v1",
-    "title": "TopoGS: Planar Reconstruction via Topology-aware 3D Gaussian Splatting",
-    "authors": [
-      "Shanshan Pan",
-      "Jiale Chen",
-      "Yilin Liu",
-      "Hui Huang"
-    ],
-    "abstract": "Extracting structured, parametric 3D representations from raw images remains a fundamental challenge in computer vision and graphics. While recent advancements in the 3D Gaussian Splatting (3DGS) pipeline integrate planar primitives to yield compact and editable geometry, these approaches typically treat planes as isolated, discrete sets. This lack of topological connectivity hinders robust geometric reasoning, leading to fragmented reconstructions and misaligned boundaries that fall short of the precision for rigorous spatial analysis and professional design workflows. To address this, we introduce TopoGS, the first 3DGS framework to explicitly integrate both planar and topological constraints for coherent 3D reconstruction. Specifically, we extract global 2D topological relationships from multi-view image segmentations and anchor Gaussian primitives to these structural elements. This formulation enables the joint optimization of plane parameters, rendering fidelity, and topological adjacency. By enforcing strict multi-view consistency alongside these topological constraints, our method significantly mitigates geometric misalignments and produces connected, structured 3D models. Extensive evaluations on the ScanNet++ dataset demonstrate that TopoGS achieves state-of-the-art performance, providing a highly robust solution for generating accurate, topologically sound, and visually faithful scene representations.",
-    "published": "2026-07-18T14:27:49Z",
-    "updated": "2026-07-18T14:27:49Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.GR"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "geometric reasoning",
-      "3D reconstruction",
-      "Gaussian Splatting",
-      "3D Gaussian Splatting",
-      "3DGS",
-      "rendering",
-      "splatting"
-    ],
-    "classification_score": 17,
-    "classification_reasons": [
-      "Matched title phrase: Gaussian Splatting",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched title phrase: 3D Gaussian Splatting",
-      "Matched abstract phrase: 3D Gaussian Splatting",
-      "Matched abstract keyword: 3DGS",
-      "Matched abstract keyword: rendering",
-      "Matched title keyword: splatting",
-      "Matched abstract keyword: splatting"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2607.16838",
-    "pdf_url": "https://arxiv.org/pdf/2607.16838",
     "first_seen": "2026-07-21T10:19:48-04:00",
     "last_seen": "2026-07-21T10:19:48-04:00"
   }
