@@ -6345,5 +6345,148 @@
     "total_tokens": 15078,
     "estimated_cost_usd": 0.00236292,
     "estimated_cost_cny": 0.017013
+  },
+  {
+    "timestamp": "2026-07-28T15:20:19Z",
+    "task": "brief_summary",
+    "arxiv_id": "2607.24509",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 585,
+    "completion_tokens": 567,
+    "total_tokens": 1152,
+    "estimated_cost_usd": 0.00024066,
+    "estimated_cost_cny": 0.001733
+  },
+  {
+    "timestamp": "2026-07-28T15:20:25Z",
+    "task": "brief_summary",
+    "arxiv_id": "2607.24495",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 621,
+    "completion_tokens": 576,
+    "total_tokens": 1197,
+    "estimated_cost_usd": 0.00024822,
+    "estimated_cost_cny": 0.001787
+  },
+  {
+    "timestamp": "2026-07-28T15:20:31Z",
+    "task": "brief_summary",
+    "arxiv_id": "2607.24493",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 492,
+    "completion_tokens": 438,
+    "total_tokens": 930,
+    "estimated_cost_usd": 0.00019152,
+    "estimated_cost_cny": 0.001379
+  },
+  {
+    "timestamp": "2026-07-28T15:20:37Z",
+    "task": "brief_summary",
+    "arxiv_id": "2607.24436",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 597,
+    "completion_tokens": 582,
+    "total_tokens": 1179,
+    "estimated_cost_usd": 0.00024654,
+    "estimated_cost_cny": 0.001775
+  },
+  {
+    "timestamp": "2026-07-28T15:20:43Z",
+    "task": "brief_summary",
+    "arxiv_id": "2607.24409",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 648,
+    "completion_tokens": 611,
+    "total_tokens": 1259,
+    "estimated_cost_usd": 0.0002618,
+    "estimated_cost_cny": 0.001885
+  },
+  {
+    "timestamp": "2026-07-28T15:20:50Z",
+    "task": "brief_summary",
+    "arxiv_id": "2607.24403",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 551,
+    "completion_tokens": 595,
+    "total_tokens": 1146,
+    "estimated_cost_usd": 0.00024374,
+    "estimated_cost_cny": 0.001755
+  },
+  {
+    "timestamp": "2026-07-28T15:20:55Z",
+    "task": "brief_summary",
+    "arxiv_id": "2607.24249",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 540,
+    "completion_tokens": 469,
+    "total_tokens": 1009,
+    "estimated_cost_usd": 0.00020692,
+    "estimated_cost_cny": 0.00149
+  },
+  {
+    "timestamp": "2026-07-28T15:21:01Z",
+    "task": "brief_summary",
+    "arxiv_id": "2607.24233",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 512,
+    "completion_tokens": 545,
+    "total_tokens": 1057,
+    "estimated_cost_usd": 0.00022428,
+    "estimated_cost_cny": 0.001615
+  },
+  {
+    "timestamp": "2026-07-28T15:21:07Z",
+    "task": "brief_summary",
+    "arxiv_id": "2607.23901",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 565,
+    "completion_tokens": 518,
+    "total_tokens": 1083,
+    "estimated_cost_usd": 0.00022414,
+    "estimated_cost_cny": 0.001614
+  },
+  {
+    "timestamp": "2026-07-28T15:21:13Z",
+    "task": "brief_summary",
+    "arxiv_id": "2607.23861",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 579,
+    "completion_tokens": 528,
+    "total_tokens": 1107,
+    "estimated_cost_usd": 0.0002289,
+    "estimated_cost_cny": 0.001648
+  },
+  {
+    "timestamp": "2026-07-28T15:21:19Z",
+    "task": "brief_summary",
+    "arxiv_id": "2607.23758",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 584,
+    "completion_tokens": 507,
+    "total_tokens": 1091,
+    "estimated_cost_usd": 0.00022372,
+    "estimated_cost_cny": 0.001611
+  },
+  {
+    "timestamp": "2026-07-28T15:21:24Z",
+    "task": "brief_summary",
+    "arxiv_id": "2607.23755",
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 522,
+    "completion_tokens": 508,
+    "total_tokens": 1030,
+    "estimated_cost_usd": 0.00021532,
+    "estimated_cost_cny": 0.00155
+  },
+  {
+    "timestamp": "2026-07-28T15:21:47Z",
+    "task": "daily_trend_report",
+    "arxiv_id": null,
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 13268,
+    "completion_tokens": 1800,
+    "total_tokens": 15068,
+    "estimated_cost_usd": 0.00236152,
+    "estimated_cost_cny": 0.017003
   }
 ]
