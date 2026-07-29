@@ -11,62 +11,58 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：39
+- 当前滚动窗口论文数：40
 - 分类分布：
-  - 3D Reconstruction & Multi-view Geometry: 15
-  - Embodied / Robotics / AR Applications: 10
+  - 3D Reconstruction & Multi-view Geometry: 17
   - Neural Scene Representations & Rendering: 10
-  - Geometry Foundation Models: 2
-  - Dynamic / 4D Reconstruction: 2
+  - Embodied / Robotics / AR Applications: 9
+  - Dynamic / 4D Reconstruction: 3
+  - Geometry Foundation Models: 1
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-好的，这是基于您提供的论文列表生成的今日科研趋势综合分析。
+好的，以下是根据您提供的论文列表生成的科研趋势综合分析。
 
 ---
 
 #### 今日主要趋势
 
-本日论文列表揭示了以下几个主要趋势：
+1.  **3D高斯泼溅（3DGS）从“生成”走向“应用生态”建设**：本日论文中，3DGS已不再仅仅是静态场景的新颖视图合成工具。其应用生态显著扩展，涵盖了**视频级世界模型**（Wonder，利用3DGS理解生成，但更偏向视频生成）、**实时流媒体传输**（SplatStream，解决动态场景的带宽问题）、**跨模态感知融合**（CORF-GS，将光学与无线射频信号耦合）、**高保真仿真平台**（SONG，用于社交导航模拟）以及**高压缩编解码**（GenSplatCodec）。这标志着3DGS正从单一的渲染技术，迅速演变为一个支撑沉浸式媒体、机器人仿真、无线通信等多种应用的基础性表示框架。
 
-1.  **前馈式方法与基础模型主导的3D重建**：大量工作致力于摆脱传统的逐场景优化范式，转向更可扩展的前馈式框架。这体现在利用几何基础模型（如VGGT-类方法）直接从多视图输入预测场景表示（如3D高斯），并在道路表面重建（`RoadVGGT`）、结构光深度估计（`NSL-SLAM`）和物体操作（`KAI`）中展现出潜力。同时，文本到图像扩散模型的先验知识被重新用于解决特定难题，如透明表面感知（`SILICA`）。
+2.  **机器人/具身智能研究向“多模态”与“高效数据利用”深度演进**：论文显示，机器人研究正从单纯的视觉模仿学习，迈向更深度的多模态融合和数据效率优化。例如，**S2A2** 系统性地将听觉声学信息与视觉信息结合，用于操作任务；**HiFi-UMI** 通过提升数据采集保真度，力求仅用高质量“无机器人”数据即可训练可部署策略，极大降低了对昂贵真实机器人数据的依赖；**KAI** 则通过嵌入运动学先验，显著提升了复杂关节物体操作的样本效率。这些工作共同指向一个目标：使机器人学习更智能（理解场景）、更经济（少用数据）、更泛化。
 
-2.  **以SLAM为核心的智能体协同与AR整合**：SLAM系统正从单一任务扩展到更复杂的多智能体协同和人机协作场景。焦点从单纯提高精度，转向平衡不同智能体（如机器人 vs. AR用户）的差异化延迟需求（`SHARE`），并通过融合高保真深度传感（`NSL-SLAM`）和利用大尺度场景的空间分解策略（`GLAM-SLAM`）来提升鲁棒性和实用性。
+3.  **SLAM与定位系统走向“以用户/任务为中心”的定制化与高精度**：SLAM领域正超越通用的框架，向针对特定应用场景和硬件进行深度优化的方向发展。**NSL-SLAM** 专门为高保真结构光深度相机定制SLAM管线，实现高精度。**SHARE** 则从系统层面出发，在人机协作空间中优先保障AR用户的低延迟体验，而非对所有智能体一视同仁。**HOME** 针对结构化和无纹理环境，提出了一种极轻量级的特征匹配方法。这些工作不再追求通用的“万金油”方案，而是面向特定短板（如无纹理、透明物体、用户延迟）和特定硬件（结构光深度相机）进行针对性设计，体现了工程实践与算法创新的深度结合。
 
-3.  **动态场景建模的深化与“未来”预测**：动态场景重建正从简单的渲染向更准确的物理运动建模演变。这体现在对头发动力学（`DynHair`）、运动解耦（`GrainGS`）的精细建模，以及对未来时域几何的预测需求（`FutureSurf`基准）。研究者开始关注模型是否真正理解了运动的物理规律，而不仅仅是拟合观测数据。
-
-4.  **数据效率与弱/自监督学习的持续崛起**：为了降低对昂贵人工标注的依赖，利用弱监督、自监督和跨模态学习成为核心策略。这包括从视频中自监督分离相机与物体运动（`SDM`），利用RGB-D追踪器自监督LiDAR人体姿态估计（`Factorized Spatio-Temporal Convolutions`），以及通过多教师蒸馏和雷达融合提升恶劣天气下的自监督深度估计（`Boosting Robustness`）。
+4.  **利用基础模型先验解决长期存在的“长尾”感知难题**：论文表明，利用大规模预训练的视觉或扩散模型，是突破传统感知方法固有局限性的有效路径。**SILICA** 是一个典型案例，它利用文本到图像扩散模型的先验知识，成功解决了标准深度传感器对其系统性失效的透明玻璃表面的感知与深度估计问题，且无需昂贵的玻璃深度标注数据。**NSL-SLAM** 也融合了单目深度先验来增强结构光深度估计。这预示着未来将有更多研究利用大模型的知识，去攻克那些因数据稀缺或物理限制而难以直接学习的感知难题。
 
 #### 技术路线观察
 
--   **几何基础模型与3D/4D重建**：本类论文（如`NSL-SLAM`, `RoadVGGT`, `MSVS-VAE`）的技术路线明显偏向于**前馈式网络**。它们倾向于将特定领域先验（如道路结构、运动学）或预训练基础模型（如VGGT, 扩散模型）集成到网络中，以实现对单/多视图输入的快速、一致推理。`FutureSurf`则开辟了一个全新的评估路线，提出了一个验证动态模型是否理解物理规律的诊断基准。
-
--   **神经场景表示与渲染**：本类（`GenSplatCodec`, `DynHair`, `GrainGS`）技术路线核心是**3D高斯泼溅（3DGS）** 的扩展与优化。它们致力于解决3DGS在处理压缩（`GenSplatCodec`）、动态（`DynHair`, `GrainGS`）和大尺度场景（`GLAM-SLAM`）时的局限性。其中，动态场景的解决方案出现分歧：有的采用**锚定+每高斯形变**的混合架构（`GrainGS`），有的则结合**显式发丝表示与时间网络**（`DynHair`）。
-
--   **具身/机器人/AR应用**：本类（`KAI`, `HGeo-TopoMap`, `SHARE`, `DAP-Pose`）的技术路线更侧重于**系统集成**与**任务特定设计**。例如，`KAI`通过设计运动学感知的中间表征来提升样本效率；`SHARE`通过用户中心的调度策略整合边缘计算和实时性；`DAP-Pose`则设计深度时序对齐模块来解决多传感器异步问题。这些工作通常不会单独提出全新的3D表示，而是巧妙地将现有技术（Implicit Representation, SLAM, 传感器融合）组合并适配于特定任务。
+- **几何基础模型**：**HOME** 采取了“非主流”路线，抛弃了流行的神经网络和点特征，回归到经典的**霍夫变换**，将线条匹配问题巧妙地转化为一维点匹配，展现了极致的轻量化、无训练设计思路。这与众多依赖深度学习方法形成鲜明对比。
+- **3D/4D 重建**：这是本日论文最密集的领域之一。技术路线呈现多元化：
+    - **3DGS**：成为绝对主流。代表论文有 **SplatStream**（+视频编码）、**CORF-GS**（+信号处理）、**SONG**（+仿真）、**GenSplatCodec**（+生成式压缩）、**PanoLess**（+逆渲染）。这表明3DGS已从单纯的对场景进行“拍照式复制”转向对场景进行“结构化、可交互的表征”。
+    - **基于表示学习的VAE**：**MSVS-VAE** 代表了另一种思路，通过分层点洗牌上采样和局部聚合算子，在不依赖体素的情况下提升重建保真度。
+    - **传统几何+高精度数据**：**Accuracy potential of visual localization** 回到经典的SfM+PnP流程，但通过构建高精度、带亚厘米级真值的大规模数据集，探索了传统方法在理想数据下的精度天花板。
+    - **多机器人协同**：**Quality-Adaptive Multi-UAV 3D Reconstruction** 关注的是分布式、质量自适应的重建规划，属于系统层面的优化。
+- **神经场景表示 & 新视角合成**：技术路线集中在如何**高效、动态、交互式**地利用3DGS。**Wonder** 将其与视频生成世界模型结合，**SplatStream** 将其与视频编码结合，**GenSplatCodec** 将其与扩散模型结合。**PanoLess** 则将其与逆渲染结合，从反射中推理环境。整体上，3DGS正在与各类生成、编码、推理模型进行深度融合。
+- **机器人/AR应用**：技术路线覆盖了从“如何学”到“如何用”的全链路：
+    - **模仿学习**：**S2A2** (多模态声学+视觉) 和 **KAI** (先验知识引导) 关注如何让策略学的更好，**HiFi-UMI** 关注如何让数据更好（从而学的好）。
+    - **世界模型**：**Wonder** 和 **TD-JEPA** 从不同角度（前者是生成式交互，后者是规划导向表征）为机器人构建“预演”能力。
+    - **系统与应用**：**SHARE** 关注系统级的延迟优化，**SONG** 关注提供更好的仿真测试平台。
 
 #### 值得优先阅读的论文
 
-1.  **NSL-SLAM** - 理由：代表了一个**高精度深度传感器+SLAM**的可行范式。其“强深度使你SLAM管道可以变简单”的理念具有很强的启发性，且实验证明了在当前sota方法基础上依然能获得显著提升（深度精度提升35%）。对于研究实用型SLAM和AR的学者，这是必读。
-2.  **SILICA** - 理由：巧妙地**重新利用预训练扩散模型的先验知识**来解决“透明表面”这一公认的难题，完全绕过了真实数据的稀缺性。其零样本迁移能力和20%的显著性能提升，展示了通用视觉先验的另一种有效应用路径。
-3.  **MSVS-VAE** - 理由：直接挑战并**弥合了基于集合的VAE与性能更优的基于体素的VAE之间的保真度差距**。这对于基于潜在扩散的3D生成模型至关重要。其分层稠密化和局部聚合算子（AVS-Conv）的设计思路，为解决3D VAE的瓶颈提供了清晰有效的方案。
-4.  **FutureSurf** - 理由：提出了一个新颖且关键的评估问题：“动态重建模型是否真的理解了物理规律？” 通过构建基准和证伪控制，揭示了现有sota方法在预测未来表面时存在严重误差，且渲染质量与未来曲面准确性解耦。这为动态场景建模的研究方向设立了新的评估标准。
-5.  **SDM** - 理由：针对**从视频中分离相机运动与物体运动**这一基础且未充分解决的问题，提出了一种只需弱监督的解决方案。其表现与强监督方法（VGGT）相当，证明了自监督+弱监督范式在此类解耦任务上的巨大潜力。
+1.  **HiFi-UMI (`2607.25895)`**：**强烈推荐。** 这篇论文直面当前机器人操作学习中最现实、最核心的瓶颈之一——数据。它提出的“以数据保真度换取数据规模”的策略极具颠覆性，可能显著改变数据采集策略和策略训练范式。其详实的实验（3mm精度，无后训练锚点）提供了强有力的证据。
+2.  **S2A2 (`2607.26047`)**：**推荐。** 它系统性地将听觉模态引入机器人操作模仿学习，这是一个相对前沿且有很大探索空间的方向。它不仅提出了任务，还整合了多种策略（ACT, Diffusion Policy等），具有很好的参考价值。
+3.  **SILICA (`2607.24249`)**：**推荐。** 该工作漂亮地展示了一种解决长尾问题的典型范式：用基础模型的强大先验，去攻克传统方法因数据缺失而无法解决的难题（透明物体感知）。其零样本泛化能力以及性能提升（相对SOTA提升近20%）使其很有启发性。
+4.  **TD-JEPA (`2607.25337`)**：**推荐给关注机器人规划与表征学习的研究者。** 这篇论文直指JEPA世界模型中“规划目标”与“学习目标”的不匹配这一关键理论问题，并提出了优雅的解决方案（挖掘时域有向成本）。其消融实验清晰地展示了各模块的贡献，对于理解类JEPA方法的内在机制非常有帮助。
+5.  **GenSplatCodec (`2607.24403`)**：**推荐给关注3DGS压缩与传输的研究者。** 它将生成式模型（扩散模型）巧妙地整合进编解码过程，解决了低码率下保真度与视图一致性的矛盾。其“几何引导的生成式解码”思路，对于如何有效压缩和传输日益增长的3D场景数据具有启发性。
 
 #### 可能的研究机会
 
-1.  **未来表面预测的专用架构**：`FutureSurf` 的基准表明现有方法（DG-Mesh, Deform-3DGS）在预测未来时表现不佳。一个清晰的机会是开发**专门用于时域外推的动态表面重建模型**，该模型需要显式地融入物理运动模型（如轨迹预测、波动方程）而非仅仅依赖隐式变形。
-2.  **前馈式4D重建与压缩**：`RoadVGGT` 和 `GenSplatCodec` 分别展示了前馈式3D重建与压缩的潜力。将它们结合，可以尝试开发一个**端到端的前馈式动态（4D）场景编解码器**，直接从视频流预测紧凑的、可驱动的动态场景表示，并支持高效的存储和传输。
-3.  **跨任务的知识蒸馏与统一表示**：`SILCA` 和 `Boosting Robustness` 都利用了多教师蒸馏。另一个机会是探索**如何为一个复杂的多模态任务（如人机协作导航）构建一个统一的基础模型**，使其能同时进行玻璃分割、深度估计、运动预测和规划，并利用自监督信号从大量无标注数据中学习。
-4.  **针对异构智能体的协同SLAM**：`SHARE` 的工作启发了一个方向，即**设计能够感知和适应不同任务需求的异构智能体SLAM系统**。例如，为一个由高速无人机、精准操作机械臂和头戴AR设备组成的团队，优化其之间的地图共享与计算调度策略。
-
-#### 风险和不确定性
-
--   **结论的泛化性需全文验证**：许多论文的优越性能是在特定数据集或环境下报告的。例如，`NSL-SLAM` 的深度提升（35%）和`SILICA` 的性能提升（~20%）是否泛化到更多样、更具挑战性的真实场景，需要阅读全文以了解其对数据集构成和测试条件的详细描述。
--   **因果解释的可靠性**：`KAI` 声称仅用一半数据即可达到相似性能，`SDM` 声称实现了有效解耦。这些结论依赖于精心设计的实验和消融研究。读者需要检查全文中是否排除了其他可能的影响因素（如网络容量、数据随机性），以确认观察到的提升确实源于提出的核心组件，而非偶然。
--   **实际部署的可行性**：`GLAM-SLAM` 和 `DAP-Pose` 强调了实时性，`Factorized Spatio-Temporal Convolutions`
+1.  **融合S2A2与HiFi-UMI**：能否将HiFi-UMI的高保真数据采集思想应用于S2A2的声学数据采集？例如，设计一个同时记录视觉、声学位置和材料属性的高保真“无机器人”数据采集系统，从而让机器人仅从这种数据中学习声学感知操作？
+2.  **将SILICA方法推广至其他“传感器失效”场景**：SILICA的成功为用扩散模型先验解决其他长尾感知问题提供了范式。未来的
 
 ### interests.md 指令分析
 
@@ -193,6 +189,45 @@ Understanding motion in video is a fundamental challenge for visual learning, as
 **Matched keywords:** dynamic 3D, dynamic Gaussian, Gaussian Splatting, 3D Gaussian Splatting, rendering, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：SplatStream: Fine Granular Scalable Gaussian Splatting for Adaptive 3D Scene Streaming
+- 作者：Muhammad Talha, William Gordon, Sajid Umair, Anique Akhtar, Joel Jung
+- 出版日期：2026-07-28
+- 分类：Dynamic / 4D Reconstruction（主分类），Neural Scene Representations & Rendering（次分类）
+- 链接：摘要链接 https://arxiv.org/abs/2607.25971；PDF链接 https://arxiv.org/pdf/2607.25971
+
+### 一句话总结
+SplatStream 提出了一种细粒度可扩展的高斯溅射框架，通过分层编码、帧间预测和视觉重要性排序，实现了动态 3D 场景在带宽变化条件下的自适应、低延迟流媒体传输。
+
+### 研究问题
+动态 3D 高斯溅射（GS）在实现高质量实时渲染时，其庞大的表示尺寸和帧间冗余导致了自适应流媒体传输的显著挑战——如何在带宽变化条件下高效、精细地按需传输动态 3D 场景？
+
+### 核心思路/方法
+1. **分层可扩展编码**：将高斯溅射场景分解为质量层和分辨率层，并引入层间预测编码来实现可扩展性。
+2. **时间方向可扩展性**：引入 B 帧结构，支持时间维度的质量可扩展。
+3. **轻量级跨层 Transformer 预测器**：用于跨层预测和时间预测，减少冗余。
+4. **基于体素不透明度的视觉重要性度量**：对高斯原语进行细粒度分组，使视觉上重要的原语更早传输，实现渐进式细化。
+5. **与 MPEG-DASH 兼容的子表示结构**：将可扩展的 GS 比特流映射到这种结构，支持细粒度、自适应的低延迟传输。
+
+### 主要贡献
+- 提出了一个细粒度可扩展的高斯溅射框架（SplatStream），专为动态 3D 场景的自适应流媒体设计。
+- 设计了质量层和分辨率层的可扩展编码方案，并引入 B 帧实现时间质量可扩展性。
+- 采用轻量级跨层 Transformer 预测器进行跨层和时间预测，减少表示冗余。
+- 提出基于体素不透明度的视觉重要性度量，实现优先传输重要原语的细粒度分组。
+- 将可扩展比特流映射到 MPEG-DASH 兼容结构，支持在带宽变化条件下的自适应、低延迟流媒体传输。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**中**。  
+理由：该工作解决了动态 3D 高斯溅射流媒体传输中的关键工程问题（可扩展性、自适应传输），方法上具有较好的创新性（分层可扩展、跨层 Transformer 预测、与 MPEG-DASH 结合）。但未提供具体实验结果，且属于特定应用场景（3D 流媒体），对纯算法研究或通用场景的读者吸引力有限。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Dynamic 3D Gaussian Splatting (GS) enables high quality real-time rendering for immersive media, but its large representation size and frame-wise redundancy create significant challenges for adaptive streaming. This paper presents SplatStream, a fine granular scalable Gaussian splatting framework for dynamic 3D scene delivery. The proposed method decompose the GS scenes into quality and resolution layers, and introduces inter-layer predictive coding to achieve scalability. For temporal direction, B-frames are introduced to have temporal quality scalability. A lightweight cross-layer transformer based predictor is utilized for both cross layer and temporal predictions. In addition, a volume-opacity based importance measure is used for fine-grained Gaussian packetization, allowing visually important primitives to be transmitted earlier for progressive refinement. Finally, the scalable GS bitstream is mapped to an MPEG-DASH compatible sub-representation structure, enabling fine granular adaptive, low-latency delivery of dynamic Gaussian splatting content under bandwidth-varying conditions.
@@ -311,6 +346,44 @@ We propose FA-LAM, a Focus-Aware Large Avatar Model for one-shot animatable Gaus
 **Matched keywords:** simultaneous localization and mapping, SLAM, pose estimation, feature matching, robotics, mapping, localization
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：HOME: Robust Hough-space Matching Method for Structured and Textureless Videos  
+- 作者：Masaki Satoh  
+- 出版日期：2026-07-28  
+- 分类：3D Reconstruction & Multi-view Geometry；Embodied / Robotics / AR Applications  
+- 链接：摘要：https://arxiv.org/abs/2607.25389 ；PDF：https://arxiv.org/pdf/2607.25389  
+
+### 一句话总结
+提出一种基于霍夫空间的超轻量、免训练特征匹配框架HOME，通过将图像中的全局线性结构映射为稳定局部极值，将复杂线条匹配简化为高效的一维点匹配，在结构化和无纹理场景中实现鲁棒且快速的单应性估计。
+
+### 研究问题
+如何在计算资源有限的边缘设备上，针对结构化环境（强线性结构）或无纹理表面，实现高效、鲁棒的视觉特征匹配，从而解决现有基于点特征（如ORB）在这些场景中频繁失败、而基于线条的SLAM方法计算量过大的瓶颈问题。
+
+### 核心思路/方法
+1. **霍夫空间变换**：将输入图像转换到霍夫空间，把全局线性结构映射为稳定的局部极值，并将这些极值作为关键点。  
+2. **一维点匹配**：将复杂的线条匹配问题重构成高效的一维点匹配任务。  
+3. **一维径向描述子**：设计具有数学保证的旋转和平移不变性的描述子，无需显式估计方向，降低计算开销。  
+4. **验证方式**：以单应性估计作为概念验证，评估匹配精度和效率。
+
+### 主要贡献
+- 提出HOME框架，首次将线条匹配通过霍夫空间转换为轻量级的一维点匹配，避免了传统线条提取与描述的昂贵计算。  
+- 数学上保证了一维径向描述子的旋转和平移不变性，无需方向估计步骤。  
+- 实验表明：在基于点特征方法失败的结构化/无纹理场景中，HOME仍能实现鲁棒配准，且运行速度远快于现有基于线条的方法。
+
+### 局限性
+- 摘要仅说明本文聚焦于单应性估计作为概念验证，未提供全3D位姿估计的实验细节。  
+- 摘要未提供任何关于算法实时性定量数据、与其他方法的具体速度对比数值、以及在更多场景下的鲁棒性测试结果。  
+- 摘要明确提及“将稳健匹配引擎扩展到全3D位姿估计仍是未来方向”，表明当前工作尚未覆盖3D位姿估计。  
+
+### 阅读优先级
+**高**  
+理由：该方法针对边缘计算中的实时匹配瓶颈提出新颖且轻量的思路，在结构化和无纹理场景中具有显著优势。尽管当前验证限于2D单应性估计，但其基础框架对机器人、AR等实时应用具有潜在价值，适合对轻量化特征匹配感兴趣的研究者。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Visual front-ends for robotic localization typically rely on point-based features such as Oriented FAST and Rotated BRIEF (ORB), which frequently fail in structured environments dominated by strong linear structures or textureless surfaces. While line-based Simultaneous Localization and Mapping (SLAM) systems mitigate this by utilizing line segments, conventional line extraction and description algorithms are computationally prohibitive for real-time edge robotics. To address this fundamental bottleneck, we propose HOME (Hough-space One-dimensional Matching of Extrema), an ultra-lightweight, training-free feature matching framework. HOME transforms images into Hough space, mapping global linear structures to stable local extrema, which serve as keypoints, thereby reformulating complex line matching into highly efficient one-dimensional point matching. The proposed 1D radial descriptor mathematically guarantees rotational and translational invariance without the overhead of explicit orientation estimation. As a proof of concept to validate the matching accuracy and efficiency of HOME, this paper focuses on homography estimation. Extensive evaluations demonstrate that HOME achieves robust registration in challenging scenarios where point-based methods fail, operating at a much faster speed than existing line-based methods. Extending this robust matching engine to full 3D pose estimation remains a highly promising future direction.
@@ -324,6 +397,40 @@ Visual front-ends for robotic localization typically rely on point-based feature
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** Embodied / Robotics / AR Applications
 **Matched keywords:** depth estimation, stereo depth, robotics, augmented reality
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：WHTMix: Efficient Stereo Depth Estimation via Walsh-Hadamard Token Mixing
+- 作者：Prathyush Sajith, Emadeldeen Hamdan, Ahmet Enis Cetin
+- 出版日期：2026-07-28
+- 分类：3D Reconstruction & Multi-view Geometry（主要），Embodied / Robotics / AR Applications（次要）
+- 链接：摘要：https://arxiv.org/abs/2607.25234；PDF：https://arxiv.org/pdf/2607.25234
+
+### 一句话总结
+本文提出用数据无关的Walsh-Hadamard token mixer替代立体深度估计Transformer中的全局自注意力，在对数线性复杂度下保持精度，并引入混合对数视差损失以提升远距离物体估计性能。
+
+### 研究问题
+立体深度估计算法（用于驾驶、机器人和增强现实）需在高分辨率下快速运行，而基于Transformer的立体匹配器中，全局自注意力的计算复杂度随像素数平方增长，成为推理延迟的主要瓶颈。
+
+### 核心思路/方法
+1. 将立体Transformer中的联合自注意力阶段替换为数据无关的Walsh-Hadamard token mixer，该混频器在变换域以对数线性成本全局混合token，而保留数据相关的交叉注意力用于左右视图对应。
+2. 引入混合对数视差损失函数，对代表远距离物体的小视差像素赋予更高权重，以提升远处物体估计精度且不增加额外计算开销。
+
+### 主要贡献
+- 提出Walsh-Hadamard token mixer替代全局自注意力，在合成驾驶数据上将模型计算量降低2.46倍，单图像推理延迟降低2.65倍，且端点误差与注意力基线持平。
+- 通过复杂度分析揭示该方法优势受序列长度与通道宽度比值主导，解释了其在高分辨率立体匹配中的适用性及在分类Transformer中的不适用性，并在非立体长序列基准上验证了这种token-通道缩放规律。
+- 引入混合对数视差损失，在不增加计算开销的前提下减少远距离物体的误差。
+
+### 局限性
+摘要未提供足够信息。摘要未讨论模型在真实驾驶/机器人数据上的鲁棒性、泛化能力、硬件部署细节，也未对比其他高效注意力变体或提供消融实验的量化误差率。
+
+### 阅读优先级
+高  
+理由：该工作直接针对立体深度估计的实时性核心瓶颈，提供了理论清晰（复杂度分析）、实验验证（计算和延迟大幅下降，精度持平）且实用（损失函数提升远距离物体性能）的解决方案，对高分辨率实时应用场景具有显著参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1104,6 +1211,41 @@ Reliable feedforward underwater 3D reconstruction remains challenging due to sev
 **Matched keywords:** radiance field, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, radiance, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：CORF-GS: Real-Time Wireless Radiance Field Reconstruction via Coupled Optical-RF Gaussian Splatting
+- 作者：Jinya Zhang, Jiajia Guo, Chao-Kai Wen, Shi Jin
+- 出版日期：2026-07-28
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2607.25569
+
+### 一句话总结
+CORF-GS提出一种基于耦合光学-射频3D高斯泼溅的实时无线辐射场重建框架，通过光学引导和联合优化实现高效在线信道建模。
+
+### 研究问题
+现有无线辐射场重建方法依赖预采集观测数据和离线优化，无法提供实时信道知识，如何实现基于序贯输入数据的实时无线信道重建。
+
+### 核心思路/方法
+1. 构建光学与射频的统一高斯表征：共享几何结构，分别学习模态特定的外观属性。
+2. 光学引导高斯采样：在新关键帧到达时，利用高分辨率光学图像为重建不足区域补充高斯点。
+3. 耦合光学-射频联合优化：针对光与无线电波对物体表面响应的波长失配问题，同时优化共享高斯，使其适应光学结构和射频功率分布，避免被动适应冻结的光学几何。
+
+### 主要贡献
+- 提出首个基于3DGS的实时无线辐射场重建框架CORF-GS。
+- 设计光学引导采样与耦合优化策略，解决跨模态信源感知差异。
+- 仿真结果表明CORF-GS在RF频谱合成质量上达到最先进水平，重建时间相比现有方法减少6.4倍。
+
+### 局限性
+摘要未提供足够信息：未报告方法在真实场景、动态环境或不同频段下的性能表现，亦未分析计算资源需求或模型可扩展性。
+
+### 阅读优先级
+**高**
+理由：该工作首次将在线、实时特性引入无线辐射场重建领域，且提出耦合光学-射频联合优化方案解决跨模态感知差异问题，性能提升显著（重建时间降低6.4倍），对动态无线信道建模有重要参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Recent advances in 3D Gaussian Splatting (3DGS)-based wireless radiance field (WRF) reconstruction provide an efficient solution for wireless channel modeling. However, existing WRF reconstruction methods rely on pre-collected observations and offline optimization, and thus struggle to provide real-time channel knowledge. To bridge this gap, we propose CORF-GS, a real-time WRF reconstruction framework that processes sequential optical and radio frequency (RF) keyframes. Specifically, CORF-GS constructs a unified Gaussian representation for optical and RF with shared geometry and modality-specific appearance, allowing high-resolution optical images to provide structural priors for WRF reconstruction. When a new keyframe arrives, CORF-GS first employs optical-guided Gaussian sampling to densify the WRF in under-represented regions. Since light and radio waves may respond differently to the same object surfaces due to wavelength mismatch, relying solely on optical guidance may neglect RF-informative areas. Therefore, CORF-GS performs coupled optical-RF optimization to jointly refine the shared Gaussians. Compared with the existing two-stage training pipelines, this prevents WRF from passively adapting to a frozen optical geometry and encourages the shared Gaussians to adapt to both optical structures and RF power distributions. Simulations show that CORF-GS achieves state-of-the-art RF spectrum synthesis quality and reduces the reconstruction time by $6.4\times$ compared with existing WRF methods.
@@ -1119,6 +1261,40 @@ Recent advances in 3D Gaussian Splatting (3DGS)-based wireless radiance field (W
 **Matched keywords:** Gaussian Splatting, inverse rendering, rendering, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：PanoLess: Environment Reconstruction from Partial Reflective Views
+- 作者：Ahitagni Das, Ashok Veeraraghavan, Vivek Boominathan
+- 出版日期：2026-07-28
+- 分类：Neural Scene Representations & Rendering
+- 链接：摘要地址 https://arxiv.org/abs/2607.25362，PDF地址 https://arxiv.org/pdf/2607.25362
+
+### 一句话总结
+PanoLess 提出一种基于高斯溅射的框架，仅通过反射表面（如玻璃）的部分视角图像，就能重构出完整的环境照明图，并输出环境支持区域的可见性图。
+
+### 研究问题
+如何在仅从反射表面一侧获取的局部视角图像中，重建出具有几何一致性的周围环境照明图（远场 illumination map），以克服传统方法需要 360 度全覆盖数据的限制。
+
+### 核心思路/方法
+1. 使用表面对齐的 2D 高斯溅射与延迟着色技术，从部分反射视图中恢复精确的逐像素法线及反射线索。
+2. 将这些线索融合到一个神经立方体贴图表示中，用以编码环境照明信息。
+3. 额外生成一个可见性图，显式标记环境中的哪些区域得到了部分反射观测的支持。
+
+### 主要贡献
+- 提出可在仅利用反射表面一侧图像的情况下重建环境照明的新框架。
+- 与需要全 360 度覆盖的现有逆渲染和反射感知高斯溅射方法不同，本方法能够在局部视图输入下实现一致、有物理依据的照明估计。
+- 在自建合成基准和公开数据集上超越反射感知基线，并展示出对真实世界反射捕获数据的泛化能力。
+
+### 局限性
+摘要未提供足够信息，未提及该方法在特定复杂场景（如非朗伯反射表面、强遮挡或动态环境）下的表现或限制，也未讨论重建计算开销或对输入图像质量的要求。
+
+### 阅读优先级
+高。该工作针对部分反射视图这一实用场景提出新的解决方案，在技术路径（高斯溅射+神经立方体贴图）和任务设定上均有新意，且展示了较好的实验结果和泛化性，适合关注环境重建、反射感知渲染的研究者优先阅读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Reflections from shiny objects and glass facades naturally extend the field of view of a camera, capturing the surrounding environment without the need to pan the camera or acquire a full panorama. We propose PanoLess, a Gaussian-splat-based framework that reconstructs the surrounding environment as a distant illumination map from images captured on only one side of a reflective surface. PanoLess leverages surface-aligned 2D Gaussian splats with deferred shading to recover accurate per-pixel normals and reflection cues, which are fused into a neural cubemap representation of the environment. In addition, PanoLess produces a visibility map that explicitly denotes which regions of the environment are supported by the partial reflective observations. Unlike existing inverse-rendering and reflection-aware Gaussian-splatting approaches, which typically require full 360-degree coverage and struggle under incomplete views, PanoLess enables consistent, physically grounded illumination estimation from partial-view input. We show that PanoLess achieves high-fidelity and geometrically consistent environment reconstruction, outperforming reflection-aware baselines on a new custom synthetic benchmark and publicly available datasets, and demonstrating generalization to real-world reflective captures.
@@ -1132,6 +1308,44 @@ Reflections from shiny objects and glass facades naturally extend the field of v
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** Embodied / Robotics / AR Applications
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, splatting, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：SONG: A Photorealistic 3D Gaussian Simulation Platform for Benchmarking Social Navigation
+- 作者：Weiqi Huang, Dianyi Yang, Jiaxin Li, Shuangyi Dong, Hao Xu, Zan Wang, Wei Liang
+- 出版日期：2026-07-28T02:51:24Z
+- 分类：Neural Scene Representations & Rendering（主要），Embodied / Robotics / AR Applications（次要）
+- 链接：摘要：https://arxiv.org/abs/2607.25219，PDF：https://arxiv.org/pdf/2607.25219
+
+### 一句话总结
+提出一个基于3D高斯泼溅（3DGS）的社交导航仿真平台SONG，结合大语言模型驱动行人轨迹和全身运动合成，并提供基准数据集SONG-Bench与多维评估指标，用于支持视觉感知的社交导航研究。
+
+### 研究问题
+现有社交导航仿真平台缺乏视觉观测、移动人物化身或真实感外观与行人行为，无法支持基于视觉的社交导航研究。本文旨在构建一个高保真、可真实模拟视觉感知环境的仿真平台。
+
+### 核心思路/方法
+- 采用3D高斯泼溅（3DGS）对场景和人物化身进行真实感表示。
+- 使用大语言模型生成语义合理的行人移动轨迹。
+- 通过轨迹驱动的全身运动生成器合成连续、自然的肢体运动。
+- 构建SONG-Bench，按难度分层的评估任务序列。
+- 提出涵盖有效性、安全性、社会合规性的多维评估指标集。
+
+### 主要贡献
+1. 提出SONG平台，首个利用3DGS实现场景和人物高保真表示的社交导航仿真平台。
+2. 构建SONG-Bench，提供分层难度的评估任务与多维评价指标。
+3. 系统评估表明：基于视觉的社交导航远未解决；安全性缺陷先于社交礼节问题；真实世界数据比模型规模更重要。
+4. 验证了在平台生成数据上微调可有效提升真实环境下的成功率。
+
+### 局限性
+摘要未提供足够信息。例如未说明平台的可扩展性、计算开销、跨场景泛化能力或对人类行为多样性的覆盖程度。
+
+### 阅读优先级
+高  
+理由：该平台直接针对视觉社交导航模拟的空白，采用3DGS+大语言模型的新技术组合，提供了系统评估与真实场景迁移验证，对从事仿真、机器人导航与具身智能的研究者有重要参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1502,6 +1716,42 @@ We introduce MR-Compare, a mixed reality framework for spatially grounded visual
 **Matched keywords:** manipulation, localization, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：S2A2: Audio-Visual Imitation Learning for Manipulation Tasks Using Acoustic Spatial Information
+- 作者：Kaneyoshi Hiratsuka, Benjamin Yen, Ryosuke Kojima
+- 出版日期：2026-07-28T17:56:07Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2607.26047
+
+### 一句话总结
+本文提出一个将听觉空间信息与视觉特征融合的多模态模仿学习框架S2A2，用于机器人操作任务中的声源定位与识别，并通过仿真和真实机器人实验验证其有效性。
+
+### 研究问题
+如何在机器人模仿学习操作任务中，有效利用物体位置、材质及接触/运动引起的声学信息，实现主动声源定位与识别，并完成声学感知驱动的操作目标。
+
+### 核心思路/方法
+1. 设计一系列新的“声学感知操作任务”，要求机器人依赖听觉线索（如声音位置、音色）来确定操作目标。
+2. 提出多模态模仿学习框架S2A2（Spatial-Spectral Audio Action），该框架将视觉特征与声学空间信息（空间+谱）整合，用于声学感知操作任务。
+3. 将ACT、Diffusion Policy、VQ-BeT和π₀等策略集成到S2A2框架中，并通过仿真实验和真实机器人实验进行评估。
+
+### 主要贡献
+- 引入了一组新的声学感知操作任务，用于模仿学习，强调机器人通过听觉线索进行主动探索。
+- 提出了S2A2框架，该框架能够将视觉特征与声学空间-谱信息进行多模态融合。
+- 仿真实验表明，所提方法在同时需要位置和音色信息的任务中效果最佳。
+- 真实机器人实验验证了所提任务和框架在真实世界操作中的可行性。
+
+### 局限性
+摘要未提供足够信息，无法明确列出本文实验的量化局限性（如失败案例、计算资源需求或任务泛化能力等）。
+
+### 阅读优先级
+**中**  
+理由：该工作创新性地将听觉空间信息引入机器人操作中的模仿学习，解决了传统方法忽视声音线索的问题，对于多模态机器人学习领域有参考价值。但由于未详细说明方法具体结构、基线对比差异或实验量化结果，目前仅适用于概念验证和领域入门阅读，尚需后续完整论文评估细节。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Acoustic information provides rich cues about object location, material properties, and changes caused by contact or motion. This paper introduces a new set of acoustic-aware manipulation tasks for imitation learning, in which robots must use auditory cues to determine manipulation targets. These tasks require sound source localization and identification for active exploration in robotic manipulation. Also, we propose a multimodal imitation learning framework, Spatial-Spectral Audio Action (S2A2), that integrates visual features with acoustic spatial and acoustic signal information for the acoustic-aware manipulation tasks. We implemented S2A2 models that integrates policies such as ACT, Diffusion Policy, VQ-BeT, and $π_0$, into our framework. Simulation experiments showed that the proposed method is the most effective for tasks requiring both position and timbre. Furthermore, real-robot experiments confirm the applicability of the proposed tasks and framework to real-world manipulation.
@@ -1515,6 +1765,42 @@ Acoustic information provides rich cues about object location, material properti
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** world model
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Wonder: Video World Model Done Better
+- 作者：Jiacong Xu, Hanwen Jiang, Zhixin Shu, Kalyan Sunkavalli, Vishal M. Patel, Yiqun Mei
+- 出版日期：2026-07-28T17:45:25Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2607.26037
+
+### 一句话总结
+本文提出一个名为Wonder的通用的视频世界模型，支持实时、可控制摄像头的交互式世界探索，用户可通过移动摄像头在长时程中导航并发现新区域。
+
+### 研究问题
+如何构建一个通用的视频世界模型，使其能够实时响应摄像头控制指令，在保持长期连贯性的同时支持用户交互式探索（如移动摄像头、发现和重访区域）。
+
+### 核心思路/方法
+1. **摄像头控制**：引入密集坐标场的摄像头条件化方法，通过渲染提供空间对齐的运动和方向线索，使模型直接将摄像头运动视为视觉证据。
+2. **记忆机制**：提出高效的基于稀疏注意力的记忆机制，在推理时选择性地关注少量相关上下文标记，不受实际上下文长度限制，实现快速精确的记忆检索。
+3. **训练策略**：开发了多种技术来纠正自强制样式的蒸馏流程，提升学生模型对控制信号的遵从性，同时保持教师模型的多样化生成模式和长期记忆能力。
+
+### 主要贡献
+- 提出了一个支持实时、长时程、摄像头可控交互的视频世界模型Wonder。
+- 设计了基于密集坐标场的摄像头条件化方法和稀疏注意力记忆机制。
+- 改进了蒸馏训练流程，平衡了控制信号响应、生成多样性及长期记忆保持。
+- 模型能以16 FPS合成多样化的分钟级视频，在长卷中保持连贯的几何、外观和动态。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**  
+理由：该方法涉及视频生成、世界模型、交互控制与长期记忆等前沿交叉领域，且声称实现了实时长时程的可控探索，对机器人仿真、AR/VR及具身智能应用具有潜在重要影响。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1532,6 +1818,44 @@ We present Wonder, a general-purpose video world model for real-time, camera-con
 **Matched keywords:** SLAM, manipulation, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：HiFi-UMI: Learning Deployable Manipulation Policies from High-Fidelity UMI Data Alone
+- 作者：Simple AI, :, Yuteng Wei, Jinming Ma, Jiawei Wang, Weitao Zhou, Yushen Zuo, Ke Rui, Minglei Li, Jinhao Zhang, Zhikang Pan, Xiang Wang, Haoran Jia, Huan Du, Zicheng Zeng, Jun Ma, Guiyu Qin, Di Zhang, Xiaofei Li
+- 出版日期：2026-07-28
+- 分类：Embodied / Robotics / AR Applications
+- 链接：arxiv.org/abs/2607.25895
+
+### 一句话总结
+本文提出HiFi-UMI数据生产系统，通过提升无机器人UMI数据的采集保真度，使得仅用该数据微调的策略能直接部署到真实机器人上，无需任何后训练阶段的真实机器人数据。
+
+### 研究问题
+机器人操作策略学习受限于同时具备高保真度和可扩展性的数据匮乏问题：真实遥操作数据精准但成本高、难以规模化；无机器人UMI数据容易采集但保真度低，通常只能用于预训练，仍需少量真实机器人数据作为后训练的“锚点”。本文核心问题是：能否仅通过提高无机器人UMI数据的保真度，完全去除后训练中的真实机器人数据环节。
+
+### 核心思路/方法
+本文从四个维度协同设计了一套便携式UMI数据生产系统（HiFi-UMI）以提升数据保真度：
+1. **轨迹精度**：采用头戴式离线立体惯性SLAM。
+2. **夹爪间相对姿态**：使用原生而非重建的相对姿态估计。
+3. **同步性**：利用共享微秒级GPIO触发信号。
+4. **视野**：每只手配备两个广角相机，覆盖约200度视野。
+该系统在无外部定位基础设施下，可实现3毫米工作空间局部末端执行器精度。基于此系统采集的高保真数据，策略后训练阶段完全使用HiFi-UMI演示数据，无需任何真实机器人轨迹。
+
+### 主要贡献
+1. 提出HiFi-UMI数据生产系统，通过提升无机器人UMI数据的保真度，实现了零机器人后训练：仅用HiFi-UMI演示数据微调的策略可直接在真实机器人上部署，并在三个不同架构（视觉-语言-动作族与世界-动作模型族）的基线上，与评估场景内采集的遥操作基线相比，成功率差异仅为-2.5、+3.1和-0.6个百分点。
+2. 最强策略在精密插入任务上达到85%成功率，尽管HiFi-UMI轨迹未在该评估场景采集。
+3. 在相同语料库上预训练4000小时，将十个未见任务的动作误差降低41%，并使基于StarVLA-QwenPI的真实机器人成功率再提升18.1个百分点。
+4. 开源HiFi-UMI-2K数据集：2000小时微秒同步、超宽视角演示数据，每条数据均通过仿真回放自动重建与验证。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：本文针对机器人操作学习的数据瓶颈，提出了一种系统性的数据生产方案，在不依赖昂贵真实机器人数据的情况下实现了高性能策略学习，并提供了大规模开源数据集，对具身智能领域的研究有重要参考价值。实验覆盖多种主流策略架构并报告了量化成功率和动作误差，结果详实。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Learning deployable manipulation policies is bottlenecked by the scarcity of data that is both high-fidelity and scalable. Real-robot teleoperation is accurate but costly to scale; robot-free UMI capture scales readily, and current practice uses the resulting data mainly for pre-training, adding a small real-robot "anchor" at post-training. We ask whether raising the fidelity of robot-free UMI data, rather than shrinking the real-robot fraction, can remove that anchor. We present HiFi-UMI, a portable UMI data-production system co-designed for trajectory accuracy, inter-gripper relative pose, synchronization, and field of view: head-mounted offline stereo-inertial SLAM, native rather than reconstructed relative pose, a shared microsecond GPIO trigger, and two wide-angle cameras per hand covering ~200 degrees. It reaches 3 mm workspace-local end-effector accuracy without external tracking infrastructure. Using this corpus, we demonstrate zero-robot post-training: a policy post-trained solely on HiFi-UMI demonstrations deploys directly on a real robot and matches in-domain teleoperation across three backbones spanning the vision-language-action and world-action-model families, with success-rate differences of -2.5, +3.1, and -0.6 percentage points on StarVLA-QwenPI, OpenPI-pi_0.5, and LingBot-VA; the strongest policy reaches 85% on a precision insertion task, even though the teleoperation baseline is collected in the evaluation scene and no HiFi-UMI trajectory is. Pre-training on 4,000 hours from the same corpus lowers action error on ten unseen tasks by 41% and, on StarVLA-QwenPI, raises real-robot success by a further 18.1 percentage points. We open-source HiFi-UMI-2K, 2,000 hours of microsecond-synchronized, ultra-wide-FoV demonstrations, each automatically reconstructed and validated through simulation replay, as a large-scale, high-fidelity resource for the robot-learning community.
@@ -1545,6 +1869,42 @@ Learning deployable manipulation policies is bottlenecked by the scarcity of dat
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** world model
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Temporal-Distance JEPA: Plan-Aware Representation Learning for Latent World Model Predictive Control
+- 作者：Jiaxin Bai, Jiaxuan Xiong
+- 出版日期：2026-07-28T06:38:16Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：摘要: https://arxiv.org/abs/2607.25337，PDF: https://arxiv.org/pdf/2607.25337
+
+### 一句话总结
+本文提出TD-JEPA，通过从离线日志中挖掘时域有向时间成本并融入JEPA训练，缩小了世界模型表示学习与规划目标之间的差距，在多个控制任务上超越现有方法。
+
+### 研究问题
+如何在JEPA世界模型中，使表示学习过程产生的潜在距离匹配规划所需的进度排名，从而提升模型预测控制性能。
+
+### 核心思路/方法
+1. 保留LeWM的编码器-预测器骨干结构，但引入**有向时间成本**挖掘：利用同轨迹中的步序提供正样本，跨轨迹对作为启发式负样本。
+2. 添加**规划-一致性项**以匹配规划器的生成范围。
+3. 挖掘得到的监督信号同时用作规划时的部署成本（拓扑主导场景）和表示学习信号（接触几何主导场景），实现**成本与表示协同设计**。
+
+### 主要贡献
+1. 提出TD-JEPA，通过挖掘时域进度结构弥合JEPA世界模型的训练-规划差距。
+2. 在锁定评估下，TD-JEPA在Two-Room任务上将成功率从LeWM的97.4%提升至100.0%，并在OGB-Cube上提升14.2个点，在Push-T上也有改进。
+3. 与LeWM和并发基线RC-aux相比，TD-JEPA在所有环境下均达到或超越两者性能。
+4. 消融实验表明，有向头、跨轨迹负样本和规划一致性项均贡献显著。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**中**  
+理由：该方法在机器人/具身智能领域的规划与控制上有明确性能提升，且代码已开源，但摘要未涉及问题复杂度或通用性讨论，适合对该任务方向感兴趣的研究者参考。
+
+</details>
 
 <details>
 <summary>Abstract</summary>

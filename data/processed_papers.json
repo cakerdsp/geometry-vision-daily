@@ -5239,6 +5239,106 @@
         "path": "summaries/brief/2607.23755.md",
         "markdown": "### Metadata\n- 标题：DAP-Pose: Deep Temporal Alignment and Physics-aware Cross-modal Sensor Fusion for Robust Pose Estimation\n- 作者：Jianhan Lin, Yuchu Qin, Jiateng Yuan, Wenbo Zhang, Shuai Gao\n- 出版日期：2026-07-26\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：摘要: https://arxiv.org/abs/2607.23755 ; PDF: https://arxiv.org/pdf/2607.23755\n\n### 一句话总结\nDAP-Pose是一个端到端的多模态位姿估计模型，通过深度时序对齐和物理感知跨模态融合，在KITTI基准上取得了最先进的性能（平移误差1.31%，旋转误差0.46°）。\n\n### 研究问题\n如何在多模态传感器（视觉、惯性、GNSS）存在异步时间偏移的情况下，实现鲁棒且准确的位姿估计？\n\n### 核心思路/方法\n1. **Bi-level Cross-modal Fusion (BCF)**：从视觉、惯性和GNSS测量中捕获互补的语义和几何运动线索。\n2. **Deep Temporal Alignment (DTA)**：在隐空间中对齐异步流，实现无需严格硬件同步的连贯运动建模。\n3. **物理感知约束**：利用流形几何和GNSS引导的绝对度量尺度，强制执行运动一致性并抑制漂移。\n\n### 主要贡献\n1. 提出了一个统一端到端模型DAP-Pose，用于鲁棒多模态位姿估计。\n2. 设计了BCF模块和DTA模块，分别解决模态融合和时序异步问题。\n3. 引入物理感知约束（流形几何、GNSS度量尺度）增强运动一致性。\n4. 在KITTI数据集上，DAP-Pose实现了最低的平移误差（1.31%）和旋转误差（0.46°），并在严重人工注入时间错位下仍保持鲁棒性能。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**。理由：该工作发表于权威应用场景（自动驾驶/机器人），在多模态融合和时序对齐方面提出了新颖模块，并在公开基准KITTI上取得了当时最佳结果，对位姿估计、传感融合领域的研究者有直接参考价值。摘要中实验设置清晰，性能指标明确，但未说明消融实验或局限性，建议结合全文评估实际适用场景。"
       }
+    },
+    "2607.26047": {
+      "brief": {
+        "status": "success",
+        "input_hash": "f440273007afe1316a159b876c866fbcdcd34620b00f87469b63f326bcc2a437",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-29T15:07:39Z",
+        "path": "summaries/brief/2607.26047.md",
+        "markdown": "### Metadata\n- 标题：S2A2: Audio-Visual Imitation Learning for Manipulation Tasks Using Acoustic Spatial Information\n- 作者：Kaneyoshi Hiratsuka, Benjamin Yen, Ryosuke Kojima\n- 出版日期：2026-07-28T17:56:07Z\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2607.26047\n\n### 一句话总结\n本文提出一个将听觉空间信息与视觉特征融合的多模态模仿学习框架S2A2，用于机器人操作任务中的声源定位与识别，并通过仿真和真实机器人实验验证其有效性。\n\n### 研究问题\n如何在机器人模仿学习操作任务中，有效利用物体位置、材质及接触/运动引起的声学信息，实现主动声源定位与识别，并完成声学感知驱动的操作目标。\n\n### 核心思路/方法\n1. 设计一系列新的“声学感知操作任务”，要求机器人依赖听觉线索（如声音位置、音色）来确定操作目标。\n2. 提出多模态模仿学习框架S2A2（Spatial-Spectral Audio Action），该框架将视觉特征与声学空间信息（空间+谱）整合，用于声学感知操作任务。\n3. 将ACT、Diffusion Policy、VQ-BeT和π₀等策略集成到S2A2框架中，并通过仿真实验和真实机器人实验进行评估。\n\n### 主要贡献\n- 引入了一组新的声学感知操作任务，用于模仿学习，强调机器人通过听觉线索进行主动探索。\n- 提出了S2A2框架，该框架能够将视觉特征与声学空间-谱信息进行多模态融合。\n- 仿真实验表明，所提方法在同时需要位置和音色信息的任务中效果最佳。\n- 真实机器人实验验证了所提任务和框架在真实世界操作中的可行性。\n\n### 局限性\n摘要未提供足够信息，无法明确列出本文实验的量化局限性（如失败案例、计算资源需求或任务泛化能力等）。\n\n### 阅读优先级\n**中**  \n理由：该工作创新性地将听觉空间信息引入机器人操作中的模仿学习，解决了传统方法忽视声音线索的问题，对于多模态机器人学习领域有参考价值。但由于未详细说明方法具体结构、基线对比差异或实验量化结果，目前仅适用于概念验证和领域入门阅读，尚需后续完整论文评估细节。"
+      }
+    },
+    "2607.26037": {
+      "brief": {
+        "status": "success",
+        "input_hash": "4e9d2c4efe62c37015cc72b07ec91568185bddba778872b72c38c7a1b0751524",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-29T15:07:46Z",
+        "path": "summaries/brief/2607.26037.md",
+        "markdown": "### Metadata\n- 标题：Wonder: Video World Model Done Better\n- 作者：Jiacong Xu, Hanwen Jiang, Zhixin Shu, Kalyan Sunkavalli, Vishal M. Patel, Yiqun Mei\n- 出版日期：2026-07-28T17:45:25Z\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2607.26037\n\n### 一句话总结\n本文提出一个名为Wonder的通用的视频世界模型，支持实时、可控制摄像头的交互式世界探索，用户可通过移动摄像头在长时程中导航并发现新区域。\n\n### 研究问题\n如何构建一个通用的视频世界模型，使其能够实时响应摄像头控制指令，在保持长期连贯性的同时支持用户交互式探索（如移动摄像头、发现和重访区域）。\n\n### 核心思路/方法\n1. **摄像头控制**：引入密集坐标场的摄像头条件化方法，通过渲染提供空间对齐的运动和方向线索，使模型直接将摄像头运动视为视觉证据。\n2. **记忆机制**：提出高效的基于稀疏注意力的记忆机制，在推理时选择性地关注少量相关上下文标记，不受实际上下文长度限制，实现快速精确的记忆检索。\n3. **训练策略**：开发了多种技术来纠正自强制样式的蒸馏流程，提升学生模型对控制信号的遵从性，同时保持教师模型的多样化生成模式和长期记忆能力。\n\n### 主要贡献\n- 提出了一个支持实时、长时程、摄像头可控交互的视频世界模型Wonder。\n- 设计了基于密集坐标场的摄像头条件化方法和稀疏注意力记忆机制。\n- 改进了蒸馏训练流程，平衡了控制信号响应、生成多样性及长期记忆保持。\n- 模型能以16 FPS合成多样化的分钟级视频，在长卷中保持连贯的几何、外观和动态。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**  \n理由：该方法涉及视频生成、世界模型、交互控制与长期记忆等前沿交叉领域，且声称实现了实时长时程的可控探索，对机器人仿真、AR/VR及具身智能应用具有潜在重要影响。"
+      }
+    },
+    "2607.25971": {
+      "brief": {
+        "status": "success",
+        "input_hash": "e1b2442d25e4d910022e541fe54e5bc337dbce26a0b73b1d4aa2c35b1caef488",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-29T15:07:53Z",
+        "path": "summaries/brief/2607.25971.md",
+        "markdown": "### Metadata\n- 标题：SplatStream: Fine Granular Scalable Gaussian Splatting for Adaptive 3D Scene Streaming\n- 作者：Muhammad Talha, William Gordon, Sajid Umair, Anique Akhtar, Joel Jung\n- 出版日期：2026-07-28\n- 分类：Dynamic / 4D Reconstruction（主分类），Neural Scene Representations & Rendering（次分类）\n- 链接：摘要链接 https://arxiv.org/abs/2607.25971；PDF链接 https://arxiv.org/pdf/2607.25971\n\n### 一句话总结\nSplatStream 提出了一种细粒度可扩展的高斯溅射框架，通过分层编码、帧间预测和视觉重要性排序，实现了动态 3D 场景在带宽变化条件下的自适应、低延迟流媒体传输。\n\n### 研究问题\n动态 3D 高斯溅射（GS）在实现高质量实时渲染时，其庞大的表示尺寸和帧间冗余导致了自适应流媒体传输的显著挑战——如何在带宽变化条件下高效、精细地按需传输动态 3D 场景？\n\n### 核心思路/方法\n1. **分层可扩展编码**：将高斯溅射场景分解为质量层和分辨率层，并引入层间预测编码来实现可扩展性。\n2. **时间方向可扩展性**：引入 B 帧结构，支持时间维度的质量可扩展。\n3. **轻量级跨层 Transformer 预测器**：用于跨层预测和时间预测，减少冗余。\n4. **基于体素不透明度的视觉重要性度量**：对高斯原语进行细粒度分组，使视觉上重要的原语更早传输，实现渐进式细化。\n5. **与 MPEG-DASH 兼容的子表示结构**：将可扩展的 GS 比特流映射到这种结构，支持细粒度、自适应的低延迟传输。\n\n### 主要贡献\n- 提出了一个细粒度可扩展的高斯溅射框架（SplatStream），专为动态 3D 场景的自适应流媒体设计。\n- 设计了质量层和分辨率层的可扩展编码方案，并引入 B 帧实现时间质量可扩展性。\n- 采用轻量级跨层 Transformer 预测器进行跨层和时间预测，减少表示冗余。\n- 提出基于体素不透明度的视觉重要性度量，实现优先传输重要原语的细粒度分组。\n- 将可扩展比特流映射到 MPEG-DASH 兼容结构，支持在带宽变化条件下的自适应、低延迟流媒体传输。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**中**。  \n理由：该工作解决了动态 3D 高斯溅射流媒体传输中的关键工程问题（可扩展性、自适应传输），方法上具有较好的创新性（分层可扩展、跨层 Transformer 预测、与 MPEG-DASH 结合）。但未提供具体实验结果，且属于特定应用场景（3D 流媒体），对纯算法研究或通用场景的读者吸引力有限。"
+      }
+    },
+    "2607.25895": {
+      "brief": {
+        "status": "success",
+        "input_hash": "79108b7e184b75061fddd2e0c6903da555d6f8edcb30f1c5150bd0ec4e8f6350",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-29T15:08:02Z",
+        "path": "summaries/brief/2607.25895.md",
+        "markdown": "### Metadata\n- 标题：HiFi-UMI: Learning Deployable Manipulation Policies from High-Fidelity UMI Data Alone\n- 作者：Simple AI, :, Yuteng Wei, Jinming Ma, Jiawei Wang, Weitao Zhou, Yushen Zuo, Ke Rui, Minglei Li, Jinhao Zhang, Zhikang Pan, Xiang Wang, Haoran Jia, Huan Du, Zicheng Zeng, Jun Ma, Guiyu Qin, Di Zhang, Xiaofei Li\n- 出版日期：2026-07-28\n- 分类：Embodied / Robotics / AR Applications\n- 链接：arxiv.org/abs/2607.25895\n\n### 一句话总结\n本文提出HiFi-UMI数据生产系统，通过提升无机器人UMI数据的采集保真度，使得仅用该数据微调的策略能直接部署到真实机器人上，无需任何后训练阶段的真实机器人数据。\n\n### 研究问题\n机器人操作策略学习受限于同时具备高保真度和可扩展性的数据匮乏问题：真实遥操作数据精准但成本高、难以规模化；无机器人UMI数据容易采集但保真度低，通常只能用于预训练，仍需少量真实机器人数据作为后训练的“锚点”。本文核心问题是：能否仅通过提高无机器人UMI数据的保真度，完全去除后训练中的真实机器人数据环节。\n\n### 核心思路/方法\n本文从四个维度协同设计了一套便携式UMI数据生产系统（HiFi-UMI）以提升数据保真度：\n1. **轨迹精度**：采用头戴式离线立体惯性SLAM。\n2. **夹爪间相对姿态**：使用原生而非重建的相对姿态估计。\n3. **同步性**：利用共享微秒级GPIO触发信号。\n4. **视野**：每只手配备两个广角相机，覆盖约200度视野。\n该系统在无外部定位基础设施下，可实现3毫米工作空间局部末端执行器精度。基于此系统采集的高保真数据，策略后训练阶段完全使用HiFi-UMI演示数据，无需任何真实机器人轨迹。\n\n### 主要贡献\n1. 提出HiFi-UMI数据生产系统，通过提升无机器人UMI数据的保真度，实现了零机器人后训练：仅用HiFi-UMI演示数据微调的策略可直接在真实机器人上部署，并在三个不同架构（视觉-语言-动作族与世界-动作模型族）的基线上，与评估场景内采集的遥操作基线相比，成功率差异仅为-2.5、+3.1和-0.6个百分点。\n2. 最强策略在精密插入任务上达到85%成功率，尽管HiFi-UMI轨迹未在该评估场景采集。\n3. 在相同语料库上预训练4000小时，将十个未见任务的动作误差降低41%，并使基于StarVLA-QwenPI的真实机器人成功率再提升18.1个百分点。\n4. 开源HiFi-UMI-2K数据集：2000小时微秒同步、超宽视角演示数据，每条数据均通过仿真回放自动重建与验证。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**。理由：本文针对机器人操作学习的数据瓶颈，提出了一种系统性的数据生产方案，在不依赖昂贵真实机器人数据的情况下实现了高性能策略学习，并提供了大规模开源数据集，对具身智能领域的研究有重要参考价值。实验覆盖多种主流策略架构并报告了量化成功率和动作误差，结果详实。"
+      }
+    },
+    "2607.25569": {
+      "brief": {
+        "status": "success",
+        "input_hash": "cc10f89e6c5ab146c523f4fd99cb94f6322160098e00267ba35ec49ce9756a72",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-29T15:08:09Z",
+        "path": "summaries/brief/2607.25569.md",
+        "markdown": "### Metadata\n- 标题：CORF-GS: Real-Time Wireless Radiance Field Reconstruction via Coupled Optical-RF Gaussian Splatting\n- 作者：Jinya Zhang, Jiajia Guo, Chao-Kai Wen, Shi Jin\n- 出版日期：2026-07-28\n- 分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2607.25569\n\n### 一句话总结\nCORF-GS提出一种基于耦合光学-射频3D高斯泼溅的实时无线辐射场重建框架，通过光学引导和联合优化实现高效在线信道建模。\n\n### 研究问题\n现有无线辐射场重建方法依赖预采集观测数据和离线优化，无法提供实时信道知识，如何实现基于序贯输入数据的实时无线信道重建。\n\n### 核心思路/方法\n1. 构建光学与射频的统一高斯表征：共享几何结构，分别学习模态特定的外观属性。\n2. 光学引导高斯采样：在新关键帧到达时，利用高分辨率光学图像为重建不足区域补充高斯点。\n3. 耦合光学-射频联合优化：针对光与无线电波对物体表面响应的波长失配问题，同时优化共享高斯，使其适应光学结构和射频功率分布，避免被动适应冻结的光学几何。\n\n### 主要贡献\n- 提出首个基于3DGS的实时无线辐射场重建框架CORF-GS。\n- 设计光学引导采样与耦合优化策略，解决跨模态信源感知差异。\n- 仿真结果表明CORF-GS在RF频谱合成质量上达到最先进水平，重建时间相比现有方法减少6.4倍。\n\n### 局限性\n摘要未提供足够信息：未报告方法在真实场景、动态环境或不同频段下的性能表现，亦未分析计算资源需求或模型可扩展性。\n\n### 阅读优先级\n**高**\n理由：该工作首次将在线、实时特性引入无线辐射场重建领域，且提出耦合光学-射频联合优化方案解决跨模态感知差异问题，性能提升显著（重建时间降低6.4倍），对动态无线信道建模有重要参考价值。"
+      }
+    },
+    "2607.25389": {
+      "brief": {
+        "status": "success",
+        "input_hash": "0ce1c4283f660faac6e2edfee54ac9e6e306216d9882740be2d38a29a90554f5",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-29T15:08:16Z",
+        "path": "summaries/brief/2607.25389.md",
+        "markdown": "### Metadata\n- 标题：HOME: Robust Hough-space Matching Method for Structured and Textureless Videos  \n- 作者：Masaki Satoh  \n- 出版日期：2026-07-28  \n- 分类：3D Reconstruction & Multi-view Geometry；Embodied / Robotics / AR Applications  \n- 链接：摘要：https://arxiv.org/abs/2607.25389 ；PDF：https://arxiv.org/pdf/2607.25389  \n\n### 一句话总结\n提出一种基于霍夫空间的超轻量、免训练特征匹配框架HOME，通过将图像中的全局线性结构映射为稳定局部极值，将复杂线条匹配简化为高效的一维点匹配，在结构化和无纹理场景中实现鲁棒且快速的单应性估计。\n\n### 研究问题\n如何在计算资源有限的边缘设备上，针对结构化环境（强线性结构）或无纹理表面，实现高效、鲁棒的视觉特征匹配，从而解决现有基于点特征（如ORB）在这些场景中频繁失败、而基于线条的SLAM方法计算量过大的瓶颈问题。\n\n### 核心思路/方法\n1. **霍夫空间变换**：将输入图像转换到霍夫空间，把全局线性结构映射为稳定的局部极值，并将这些极值作为关键点。  \n2. **一维点匹配**：将复杂的线条匹配问题重构成高效的一维点匹配任务。  \n3. **一维径向描述子**：设计具有数学保证的旋转和平移不变性的描述子，无需显式估计方向，降低计算开销。  \n4. **验证方式**：以单应性估计作为概念验证，评估匹配精度和效率。\n\n### 主要贡献\n- 提出HOME框架，首次将线条匹配通过霍夫空间转换为轻量级的一维点匹配，避免了传统线条提取与描述的昂贵计算。  \n- 数学上保证了一维径向描述子的旋转和平移不变性，无需方向估计步骤。  \n- 实验表明：在基于点特征方法失败的结构化/无纹理场景中，HOME仍能实现鲁棒配准，且运行速度远快于现有基于线条的方法。\n\n### 局限性\n- 摘要仅说明本文聚焦于单应性估计作为概念验证，未提供全3D位姿估计的实验细节。  \n- 摘要未提供任何关于算法实时性定量数据、与其他方法的具体速度对比数值、以及在更多场景下的鲁棒性测试结果。  \n- 摘要明确提及“将稳健匹配引擎扩展到全3D位姿估计仍是未来方向”，表明当前工作尚未覆盖3D位姿估计。  \n\n### 阅读优先级\n**高**  \n理由：该方法针对边缘计算中的实时匹配瓶颈提出新颖且轻量的思路，在结构化和无纹理场景中具有显著优势。尽管当前验证限于2D单应性估计，但其基础框架对机器人、AR等实时应用具有潜在价值，适合对轻量化特征匹配感兴趣的研究者。"
+      }
+    },
+    "2607.25362": {
+      "brief": {
+        "status": "success",
+        "input_hash": "8a8c010fc17b3875693407a2562204229c7e77a7c2f9f6a2013b3b6da51dcdb8",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-29T15:08:23Z",
+        "path": "summaries/brief/2607.25362.md",
+        "markdown": "### Metadata\n- 标题：PanoLess: Environment Reconstruction from Partial Reflective Views\n- 作者：Ahitagni Das, Ashok Veeraraghavan, Vivek Boominathan\n- 出版日期：2026-07-28\n- 分类：Neural Scene Representations & Rendering\n- 链接：摘要地址 https://arxiv.org/abs/2607.25362，PDF地址 https://arxiv.org/pdf/2607.25362\n\n### 一句话总结\nPanoLess 提出一种基于高斯溅射的框架，仅通过反射表面（如玻璃）的部分视角图像，就能重构出完整的环境照明图，并输出环境支持区域的可见性图。\n\n### 研究问题\n如何在仅从反射表面一侧获取的局部视角图像中，重建出具有几何一致性的周围环境照明图（远场 illumination map），以克服传统方法需要 360 度全覆盖数据的限制。\n\n### 核心思路/方法\n1. 使用表面对齐的 2D 高斯溅射与延迟着色技术，从部分反射视图中恢复精确的逐像素法线及反射线索。\n2. 将这些线索融合到一个神经立方体贴图表示中，用以编码环境照明信息。\n3. 额外生成一个可见性图，显式标记环境中的哪些区域得到了部分反射观测的支持。\n\n### 主要贡献\n- 提出可在仅利用反射表面一侧图像的情况下重建环境照明的新框架。\n- 与需要全 360 度覆盖的现有逆渲染和反射感知高斯溅射方法不同，本方法能够在局部视图输入下实现一致、有物理依据的照明估计。\n- 在自建合成基准和公开数据集上超越反射感知基线，并展示出对真实世界反射捕获数据的泛化能力。\n\n### 局限性\n摘要未提供足够信息，未提及该方法在特定复杂场景（如非朗伯反射表面、强遮挡或动态环境）下的表现或限制，也未讨论重建计算开销或对输入图像质量的要求。\n\n### 阅读优先级\n高。该工作针对部分反射视图这一实用场景提出新的解决方案，在技术路径（高斯溅射+神经立方体贴图）和任务设定上均有新意，且展示了较好的实验结果和泛化性，适合关注环境重建、反射感知渲染的研究者优先阅读。"
+      }
+    },
+    "2607.25337": {
+      "brief": {
+        "status": "success",
+        "input_hash": "e24c1e8b4c40c0a3a3b0a28b6d5ab42a2dcf7f2e970ac4a4c59ee901b03c00d3",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-29T15:08:29Z",
+        "path": "summaries/brief/2607.25337.md",
+        "markdown": "### Metadata\n- 标题：Temporal-Distance JEPA: Plan-Aware Representation Learning for Latent World Model Predictive Control\n- 作者：Jiaxin Bai, Jiaxuan Xiong\n- 出版日期：2026-07-28T06:38:16Z\n- 分类：Embodied / Robotics / AR Applications\n- 链接：摘要: https://arxiv.org/abs/2607.25337，PDF: https://arxiv.org/pdf/2607.25337\n\n### 一句话总结\n本文提出TD-JEPA，通过从离线日志中挖掘时域有向时间成本并融入JEPA训练，缩小了世界模型表示学习与规划目标之间的差距，在多个控制任务上超越现有方法。\n\n### 研究问题\n如何在JEPA世界模型中，使表示学习过程产生的潜在距离匹配规划所需的进度排名，从而提升模型预测控制性能。\n\n### 核心思路/方法\n1. 保留LeWM的编码器-预测器骨干结构，但引入**有向时间成本**挖掘：利用同轨迹中的步序提供正样本，跨轨迹对作为启发式负样本。\n2. 添加**规划-一致性项**以匹配规划器的生成范围。\n3. 挖掘得到的监督信号同时用作规划时的部署成本（拓扑主导场景）和表示学习信号（接触几何主导场景），实现**成本与表示协同设计**。\n\n### 主要贡献\n1. 提出TD-JEPA，通过挖掘时域进度结构弥合JEPA世界模型的训练-规划差距。\n2. 在锁定评估下，TD-JEPA在Two-Room任务上将成功率从LeWM的97.4%提升至100.0%，并在OGB-Cube上提升14.2个点，在Push-T上也有改进。\n3. 与LeWM和并发基线RC-aux相比，TD-JEPA在所有环境下均达到或超越两者性能。\n4. 消融实验表明，有向头、跨轨迹负样本和规划一致性项均贡献显著。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**中**  \n理由：该方法在机器人/具身智能领域的规划与控制上有明确性能提升，且代码已开源，但摘要未涉及问题复杂度或通用性讨论，适合对该任务方向感兴趣的研究者参考。"
+      }
+    },
+    "2607.25234": {
+      "brief": {
+        "status": "success",
+        "input_hash": "b6de7a4db4e1928d68be47868ec3b6164fdab82953b6a515fa0146ffcac1987a",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-29T15:08:36Z",
+        "path": "summaries/brief/2607.25234.md",
+        "markdown": "### Metadata\n- 标题：WHTMix: Efficient Stereo Depth Estimation via Walsh-Hadamard Token Mixing\n- 作者：Prathyush Sajith, Emadeldeen Hamdan, Ahmet Enis Cetin\n- 出版日期：2026-07-28\n- 分类：3D Reconstruction & Multi-view Geometry（主要），Embodied / Robotics / AR Applications（次要）\n- 链接：摘要：https://arxiv.org/abs/2607.25234；PDF：https://arxiv.org/pdf/2607.25234\n\n### 一句话总结\n本文提出用数据无关的Walsh-Hadamard token mixer替代立体深度估计Transformer中的全局自注意力，在对数线性复杂度下保持精度，并引入混合对数视差损失以提升远距离物体估计性能。\n\n### 研究问题\n立体深度估计算法（用于驾驶、机器人和增强现实）需在高分辨率下快速运行，而基于Transformer的立体匹配器中，全局自注意力的计算复杂度随像素数平方增长，成为推理延迟的主要瓶颈。\n\n### 核心思路/方法\n1. 将立体Transformer中的联合自注意力阶段替换为数据无关的Walsh-Hadamard token mixer，该混频器在变换域以对数线性成本全局混合token，而保留数据相关的交叉注意力用于左右视图对应。\n2. 引入混合对数视差损失函数，对代表远距离物体的小视差像素赋予更高权重，以提升远处物体估计精度且不增加额外计算开销。\n\n### 主要贡献\n- 提出Walsh-Hadamard token mixer替代全局自注意力，在合成驾驶数据上将模型计算量降低2.46倍，单图像推理延迟降低2.65倍，且端点误差与注意力基线持平。\n- 通过复杂度分析揭示该方法优势受序列长度与通道宽度比值主导，解释了其在高分辨率立体匹配中的适用性及在分类Transformer中的不适用性，并在非立体长序列基准上验证了这种token-通道缩放规律。\n- 引入混合对数视差损失，在不增加计算开销的前提下减少远距离物体的误差。\n\n### 局限性\n摘要未提供足够信息。摘要未讨论模型在真实驾驶/机器人数据上的鲁棒性、泛化能力、硬件部署细节，也未对比其他高效注意力变体或提供消融实验的量化误差率。\n\n### 阅读优先级\n高  \n理由：该工作直接针对立体深度估计的实时性核心瓶颈，提供了理论清晰（复杂度分析）、实验验证（计算和延迟大幅下降，精度持平）且实用（损失函数提升远距离物体性能）的解决方案，对高分辨率实时应用场景具有显著参考价值。"
+      }
+    },
+    "2607.25219": {
+      "brief": {
+        "status": "success",
+        "input_hash": "548569fc096f68ffbae4048f410f6a66d38e15c58291b6d74dcf6698575efccc",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-07-29T15:08:43Z",
+        "path": "summaries/brief/2607.25219.md",
+        "markdown": "### Metadata\n- 标题：SONG: A Photorealistic 3D Gaussian Simulation Platform for Benchmarking Social Navigation\n- 作者：Weiqi Huang, Dianyi Yang, Jiaxin Li, Shuangyi Dong, Hao Xu, Zan Wang, Wei Liang\n- 出版日期：2026-07-28T02:51:24Z\n- 分类：Neural Scene Representations & Rendering（主要），Embodied / Robotics / AR Applications（次要）\n- 链接：摘要：https://arxiv.org/abs/2607.25219，PDF：https://arxiv.org/pdf/2607.25219\n\n### 一句话总结\n提出一个基于3D高斯泼溅（3DGS）的社交导航仿真平台SONG，结合大语言模型驱动行人轨迹和全身运动合成，并提供基准数据集SONG-Bench与多维评估指标，用于支持视觉感知的社交导航研究。\n\n### 研究问题\n现有社交导航仿真平台缺乏视觉观测、移动人物化身或真实感外观与行人行为，无法支持基于视觉的社交导航研究。本文旨在构建一个高保真、可真实模拟视觉感知环境的仿真平台。\n\n### 核心思路/方法\n- 采用3D高斯泼溅（3DGS）对场景和人物化身进行真实感表示。\n- 使用大语言模型生成语义合理的行人移动轨迹。\n- 通过轨迹驱动的全身运动生成器合成连续、自然的肢体运动。\n- 构建SONG-Bench，按难度分层的评估任务序列。\n- 提出涵盖有效性、安全性、社会合规性的多维评估指标集。\n\n### 主要贡献\n1. 提出SONG平台，首个利用3DGS实现场景和人物高保真表示的社交导航仿真平台。\n2. 构建SONG-Bench，提供分层难度的评估任务与多维评价指标。\n3. 系统评估表明：基于视觉的社交导航远未解决；安全性缺陷先于社交礼节问题；真实世界数据比模型规模更重要。\n4. 验证了在平台生成数据上微调可有效提升真实环境下的成功率。\n\n### 局限性\n摘要未提供足够信息。例如未说明平台的可扩展性、计算开销、跨场景泛化能力或对人类行为多样性的覆盖程度。\n\n### 阅读优先级\n高  \n理由：该平台直接针对视觉社交导航模拟的空白，采用3DGS+大语言模型的新技术组合，提供了系统评估与真实场景迁移验证，对从事仿真、机器人导航与具身智能的研究者有重要参考价值。"
+      }
     }
   },
   "reports": {
@@ -5589,6 +5689,13 @@
       "status": "success",
       "updated_at": "2026-07-28T15:21:47Z",
       "path": "reports/daily/2026-07-28.md",
+      "tasks": [],
+      "ai_trend_report": true
+    },
+    "2026-07-29": {
+      "status": "success",
+      "updated_at": "2026-07-29T15:09:10Z",
+      "path": "reports/daily/2026-07-29.md",
       "tasks": [],
       "ai_trend_report": true
     }
