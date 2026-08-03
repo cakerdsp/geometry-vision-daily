@@ -5589,6 +5589,16 @@
         "path": "summaries/brief/2607.27634.md",
         "markdown": "### Metadata\n- 标题：4DHumanDiff: Direct Text-to-4DGS Generation for Consistent 360-Degree Dynamic Humans\n- 作者：Renlong Wu, Haoran Chen, Yuxiang Wei, Xiaowei Jin, Wangmeng Zuo, Hui Li\n- 出版日期：2026-07-30\n- 分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2607.27634 ；PDF: https://arxiv.org/pdf/2607.27634\n\n### 一句话总结\n本文提出4DHumanDiff，一个直接从文本提示端到端生成由4D高斯泼溅（4DGS）表示的动态人体模型的扩散框架，可在约一分钟内生成360度一致动态人体，推理时间较现有方法降低10倍以上。\n\n### 研究问题\n现有文本生成动态人体资产的方法通常先合成单目或多视角视频，再拟合4D表示，该流程成本高且容易出现几何不完整或视角不一致的渲染结果。本文旨在解决如何在文本提示下直接、高效、一致地生成完整360度动态人体资产的问题。\n\n### 核心思路/方法\n- 直接建模结构化的4D表示空间，端到端生成4DGS动态人体，避免视频预生成和逐场景重建。\n- 采用3D U-Net骨干网络并引入时间注意力机制，实现运动感知的生成。\n- 构建大规模text-to-4DGS数据集（60,000个高质量文本-4DGS对）。\n- 引入2D正则化提升渲染质量，并提出免训练的4D插值方法增强运动平滑性。\n\n### 主要贡献\n- 提出首个直接从文本生成4DGS动态人体的扩散框架，免去视频中间步骤和逐场景重建。\n- 构建60,000对的大规模text-to-4DGS训练数据集。\n- 通过2D正则化和免训练4D插值，提升渲染质量与运动平滑度。\n- 实验显示所提方法能在一分钟内生成一致的360度动态人体，获得更好的时间一致性和多视角一致性，并将推理时间降低10倍以上。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**\n理由：该方法直接针对文本到动态3D资产生成这一热点方向，绕开了传统多阶段流程，在效率（10倍以上提速）和一致性（360度、时间与多视角）上均有明显提升，并附带大规模数据集，对神经场景表示、内容生成和渲染领域的研究者有较高参考价值。"
       }
+    },
+    "2607.29633": {
+      "brief": {
+        "status": "success",
+        "input_hash": "1f6c7f6c0f49673f9d7f30feab97b298961bdfb4806334f084c921ea9930167e",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-08-03T15:42:00Z",
+        "path": "summaries/brief/2607.29633.md",
+        "markdown": "### Metadata\n- 标题：OASIS: Occlusion-aware Single-image Hand Avatar Reconstruction via 3D Gaussian Splatting\n- 作者：Zhisheng Han, Shiyao Wu, Jiayan Qiu, Yakun Ju, Lu Liu, Le Zhang, Pengfei Feng, Huiyu Zhou, Zheheng Jiang\n- 出版日期：2026-07-31\n- 分类：主分类：Dynamic / 4D Reconstruction；次分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2607.29633\n\n### 一句话总结\n提出了一种基于3D高斯泼溅的遮挡感知单图手部化身重建框架OASIS，通过可见性条件注意力与特征网格表征实现高保真重建。\n\n### 研究问题\n从单张图像重建3D手部化身，核心难点在于：严重自遮挡导致的视觉证据有限，以及高度关节化手部的复杂姿态依赖形变。现有基于隐式神经辐射场（NeRF）的方法计算开销大且难以保留精细手部细节。\n\n### 核心思路/方法\n1. **几何对齐视觉证据令牌**：将输入图像观测与3D手部几何显式对齐，并通过上下文自适应令牌化编码稀疏的图像外观信息。\n2. **可见性条件点-图像注意力**：由于自遮挡使图像证据可靠性依赖可见性，引入该机制将视觉证据可靠传递至几何令牌，生成遮挡感知的高斯特征。\n3. **网格上特征（Feature-on-Mesh）表征**：使高斯形变由局部表面拉伸引导，捕获手部的非刚性形变。\n4. **一次性适应方案**：先从多身份训练数据学习共享手部先验，再拟合到目标图像实现目标专属重建。\n\n### 主要贡献\n- 提出首个针对单图手部化身重建的定制3D高斯泼溅框架，在视觉保真度和效率上优于现有基线。\n- 设计了几何对齐视觉证据令牌与可见性条件注意力机制，缓解自遮挡带来的信息缺失问题。\n- 引入Feature-on-Mesh表征，使高斯形变能由局部表面拉伸引导，提升对非刚性形变的建模能力。\n- 采用一次性适应方案，支持跨身份先验学习与目标图像适配，并展示了在文本到化身生成和纹理编辑等下游任务中的适用性。\n\n### 局限性\n摘要未提供足够信息，未明确讨论该方法的失败案例、计算资源需求、对极端遮挡或复杂背景的鲁棒性边界，也未提及与现有方法在定量指标上的具体差距。\n\n### 阅读优先级\n**高**。理由：该工作针对单图手部重建这一长期存在的病态问题，提出基于3D高斯泼溅的新框架，同时解决遮挡感知和姿态形变两个核心挑战，在效率和保真度上均表现出优势，且展示了多场景下游应用的潜力，对关注手部重建、3D视觉或动态重建的研究者具有较高参考价值。"
+      }
     }
   },
   "reports": {
@@ -5974,6 +5984,13 @@
       "status": "success",
       "updated_at": "2026-08-02T14:28:36Z",
       "path": "reports/daily/2026-08-02.md",
+      "tasks": [],
+      "ai_trend_report": true
+    },
+    "2026-08-03": {
+      "status": "success",
+      "updated_at": "2026-08-03T15:42:24Z",
+      "path": "reports/daily/2026-08-03.md",
       "tasks": [],
       "ai_trend_report": true
     }
