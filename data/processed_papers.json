@@ -6139,6 +6139,106 @@
         "path": "summaries/brief/2608.04042.md",
         "markdown": "### Metadata\n- 标题：Kitchen Robotic Manipulation utilizing Foundation Models\n- 作者：Myung-Hwan Jeon, Sankalp Yamsani, Joohyung Kim\n- 出版日期：2026-08-04\n- 分类：3D Reconstruction & Multi-view Geometry（主要）；Embodied / Robotics / AR Applications（次要）\n- 链接：https://arxiv.org/abs/2608.04042\n\n### 一句话总结\n本文提出了一种模块化的机器人厨房操作感知流水线，通过整合多个视觉和几何基础模型，在碗碟处理任务中实现了无需环境特定再训练的6D姿态估计与抓取规划。\n\n### 研究问题\n如何构建一个既鲁棒又自适应、能在真实家庭厨房环境中完成碗碟操作任务的机器人感知系统，并且无需针对特定环境进行重新训练。\n\n### 核心思路/方法\n采用模块化感知流水线设计，包含以下核心组件：\n- 开放词汇目标检测\n- 多视角分割\n- 实例感知的3D重建\n- 2D-3D特征融合策略，用于6D姿态估计和抓取规划\n\n由于流水线是模块化的，可以系统性地替换多种视觉和几何基础模型，从而通过评估找到最佳配置。最佳配置为 LLMDet + SAMv2 + DINOv2 + GeoTransformer，并在自定义厨房数据集上进行了评估。\n\n### 主要贡献\n- 提出了一种模块化、可替换的机器人厨房操作感知流水线框架。\n- 通过系统性组合和评估，确定了一个最佳配置（LLMDet + SAMv2 + DINOv2 + GeoTransformer），在20场景厨房基准（含杂乱和遮挡条件）上达到89.12%的ADI。\n- 在真实机器人上验证了最佳配置的可部署性，无需环境特定再训练，成功执行了水池到洗碗机的转移和杯子堆叠等任务。\n- 证明该流水线对家庭机器人系统具有适应性和可扩展性，并公开了代码和补充材料。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**。理由：该论文面向家庭机器人操作这一实际应用场景，采用模块化基础模型组合的思路具有较强工程实用价值；提供了定量基准（89.12% ADI）和真实机器人演示验证，结果可信度较高；且公开代码和补充材料，便于复现和进一步研究。对于从事机器人感知、6D姿态估计或基础模型应用的研究者，值得优先阅读。"
       }
+    },
+    "2608.06210": {
+      "brief": {
+        "status": "success",
+        "input_hash": "18f9c7f8a46b92c680379dcec7cc99893ae401d9cc0b2239cb7d3120c385ea60",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-08-07T14:12:14Z",
+        "path": "summaries/brief/2608.06210.md",
+        "markdown": "### Metadata\n- 标题：VIDP: Variable Impedance Diffusion Policy for Compliant Robot Manipulation from Diverse Demonstrations\n- 作者：Hisham Khalil, Neil Fernandes, Thomas M. Kwok, Hsiu-Chin Lin, Yue Hu\n- 出版日期：2026-08-06\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2608.06210\n\n### 一句话总结\n本文提出一种基于模仿学习的变阻抗扩散策略（VIDP），通过任务参数化的方向感知混合模型从多样演示中提取刚度分布，使机器人无需力传感器即可同时预测位姿动作与任务顺应性。\n\n### 研究问题\n如何在缺少力传感器的情况下，从运动学演示数据中学习可变阻抗控制策略，以提高接触丰富操作任务的成功率并降低交互力，同时避免静态顺应性无法适应多变接触约束的问题。\n\n### 核心思路/方法\n- 提出VIDP框架，将变阻抗控制与模仿学习结合。\n- 利用任务参数化的方向感知混合模型（TP-DAMM）从多样演示中提取物理上一致的轨迹分布。\n- 将该分布映射为刚度轮廓（stiffness profiles），使策略能联合预测位姿动作与任务顺应性。\n- 该方法无需力传感器，仅基于运动学数据推断隐式顺应性。\n\n### 主要贡献\n- 提出一种无需力传感器的变阻抗控制学习框架（VIDP），解决了顺应性作为隐藏变量难以从运动学数据中直接推断的问题。\n- 引入TP-DAMM用于从多样演示中提取物理一致的轨迹分布，避免了将几何适应误判为有意顺应性的问题。\n- 真实世界实验表明，VIDP在任务成功率上显著优于固定阻抗基线，同时相对于高刚度控制器降低了交互力，相对于低刚度基线降低了跟踪误差。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**  \n理由：该研究针对接触丰富操作中变阻抗控制的关键难点（无传感器条件下推断顺应性），提出了联合预测动作与顺应性的新框架，并给出了真实实验的成功率、交互力和跟踪误差对比，对机器人学习与控制方向具有较强参考价值。"
+      }
+    },
+    "2608.06117": {
+      "brief": {
+        "status": "success",
+        "input_hash": "bd6b7d4301fc322a6dd1602132fc54308d4334f9b72f0cd1c5de473637518aba",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-08-07T14:12:20Z",
+        "path": "summaries/brief/2608.06117.md",
+        "markdown": "### Metadata\n- 标题：Confidence matters: Leveraging Multi-view Geometric Priors for GS-based Reconstruction\n- 作者：Hongyu Zhou, Zorah Lähner\n- 出版日期：2026-08-06\n- 分类：Geometry Foundation Models（主要），3D Reconstruction & Multi-view Geometry、Neural Scene Representations & Rendering（次要）\n- 链接：https://arxiv.org/abs/2608.06117\n\n### 一句话总结\n本文研究将多视图几何先验（预测法线和深度图）融入3D高斯泼溅（3DGS）框架以提升重建质量，并发现多视图预测及其置信度图能显著改善效果，尤其在含高光物体的复杂场景中。\n\n### 研究问题\n如何利用几何先验改进基于3DGS的重建质量，特别是针对高光物体等几何重建不佳的情况，并分析不同先验来源（单视图 vs. 多视图）及置信度信息的作用。\n\n### 核心思路/方法\n- 将预测的法线图和深度图作为几何先验集成到3DGS框架中。\n- 对比单视图预测与多视图预测（如近期视觉几何基础变换器VGGT）作为先验来源的效果。\n- 利用多视图模型附带生成的置信度图，对每个预测进行加权，以增强先验的有效性。\n- 在标准基准上进行实验评估。\n\n### 主要贡献\n- 系统分析了几何先验（法线、深度）在GS类方法中的集成效果。\n- 发现多视图预测优于单视图预测，且多视图模型生成的置信度图是关键因素，可显著提升先验利用效率。\n- 实验表明该方法在标准基准上持续改善重建质量，在高光物体的复杂场景中获得显著增益。\n\n### 局限性\n摘要未提供足够信息。摘要未提及方法在极端场景下的失败案例、计算开销、对置信度图质量的依赖程度或与其他优化方法的兼容性等局限性。\n\n### 阅读优先级\n**高**。理由：本文针对3DGS的热门问题（几何重建不鲁棒）提出利用多视图几何先验及置信度加权的方案，并给出清晰的对比分析（单视图 vs. 多视图），实验结果有显著提升。该方向与几何基础模型、三维重建及神经渲染高度相关，对研究人员有较强参考价值。"
+      }
+    },
+    "2608.06021": {
+      "brief": {
+        "status": "success",
+        "input_hash": "b9d40d0b5101b977c65cc9c6dc9bbf89f2477e7829be7f23093bbdc344c3c5f0",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-08-07T14:12:26Z",
+        "path": "summaries/brief/2608.06021.md",
+        "markdown": "### Metadata\n- 标题：Topometric Autonomous Vehicle Localization by Combining Visual Embeddings and Feed-Forward 3D Models\n- 作者：Eulogio Quemada-Torres, Alberto Jaenal, Francisco-Angel Moreno, Javier Gonzalez-Jimenez\n- 出版日期：2026-08-06\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2608.06021\n\n### 一句话总结\n本文提出一种融合视觉嵌入（VPR）与前馈神经3D几何（FF3D）测姿的拓扑度量定位框架，在保留外观变化鲁棒性的同时提升定位精度。\n\n### 研究问题\n如何将视觉位置识别（VPR）的低度量精度限制，与基于前馈神经3D模型（FF3D）的精确局部轨迹估计相结合，实现兼顾鲁棒性和精度的顺序外观定位。\n\n### 核心思路/方法\n- 提出一个拓扑度量（topometric）定位框架，迭代结合概率VPR与FF3D度量位姿估计。\n- 设计自动离线建图工具，建模场景不同区域的“位姿-外观”交互关系（拓扑度量图）。\n- 在线阶段采用粒子滤波器，融合里程计、地点置信度，并驱动FF3D推理，将神经度量估计纳入概率外观定位。\n- 框架具备模块化设计，描述子提取器和FF3D模型可互换。\n\n### 主要贡献\n- 提出将VPR与FF3D度量估计结合进统一概率定位框架的新方法。\n- 引入自动离线建图工具，显式建模拓扑度量中的位姿-外观关系。\n- 在三个公开基准上进行了广泛评估，显著优于现有基于外观的方法。\n- 模块化架构支持组件替换；分析表明顺序置信度可缓解感知混淆（perceptual aliasing）下的严重失败。\n\n### 局限性\n摘要未提供足够信息：未提及具体失败模式、计算开销、实时性能、对极端动态场景的适应性，或对FF3D模型失效时的处理策略等局限性。\n\n### 阅读优先级\n**中**。理由：该工作针对VPR度量精度不足这一明确痛点提出创新融合方案，并展示了基准上的显著提升，对从事视觉定位、机器人和AR的研究者有参考价值。但摘要未给出与主流局部特征/神经表征方法的定量对比细节，且无实验细节支撑其声称的“显著提升”程度，因此优先级定为中等。"
+      }
+    },
+    "2608.05920": {
+      "brief": {
+        "status": "success",
+        "input_hash": "c53f455e1043669da84ee40e6d5e9332ba545b9272df1c49487519bf297bff35",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-08-07T14:12:30Z",
+        "path": "summaries/brief/2608.05920.md",
+        "markdown": "### Metadata\n- 标题：Floating Radiance Networks (FlaRe)\n- 作者：Krzysztof Byrski, Rafał Tobiasz, Grzegorz Wilczyński, Mikołaj Zieliński, Dawid Baran, Dominik Belter, Jacek Tabor, Przemysław Spurek\n- 出版日期：2026-08-06T11:50:01Z\n- 分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2608.05920\n\n### 一句话总结\nFloating Radiance Networks (FlaRe) 是一种将可光线追踪的显式几何与连续神经辐射函数相结合的神经场景表示，通过浮动的平面高斯原语实现交互式渲染、光线追踪、几何变形与外观编辑的统一。\n\n### 研究问题\n现有神经场景表示方法大多紧密耦合于单一渲染范式，限制了其通用性以及与常规图形工作流的集成能力。本文旨在提出一种同时具备显式可寻址结构与神经场表达能力的统一场景表示方法。\n\n### 核心思路/方法\n- 场景由浮动的平面广义高斯原语表示，每个原语携带一个紧凑的局部辐射场潜在描述符。\n- 共享的轻量解码器将该描述符、局部表面坐标和观察方向映射为颜色与不透明度。\n- 通过硬件加速的原语求交实现交互式渲染和递归光线追踪（包括反射、折射、透明和阴影）。\n- 同一表示支持原语级变形、网格提取以及直接在潜在描述符空间中进行外观风格化。\n\n### 主要贡献\n- 提出 FlaRe，一种结合显式光线追踪几何与连续神经辐射函数的统一神经场景表示。\n- 实现显式可寻址结构，支持高效查询和操作，突破单一渲染范式限制。\n- 支持交互式渲染、递归光线追踪（反射、折射、透明、阴影）以及原语级变形、网格提取和外观风格化。\n- 在标准重建基准上展示有竞争力的渲染质量，且仅使用紧凑的原语集。\n\n### 局限性\n摘要未提供足够信息（未提及具体实验配置、定量评估细节、失败案例或计算开销等局限）。\n\n### 阅读优先级\n**高**  \n理由：该工作提出了一种统一的神经场景表示，同时支持高质量神经渲染、传统光线追踪、几何操作与外观编辑，解决现有方法渲染范式单一的问题。研究内容具有较强的方法创新性和实际应用潜力（如交互式渲染和图形学工作流集成），适合关注神经渲染、场景表示和图形学交叉方向的研究者优先阅读。"
+      }
+    },
+    "2608.05728": {
+      "brief": {
+        "status": "success",
+        "input_hash": "69def4feb86750261dac835354ee33480932648b646a71549272976de452cdf6",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-08-07T14:12:35Z",
+        "path": "summaries/brief/2608.05728.md",
+        "markdown": "### Metadata\n- 标题：Engram-E2VID: Reference-Based Event-to-Video Reconstruction via Generative Activation of Appearance Engrams\n- 作者：Feiyu Ji, Xiang Li, Hao Ma, Tianxiang Huang, Qingxin Lu, Mengqi Ji, Lei Han, Xiaokang Yang, Xiaoyun Yuan\n- 出版日期：2026-08-06\n- 分类：Dynamic / 4D Reconstruction\n- 链接：https://arxiv.org/abs/2608.05728\n\n### 一句话总结\nEngram-E2VID 提出一种基于参考帧和事件流的视频重建框架，通过在扩散模型中生成式激活“外观印记”将事件派生的结构信息与参考帧外观关联，从而提升重建质量。\n\n### 研究问题\n如何从参考帧和参考到目标时间段内的事件流中恢复目标 RGB 帧。核心挑战在于事件只提供稀疏、异步的对数亮度变化而非绝对外观，尤其在复杂运动和长时间间隔下，如何将事件派生的目标时刻结构与参考帧中的相关外观信息正确关联。\n\n### 核心思路/方法\n- 将参考帧编码为 token 空间中的“外观印记”（appearance engrams）。\n- 将事件流与参考上下文转换为目标时刻的“运动-结构支架”（motion-structure scaffold），捕获运动边界和事件引发的结构变化。\n- 在单步扩散骨干中，支架派生的结构 token 跨层逐步交互并激活相关的外观印记。\n- 这种 token 空间关联避免依赖直接的像素级对应，同时扩散先验用于补充不确定或新显露的区域。\n\n### 主要贡献\n- 提出结构引导的参考式事件到视频重建框架。\n- 在三个基准上，对比最强的同输入基线，PSNR 最高提升 3.29 dB，LPIPS 最多降低 0.08。\n- 随着重建间隔增加，性能下降更缓慢，显示对长间隔的鲁棒性。\n\n### 局限性\n摘要未提供足够信息。摘要未说明方法在极端复杂场景（如剧烈遮挡、光照突变）下的表现，也未提供计算开销或实时性分析，也未提及失败案例或对训练数据依赖性的讨论。\n\n### 阅读优先级\n**高**  \n理由：该方法在事件驱动视频重建任务上取得了显著的量化提升（PSNR +3.29 dB），并明确针对复杂运动和长间隔这一核心难点提出创新性的 token 空间关联方案，适合对该方向的研究者作为重要参考。"
+      }
+    },
+    "2608.05704": {
+      "brief": {
+        "status": "success",
+        "input_hash": "84d7096ebd1956fa855d3e3158320734a31d12db5debb2383d0cf419f8270422",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-08-07T14:12:40Z",
+        "path": "summaries/brief/2608.05704.md",
+        "markdown": "### Metadata\n- 标题：G²ARD-GS: Geometry-Guided Anchor-Regularized Gaussian Splatting Distillation\n- 作者：Puyuan Zhang, Jianming Huang, Wenkai Ye, Wei Dong\n- 出版日期：2026-08-06\n- 分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2608.05704\n\n### 一句话总结\n本文提出一种几何引导的蒸馏方法，将稠密高斯先验压缩为紧凑表示，在不增加或删除原语的前提下恢复外观，实现高效的三维高斯渲染与几何复用。\n\n### 研究问题\n如何在不牺牲新视角合成质量和几何可用性的前提下，将稠密彩色LiDAR地图转换的3D高斯表示（含数百万个原语）大幅压缩为紧凑、可复用且可稳定渲染的表示。\n\n### 核心思路/方法\n- 将稠密高斯先验（可来自无训练的LiDAR点云提升或已训练的3DGS模型）通过几何引导的蒸馏方法逐步合并为表面感知的代表性原语。\n- 在构造阶段固定紧致拓扑之后，仅在构造时锚点约束下恢复外观，恢复过程中不增加或删除任何原语。\n- 在有限监督条件下，采用几何感知的视角选择策略来分配可用的视角预算。\n\n### 主要贡献\n- 提出G²ARD-GS，一种几何引导的蒸馏框架，将稠密高斯先验压缩为紧凑、可复用的表示。\n- 在MatrixCity数据集上，在5×–30×压缩预算下取得最佳PSNR、SSIM和LPIPS，PSNR比PUP高3.2–6.8 dB。\n- 当紧致模型作为冻结几何复用时，在偏离轨迹的外观适配上比PUP 3D-GS提升3.7–4.9 dB，并在30×压缩下保持Cambridge KingsCollege上的图像到模型配准精度。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**。理由：本文针对3DGS大规模应用中的存储和渲染成本问题提出系统化压缩蒸馏方案，实验在多个指标和压缩倍率下显著优于现有方法，且涉及几何复用与配准等实用性验证，对神经场景表示与渲染方向的研究者和工程实践者均有较高参考价值。"
+      }
+    },
+    "2608.05564": {
+      "brief": {
+        "status": "success",
+        "input_hash": "0f894c3c8d2ba739f12f4bb5c528b46101c8df09ea8221d5d54f4c3861e6b9dc",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-08-07T14:12:46Z",
+        "path": "summaries/brief/2608.05564.md",
+        "markdown": "### Metadata\n- 标题：ESVR: 3D Ellipsoid-based Sparse Volume Rendering via Structure-aware Primitive Learning and Per-primitive Ray Sampling\n- 作者：Suemin Jeon, Youjin Kim, Jungwoo Park, Kyungryun Lee, Won-Ki Jeong\n- 出版日期：2026-08-06\n- 分类：Neural Scene Representations & Rendering\n- 链接：https://arxiv.org/abs/2608.05564\n\n### 一句话总结\nESVR提出了一种基于椭球体稀疏体渲染框架，直接从三维体积数据学习紧致椭球基元，实现大面积稀疏数据的高压缩比与实时渲染。\n\n### 研究问题\n大型稀疏体数据的高效表示与渲染问题——有意义结构仅占空间域一小部分，传统直接体渲染（DVR）的计算与内存开销随数据规模增长而急剧扩大，而现有基于3DGS的方法从渲染图像而非原始体积学习，导致信息损失并限制交互式传输函数控制。\n\n### 核心思路/方法\n- 提出椭球体稀疏体渲染框架（ESVR），直接在三维空间学习并渲染体数据。\n- 使用具有有界支撑的可微椭球基元表示体积场景。\n- 引入结构感知的基元学习与互补剪枝策略，提升基元对结构的表达能力。\n- 设计逐基元光线采样策略，实现快速、准确的传输函数映射。\n- 为支持大规模数据集，提出基于块（chunk）的优化方案，并引入“幽灵椭球”（ghost ellipsoids）以提供训练时边界上下文。\n\n### 主要贡献\n- 提出首个无需依赖DVR渲染图像、直接对原始体数据进行学习的椭球体稀疏渲染框架。\n- 结合结构感知基元学习、逐基元光线采样与块式优化，实现高效表示与灵活传输函数控制。\n- 在大型稀疏数据集上实现高达四个数量级的压缩比，并以43–223 FPS实时渲染，同时保持有竞争力的重建质量。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**中**。理由：该工作面向科学可视化中的大规模稀疏体数据渲染，提出直接基于原始体积的学习方案，弥补了现有3DGS方法的信息损失问题，具有一定创新性；但摘要未提供与现有方法的定量对比细节或消融实验，应用场景偏专业领域，适合对体渲染、科学可视化感兴趣的读者重点阅读。"
+      }
+    },
+    "2608.05539": {
+      "brief": {
+        "status": "success",
+        "input_hash": "26a0b7afc3ba852b9f7ec65395e483015497c239d8540de963b069861c56dd07",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-08-07T14:12:52Z",
+        "path": "summaries/brief/2608.05539.md",
+        "markdown": "### Metadata\n- 标题：OmniMech: All-in-one Multimodal Mechanical Benchmark for 3D Reconstruction\n- 作者：Taiting Lu, Runze Liu, Ziwei Dong, Sisong Bei, Jingying Zeng, Mingjia Wang, Zhenghao Li, Kaiyuan Lin, Yi-Shan Wu, Yangshoudu Zheng, Hongxing Pan, Kai Zhang, Guoliang Shi, Ling Ma, Yifan Yang, Jiaying Lu, Qi He, Sung-Liang Chen, Yi-Chao Chen, Yincheng Jin, Mahanth Gowda\n- 出版日期：2026-08-06\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2608.05539\n\n### 一句话总结\nOmniMech 是一个百万级规模的工业机械设计多模态基准，用于评估视觉语言模型从工程图纸生成可执行 CAD 程序及细粒度 3D 重建的能力。\n\n### 研究问题\n现有视觉语言模型（VLMs）虽然能从图像生成可执行的 CAD 程序，但主要针对粗粒度、通用性的 3D 物体，难以满足工业机械设计中细粒度几何和毫米级公差的要求。本文旨在构建一个工业制造数据上的基准，系统评估 VLMs 在可执行 CAD 生成方面的能力。\n\n### 核心思路/方法\n作者构建了 OmniMech 基准，包含超过 251,000 张带完整尺寸和公差的 2D 正交工程图，并配套原生 CAD 模型、多视图渲染、网格、STEP、B-rep 表示以及丰富的语义标注。基准设计了四个任务：1）从工程图合成参数化 CAD 程序；2）图到 3D 推理（保证几何和结构一致性）；3）基于标注的尺寸、符号、特征标注和制造约束推理；4）使用可视化、测量、CAD 执行和验证工具的工具增强智能体推理。\n\n### 主要贡献\n- 提出了 OmniMech，首个百万级规模的工业制造数据基准，用于评估 VLMs 在可执行 CAD 生成上的表现。\n- 基准包含多种数据表示（2D 图纸、CAD 模型、多视图渲染、网格、STEP、B-rep）和丰富的语义标注。\n- 设计了覆盖从程序合成到智能体推理的四项基准任务。\n- 实验表明当前 VLMs 和 CAD 专用模型在可执行程序合成、细粒度 3D 重建以及尺寸/公差可靠执行方面仍存在明显不足。\n- 将发布基准数据、评估代码和工具接口以支持未来研究。\n\n### 局限性\n摘要未提供足够信息，未明确讨论该基准的局限性（如数据覆盖范围、任务难度设置、评估指标可能存在的偏差等）。\n\n### 阅读优先级\n**高**。理由：该工作提出了首个百万级规模的工业机械 CAD 生成基准，填补了现有 VLM 评估在细粒度工业场景中的空白，且数据规模和任务设计（四个任务，涵盖程序合成到智能体推理）对 3D 重建、CAD 生成和 VLM 评估方向的研究者具有较高的参考价值。实验结果揭示了现有模型的明显短板，有利于推动后续方法改进。"
+      }
+    },
+    "2608.05482": {
+      "brief": {
+        "status": "success",
+        "input_hash": "fb282528f4a15648c3a7d1760877d9f40a6d1265a7cb80f050654a3d568219da",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-08-07T14:12:56Z",
+        "path": "summaries/brief/2608.05482.md",
+        "markdown": "### Metadata\n- 标题：CDSeg: A Renderable Gaussian Carrier for Image-to-3D Label Transfer\n- 作者：Wentao Sun, Yiping Chen, Zhengsen Xu, Jonathan Li, John S. Zelek\n- 出版日期：2026-08-06\n- 分类：Neural Scene Representations & Rendering\n- 链接：\n  - 摘要：https://arxiv.org/abs/2608.05482\n  - PDF：https://arxiv.org/pdf/2608.05482\n\n### 一句话总结\nCDSeg 利用高斯溅射（Gaussian Splatting）基元作为可渲染的标签载体，将外部二维掩码标签跨视图迁移到三维场景（点云或高斯场景）中，无需任务特定的三维分割训练。\n\n### 研究问题\n如何将图像域中现成的二维分割掩码（如提示式、自动实例、语义及 LiDAR 设置）可靠地传递到三维空间中的对应位置，而不需要为每个任务训练专门的三维分割网络。\n\n### 核心思路/方法\n- 将每个输入点补全为一个高斯基元（保留其索引），或复用已优化高斯场景中的原生基元，构成“可渲染的标签载体”。\n- 在渲染过程中记录像素与高斯基元之间的关联，通过渲染器导出的可见性决定哪些三维基元接收标签。\n- 对多视角掩码进行投票融合，并应用局部滤波以提升标签一致性。\n- 标签结果可返回原始点、保留在高斯场景上，或渲染到其他视图。\n\n### 主要贡献\n- 提出 CDSeg，一个跨域标签迁移接口，覆盖点云、高斯场景和图像视图，无需任务特定的三维分割网络。\n- 支持多种掩码来源（提示式、自动实例、语义、LiDAR），并可处理数百万基元的大规模场景，处理时间仅需数秒。\n- 实验验证：在 DesktopObjects-360 上达到 92.35% mIoU，在 NeRDS-360 上达到 95.89%，在完整 ScanNet-v2 验证集上使用提供的二维语义标注达到 65.77% mIoU。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**高**。理由：该方法统一了二维掩码到三维标签迁移的流程，无需训练三维分割网络，在多个基准上取得较高精度，并支持多种任务类型和大规模场景，对视觉与三维场景理解交叉领域有较强参考价值。"
+      }
+    },
+    "2608.05215": {
+      "brief": {
+        "status": "success",
+        "input_hash": "176ecab5b814d6ecf1b8a4d1cf385665832d906e8c874ceeb65c42f99715dec3",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-08-07T14:13:02Z",
+        "path": "summaries/brief/2608.05215.md",
+        "markdown": "### Metadata\n- 标题：VLAff: Vision-Language-Affordance Model for Unified Actionable Affordances\n- 作者：Jihoon Oh, Kento Kawaharazuka, Kei Okada\n- 出版日期：2026-08-05\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2608.05215\n\n### 一句话总结\n本文提出VLAff，一个基于视觉-语言模型的统一基础模型，从人类第一人称视频中提取视觉、抓取和轨迹三类可操作可供性，并将其转化为机器人可直接执行的操纵动作。\n\n### 研究问题\n如何利用人类视频学习与机器人本体无关（embodiment-agnostic）的物体中心可操作可供性，以缓解机器人与人类之间的形态差异，从而支持可扩展的机器人技能学习。\n\n### 核心思路/方法\n- 利用第一人称人类视频，结合最先进的3D运动恢复结构（Structure-from-Motion）和手部网格重建技术，提取三类可操作可供性：\n  - 视觉可供性（visual affordance）：指示“在哪里交互”；\n  - 抓取可供性（grasp affordance）：指示“如何抓取”；\n  - 轨迹可供性（trajectory affordance）：指示“如何移动”。\n- 构建大规模数据集EgoAffordance，包含204K个片段、560万视觉可供性标注和1160万抓取及轨迹可供性标注。\n- 提出VLAff，这是一个基于大规模视觉-语言模型（VLM）的统一基础模型，学习所有可操作可供性之间的跨模态相关性。\n- 给定视觉观察和指令，VLAff生成视觉可供性热图、抓取姿态和轨迹，并利用3D场景信息将其转换为可直接执行的动作。\n\n### 主要贡献\n- 提出从人类视频中提取统一可操作可供性（视觉、抓取、轨迹）的框架。\n- 构建大规模数据集EgoAffordance（204K片段，560万视觉可供性、1160万抓取和轨迹可供性）。\n- 引入VLAff，一个基于大视觉-语言模型的统一基础模型，用于跨模态可供性学习。\n- 实验表明VLAff在视觉可供性预测上达到最先进性能，并能有效应用于真实机器人场景，包括零样本操纵和可供性引导的机器人学习。\n\n### 局限性\n摘要未提供足够信息。例如，未提及数据集的具体场景多样性、模型计算开销、跨物体泛化能力上限，以及零样本操作的成功率或失败模式等具体实验细节。\n\n### 阅读优先级\n**高**\n\n理由：该工作面向机器人学习中的核心挑战（人-机形态差异），提出了统一的可供性建模框架，并构建了大规模数据集和基于视觉-语言模型的基础模型，兼具数据、方法和应用验证，对具身智能、机器人操纵和视觉-语言模型交叉领域有较高参考价值。"
+      }
     }
   },
   "reports": {
@@ -6552,6 +6652,13 @@
       "status": "success",
       "updated_at": "2026-08-06T15:14:40Z",
       "path": "reports/daily/2026-08-06.md",
+      "tasks": [],
+      "ai_trend_report": true
+    },
+    "2026-08-07": {
+      "status": "success",
+      "updated_at": "2026-08-07T14:13:22Z",
+      "path": "reports/daily/2026-08-07.md",
       "tasks": [],
       "ai_trend_report": true
     }
