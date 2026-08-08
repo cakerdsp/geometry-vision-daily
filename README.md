@@ -85,7 +85,7 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 <!-- DAILY_REPORT_END -->
 
 **Last updated:** 2026-08-07T09:36:40-04:00
-**Total number of papers:** 65
+**Total number of papers:** 64
 **Number of papers added in the latest update:** 10
 **Categories tracked:** cs.CV, cs.GR, cs.RO, eess.IV
 
@@ -694,59 +694,6 @@ Dynamic 4D Gaussian Splatting has emerged as an efficient representation for dyn
 <summary>Abstract</summary>
 
 We present DynActiveGS, a dynamic-aware active reconstruction framework based on 3D Gaussian Splatting (3DGS) for autonomous exploration in dynamic environments. The framework incrementally reconstructs a 3D Gaussian scene representation while suppressing motion-corrupted observations through online uncertainty prediction and uncertainty-weighted Gaussian optimization. A key component of DynActiveGS is the explicit decomposition of uncertainty into structural uncertainty and motion-induced uncertainty, which enables the system to distinguish under-reconstructed static regions from dynamically unreliable areas. Based on these uncertainty fields, DynActiveGS performs dynamic-aware viewpoint selection and dynamic-constrained path planning to favor informative yet stable observations during exploration. The resulting system forms a unified closed-loop pipeline for robust active reconstruction in dynamic scenes. Extensive experiments on challenging dynamic benchmarks demonstrate consistent improvements over existing active reconstruction baselines in reconstruction accuracy, completeness, rendering quality, and exploration efficiency.
-
-</details>
-
-### 2026-07
-
-#### 2026-07-31 - OASIS: Occlusion-aware Single-image Hand Avatar Reconstruction via 3D Gaussian Splatting
-
-**Authors:** Zhisheng Han, Shiyao Wu, Jiayan Qiu, Yakun Ju, Lu Liu, Le Zhang, Pengfei Feng, Huiyu Zhou, Zheheng Jiang
-**Links:** [abs](https://arxiv.org/abs/2607.29633) - [pdf](https://arxiv.org/pdf/2607.29633)
-**Primary category:** Dynamic / 4D Reconstruction
-**Secondary categories:** Neural Scene Representations & Rendering
-**Matched keywords:** avatar reconstruction, NeRF, Gaussian Splatting, 3D Gaussian Splatting, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：OASIS: Occlusion-aware Single-image Hand Avatar Reconstruction via 3D Gaussian Splatting
-- 作者：Zhisheng Han, Shiyao Wu, Jiayan Qiu, Yakun Ju, Lu Liu, Le Zhang, Pengfei Feng, Huiyu Zhou, Zheheng Jiang
-- 出版日期：2026-07-31
-- 分类：主分类：Dynamic / 4D Reconstruction；次分类：Neural Scene Representations & Rendering
-- 链接：https://arxiv.org/abs/2607.29633
-
-### 一句话总结
-提出了一种基于3D高斯泼溅的遮挡感知单图手部化身重建框架OASIS，通过可见性条件注意力与特征网格表征实现高保真重建。
-
-### 研究问题
-从单张图像重建3D手部化身，核心难点在于：严重自遮挡导致的视觉证据有限，以及高度关节化手部的复杂姿态依赖形变。现有基于隐式神经辐射场（NeRF）的方法计算开销大且难以保留精细手部细节。
-
-### 核心思路/方法
-1. **几何对齐视觉证据令牌**：将输入图像观测与3D手部几何显式对齐，并通过上下文自适应令牌化编码稀疏的图像外观信息。
-2. **可见性条件点-图像注意力**：由于自遮挡使图像证据可靠性依赖可见性，引入该机制将视觉证据可靠传递至几何令牌，生成遮挡感知的高斯特征。
-3. **网格上特征（Feature-on-Mesh）表征**：使高斯形变由局部表面拉伸引导，捕获手部的非刚性形变。
-4. **一次性适应方案**：先从多身份训练数据学习共享手部先验，再拟合到目标图像实现目标专属重建。
-
-### 主要贡献
-- 提出首个针对单图手部化身重建的定制3D高斯泼溅框架，在视觉保真度和效率上优于现有基线。
-- 设计了几何对齐视觉证据令牌与可见性条件注意力机制，缓解自遮挡带来的信息缺失问题。
-- 引入Feature-on-Mesh表征，使高斯形变能由局部表面拉伸引导，提升对非刚性形变的建模能力。
-- 采用一次性适应方案，支持跨身份先验学习与目标图像适配，并展示了在文本到化身生成和纹理编辑等下游任务中的适用性。
-
-### 局限性
-摘要未提供足够信息，未明确讨论该方法的失败案例、计算资源需求、对极端遮挡或复杂背景的鲁棒性边界，也未提及与现有方法在定量指标上的具体差距。
-
-### 阅读优先级
-**高**。理由：该工作针对单图手部重建这一长期存在的病态问题，提出基于3D高斯泼溅的新框架，同时解决遮挡感知和姿态形变两个核心挑战，在效率和保真度上均表现出优势，且展示了多场景下游应用的潜力，对关注手部重建、3D视觉或动态重建的研究者具有较高参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Single-image 3D hand avatar reconstruction is fundamentally ill-posed and particularly challenging due to limited visual evidence under severe self-occlusion and the complex pose-dependent deformation of highly articulated hands. Existing methods predominantly rely on implicit NeRF-style representations, whose volumetric fitting is computationally expensive and often struggles to preserve fine-grained hand details. In this work, we present OASIS, a tailored 3D Gaussian Splatting framework for single-image hand avatar reconstruction. To faithfully encode sparse image-specific appearance cues in single-view reconstruction, we construct geometry-aligned visual evidence tokens by explicitly aligning input image observations with 3D hand geometry and context-adaptively tokenizing the resulting visual evidence. Since severe self-occlusion makes the reliability of image evidence inherently visibility-dependent, we introduce a visibility-conditioned point-image attention to reliably transfer visual evidence to geometric tokens, yielding occlusion-aware Gaussian features for faithful and robust reconstruction. To further capture non-rigid deformation of articulated hands, we introduce a Feature-on-Mesh representation to enable Gaussian deformation to be guided by local surface stretching. Under this framework, we adopt a one-shot adaptation scheme that learns a shared hand prior from multi-identity training data and then fits it to a target image for target-specific reconstruction. Extensive experiments show that OASIS outperforms existing baselines in both visual fidelity and efficiency across challenging poses and in-the-wild scenarios, and further demonstrates strong versatility in downstream applications such as text-to-avatar generation and texture editing.
 
 </details>
 
