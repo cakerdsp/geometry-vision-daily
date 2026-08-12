@@ -1,5 +1,759 @@
 [
   {
+    "arxiv_id": "2608.11150",
+    "version": "v1",
+    "title": "CausalSplat: Towards Comprehensive Hierarchical Reasoning in 3D Gaussian Splatting",
+    "authors": [
+      "Jiayu Ding",
+      "Meilu Song",
+      "Yun Chen",
+      "Wei Gao",
+      "Ge Li"
+    ],
+    "abstract": "While 3D Gaussian Splatting (3DGS) has advanced open vocabulary scene understanding, existing methods remain confined to explicit queries. They struggle to interpret implicit intents, complex spatial constraints, and commonsense reasoning required for practical embodied interactions. To address this gap, we introduce the task of reasoning 3D Gaussian segmentation and construct two benchmarks, Causal-LERF and Causal-ScanNet. These benchmarks systematically evaluate commonsense, spatial, affordance, and counterfactual reasoning. Evaluations reveal that current state of the art methods perform poorly on these reasoning challenges. Therefore, we propose CausalSplat, a framework that integrates vision-language models with 3D scene graphs to disentangle explicit structural perception from implicit logical inference. Extensive experiments demonstrate that CausalSplat achieves state of the art performance on our reasoning benchmarks while showing strong generalizability on standard referring and open vocabulary 3D segmentation tasks. Project Page: https://jiayuding031020.github.io/CausalSplat",
+    "published": "2026-08-11T17:09:49Z",
+    "updated": "2026-08-11T17:09:49Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Neural Scene Representations & Rendering",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "Gaussian Splatting",
+      "3D Gaussian Splatting",
+      "3DGS",
+      "splatting",
+      "scene understanding"
+    ],
+    "classification_score": 16,
+    "classification_reasons": [
+      "Matched title phrase: Gaussian Splatting",
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched title phrase: 3D Gaussian Splatting",
+      "Matched abstract phrase: 3D Gaussian Splatting",
+      "Matched abstract keyword: 3DGS",
+      "Matched title keyword: splatting",
+      "Matched abstract keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.11150",
+    "pdf_url": "https://arxiv.org/pdf/2608.11150",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.11100",
+    "version": "v1",
+    "title": "WildFireGS: Physics-Based Wildfire Simulation in Large-Scale Semantics-Enriched Gaussian Splatting Forest Scenes",
+    "authors": [
+      "Nienke Driessen",
+      "Joris Rijsdijk",
+      "Sören Pirk",
+      "Wojtek Palubicki",
+      "Dominik L. Michels",
+      "Michael Weinmann"
+    ],
+    "abstract": "Climate-driven environmental change is driving an increase in both the frequency and severity of wildfire events, making accurate simulation and prediction critical for effective risk mitigation and landscape management. While recent physics-based wildfire models achieve high realism by explicitly simulating combustion, heat transfer, and fuel dynamics, they remain largely restricted to synthetic environments with complete and idealized knowledge of forest structure, limiting their applicability to real-world environments captured via aerial imagery. To provide a pathway toward real-world wildfire digital twins derived directly from observational data, we present WildFireGS, a physics-based wildfire simulation framework operating directly on large-scale, semantics-enriched 3D Gaussian Splatting forest reconstructions. Our approach bridges learning-based scene reconstruction and environmental simulation by augmenting Gaussian primitives with semantics and material properties that encode vegetation type and fuel characteristics. We introduce a particle-based combustion model that operates natively on Gaussian representations, simulating ignition, heat transfer, combustion, and flame propagation across complex forest structures. This enables direct physics-based simulation of fire behavior on reconstructed real-world environments, without requiring conversion to explicit meshes or volumetric grids. We demonstrate the modularity of WildFireGS through a rain-driven cooling mechanism in terms of an energy-sink process to realistically model fire containment. Evaluations on synthetic scenes and real aerial forest captures show physically consistent wildfire behavior, reproducing characteristic dynamics including propagation scaling with vegetation density, wind velocity, and terrain slope. In addition, we validate our model through novel firebreak experiments and biomass loss estimation.",
+    "published": "2026-08-11T16:08:59Z",
+    "updated": "2026-08-11T16:08:59Z",
+    "primary_arxiv_category": "cs.GR",
+    "arxiv_categories": [
+      "cs.GR"
+    ],
+    "primary_category": "Neural Scene Representations & Rendering",
+    "secondary_categories": [
+      "Embodied / Robotics / AR Applications"
+    ],
+    "matched_keywords": [
+      "scene reconstruction",
+      "Gaussian Splatting",
+      "3D Gaussian Splatting",
+      "splatting",
+      "simulation"
+    ],
+    "classification_score": 11,
+    "classification_reasons": [
+      "Matched title phrase: Gaussian Splatting",
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched abstract phrase: 3D Gaussian Splatting",
+      "Matched title keyword: splatting",
+      "Matched abstract keyword: splatting",
+      "Matched title keyword: simulation",
+      "Matched abstract keyword: simulation"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.11100",
+    "pdf_url": "https://arxiv.org/pdf/2608.11100",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.11093",
+    "version": "v1",
+    "title": "Cross-View Feature Matching: Survey, Benchmarking, and Foundation-Model Perspectives",
+    "authors": [
+      "Songlin Du",
+      "Xiaoyong Lu",
+      "Zeyu Wu",
+      "Xiaobo Lu",
+      "Guobao Xiao",
+      "Bin Fan",
+      "Jiayi Ma",
+      "Takeshi Ikenaga"
+    ],
+    "abstract": "Cross-view feature matching aims to establish reliable correspondences across images with large viewpoint variations. Over the past decade, the field has evolved from task-specific models toward increasingly unified and generalizable correspondence models, with recent progress further driven by the emergence of vision foundation models (VFMs). Despite these advances, existing studies remain highly diverse in their problem formulations, model architectures, training paradigms, and evaluation protocols, making it difficult to obtain a unified understanding of the field. In this survey, we present a unified review of cross-view feature matching. We first introduce a structured taxonomy covering feature extraction, single-type feature matcher, multi-type feature matcher, VFMs based methods, training strategy and robust estimation, providing a coherent framework for analysis and comparison. We further examine recent advances, distilling key design principles and highlighting the shift toward unified and generalizable correspondence models. We also provide a unified experimental benchmarking of representative state-of-the-art methods under consistent protocols, enabling fair and comprehensive performance comparisons. In addition, we discuss open challenges and future directions, including efficiency, robustness under extreme conditions, and cross-domain generalization. This survey aims to provide a comprehensive and structured reference for understanding the evolution, current landscape, and future development of cross-view feature matching in the era of vision foundation models.",
+    "published": "2026-08-11T16:00:40Z",
+    "updated": "2026-08-11T16:00:40Z",
+    "primary_arxiv_category": "cs.LG",
+    "arxiv_categories": [
+      "cs.LG",
+      "cs.CV"
+    ],
+    "primary_category": "3D Reconstruction & Multi-view Geometry",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "feature matching"
+    ],
+    "classification_score": 6,
+    "classification_reasons": [
+      "Matched title phrase: feature matching",
+      "Matched abstract phrase: feature matching"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.11093",
+    "pdf_url": "https://arxiv.org/pdf/2608.11093",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10938",
+    "version": "v1",
+    "title": "GS-CPE: Unified 6-Degree-of-Freedom Camera Pose Estimation via 3D Gaussian Splatting",
+    "authors": [
+      "Huaiyuan Weng",
+      "Chul Min Yeum",
+      "Su-Min Kang"
+    ],
+    "abstract": "Despite substantial progress in visual localization, from scene coordinate regression to direct camera pose regression, achieving both robust generalization and high accuracy remain challenging. This study introduces GS-CPE (Gaussian Splatting based Camera Pose Estimation), a coarse-to-fine framework for 6-DoF camera pose estimation that unifies geometry-based coarse pose estimation with robust 3D Gaussian Splatting (3DGS) warping based pose refinement. GS-CPE first estimates a coarse pose via retrieval-guided geometric pose estimation on a 3DGS scene representation, then refines it by minimizing a visibility aware masked RGB warping objective in a multi-scale optimization framework, with adaptive re-rendering. Extensive experiments on indoor and outdoor benchmarks including 7Scenes, Cambridge Landmarks, FAST-LIVO2 datasets, and a custom dataset demonstrate state-of-the-art performance, consistently outperforming in both accuracy and generalization.",
+    "published": "2026-08-11T14:06:51Z",
+    "updated": "2026-08-11T14:06:51Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "3D Reconstruction & Multi-view Geometry",
+    "secondary_categories": [
+      "Neural Scene Representations & Rendering"
+    ],
+    "matched_keywords": [
+      "camera pose estimation",
+      "pose estimation",
+      "Gaussian Splatting",
+      "3D Gaussian Splatting",
+      "3DGS",
+      "scene representation",
+      "rendering",
+      "splatting",
+      "localization"
+    ],
+    "classification_score": 12,
+    "classification_reasons": [
+      "Matched title phrase: camera pose estimation",
+      "Matched abstract phrase: camera pose estimation",
+      "Matched title phrase: pose estimation",
+      "Matched abstract phrase: pose estimation",
+      "Matched title phrase: Gaussian Splatting",
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched title phrase: 3D Gaussian Splatting",
+      "Matched abstract phrase: 3D Gaussian Splatting",
+      "Matched abstract keyword: 3DGS",
+      "Matched abstract phrase: scene representation",
+      "Matched abstract keyword: rendering",
+      "Matched title keyword: splatting",
+      "Matched abstract keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10938",
+    "pdf_url": "https://arxiv.org/pdf/2608.10938",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10864",
+    "version": "v1",
+    "title": "Multi-View Relational Distillation for Spatial Reasoning with Vision-Language Models",
+    "authors": [
+      "Kiet T. Nguyen",
+      "Hanbo Shim",
+      "Jinwoo Kim",
+      "Seunghoon Hong"
+    ],
+    "abstract": "Vision-language models (VLMs) have achieved strong image and video understanding, yet their visual-spatial representations remain geometrically fragile, leading to failures in spatial reasoning needed for embodied AI, robotics, and autonomous driving. Prior approaches to geometry grounding either fine-tune VLMs on spatial question answering, which can perpetuate spurious visual representations, or fuse features from large geometry-grounded vision models, which substantially increases model size at inference. Knowledge distillation from geometry-grounded vision models offers an alternative, but directly matching multi-view teacher features can disrupt the pretrained alignment between visual and textual representations, degrading object- and language-semantic capabilities. We propose multi-view relational distillation (MVRD), which distills patch-wise cosine similarities across views instead of the teacher features themselves. These relations encode geometric correspondences adequate for spatial understanding, while leaving the student representation underdetermined, allowing it to remain close to its pretrained vision- language space. Across representative VLMs, MVRD improves visual-spatial reasoning, outperforming supervised fine-tuning and feature distillation while approaching feature fusion methods with considerably fewer added parameters and lower latency. We show that MVRD makes visual representations more geometric while retaining language alignment, and generalizes to 3D scene understanding tasks such as object grounding, dense captioning, and question answering.",
+    "published": "2026-08-11T12:34:41Z",
+    "updated": "2026-08-11T12:34:41Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Embodied / Robotics / AR Applications",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "embodied AI",
+      "robotics",
+      "autonomous driving",
+      "scene understanding"
+    ],
+    "classification_score": 7,
+    "classification_reasons": [
+      "Matched abstract phrase: embodied AI",
+      "Matched abstract keyword: robotics",
+      "Matched abstract phrase: autonomous driving",
+      "Matched abstract phrase: scene understanding"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10864",
+    "pdf_url": "https://arxiv.org/pdf/2608.10864",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10756",
+    "version": "v1",
+    "title": "Embodied Multimodal Grounding for Open-Vocabulary Mobile Manipulation via Semantic 3D Gaussian Splatting",
+    "authors": [
+      "Huosen Ou",
+      "Dongni Song",
+      "Yuncong Wang",
+      "Tao Zhou",
+      "Yiding Ji"
+    ],
+    "abstract": "Embodied mobile manipulation requires language, visual observations, three-dimensional scene structure, and action feasibility to be aligned before execution. We study open-vocabulary target grounding with few-shot manipulation in local household workspaces and present an embodied multimodal grounding framework that integrates active multi-view Semantic 3D Gaussian Splatting (Semantic-3DGS), reachability-aware base positioning, and a diffusion-based vision-language-action policy. A task-driven local Semantic-3DGS serves as a shared interface across active sensing, language-conditioned 3D localization, obstacle-aware scene reasoning, base preparation, and semantic conditioning of the action model. To preserve pretrained action priors, the 3D semantic cues are injected only into the late action-expert blocks. In expanded 50-trial real-robot evaluations against representative vision-language-action (VLA) approaches, the full system achieves 60% long-horizon success compared with 40% for PointVLA and 28% for DexVLA, and reaches 74% success in heavily cluttered manipulation compared with 52% for the single-view variant and 46% for PointVLA. It also maintains 75% success under a 75 cm height shift and eliminates photo-induced false grasps. These results indicate that explicit, refreshable 3D semantic grounding can improve robustness under clutter, occlusion, viewpoint variation, and embodiment constraints.",
+    "published": "2026-08-11T10:16:30Z",
+    "updated": "2026-08-11T10:16:30Z",
+    "primary_arxiv_category": "cs.RO",
+    "arxiv_categories": [
+      "cs.RO",
+      "cs.CV"
+    ],
+    "primary_category": "Neural Scene Representations & Rendering",
+    "secondary_categories": [
+      "Embodied / Robotics / AR Applications"
+    ],
+    "matched_keywords": [
+      "Gaussian Splatting",
+      "3D Gaussian Splatting",
+      "3DGS",
+      "splatting",
+      "manipulation",
+      "localization"
+    ],
+    "classification_score": 16,
+    "classification_reasons": [
+      "Matched title phrase: Gaussian Splatting",
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched title phrase: 3D Gaussian Splatting",
+      "Matched abstract phrase: 3D Gaussian Splatting",
+      "Matched abstract keyword: 3DGS",
+      "Matched title keyword: splatting",
+      "Matched abstract keyword: splatting",
+      "Matched title keyword: manipulation",
+      "Matched abstract keyword: manipulation",
+      "Matched abstract keyword: localization"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10756",
+    "pdf_url": "https://arxiv.org/pdf/2608.10756",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10712",
+    "version": "v1",
+    "title": "Compact Feed-Forward 3D Gaussians via Saliency-Guided Primitive Merging",
+    "authors": [
+      "Tim-Felix Fassch",
+      "Jochen Kall",
+      "Cyrill Stachniss"
+    ],
+    "abstract": "3D scene reconstruction, modeling, and rendering are highly relevant for numerous tasks, and 3D Gaussian splatting has become a standard choice in this context. Its feed-forward variants provide fast reconstruction from sparse input views but often produce per-pixel primitives, leading to highly redundant and thus inefficient representations. We present a structure-aware merging pipeline that takes per-pixel primitives from any feed-forward method and consolidates them into a compact, content-adaptive Gaussian set while largely retaining visual quality at just $\\frac{1}{20}^\\text{th}$ of the Gaussians of a per-pixel method. We group spatially coherent Gaussians of similar appearance into variable-size clusters via adaptive superpixel segmentation guided by a saliency map, which allocates fine segments to textured regions and coarse segments to homogeneous areas. We compress each cluster into a compact latent representation through a learned encoder, then match and consolidate representations across views based on geometric overlap and feature similarity via a learned merger. A level-of-detail decoder then produces the final Gaussians at a controllable resolution, enabling a flexible quality-efficiency trade-off at inference. As a post-processing module, the pipeline is backbone-agnostic, leveraging the strengths of existing feed-forward methods. This leads to better and more robust quality than achieved by previous approaches that target a reduction in primitive count, while providing a highly compact representation, that can be rendered efficiently.",
+    "published": "2026-08-11T09:32:08Z",
+    "updated": "2026-08-11T09:32:08Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Neural Scene Representations & Rendering",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "scene reconstruction",
+      "Gaussian Splatting",
+      "3D Gaussian Splatting",
+      "rendering",
+      "splatting"
+    ],
+    "classification_score": 6,
+    "classification_reasons": [
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched abstract phrase: 3D Gaussian Splatting",
+      "Matched abstract keyword: rendering",
+      "Matched abstract keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10712",
+    "pdf_url": "https://arxiv.org/pdf/2608.10712",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10708",
+    "version": "v1",
+    "title": "Self-Geometry: GT-Free and Plug-and-Play Test-Time Adaptation for Geometrically Consistent 3D Vision Foundation Models",
+    "authors": [
+      "Seokhyun Youn",
+      "Dahyeon Kye",
+      "Sung-Ho Bae",
+      "Jihyong Oh"
+    ],
+    "abstract": "Recent Vision Foundation Models (VFMs) predict depth, camera pose, and pointmap in a single forward pass without per-scene optimization, achieving strong generalization. However, enforcing explicit multi-view geometric consistency, e.g., through bundle adjustment, is computationally costly and is thus not imposed during VFM pretraining, so such inconsistency can arise. To address this, implicit self-consistency derived from model outputs (e.g., pointmaps, features), though enforced at test-time in prior work, delivers inherently limited performance gain, especially on scenes where the pretrained VFM is highly inaccurate. In contrast to this implicit signal, we propose Self-Geometry, a plug-and-play test-time adaptation pipeline that directly imposes explicit multi-view geometric constraints using 2D pixel correspondences as pseudo ground-truth. Our proposed Self-Geometry consists of Geometric Disentanglement Optimization, which combines Multi-View Consistency and Epipolar Consistency losses with Gradient Disentanglement to prevent gradient conflict; Frame Angular-Neighbor, a view sampler based on SO(3) geodesic distances for lightly imposing these constraints; and Lightweight TTA, which adapts VFMs via LoRA. Our method achieves consistent improvements in both pose and geometry estimation across six VFMs (VGGT, $π^3$, DA3-Giant/Large/Base/Small) and four benchmarks (7Scenes, ETH3D, ScanNet++, HiRoom).",
+    "published": "2026-08-11T09:28:50Z",
+    "updated": "2026-08-11T09:28:50Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Geometry Foundation Models",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "VGGT",
+      "pointmap",
+      "bundle adjustment"
+    ],
+    "classification_score": 7,
+    "classification_reasons": [
+      "Matched representative model name in abstract: VGGT",
+      "Matched abstract keyword: pointmap"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10708",
+    "pdf_url": "https://arxiv.org/pdf/2608.10708",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10682",
+    "version": "v1",
+    "title": "Visual Geometry Foundation-Aware Gaussians for Single-Frame Surround-View Driving Reconstruction",
+    "authors": [
+      "Junhong Lin",
+      "Jinlong Wang",
+      "Xianda Guo",
+      "Yanlun Peng",
+      "Wei Zheng",
+      "Guoqing Liu",
+      "Hanli Wang",
+      "Tiesong Zhao",
+      "Wei Gao"
+    ],
+    "abstract": "Single-frame surround-view reconstruction faces severe geometric instability and rendering artifacts due to minimal inter-camera overlap. While existing methods rely on complex decoders or auxiliary cues, they remain bottlenecked by the weak geometric capacity of upstream features. We argue that leveraging pretrained visual geometry priors strengthens upstream representations and alleviates the geometric ambiguity in sparse surround views. To this end, we propose VGGD, a visual geometry foundation-aware 3D Gaussian Splatting framework for feed-forward surround-view driving reconstruction, which shifts geometric modeling to the frontend and adapts foundation priors to the driving camera setting. First, VGGD leverages VGGT to provide transferable multi-view geometric prior tokens. Next, we introduce a Dual-Path Neck to decouple geometry-consistent and appearance-aware representations, improving appearance completion in weakly observed regions. We further apply Scale Warmup to stabilize early geometry learning and suppress scale drift under ego-pose changes. Finally, we use a hybrid pixel--volume Gaussian decoder to produce a renderable 3D Gaussian scene for novel-view synthesis. Experiments on the nuScenes single-frame benchmark show that VGGD achieves the best overall rendering quality among the compared methods and improves relative geometric consistency.",
+    "published": "2026-08-11T09:04:33Z",
+    "updated": "2026-08-11T09:04:33Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Geometry Foundation Models",
+    "secondary_categories": [
+      "Neural Scene Representations & Rendering"
+    ],
+    "matched_keywords": [
+      "VGGT",
+      "Gaussian Splatting",
+      "3D Gaussian Splatting",
+      "novel view synthesis",
+      "view synthesis",
+      "rendering",
+      "splatting"
+    ],
+    "classification_score": 6,
+    "classification_reasons": [
+      "Matched representative model name in abstract: VGGT",
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched abstract phrase: 3D Gaussian Splatting",
+      "Matched abstract phrase: novel view synthesis",
+      "Matched abstract phrase: view synthesis",
+      "Matched abstract keyword: rendering",
+      "Matched abstract keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10682",
+    "pdf_url": "https://arxiv.org/pdf/2608.10682",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10660",
+    "version": "v1",
+    "title": "Cross-View Sequential Visual Localization with Spatio-Temporal Context Modeling for Autonomous Driving",
+    "authors": [
+      "Jiaping Wang",
+      "Shaobo Li",
+      "Zhen Wang"
+    ],
+    "abstract": "Continuous and reliable localization is essential for autonomous driving. Cross-view visual localization matches ground images with satellite maps, providing complementary localization cues for pipelines that depend on Global Navigation Satellite System (GNSS) signals and high-definition (HD) maps. Most existing cross-view visual localization methods process each frame independently, leaving temporal information underused and limiting accuracy under dynamic occlusion, illumination variation, and repetitive textures. This study proposes a temporal-context-enhanced framework for cross-view sequence visual localization. The proposed recurrent cross-frame module aggregates historical context from the previous state to enhance the coarse ground feature of each current frame. These enhanced features facilitate satellite candidate-region classification, while hierarchical fine-grained features enable precise local offset estimation. On the CVIS dataset, the proposed method reduces mean localization error from 3.80 m to 1.57 m and increases R@1 m from 8.14% to 40.22%. Direct transfer to KITTI-CVL achieves a mean error of 2.61 m, with target-domain fine-tuning further reducing the mean error to 2.27 m. Zero-shot field experiments on a real-world vehicle achieve a mean error of 2.84 m and R@5 m of 96.86%. These results demonstrate that temporal context enhancement significantly improves cross-view localization accuracy and supports robust deployment on public benchmarks and real-world roads.",
+    "published": "2026-08-11T08:44:42Z",
+    "updated": "2026-08-11T08:44:42Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV",
+      "cs.AI"
+    ],
+    "primary_category": "Embodied / Robotics / AR Applications",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "autonomous driving",
+      "localization"
+    ],
+    "classification_score": 9,
+    "classification_reasons": [
+      "Matched title phrase: autonomous driving",
+      "Matched abstract phrase: autonomous driving",
+      "Matched title keyword: localization",
+      "Matched abstract keyword: localization"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10660",
+    "pdf_url": "https://arxiv.org/pdf/2608.10660",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10618",
+    "version": "v1",
+    "title": "Toward the Cognitive--Physical Limits of Embodied Intelligence through a World-Model-Centric Autonomous Racing Agent",
+    "authors": [
+      "Zitong Shan",
+      "Baichuan Lou",
+      "Yanxin Zhou",
+      "Shuge Wu",
+      "Xianqi He",
+      "Bolin Zhao",
+      "Sheng Zhao",
+      "Zhouheng Li",
+      "Chee Kiong Ong",
+      "King Ho Holden Li",
+      "Chen Lv"
+    ],
+    "abstract": "Embodied artificial intelligence aims to develop agents that perceive, reason, and act through continuous interaction with the physical world. However, most embodied systems are still evaluated within conservative safety margins or moderate interaction regimes, leaving their capability boundaries under extreme conditions insufficiently understood. Autonomous racing provides a stringent testbed by combining high-frequency localization and perception, adversarial interaction, near-saturated vehicle dynamics, and strict safety constraints. Existing systems push high-speed performance but rarely model and refine cognitive and physical limits jointly. Here we show that a world-model-centric autonomous racing agent provides a concrete step toward exploring these coupled limits. The framework learns predictive world models from near-limit successes and failures to capture interaction evolution, ego dynamics, and feasible-motion boundaries, coupling world-state construction, future-aware reasoning, and near-limit control in a closed-loop refinement process. Training data were collected from real-vehicle autonomous racing, where the onboard system maintained robust localization and perception at speeds up to 256.3 km/h and peak lateral acceleration of 26.8 m/s$^2$. In full-scale simulated racing, the well trained world-model-centric agent achieves an 88.3% interaction success rate across various challenging simulated racing scenarios. Closed-loop refinement of the world model and policy further improved utilization of cognitive-physical limits, recovery from failure modes, and generalization across varying conditions and unseen circuits. These results suggest a boundary-aware methodology in which world models help embodied agents represent, predict, and continually refine their capability boundaries for safer real-world deployment.",
+    "published": "2026-08-11T08:01:35Z",
+    "updated": "2026-08-11T08:01:35Z",
+    "primary_arxiv_category": "cs.RO",
+    "arxiv_categories": [
+      "cs.RO"
+    ],
+    "primary_category": "Embodied / Robotics / AR Applications",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "localization",
+      "world model"
+    ],
+    "classification_score": 7,
+    "classification_reasons": [
+      "Matched abstract keyword: localization",
+      "Matched title phrase: world model",
+      "Matched abstract phrase: world model"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10618",
+    "pdf_url": "https://arxiv.org/pdf/2608.10618",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10602",
+    "version": "v1",
+    "title": "Gaussian Sculpting: End-to-End Controllable Surface Reconstruction via Field Optimization",
+    "authors": [
+      "Ke Jiaxin",
+      "Juncheng Liu",
+      "Yi Wang",
+      "Zhouhui Lian",
+      "Bin Liu",
+      "Shengfa Wang",
+      "Xiangjia He"
+    ],
+    "abstract": "3D Gaussian Splatting (3DGS) has recently enabled real-time novel view synthesis with impressive quality. However, it struggles to recover accurate surfaces under limited viewpoints and due to the inherent irregularity of Gaussian primitives. The resulting geometric errors are notoriously difficult to correct manually. To address these issues, we propose Gaussian Sculpting, a fully differentiable end-to-end framework for high-quality surface reconstruction. Our key insight is to anchor Gaussians onto an evolving differentiable surface, allowing them to guide signed distance field (SDF) optimization instead of extracting the surface only during post-processing. To enable stable gradient isolation during joint optimization, we design a bi-level training strategy in which the outer loop optimizes the geometry represented by the SDF, while the inner loop updates the Gaussians with the geometry fixed. We further impose constraints on Gaussian parameters to ensure consistency with the underlying surface, thereby improving both geometric and appearance fidelity during optimization. In addition, we introduce a multi-resolution subdivision scheme based on octree-like partitioning to preserve fine details while reducing memory consumption. Experiments on object-level scenes demonstrate that our method effectively removes redundant surfaces, recovers missing structures caused by limited viewpoints, and achieves strong reconstruction quality even at relatively low resolutions.",
+    "published": "2026-08-11T07:42:24Z",
+    "updated": "2026-08-11T07:42:24Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV",
+      "cs.GR"
+    ],
+    "primary_category": "3D Reconstruction & Multi-view Geometry",
+    "secondary_categories": [
+      "Neural Scene Representations & Rendering"
+    ],
+    "matched_keywords": [
+      "surface reconstruction",
+      "Gaussian Splatting",
+      "3D Gaussian Splatting",
+      "3DGS",
+      "novel view synthesis",
+      "view synthesis",
+      "splatting"
+    ],
+    "classification_score": 6,
+    "classification_reasons": [
+      "Matched title phrase: surface reconstruction",
+      "Matched abstract phrase: surface reconstruction",
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched abstract phrase: 3D Gaussian Splatting",
+      "Matched abstract keyword: 3DGS",
+      "Matched abstract phrase: novel view synthesis",
+      "Matched abstract phrase: view synthesis",
+      "Matched abstract keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10602",
+    "pdf_url": "https://arxiv.org/pdf/2608.10602",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10449",
+    "version": "v1",
+    "title": "PBD-AG: Persistent Baseline-Delta Active Graphs with Uncertainty-Aware Inspection for Long-Horizon Service Robots",
+    "authors": [
+      "Shuo Bao",
+      "Wei Dong",
+      "Shuyue Zhang",
+      "Ming Shang",
+      "Yuchen Huang",
+      "Han Yu",
+      "Chengjie Xu",
+      "Yiheng Bi",
+      "Kai Sun",
+      "Fuchun Sun",
+      "Xinzhou Wang"
+    ],
+    "abstract": "Long-horizon service robots require persistent world models that can be built autonomously in unseen environments and revised as task-relevant objects change. Existing methods rely on online mapping, which accumulates localization and observation errors, static scene representations that cannot capture persistent object changes, or holistic vision-language predictions that lack verifiable 3D geometric evidence. We present PBD-AG, a persistent baseline-delta active graph framework that decouples robot-verified stable fixtures from revisable dynamic object events. Under our framework, the robot autonomously bootstraps the structural baseline from onboard exploration and inspects discovered fixtures to ground hierarchical object beliefs. PBD-AG maintains reliability-weighted object states over geometry, semantics, identity, existence, and support relations, utilizing a geometric visibility gate to mitigate false deletions under occlusion. Inspection viewpoints are selected by a graph-conditioned policy that balances target coverage, travel cost, collision risk, and redundant observation. Simulation experiments in multiple environments and under controlled dynamic evaluation show higher aggregate coarse-fixture F1 than capability-matched controls, as well as stronger identity continuity and event recall. A qualitative physical-robot demonstration further illustrates integration with onboard sensing, providing a traceable world model for long-horizon robotic perception.The project page of PBD-AG is available at https://shuobao214.github.io/PBD-AG/",
+    "published": "2026-08-11T04:03:54Z",
+    "updated": "2026-08-11T04:03:54Z",
+    "primary_arxiv_category": "cs.RO",
+    "arxiv_categories": [
+      "cs.RO"
+    ],
+    "primary_category": "Embodied / Robotics / AR Applications",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "mapping",
+      "localization",
+      "simulation",
+      "world model"
+    ],
+    "classification_score": 5,
+    "classification_reasons": [
+      "Matched abstract keyword: mapping",
+      "Matched abstract keyword: localization",
+      "Matched abstract keyword: simulation",
+      "Matched abstract phrase: world model"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10449",
+    "pdf_url": "https://arxiv.org/pdf/2608.10449",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10423",
+    "version": "v1",
+    "title": "Amulet: Frame Extrapolation Through Sparse Layered Scene Representation and Adaptive Shading",
+    "authors": [
+      "Sebastian Künzel",
+      "Fabian Schmierer",
+      "Sergej Geringer",
+      "Guido Reina",
+      "Daniel Weiskopf",
+      "Dieter Schmalstieg"
+    ],
+    "abstract": "We introduce Amulet, a rendering method that transforms a scene into a sparse, tiled and layered intermediate scene representation (cache) for high-frequency frame extrapolation. In contrast to reprojection-based techniques, Amulet explicitly rasterizes and stores potentially visible geometry in its layered image-space cache, allowing accurate shading and inpainting of newly disoccluded regions without hallucination. Our key contribution is a cache that is predictively filled with shading information for future views, amortized over multiple current frames. Novel views are synthesized by hierarchically traversing the cache front to back and refining stale or missing shading on the fly. Using a predictive, gradient-based scheduler that assigns lifetimes for each tile, we enable adaptive shading updates under motion and dynamic lighting. Amulet decouples the rasterization and shading rate from the refresh rate of the display. In many scenarios, our cache can use a single shaded frame to synthesize multiple extrapolated frames with only a few localized updates. In a typical application, we extrapolate a 60 Hz shading rate to a 240 Hz display. Amulet achieves up to 250 Hz at 4K resolution and is competitive with state-of-the-art frame generation methods, including DLSS and neural-flow approaches, in multiple metrics. Amulet explores the design space of sparse layered image-space representation. It enables accurate, non-neural multi frame extrapolation with explicit handling of disocclusions. Our findings show that Amulet can extrapolate many more frames than contemporary methods with high quality, rivaling latency-bound frame interpolation methods with similar quality in many scenes.",
+    "published": "2026-08-11T03:14:05Z",
+    "updated": "2026-08-11T03:14:05Z",
+    "primary_arxiv_category": "cs.GR",
+    "arxiv_categories": [
+      "cs.GR"
+    ],
+    "primary_category": "Neural Scene Representations & Rendering",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "scene representation",
+      "rendering"
+    ],
+    "classification_score": 7,
+    "classification_reasons": [
+      "Matched title phrase: scene representation",
+      "Matched abstract phrase: scene representation",
+      "Matched abstract keyword: rendering"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10423",
+    "pdf_url": "https://arxiv.org/pdf/2608.10423",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10345",
+    "version": "v1",
+    "title": "CasDeblurGS: Cascaded 2D-to-3D Multi-View Consistency for 3D Gaussian Splatting from Two Blurry Images",
+    "authors": [
+      "Haeyun Choi",
+      "Minhyuk Jang",
+      "I-Gil Kim"
+    ],
+    "abstract": "Free-viewpoint 3D scene media is increasingly important for immersive applications, yet practical capture often suffers from severe view sparsity and motion blur. Although neural rendering has advanced sparse-view synthesis, existing blur-aware methods typically require substantial multi-view redundancy, accurate camera poses, or costly per-scene optimization. We address a stringent yet practical setting: reconstructing a coherent 3D scene from only two motion-blurred images with known intrinsics, without input-view poses, auxiliary sharp images, or per-scene test-time optimization. To this end, we propose CasDeblurGS, a cascaded framework that progressively recovers reliable cross-view information from local 2D correspondences to global 3D guidance. Stage 1 constructs locally reliable guidance through occlusion-aware correspondence filtering, while Stage 2 aggregates the intermediate restorations into a provisional pose-free 3D Gaussian representation whose input-view re-renders provide dense global guidance for final restoration. The resulting views enable a more coherent 3D representation and higher-quality novel-view synthesis. Experiments on real-world and synthetic Deblur-NeRF scenes show consistent gains over strong baselines, improving PSNR by 1.19 dB and 2.11 dB, respectively. Progressive ablations, cross-view correspondence visualization, and camera reprojection analysis further demonstrate improvements in both rendering quality and multi-view geometric consistency.",
+    "published": "2026-08-11T01:13:21Z",
+    "updated": "2026-08-11T01:13:21Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Neural Scene Representations & Rendering",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "NeRF",
+      "Gaussian Splatting",
+      "3D Gaussian Splatting",
+      "neural rendering",
+      "novel view synthesis",
+      "view synthesis",
+      "rendering",
+      "splatting"
+    ],
+    "classification_score": 18,
+    "classification_reasons": [
+      "Matched abstract keyword: NeRF",
+      "Matched title phrase: Gaussian Splatting",
+      "Matched title phrase: 3D Gaussian Splatting",
+      "Matched abstract phrase: neural rendering",
+      "Matched abstract phrase: novel view synthesis",
+      "Matched abstract phrase: view synthesis",
+      "Matched abstract keyword: rendering",
+      "Matched title keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10345",
+    "pdf_url": "https://arxiv.org/pdf/2608.10345",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10286",
+    "version": "v1",
+    "title": "TRACE-GS: On-Policy Trajectory Distillation with Privileged Geometric Conditioning for Sparse-View 3DGS Restoration",
+    "authors": [
+      "Linlian Jiang",
+      "Yuchen Xi",
+      "Sadman Rakib Pinon",
+      "Ruigang Yang",
+      "Yang Wang",
+      "Xinxin Zuo"
+    ],
+    "abstract": "We present TRACE-GS, an on-policy trajectory distillation framework that leverages privileged geometric conditioning at training time, thereby adapting a diffusion prior to sparse-view 3D Gaussian Splatting (3DGS) restoration. Rather than pursuing increasingly sophisticated restoration architectures, we identify a more fundamental limitation shared by existing diffusion-based approaches: supervision at independently noised states does not cover those reached during inference. In sparse-view 3DGS, under-constrained geometry biases denoising from the outset, and the resulting deviations compound along the rollout. TRACE-GS instead performs on-policy trajectory distillation: a teacher conditioned on richer geometry from additional training views supplies targets along the sparse-view student's own rollout, aligning denoising directions and cross-view responses at each visited state. This training-only geometry places TRACE-GS in the learning using privileged information (LUPI) setting. At deployment, only the sparse-view student is retained, and its restored renderings serve as pseudo-observations for 3DGS refinement. To the best of our knowledge, TRACE-GS is the first to derive on-policy supervision from privileged geometry for sparse-view 3DGS restoration, achieving consistent gains and strong generalization across datasets and sparse-view settings.",
+    "published": "2026-08-10T22:43:06Z",
+    "updated": "2026-08-10T22:43:06Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Neural Scene Representations & Rendering",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "Gaussian Splatting",
+      "3D Gaussian Splatting",
+      "3DGS",
+      "splatting"
+    ],
+    "classification_score": 8,
+    "classification_reasons": [
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched abstract phrase: 3D Gaussian Splatting",
+      "Matched title keyword: 3DGS",
+      "Matched abstract keyword: 3DGS",
+      "Matched abstract keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10286",
+    "pdf_url": "https://arxiv.org/pdf/2608.10286",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10107",
+    "version": "v1",
+    "title": "4D-WAM: 4D Consistent World Modeling for Autonomous Driving",
+    "authors": [
+      "Jiacheng Fu",
+      "Yibo Yuan",
+      "Meng Tian",
+      "Yue Li",
+      "Jiangtong Zhu",
+      "Jianhua Han",
+      "Yueyi Zhang",
+      "Jianwu Fang",
+      "Jianru Xue",
+      "Hang Xu",
+      "Zhiwei Xiong"
+    ],
+    "abstract": "Emerging World-Action Models (WAMs) have demonstrated promising performance in autonomous driving by jointly modeling future driving scene evolution and trajectory planning. However, existing WAMs are typically trained with video data, which is only 2D projections of the underlying 4D driving scene. Consequently, WAMs fail to understand and capture the structure of 4D scenes and thus generate visually plausible yet 4D inconsistent future predictions that mislead downstream planning. To alleviate this issue, we present 4D-WAM, a model that leverages geometric foundation models for training-time supervision to enable 4D consistent world modeling. Specifically, we feed WAM-predicted future frames into a geometric foundation model, and use 4D-aware responses to define a 4D consistency loss. This loss encourages the model to understand, represent, and predict physically consistent 4D scenes during training, without additional inference cost. Moreover, we identify an early-decision phenomenon in WAMs and propose a decision-oriented timestep sampling strategy that emphasizes supervision at early, high-noise stages, where driving decisions are primarily formed. By propagating 4D supervision to this critical decision-formation phase, the proposed strategy further improves trajectory planning. Extensive experiments demonstrate that 4D-WAM effectively models 4D consistent scene evolution and achieves state-of-the-art performance on challenging NAVSIM-v1 and NAVSIM-v2 benchmarks.",
+    "published": "2026-08-10T18:14:52Z",
+    "updated": "2026-08-10T18:14:52Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Embodied / Robotics / AR Applications",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "geometric foundation model",
+      "autonomous driving",
+      "driving scene",
+      "world modeling"
+    ],
+    "classification_score": 14,
+    "classification_reasons": [
+      "Matched title phrase: autonomous driving",
+      "Matched abstract phrase: autonomous driving",
+      "Matched abstract phrase: driving scene",
+      "Matched title phrase: world modeling",
+      "Matched abstract phrase: world modeling"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10107",
+    "pdf_url": "https://arxiv.org/pdf/2608.10107",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
+    "arxiv_id": "2608.10057",
+    "version": "v1",
+    "title": "LEGO: Leveled Language Gaussian Splatting",
+    "authors": [
+      "Yuning Peng",
+      "Haiping Wang",
+      "Yuan Liu",
+      "Yipeng Lu",
+      "Zhen Dong",
+      "Bisheng Yang"
+    ],
+    "abstract": "We introduce LEGO for advanced open-vocabulary scene understanding. Beyond basic concept recognition, its core innovation lies in capturing the intrinsic semantic hierarchies within the scene, such as the \"flowerpot -> bouquet -> bud -> petal\" lineage. While foundation models like SAM can identify multi-granular structures in 2D, their partitions are strictly perspective-bound and lack cross-view consensus. LEGO self-adaptively re-grades volatile multi-view SAM granularities into a unified, 3D-consistent hierarchy. This provides precise supervision for the structurally coherent, multi-level segmentation of 3D scenes. By grounding these segments with CLIP embeddings, LEGO recovers open-vocabulary semantic logic across hierarchical levels. Furthermore, by incorporating spatial relationships, we elevate these segments into level-wise language scene graphs, effectively empowering Large Language Models to perform complex, context-aware spatial reasoning and precise visual grounding. Experimental results demonstrate that LEGO establishes new state-of-the-art performance across both promptable and open-vocabulary 3D segmentation benchmarks, exhibiting advanced hierarchical scene decomposition and context-aware spatial reasoning.",
+    "published": "2026-08-10T17:59:21Z",
+    "updated": "2026-08-10T17:59:21Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Neural Scene Representations & Rendering",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "Gaussian Splatting",
+      "splatting",
+      "scene understanding"
+    ],
+    "classification_score": 6,
+    "classification_reasons": [
+      "Matched title phrase: Gaussian Splatting",
+      "Matched title keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.10057",
+    "pdf_url": "https://arxiv.org/pdf/2608.10057",
+    "first_seen": "2026-08-12T09:43:56-04:00",
+    "last_seen": "2026-08-12T09:43:56-04:00"
+  },
+  {
     "arxiv_id": "2608.09771",
     "version": "v1",
     "title": "SLIM-0.5B: Learning Action-Grounded Predictive Latents for Robot Manipulation",
@@ -37,7 +791,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.09771",
     "pdf_url": "https://arxiv.org/pdf/2608.09771",
     "first_seen": "2026-08-11T09:40:22-04:00",
-    "last_seen": "2026-08-11T09:40:22-04:00"
+    "last_seen": "2026-08-12T09:43:56-04:00"
   },
   {
     "arxiv_id": "2608.09620",
@@ -73,7 +827,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.09620",
     "pdf_url": "https://arxiv.org/pdf/2608.09620",
     "first_seen": "2026-08-11T09:40:22-04:00",
-    "last_seen": "2026-08-11T09:40:22-04:00"
+    "last_seen": "2026-08-12T09:43:56-04:00"
   },
   {
     "arxiv_id": "2608.09613",
@@ -111,7 +865,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.09613",
     "pdf_url": "https://arxiv.org/pdf/2608.09613",
     "first_seen": "2026-08-11T09:40:22-04:00",
-    "last_seen": "2026-08-11T09:40:22-04:00"
+    "last_seen": "2026-08-12T09:43:56-04:00"
   },
   {
     "arxiv_id": "2608.09579",
@@ -145,7 +899,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.09579",
     "pdf_url": "https://arxiv.org/pdf/2608.09579",
     "first_seen": "2026-08-11T09:40:22-04:00",
-    "last_seen": "2026-08-11T09:40:22-04:00"
+    "last_seen": "2026-08-12T09:43:56-04:00"
   },
   {
     "arxiv_id": "2608.09520",
@@ -183,7 +937,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.09520",
     "pdf_url": "https://arxiv.org/pdf/2608.09520",
     "first_seen": "2026-08-11T09:40:22-04:00",
-    "last_seen": "2026-08-11T09:40:22-04:00"
+    "last_seen": "2026-08-12T09:43:56-04:00"
   },
   {
     "arxiv_id": "2608.09515",
@@ -218,11 +972,11 @@
     "abstract_url": "https://arxiv.org/abs/2608.09515",
     "pdf_url": "https://arxiv.org/pdf/2608.09515",
     "first_seen": "2026-08-11T09:40:22-04:00",
-    "last_seen": "2026-08-11T09:40:22-04:00"
+    "last_seen": "2026-08-12T09:43:56-04:00"
   },
   {
     "arxiv_id": "2608.09449",
-    "version": "v1",
+    "version": "v2",
     "title": "Sekai2: From World Exploration to Interactive World Modeling",
     "authors": [
       "Kang He",
@@ -234,7 +988,7 @@
     ],
     "abstract": "Video world models must capture how scenes evolve over time and across viewpoints. Training them for long-horizon generation and camera control therefore benefits from long videos paired with camera trajectories and temporally grounded semantics. Existing corpora rarely offer the three together: large-scale web video provides broad visual diversity but no trajectories or time-aligned text, while pose-annotated datasets are typically short-range or reconstruction-oriented. We introduce Sekai2, a multi-source real-world video dataset that carries the world-exploration footage of Sekai toward interactive world modeling. The release contains 128,892 clips totaling 2,826 hours from 10,428 source videos across 113 countries or regions, and is deliberately weighted toward sustained observation: under a common 120-second decomposition, 43,594 segments reach the full two minutes and account for 51.4% of all footage. Every clip includes a released camera trajectory and hierarchical annotations disentangling subject motion, environment dynamics, static scene content, and camera behavior, resulting in 649,597 temporally grounded segments. Crucially, we further introduce 982 panoramic sequences captured along non-linear trajectories with loops and revisits. These revisits provide repeated observations of the same locations across time and viewpoints, offering essential supervision for learning persistent scene representations, long-term spatial memory, and geometrically consistent world models. Corpus-scale analyses demonstrate complete pose-and-caption coverage, broad geographic and semantic diversity, varied camera trajectories, and highly non-redundant temporal descriptions. Together, these properties make Sekai2 a scalable resource for long-horizon video generation, camera-controllable synthesis, and interactive world-model pre-training.",
     "published": "2026-08-10T11:23:01Z",
-    "updated": "2026-08-10T11:23:01Z",
+    "updated": "2026-08-11T09:05:36Z",
     "primary_arxiv_category": "cs.CV",
     "arxiv_categories": [
       "cs.CV"
@@ -255,7 +1009,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.09449",
     "pdf_url": "https://arxiv.org/pdf/2608.09449",
     "first_seen": "2026-08-11T09:40:22-04:00",
-    "last_seen": "2026-08-11T09:40:22-04:00"
+    "last_seen": "2026-08-12T09:43:56-04:00"
   },
   {
     "arxiv_id": "2608.09402",
@@ -290,7 +1044,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.09402",
     "pdf_url": "https://arxiv.org/pdf/2608.09402",
     "first_seen": "2026-08-11T09:40:22-04:00",
-    "last_seen": "2026-08-11T09:40:22-04:00"
+    "last_seen": "2026-08-12T09:43:56-04:00"
   },
   {
     "arxiv_id": "2608.09392",
@@ -323,7 +1077,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.09392",
     "pdf_url": "https://arxiv.org/pdf/2608.09392",
     "first_seen": "2026-08-11T09:40:22-04:00",
-    "last_seen": "2026-08-11T09:40:22-04:00"
+    "last_seen": "2026-08-12T09:43:56-04:00"
   },
   {
     "arxiv_id": "2608.09146",
@@ -369,7 +1123,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.09146",
     "pdf_url": "https://arxiv.org/pdf/2608.09146",
     "first_seen": "2026-08-11T09:40:22-04:00",
-    "last_seen": "2026-08-11T09:40:22-04:00"
+    "last_seen": "2026-08-12T09:43:56-04:00"
   },
   {
     "arxiv_id": "2608.09112",
@@ -405,7 +1159,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.09112",
     "pdf_url": "https://arxiv.org/pdf/2608.09112",
     "first_seen": "2026-08-11T09:40:22-04:00",
-    "last_seen": "2026-08-11T09:40:22-04:00"
+    "last_seen": "2026-08-12T09:43:56-04:00"
   },
   {
     "arxiv_id": "2608.09110",
@@ -447,7 +1201,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.09110",
     "pdf_url": "https://arxiv.org/pdf/2608.09110",
     "first_seen": "2026-08-11T09:40:22-04:00",
-    "last_seen": "2026-08-11T09:40:22-04:00"
+    "last_seen": "2026-08-12T09:43:56-04:00"
   },
   {
     "arxiv_id": "2608.09098",
@@ -480,7 +1234,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.09098",
     "pdf_url": "https://arxiv.org/pdf/2608.09098",
     "first_seen": "2026-08-11T09:40:22-04:00",
-    "last_seen": "2026-08-11T09:40:22-04:00"
+    "last_seen": "2026-08-12T09:43:56-04:00"
   },
   {
     "arxiv_id": "2608.08659",
@@ -1340,502 +2094,5 @@
     "pdf_url": "https://arxiv.org/pdf/2608.04865",
     "first_seen": "2026-08-06T10:33:13-04:00",
     "last_seen": "2026-08-08T09:10:17-04:00"
-  },
-  {
-    "arxiv_id": "2608.04842",
-    "version": "v1",
-    "title": "RORA: Realistic Object Reconstruction with Articulation",
-    "authors": [
-      "Hyesung Lee",
-      "Youngseon Lee",
-      "Kyutae Lee",
-      "Dongjun Lee",
-      "Yongseok Lee"
-    ],
-    "abstract": "Replicating real-world environments into simulation by realistic visual representation like NeRF and 3D Gaussian Splatting (3DGS) has emerged as an effective strategy to reduce the sim-to-real gap in robot learning. However, implementing object articulation during the real-to-sim process is still a challenging task. Existing motion tracking or learning based articulation methods shows low success rates on complex kinematic structures having multiple joints. Furthermore, those methods require scan of dynamic motion of objects, which makes reconstruction process much complicated. In this work, we propose the first end-to-end pipeline that reconstructs simulation-ready assets with accurate articulation from a single static object video input through suggestion based human-in-the-loop process. Our approach exports a hybrid representation combining 3DGS for photorealistic rendering and mesh-based geometry for physical interaction. In the reconstruction process, our pipeline performs convex decomposition followed by user grouping for intuitive part segmentation, subsequently binding 3D Gaussians to the corresponding mesh parts. An Automatic Joint Suggestion Algorithm then calculates candidate joint axes from local boundary geometries and presents them to users for efficient articulated asset reconstruction. We have shown that our method achieves precise articulation results on partnet-mobility-v0 dataset and real objects. Additionally we presented a potential usage of our framework on robot learning, deploying the reconstructed assets in Unreal Engine and NVIDIA Isaac Sim, demonstrating real-time dexterous hand manipulation tasks.",
-    "published": "2026-08-05T13:36:58Z",
-    "updated": "2026-08-05T13:36:58Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO",
-      "cs.GR"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "NeRF",
-      "Gaussian Splatting",
-      "3D Gaussian Splatting",
-      "3DGS",
-      "rendering",
-      "splatting",
-      "manipulation",
-      "simulation"
-    ],
-    "classification_score": 8,
-    "classification_reasons": [
-      "Matched abstract keyword: NeRF",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: 3D Gaussian Splatting",
-      "Matched abstract keyword: 3DGS",
-      "Matched abstract keyword: rendering",
-      "Matched abstract keyword: splatting"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.04842",
-    "pdf_url": "https://arxiv.org/pdf/2608.04842",
-    "first_seen": "2026-08-06T10:33:13-04:00",
-    "last_seen": "2026-08-08T09:10:17-04:00"
-  },
-  {
-    "arxiv_id": "2608.04737",
-    "version": "v1",
-    "title": "Dense Metric Depth Completion from Sparse Direct Time-of-Flight Sensors",
-    "authors": [
-      "Hakyeong Kim",
-      "Ruicheng Wang",
-      "Chengtang Yao",
-      "Jiaolong Yang",
-      "Min H. Kim"
-    ],
-    "abstract": "Direct Time-of-Flight (dToF) sensors provide highly accurate metric depth and are more robust than indirect ToF systems in challenging real-world conditions. However, their high manufacturing cost and limited photodiode array size produce depth maps that are extremely sparse, low-resolution, and noisy, making them unsuitable for VR/XR, robotics, and 3D perception tasks that require dense metric depth. Existing monocular and depth completion methods struggle to handle the unique sampling patterns and hardware artifacts of dToF devices, and their performance often deteriorates significantly under severe sparsity or noise. We present a generalizable framework for dense metric depth completion from sparse dToF measurements, capable of operating across diverse sensor types, sparsity levels, and noise conditions. Our model employs a depth-guided dual-branch Vision Transformer encoder that processes RGB images and sparse dToF measurements separately, while a masked joint attention module allows depth tokens to reliably guide image features without being overwritten by them. A lightweight decoder reconstructs dense metric depth efficiently, without diffusion-based or refinement-heavy post-processing. To address the scarcity of paired training data, we introduce a comprehensive dToF simulation pipeline that reproduces the characteristics of flash, sub-VGA flash, and rotating sensors, including hardware-induced degradation, irregular sparsity, and realistic noise distributions. Trained entirely on synthetic data, our model achieves strong zero-shot generalization across 6 datasets and 3 real dToF devices, outperforming state-of-the-art approaches in both accuracy and computational efficiency. This establishes a robust and practical solution for dense metric depth completion from sparse direct ToF sensors. Our code and models are open-sourced. See https://vclab.kaist.ac.kr/cvpr2026p3.",
-    "published": "2026-08-05T12:02:09Z",
-    "updated": "2026-08-05T12:02:09Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.GR"
-    ],
-    "primary_category": "Geometry Foundation Models",
-    "secondary_categories": [
-      "Embodied / Robotics / AR Applications"
-    ],
-    "matched_keywords": [
-      "metric depth",
-      "robotics",
-      "VR",
-      "simulation"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched title phrase: metric depth",
-      "Matched abstract phrase: metric depth",
-      "Matched abstract keyword: robotics",
-      "Matched abstract keyword: VR",
-      "Matched abstract keyword: simulation"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.04737",
-    "pdf_url": "https://arxiv.org/pdf/2608.04737",
-    "first_seen": "2026-08-06T10:33:13-04:00",
-    "last_seen": "2026-08-07T09:36:40-04:00"
-  },
-  {
-    "arxiv_id": "2608.04701",
-    "version": "v1",
-    "title": "UniWorld-View: Large-Baseline View Synthesis via Video Diffusion Models",
-    "authors": [
-      "Haiyang Zhou",
-      "Wangbo Yu",
-      "Chaoran Feng",
-      "Xunyu Zhou",
-      "Yonghong Tian",
-      "Li Yuan"
-    ],
-    "abstract": "The abundance of casually captured monocular videos and images on social media provides a valuable source for immersive content creation, where generating novel views from such sparse observations can greatly enhance user experiences. However, producing photorealistic and geometrically consistent views with precise camera control remains challenging when input coverage is extremely limited. Reconstruction-based approaches such as NeRF and 3D Gaussian Splatting (3DGS) deteriorate severely under sparse inputs and fail to explicitly handle occlusions. Generative methods ease data requirements but still struggle with large-baseline view synthesis due to inaccurate or implicit geometric guidance. To overcome these limitations, we introduce UniWorld-View, a unified framework for controllable large-baseline novel view synthesis from monocular inputs. UniWorld-View integrates explicit 3D guidance with generative diffusion modeling to enable precise camera control and geometrically consistent view generation. The geometric guidance is obtained through an occlusion-aware point cloud rendering strategy that resolves visibility ambiguities and provides accurate priors for diffusion-based synthesis. By coupling this rendering strategy with powerful video diffusion backbones, UniWorld-View achieves high-fidelity novel view generation even under extreme camera motions and wide-baseline changes, and can further provide multi-view videos for downstream dynamic 3DGS reconstruction. Experiments on the WorldScore benchmark and zero-shot NVS benchmarks demonstrate the effectiveness of UniWorld-View in controllability, geometric consistency, and visual fidelity.",
-    "published": "2026-08-05T11:10:52Z",
-    "updated": "2026-08-05T11:10:52Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "NeRF",
-      "Gaussian Splatting",
-      "3D Gaussian Splatting",
-      "3DGS",
-      "novel view synthesis",
-      "view synthesis",
-      "rendering",
-      "splatting"
-    ],
-    "classification_score": 16,
-    "classification_reasons": [
-      "Matched abstract keyword: NeRF",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: 3D Gaussian Splatting",
-      "Matched abstract keyword: 3DGS",
-      "Matched abstract phrase: novel view synthesis",
-      "Matched title phrase: view synthesis",
-      "Matched abstract phrase: view synthesis",
-      "Matched abstract keyword: rendering",
-      "Matched abstract keyword: splatting"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.04701",
-    "pdf_url": "https://arxiv.org/pdf/2608.04701",
-    "first_seen": "2026-08-06T10:33:13-04:00",
-    "last_seen": "2026-08-07T09:36:40-04:00"
-  },
-  {
-    "arxiv_id": "2608.04673",
-    "version": "v1",
-    "title": "Differential 6-DOF Pose Estimation with Provable First-Order Immunity to Camera Calibration Errors",
-    "authors": [
-      "Yueqiang Zhang",
-      "Liang Deng",
-      "Yi Zhang",
-      "Baoqiong Wang",
-      "Wenjun Chen",
-      "Shuixin Pan",
-      "Yulan Guo",
-      "Qifeng Yu"
-    ],
-    "abstract": "Accurate six-degree-of-freedom (6-DOF) motion estimation is essential for robotic manipulation, autonomous systems, and structural displacement monitoring. Conventional 3D-2D methods estimate absolute camera poses independently at each time and recover platform motion through camera-to-platform extrinsics, making them sensitive to extrinsic calibration errors, especially for micromotion. We present a differential pose estimation method that directly recovers platform motion from inter-frame image displacements and known 3D control points. By differencing perspective projection equations, using a depth-invariance approximation, and modeling motion on SE(3), the method avoids independent absolute-pose estimation and supports both monocular and multi-camera systems. We prove that translational extrinsic errors cancel exactly, while rotational errors induce a bounded perturbation determined by calibration error, motion magnitude, and observation geometry. We also derive generic observability conditions, a Cramer-Rao lower bound, and a bias-eliminated consistent estimator, and characterize the validity limits of the approximations. Extensive synthetic and real-world experiments establish a new state of the art for 6-DOF platform micromotion estimation, outperforming representative PnP and generalized-PnP methods in accuracy, calibration robustness, and computational efficiency. With five control points and 0.5-pixel image noise, the monocular solver obtains a combined pitch-yaw rotation RMSE of 10.09 arcsec, a translation RMSE of 3.70 mm, and a runtime of 0.34 ms. The binocular solver achieves a rotation RMSE of 10.58 arcsec, a translation RMSE of 3.91 mm, and a runtime of 0.27 ms. Code will be released upon publication at https://github.com/zyoungszu/pami2026.",
-    "published": "2026-08-05T10:36:04Z",
-    "updated": "2026-08-05T10:36:04Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.RO"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "pose estimation",
-      "camera calibration",
-      "manipulation"
-    ],
-    "classification_score": 10,
-    "classification_reasons": [
-      "Matched title phrase: pose estimation",
-      "Matched abstract phrase: pose estimation",
-      "Matched title phrase: camera calibration"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.04673",
-    "pdf_url": "https://arxiv.org/pdf/2608.04673",
-    "first_seen": "2026-08-06T10:33:13-04:00",
-    "last_seen": "2026-08-07T09:36:40-04:00"
-  },
-  {
-    "arxiv_id": "2608.05215",
-    "version": "v1",
-    "title": "VLAff: Vision-Language-Affordance Model for Unified Actionable Affordances",
-    "authors": [
-      "Jihoon Oh",
-      "Kento Kawaharazuka",
-      "Kei Okada"
-    ],
-    "abstract": "Learning manipulation skills from human videos is promising for scalable robot learning. However, the embodiment mismatch between humans and robots makes this challenging. One promising solution is to learn object-centric actionable affordances that are embodiment-agnostic. In this work, we propose a framework that leverages egocentric human videos with state-of-the-art 3D Structure-from-Motion and hand mesh reconstruction to extract actionable affordances such as visual, grasp, and trajectory affordances that explicitly encode where to interact, how to grasp, and how to move. We construct EgoAffordance, a large-scale dataset comprising 204K episodes with 5.6M visual affordances and 11.6M grasp and trajectory affordances. Building on this, we introduce VLAff, a large vision-language model-based unified foundation model that learns cross-modal correlations across all actionable affordances. Given a visual observation and instruction, VLAff generates visual affordance heatmaps, grasp poses, and trajectories, which are then converted into directly executable actions by utilizing 3D scene information. Through extensive experiments, we demonstrate that VLAff not only achieves state-of-the-art performance on visual affordance prediction, but can also be effectively applied to real robot applications such as zero-shot manipulation and affordance-guided robot learning.",
-    "published": "2026-08-05T10:15:55Z",
-    "updated": "2026-08-05T10:15:55Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO",
-      "cs.CV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "structure from motion",
-      "mesh reconstruction",
-      "manipulation"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Rescued from exclusion by geometry keywords: reconstruction, mesh reconstruction",
-      "Matched abstract phrase: structure from motion",
-      "Matched abstract phrase: mesh reconstruction"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.05215",
-    "pdf_url": "https://arxiv.org/pdf/2608.05215",
-    "first_seen": "2026-08-07T09:36:40-04:00",
-    "last_seen": "2026-08-07T09:36:40-04:00"
-  },
-  {
-    "arxiv_id": "2608.04633",
-    "version": "v1",
-    "title": "Mind-VLA: Instruction-Aware Spatial Representation Alignment for Vision-Language-Action Models",
-    "authors": [
-      "Xingyu Ding",
-      "Yuzhong Zhao",
-      "Yang Wu",
-      "Chaoyang Zhao",
-      "Chunhai Zhao",
-      "Yifan Zhang",
-      "Jian Cheng"
-    ],
-    "abstract": "Recent Vision-Language-Action (VLA) methods improve generalization by aligning their representations with 3D scene geometry. However, these methods are fundamentally instruction-agnostic: the representations align the entire scene uniformly, neglecting the 3D geometry of the specific target object designated by the language instruction. This causes failures on fine-grained manipulation and target occlusion tasks, where success depends on accurate 3D understanding of the target object rather than the entire scene. To address this, we present Mind-VLA, an instruction-aware spatial representation alignment method for VLA models. Specifically, Mind-VLA first obtains the target object specified by the language instruction, then prepares its target-object tri-view and extracts the corresponding VAE and VGGT features. Finally, the latent representation of the VLA model is aligned with these features to enable instruction-aware 3D understanding. Mind-VLA reaches 93.9% on LIBERO and 4.47 on CALVIN with a compact 345M-parameter backbone. On real-robot tasks with target occlusion, Mind-VLA reaches 54% average success, outperforming the best-performing instruction-agnostic method in real-robot comparison by 32 percentage points. Code will be publicly available.",
-    "published": "2026-08-05T09:49:02Z",
-    "updated": "2026-08-05T09:49:02Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO"
-    ],
-    "primary_category": "Geometry Foundation Models",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "VGGT",
-      "manipulation"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched representative model name in abstract: VGGT"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.04633",
-    "pdf_url": "https://arxiv.org/pdf/2608.04633",
-    "first_seen": "2026-08-06T10:33:13-04:00",
-    "last_seen": "2026-08-07T09:36:40-04:00"
-  },
-  {
-    "arxiv_id": "2608.04610",
-    "version": "v1",
-    "title": "HiSC: Hierarchical Spatial Clustering Token Compression for Efficient 3D Scene Understanding",
-    "authors": [
-      "Jiuhe Qu",
-      "Yingping Liang",
-      "Ying Fu"
-    ],
-    "abstract": "3D vision-language models (3D VLMs) enable spatial reasoning over multi-view scenes but suffer from substantial token redundancy due to duplicated observations and large uninformative regions, leading to high computational cost. Although visual token compression has shown promise in accelerating 2D VLMs, it fails to capture the structured nature of 3D scenes and leads to incomplete spatial coverage and loss of fine-grained details. In this paper, we propose \\textbf{HiSC}, a training-free framework for hierarchical spatial clustering token compression in 3D VLMs. HiSC lifts token compression from token-level selection to cluster-level processing by organizing tokens into spatially grounded clusters using joint geometric and semantic cues. Specifically, we first introduce a \\textbf{spatial graph-based merging (SGraM) strategy} that models cross-view redundancy as spatial connectivity and consolidates physically consistent regions, effectively merging extremely similar redundant tokens prior to LLM inference. We then propose a \\textbf{spatial clustering-based pruning (SCluP) paradigm} within LLM inference, which performs hierarchical compression across clusters and within clusters, preserving object instance completeness while retaining fine-grained details for important regions. Extensive experiments on diverse 3D reasoning benchmarks show validate the effectiveness of HiSC, particularly under high visual token pruning ratios. Besides, HiSC achieves over 90\\% token reduction with minimal performance degradation. Code is accessible at https://github.com/elecreak/HiSC.",
-    "published": "2026-08-05T09:15:43Z",
-    "updated": "2026-08-05T09:15:43Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "scene understanding"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Rescued from exclusion by geometry keywords: geometric",
-      "Matched title phrase: scene understanding"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.04610",
-    "pdf_url": "https://arxiv.org/pdf/2608.04610",
-    "first_seen": "2026-08-06T10:33:13-04:00",
-    "last_seen": "2026-08-07T09:36:40-04:00"
-  },
-  {
-    "arxiv_id": "2608.04581",
-    "version": "v1",
-    "title": "ACA-GS: Adaptive-Capacity Anchored Gaussian Splatting for Compact Dynamic Radiance Fields",
-    "authors": [
-      "Seunghyeon Song",
-      "Joo Chan Lee",
-      "Chanung Park",
-      "Jun Young Jeong",
-      "Minseo Lee",
-      "Eunbyung Park",
-      "Jong Hwan Ko"
-    ],
-    "abstract": "Recent advances in 4D Gaussian Splatting (4DGS) enable high-fidelity, real-time spatiotemporal rendering, but expose a fundamental trade-off between motion expressiveness and storage efficiency. While anchor-based designs achieve compactness through anchor-level parameter sharing, their rigid uniform parametrization enforces fixed Neural Gaussian counts and feature budgets per anchor. Consequently, insufficient fidelity is addressed by excessive anchor density, rather than lightweight, targeted increases in Neural Gaussian count or feature capacity, resulting in memory waste. To overcome this rigidity, we introduce an adaptive-capacity anchor-based framework that dynamically allocates the representational capacity based on local spatiotemporal demands. Adaptive Anchor Cardinality varies the number of Neural Gaussians per anchor, concentrating primitives in regions of high geometric or motion complexity while suppressing redundancy. In parallel, Adaptive Anchor Feature Masking modulates anchor-level feature channels, assigning rich features to complex regions and lightweight representations to simpler ones. Experiments on MPEG, Panoptic Sports, and N3DV datasets demonstrate substantial storage reduction without degrading visual quality. Notably, on challenging MPEG sequences with complex motion, our method achieves up to 1.5x higher compression than state-of-the-art anchor-based methods while preserving comparable quality.",
-    "published": "2026-08-05T08:47:48Z",
-    "updated": "2026-08-05T08:47:48Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "4D Gaussian",
-      "Gaussian Splatting",
-      "rendering",
-      "radiance",
-      "splatting"
-    ],
-    "classification_score": 14,
-    "classification_reasons": [
-      "Matched title phrase: Gaussian Splatting",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: 4D Gaussian",
-      "Matched abstract keyword: rendering",
-      "Matched title keyword: radiance",
-      "Matched title keyword: splatting",
-      "Matched abstract keyword: splatting"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.04581",
-    "pdf_url": "https://arxiv.org/pdf/2608.04581",
-    "first_seen": "2026-08-06T10:33:13-04:00",
-    "last_seen": "2026-08-07T09:36:40-04:00"
-  },
-  {
-    "arxiv_id": "2608.04568",
-    "version": "v1",
-    "title": "Talk2Sensors: 3D Visual Grounding in Autonomous Driving via Sensor-Adaptive Physical Cue Matching",
-    "authors": [
-      "Runwei Guan",
-      "Di Tian",
-      "Ningwei Ouyang",
-      "Ruixiao Zhang",
-      "Shaofeng Liang",
-      "Haocheng Zhao",
-      "Lianqing Zheng",
-      "Xiaokai Bai",
-      "Guotao Wang",
-      "Daizong Liu",
-      "Henghui Ding",
-      "Hui Xiong"
-    ],
-    "abstract": "As a key capability for embodied intelligence, 3D visual grounding (3DVG) has been predominantly studied in indoor scenes with RGB-D or point-cloud inputs, while existing outdoor extensions largely rely on monocular images alone. Both settings fall short of real-world outdoor perception, where heterogeneous sensors capture complementary yet distinct physical properties, such as visual texture, 3D geometry, and object kinematics, that are indispensable for flexible and robust query-adaptive grounding but remain under-exploited. To bridge this gap, we introduce Talk2Sensors, the first multi-sensor 3D visual grounding dataset built upon camera, LiDAR, and 4D radar. It contains 8,682 language instructions and 20,558 referred objects, with diverse prompts explicitly aligned with sensor-specific physical cues. Furthermore, we propose TSFormer, a unified Transformer-based framework for language-guided 3D visual grounding in autonomous driving. TSFormer adopts a coarse-to-fine property-aware fusion strategy: the Language-Routed Property Sampler first performs coarse text-conditioned feature retrieval by modulating sensor sampling weights with query-level linguistic cues, while the subsequent Sparse-Preserving Modality Arbiter module conducts fine-grained modality arbitration and text-guided refinement to determine the precise referred spatial location. This design enables dynamic routing of appearance, geometry, and motion cues according to the semantic requirements of each prompt, preventing dense modalities from overwhelming sparse but critical sensor signals. Extensive experiments demonstrate that TSFormer achieves state-of-the-art performance across multiple benchmarks: it improves over the strongest baseline by 8.05 mAP on Talk2Sensors, and transfers to the monocular Mono3DRefer benchmark with 53.05\\% Acc@0.5.",
-    "published": "2026-08-05T07:58:35Z",
-    "updated": "2026-08-05T07:58:35Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "autonomous driving"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched title phrase: autonomous driving",
-      "Matched abstract phrase: autonomous driving"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.04568",
-    "pdf_url": "https://arxiv.org/pdf/2608.04568",
-    "first_seen": "2026-08-06T10:33:13-04:00",
-    "last_seen": "2026-08-07T09:36:40-04:00"
-  },
-  {
-    "arxiv_id": "2608.04560",
-    "version": "v1",
-    "title": "OutLangSplat: 3D Language Gaussian Splatting for UAV Outdoor Scenes",
-    "authors": [
-      "Xia Yan",
-      "He Wu",
-      "Yanghui Xu",
-      "Zizhao Wu",
-      "Jiazhou Chen"
-    ],
-    "abstract": "3D Language Gaussian Splatting embeds open-vocabulary language features into 3D Gaussian Splatting, providing an efficient explicit representation for text-driven 3D scene understanding. However, existing methods are limited to indoor or small-scale scenes, and tend to fail in Unmanned Aerial Vehicle (UAV) outdoor scenes, where severe occlusions and long distance viewpoints often lead to incorrect semantic activations and missing target responses. In this paper, we present OutLangSplat which adapts language Gaussian representations to UAV outdoor scenes by improving feature representation and aggregation reliability. For the feature representation, a 2D-3D dual-branch representation with region-based alignment and fusion is designed to improve spatial consistency, reducing incomplete target responses and background misactivations. For the feature aggregation, we introduce a training-free contribution and consistency-aware Gaussian feature aggregation strategy that leverages pixel contribution reliability and cross-view semantic consistency to suppress unreliable responses from noisy viewpoints. A new dataset is provided by manually annotating various objects on four real-world public UAV outdoor scene datasets. To the best of our knowledge, it is the first accessible dataset of open-vocabulary 3D scene understanding for UAV outdoor scenes. Quantitative evaluations and ablation studies demonstrate that OutLangSplat outperforms SOTA methods on both open-vocabulary semantic segmentation and instance localization tasks. The datasets and codes will be open-sourced.",
-    "published": "2026-08-05T07:54:22Z",
-    "updated": "2026-08-05T07:54:22Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.GR"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [
-      "Embodied / Robotics / AR Applications"
-    ],
-    "matched_keywords": [
-      "Gaussian Splatting",
-      "3D Gaussian Splatting",
-      "splatting",
-      "localization",
-      "scene understanding"
-    ],
-    "classification_score": 11,
-    "classification_reasons": [
-      "Rescued from exclusion by geometry keywords: Gaussian Splatting, localization",
-      "Matched title phrase: Gaussian Splatting",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: 3D Gaussian Splatting",
-      "Matched title keyword: splatting",
-      "Matched abstract keyword: splatting",
-      "Matched abstract keyword: localization",
-      "Matched abstract phrase: scene understanding"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.04560",
-    "pdf_url": "https://arxiv.org/pdf/2608.04560",
-    "first_seen": "2026-08-06T10:33:13-04:00",
-    "last_seen": "2026-08-07T09:36:40-04:00"
-  },
-  {
-    "arxiv_id": "2608.03851",
-    "version": "v1",
-    "title": "LiteMVS: Efficient Multi-View Stereo with Foundation Distillation and Expert Aggregation",
-    "authors": [
-      "Tianbao Zhang",
-      "Zeyu Liu",
-      "Shuyu Wu",
-      "Fanxing Li",
-      "Zhaoxin Fan",
-      "Wenjun Wu",
-      "Danping Zou"
-    ],
-    "abstract": "Real-time 3D perception is crucial for robotics, augmented reality, and embodied intelligence applications. Existing multi-view stereo (MVS) methods primarily rely on geometric correspondences, which often fail in textureless or repetitive regions, while monocular depth models leverage strong image-level priors but lack robust multi-view geometric constraints. More importantly, in robotics and embodied manipulation scenarios, high-quality 3D geometry is not only essential for static reconstruction, but also serves as a critical foundation for learning temporally consistent 4D representations. To obtain visual representations with stronger structural awareness and greater potential for spatiotemporal extension, we present LiteMVS, a lightweight multi-view depth estimation model that integrates plane-sweep geometric reasoning with strong monocular semantic and structural priors. The central idea of LiteMVS is to efficiently inject high-level monocular knowledge, obtained from lightweight segmentation models and large-scale vision foundation models, into a multi-view stereo framework. In particular, LiteMVS enriches the cost volume with semantic descriptors and employs a Mixture-of-Experts (MoE) formulation to enable adaptive geometric aggregation across depth hypotheses. Moreover, geometric priors distilled from vision foundation models further strengthen monocular guidance without increasing inference cost. Through this design, LiteMVS not only improves depth estimation and 3D reconstruction quality in static scenes, but also provides a more reliable geometric foundation for subsequent temporal modeling and 4D representation learning. Experiments on ScanNetv2 and 7-Scenes demonstrate that LiteMVS achieves high-quality depth prediction and 3D reconstruction while maintaining competitive efficiency.",
-    "published": "2026-08-04T15:54:32Z",
-    "updated": "2026-08-04T15:54:32Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Geometry Foundation Models",
-    "secondary_categories": [
-      "3D Reconstruction & Multi-view Geometry",
-      "Embodied / Robotics / AR Applications"
-    ],
-    "matched_keywords": [
-      "depth prediction",
-      "geometric reasoning",
-      "3D reconstruction",
-      "multi-view stereo",
-      "MVS",
-      "depth estimation",
-      "monocular depth",
-      "robotics",
-      "manipulation",
-      "augmented reality"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched abstract phrase: depth prediction",
-      "Matched abstract phrase: geometric reasoning",
-      "Matched abstract phrase: 3D reconstruction",
-      "Matched title phrase: multi-view stereo",
-      "Matched abstract phrase: multi-view stereo",
-      "Matched abstract keyword: MVS",
-      "Matched abstract phrase: depth estimation",
-      "Matched abstract phrase: monocular depth",
-      "Matched abstract keyword: robotics",
-      "Matched abstract keyword: manipulation",
-      "Matched abstract phrase: augmented reality"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.03851",
-    "pdf_url": "https://arxiv.org/pdf/2608.03851",
-    "first_seen": "2026-08-05T10:31:12-04:00",
-    "last_seen": "2026-08-07T09:36:40-04:00"
-  },
-  {
-    "arxiv_id": "2608.03666",
-    "version": "v1",
-    "title": "XiDepth: a Lightweight and Efficient Network for Self-supervised Monocular Depth Estimation",
-    "authors": [
-      "Elena Izzo",
-      "Riccardo Toniolo",
-      "Lamberto Ballan"
-    ],
-    "abstract": "Self-supervised monocular depth estimation has emerged as an appealing solution to design lightweight and effective models for deployment on computationally constrained devices due to its reduced reliance on expensive depth sensors. By eliminating the need for ground-truth annotations and leveraging the simplicity of monocular camera setups, this approach facilitates cost-effective data collection and broad applicability across fields such as computer vision and robotics. A critical challenge is achieving resource-efficient neural networks without compromising the overall performance. State-of-the-art models generally adopt depth-wise convolutions and attention mechanisms; however, these functions often incur high energy costs and face compatibility issues in embedded environments. To address this, we propose XiDepth, a lightweight architecture based on the XiNet operator block, designed to enhance feature extraction while maintaining low computational complexity and energy demand. On the KITTI dataset, XiDepth achieves state-of-the-art performance with only 0.8M parameters. Tests on a Raspberry Pi 4 further confirm its suitability for real-world embedded applications, reducing FLOPs by 40% and energy consumption by 35% compared to leading methods.",
-    "published": "2026-08-04T13:42:41Z",
-    "updated": "2026-08-04T13:42:41Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "depth estimation",
-      "monocular depth",
-      "robotics"
-    ],
-    "classification_score": 12,
-    "classification_reasons": [
-      "Matched title phrase: depth estimation",
-      "Matched abstract phrase: depth estimation",
-      "Matched title phrase: monocular depth",
-      "Matched abstract phrase: monocular depth"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.03666",
-    "pdf_url": "https://arxiv.org/pdf/2608.03666",
-    "first_seen": "2026-08-05T10:31:12-04:00",
-    "last_seen": "2026-08-07T09:36:40-04:00"
   }
 ]
