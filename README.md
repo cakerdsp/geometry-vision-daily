@@ -11,13 +11,13 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：52
+- 当前滚动窗口论文数：47
 - 分类分布：
-  - Neural Scene Representations & Rendering: 17
-  - 3D Reconstruction & Multi-view Geometry: 15
-  - Embodied / Robotics / AR Applications: 15
-  - Geometry Foundation Models: 3
-  - Dynamic / 4D Reconstruction: 2
+  - Embodied / Robotics / AR Applications: 16
+  - Neural Scene Representations & Rendering: 14
+  - 3D Reconstruction & Multi-view Geometry: 12
+  - Geometry Foundation Models: 4
+  - Dynamic / 4D Reconstruction: 1
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
@@ -25,66 +25,57 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-**趋势一：3DGS 正从“重建工具”升级为“推理与任务执行平台”**
-多篇论文不再将 3D Gaussian Splatting 仅视为新视角合成的工具，而是将其作为承载高层认知任务的统一场景表示。典型代表包括 CausalSplat（将 VLM 与 3D 场景图集成于 3DGS 以实现因果/常识推理）、LEGO（在 3DGS 上构建层级化语言场景图以支撑空间推理）、Embodied Multimodal Grounding（将语义 3DGS 作为移动操作机器人从感知到动作的共享接口）。这一趋势表明 3DGS 正从感知层向认知-决策层延伸。
+**1. 3D 高斯泼溅（3DGS）从“表示”走向“计算基础设施”**
+今日论文中，3DGS 已不再仅仅是新视角合成的工具，而是被深度用作各类高层任务的“共享 3D 空间”。Seed2GS 在冻结的 3DGS 场景上做物体提取；COGENT 在高斯参数空间而非体素空间生成医学影像反事实解释；WildFireGS 直接在语义增强的 3DGS 森林场景上运行基于物理的野火模拟；Embodied Multimodal Grounding 则用 Semantic-3DGS 作为具身操作的统一接口（感知、定位、动作条件化）。这表明 3DGS 正成为一种可编辑、可模拟、可推理的通用 3D 数据中枢。
 
-**趋势二：几何基础模型（VFMs）成为训练时的“免费”监督信号源**
-与直接微调或特征拼接不同，今日多篇论文将几何基础模型作为**训练阶段**的监督器或先验注入器，避免推理阶段引入额外开销。代表性工作包括：4D-WAM（利用几何基础模型输出定义 4D 一致性损失，监督世界模型预测）、VGGD（借助 VGGT 的先验 tokens 增强前馈几何建模）、Self-Geometry（测试时直接施加显式多视图几何约束）。这一趋势呼应了“基础模型作为可插拔教师”的范式转型。
+**2. 三维视觉基础模型的“测试时自适应”与“即插即用”成为刚需**
+预训练的三维几何基础模型（如 VGGT、DUSt3R 类模型）虽然泛化能力强，但缺乏显式多视图几何一致性。Self-Geometry 提出无需真值的即插即用测试时自适应（TTA）管线，直接用 2D 像素对应作为伪真值施加显式约束；VGGD 则将 VGGT 的几何先验注入单帧环视驾驶重建的前端。这说明领域正在从“训练更大的基础模型”转向“如何低成本地适配既有基础模型到特定任务/传感器/场景”。
 
-**趋势三：极端稀疏视角与退化输入下的鲁棒重建成为焦点**
-多篇论文聚焦于在实际采集条件中常见的退化情景——视角极少（CasDeblurGS：仅两张模糊图像）、训练-推理分布不匹配（TRACE-GS：稀疏视角导致去噪轨迹偏差）、前馈方法产生冗余原语（Compact Feed-Forward 3D Gaussians）。这些工作共同指向一个核心问题：如何在信息严重不足或分布偏移时保持几何与外观的稳定性，而非在理想条件下继续“刷分”。
+**3. 可解释性（XAI）与推理能力向显式 3D 表征迁移**
+可解释性研究不再满足于 2D 热力图或体素空间归因。CAM 综述系统梳理了从 CNN 到 Transformer 再到基础模型时代的类激活映射演进；COGENT 将反事实解释直接定义在高斯基元参数空间；CausalSplat 则定义了“推理式 3D 高斯分割”这一新任务，要求模型处理常识、空间、功能与反事实推理。可解释性与高层次语义/因果推理正在与显式场景表示深度融合。
 
-**趋势四：空间推理能力成为 VLM 与具身智能的共同瓶颈突破点**
-从视觉语言模型的空间推理（MVRD：多视角关系蒸馏）、到自动驾驶的跨视角时序定位（Cross-View Sequential Visual Localization）、再到 4D 世界模型的一致性（4D-WAM），空间理解已从“能不能看见”转向“能不能想清楚”。MVRD 明确指出现有 VLM 的视觉-空间表征“几何上脆弱”，而跨视角定位则利用时序上下文补偿单帧信息不足——两条路线共同表明空间推理是当前多模态与具身智能的主要短板。
+**4. 跨视角、跨模态、跨传感器的“统一化”与“几何-语义解耦”**
+跨视角特征匹配综述指出领域正从任务特化走向统一可泛化对应模型；STAR 通过空间拓扑感知的路由解决跨传感器模态（激光雷达、RGB-D 等）的 3D 理解统一问题；RGB-HS 将 RGB 基础模型的知识迁移到热成像深度估计。同时，多个工作强调将几何信息与语义/外观信息解耦（如 VGGD 的双路径颈部、MVRD 只蒸馏几何关系而非特征、CausalSplat 将显式结构感知与隐式逻辑推理解耦），这种解耦正成为处理多模态、多任务的核心设计模式。
 
-**趋势五：面向物理极限与真实世界部署的“高保真”模拟成为前沿探索方向**
-WildFireGS 将 GPU 场景直接用于基于物理的野火传播模拟（粒子燃烧模型原生运行于高斯表示），而 Autonomous Racing Agent 则在 256 km/h 的真实车辆极限工况下训练世界模型。这两项工作将神经场景表示从“数字孪生观赏”推向“数字孪生用于物理预测与决策”，代表着场景表示与物理学/控制论的交叉融合。
+**5. 具身智能与自动驾驶的“仿真-现实”边界加速融合，且更注重时序与物理极限**
+RoadWeaver 从零生成大规模车道级 HD 地图用于驾驶仿真；WildFireGS 从观测数据构建真实世界野火数字孪生；World-Model-Centric Autonomous Racing Agent 用真实极端工况数据训练世界模型探索认知-物理极限；Cross-View Sequential Visual Localization 通过循环跨帧模块利用时序上下文显著提升定位精度。仿真数据生成、数字孪生与现实世界之间的鸿沟正在被系统性地弥合。
 
 
 #### 技术路线观察
 
-| 方向 | 技术侧重 | 代表论文 |
-|------|---------|---------|
-| 几何基础模型 | 作为训练时监督（4D-WAM）、先验注入（VGGD）、测试时自适应（Self-Geometry）、关系蒸馏（MVRD） | 4D-WAM, VGGD, Self-Geometry, MVRD |
-| 3D/4D 重建 | 表面与高斯联合优化（Gaussian Sculpting）、稀疏视角恢复（CasDeblurGS, TRACE-GS）、原语压缩（Compact Feed-Forward） | Gaussian Sculpting, CasDeblurGS, TRACE-GS |
-| 神经场景表示 | 语义层级化（LEGO, CausalSplat）、语义-物理融合（WildFireGS）、预测式缓存（Amulet） | LEGO, CausalSplat, WildFireGS, Amulet |
-| 机器人/AR 应用 | 语义 3DGS 作为完整闭环共享接口（Embodied Grounding）、持久世界模型（PBD-AG）、紧凑动作潜在模型（SLIM）、边缘-云分割推理（Edge SLAM） | Embodied Grounding, PBD-AG, SLIM, 5G Edge SLAM |
+| 方向 | 代表论文 | 技术侧重点 |
+|------|----------|------------|
+| **几何基础模型（Geometry Foundation Models）** | Map-Det3D、Self-Geometry、VGGD | 将预训练的几何先验作为骨干或前端；用显式几何约束（像素对应、多视图一致性）替代隐式自一致性；关注跨域迁移与测试时优化，而非重新训练大模型 |
+| **3D 重建与多视角几何** | HSTGFormer、GS-CPE、Gaussian Sculpting、Cross-View Feature Matching | 重建框架普遍采用“粗到细”（coarse-to-fine）策略；传统重建任务（姿态估计、表面重建）正在与 3DGS 深度融合；Transformer/图模型与几何约束结合解决时空耦合问题 |
+| **神经场景表示与渲染** | Seed2GS、COGENT、CausalSplat、Compact Feed-Forward 3DGS、WildFireGS | 3DGS 的“可编辑性”和“语义可操作性”成为核心卖点；关注在冻结场景上的后处理（提取、解释、模拟），以及紧凑化表示（原语合并、显著性引导）；高斯参数空间成为新的“语义操作界面” |
+| **机器人 / AR / 具身智能** | Embodied Multimodal Grounding、RoadWeaver、World-Model Racing、Cross-View Loc | 强调“多模态对齐”（语言-视觉-3D-动作）；语义 3D 表示作为机器人感知与动作策略之间的接口；仿真数据生成（HD 地图）和世界模型成为评价与训练的关键；关注从单帧感知走向时序/序列建模 |
+| **可解释性（跨领域）** | CAM Survey、COGENT | 解释目标从“可视化”走向“因果/反事实”；从 2D 像素级归因走向 3D 结构级归因；综述类工作开始系统化整理方法分类学（CAM 综述），反映领域成熟度提升 |
 
-**路线交叉观察**：
-- 几何基础模型正从“最终输出的预测器”转变为“中间监督信号的提供者”，即从替代人工标注走向替代工程化的几何约束。
-- 3DGS 的应用边界显著拓宽——从纯感知（重建）到认知（推理/分割/问答）再到物理（火灾模拟、车辆动力学）。
-- 机器人端存在两条路线：一条是“重表示”路线（Embodied Grounding 依赖语义 3DGS 做多阶段共享表示），另一条是“轻模型”路线（SLIM 用 0.5B 参数避开大规模 VLA 骨干）——二者对计算资源的取舍形成鲜明对比。
+**总体观察**：3DGS 与几何基础模型两条技术线正在交汇。3DGS 提供可操作、可编辑的显式场景结构，几何基础模型提供强泛化的先验知识，二者的结合点（如“基础模型先验 + 高斯场景适配”）是当前最活跃的探索地带。
 
 
 #### 值得优先阅读的论文
 
-1. **CausalSplat（2608.11150）** — 定义了“推理式 3D 高斯分割”这一新任务并提供了基准与框架，是了解 3DGS 从感知走向推理的关键文献。对具身智能、开放词汇 3D 理解研究者具有直接参考价值。
+**1. CausalSplat（arXiv:2608.11150）** — 高优先级
+理由：定义了“推理式 3D 高斯分割”这一新任务，并配套构建了两个基准（Causal-LERF、Causal-ScanNet），同时给出框架。既做任务定义又做基准又给方法，是该方向研究者不可绕过的起点，对具身智能和开放词汇 3D 理解有直接推动。
 
-2. **TRACE-GS（2608.10286）** — 直击扩散模型训练-推理分布不匹配的根本性问题。其在线策略轨迹蒸馏+特权几何信息的范式，可能对未来所有基于扩散先验的 3D 重建工作产生范式影响。
+**2. Self-Geometry（arXiv:2608.10708）** — 高优先级
+理由：首个直接施加显式多视图几何约束的测试时自适应方法，区别于此前依赖隐式一致性的工作。该思路对任何使用 3D VFM 的下游任务（重建、定位、检测）都有潜在适配价值，且即插即用的设计使其易于复现和推广。
 
-3. **MVRD（2608.10864）** — 为 VLM 空间推理提供了一个轻量、有效且不破坏视觉-语言对齐的蒸馏方案。该结果挑战了“几何接地必须增加模型大小”的假设，对于机器人 VLA 策略的轻量化设计有直接启发。
+**3. Cross-View Feature Matching 综述（arXiv:2608.11093）** — 高优先级
+理由：领域正处于从任务特化向统一模型转型的关键期，该综述提供了统一分类体系和同协议基准测试，且专门分析了视觉基础模型的影响。对需要快速建立领域全局图景、确定研究切入点的读者价值很高。
 
-4. **Embodied Multimodal Grounding（2608.10756）** — 提供了完整的从语言到 3D 接地再到动作执行的实机验证（50 次试验），对比了 PointVLA 与 DexVLA。对于具身操作研究者，这是一份难得含真实机器人评估数据的近期参考。
+**4. Map-Det3D（arXiv:2608.12179）** — 中高优先级
+理由：将前馈式度量 3D 重建模型作为几何骨干，绕开“2D 检测 + 3D 提升”的脆弱范式，直接在建好的度量 3D 空间中做检测。对自动驾驶和机器人视觉定位/检测方向的范式转换具有代表性和启发意义。
 
-5. **4D-WAM（2608.10107）** — 将几何基础模型用作世界模型的 4D 一致性监督，开辟了“用几何约束训练时序生成模型”的路线，且在 NAVSIM 基准上取得 SOTA。自动驾驶世界模型方向的必读。
+**5. Seed2GS（arXiv:2608.11928）** — 中高优先级
+理由：在无原始相机、无场景训练的情况下达到最高 LERF-MASK 精度，且延迟仅 9.3 秒。该方法为 3DGS 场景的轻量级交互编辑提供了实用标杆，其对“目标身份”与“3D 覆盖”解耦的思考也有方法论价值。
 
 
 #### 可能的研究机会
 
-- **“时空-语义-因果”三维一体的场景图构建**：CausalSplat 做因果推理、LEGO 做语义层级、PBD-AG 做持久场景变化——三者在不同抽象层次上各自建立场景图。将它们统一为一个能够同时编码时空演化、语义层级和因果关系的综合场景图，是一个明显但尚未被占领的交叉点。
-
-- **物理引擎与神经场景表示的深度融合**：WildFireGS 展示了高斯原语可以原生承载粒子燃烧模型。将其推广到其他物理过程（流体、形变、碰撞）并与具身决策联动，可能催生“物理-感知联合数字孪生”新方向。
-
-- **前馈/稀疏视角重建的效率优化新国界**：Compact Feed-Forward 3D Gaussians 将原语压缩至 1/20，TRACE-GS 解决了训练-推理分布不匹配。将两者结合——即在压缩表示上训练在线策略蒸馏——可能产出极高效且鲁棒的稀疏视角重建系统。
-
-- **测试时自适应的轻量化部署**：Self-Geometry 提出无需真值的测试时几何自适应（LoRA + 显式约束），SLIM 则展示了 0.5B 参数的紧凑 VLA 策略。将 Self-Geometry 的测试时自适应能力与 SLIM 的轻量架构结合，可实现“低成本 + 动态环境适应”的机器人视觉策略。
-
-- **极端输入条件下的语义-几何协同**：CasDeblurGS 在“两张模糊图”下重建，TRACE-GS 在稀疏视角下修复，而 LEGO/CausalSplat 需要较完整的输入进行语义层级构建。如何将语义先验融入极端退化输入的重建过程（用语义知识补偿几何缺失），是一个值得探索的空白。
-
-
-#### 风险和不确定性
-
-- **性能声明
+**1. 显式几何约束的“无监督/自监督”测试时优化框架推广**
+Self-Geometry 证明了用像素对应作伪真值可提升 3D VFM 的几何一致性。这一思路可推广到其他任务（如 3DGS 场景的在线位姿修正、动态场景的几何一致渲染），或探索更鲁棒的伪对应生成方式（结合光流、特征匹配）以避免对噪声对应的敏感
 
 ### interests.md 指令分析
 
@@ -154,6 +145,40 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 **Primary category:** Geometry Foundation Models
 **Secondary categories:** 3D Reconstruction & Multi-view Geometry
 **Matched keywords:** feed-forward 3D reconstruction, 3D reconstruction, localization
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Map-Det3D: Metric Feed-Forward 3D Reconstruction Prior for Multi-view 3D Object Detection from Streaming Inputs
+- 作者：Yung-Hsu Yang, Luigi Piccinelli, Samuel Rota Bulò, Sunghwan Hong, Denis Rozumny, Johannes Schönberger, Zuria Bauer, Hermann Blum, Peter Kontschieder, Marc Pollefeys
+- 出版日期：2026-08-12
+- 分类：Geometry Foundation Models；3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.12179
+
+### 一句话总结
+Map-Det3D 将前馈式度量 3D 重建模型作为几何骨干，将多视角 3D 物体检测直接引入重建出的度量 3D 空间中，从而从单目视频流中实现稳定的度量级 3D 检测。
+
+### 研究问题
+如何在缺乏深度传感器的情况下，从单目视频流中实现可靠的度量级 3D 物体检测，尤其是克服单张图像中深度和绝对尺度欠约束带来的检测不稳定性，以及在相机、运动或环境发生域偏移时的泛化问题。
+
+### 核心思路/方法
+- 设计在线多视角 3D 检测模型 Map-Det3D，将短时间窗口内的多视图映射为输入，使用前馈度量 3D 重建模型作为几何骨干，并调整其面向物体的能力。
+- 直接在重建出的度量 3D 空间中预测 3D 检测框，绕过常用的 2D 检测后提升至 3D（2D-to-3D lifting）的范式。
+- 在多个基准上验证了在线性能和鲁棒的跨域迁移能力。
+
+### 主要贡献
+- 提出 Map-Det3D，将检测直接融入从 RGB 重建的 3D 空间中，避免 2D 到 3D 提升的脆弱性。
+- 展示了将重建先验训练用于检测是获得单目视频稳定度量 3D 检测的实用路径。
+- 验证了该设计在多个基准上的强在线性能及无需适应的鲁棒迁移能力，并开源代码与模型。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该工作针对单目 3D 检测中尺度欠约束的核心难题，提出了一种新颖的“重建-检测”一体化范式，且实验显示跨域迁移能力强，对面向具身智能的视觉感知研究具有较高参考价值。摘要中虽未给出定量结果细节，但问题动机清晰、方法路径创新，建议优先精读。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -386,6 +411,42 @@ Existing unified 4D reconstruction and point tracking approaches typically rely 
 **Matched keywords:** pose estimation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：HSTGFormer: Hyper Spatial-Temporal Graph Transformer for 3D Human Pose Estimation
+- 作者：Ruochen Li, Shuang Chen, Wenke E, Farshad Arvin, Amir Atapour-Abarghouei
+- 出版日期：2026-08-12
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.12187
+
+### 一句话总结
+本文提出一种图增强的Transformer框架HSTGFormer，通过超时空图将空间与时间推理耦合成局部图聚合，实现高效且精度高的单目3D人体姿态估计。
+
+### 研究问题
+现有基于Transformer的3D人体姿态估计方法通常将空间和时间推理分为两个独立阶段，这可能导致对动作中固有的统一时空依赖建模不足，并在时间建模之前压缩了帧级结构信息。本文旨在解决这一问题，构建更统一的时空关联推理方式。
+
+### 核心思路/方法
+- 提出**Hyper Spatial-Temporal Graph (HSTG)**：将每帧的骨架图扩展到时间邻域，将全局时空推理分解为围绕每个“关节点-时间”节点的局部时空感受野，实现结构感知的耦合推理，同时保留局部结构运动信息。
+- 引入**Adaptive Dual-Scale Temporal Graph (ADSTG)**：在互补的短窗口和长窗口内捕获关节点特定的时间依赖。
+- 设计轻量级的**节点级融合模块**：自适应地整合两种图表示，用于每个“关节点-时间”节点。
+
+### 主要贡献
+- 提出将时空推理重新表述为“关节点-时间”节点上的局部耦合图聚合，替代传统分离式时空建模。
+- 设计HSTG实现局部结构感知的耦合时空推理，并保留局部结构运动信息。
+- 引入ADSTG与节点级融合模块，增强跨尺度时间依赖建模。
+- 在Human3.6M和MPI-INF-3DHP数据集上验证了强精度与高计算效率（摘要提供实验范围，具体数值未给出）。
+
+### 局限性
+摘要未提供足够信息，具体局限性（如对遮挡、极端姿态的鲁棒性、长序列效率等）未在摘要中说明。
+
+### 阅读优先级
+**高**  
+理由：该工作针对3D人体姿态估计中时空建模分离的核心问题提出了统一的耦合图推理框架，并声称在主要基准上取得强精度与高效率，方法设计具有新意，对关注人体姿态估计和时空建模的研究者有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Transformer-based methods have achieved strong performance in monocular 3D human pose estimation, but most existing approaches organise spatial and temporal reasoning as separate stages, which may weaken unified spatial-temporal interdependencies inherent in human motion and compress frame-level structural information before temporal modelling. In this paper, we propose HSTGFormer, a graph-enhanced Transformer framework that reformulates spatial-temporal reasoning as localised coupled graph aggregation over joint-time nodes. Specifically, HSTGFormer introduces a Hyper Spatial-Temporal Graph (HSTG), which decomposes global spatial-temporal reasoning into local spatial-temporal receptive fields around individual joint-time nodes by extending per-frame skeleton graphs into temporal neighbourhoods, thereby enabling structure-aware coupled reasoning while preserving local structural motion information. It further incorporates an Adaptive Dual-Scale Temporal Graph (ADSTG) to capture joint-specific temporal dependencies over complementary short- and long-range windows. A lightweight node-wise fusion module further adaptively integrates the two graph representations for each joint-time node. Experiments on Human3.6M and MPI-INF-3DHP show that HSTGFormer achieves strong accuracy with high computational efficiency.
@@ -399,6 +460,41 @@ Transformer-based methods have achieved strong performance in monocular 3D human
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** depth estimation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Repurposing RGB-based Foundation Model for Depth Estimation on Thermal Images Using Hierarchical Supervision
+- 作者：Jie Hong, Tingtian Li, Xuesong Li, Xiao Li
+- 出版日期：2026-08-12
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.11564
+
+### 一句话总结
+本文提出RGB-HS框架，通过从RGB基础模型向热成像编码器施加层级监督，以提升热成像深度估计性能。
+
+### 研究问题
+如何更充分地利用RGB基础模型在热成像深度估计任务中的表征能力，尤其是其编码器中蕴含的层级结构信息。
+
+### 核心思路/方法
+- 将热成像编码器替换为RGB基础模型，并引入同架构的RGB分支作为教师网络。
+- 在两个编码器的多个层级之间进行token对齐，使热成像学生分支同时获得结构精度与语义抽象信息。
+- 引入验证机制，根据RGB图像质量对教师分支的token进行加权，优化对齐过程。
+
+### 主要贡献
+- 提出RGB-HS框架，利用层级监督从RGB基础模型迁移知识到热成像深度估计。
+- 通过在多个层级进行token对齐，更全面地利用基础模型的层级表征。
+- 引入基于RGB图像质量的验证机制，细化对齐过程。
+- 在公开基准上验证了该方法的竞争力，表明其能更有效地挖掘RGB基础模型的表征能力。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**中**。理由：该工作面向热成像深度估计这一特定应用场景，方法核心在于层级监督与跨模态对齐，思路有一定新颖性，但摘要未给出定量结果或与现有方法的详细对比，读者若从事多模态深度估计或基础模型迁移研究可关注，否则优先级可适当降低。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -929,6 +1025,44 @@ Event cameras, with high temporal resolution, high dynamic range, and asynchrono
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Seed2GS: Camera-Free, Training-Free Object Extraction from 3D Gaussian Scenes via a Single Reference-View Grounding
+- 作者：Zongjian Ding, Yudong Gao, Jiale Liu, Xinglin Yu, Junxing Ren, Dong Wei, Yajing Chen, Shan Huang, Mingjun Cheng, Min Li
+- 出版日期：2026-08-12
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.11928
+
+### 一句话总结
+Seed2GS提出一种无需原始重建相机、无需场景特定训练的目标物体提取方法，从3D高斯溅射场景中通过单参考视图标注实现对目标的高精度分割，在LERF-MASK上达到92.1% mIoU。
+
+### 研究问题
+如何从预构建的3D高斯溅射(3DGS)场景中高效且准确地提取目标物体，同时不依赖原始重建相机信息，也不需要针对每个场景进行耗时的表示训练。
+
+### 核心思路/方法
+核心思想是将“目标身份识别”与“3D覆盖范围”分离处理。具体方法包括：
+- 利用QD-SAM3从多个开放词汇候选掩码中选出唯一可靠的参考掩码，一次性固定目标身份；
+- 通过种子提升(Seed lift)和可见性自适应虚拟轨道(visibility-adaptive virtual orbits)从新视角暴露物体；
+- 使用跟踪传播种子，避免重复检测；
+- 场景保持冻结，掩码仅用于监督每个高斯分布的单一临时前景logit。
+
+### 主要贡献
+- 在不使用原始重建相机、不进行场景特定表示训练的条件下，达到当前最高的LERF-MASK分割精度（92.1% mIoU）；
+- 测量计算延迟仅9.3秒，比最强的场景训练基线高3.7个百分点，比最接近的无相机基线高7.6个百分点；
+- 在固定单个测试参考视图时，完整流程仍保持91.1% mIoU；
+- 使用真实掩码替换预测种子仅提升0.72个百分点，说明种子预测已接近上限；
+- 在3D-OVS数据集上达到95.7% mIoU。
+
+### 局限性
+摘要未提供足够信息。具体包括：未提及该方法对复杂场景、遮挡情况、多目标场景的鲁棒性，未说明不同数据集间的泛化表现差异原因，未讨论失败案例或常见错误模式，也未提供与其他方法在运行时间、内存占用等方面的详细对比数据。
+
+### 阅读优先级
+**高**。理由：该方法在无需原始相机且无需训练的条件下，显著提升了3DGS目标提取的精度（LERF-MASK 92.1% mIoU），同时计算延迟极低（9.3秒），具有实际应用价值；且其“分离身份与覆盖范围”的方法设计具有新颖性，对交互式3D编辑和场景理解领域有参考意义。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Extracting a target object from a pre-built 3D Gaussian Splatting (3DGS) scene enables interactive 3D editing. Existing methods either train for tens of minutes per scene, sacrifice accuracy, or require original reconstruction cameras that pre-built assets may not include. We present Seed2GS, which achieves the highest reported LERF-MASK accuracy without original reconstruction cameras or scene-specific representation training. Its key insight is to separate target identity from 3D coverage. QD-SAM3 selects one reliable reference mask from several open-vocabulary candidates, fixing identity once. Seed lift and visibility-adaptive virtual orbits then expose the object from new viewpoints, while tracking propagates the seed without repeated detection. Because the scene remains frozen, these masks supervise only one temporary foreground logit per Gaussian. On LERF-MASK, Seed2GS reaches 92.1% mean intersection over union (mIoU) with a measured compute-only latency of 9.3 seconds, 3.7 points above the strongest scene-trained baseline and 7.6 points above the closest camera-free baseline. With one fixed test reference per scene, the complete pipeline retains 91.1% mIoU; replacing its predicted seed with a ground-truth mask improves mIoU by only 0.72 points. On 3D-OVS, Seed2GS reaches 95.7% mIoU.
@@ -942,6 +1076,41 @@ Extracting a target object from a pre-built 3D Gaussian Splatting (3DGS) scene e
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** scene representation, differentiable rendering, rendering
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：COGENT: Counterfactual Gaussian Explanations for Volumetric Medical Images
+- 作者：Dorian Rząsa, Bartosz Zabdyr, Krzysztof Piekarz, Jakub Grzywaczewski, Bartlomiej Sobieski, Przemyslaw Biecek, Żaneta Świderska-Chadaj, Olga Śliwicka, Przemysław Spurek, Joanna Świebocka-Więk
+- 出版日期：2026-08-11
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.11422
+
+### 一句话总结
+COGENT 提出一种在三维高斯体素表征参数空间中生成反事实解释的新框架，用于体素级医学影像（如肺部 CT）的可解释性分析。
+
+### 研究问题
+如何在三维体素医学影像（如肺 CT）中生成既保持解剖一致性、又具有空间局部性的反事实解释，以替代传统逐像素/逐体素归因方法。
+
+### 核心思路/方法
+- 基于 MedGS 和 Sybil 肺癌风险预测模型构建框架。
+- 在基于高斯的体素表征参数空间中优化选定的高斯基元（Gaussian primitives），而非在体素空间操作。
+- 通过可微渲染管线传递下游预测器的梯度，识别对模型决策影响最大的表征组件。
+- 将可解释性问题形式化为显式三维场景表示上的反事实优化问题，生成稀疏、局部化且解剖一致的解释。
+
+### 主要贡献
+- 提出首个在高斯参数空间中生成反事实解释的框架（COGENT）。
+- 将可解释性从体素空间扩展到显式三维场景表征，改变了传统归因范式。
+- 在肺 CT 上结合定量比较和医学专家定性分析，验证了解释的临床意义和有效性。
+
+### 局限性
+摘要未提供足够信息——未提及方法的计算开销、对不同三维表示或任务类型的泛化性、反事实生成的时间成本或潜在失败模式等细节。
+
+### 阅读优先级
+**中**。理由：该工作结合了三维场景表征与医学影像可解释性，视角新颖，对从事体绘可解释性、三维医学影像诊断的读者有参考价值；但摘要中实验细节有限，且仅针对单一任务（肺癌风险预测）验证，若需深入评估需进一步阅读全文。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1569,6 +1738,39 @@ Motivated by the IEEE 802.11bf effort to standardize advanced WLAN sensing, inte
 **Matched keywords:** mapping, localization
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Class Activation Mapping in Explainable Computer Vision: A Method-Centered Review of CNN, Transformer, and Foundation-Model-Era Visual Explanations
+- 作者：AmirHossein Eshghi, Hamid Saadatfar, Seyyed Ali Hoseini, AmirMohsen Eshghi, Siavash Arjomand Bigdel
+- 出版日期：2026-08-12T17:45:03Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.12299
+
+### 一句话总结
+本文对2016年以来57篇以方法为中心的类激活映射（CAM）相关论文进行系统综述，提出了按归因机制、架构依赖和评估目标划分的分类法，总结了该领域从单一CNN层向多层、概率化、令牌感知及基础模型感知解释的演进趋势。
+
+### 研究问题
+类激活映射（CAM）作为可解释人工智能中广泛使用的视觉解释方法家族，其研究现状和发展趋势如何？具体包括：不同CAM方法如何归类和区分、各方法的主要贡献与遗留问题是什么，以及当前评估协议是否统一。
+
+### 核心思路/方法
+作者严格筛选了2016年以来57篇以方法为中心的论文，构建了一个分类法，从三个维度对CAM方法进行划分：（1）归因机制（gradient-based vs. gradient-free vs. hybrid）；（2）架构依赖（CNN、Transformer、基础模型等）；（3）评估目标（忠实性、定位、鲁棒性、计算成本、人类信任等）。在此基础上，分三类综述了梯度式CAM、近期与混合CAM风格方法，以及基于模型或架构感知的方法，并检视了每种方法留下的未解决缺口及后续方法的补足尝试。
+
+### 主要贡献
+1. 提供了一个严格的、以方法为中心的57篇论文综述语料库。
+2. 构建了新的CAM分类法，按归因机制、架构依赖和评估目标实现多维划分。
+3. 系统梳理了CAM从经典CNN场景到Transformer、基础模型时代的演进路径。
+4. 明确指出评估协议碎片化问题，并分析了各方法在忠实性、定位、鲁棒性、成本和人类信任等维度上的贡献与缺口。
+
+### 局限性
+摘要未提供足够信息：未提及关于语料库选择的具体排除/纳入标准、各方法的定量对比结果、以及评估协议碎片化的具体表现或标准化建议。摘要也未报告综述过程中的偏倚控制方法或对未来研究方向的详细建议。
+
+### 阅读优先级
+**中**。理由：该文是一篇综述论文，对所涉领域（可解释视觉、CAM方法）有系统梳理价值，适合该方向研究者了解宏观脉络和分类框架。但由于其分类为“Embodied / Robotics / AR Applications”，与纯计算机视觉方向略有距离，且摘要未提供具体的实证对比结论，对于追求具体方法细节或实验复现的读者优先级略低。若读者正从事视觉可解释性研究或需要CAM方向的全景认知，则值得一读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Class activation mapping (CAM) is one of the most widely used visual explanation families in explainable artificial intelligence. Its purpose is intuitive: it converts internal model evidence into a heatmap that highlights the image regions, convolutional channels, tokens, or patches that support a target class or concept. Since the first CAM formulation in 2016, the field has moved far beyond global-average-pooled CNN classifiers. CAM-style methods now include gradient-based post-hoc explanations, gradient-free score and ablation methods, high-resolution upscaling, weakly supervised localization and segmentation, transformer token attribution, causal and debiasing methods, and foundation-model-era approaches that use CLIP, DINO, SAM, or feature-distribution comparisons. This review synthesizes a strict corpus of 57 method-centered papers published from 2016 onward. The paper develops a taxonomy that separates methods by attribution mechanism, architectural dependence, and evaluation objective. It then reviews gradient-based CAMs, recent and hybrid CAM-style methods, and model-based or architecture-aware methods. Across the corpus, the main trend is clear: the field is shifting from explaining one class score in one low-resolution CNN layer toward comparative, multi-layer, probabilistic, token-aware, and foundation-model-aware explanations. At the same time, evaluation remains fragmented. Faithfulness, localization, robustness, computational cost, and human trust are often measured with different protocols. The review therefore emphasizes not only what each method contributes, but also which gap it leaves open and which later methods attempt to close that gap.
@@ -1584,6 +1786,45 @@ Class activation mapping (CAM) is one of the most widely used visual explanation
 **Matched keywords:** scene understanding
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：STAR: A Spatial-Topology Aware Routing Framework for Generalizable 3D Scene Understanding
+- 作者：Mingwei Xing, Xinliang Wang, Yifeng Shi
+- 出版日期：2026-08-12
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.11699
+
+### 一句话总结
+STAR 提出一种空间拓扑感知的路由框架，通过引入多属性自监督预训练和域感知专家路由机制，解决跨传感器模态3D场景理解中专家分配困难的问题。
+
+### 研究问题
+如何克服不同传感器模态之间的拓扑差异，构建统一的3D场景理解模型？具体而言，在语义一致性与几何异质性共存时，传统的基于特征仅使用MoE路由器难以有效分配专家，导致性能受限。
+
+### 核心思路/方法
+- 提出STAR（Spatial-Topology Aware Routing Framework）框架，包含两个主要分支：
+  1. **多属性自监督预训练分支**：覆盖拓扑和纹理变化，用于锚定跨域结构先验。
+  2. **域感知专家分支**，包含两个机制：
+     - **Domain-Spatial-Guided Routing (DSR)**：从空间上下文捕获局部拓扑变化。
+     - **Entropy-controlled Dynamic Allocation (EDA)**：根据路由不确定性调整激活专家数量。
+- 两个分支结合，实现稳定的跨域表示学习与自适应专家分配。
+
+### 主要贡献
+- 提出STAR框架，将空间拓扑信息纳入MoE路由决策，改善跨域3D场景理解。
+- 设计多属性自监督预训练分支，增强跨域结构先验的学习。
+- 引入DSR和EDA两种机制，分别解决局部拓扑建模和动态专家分配问题。
+- 实验结果表明STAR在ScanNet验证集达到80.1% mIoU，在S3DIS达到77.2% mIoU，优于强基线模型。
+
+### 局限性
+摘要未提供足够信息。摘要未明确提及方法的失败案例、计算开销、对特定传感器类型的敏感性或扩展性限制。
+
+### 阅读优先级
+**中**  
+理由：该工作针对3D场景理解中的跨模态泛化问题提出系统性框架，并给出明确性能提升数据，对从事3D理解或多模态融合研究的读者有参考价值。但摘要未提供详细的实验对比和消融信息，方法的普适性和局限性难以全面评估，故优先级为中。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Constructing a unified 3D scene understanding model has long been hindered by the topological discrepancies across sensor modalities. While applying the Mixture-of-Experts (MoE) architecture is a flexible approach for multi-domain 3D understanding, we observe that conventional feature-only MoE routers may underrepresent local sampling topology under semantic supervision, making expert allocation difficult when semantic consistency coexists with geometric heterogeneity. To overcome this challenge, we propose STAR (Spatial-Topology Aware Routing Framework). Specifically, we introduce a multi-attribute self-supervised pre-training branch, covering topological and textural variations, to anchor cross-domain structural priors. Building upon this, we design a domain-aware expert branch with two mechanisms: Domain-Spatial-Guided Routing (DSR), which captures local topological variations from spatial context, and Entropy-controlled Dynamic Allocation (EDA), which adjusts the number of activated experts according to routing uncertainty. Together, these branches combine stable cross-domain representation learning with adaptive expert allocation. Extensive experiments across various tasks, encompassing both indoor and outdoor scenes, demonstrate the effectiveness of STAR. It achieves 80.1% mIoU on the ScanNet validation set and 77.2% mIoU on S3DIS, consistently improving over strong baselines. Code is available at our project page (https://xmw666.github.io/STAR/).
@@ -1597,6 +1838,43 @@ Constructing a unified 3D scene understanding model has long been hindered by th
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** autonomous driving, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：RoadWeaver: Large-Scale Lane-Level HD Map Generation from Scratch for Autonomous Driving Simulation
+- 作者：Yueyuan Li, Zexi Chen, Weijie Xi, Mingyang Jiang, Songan Zhang, Hanyang Zhuang, Ming Yang
+- 出版日期：2026-08-12
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.11580
+
+### 一句话总结
+RoadWeaver 提出了一种从零生成大规模车道级高清地图的粗到细框架，可在数秒内生成拓扑一致、可直接用于自动驾驶仿真的完整地图。
+
+### 研究问题
+如何从零（无需真实地图或人工设计）生成大规模、多样化且拓扑一致的车道级高清地图，以支撑自动驾驶仿真中的长距离闭环评估。
+
+### 核心思路/方法
+采用粗到细的三阶段框架：
+1. 合成全局道路布局；
+2. 将布局扩展为连通的道路网络；
+3. 构建车道级几何，并保证车道连接关系的拓扑一致性。
+
+### 主要贡献
+- 提出 RoadWeaver，首个从零生成大规模完整车道级 HD 地图的框架；
+- 相比现有 SOTA 生成方法，端点对齐误差降低 94.4%；
+- 生成时间仅需 1.39–3.50 秒，满足仿真场景的快速构建需求；
+- 生成的地图可直接部署至驾驶模拟器，支撑闭环评估；
+- 将开源训练代码与开箱即用实现。
+
+### 局限性
+摘要未提供足够信息，未明确讨论方法在极端复杂路网（如环岛、多层立交）、地图语义丰富度、泛化到不同城市风格或真实路网一致性方面的潜在局限；也未报告与真实地图数据分布差异的定量分析。
+
+### 阅读优先级
+**高**。理由：该工作针对自动驾驶仿真中高清地图生成的关键瓶颈，提出完整且可扩展的解决方案，量化指标突出（99.8%可达性、低死端率、亚米级对齐误差），且代码即将开源，对仿真平台构建和闭环评测研究具有直接参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1775,33 +2053,30 @@ Embodied artificial intelligence aims to develop agents that perceive, reason, a
 - 链接：https://arxiv.org/abs/2608.10449
 
 ### 一句话总结
-本文提出PBD-AG框架，一种用于长时程服务机器人的持久基线-增量主动图结构，通过解耦稳定的固定设施与可更新的动态对象事件，实现自主构建、修订和可靠的世界模型。
+本文提出PBD-AG框架，通过将稳定环境基线（baseline）与可更新的动态物体事件（delta）解耦，为长时程服务机器人构建可追溯、可修订的持久世界模型。
 
 ### 研究问题
-长时程服务机器人如何在未知环境中自主构建持久的世界模型，并在任务相关对象发生变化时进行有效修订，同时避免现有方法中在线建图误差累积、静态场景无法捕捉对象变化、以及高层视觉-语言预测缺乏可验证3D几何证据等问题。
+长时程服务机器人在未见环境中自主建图并动态更新任务相关物体状态时，现有方法存在定位与观测误差累积、静态场景表示无法捕捉物体持续变化、以及缺乏可验证3D几何证据的视觉-语言整体预测等问题。本文旨在解决如何构建既稳定又能够随物体变化而修订的持久世界模型这一核心问题。
 
 ### 核心思路/方法
-- 提出“持久基线-增量主动图”（PBD-AG）框架，将机器人已验证的稳定固定设施（基线）与可修订的动态对象事件（增量）进行解耦。
-- 机器人通过机载探索自主建立结构基线，并对发现的固定设施进行检测，以构建分层对象信念。
-- 维护带有可靠性权重的对象状态，涵盖几何、语义、身份、存在性和支撑关系。
-- 引入几何可见性门控机制，减少遮挡导致的错误删除。
-- 使用图条件策略选择检测视点，综合考虑目标覆盖率、移动代价、碰撞风险和冗余观测。
+- 提出**持久基线-增量活动图（Persistent Baseline-Delta Active Graph）**框架，将机器人已验证的稳定固定设施（fixtures）与可修订的动态物体事件解耦。
+- 机器人通过机载探索**自主引导**结构基线，并检查发现的固定设施以构建分层物体信念。
+- 维护带可靠性权重的物体状态，涵盖几何、语义、身份、存在性及支撑关系。
+- 引入**几何可见性门控**（geometric visibility gate）机制，减少遮挡导致的错误删除。
+- 采用**图条件化策略**选择检查视点，综合权衡目标覆盖、移动成本、碰撞风险与冗余观测。
 
 ### 主要贡献
-- 提出PBD-AG框架，将持久世界模型分解为稳定基线与可修订动态事件，支持长期自主感知。
-- 设计可靠性加权的对象状态表示，涵盖多维度属性及支撑关系。
-- 引入几何可见性门控以缓解遮挡条件下的误删问题。
-- 提出图条件视点选择策略，平衡多种检测目标。
-- 在多种仿真环境及受控动态评估中，相比能力匹配的对照组，取得更高的聚合粗粒度固定设施F1分数，以及更强的身份连续性和事件召回。
-- 提供物理机器人定性演示，展示与机载感知的集成，以及可追溯世界模型的可行性。
+- 提出一种将稳定基线与动态变化解耦的持久世界模型框架，支持长时程自主建图与修订。
+- 设计可靠性加权物体状态表示与几何可见性门控，提升物体存在性判断的鲁棒性。
+- 提出图条件化主动检查视点选择策略，均衡覆盖、成本与风险。
+- 在多种仿真环境及受控动态评估中，相比能力匹配的对照方法，在粗固定设施F1、身份连续性和事件召回率上取得更好表现。
+- 通过物理机器人定性演示，验证了与机载感知集成的可行性，提供可追溯的世界模型。
 
 ### 局限性
-摘要未提供足够信息。
+摘要未提供足够信息，未明确讨论方法在真实复杂场景中的计算开销、扩展性、长期运行稳定性极限、失败模式或对感知噪声的敏感度等局限性。
 
 ### 阅读优先级
-**高**
-
-理由：该工作针对服务机器人长时程感知中世界模型持久性与动态更新的核心挑战，提出了结构清晰的框架（基线-增量解耦、可靠性权重、几何门控、主动视点选择），并在仿真与物理机器人上均有验证，方法设计完整且具有实际应用价值，适合机器人感知与主动SLAM方向的研究者关注。
+**高**。理由：论文面向服务机器人长期自主感知这一实际重要挑战，提出的基线-增量解耦思想与不确定性感知检查机制具有明确的方法创新性，且同时提供仿真定量评估与实物定性验证，对从事机器人建图、主动感知和世界模型研究的人员具有较高参考价值。
 
 </details>
 
