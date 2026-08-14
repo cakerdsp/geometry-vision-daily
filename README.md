@@ -11,12 +11,12 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：47
+- 当前滚动窗口论文数：57
 - 分类分布：
+  - Neural Scene Representations & Rendering: 18
+  - 3D Reconstruction & Multi-view Geometry: 17
   - Embodied / Robotics / AR Applications: 16
-  - Neural Scene Representations & Rendering: 14
-  - 3D Reconstruction & Multi-view Geometry: 12
-  - Geometry Foundation Models: 4
+  - Geometry Foundation Models: 5
   - Dynamic / 4D Reconstruction: 1
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
@@ -25,57 +25,77 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-**1. 3D 高斯泼溅（3DGS）从“表示”走向“计算基础设施”**
-今日论文中，3DGS 已不再仅仅是新视角合成的工具，而是被深度用作各类高层任务的“共享 3D 空间”。Seed2GS 在冻结的 3DGS 场景上做物体提取；COGENT 在高斯参数空间而非体素空间生成医学影像反事实解释；WildFireGS 直接在语义增强的 3DGS 森林场景上运行基于物理的野火模拟；Embodied Multimodal Grounding 则用 Semantic-3DGS 作为具身操作的统一接口（感知、定位、动作条件化）。这表明 3DGS 正成为一种可编辑、可模拟、可推理的通用 3D 数据中枢。
+1. **几何基础模型重塑 3D 感知与检测范式**  
+   多篇论文（GeoUP、Map-Det3D、STAR）将前馈式重建基础模型（如 VGGT）的潜表示或重建先验作为统一 3D 感知的核心骨架，取代传统的“2D 检测后提升 3D”或“语义骨干+任务特定几何模块”的范式。其共同逻辑是：**先在 RGB 上重建出结构化的度量 3D 空间，再在该空间上执行下游任务**（检测、深度、占用预测），以提升跨域泛化能力与度量精度。
 
-**2. 三维视觉基础模型的“测试时自适应”与“即插即用”成为刚需**
-预训练的三维几何基础模型（如 VGGT、DUSt3R 类模型）虽然泛化能力强，但缺乏显式多视图几何一致性。Self-Geometry 提出无需真值的即插即用测试时自适应（TTA）管线，直接用 2D 像素对应作为伪真值施加显式约束；VGGD 则将 VGGT 的几何先验注入单帧环视驾驶重建的前端。这说明领域正在从“训练更大的基础模型”转向“如何低成本地适配既有基础模型到特定任务/传感器/场景”。
+2. **3D 高斯溅射（3DGS）正从渲染工具演变为多任务基础设施**  
+   GS²CI（快照压缩成像重建）、Seed2GS（无相机分割）、LocusGS（前馈重建的空间锚点）、COGENT（医学影像反事实解释）共同表明：3DGS 不再仅用于新视角渲染，而是被用于**单测量重建、物体提取、可解释性分析、查询式前馈重建**等更广泛的任务。同时，为适应不同场景，研究者正为其引入显式空间锚点、稠密化正则、乃至参数空间的语义/解释性操作。
 
-**3. 可解释性（XAI）与推理能力向显式 3D 表征迁移**
-可解释性研究不再满足于 2D 热力图或体素空间归因。CAM 综述系统梳理了从 CNN 到 Transformer 再到基础模型时代的类激活映射演进；COGENT 将反事实解释直接定义在高斯基元参数空间；CausalSplat 则定义了“推理式 3D 高斯分割”这一新任务，要求模型处理常识、空间、功能与反事实推理。可解释性与高层次语义/因果推理正在与显式场景表示深度融合。
+3. **动作条件视频世界模型与物理仿真平台成为机器人学习新焦点**  
+   DreamX-Phi 1.0 展示了机器人视频预测需同时满足视觉真实感与动作/物体级忠实性；HumanoidVLN 则构建了面向人形机器人的物理接地仿真器与基准，强调下肢自由度、步态导致的相机动态等物理约束。两者互补：前者从模型侧强化世界模型的几何与动力学一致性，后者从环境侧提供更真实的平台与基准。
 
-**4. 跨视角、跨模态、跨传感器的“统一化”与“几何-语义解耦”**
-跨视角特征匹配综述指出领域正从任务特化走向统一可泛化对应模型；STAR 通过空间拓扑感知的路由解决跨传感器模态（激光雷达、RGB-D 等）的 3D 理解统一问题；RGB-HS 将 RGB 基础模型的知识迁移到热成像深度估计。同时，多个工作强调将几何信息与语义/外观信息解耦（如 VGGD 的双路径颈部、MVRD 只蒸馏几何关系而非特征、CausalSplat 将显式结构感知与隐式逻辑推理解耦），这种解耦正成为处理多模态、多任务的核心设计模式。
+4. **多模态/多传感器融合走向“先矫正后融合”的鲁棒策略**  
+   RbFT-Net 将多帧雷达的累积测量视为带噪锚点并进行图像条件化矫正与可靠性估计，再行融合；RGB-HS 通过层级监督将 RGB 基础模型迁移至热成像深度估计。两者共同反映：跨模态知识迁移与融合不再假设源/目标传感器数据可靠或分布一致，而是引入显式的**矫正、可靠性或权重验证机制**。
 
-**5. 具身智能与自动驾驶的“仿真-现实”边界加速融合，且更注重时序与物理极限**
-RoadWeaver 从零生成大规模车道级 HD 地图用于驾驶仿真；WildFireGS 从观测数据构建真实世界野火数字孪生；World-Model-Centric Autonomous Racing Agent 用真实极端工况数据训练世界模型探索认知-物理极限；Cross-View Sequential Visual Localization 通过循环跨帧模块利用时序上下文显著提升定位精度。仿真数据生成、数字孪生与现实世界之间的鸿沟正在被系统性地弥合。
+5. **数据与基准构建趋向“受控对比”与“多视图/多主体”的严谨设计**  
+   MV2 数据集通过汽车、摩托车、无人机同步采集，提供大幅视点变化的 NVS 评测；Self-Supervised Pretraining 研究在资源匹配条件下对比多种 SSL 目标；ProPose 提出统一健全/残肢/义肢拓扑的标注协议与人合成数据扩充。这些工作强调**更严格的实验控制、更多样的采集轨迹、更包容的标注协议**，反映出该领域对评测公平性与现实泛化性的日益重视。
 
+---
 
 #### 技术路线观察
 
 | 方向 | 代表论文 | 技术侧重点 |
 |------|----------|------------|
-| **几何基础模型（Geometry Foundation Models）** | Map-Det3D、Self-Geometry、VGGD | 将预训练的几何先验作为骨干或前端；用显式几何约束（像素对应、多视图一致性）替代隐式自一致性；关注跨域迁移与测试时优化，而非重新训练大模型 |
-| **3D 重建与多视角几何** | HSTGFormer、GS-CPE、Gaussian Sculpting、Cross-View Feature Matching | 重建框架普遍采用“粗到细”（coarse-to-fine）策略；传统重建任务（姿态估计、表面重建）正在与 3DGS 深度融合；Transformer/图模型与几何约束结合解决时空耦合问题 |
-| **神经场景表示与渲染** | Seed2GS、COGENT、CausalSplat、Compact Feed-Forward 3DGS、WildFireGS | 3DGS 的“可编辑性”和“语义可操作性”成为核心卖点；关注在冻结场景上的后处理（提取、解释、模拟），以及紧凑化表示（原语合并、显著性引导）；高斯参数空间成为新的“语义操作界面” |
-| **机器人 / AR / 具身智能** | Embodied Multimodal Grounding、RoadWeaver、World-Model Racing、Cross-View Loc | 强调“多模态对齐”（语言-视觉-3D-动作）；语义 3D 表示作为机器人感知与动作策略之间的接口；仿真数据生成（HD 地图）和世界模型成为评价与训练的关键；关注从单帧感知走向时序/序列建模 |
-| **可解释性（跨领域）** | CAM Survey、COGENT | 解释目标从“可视化”走向“因果/反事实”；从 2D 像素级归因走向 3D 结构级归因；综述类工作开始系统化整理方法分类学（CAM 综述），反映领域成熟度提升 |
+| 几何基础模型 | GeoUP、Map-Det3D | 复用前馈重建模型（VGGT）的潜表示/重建先验，注入标定与射线图编码，统一深度、检测、占用；重视跨域、跨传感器泛化。 |
+| 3D/4D 重建 | LocusGS、Seed2GS、GS²CI | 增强 3DGS 的空间结构：显式 3D 锚点、无相机分割（身份与覆盖解耦）、SCI 感知的稠密化正则；强调训练自由度与计算效率的降低。 |
+| 神经场景表示 | COGENT、Semantic Radiance Fields | 将隐式/显式场景表示用于非渲染类任务（可解释性、仿真物理查询）；在辐射场/高斯参数空间中直接进行语义与反事实优化。 |
+| 机器人/AR 应用 | DreamX-Phi、HumanoidVLN、RoadWeaver、AMR-Pose | 世界模型需兼顾动作几何约束与场景一致性；物理仿真平台需支持多形态人形机器人；地图生成追求车道级拓扑一致性；水下位姿估计侧重主动标记与概率建模。 |
+| 多模态深度估计 | RbFT-Net、RGB-HS | “先矫正后融合”范式，对累积雷达测量或基础模型 token 做图像条件的矫正/加权，强调可靠性估计与层次化监督。 |
+| 经典几何问题加速 | Fast Iterative Five-point | 在经典五点法上以非线性优化（Dog Leg）实现精度不变、速度倍增，并可扩展至大于五点，适合作为 RANSAC 中的细化步骤。 |
 
-**总体观察**：3DGS 与几何基础模型两条技术线正在交汇。3DGS 提供可操作、可编辑的显式场景结构，几何基础模型提供强泛化的先验知识，二者的结合点（如“基础模型先验 + 高斯场景适配”）是当前最活跃的探索地带。
-
+---
 
 #### 值得优先阅读的论文
 
-**1. CausalSplat（arXiv:2608.11150）** — 高优先级
-理由：定义了“推理式 3D 高斯分割”这一新任务，并配套构建了两个基准（Causal-LERF、Causal-ScanNet），同时给出框架。既做任务定义又做基准又给方法，是该方向研究者不可绕过的起点，对具身智能和开放词汇 3D 理解有直接推动。
+1. **GeoUP**（2608.13147）  
+   将几何基础模型潜表示直接用于统一 3D 驾驶感知，是“重建基础模型+多任务解码”这一新兴范式的典型代表，对自动驾驶 3D 感知的设计思路具有全局启发性。
 
-**2. Self-Geometry（arXiv:2608.10708）** — 高优先级
-理由：首个直接施加显式多视图几何约束的测试时自适应方法，区别于此前依赖隐式一致性的工作。该思路对任何使用 3D VFM 的下游任务（重建、定位、检测）都有潜在适配价值，且即插即用的设计使其易于复现和推广。
+2. **Map-Det3D**（2608.12179）  
+   与 GeoUP 同属一个趋势但出发点是检测：展示重建先验如何绕过 2D-to-3D lifting 的脆弱性并提升跨域迁移鲁棒性，适合与 GeoUP 对照阅读。
 
-**3. Cross-View Feature Matching 综述（arXiv:2608.11093）** — 高优先级
-理由：领域正处于从任务特化向统一模型转型的关键期，该综述提供了统一分类体系和同协议基准测试，且专门分析了视觉基础模型的影响。对需要快速建立领域全局图景、确定研究切入点的读者价值很高。
+3. **GS²CI**（2608.13502）  
+   将 3DGS 与快照压缩成像结合，并针对 SCI 弱监督提出稠密化正则策略（OSGR），是 3DGS 从标准多视角走向极端采集条件的前沿尝试。
 
-**4. Map-Det3D（arXiv:2608.12179）** — 中高优先级
-理由：将前馈式度量 3D 重建模型作为几何骨干，绕开“2D 检测 + 3D 提升”的脆弱范式，直接在建好的度量 3D 空间中做检测。对自动驾驶和机器人视觉定位/检测方向的范式转换具有代表性和启发意义。
+4. **LocusGS**（2608.12825）  
+   通过显式 3D 锚点为查询式前馈 3DGS 提供空间接地，直接改善查询级空间连贯性，对理解前馈 3DGS 的表示瓶颈和改进方向有清晰贡献。
 
-**5. Seed2GS（arXiv:2608.11928）** — 中高优先级
-理由：在无原始相机、无场景训练的情况下达到最高 LERF-MASK 精度，且延迟仅 9.3 秒。该方法为 3DGS 场景的轻量级交互编辑提供了实用标杆，其对“目标身份”与“3D 覆盖”解耦的思考也有方法论价值。
+5. **DreamX-Phi 1.0**（2608.13489）  
+   动作条件视频世界模型同时兼顾视觉真实感、动作路径忠实性与物体一致性，方法组合（PRoPE 几何编码、深度分支、SAM3+V-JEPA）具有较强工程与科研参考价值。
 
+---
 
 #### 可能的研究机会
 
-**1. 显式几何约束的“无监督/自监督”测试时优化框架推广**
-Self-Geometry 证明了用像素对应作伪真值可提升 3D VFM 的几何一致性。这一思路可推广到其他任务（如 3DGS 场景的在线位姿修正、动态场景的几何一致渲染），或探索更鲁棒的伪对应生成方式（结合光流、特征匹配）以避免对噪声对应的敏感
+1. **几何基础模型潜表示的“可复用性”系统研究**  
+   GeoUP 与 Map-Det3D 各自将 VGGT 潜表示适配到驾驶感知的不同任务，但均属于初步探索。可考虑：不同重建基础模型的潜表示在语义/几何维度上的可分离性、跨任务迁移的损失函数设计、以及多任务联合训练时的冲突消解策略。
+
+2. **3DGS 的“无相机”操作链**  
+   Seed2GS 实现了训练自由、无需原始相机的物体提取，但当前仅验证了分割任务。可将该“身份与覆盖解耦”思想扩展到 3D 编辑、物体移除、场景重光照等下游操作，并探索其与 LocusGS 的显式锚点表示相结合。
+
+3. **动作条件世界模型中的几何一致性评估**  
+   DreamX-Phi 引入了深度分支与物体掩码保持，但评估手段仍以视觉质量与轨迹精度为主。可构建面向“动作-几何-物体状态”联合一致性的评测协议，或引入物理引擎闭环校验，而非仅用视频指标。
+
+4. **跨模态矫正与可靠性估计的通用框架**  
+   RbFT-Net 的“rectify-before-fuse”思路可推广到激光雷达-相机、事件相机- RGB 等其他稀疏/噪声传感器组合；RGB-HS 的层级 token 对齐也可与可靠性加权机制结合，形成更通用的跨模态知识蒸馏框架。
+
+5. **资源受限场景下的 SSL 目标选择指南**  
+   受控研究表明 DINOv2 风格在有限资源下综合最优，但联合视频 SSL 会损害几何任务。这暗示存在一个“任务敏感的资源分配策略”问题：在给定数据和算力预算下，如何按下游任务类型（语义 vs 几何）自动选择或组合 SSL 目标。
+
+---
+
+#### 风险和不确定性
+
+- 以下论文的结论均主要基于摘要，**缺少定量实验细节与消融分析**，需要全文验证：GS²CI 的 OSGR 策略在不同 SCI 压缩率下的鲁棒性、DreamX-Phi 在真实机器人上的部署效果、HSTGFormer
 
 ### interests.md 指令分析
 
@@ -147,6 +167,43 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 **Matched keywords:** VGGT, metric depth, depth estimation, autonomous driving
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Geometry-Grounded Unified 3D Perception for Autonomous Driving
+- 作者：Longfei Xu, Xiaohui Wang, Zehao Huang, Han Li, Ya Yang, Naiyan Wang, Si Liu
+- 出版日期：2026-08-13
+- 分类：Geometry Foundation Models（主要）；Embodied / Robotics / AR Applications（次要）
+- 链接：https://arxiv.org/abs/2608.13147
+
+### 一句话总结
+本文提出GeoUP框架，将基于几何基础模型的重建导向潜表示适配到多相机驾驶场景，通过因子化跨图像注意力和校准感知的射线图编码，实现度量深度估计、3D目标检测和语义占用预测的统一3D感知。
+
+### 研究问题
+现有基于相机的自动驾驶感知框架通常使用为语义识别预训练的骨干网络，并通过下游任务特定模块引入3D几何，导致其共享表示难以保留显式的度量几何和一致的3D场景结构。本文旨在构建一种能够保持度量3D结构的统一共享表示，以支持多种3D感知任务。
+
+### 核心思路/方法
+- 将重建导向的VGGT潜表示适配到经过标定的、流式的多相机驾驶场景中。
+- 将跨图像交互分解为自注意力、时间注意力和视图注意力，以分别捕获结构上不同的时间和跨视图对应关系。
+- 注入校准感知的射线图编码，以提供度量尺度和相机几何信息。
+- 将几何基础的潜表示解码为度量深度估计、3D目标检测和语义占用预测，分别对应同一3D场景的表面级、实例级和体素级读取。
+- 通过多任务和多数据集联合训练，利用异构标注并泛化到不同的传感器配置和感知范围。
+
+### 主要贡献
+- 提出GeoUP框架，将几何基础模型的潜表示引入统一的3D驾驶感知。
+- 设计因子化的自/时间/视图注意力结构，以捕获时间和跨视图的结构性对应关系。
+- 引入校准感知的射线图编码，提供度量尺度和相机几何。
+- 在nuScenes、Argoverse 2、Waymo、KITTI和DDAD等多个数据集上实现检测、占用和深度估计的SOTA性能。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该工作针对自动驾驶统一3D感知中的核心瓶颈——共享表示的度量几何保持问题，提出了基于几何基础模型的全新方案，并在五个公开数据集上取得SOTA结果，方法思路新颖且实验覆盖广泛，对从事多相机3D感知、几何基础模型及应用的研究者具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Camera-based autonomous driving perception requires a shared representation that preserves metric 3D structure across synchronized multi-camera streams. However, existing image-based frameworks often rely on backbones pretrained for semantic recognition, and introduce 3D geometry through downstream task-specific modules. As a result, their shared representations may fail to preserve explicit metric geometry and consistent 3D scene structure. In this paper, we present a Geometry-grounded Unified 3D Perception (GeoUP) framework that adapts the reconstruction-oriented latent of VGGT to calibrated, streaming multi-camera driving scenes. GeoUP factorizes cross-image interaction into self, temporal, and view attention to capture structurally distinct temporal and cross-view correspondences. It further injects calibration-aware raymap encodings to provide metric scale and camera geometry. The resulting geometry-grounded latent is decoded for metric depth estimation, 3D object detection, and semantic occupancy prediction, corresponding to surface-, instance-, and volume-level readouts of the same 3D scene. Through joint multi-task and multi-dataset training, GeoUP effectively leverages heterogeneous annotations and generalizes across diverse sensor configurations and perception ranges. Extensive experiments on nuScenes, Argoverse 2, Waymo, KITTI, and DDAD demonstrate that GeoUP achieves SOTA performance across detection, occupancy, and depth estimation. These results validate the effectiveness of geometry-grounded representations for unified 3D driving perception.
@@ -160,6 +217,42 @@ Camera-based autonomous driving perception requires a shared representation that
 **Primary category:** Geometry Foundation Models
 **Secondary categories:** None
 **Matched keywords:** depth prediction, metric depth, monocular depth
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：RbFT-Net: Rectify-Before-Fuse Temporal Radar Anchors for 4D Radar-Camera Depth Completion
+- 作者：Wentao Zhao, Shouxuan Wu, Yongtao Cen, Tianchen Deng, Yuyang Zhang, Jingchuan Wang
+- 出版日期：2026-08-13
+- 分类：Geometry Foundation Models
+- 链接：https://arxiv.org/abs/2608.13102
+
+### 一句话总结
+RbFT-Net提出了一种“先矫正后融合”的端到端框架，通过对多帧4D雷达点进行图像条件化矫正与可靠性估计，再选择性传播锚点，以提升雷达-相机深度补全的精度与鲁棒性。
+
+### 研究问题
+多帧雷达-相机深度补全中，聚合后的雷达测量虽能提供更密的度量提示，但存在时间错位、动态物体干扰、杂波和多径反射等问题，直接传播不可靠测量会污染大范围深度预测区域。
+
+### 核心思路/方法
+- 将累积的雷达返回视为带有噪声的时序锚点候选，而非直接视为准确测量。
+- 设计图像条件化矫正模块，联合修正锚点在图像平面上的位置和度量深度，并同时估计逐点可靠性。
+- 经矫正后的锚点在高层多模态融合之前进行选择性传播，以抑制不可靠测量的影响。
+- 整体采用“先矫正后融合”（rectify-before-fuse）的端到端训练框架。
+
+### 主要贡献
+- 提出RbFT-Net，一个端到端的“先矫正后融合”多帧4D雷达-相机深度补全框架。
+- 不再假设累积雷达返回准确，而是将其建模为带噪声的时序锚点候选，并引入图像条件化矫正与可靠性估计。
+- 在ZJU-4DRadarCam及新采集的4D雷达-相机-激光雷达数据集上，持续优于所评估的独立雷达-相机方法，并与使用辅助单目深度模型的插件式方案保持竞争力。
+- 跨平台评估和组件分析验证了所提矫正与可靠性感知传播策略的有效性。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**中**。理由：该工作面向自动驾驶中的雷达-相机深度补全，方法设计合理且有跨数据集验证，但摘要未给出具体数值性能或与最先进方法的详细对比，若读者关注多模态深度补全或雷达感知可进一步阅读全文，否则优先度一般。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -391,6 +484,38 @@ Existing unified 4D reconstruction and point tracking approaches typically rely 
 **Matched keywords:** camera pose estimation, pose estimation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：A Controlled Study of Self-Supervised Image and Video Pretraining under Limited Resources
+- 作者：Brunó B. Englert、Gijs Dubbelman
+- 出版日期：2026-08-13
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.13183
+
+### 一句话总结
+本文在受控资源条件下对比了多种图像与视频自监督学习目标，发现DINOv2风格预训练综合表现最佳，且将其与视频目标（如VideoMAE）结合会在语义任务上带来提升、但在几何任务上造成退化。
+
+### 研究问题
+在资源受限（数据、架构、计算预算均匹配）的情况下，图像与视频自监督学习（SSL）目标如何表现？不同SSL目标（对比、重建、特征预测、扩散）之间是否存在性能差异？联合训练图像-视频SSL目标是否能产生优于单一目标的效果？
+
+### 核心思路/方法
+作者在匹配的数据、架构和计算预算条件下，对图像与视频SSL目标进行受控对照研究。比较了对比学习（contrastive）、重建（reconstruction）、特征预测（feature-prediction）和扩散（diffusion）四类目标，并评估了单独训练以及联合训练的图像-视频SSL组合，在一系列图像与视频理解任务上进行评测。
+
+### 主要贡献
+- 在受控资源条件下系统对比了多种图像和视频SSL目标，填补了该场景下的比较空白。
+- 发现DINOv2风格预训练在有限资源下综合性能最优。
+- 揭示图像SSL（DINOv2）与视频SSL（如VideoMAE）联合训练可提升图像分类和分割性能，但会损害视频跟踪和相机位姿估计性能，表明语义表示与几何表示学习之间存在权衡。
+
+### 局限性
+摘要未提供足够信息，如具体数据集、模型规模、训练时长、评测任务细节及定量结果等均未给出。
+
+### 阅读优先级
+**中**。理由：该研究针对资源受限场景下的SSL目标比较具有实用价值，且揭示了联合训练带来的语义-几何权衡这一有意义的发现；但作者未提供定量实验细节，结论的普适性和可复现性无法从摘要评估，适合对SSL预训练策略感兴趣的读者阅读原文获取具体数据。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Visual foundation models are a cornerstone of image and video understanding but typically require large amounts of data and computation. The current scale required for pretraining visual foundation models may be unsustainable or unnecessary, and significant benefits arise when effective models can be obtained with fewer resources. To better understand how self-supervised learning (SSL) objectives behave under resource constraints, we conduct a controlled study of image and video SSL objectives under matched data, architecture, and compute budgets. We compare contrastive, reconstruction, feature-prediction, and diffusion objectives and evaluate both standalone and jointly trained image-video SSL formulations across a diverse set of image and video understanding tasks. Our results show that DINOv2-style pretraining consistently provides the strongest overall performance under limited resources. Furthermore, combining DINOv2 with video SSL objectives such as VideoMAE substantially improves image classification and segmentation performance, but degrades video tracking and camera-pose estimation performance, revealing an important tradeoff between semantic and geometric representation learning. These findings suggest that combining image and video SSL objectives can be beneficial in resource-limited settings, while highlighting the need for improved methods that better balance semantic, temporal, and geometric supervision.
@@ -404,6 +529,43 @@ Visual foundation models are a cornerstone of image and video understanding but 
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** pose estimation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Fast Iterative Five point Relative Pose Estimation
+- 作者：Johan Hedborg, Michael Felsberg
+- 出版日期：2026-08-13
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.13114
+
+### 一句话总结
+本文提出一种基于Powell's Dog Leg算法的快速迭代式五点相对位姿估计方法，在精度与Nister算法相当的情况下，速度约为其两倍。
+
+### 研究问题
+如何加速五点法相对位姿估计，同时保持与当前最先进方法相当的精度，并使其易于扩展至多于五个点的情形。
+
+### 核心思路/方法
+- 提出一种新的迭代方法，基于Powell's Dog Leg算法（一种非线性优化方法）。
+- 该方法在RANSAC框架下使用，具备与Nister五点法相同的精度，但速度约为其两倍。
+- 方法易于扩展到多于五个点的情况，同时保持高效的误差度量，因此也适合作为细化（refinement）步骤。
+- 在三种具有已知真值的数据集上进行了系统评估。
+
+### 主要贡献
+1. 提出一种新的快速迭代式五点相对位姿估计算法。
+2. 在精度不降低的前提下，速度约为Nister算法的两倍。
+3. 算法可自然扩展至超过五个点，适合作为位姿细化步骤。
+4. 在三种已知真值的数据集上进行了系统评估，验证了方法的有效性。
+
+### 局限性
+摘要未提供足够信息（例如：未提及方法对噪声、离群点的具体鲁棒性表现，未给出具体数据集类型与规模，也未说明与Nister算法以外的其他方法（如七点法、八点法）的比较情况）。
+
+### 阅读优先级
+**中**
+理由：该工作针对经典五点相对位姿估计问题提出性能改进，方向明确且速度提升显著，对从事三维重建、多视图几何的读者有一定参考价值。但摘要仅提供了性能对比的高层结论，缺乏具体的实验数值和评估细节，适合作为速读参考，而非必读精读文献。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -421,6 +583,41 @@ Robust estimation of the relative pose between two cameras is a fundamental part
 **Matched keywords:** pose estimation, localization
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Topology-Unified 2D Pose Estimation across Intact, Residual and Prosthetic Limbs
+- 作者：Tianye Qi, Tengyue Zhang, Jiaying Ying, Tianqing Zhu, Xin Yu
+- 出版日期：2026-08-13
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.13047
+
+### 一句话总结
+本文提出统一拓扑表示的ProPose基准和结构感知的ProLoss损失函数，以改善包含健全肢体、义肢和残肢的人体姿态估计性能。
+
+### 研究问题
+现有主流人体姿态估计数据集存在严重的表示偏差，主要面向健全人，对义肢（如跑步刀片）和未安装假肢的残肢缺乏统一的标注协议，导致模型在这些多样化肢体形态上难以泛化，且长尾分布下关节分类精度不足。
+
+### 核心思路/方法
+1. 提出**ProPose**基准：设计一种新型标注协议，在单一框架内统一生物学肢体、多种义肢和物理缺失肢体的拓扑表示。
+2. 设计**Real-to-Synthetic数据扩充管道**：针对真实义肢图像稀缺且呈极端长尾分布的问题，显式合成并扩充该类样本。
+3. 提出**ProLoss**损失函数：结构感知目标函数，强制同一肢体内部关键点之间的依赖关系，防止模型在机械结构上幻觉出不存在的关节。
+
+### 主要贡献
+- 引入大规模基准ProPose，首次在统一拓扑框架下覆盖健全、残肢与义肢场景。
+- 提出Real-to-Synthetic数据扩充策略，缓解义肢数据的极端长尾问题。
+- 设计ProLoss结构感知损失，约束关键点间依赖关系，避免不真实预测。
+- 实验表明，在不损失坐标定位精度的前提下，长尾义肢关节分类准确率提升2%至6%。
+
+### 局限性
+摘要未提供足够信息。具体而言，关于ProPose数据集的规模与构成细节、各方法的消融实验对比、具体实验设置（如backbone、训练配置）以及在不同下游任务上的泛化验证等均未在摘要中提及。
+
+### 阅读优先级
+**中**。理由：该工作面向人体姿态估计中的包容性/公平性研究，属于较细分的进阶方向，当前可能不是通用姿态估计领域的主流热点；但问题定义清晰、方法具有工程创新性，且摘要中的量化提升明确，适合研究义肢场景或关注数据长尾问题的读者参考。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Driven by the availability of large-scale datasets, Human Pose Estimation (HPE) plays a critical role in numerous downstream tasks. However, mainstream benchmarks exhibit severe representation bias, predominantly featuring able-bodied individuals. While a few pioneering datasets have attempted to address limb differences, their annotation protocols fail to generalize, struggling to represent specialized mechanical structures like running blades or unprosthetized residual limbs. To bridge this gap, we introduce ProPose, a large-scale benchmark featuring a novel annotation protocol that unifies the topological representation of biological limbs, diverse prostheses, and physical absences within a single framework. Because real-world prosthetic images are inherently scarce and exhibit extreme long-tail distributions, we design a Real-to-Synthetic data expansion pipeline to explicitly synthesize and expand the underrepresented cases. However, simply training existing models on this enriched dataset often leads to suboptimal solutions, as they estimate each keypoint independently and might hallucinate non-existent joints on mechanical structures. To resolve this, we propose ProLoss, a structure-aware objective that enforces keypoint dependencies within a single limb to prevent unrealistic limb predictions. Extensive experiments demonstrate that our approach improves the classification accuracy of long-tail prosthetic joints by 2% to 6% without compromising spatial coordinate localization performance. This work sets a foundation for inclusive pose estimation, unlocking new possibilities for understanding the interactions between human bodies and assistive devices.
@@ -436,6 +633,43 @@ Driven by the availability of large-scale datasets, Human Pose Estimation (HPE) 
 **Matched keywords:** pose estimation, robotics, localization
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：AMR-Pose: An Active LED Marker-Based Relative Pose Estimation Framework With Probabilistic Switching PnP for Cooperative AUVs
+- 作者：Zeyu Sha, Xiaorui Wang, Mingyang Yang, Feitian Zhang
+- 出版日期：2026-08-13T06:29:43Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.12866
+
+### 一句话总结
+本文提出AMR-Pose，一种基于主动LED标记与概率切换PnP的水下自主机器人（AUV）相对位姿估计框架，通过紧凑标记模块与自适应估计机制在复杂水下环境中实现稳健的六自由度相对定位。
+
+### 研究问题
+如何在存在浑浊、光照变化、反射和间歇性特征遮挡等严重光学退化条件下，实现合作AUV之间可靠、鲁棒的基于视觉的相对位姿估计。
+
+### 核心思路/方法
+- 设计一个紧凑的主动LED标记模块，包含一个红色中心LED和三个蓝色外围LED，安装在领航AUV上，以在复杂水下条件下提供独特的视觉特征。
+- 基于检测到的标记观测，开发概率切换PnP估计器（PSwPnP），结合SE(3)上的李群位姿传播、概率标记关联和可见性自适应测量融合。
+- 框架根据标记可见性动态调整估计过程，在部分观测和可见性切换期间保持几何一致性和时间稳定性。
+
+### 主要贡献
+- 提出AMR-Pose框架，基于主动LED标记实现水下合作AUV的相对位姿估计。
+- 开发紧凑的LED标记模块，提供水下复杂环境中可辨识的视觉特征。
+- 设计概率切换PnP估计器（PSwPnP），融合李群位姿传播、概率关联与自适应融合。
+- 通过水槽实验（运动捕捉系统提供真值）验证了框架在挑战性水下条件下的准确性、平滑性和鲁棒性。
+- 闭环领航-跟随实验证明其在合作水下机器人实时相对位姿反馈中的可行性。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**
+理由：该工作面向水下多机器人协作中的关键难题（光学退化下的相对定位），提出了结合主动标记设计与概率切换PnP的完整解决方案，并通过水槽真值实验和闭环实验验证了实用性。对于从事水下机器人、视觉定位或多机器人协同的研究人员具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Reliable relative pose estimation between autonomous underwater vehicles (AUVs) is critical for cooperative ocean exploration, sampling, and multi-robot coordination. However, achieving robust vision-based relative localization in underwater environments remains challenging due to severe optical degradation, including turbidity, illumination variations, reflections, and intermittent feature occlusions. This paper presents AMR-Pose, an active LED marker-based relative pose estimation framework for cooperative AUVs. A compact marker module consisting of one red central LED and three blue peripheral LEDs is developed and integrated onto the leader AUV to provide distinctive visual features under complex underwater conditions. Building upon the detected marker observations, a probabilistic switching Perspective-n-Point estimator (PSwPnP) is developed by combining Lie-group pose propagation on $SE(3)$, probabilistic marker association, and visibility-adaptive measurement fusion for robust six-degree-of-freedom relative pose estimation. The proposed framework dynamically adapts the estimation process according to marker visibility, maintaining geometric consistency and temporal stability during partial observations and visibility transitions. Extensive water-tank experiments with motion-capture ground truth validate that AMR-Pose achieves accurate, smooth, and robust relative pose estimation under challenging underwater conditions. Closed-loop leader-follower experiments further demonstrate its feasibility for real-time relative pose feedback in cooperative underwater robotics.
@@ -449,6 +683,39 @@ Reliable relative pose estimation between autonomous underwater vehicles (AUVs) 
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** Neural Scene Representations & Rendering
 **Matched keywords:** structure from motion, camera pose estimation, pose estimation, novel view synthesis, view synthesis, differentiable rendering, rendering
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：MV2: Multi-View Multi-Vehicle Driving Dataset for Novel View Synthesis
+- 作者：Sanjay Bhargav Dharavath, Hanvitha Saraswathi Mukkamala, Faizan Farooq Khan, Ioannis Kakogeorgiou, Aditya Arun, C V Jawahar, Zakaria Laskar
+- 出版日期：2026-08-12T16:02:32Z
+- 分类：3D Reconstruction & Multi-view Geometry（主要）；Neural Scene Representations & Rendering（次要）
+- 链接：https://arxiv.org/abs/2608.12442
+
+### 一句话总结
+本文提出MV2数据集与基准，通过多车辆（汽车、摩托车、无人机）同步轨迹拍摄，评估新视角合成方法在动态城市场景中大幅视点变化下的性能。
+
+### 研究问题
+新视角合成在真实驾驶场景中因稀疏采集视角、动态物体和有限的多轨迹数据而难以应用，现有数据集多为单一轨迹，难以评估视点大幅变化下的模型表现。
+
+### 核心思路/方法
+构建MV2数据集：使用汽车、摩托车和无人机三台设备同步采集，各自沿不同但同步的轨迹行驶；训练时使用某一车辆的相机流，测试时换用另一车辆的相机流，从而引入大幅视点变化。所有序列通过Structure-from-Motion配准，并使用手动像素级对应标注验证相机位姿，最终得到50个高质量场景、12000张图像。在此基础上，对近期NVS方法和相机位姿估计方法进行基准测试。
+
+### 主要贡献
+- 提出MV2数据集，包含50个高质量场景、12000张图像，支持动态城市场景下大幅视点变化的NVS评估。
+- 设计多车辆交叉轨迹的基准协议，使训练和测试视点差异显著大于现有单轨迹数据集。
+- 通过基准测试发现：NVS性能随视点差异增大而下降；前馈位姿估计器明显落后于优化方法，验证了MV2作为驾驶NVS测试床的严格性。
+- 公开数据集、基准协议及项目资源。
+
+### 局限性
+摘要未提供足够信息：未说明数据集在场景多样性（如天气、光照、交通密度）上的覆盖范围，也未提及与现有驾驶数据集的定量对比，或方法失败的典型案例分析。
+
+### 阅读优先级
+**中**。理由：该工作主要贡献在于新数据集与基准，对从事驾驶场景新视角合成或位姿估计的研究者有一定参考价值，但属于资源型工作而非新方法提出；若不在该领域，则关联度有限。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1080,6 +1347,40 @@ Event cameras, with high temporal resolution, high dynamic range, and asynchrono
 **Matched keywords:** scene reconstruction, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GS²CI: Robust Gaussian Splatting For Snapshot Compressive Imaging via Large Vision Model Priors
+- 作者：Yanming Yang, Chenxi Song, Ping Wang, Xin Yuan, Chi Zhang
+- 出版日期：2026-08-13
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.13502
+
+### 一句话总结
+该论文提出一种新框架，利用3D高斯溅射与大规模视觉基础模型先验，从单次快照压缩成像测量中重建高质量3D场景，并通过专用稠密化策略提升重建鲁棒性与效率。
+
+### 研究问题
+如何从单一快照压缩成像（SCI）测量中高效、高质量地重建3D场景，克服信息损失、视点多样性有限以及3D表示与相机位姿联合优化的计算负担等挑战。
+
+### 核心思路/方法
+- 主重建阶段：将测量数据与3D视觉基础模型（VFM）初始化结合，进行SCI感知的高斯优化。
+- 辅助细化阶段：在粗阶段收敛后，引入2D视觉基础模型在合成视点处提供伪视图监督，用于局部外观细化。
+- 专用稠密化策略（OSGR）：包括基于局部不透明度统计扩展分裂候选、通过平均不透明度正则抑制损失补偿性的不透明度膨胀，以及用显式候选比例和高斯数量约束限制表示增长，以应对SCI监督模糊导致的不稳定性。
+
+### 主要贡献
+- 提出首个结合3DGS与大规模视觉基础模型先验的SCI单测量3D重建框架。
+- 设计SCI专用的不透明度引导分裂与增长调节（OSGR）稠密化策略。
+- 在多个基准上实现最佳综合性能，兼顾领先的重建质量、对视点变化的鲁棒性以及竞争力的计算效率。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该工作将快照压缩成像与3D高斯溅射及视觉基础模型结合，属于多领域交叉创新，面向3D重建的前沿方向。其提出的稠密化策略针对SCI特有监督模糊问题，具有明确的方法贡献和广泛的实验验证（摘要提及多基准），适合关注3D表示学习、压缩感知或高效重建的研究者深入阅读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Snapshot Compressive Imaging (SCI) offers an efficient solution for high-speed video acquisition and, under exposure-time camera--scene relative motion, multi-view scene capture by compressing temporal or spatial information into a single 2D measurement. While recent studies have explored SCI for 3D scene reconstruction, existing methods struggle with significant challenges due to information loss, limited viewpoint diversity, and the computational burden of jointly optimizing 3D representations and camera poses. In this work, we propose a novel framework that reconstructs high-quality 3D scenes from a single SCI measurement by leveraging 3D Gaussian Splatting (3DGS) and the powerful priors of large-scale vision foundation models (VFMs). Our primary reconstruction combines measurement-derived 3D VFM initialization with SCI-aware Gaussian optimization. After coarse-stage convergence, an auxiliary 2D VFM provides pseudo-view supervision at synthesized viewpoints for local appearance refinement. To further address the instability caused by ambiguous SCI supervision during 3DGS optimization, we introduce Opacity-Guided Splitting and Growth Regulation (OSGR), an SCI-specific densification strategy that augments split candidates using local opacity statistics, discourages loss-compensating opacity inflation through mean-opacity regulation, and bounds representation growth with explicit candidate-ratio and Gaussian-count constraints. Extensive experiments across multiple benchmarks demonstrate that our method achieves the strongest overall performance, combining leading reconstruction quality and robustness to viewpoint variation with competitive computational efficiency.
@@ -1093,6 +1394,39 @@ Snapshot Compressive Imaging (SCI) offers an efficient solution for high-speed v
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** radiance field, novel view synthesis, view synthesis, rendering, radiance
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Semantic Radiance Fields as Simulators for Spatial Reasoning in Real-World Scenes
+- 作者：Nico Heider, Michał Jan Włodarczyk, Katarzyna Wasielewska-Michniewska, Przemysław Hołda, Martin Schieck, Marcin Paprzycki, Maria Ganzha, Bogdan Franczyk
+- 出版日期：2026-08-13T11:01:09Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.13095
+
+### 一句话总结
+本文提出将语义辐射场（SRF）作为真实场景中空间推理智能体的模拟器，通过联合编码几何、外观和逐类语义身份，实现真实感与语义标注的统一。
+
+### 研究问题
+如何为空间推理智能体的训练与评估提供既具备几何真实性又可语义查询的多样化环境？现有合成模拟器虽提供真值语义但缺乏真实感，而基于真实场景重建的模拟器虽外观真实却默认缺少语义真值。
+
+### 核心思路/方法
+使用语义辐射场（SRF）作为模拟器：将预训练视觉模型产生的2D语义分割提升到3D辐射场中，使辐射场联合编码几何、外观和逐类语义身份。该表示从真实场景的有姿态RGB图像重建，支持新视角合成、语义查询和自由空间查询，并可将这些能力提供给物理引擎使用。
+
+### 主要贡献
+- 提出将SRF用作空间推理智能体的模拟器，统一了真实感与语义真值。
+- SRF从真实场景重建，同时支持新视角渲染、语义查询和自由空间查询，形成单一三维接地表示。
+- 能够高效生成多样化的真实世界环境，用于训练和评估空间推理模型。
+- 以果园苹果抓取任务为例，展示了SRF驱动模拟器的应用流程（相机渲染、语义真值、占用查询供物理引擎使用）。
+
+### 局限性
+摘要未提供足够信息。摘要中仅以果园苹果抓取任务作为示例应用，未讨论方法在场景规模、动态物体、语义类别覆盖、计算开销或泛化能力等方面的潜在限制。
+
+### 阅读优先级
+**中**。理由：该方法对空间推理或神经场景表示领域有一定新颖性，且提出的SRF模拟器思路清晰，具有应用潜力；但摘要未涉及实验验证和量化结果，属于概念性方案论述，若读者关注该交叉方向可进一步阅读，若仅需成熟方法则优先级可降低。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1110,6 +1444,46 @@ Training and evaluating spatial reasoning in embodied agents requires diverse en
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：HumanoidVLN: A Physics-Grounded Simulator and Benchmark for Vision-Language Navigation Across Diverse Humanoid Embodiments
+- 作者：Quan-Dung Pham, Anh Dao, The-Anh Nguyen, Minh Nguyen-Dinh, Phuong Nam Dang, Tri Pham, Hung Tran, Bach Dao, Tuyen P. Le, Truong Nguyen, Quan Nguyen
+- 出版日期：2026-08-13T06:16:05Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.12860
+
+### 一句话总结
+本文提出了HumanoidVLN，一个基于物理的仿真器与基准，用于评估跨多种人形机器人的视觉-语言导航任务，并验证了其仿真到现实迁移的有效性。
+
+### 研究问题
+现有视觉-语言导航（VLN）基准未考虑人形机器人特有的物理约束（如双足运动限制）、多平台形态差异以及步态导致的视觉相机动态畸变，本文旨在填补这一空白，提出面向人形机器人形态多样性的VLN仿真环境与评测基准。
+
+### 核心思路/方法
+- 基于NVIDIA Isaac Sim构建物理仿真平台，支持可扩展的人形机器人配置，涵盖4种机器人（Unitree G1、H1、Internal-A、Internal-B），身高1.17m至1.80m，下肢自由度10–12。
+- 采用分层控制栈：强化学习运动策略结合可替换的PD或MPC路径跟踪器。
+- 环境来源包括艺术家设计场景与3D高斯泼溅重建，筛选可通行面积超过100平方米的区域。
+- 指令生成采用“生成器-评审器-释义器”多智能体流水线并有人类在环验证，产出933条冲突感知参考片段，每条含1条细粒度指令和3种风格变体（正式、自然、随意）。
+- 兼容性验证：支持NaVILA、DualVLN、StreamVLN、JanusVLN等VLN模型。
+- 仿真到现实迁移：使用DualVLN和Unitree G1进行20片段试点实验。
+
+### 主要贡献
+- 提出了首个面向多种人形机器人形态的物理仿真VLN基准（HumanoidVLN）。
+- 构建了可扩展的仿真平台，支持新机器人和新VLN模型的低成本集成。
+- 发布了包含933条高质量参考片段的多粒度指令数据集。
+- 在4个模型和4种机器人上进行了系统评估，其中JanusVLN获得最高平均成功率43.55%和nDTW 48.38。
+- 通过20片段实机实验验证了仿真到现实的强相关性（r=0.935），平均绝对误差0.68m，平均轨迹相似度0.782 nDTW（±0.188）。
+
+### 局限性
+摘要未提供足够信息。摘要未明确讨论该方法在计算开销、仿真多样性覆盖范围、不同指令风格对性能的影响分析、以及内部机器人（Internal-A/B）的实机验证情况等方面的局限性。
+
+### 阅读优先级
+**高**。
+理由：该工作针对人形机器人VLN这一前沿且实际约束突出的问题，提供了完整的仿真-数据-基准-实机验证闭环，实验结果（含sim-to-real强相关性）具有较强说服力，对从事VLN、机器人导航和人形机器人研究的读者有直接参考价值，且代码和数据承诺开放。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Vision-Language Navigation (VLN) for humanoid robots poses challenges existing benchmarks fail to address: bipedal locomotion imposes physical constraints absent from wheeled agents, humanoid morphologies vary across platforms, and egocentric observations are distorted by locomotion-induced camera dynamics. We present HumanoidVLN, a physics-grounded simulator and benchmark for VLN across diverse humanoid embodiments. Built on NVIDIA Isaac Sim, our platform supports an extensible set of humanoid configurations, demonstrated on four robots (Unitree G1, Unitree H1, Internal-A, Internal-B) spanning 10-12 lower-body DoF and heights from 1.17m to 1.80m, via a hierarchical control stack combining a reinforcement learning locomotion policy with interchangeable PD or MPC path trackers. New robots and VLN models integrate with minimal effort; we demonstrate compatibility with NaVILA, DualVLN, StreamVLN, and JanusVLN. Environments are drawn from artist-designed scenes and 3D Gaussian Splatting reconstructions, filtered for navigable areas exceeding 100 square meters. Instructions are generated by a dual generator-reviewer plus paraphraser multi-agent pipeline with human-in-the-loop verification, yielding 933 collision-aware reference episodes, each paired with one fine-grained instruction and three coarse-grained stylistic variants (formal, natural, casual). Across four models and four embodiments, JanusVLN achieves the highest mean success rate of 43.55% and nDTW of 48.38. In a 20-episode sim-to-real pilot with DualVLN and the Unitree G1, navigation errors correlate strongly (r=0.935), with a mean absolute difference of 0.68m and mean trajectory similarity of 0.782 (+/-0.188) nDTW. These results highlight the interaction between VLN models, controllers, and humanoid embodiments under physical execution. Code, benchmark, and data will be released upon acceptance at https://humanoid-vln.github.io/.
@@ -1123,6 +1497,40 @@ Vision-Language Navigation (VLN) for humanoid robots poses challenges existing b
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, rendering, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：LocusGS: Spatially Grounded Tokens for Feed-Forward 3D Gaussian Splatting
+- 作者：Wenyu Li, Sidun Liu, Tongrui Hu, Peng Qiao, Yong Dou
+- 出版日期：2026-08-13
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.12825
+
+### 一句话总结
+LocusGS 通过为查询式前馈 3D 高斯泼溅中的每个高斯查询引入显式的 3D 锚点状态（中心+支撑半径），改善查询的空间连贯性，从而提升渲染质量。
+
+### 研究问题
+现有查询式前馈 3DGS 方法中，从同一查询解码出的高斯常常散布在场景中相距较远的区域，导致查询级别的空间连贯性弱、与场景结构对齐差。作者将这一问题归因于现有高斯查询所采用纯隐式表示，缺乏显式空间约束。
+
+### 核心思路/方法
+LocusGS 为每个高斯查询增加一个 3D 锚点状态，包含中心位置和支撑半径。锚点状态在解码器各层中逐步细化，并在查询交互、多视图特征聚合和高斯生成三个环节中统一使用。具体包括：
+1. 锚点-射线几何偏置：引导查询只关注与其锚点空间相关的图像观测。
+2. 锚点中心解码：将查询生成的 Gaussians 限制在锚点周围的局部区域内。
+
+### 主要贡献
+1. 提出 LocusGS 方法，通过显式 3D 锚点状态增强高斯查询的空间定位能力。
+2. 在相同高斯预算下，较查询式高斯 token 基线方法在新型视图合成基准上取得更好的渲染质量。
+3. 实验分析表明，学习到的锚点形成连贯的空间布局，高斯分布更加结构化，证明显式锚点状态改善了空间组织性。
+
+### 局限性
+摘要未提供足够信息，无法得知该方法在计算开销、对遮挡或复杂场景的鲁棒性、以及与大场景或动态场景的适配性等方面的局限性。
+
+### 阅读优先级
+**中**。该工作针对查询式前馈 3DGS 的空间连贯性问题提出了明确改进，方法设计清晰、实验验证充分，适合关注 3D 场景表示与神经渲染的研究者阅读。但摘要未展示与更多当前主流方法（如非查询式方法）的全面对比，也未涉及多尺度或大规模场景的扩展讨论，因此作为方向性参考价值较高，而非必须优先精读的突破性工作。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1851,6 +2259,46 @@ Motivated by the IEEE 802.11bf effort to standardize advanced WLAN sensing, inte
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** manipulation, world model
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：DreamX-Phi 1.0: Action-Conditioned Video World Model for Robotic Manipulation
+- 作者：DreamX Team, Rui Chen, Xiangxiang Chu, Geng Li, Jifan Li, Qingfeng Shi, Datao Tang, Jing Tang, Jun Wang, Pengfei Zhang
+- 出版日期：2026-08-13
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.13489
+
+### 一句话总结
+DreamX-Phi 1.0 是一个动作条件下的视频世界模型，通过几何编码、深度分支和物体一致性保持等技术，实现机器人操作中的高质量未来帧预测，并在 WorldArena 2.0 挑战赛中取得优异成绩。
+
+### 研究问题
+如何构建一个既具备视觉真实感、又能严格遵循动作指令且保持物体一致性的机器人操作视频世界模型，以准确预测给定动作序列下的未来观测。
+
+### 核心思路/方法
+- 以当前观测帧、语言指令和末端执行器位姿及夹爪状态序列为条件，预测未来观测视频。
+- 采用 **PRoPE-style 几何编码**：将每只手臂的 SE(3) 变换注入注意力机制，保持手臂身份与刚体运动结构，确保预测遵循各臂指令路径。
+- 引入轻量 **深度分支** 建模场景级几何信息。
+- 利用 **SAM3 掩码** 与冻结的 **V-JEPA teacher** 维持抓取过程中小物体的语义一致性。
+- 通过 **分布匹配蒸馏** 将多步生成器压缩为少步学生模型，提升部署效率。
+
+### 主要贡献
+- 提出动作条件视频世界模型 DreamX-Phi 1.0，兼顾视觉真实感与动作/物体级忠实性。
+- 创新性引入 PRoPE-style 几何编码实现手臂级 SE(3) 约束。
+- 结合深度分支与 SAM3+V-JEPA 教师机制，解决场景几何与物体演化建模难题。
+- 通过分布匹配蒸馏实现高效生成推理。
+- 在 WorldArena 2.0 挑战赛中获得 Track 1 第一名、Track 2 第二名。
+
+### 局限性
+摘要未提供足够信息：论文未在摘要中报告量化实验误差、模型参数量、训练数据规模、推理速度或具体蒸馏加速比等细节，也未说明当前方法在哪些场景下可能失效或存在何种限制。
+
+### 阅读优先级
+**高**
+
+理由：该工作面向机器人操作中的视频世界建模这一前沿方向，方法整合了几何编码、深度估计、物体分割与蒸馏技术，设计较为系统，且已在公开挑战赛中验证效果，对从事具身智能、视频预测和机器人控制的研究者具有较强参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
