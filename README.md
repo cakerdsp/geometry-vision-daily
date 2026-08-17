@@ -11,11 +11,11 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：51
+- 当前滚动窗口论文数：42
 - 分类分布：
-  - 3D Reconstruction & Multi-view Geometry: 16
-  - Neural Scene Representations & Rendering: 15
-  - Embodied / Robotics / AR Applications: 14
+  - Neural Scene Representations & Rendering: 14
+  - 3D Reconstruction & Multi-view Geometry: 12
+  - Embodied / Robotics / AR Applications: 10
   - Geometry Foundation Models: 5
   - Dynamic / 4D Reconstruction: 1
 - 当前兴趣方向：未指定
@@ -25,45 +25,68 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-**1. 几何基础模型（Geometry Foundation Models）从“重建”走向“感知骨干”**
-本周多篇论文不再将几何基础模型仅仅视为离线重建工具，而是将其作为在线、流式感知系统的共享骨干。GeoUP 将 VGGT 的重建导向潜表示适配到多相机驾驶场景，作为统一 3D 感知的几何底座；Map-Det3D 则直接将前馈式度量 3D 重建模型作为检测模型的几何骨干，将 3D 检测框直接在重建出的度量空间中预测，绕开“2D 检测 + 3D 提升”的脆弱范式。这表明该领域正从“重建即目标”转向“重建即基础设施”。
+1. **几何基础模型正从“重建专用”走向“多任务统一骨干”**  
+   今日多篇论文（GeoUP、Map-Det3D、RbFT-Net）不再将3D重建视为孤立任务，而是将重建导向的潜表示或重建先验作为统一骨干，直接服务于下游感知任务（深度估计、3D检测、占用预测）。GeoUP明确将VGGT的重建潜表示适配到自动驾驶多相机流中；Map-Det3D则把前馈度量重建模型作为几何先验，将检测直接引入重建出的3D空间。这表明**重建先验正在成为一种通用的几何骨干范式**。
 
-**2. 前馈式 3D 高斯溅射（3DGS）持续追求“空间结构化”与“低开销”**
-查询式前馈 3DGS 方法（如 LocusGS）开始暴露纯隐式查询表示的局限——同一查询解码的高斯散布于远距区域，空间连贯性弱。LocusGS 通过显式 3D 锚点（中心 + 支撑半径）将查询“接地”到场景局部区域，改善空间组织性。与此同时，Seed2GS 则追求无需相机位姿、无需场景特定训练的物体提取（9.3秒、92.1% mIoU），体现了前馈式方法在“效率”与“可用性”（不需要原始重建相机）上的双重发力。
+2. **3D高斯溅射（3DGS）正进入“结构可控化”与“跨模态扩展”阶段**  
+   LocusGS通过显式3D锚点（中心+支撑半径）约束查询的空间连贯性，解决“同一查询解码的高斯散落远隔区域”的问题，代表3DGS前馈范式从纯隐式向**空间显式可控**演进。GS²CI将3DGS与快照压缩成像（SCI）结合，并借助视觉基础模型先验提升重建鲁棒性，显示3DGS正在向**极端输入条件（单次测量、信息严重压缩）** 扩展。
 
-**3. 重建先验与视觉基础模型（VFM）成为弱/受限观测下重建的“救命稻草”**
-当观测信息严重不足（单次快照压缩成像）或模态退化（热成像、水下成像）时，研究者转而依赖大规模预训练模型先验来补偿信息缺失。GS²CI 利用 3D VFM 初始化与 2D VFM 伪视图监督，从单张 SCI 测量重建 3D 场景；RGB-HS 通过层级 token 对齐将 RGB 基础模型知识迁移到热成像深度估计；AMR-Pose 虽未使用 VFM，但也通过主动 LED 标记弥补水下光学退化。这一趋势表明，基础模型先验正成为解决“病态逆问题”的通用补丁。
+3. **大规模视觉基础模型（VFM）正被系统性“借用”到三维与多模态表示中**  
+   今日至少5篇论文直接依赖视觉基础模型：GS²CI（3D VFM初始化+2D VFM伪视图监督）、DreamX-Phi（冻结V-JEPA teacher+SAM3掩码）、Semantic Radiance Fields（预训练分割模型提升语义到3D）、RGB-HS（从RGB基础模型向热成像分支施加层级监督）、Seed2GS（QD-SAM3）。**基础模型作为先验提供者（初始化、监督、掩码、几何约束）已成为跨模态与跨任务迁移的主流技术路线**。
 
-**4. 世界模型与仿真环境迈向“物理可行 + 语义可查询”**
-机器人相关论文显示，仿真与预测正从“视觉逼真”转向“物理忠实 + 语义可用”。DreamX-Phi 1.0 通过 PRoPE 几何编码确保预测视频遵循手臂级 SE(3) 指令路径，并通过深度分支与 SAM3 掩码保持物体一致性；HumanoidVLN 强调双足运动的物理约束、形态多样性和步态导致的相机动态畸变；Semantic Radiance Fields 则将 2D 语义分割提升至 3D 辐射场，使真实场景重建同时具备几何真实性、新视角合成与语义/自由空间查询能力，服务于空间推理智能体的训练与评估。
+4. **仿真器与基准正在向“物理真实+语义可用+形态多样”三位一体演进**  
+   HumanoidVLN构建物理接地的人形机器人VLN仿真器，覆盖4种不同形态的机器人，并验证sim-to-real迁移；RoadWeaver从零生成大规模车道级HD地图供驾驶模拟闭环评估；Semantic Radiance Fields提出将语义辐射场作为空间推理智能体的仿真器。**仿真平台不再仅追求视觉真实感，而是强调物理约束（双足平衡、相机运动畸变）、语义真值（逐类查询）和形态多样性（多种机器人、多种车辆视角）。**
 
-**5. 自动驾驶与机器人的“大规模/统一基准”缺口被逐步填补，且新数据集生成呈自动化趋势**
-MV2 数据集弥补了多视角、多车辆轨迹下新视角合成评估的空缺；HumanoidVLN 提供物理接地的人形 VLN 基准；ProPose 提出统一拓扑的义肢/残肢姿态估计基准。同时，RoadWeaver 展示了从零生成大规模车道级 HD 地图的自动化管线（1.39–3.50 秒生成完整地图），进一步压缩了仿真场景构建的时间成本。这类工作指向一个共同诉求：以更低的成本获得覆盖更广、更真实的评测资源。
+5. **标注协议与数据本身正在被重新设计，以覆盖长尾物理差异**  
+   ProPose提出统一健全肢体、义肢和残肢的拓扑标注协议，并设计Real-to-Synthetic数据扩充缓解极端长尾；MV2数据集则设计了多车交叉轨迹评估协议（用一辆车的视角训练、另一辆车的视角测试），以更严格评估大视点变化下的NVS。**这些工作反映出：性能瓶颈正从模型结构转向数据协议与评估协议的设计创新。**
 
+---
 
 #### 技术路线观察
 
-- **几何基础模型**：GeoUP 与 Map-Det3D 均将重建模型（VGGT、前馈度量重建模型）用作多视图感知的几何骨干，但 GeoUP 采用因子化注意力（自/时间/视图）分解跨图像交互，Map-Det3D 则直接将检测框映射进重建空间。两者的共同逻辑是“用重建先验替代语义预训练骨干的几何短板”，差异在于架构耦合的深度。
-- **3D/4D 重建与神经场景表示**：可明显看到两条分叉路线——一是优化式/表示增强路线（LocusGS 的显式锚点、GS²CI 的 OSGR 稠密化策略），强调在既有表征（3DGS、辐射场）中注入更强的空间结构或 SCI 专用约束；二是免训练/免相机路线（Seed2GS），强调对预构建 3DGS 资产的即取即用。此外，COGENT 提出了全新应用维度——将高斯表示用于可解释性（反事实解释），扩展了神经场景表示的下游消费场景。
-- **机器人/AR 应用**：世界模型（DreamX-Phi 1.0）与仿真器（HumanoidVLN、SRF 模拟器）均强调“物理约束 + 语义接口”的耦合：前者通过几何编码与物体一致性保持实现动作忠实，后者通过物理引擎与语义查询实现闭环训练。与此同时，4D 雷达-相机深度补全（RbFT-Net）与水下位姿估计（AMR-Pose）则反映出对极端/异质传感模态的鲁棒感知重建正在成为独立关注点。
-- **自监督预训练**：受控条件下的 SSL 对比研究（论文 2608.13183）提供了一个重要但容易被忽视的视角——在有限资源下，DINOv2 风格预训练综合最优，且图像 SSL 与视频 SSL 的联合训练存在语义/几何任务间的权衡。这提示 3D 感知社区在采用大规模预训练骨干时，需要警惕任务类型的匹配性。
+| 方向 | 核心关注点 | 代表性论文 | 技术侧重点 |
+|---|---|---|---|
+| **几何基础模型** | 重建先验的多任务泛化、跨域鲁棒性 | GeoUP、Map-Det3D | 将重建潜表示/重建前馈模型作为几何骨干，注入校准感知编码与跨视图注意力 |
+| **3D/4D重建与NVS** | 稀疏输入下的鲁棒重建、空间可控性、真实驾驶场景评估 | GS²CI、LocusGS、MV2 | VFM初始化与伪监督、显式锚点状态逐步细化、多轨迹交叉测试协议 |
+| **神经场景表示** | 语义与几何联合编码、解释性、对象提取 | Semantic Radiance Fields、COGENT、Seed2GS | 将2D语义提升到3D辐射场/3DGS；在高斯参数空间做反事实优化；单参考视图引导对象分割 |
+| **机器人/AR应用** | 物理接地仿真、动作条件预测、多形态泛化 | HumanoidVLN、DreamX-Phi、AMR-Pose | 物理引擎+RL运动策略、SE(3)几何编码注入注意力、主动LED标记+概率切换PnP |
+| **底层几何优化** | 经典问题的效率与可扩展性 | Fast Iterative Five-point | Dog Leg迭代优化替代代数解法，精度不变、速度翻倍 |
 
+**关键观察：**
+- 几何基础模型与3DGS两条路线在今日论文中出现了明显交汇：GeoUP与Map-Det3D将重建模型作为检测/感知的几何先验，而GS²CI将VFM先验引入3DGS重建，两者方向相反但共同指向“**重建学习与感知任务互为先验**”的循环范式。
+- 视觉基础模型的角色已从“直接微调”转变为“多样化先验提供者”：初始化（GS²CI）、伪标签教师（DreamX-Phi、RGB-HS）、语义提升（Semantic Radiance Fields）、开放词汇分割（Seed2GS）。
+- 仿真与数据层面不再只追求“更多数据”，而是追求“更可控的多样性”：HumanoidVLN控制机器人形态与身高，RoadWeaver控制路网拓扑与规模，MV2控制视点差异幅度。
+
+---
 
 #### 值得优先阅读的论文
 
-1. **GeoUP（2608.13147）**：将几何基础模型引入统一 3D 驾驶感知，是当前“重建先验 + 感知”融合趋势的代表作，对自动驾驶与多视图 3D 感知研究者有直接参考价值。
-2. **Map-Det3D（2608.12179）**：与 GeoUP 思路互补，将度量重建先验直接用于 3D 检测，绕开 2D-to-3D 提升的脆弱性。对 monocular 3D detection 域偏移问题有兴趣者必读。
-3. **LocusGS（2608.12825）**：直击查询式前馈 3DGS 的“空间散乱”要害，显式锚点思想简洁且可推广，对该子方向的后续发展有启示意义。
-4. **GS²CI（2608.13502）**：将快照压缩成像与 3DGS 及视觉基础模型结合，属多领域交叉创新，其 SCI 专用稠密化策略（OSGR）对极端观测条件下的重建有方法论借鉴价值。
-5. **A Controlled Study of Self-Supervised Image and Video Pretraining under Limited Resources（2608.13183）**：稀缺的受控对比研究，对依赖预训练骨干的 3D/多模态感知研究者有很强的资源配置与方法选型的指导意义。
+1. **GeoUP（2608.13147）**  
+   *理由*：本文将几何基础模型（VGGT）的重建潜表示系统性地适配到自动驾驶多相机感知场景，并以因子化注意力+校准感知射线编码实现深度、检测、占用三任务统一。它代表了“重建-感知统一骨干”这一最新技术路线的典型范式，对从事自动驾驶或统一3D感知的读者有直接参考价值。
 
+2. **GS²CI（2608.13502）**  
+   *理由*：单次快照压缩测量即可重建3D场景，是3DGS与极端输入条件结合的前沿探索。其提出的SCI专用稠密化策略（OSGR）针对弱监督下3DGS不稳定的问题，具有普适借鉴意义。此外，它展示了VFM作为初始化与伪监督的双重用法。
+
+3. **LocusGS（2608.12825）**  
+   *理由*：指出了查询式前馈3DGS的典型失败模式（同一查询解码的高斯空间分散），并给出简洁有效的解决方案（显式3D锚点状态）。将为进一步研究“3DGS的空间可控生成”提供重要基础，值得精读。
+
+4. **Map-Det3D（2608.12179）**  
+   *理由*：直接挑战“2D检测后提升到3D”的脆弱范式，转而用前馈度量重建模型作为几何先验，在重建出的3D空间中做检测。这一思路跳出检测头设计的传统框架，对无深度传感器的机器人与自动驾驶感知有方法论意义。
+
+5. **HumanoidVLN（2608.12860）**  
+   *理由*：首个面向多种人形机器人形态的物理接地VLN仿真器与基准，直指现有VLN基准忽视双足物理约束与形态差异的缺陷。其分层控制栈（RL运动+PD/MPC路径跟踪）和多智能体指令生成流水线具有较高工程参考价值；对从事具身导航与仿真研究的读者应优先关注。
+
+---
 
 #### 可能的研究机会
 
-- **“重建先验 + 感知”的更深层融合**：GeoUP 与 Map-Det3D 均将重建模型作为骨干，但与任务头（检测、占用）的耦合仍较浅。未来可在重建潜空间内直接联合优化检测、跟踪、预测，探索真正“以重建为中心”的自动驾驶感知架构。
-- **SCI/压缩感知条件下的 3D 重建通用化**：GS²CI 聚焦单测量 SCI，但该方法是否可推广到其他压缩成像设置（如光谱、全息）？其 OSGR 稠密化策略能否迁移至其他弱监督重建任务（如稀疏视角 3DGS）值得探索。
-- **基础模型先验的“分层监督”范式泛化**：RGB-HS 的层级 token 对齐策略能否扩展到其他跨模态（雷达、事件相机、超声）的深度/几何估计？其基于 RGB 图像质量的教师加权机制也是一种可复用的教务设计。
-- **语义辐射场作为通用机器人模拟器**：目前仅以果园苹果抓取为例，可扩展到室内服务机器人、手术机器人、搜索救援等场景；如何高效更新
+1. **“重建-感知”双向循环的可扩展验证**  
+   GeoUP和Map-Det3D各自证明了“重建先验→感知”的可行性，但尚未看到“感知反馈→改进重建”的闭环研究。将两者结合，构建一个重建与感知互相提供监督信号的统一框架，是一个待填补的空白。
+
+2. **3DGS空间可控生成与语义/实例级编辑的结合**  
+   LocusGS已经让高斯查询具备显式空间锚点，这一机制自然可与Seed2GS（单参考视图对象提取）或COGENT（高斯参数空间反事实解释）结合，实现语义级、实例级的3DGS编辑与可解释操作。例如，将LocusGS的锚点与语义标签绑定，实现“指哪儿改哪儿”的可控生成。
+
+3. **在康复医学与辅助技术中
 
 ### interests.md 指令分析
 
@@ -992,54 +1015,6 @@ Despite substantial progress in visual localization, from scene coordinate regre
 <summary>Abstract</summary>
 
 Autonomous robots increasingly rely on edge computing to offload computationally intensive perception tasks while maintaining real-time operation over 5G networks. However, conventional fiducial marker detection pipelines provide limited opportunities for efficient task partitioning, making them poorly suited for communication-aware edge deployment. This paper proposes a semantic split inference framework for fiducial marker processing in 5G-enabled Edge SLAM. A DeepTag-inspired convolutional neural network is partitioned between the robot and the edge server, where intermediate feature representations serve as task-oriented semantic information transmitted over the wireless link. The framework is integrated into a ROS2-based robotic architecture and characterized over a real 5G communication testbed. Experimental results demonstrate accurate keypoint estimation, illustrate the impact on downstream pose estimation, and quantify the communication--computation trade-offs associated with different split points, providing practical insights for communication-aware deployment of deep visual perception in connected robotic systems.
-
-</details>
-
-#### 2026-08-10 - You Only Flow Once: Calibrated and Real-Time Radar Pose Estimation with Multi-Hypothesis Normalizing Flows
-
-**Authors:** Jonas Leo Mueller, Sebastian Hoefler, Dario Zanca, Naga Venkata Sai Jitin Jami, Thomas Altstidl, Bjoern M. Eskofier
-**Links:** [abs](https://arxiv.org/abs/2608.09579) - [pdf](https://arxiv.org/pdf/2608.09579)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** None
-**Matched keywords:** pose estimation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：You Only Flow Once: Calibrated and Real-Time Radar Pose Estimation with Multi-Hypothesis Normalizing Flows
-- 作者：Jonas Leo Mueller, Sebastian Hoefler, Dario Zanca, Naga Venkata Sai Jitin Jami, Thomas Altstidl, Bjoern M. Eskofier
-- 出版日期：2026-08-10
-- 分类：3D Reconstruction & Multi-view Geometry
-- 链接：https://arxiv.org/abs/2608.09579
-
-### 一句话总结
-本文提出基于条件归一化流的多假设雷达姿态估计方法MH-NFPG，在保持校准不确定性的同时实现实时推理，性能超越扩散模型。
-
-### 研究问题
-稀疏且含噪的毫米波雷达点云通常对应多种合理的人体姿态，导致确定性姿态估计存在本质上的不适定性；现有雷达方法多为确定性估计，无法处理多模态歧义，而扩散模型虽能建模多假设分布但推理成本高且缺乏校准的不确定性。
-
-### 核心思路/方法
-将条件归一化流与时空Transformer骨干结合：Transformer提取雷达点云时空特征，条件归一化流将Laplace基分布变换为表达力强的后验分布，通过单次前向传播并行生成多个姿态假设，从而以低推理成本获得多模态分布并支持校准的不确定性估计。
-
-### 主要贡献
-- 提出MH-NFPG：首个面向雷达姿态估计的多假设归一化流方法，兼具多模态建模与单次前向推理效率。
-- 在三个雷达基准（MM-Fi、mmRadPose、mRI）上超越扩散模型的校准性能，并在两个数据集上提升姿态精度，第三个数据集精度持平。
-- 推理速度比扩散模型快20倍以上，校准误差最高降低85%。
-- 发现扩散模型在校准上显著退化，而基于流的方法在跨环境设置下仍保持可靠覆盖率。
-
-### 局限性
-摘要未提供足够信息。例如：未提及方法在极端噪声、遮挡或训练数据规模有限时的表现，也未讨论模型参数量、显存开销或失败案例。
-
-### 阅读优先级
-**优先级：中**。理由：该方法在雷达姿态估计任务上展示了归一化流对扩散模型的计算效率与校准优势，对关注实时不确定性感知姿态估计的研究者有参考价值；但若你不是该子领域（毫米波雷达人体姿态估计）从业者，或更关注通用生成模型方法论，则与本工作的直接相关性有限。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Sparse and noisy millimeter-wave radar point cloud observations often correspond to multiple plausible human poses, making deterministic pose estimation fundamentally ill-posed. Yet existing radar methods remain deterministic, collapsing this ambiguity into a single estimate. Diffusion-based alternatives can model multi-hypothesis distributions but require costly sequential denoising for each distribution sample and lack calibrated uncertainty. We propose Multi-Hypothesis Normalizing Flow Pose Generator (MH-NFPG), which models pose distributions from radar point clouds using a conditional normalizing flow. Specifically, we combine a spatiotemporal transformer backbone with a normalizing flow that transforms a Laplace base distribution into an expressive posterior, generated in parallel through a single forward pass. Leveraging this efficiency, we outperform diffusion-based alternatives in calibration across three radar benchmarks (MM-Fi, mmRadPose, mRI), improve pose accuracy on two, and match it on the third, while achieving over 20x faster inference for applications and reducing calibration error by up to 85%. We find that calibration degrades substantially for diffusion models, whereas our flow-based approach maintains reliable coverage, also in cross-environment settings. These results demonstrate normalizing flows as a practical alternative to diffusion models for real-time, uncertainty-aware radar pose estimation. Our code will be made publicly available.
 
 </details>
 
