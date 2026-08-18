@@ -11,13 +11,12 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：42
+- 当前滚动窗口论文数：36
 - 分类分布：
   - Neural Scene Representations & Rendering: 14
   - 3D Reconstruction & Multi-view Geometry: 12
-  - Embodied / Robotics / AR Applications: 10
-  - Geometry Foundation Models: 5
-  - Dynamic / 4D Reconstruction: 1
+  - Embodied / Robotics / AR Applications: 6
+  - Geometry Foundation Models: 4
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
@@ -25,68 +24,72 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-1. **几何基础模型正从“重建专用”走向“多任务统一骨干”**  
-   今日多篇论文（GeoUP、Map-Det3D、RbFT-Net）不再将3D重建视为孤立任务，而是将重建导向的潜表示或重建先验作为统一骨干，直接服务于下游感知任务（深度估计、3D检测、占用预测）。GeoUP明确将VGGT的重建潜表示适配到自动驾驶多相机流中；Map-Det3D则把前馈度量重建模型作为几何先验，将检测直接引入重建出的3D空间。这表明**重建先验正在成为一种通用的几何骨干范式**。
+**1. 3DGS 从"表征工具"走向"多角色复用与场景理解中枢"**
+多篇论文不再将 3DGS 仅视为渲染表征，而是将其作为集几何、可见性、语义、语言于一体的多模态场景表示。SplatGuide 复用同一 3DGS 场景产生渲染图像、逐高斯可见性投票图和重建 token 三种信号；GaussianDWM++ 将 Qwen/SigLIP 视觉语言特征直接蒸馏进 3D 高斯基元，构建开放词汇语义场；QAGaussian 在 3DGS 上做查询自适应的结构化推理（而非相似性匹配）；Gaussian-JEPA 则在 3DGS token 上进行潜空间自监督预测。这种"单一表示、多角色复用"的趋势显著。
 
-2. **3D高斯溅射（3DGS）正进入“结构可控化”与“跨模态扩展”阶段**  
-   LocusGS通过显式3D锚点（中心+支撑半径）约束查询的空间连贯性，解决“同一查询解码的高斯散落远隔区域”的问题，代表3DGS前馈范式从纯隐式向**空间显式可控**演进。GS²CI将3DGS与快照压缩成像（SCI）结合，并借助视觉基础模型先验提升重建鲁棒性，显示3DGS正在向**极端输入条件（单次测量、信息严重压缩）** 扩展。
+**2. 几何基础模型（Video/Image-based Reconstruction Models）向任务专用化与下游适配演进**
+VGGT 风格的重建基础模型正被适配到特定场景。VGGT-Align 针对长序列重建的尺度漂移问题，提出场景几何不变量锚定（SGIA），将 Sim(3) 对齐退化为刚体变换；GeoUP 则将 VGGT 重建导向潜表示适配到流式多相机驾驶场景，支撑度量深度、3D 检测和语义占用三个任务。这表明几何基础模型正从"通用重建"走向"下游任务级适配"。
 
-3. **大规模视觉基础模型（VFM）正被系统性“借用”到三维与多模态表示中**  
-   今日至少5篇论文直接依赖视觉基础模型：GS²CI（3D VFM初始化+2D VFM伪视图监督）、DreamX-Phi（冻结V-JEPA teacher+SAM3掩码）、Semantic Radiance Fields（预训练分割模型提升语义到3D）、RGB-HS（从RGB基础模型向热成像分支施加层级监督）、Seed2GS（QD-SAM3）。**基础模型作为先验提供者（初始化、监督、掩码、几何约束）已成为跨模态与跨任务迁移的主流技术路线**。
+**3. 视觉-语言-3D 融合走向结构化推理与细粒度对齐**
+从简单的文本-区域全局相似性匹配，转向基于关系图的逻辑推理和细粒度特征对齐。QAGaussian 直接批判全局相似性匹配的弱点，提出多尺度高斯槽 + 关系感知槽图推理；GaussianDWM++ 强调文本与 3D 结构细粒度对齐的必要性，采用 KL 对齐将高斯世界 token 与基础图像 token 对齐。
 
-4. **仿真器与基准正在向“物理真实+语义可用+形态多样”三位一体演进**  
-   HumanoidVLN构建物理接地的人形机器人VLN仿真器，覆盖4种不同形态的机器人，并验证sim-to-real迁移；RoadWeaver从零生成大规模车道级HD地图供驾驶模拟闭环评估；Semantic Radiance Fields提出将语义辐射场作为空间推理智能体的仿真器。**仿真平台不再仅追求视觉真实感，而是强调物理约束（双足平衡、相机运动畸变）、语义真值（逐类查询）和形态多样性（多种机器人、多种车辆视角）。**
+**4. 物理交互与交互式仿真成为神经场景表示的新延伸**
+LaGSplat 将低维潜状态同时作为耗散拉格朗日动力学广义坐标和 3DGS 解码器条件变量，支持用户对物体施加训练未见过的外力。这是"重建 + 物理"融合方向的一个典型代表，结合了可微物理与神经渲染的归纳偏置。
 
-5. **标注协议与数据本身正在被重新设计，以覆盖长尾物理差异**  
-   ProPose提出统一健全肢体、义肢和残肢的拓扑标注协议，并设计Real-to-Synthetic数据扩充缓解极端长尾；MV2数据集则设计了多车交叉轨迹评估协议（用一辆车的视角训练、另一辆车的视角测试），以更严格评估大视点变化下的NVS。**这些工作反映出：性能瓶颈正从模型结构转向数据协议与评估协议的设计创新。**
+**5. 效率优化与边缘化部署成为显式研究维度**
+TinyDETR-Pose 面向资源受限硬件做端到端 6DoF 位姿估计；RoofGS 通过 Roofline 分析差异化优化 3DGS 渲染瓶颈；BinRVR 用二值化网络实现约 96% 的参数量和计算量缩减。这与"大规模基础模型"的趋势并行，构成另一条清晰的优化路径。
 
 ---
 
 #### 技术路线观察
 
-| 方向 | 核心关注点 | 代表性论文 | 技术侧重点 |
-|---|---|---|---|
-| **几何基础模型** | 重建先验的多任务泛化、跨域鲁棒性 | GeoUP、Map-Det3D | 将重建潜表示/重建前馈模型作为几何骨干，注入校准感知编码与跨视图注意力 |
-| **3D/4D重建与NVS** | 稀疏输入下的鲁棒重建、空间可控性、真实驾驶场景评估 | GS²CI、LocusGS、MV2 | VFM初始化与伪监督、显式锚点状态逐步细化、多轨迹交叉测试协议 |
-| **神经场景表示** | 语义与几何联合编码、解释性、对象提取 | Semantic Radiance Fields、COGENT、Seed2GS | 将2D语义提升到3D辐射场/3DGS；在高斯参数空间做反事实优化；单参考视图引导对象分割 |
-| **机器人/AR应用** | 物理接地仿真、动作条件预测、多形态泛化 | HumanoidVLN、DreamX-Phi、AMR-Pose | 物理引擎+RL运动策略、SE(3)几何编码注入注意力、主动LED标记+概率切换PnP |
-| **底层几何优化** | 经典问题的效率与可扩展性 | Fast Iterative Five-point | Dog Leg迭代优化替代代数解法，精度不变、速度翻倍 |
+| 方向 | 技术侧重 | 代表论文 |
+|------|----------|----------|
+| **几何基础模型** | 主要聚焦如何校准尺度漂移（Sim(3)→SE(3) 降自由度退化）、如何将重建潜表示适配到下游感知任务（因子化注意力 + 标定感知射线图） | VGGT-Align、GeoUP |
+| **3D/4D 重建与神经场景表示** | 3DGS 成为绝对主导表示；强调从单一场景中复用多种信号（渲染、可见性、token、语义）或引入物理可解释潜状态；自监督方向探索 JEPA 式潜空间预测 | SplatGuide、Gaussian-JEPA、LaGSplat、GS²CI |
+| **视觉-语言-3D 交叉** | 从"相似性匹配"转向"结构化推理"；采用槽式候选 + 图推理（语言条件边权重）+ 粒度自适应路由；或利用基础特征蒸馏实现开放词汇语义场 | QAGaussian、GaussianDWM++ |
+| **机器人/AR 应用** | 强调低成本遥操作硬件 + 触觉反馈提升接触关键任务示教质量；动作条件世界模型（注入 SE(3) 几何编码、深度分支 + SAM3 掩码）；语义辐射场作为模拟器提供几何和语义接地 | ViHaTeleop、DreamX-Phi 1.0、Semantic Radiance Fields as Simulators |
+| **效率优化与低资源** | Roofline 模型驱动的瓶颈特定优化；二值化网络 + 分布感知量化；轻量级 Transformer 单阶段端到端位姿回归 | RoofGS、BinRVR、TinyDETR-Pose |
 
-**关键观察：**
-- 几何基础模型与3DGS两条路线在今日论文中出现了明显交汇：GeoUP与Map-Det3D将重建模型作为检测/感知的几何先验，而GS²CI将VFM先验引入3DGS重建，两者方向相反但共同指向“**重建学习与感知任务互为先验**”的循环范式。
-- 视觉基础模型的角色已从“直接微调”转变为“多样化先验提供者”：初始化（GS²CI）、伪标签教师（DreamX-Phi、RGB-HS）、语义提升（Semantic Radiance Fields）、开放词汇分割（Seed2GS）。
-- 仿真与数据层面不再只追求“更多数据”，而是追求“更可控的多样性”：HumanoidVLN控制机器人形态与身高，RoadWeaver控制路网拓扑与规模，MV2控制视点差异幅度。
+值得注意的横向特征：多个工作（VGGT-Align、GeoUP、GaussianDWM++、SplatGuide）都共享一种"将大模型/基础模型的特征或潜表示嵌入 3D 表示中"的范式，差异在于嵌入的层次（逐高斯 vs. 场景级 token）和用途（重建、感知、编辑）。
 
 ---
 
 #### 值得优先阅读的论文
 
-1. **GeoUP（2608.13147）**  
-   *理由*：本文将几何基础模型（VGGT）的重建潜表示系统性地适配到自动驾驶多相机感知场景，并以因子化注意力+校准感知射线编码实现深度、检测、占用三任务统一。它代表了“重建-感知统一骨干”这一最新技术路线的典型范式，对从事自动驾驶或统一3D感知的读者有直接参考价值。
+**1. SplatGuide（2608.16863）**
+将同一 3DGS 场景复用于三种互补信号，直接解决"信息断开"问题，且无额外计算开销。对 3DGS 前馈重建 + 扩散的管线设计具有较强的方法论启发价值。
 
-2. **GS²CI（2608.13502）**  
-   *理由*：单次快照压缩测量即可重建3D场景，是3DGS与极端输入条件结合的前沿探索。其提出的SCI专用稠密化策略（OSGR）针对弱监督下3DGS不稳定的问题，具有普适借鉴意义。此外，它展示了VFM作为初始化与伪监督的双重用法。
+**2. VGGT-Align（2608.15260）**
+聚焦长序列 3D 重建核心痛点——尺度漂移，提出即插即用框架（SGIA + 测试时自适应），无需重训即可直接挂载到现有 VGGT 类管线，实用性和增量贡献明显。
 
-3. **LocusGS（2608.12825）**  
-   *理由*：指出了查询式前馈3DGS的典型失败模式（同一查询解码的高斯空间分散），并给出简洁有效的解决方案（显式3D锚点状态）。将为进一步研究“3DGS的空间可控生成”提供重要基础，值得精读。
+**3. QAGaussian（2608.16103）**
+明确指出现有 3DGS 指代分割基于全局相似性匹配的不足，提出系统的结构化推理框架（多尺度槽 + 图推理 + 粒度路由）。对"语言-3D"交互方向有较强的范式意义。
 
-4. **Map-Det3D（2608.12179）**  
-   *理由*：直接挑战“2D检测后提升到3D”的脆弱范式，转而用前馈度量重建模型作为几何先验，在重建出的3D空间中做检测。这一思路跳出检测头设计的传统框架，对无深度传感器的机器人与自动驾驶感知有方法论意义。
+**4. Gaussian-JEPA（2608.15651）**
+首次将 JEPA 潜空间预测范式引入 3DGS 表示学习，解决高斯原语耦合属性与异质空间支撑的难题。对 3D 自监督预训练方向有前瞻性价值，可能影响后续 3D 基础模型的预训练方式。
 
-5. **HumanoidVLN（2608.12860）**  
-   *理由*：首个面向多种人形机器人形态的物理接地VLN仿真器与基准，直指现有VLN基准忽视双足物理约束与形态差异的缺陷。其分层控制栈（RL运动+PD/MPC路径跟踪）和多智能体指令生成流水线具有较高工程参考价值；对从事具身导航与仿真研究的读者应优先关注。
+**5. LaGSplat（2608.16324）**
+将物理可解释的拉格朗日动力学与 3DGS 解码器结合，实现用户可在推理时交互施力。这是"可交互物理 + 神经渲染"的跨域创新，值得跟踪其后续扩展。
 
 ---
 
 #### 可能的研究机会
 
-1. **“重建-感知”双向循环的可扩展验证**  
-   GeoUP和Map-Det3D各自证明了“重建先验→感知”的可行性，但尚未看到“感知反馈→改进重建”的闭环研究。将两者结合，构建一个重建与感知互相提供监督信号的统一框架，是一个待填补的空白。
+**1. 3DGS 的多角色统一复用 + 下游任务联合学习**
+SplatGuide 展示了同一 3DGS 场景可产生几何、可见性、特征三种信号，GaussianDWM++ 则展示了语言语义蒸馏的可行性。将这两种思路结合，探索"一个 3DGS 表示同时服务重建、理解、编辑、交互"的统一框架，是一个明确的空白。
 
-2. **3DGS空间可控生成与语义/实例级编辑的结合**  
-   LocusGS已经让高斯查询具备显式空间锚点，这一机制自然可与Seed2GS（单参考视图对象提取）或COGENT（高斯参数空间反事实解释）结合，实现语义级、实例级的3DGS编辑与可解释操作。例如，将LocusGS的锚点与语义标签绑定，实现“指哪儿改哪儿”的可控生成。
+**2. 3DGS 的 JEPA 式预训练 + 下游任务微调**
+Gaussian-JEPA 刚提出潜空间预测范式，但下游验证还限于部件分割和物体分类。将其扩展到语言引导的指代分割（QAGaussian）、场景理解（GaussianDWM++）、乃至驾驶场景，是一个自然的延伸方向。
 
-3. **在康复医学与辅助技术中
+**3. 尺度/位姿一致性的跨任务复用**
+VGGT-Align 的 SGIA 利用了驾驶场景的几何不变量，GeoUP 则适配了 VGGT 潜表示到多相机驾驶感知。两者核心都是"利用场景结构约束重建/感知一致性"，但尚未被统一。可探索一个通用的"几何不变量约束模块"，跨数据集、跨任务复用。
+
+**4. 物理交互合成数据的生成与自监督**
+LaGSplat 从单目视频推断物理交互，DreamX-Phi 1.0 是动作条件视频世界模型，SRF 则用语义辐射场做模拟器。三者的共性都是"用可交互/可查询的神经场景表示生成训练数据"。探索用物理可解释的 3DGS 场景生成机器人操作或空间推理的训练数据，是一个有潜力的组合方向。
+
+**5. 高频感知（SCI / 压缩成像）与几何基础模型的结合**
+GS²CI 已证明快照压缩成像 + 3DGS + 视觉基础模型先验的可行性。但
 
 ### interests.md 指令分析
 
@@ -156,6 +159,44 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 **Primary category:** Geometry Foundation Models
 **Secondary categories:** 3D Reconstruction & Multi-view Geometry
 **Matched keywords:** VGGT, 3D reconstruction
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：VGGT-Align: Bridging Local Reconstruction and Global Consistency for Long-Sequence 3D Reconstruction
+- 作者：Wei Zhang, Yihang Wu, Songhua Li, Qi Wang
+- 出版日期：2026-08-15
+- 分类：Geometry Foundation Models（次要分类：3D Reconstruction & Multi-view Geometry）
+- 链接：https://arxiv.org/abs/2608.15260
+
+### 一句话总结
+本文提出一种即插即用的尺度一致性增强框架（含SGIA与测试时自适应策略），通过约束块间尺度漂移来提升长序列三维重建的全局几何一致性。
+
+### 研究问题
+长序列三维重建中全局几何一致性难以保持，核心故障模式是尺度漂移——在基于分块（chunk-based）的推断流程中，逐块Sim(3)对齐的尺度自由度未被约束，导致估计误差乘法式累积，扭曲全局轨迹与点云几何。
+
+### 核心思路/方法
+- 关键洞察：在驾驶场景等结构化环境中，环境规则性衍生的几何量在时间片段间本质不变，其逐块测量差异可直接暴露块间尺度漂移。
+- **Scene Geometric Invariant Anchoring (SGIA)**：从每块预测点云中通过粗到细的鲁棒估计提取主导几何不变量，利用跨块一致性建立独立于点云配准的尺度约束，将7自由度Sim(3)对齐显式退化为6自由度刚体变换，从源头切断链式尺度误差传播。
+- **测试时自适应策略**：通过多目标自监督仅微调归一化层参数，沿序列渐进改善块内预测。
+- 两个模块均为即插即用，无需离线重训练。
+
+### 主要贡献
+- 提出SGIA方法，利用场景几何不变量约束尺度漂移，将Sim(3)对齐退化为刚体变换。
+- 提出轻量级测试时自适应策略（仅微调归一化层参数）。
+- 两项模块均即插即用，无需离线重训练。
+- 在多个长序列基准上达到最先进性能，绝对轨迹误差最多降低32%，轨迹稳定性与重建质量显著提升。
+- 开源代码。
+
+### 局限性
+摘要未提供足够信息（如对非结构化场景的泛化能力、计算开销细节、失败案例分析等均未提及）。
+
+### 阅读优先级
+**高**
+理由：该方法针对长序列三维重建中常见的尺度漂移问题提出了无需重训练的即插即用解决方案，在多个基准上误差降低显著（最高32%），且代码已开源，对从事三维重建、几何基础模型相关研究的读者有直接参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -333,6 +374,43 @@ No papers in the current README window.
 **Matched keywords:** depth estimation, monocular depth
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Binarized High-Efficiency RAW Video Restoration and Beyond
+- 作者：Tianyu Zhu, Ying Fu, Hesong Li, Gengchen Zhang, Xin Yuan, Yulun Zhang
+- 出版日期：2026-08-17T16:03:50Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.16756
+
+### 一句话总结
+本文提出BinRVR，一种面向RAW视频恢复的二值化神经网络框架，在降低约96%计算量和参数量的同时，仅带来约4%的性能损失，并支持多比特量化以实现精度与效率的灵活权衡。
+
+### 研究问题
+二值化神经网络（BNNs）虽能实现轻量级高效部署，但在视频场景下对时序连贯性和激活值分布的建模能力不足，导致RAW视频恢复任务中性能受限。
+
+### 核心思路/方法
+- 提出二值化信息交互模块（BIIM），以统一且高效的方式联合建模空间与时间信息。
+- 开发分布感知二值化卷积（DAB-Conv），利用全精度激活值的统计信息来缓解量化误差。
+- 框架支持多比特量化，可在不同硬件约束下灵活调整精度与效率。
+
+### 主要贡献
+- 首次提出针对RAW视频恢复的二值化框架BinRVR，大幅降低计算与参数量（约96%）的同时仅损失约4%性能。
+- 设计BIIM模块，有效解决二值化模型在视频场景中的时序建模问题。
+- 提出DAB-Conv，利用激活值分布统计信息减少量化误差。
+- 支持多比特量化，提供精度-效率的灵活权衡。
+- 在低光增强、去噪、去模糊和超分辨率等多个RAW视频恢复任务上验证了方法的有效性，并探索了在下游任务（目标检测、单目深度估计）上的潜力。
+
+### 局限性
+摘要未提供足够信息，例如：未提及与其他非二值化方法的具体性能对比细节、未给出不同比特量化下的具体精度/效率数值、未讨论方法的训练成本或推理速度实测数据。
+
+### 阅读优先级
+**高**
+理由：该工作针对RAW视频恢复这一基础性重要任务，提出高压缩率的二值化方案，同时兼顾性能与效率，且覆盖多种恢复任务及下游应用，对于关注轻量化视频处理和模型部署的研究者具有较高的参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 RAW video restoration is fundamental to high-quality low-level perception and serves as the basis for a wide range of downstream vision applications. While binary neural networks (BNNs) enable efficient lightweight deployment for image enhancement, their deficiencies in modeling temporal coherence and activation value distributions hinder their effectiveness when applied to video scenarios. In this paper, we propose BinRVR, a binarized RAW video restoration framework that reduces computation and parameters by approximately 96% while incurring only about 4% performance degradation. Specifically, we present a Binarized Information Interaction Module (BIIM) to jointly model spatial and temporal information in an efficient and unified manner. Moreover, we develop a Distribution-Aware Binarized Convolution (DAB-Conv) that leverages the statistics of full-precision activations to mitigate quantization errors. The proposed framework further supports multi-bit quantization, enabling flexible accuracy-efficiency trade-offs across different hardware constraints. Extensive experiments demonstrate that our BinRVR achieves competitive performance compared with state-of-the-art binarized methods on RAW video restoration tasks, including low-light enhancement, denoising, deblurring, and super-resolution. We further explore the potential of our method on downstream video applications, including object detection and monocular depth estimation.
@@ -348,6 +426,42 @@ RAW video restoration is fundamental to high-quality low-level perception and se
 **Matched keywords:** pose estimation, monocular depth
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：TinyDETR-Pose: Towards End-to-End Real-Time Single-Stage 6DoF Object Pose Estimation with Lightweight Transformers
+- 作者：Paul Julius Kühn, Duc Anh Nguyen, Saptarshi Neil Sinha, Michael Weinmann, Arjan Kuijper
+- 出版日期：2026-08-15
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.15297
+
+### 一句话总结
+本文提出TinyDETR-Pose，一种基于轻量级Transformer的端到端单阶段6DoF物体位姿估计框架，在边缘设备上实现了实时推理与准确预测的平衡。
+
+### 研究问题
+如何在资源受限的硬件上实现实时且准确的6DoF物体位姿估计，同时避免依赖非可微的PnP/RANSAC、迭代精化或高成本的基础模型推理。
+
+### 核心思路/方法
+- 基于高效LW-DETR架构，将检测与位姿估计建模为集合预测问题，单次前向传播同时完成物体检测和6D位姿回归。
+- 为每个解码器查询附加专用MLP头，分别回归旋转、单目深度和投影物体中心，无需PnP、NMS或迭代精化。
+- 使用ADD-S损失统一处理所有物体的对称性，无需针对物体特定损失调度或额外的测地线/ADD监督。
+- 采用基于类别和2D空间线索的对称安全匈牙利匹配器进行预测与真值分配，在对称性和深度模糊情况下保持稳定匹配。
+
+### 主要贡献
+- 提出轻量级端到端单阶段6DoF位姿估计框架TinyDETR-Pose，无需PnP、NMS和迭代精化。
+- 在YCB-V数据集上达到85.9的ADD-S AUC，与现有方法相当。
+- 相比其他基于DETR的单阶段位姿估计方法，参数量最多减少72.7%。
+- 在NVIDIA Jetson Nano上使用TensorRT实现约4.5毫秒/帧的推理延迟，证明Transformer-based位姿估计可在边缘设备实时运行。
+
+### 局限性
+摘要未提供足够信息。摘要未明确讨论方法的失败模式、对遮挡或纹理缺失物体的鲁棒性、多物体场景下的性能、训练数据需求或与其他非DETR基线方法的详细对比。
+
+### 阅读优先级
+**高**。理由：该工作针对资源受限边缘设备上的实时6DoF位姿估计这一实际痛点，提出无需PnP/NMS的精简端到端Transformer方案，在准确率与效率之间取得良好平衡，并给出了具体硬件上的延迟验证，对部署导向研究具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Real-time 6DoF object pose estimation on resource-constrained hardware remains challenging, as accurate correspondence-based and refinement pipelines typically rely on non-differentiable PnP/RANSAC stages or costly iterative refinement, while recent foundation-model-based approaches incur inference costs that are prohibitive for edge deployment. We present TinyDETR-Pose, a lightweight, end-to-end, single-stage framework that jointly detects objects and regresses their full 6D pose in a single forward pass. Built on the efficient LW-DETR architecture, TinyDETR-Pose formulates detection and pose estimation as a set-prediction problem and attaches dedicated MLP heads for rotation, monocular depth, and projected object center regression to each decoder query, eliminating the need for PnP, NMS (non-maximum suppression), or iterative pose refinement. Object symmetries are handled through a ADD-S loss applied uniformly to all objects, without the need for object-specific loss schedules or separate geodesic/ADD supervision. In addition, predictions are assigned to ground truth using a symmetry-safe Hungarian matcher based on class and 2D spatial cues, yielding stable assignment under symmetry and depth ambiguity. On YCB-V, TinyDETR-Pose achieves a comparable ADD-S AUC of 85.9, while requiring up to 72.7% fewer parameters than other DETR-based single-stage pose-estimation approaches. Due to its compact design, TinyDETR-Pose runs in real time and achieves an inference latency of only ~4.5 ms per frame on an NVIDIA Jetson Nano using TensorRT, demonstrating that accurate end-to-end transformer-based 6D pose estimation can be made practical for edge deployment.
@@ -361,6 +475,42 @@ Real-time 6DoF object pose estimation on resource-constrained hardware remains c
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** 3D reconstruction, structure from motion, feature matching
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Robust structure from motion for aerial-ground images via detector-free feature matching and multi-view track refinement
+- 作者：San Jiang, Hui Wang, Xing Zhang, Zhongwen Hu, Zhijun Wang, Ruisheng Wang, Wanshou Jiang, Qingquan Li
+- 出版日期：2026-08-15
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.15251
+
+### 一句话总结
+本文提出一种结合旋转变换鲁棒的免检测器特征匹配网络与多视角轨迹优化的增量式运动恢复结构（ISfM）方法，用于提升空地影像集成三维重建的精度。
+
+### 研究问题
+空地影像因视点、尺度和旋转差异显著，导致特征匹配困难，进而影响运动恢复结构（SfM）的鲁棒性和重建精度。本文旨在解决这一条件下的特征匹配与多视角轨迹稳定性问题。
+
+### 核心思路/方法
+本文提出一个包含四个关键模块的ISfM工作流：
+1. **旋转感知特征提取**：用全向状态空间块（OSS Block）替代传统卷积，在八个对称方向上进行选择性扫描，以建模长程空间依赖并生成旋转不变特征图。
+2. **多尺度注意力变换**：利用四叉树注意力构建层次化令牌金字塔，隔离高关联令牌区域并丢弃无关区域，以线性计算复杂度捕获长程上下文。
+3. **双向特征匹配**：执行对称的从粗到细匹配方案，粗对齐阶段在互近邻约束下计算双向Softmax置信度矩阵，细对齐阶段用多层感知机回归亚像素坐标偏移。
+4. **多视角轨迹优化**：采用集成索引结构评估局部空间邻近性，将不相交的子轨迹连接到最高置信度锚点，确保特征在ISfM管线中的稳定可重复性。
+
+### 主要贡献
+- 提出旋转鲁棒的免检测器匹配网络，整合了旋转感知特征提取、多尺度注意力变换与双向粗到细匹配机制。
+- 引入多视角轨迹优化模块，提升ISfM中特征轨迹的稳定性。
+- 在真实空地影像数据集上，与LoFTR相比，该方法在5°位姿误差下的AUC提升了93.9%，并在ISfM重建中取得最高精度，精度提升范围为27.6%至32.7%。
+
+### 局限性
+摘要未提供足够信息（例如计算成本、对极端场景的适应能力、失败案例分析等均未提及）。
+
+### 阅读优先级
+**高**。理由：该工作针对空地影像集成三维重建中的核心难点（视角、尺度、旋转变化）提出系统性解决方案，并在公开数据集上取得显著精度提升；其旋转鲁棒匹配与轨迹优化思路对SfM和三维重建方向研究者具有直接参考价值，且发表在arXiv近期论文中，值得优先阅读。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -834,6 +984,46 @@ Despite substantial progress in visual localization, from scene coordinate regre
 **Matched keywords:** NeRF, 3DGS, novel view synthesis, view synthesis, rendering
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：SplatGuide: Geometric Priors from 3D Gaussians for Pose-Free Novel View Synthesis
+- 作者：Yejun Zhang, Zihan Wang, Xu Ji, Yihao Wang, Yuxin Hou, Junyuan Fang, Juho-Matti Kilpeläinen, Arno Solin, Hamed Rezazadegan Tavakoli, Esa Rahtu, Juho Kannala
+- 出版日期：2026-08-17
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.16863
+
+### 一句话总结
+SplatGuide 通过将单个 3D 高斯场景复用于三种互补信号（渲染图像、逐高斯可见性投票图、重建 token），弥合了前馈 3DGS 重建与多视角扩散之间的信息断层，实现了无需位姿的最新视图合成。
+
+### 研究问题
+如何在不使用相机位姿的情况下，利用 3D 高斯重建中的几何先验（包括可渲染几何、可见性线索和学到的特征）来提升新视图合成的质量，特别是解决现有管线仅提取单一信号而忽略其他信号的问题。
+
+### 核心思路/方法
+- 核心策略：在一个前馈 3DGS 重建过程中，同时复用同一场景产生三种信号：
+  1. **渲染图像**：提供像素对齐的几何条件。
+  2. **逐高斯源视角索引投票图**：渲染到目标视图，用于遮挡感知的参考视图选择。
+  3. **重建 token**：通过交叉注意力提供特征级引导。
+- 所有三种信号均来自同一次重建前向传播，无需额外计算开销。
+- 与多视角扩散模型结合，实现从无位姿图像生成逼真新视图。
+
+### 主要贡献
+- 指出并解决现有管线中“信息断开”问题（即重建的几何、可见性信息和特征未被充分利用）。
+- 提出 SplatGuide 方法，将单个 3DGS 场景用于三种互补角色，系统性提取几何先验。
+- 在 RealEstate10K、DL3DV、Tanks-and-Temples 和 Mip-NeRF 360 上实现最先进的无需位姿新视图合成性能。
+- 在 RealEstate10K 上，使用中等数量输入视图时，超越了使用真实位姿的基线方法。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**
+
+理由：该方法提出了明确的创新点（复用 3DGS 场景产生三种互补信号），针对无位姿新视图合成这一重要问题，在多个基准上达到最先进效果，甚至超越有真值位姿的基线，对神经场景表示与渲染领域具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Generating photorealistic novel views from unposed images requires both 3D geometric understanding and the ability to synthesize unseen content. A natural strategy combines feed-forward 3DGS reconstruction with multi-view diffusion. Yet prior pipelines extract at most one signal from the reconstruction, either pixel rendering or learned features, while none exploits per-Gaussian visibility for occlusion-aware reference selection. This *information disconnect* leaves renderable geometry, visibility cues, and learned features unused. SplatGuide closes this disconnect by reusing a single 3DGS scene across three complementary roles. Rendered images provide pixel-aligned geometric conditioning. Per-Gaussian source-view indices are rendered into a target-view voting map for occlusion-aware reference selection. Reconstruction tokens supply feature-level guidance via cross-attention. All three signals derive from the same reconstruction forward pass. Across RealEstate10K, DL3DV, Tanks-and-Temples, and Mip-NeRF 360, SplatGuide achieves state-of-the-art pose-free novel view synthesis. On RealEstate10K, with a moderate number of input views, it surpasses the ground-truth-pose baseline.
@@ -847,6 +1037,42 @@ Generating photorealistic novel views from unposed images requires both 3D geome
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** NeRF, Gaussian Splatting, splatting, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：LaGSplat: Inferring Physics-Governed Interactive Simulation from Monocular Video Using Latent Lagrangian Gaussian Splatting
+- 作者：Louen Pottier
+- 出版日期：2026-08-17T09:29:12Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.16324
+
+### 一句话总结
+本文提出LaGSplat框架，利用隐式拉格朗日力学与高斯泼溅解码器，从单目视频中推断物理驱动的交互式动态仿真，允许用户在推理时对物体施加训练中未见过的外力。
+
+### 研究问题
+如何从单目视频中学习具有物理可解释性的动态场景模型，使得在推理阶段用户可以对真实物体施加任意大小和方向的外部力，并获得实时、合理的物理响应。
+
+### 核心思路/方法
+- 引入低维隐状态 $\mathbf{q} \in \mathbb{R}^d$，同时担任两个角色：其一是学习到的耗散拉格朗日动力学方程的广义坐标，其二是高斯泼溅解码器的条件变量。
+- 高斯泼溅解码器的基元是显式点 $\mu_i(\mathbf{q})$，它们随物体运动；这种归纳偏置使得图像平面施加的力 $f$ 可以回拉为隐式广义力 $J(\mathbf{q})^\top f$，并进入运动方程，从而支持外部交互力。像素空间CNN或神经场（NeRF）解码器不具备此能力。
+- 通过在耗散欧拉-拉格朗日方程上做假设，对未见外力产生有界且合理的响应，而非约束的预测器则会发散。
+
+### 主要贡献
+- 提出一种从单目视频（一个或少数几个）推断物理控制交互仿真的框架。
+- 设计双重角色的隐状态表示，将广义坐标与高斯泼溅条件变量统一，实现物理力与图像空间交互的耦合。
+- 在从刚体到可变形、从自主运动到受迫真实系统的递增难度测试案例上验证了方法，结合单目视频与传感器测量。
+- 支持交互式使用：任意大小和方向的外力可作用于重建物体，并在2D或3D实时渲染其响应。
+
+### 局限性
+摘要未提供足够信息（未明确讨论方法的失败案例、计算开销、对相机位姿或物体纹理的依赖、时间泛化能力等具体局限）。
+
+### 阅读优先级
+**高**
+理由：该工作将经典力学（拉格朗日动力学）与神经渲染（3D高斯泼溅）结合，解决了单目视频中物理交互仿真的关键难题，方法新颖且具有实用交互性，对动态场景重建与物理推理领域有较显著的启示意义。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -864,6 +1090,47 @@ We present LaGSplat (Latent Lagrangian Gaussian Splatting), a framework that inf
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, Gaussian primitive, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Beyond Similarity Matching: Structured Reasoning for Open-Vocabulary Referring Segmentation in 3DGS
+- 作者：Yizhao Wang, Xinfa Wang, Jingbo Wang, Jingbo Wang, Guantao Zhang, Yafeng Han, Guohong Gao, Yuhe Xia
+- 出版日期：2026-08-17T04:48:02Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.16103
+
+### 一句话总结
+本文提出QAGaussian，一种基于查询自适应神经推理的3D高斯泼溅（3DGS）开放词汇指代分割框架，通过多尺度高斯槽学习、关系感知图推理和自适应路由机制，超越了传统的全局文本-区域相似性匹配方法。
+
+### 研究问题
+现有3DGS开放词汇指代分割方法依赖全局文本-区域相似性，难以处理涉及属性、参照对象、空间关系和细粒度部件的查询，导致目标-参照混淆、粒度不匹配、部分-整体泄漏和关系违背等问题。本文旨在解决这些结构化推理难题。
+
+### 核心思路/方法
+QAGaussian框架包含三个关键组件：
+1. **查询条件多尺度高斯槽学习**：学习查询条件化的多尺度高斯槽作为可微分候选，其感受野由输入表达式塑造。
+2. **关系感知槽图推理**：构建语言条件边权重的关系感知槽图，传播目标-参照、属性、部分-整体和上下文证据。
+3. **粒度自适应路由与细化**：软性组合区域级、对象级、部分级、属性感知和关系感知掩码分支，并通过关系约束细化保证空间、部分-整体、属性和几何一致性。
+
+模型仅在Mosaic3D-5.6M上预训练用于高斯-文本对齐，在独立基准上评估时不进行目标数据集微调。
+
+### 主要贡献
+1. 提出QAGaussian，一个查询自适应的神经推理框架，专为语言引导的高斯原语选择设计。
+2. 引入查询条件多尺度高斯槽学习、关系感知图推理和自适应路由的联合建模策略。
+3. 在独立基准上实现47.2 Avg. mIoU和63.2 Avg. F1，超过最强3DGS指代基线2.7 mIoU点和2.9 F1点。
+4. 显著改进Part-mIoU（从38.6到43.4）和Rel-mIoU（从44.4到50.8），并将目标-参照混淆从10.8降至7.4。
+5. 开源代码：https://github.com/zqeslwyz/QAGaussian
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**
+
+理由：该工作针对3DGS开放词汇指代分割中的结构化推理难题，提出了完整的神经推理框架，在多个评估指标上取得显著提升（mIoU、F1、Part-mIoU、Rel-mIoU），且不依赖目标数据集微调，具有较强泛化性。同时开源代码，便于复现和后续研究。对从事3D场景理解、指代分割和高斯泼溅相关研究的读者具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Open-vocabulary referring segmentation in 3D Gaussian Splatting (3DGS) requires a neural model to select Gaussian primitives according to free-form language expressions. Existing 3DGS-based methods usually rely on global text-region similarity, which is weak for queries involving attributes, reference objects, spatial relations, and fine-grained parts. This often causes target-reference confusion, granularity mismatch, part-whole leakage, and relation violations. We propose QAGaussian, a query-adaptive neural reasoning framework for language-guided Gaussian primitive selection. QAGaussian first learns query-conditioned multi-scale Gaussian slots as differentiable candidates whose receptive fields are shaped by the input expression. It then builds a relation-aware slot graph with language-conditioned edge weighting to propagate target-reference, attribute, part-whole, and contextual evidence. A granularity-adaptive router softly combines region-level, object-level, part-level, attribute-aware, and relation-aware mask branches, followed by relation-constrained refinement for spatial, part-whole, attribute, and geometric consistency. QAGaussian is pretrained only on Mosaic3D-5.6M for Gaussian-text alignment and evaluated on independent benchmarks without target-dataset fine-tuning. It achieves 47.2 Avg. mIoU and 63.2 Avg. F1, outperforming the strongest 3DGS referring baseline by 2.7 mIoU points and 2.9 F1 points. It also improves Part-mIoU from 38.6 to 43.4, Rel-mIoU from 44.4 to 50.8, and reduces target-reference confusion from 10.8 to 7.4. These results demonstrate that query-conditioned slot learning, relation-aware graph reasoning, and adaptive routing provide an effective neural modeling strategy for open-vocabulary referring segmentation in 3DGS. The code is available at https://github.com/zqeslwyz/QAGaussian.
@@ -877,6 +1144,45 @@ Open-vocabulary referring segmentation in 3D Gaussian Splatting (3DGS) requires 
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, rendering, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：RoofGS: Roofline-Guided End-to-End Acceleration of 3D Gaussian Splatting
+- 作者：Yang Luo, Yan Gong, Yongsheng Gao, Jie Zhao
+- 出版日期：2026-08-16
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.15785
+
+### 一句话总结
+RoofGS 通过基于 Roofline 模型的分阶段瓶颈分析，对 3D Gaussian Splatting 的前端（内存受限）和光栅化（指令吞吐受限）分别设计针对性优化，在 4K 分辨率下实现 10.1 倍端到端加速且仅损失 0.028 dB PSNR。
+
+### 研究问题
+3D Gaussian Splatting（3DGS）在 GPU 高分辨率渲染场景下存在性能瓶颈，需要识别并消除不同渲染阶段的硬件瓶颈以实现加速。
+
+### 核心思路/方法
+1. 通过分阶段 Roofline 特征分析，识别出两个不同的硬件瓶颈：
+   - 前端（front end）：全局内存流量受限
+   - 光栅化（rasterization）：指令吞吐量受限
+2. 针对内存受限的前端，设计分辨率自适应的量化深度排序键，将每个键压缩至 32 位。
+3. 针对计算受限的光栅化器，提出范围感知的位级快速指数近似，利用不透明度剔除后的有界指数范围，并推导出逐像素误差界。
+4. 辅以额外优化：内核融合、紧凑属性存储、剔除、双像素评估，以进一步减少内存流量并提升指令级并行度。
+
+### 主要贡献
+- 识别出 3DGS 在不同渲染阶段具有不同的硬件瓶颈（内存 vs 指令吞吐），而非统一的性能限制因素。
+- 提出面向内存瓶颈的量化为 32 位的深度排序键方案。
+- 提出面向计算瓶颈的、具有明确误差界的快速指数近似方法。
+- 集成多项辅助优化，实现端到端加速：在 RTX 4090 上 4K 分辨率下从 61 FPS 提升至 616 FPS（10.1 倍），PSNR 仅下降 0.028 dB。
+
+### 局限性
+摘要未提供足够信息（例如：在不同分辨率、不同 GPU 平台上的表现，对非 4K 场景的适应性，误差界对视觉质量的实际影响，内存开销变化等均未提及）。
+
+### 阅读优先级
+**高**  
+理由：该方法在不显著损失质量的前提下实现了 10 倍以上的端到端加速，针对不同瓶颈采用差异化优化而非通用内核加速，设计思路有较强的可借鉴性；且实验数据明确，适合关注 3DGS 高效渲染、硬件感知优化的研究者优先阅读。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -894,6 +1200,41 @@ Open-vocabulary referring segmentation in 3D Gaussian Splatting (3DGS) requires 
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Gaussian-JEPA: Joint-Embedding Predictive Learning for 3D Gaussian Splats
+- 作者：Bin Ren, Qi Ma, Yue Li, Zongyan Han, Yidi Li, Yuqian Fu, Rao Muhammad Anwer, Theo Gevers, Fahad Shahbaz Khan, Salman Khan
+- 出版日期：2026-08-16
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.15651
+
+### 一句话总结
+本文提出Gaussian-JEPA，一种基于联合嵌入预测学习（JEPA）范式的自监督方法，用于从3D高斯溅射（3DGS）表示中学习可复用的特征表示，无需重建被掩蔽的高斯属性。
+
+### 研究问题
+在3DGS表示中，自监督预训练面临两个核心挑战：同一物体可能通过不同的高斯原语（primitive）实现被观测，而现有方法将监督信号绑定在单次采样实现上并依赖输入空间解码器进行属性重建。本文旨在探索是否可以通过潜空间预测（latent prediction）为高斯token学习更统一、可复用的表示。
+
+### 核心思路/方法
+- 采用联合嵌入预测架构：在线编码器处理可见的高斯token块，共享权重的指数移动平均（EMA）编码器为掩蔽的token块提供多尺度目标特征。
+- 引入互补目标投影（complementary target projections）和特征空间接地（feature-space grounding）机制，在潜空间提供监督信号，避免重建高斯属性。
+- 评估场景包括高斯重采样、部分观测、可渲染形状补全，以及迁移到部件分割和物体分类任务。
+
+### 主要贡献
+- 提出Gaussian-JEPA，首次将潜空间预测范式应用于3DGS表示学习，适应高斯原语耦合属性与异质空间支撑的特点。
+- 设计了基于EMA编码器和互补投影的多尺度目标生成方案，无需重建输入属性。
+- 通过实验证明，与匹配的重建式预训练相比，Gaussian-JEPA在重采样输入下特征更一致，部分观测时保留更多实例信息，并为高斯补全提供更强的冻结特征。
+
+### 局限性
+摘要未提供足够信息（未提及计算开销、对超参数敏感性、在大规模场景上的扩展性、对下游任务的全面评测或失败案例等）。
+
+### 阅读优先级
+**中**
+理由：该方法针对3DGS自监督学习提出了一种新颖的JEPA式范式，在特征一致性、部分观测鲁棒性和补全性能上相对于重建式预训练具有明确优势，且代码已公开，对从事神经场景表示、3D表示学习的研究者有参考价值。但摘要未提供底层实现细节和大规模实验验证，且该研究方向相对细分，若读者不涉及3DGS或自监督预训练，则优先级可下调。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 3D Gaussian Splatting (3DGS) represents 3D content with anisotropic primitives that jointly encode geometry and appearance. Fixed-budget encoders consume sampled observations of Gaussian assets, so the same object may be observed through different primitive realizations. Existing self-supervised methods mainly reconstruct masked Gaussian attributes, tying supervision to one sampled realization and requiring an input-space decoder. Latent prediction offers an alternative, but its application to Gaussian tokens requires targets that accommodate coupled attributes and heterogeneous spatial support. We introduce Gaussian-JEPA, which predicts representations of held-out Gaussian token blocks from visible context. An online encoder processes the context, while a shared exponential-moving-average encoder supplies stop-gradient features for multi-scale targets. Complementary target projections and feature-space grounding provide latent supervision without reconstructing Gaussian attributes. We evaluate the features under Gaussian resampling, partial observations, and renderable shape completion, together with transfer to part segmentation and object classification. Compared with matched reconstruction pretraining, Gaussian-JEPA is more consistent across resampled inputs, retains more instance information under partial observations, and provides stronger frozen features for Gaussian completion. These results support latent prediction as an effective objective for reusable 3D Gaussian representations. Code is on the project page (https://amazingren.github.io/Gaussian-JEPA/).
@@ -907,6 +1248,38 @@ Open-vocabulary referring segmentation in 3D Gaussian Splatting (3DGS) requires 
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** NeRF, neural radiance field, radiance field, radiance
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：HistReNeRF: Historic Image Relocalisation within Contemporary Neural Radiance Field Reconstructions
+- 作者：Benjamin T. Hughes, Stuart James
+- 出版日期：2026-08-15
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.15420
+
+### 一句话总结
+本文提出 HistReNeRF 框架，通过匹配历史照片的 DINOv2 特征与当代 NeRF 重建中的候选射线，实现对历史照片的 6-DoF 位姿重定位。
+
+### 研究问题
+如何将历史档案照片在当代场景模型中进行可靠重定位，以应对历史与现代视图在摄影外观、可见物体和空间布局上的显著差异。
+
+### 核心思路/方法
+利用 NeRF 的连续场景表示作为可查询接口，从当代重建中采样候选射线；将历史照片与当代图像的特征通过域适应直接对齐到 DINOv2 特征空间中，避免在像素空间进行操作，从而减少跨时间外观偏移。研究对比了嵌入空间域适应与像素空间方法。
+
+### 主要贡献
+- 提出 HistReNeRF，一个基于 NeRF 和 DINOv2 特征匹配的历史图像重定位框架。
+- 构建了一个新的跨时间数据集，包含 10,545 张当代街景图像和 230 张来自三个欧洲地标的历史档案照片。
+- 实验表明，嵌入空间域适应相比像素空间方法，在三个场景中平均降低平移误差 11%、旋转误差 16%。
+
+### 局限性
+摘要未提供足够信息，未明确讨论方法的失败情况、运行效率、对 NeRF 重建质量的依赖程度、数据集覆盖范围局限或潜在泛化能力限制。
+
+### 阅读优先级
+**中**。该工作聚焦于历史图像重定位这一较细分方向，方法结合了 NeRF 与 DINOv2 特征，具有一定新颖性，并提供了公开数据集和代码。但摘要未展示与主流视觉定位基准的对比或更广泛适用性，若研究兴趣集中在跨时间视觉定位或 NeRF 应用，可优先阅读；若为通用视觉重定位领域，可暂缓精读。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1332,6 +1705,40 @@ Climate-driven environmental change is driving an increase in both the frequency
 **Matched keywords:** SLAM, manipulation, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：ViHaTeleop: A Low-Cost, Lightweight Visual-Haptic Teleoperation System for Dexterous Manipulation Learning
+- 作者：Fucai Zhu, Yanhou Lai, Paul Maestre, Koichi Hashimoto
+- 出版日期：2026-08-17
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.16572
+
+### 一句话总结
+本文提出了一种低成本、轻量级的视觉-触觉遥操作系统 ViHaTeleop，通过引入指级振动触觉反馈，显著提升了接触关键型灵巧操作任务的示教质量与成功率。
+
+### 研究问题
+如何以低成本硬件实现高质量的接触关键型灵巧操作示教数据采集，即解决低成本遥操作硬件难以采集接触关键演示数据的问题。
+
+### 核心思路/方法
+- 构建轻量（0.7 kg）低成本（$550）的视觉-触觉遥操作系统，融合 SLAM 腕部追踪、相机手部追踪以及基于线性谐振致动器（LRA）的指级振动触觉反馈。
+- 引入若干设计选择：LED 照明、鱼眼手部相机、触觉感知重定向约束。
+- 在真实环境（Franka + LEAP Hand + 9DTact）与仿真环境（Isaac Sim）中部署系统，并集成基于深度相机的轻量触觉代理，实现从多模态示教采集到视觉-触觉策略训练的完整流程。
+
+### 主要贡献
+- 首次提出结合低成本视觉追踪与指级振动触觉反馈的遥操作系统，并通过消融实验验证触觉反馈的有效性。
+- 在六项接触关键任务、九名参与者的匹配实验中，触觉反馈使所有任务的成功率提升（+2.2～+15.6 个百分点），主观评分在触觉清晰度和抓取信心方面有显著提升（Wilcoxon 符号秩检验，p<0.05）。
+- 提供从多模态示教采集到视觉-触觉策略训练的完整管线，初步下游验证表明触觉线索对接触关键子任务（如插销入孔）有显著增益（相较纯视觉提升 +17 个百分点）。
+
+### 局限性
+摘要未提供足够信息；未报告硬件耐久性、系统延迟、大规模任务泛化能力、参与者多样性等细节。
+
+### 阅读优先级
+**高**。理由：该工作直击灵巧操作示教学习中接触关键数据采集困难的核心痛点，系统成本低、重量轻，且提供了真实与仿真环境下的多任务验证以及消融实验，对遥操作硬件设计和触觉反馈在人机交互中的价值均有明确的数据支撑，适合机器人操作、示教学习与人机交互方向的研究者阅读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Learning from demonstration is a promising approach for dexterous manipulation, but collecting high-quality contact-critical demonstrations remains difficult with low-cost teleoperation hardware. We present ViHaTeleop, a lightweight (0.7 kg), low-cost (\$550) visual-haptic teleoperation system with SLAM-based wrist tracking, camera-based hand tracking, and finger-wise vibrotactile feedback through Linear Resonant Actuators (LRA). The system includes several design choices (LED illumination, fisheye hand camera, and tactile-aware retargeting constraints) and is deployed on Franka + LEAP Hand + 9DTact in both real and simulated environments. Under matched with/without-haptic conditions with nine participants across six contact-critical tasks, haptics improved success rates across all tasks (+2.2 to +15.6 percentage points), while completion-time effects were task-dependent. Subjective ratings showed significant gains in contact clarity and grasp confidence in both simulation and real-world settings (Wilcoxon signed-rank, $p<0.05$). We also integrate a lightweight depth-camera-based tactile proxy in Isaac Sim, enabling a full pipeline from multi-modal demonstration collection to visual-tactile policy training. Preliminary downstream validation by training visual-tactile policies from collected demonstrations shows tactile cues benefit contact-critical subtasks (peg-in-hole: +17 percentage points over vision-only).
@@ -1345,6 +1752,42 @@ Learning from demonstration is a promising approach for dexterous manipulation, 
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** manipulation, scene understanding, world model
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GaussianDWM++: Language-Grounded 3D Gaussian Driving World Model for Unified Scene Understanding, Editing, and Multi-Modal Generation
+- 作者：Tianchen Deng, Xuefeng Chen, Shuang Wu, Qu Chen, Jiajun Zhu, Bo Dai, Jianfei Yang, Hesheng Wang
+- 出版日期：2026-08-17
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.16234
+
+### 一句话总结
+本文提出一个基于3D高斯的基础特征驾驶世界模型，统一了场景理解、语言推理、可控4D编辑与多模态生成任务。
+
+### 研究问题
+现有驾驶世界模型主要聚焦条件场景生成，缺乏显式3D场景理解、语言接地推理与可控4D编辑能力；此外，点云、占用或BEV表示难以实现文本信息与3D场景结构的细粒度对齐。
+
+### 核心思路/方法
+- 提出基础特征高斯分词器（foundation-feature Gaussian tokenizer），将Qwen/SigLIP的视觉语言特征直接蒸馏至3D高斯基元，构建紧凑的开词汇高斯语义场。
+- 设计几何感知高斯适配器（geometry-aware Gaussian adapter），结合重要性感知层次选择与文本条件Perceiver式交叉注意力，将稠密高斯基元聚合成紧凑世界令牌。
+- 引入基于KL的高斯-图像分布对齐目标，使高斯世界令牌与基础图像令牌对齐。
+- 在对齐的高斯表示基础上，支持指令可控场景编辑（如天气条件生成、动态车辆操作）。
+
+### 主要贡献
+- 提出统一框架，同时支持场景理解、语言接地推理、可控4D编辑与多模态生成。
+- 提出基础特征高斯分词器，实现开放词汇的3D语义场构建。
+- 设计几何感知适配器与KL对齐目标，提升表示兼容性。
+- 在多个驾驶基准上，于场景理解、视觉接地、规划推理和可控4D生成任务中取得先进性能。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该工作将3D高斯表示与视觉语言基础模型结合，面向驾驶场景提出统一框架，覆盖理解、编辑与生成多类任务，与当前3D生成式世界模型和语言接地研究方向高度相关，且宣称在多个基准上取得SOTA，值得进一步精读其技术细节与实验设计。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
