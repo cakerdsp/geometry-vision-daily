@@ -11,12 +11,13 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：36
+- 当前滚动窗口论文数：42
 - 分类分布：
-  - Neural Scene Representations & Rendering: 14
-  - 3D Reconstruction & Multi-view Geometry: 12
-  - Embodied / Robotics / AR Applications: 6
+  - Neural Scene Representations & Rendering: 19
+  - 3D Reconstruction & Multi-view Geometry: 13
+  - Embodied / Robotics / AR Applications: 5
   - Geometry Foundation Models: 4
+  - Dynamic / 4D Reconstruction: 1
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
@@ -24,72 +25,61 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-**1. 3DGS 从"表征工具"走向"多角色复用与场景理解中枢"**
-多篇论文不再将 3DGS 仅视为渲染表征，而是将其作为集几何、可见性、语义、语言于一体的多模态场景表示。SplatGuide 复用同一 3DGS 场景产生渲染图像、逐高斯可见性投票图和重建 token 三种信号；GaussianDWM++ 将 Qwen/SigLIP 视觉语言特征直接蒸馏进 3D 高斯基元，构建开放词汇语义场；QAGaussian 在 3DGS 上做查询自适应的结构化推理（而非相似性匹配）；Gaussian-JEPA 则在 3DGS token 上进行潜空间自监督预测。这种"单一表示、多角色复用"的趋势显著。
+1. **“重建-生成”边界显式化成为新视角合成核心设计原则**  
+   《GenRec》《SplatGuide》《GS-Voxel》等论文不约而同地将任务拆分为“确定性重建部分”与“生成/补全部分”。GenRec 通过观测掩码在架构、监督和梯度流三个层面区分重建与生成；SplatGuide 将单个 3DGS 场景复用于渲染图像、可见性投票图和重建 token 三种互补信号，弥合前馈重建与扩散生成之间的信息断层。这一趋势反映出，纯重建或纯生成已不再是研究焦点，如何明确划分两者的边界并协同优化才是当前新视角合成的前沿问题。
 
-**2. 几何基础模型（Video/Image-based Reconstruction Models）向任务专用化与下游适配演进**
-VGGT 风格的重建基础模型正被适配到特定场景。VGGT-Align 针对长序列重建的尺度漂移问题，提出场景几何不变量锚定（SGIA），将 Sim(3) 对齐退化为刚体变换；GeoUP 则将 VGGT 重建导向潜表示适配到流式多相机驾驶场景，支撑度量深度、3D 检测和语义占用三个任务。这表明几何基础模型正从"通用重建"走向"下游任务级适配"。
+2. **3D Gaussian Splatting 从“表示”走向“系统级基础设施”**  
+   GS-Voxel（结构化潜空间生成）、NGS-Marker（原生水印与版权保护）、3DGART（光线追踪加速训练）、SplatGuide（几何先验复用）、GaussianDWM++（驾驶世界模型）等论文覆盖了 3DGS 的表示压缩、安全保护、渲染加速、多模态语义融合和世界模型构建等多个维度。这表明 3DGS 已不仅是神经渲染的一种选择，而是正在成为连接重建、生成、仿真、编辑和版权管理的统一基础设施。
 
-**3. 视觉-语言-3D 融合走向结构化推理与细粒度对齐**
-从简单的文本-区域全局相似性匹配，转向基于关系图的逻辑推理和细粒度特征对齐。QAGaussian 直接批判全局相似性匹配的弱点，提出多尺度高斯槽 + 关系感知槽图推理；GaussianDWM++ 强调文本与 3D 结构细粒度对齐的必要性，采用 KL 对齐将高斯世界 token 与基础图像 token 对齐。
+3. **从“离线重建”到“可交互物理仿真”的范式跃迁**  
+   LaGSplat 通过隐式拉格朗日力学与高斯泼溅解码器的双重角色设计，允许用户在推理时对物体施加训练中未见过的外力并获得物理合理的响应，首次将“重建-渲染”链路延伸到“交互式物理仿真”。同时，Scalix 将学习式深度线索以概率方式集成到因子图 SLAM 中，实现度量尺度的实时单目定位。这两篇论文共同指向一个方向：重建的目的不再只是“看得见”，而是让模型“动得起来、估得准、相互作用得起来”。
 
-**4. 物理交互与交互式仿真成为神经场景表示的新延伸**
-LaGSplat 将低维潜状态同时作为耗散拉格朗日动力学广义坐标和 3DGS 解码器条件变量，支持用户对物体施加训练未见过的外力。这是"重建 + 物理"融合方向的一个典型代表，结合了可微物理与神经渲染的归纳偏置。
+4. **真实传感器效应（卷帘快门、跨数据集退化）从“忽略”走向“显式建模”**  
+   RS-Avatar 揭示了卷帘快门传感器逐行曝光对可动画化身重建的破坏性影响，提出将渲染流程中的模糊算子替换为按扫描线合成的卷帘快门模型；SPVC 则针对跨数据集驾驶场景渲染中的伪影、闪烁和前景-背景错位问题，提出结构化与全景式视频修复框架。这类工作将此前被视为“工程细节”的传感器特性和数据分布差异提升为算法设计的一等公民，标志着领域对物理真实性的要求正在深化。
 
-**5. 效率优化与边缘化部署成为显式研究维度**
-TinyDETR-Pose 面向资源受限硬件做端到端 6DoF 位姿估计；RoofGS 通过 Roofline 分析差异化优化 3DGS 渲染瓶颈；BinRVR 用二值化网络实现约 96% 的参数量和计算量缩减。这与"大规模基础模型"的趋势并行，构成另一条清晰的优化路径。
+5. **可微渲染的性能瓶颈从“前向遍历”转向“反向传播与内存”**  
+   3DGART 明确指出高斯光线追踪训练的主要瓶颈并非光线遍历本身，而是像素中心反向传播中的原子争用和线程串行化，通过将反向传播重组为以基元为中心的结构化“聚集”过程，实现了与光栅化相当的训练速度。VoroTracing 则识别出遍历长度、每单元计算量和内存局部性为吞吐量核心决定因素。两者共同表明，当场景表示趋于成熟后，系统的性能竞争力将由内存访问模式、梯度计算结构和 GPU 执行优化等底层因素决定。
 
----
 
 #### 技术路线观察
 
-| 方向 | 技术侧重 | 代表论文 |
-|------|----------|----------|
-| **几何基础模型** | 主要聚焦如何校准尺度漂移（Sim(3)→SE(3) 降自由度退化）、如何将重建潜表示适配到下游感知任务（因子化注意力 + 标定感知射线图） | VGGT-Align、GeoUP |
-| **3D/4D 重建与神经场景表示** | 3DGS 成为绝对主导表示；强调从单一场景中复用多种信号（渲染、可见性、token、语义）或引入物理可解释潜状态；自监督方向探索 JEPA 式潜空间预测 | SplatGuide、Gaussian-JEPA、LaGSplat、GS²CI |
-| **视觉-语言-3D 交叉** | 从"相似性匹配"转向"结构化推理"；采用槽式候选 + 图推理（语言条件边权重）+ 粒度自适应路由；或利用基础特征蒸馏实现开放词汇语义场 | QAGaussian、GaussianDWM++ |
-| **机器人/AR 应用** | 强调低成本遥操作硬件 + 触觉反馈提升接触关键任务示教质量；动作条件世界模型（注入 SE(3) 几何编码、深度分支 + SAM3 掩码）；语义辐射场作为模拟器提供几何和语义接地 | ViHaTeleop、DreamX-Phi 1.0、Semantic Radiance Fields as Simulators |
-| **效率优化与低资源** | Roofline 模型驱动的瓶颈特定优化；二值化网络 + 分布感知量化；轻量级 Transformer 单阶段端到端位姿回归 | RoofGS、BinRVR、TinyDETR-Pose |
+| 技术方向 | 代表论文 | 技术侧重点 |
+|---|---|---|
+| **几何基础模型** | PXDepth、Scalix、GeoWeaver | 单目深度估计器沿两条路线分化：PXDepth 走“全局上下文-像素级预测分离”的判别式路线；Scalix 和 GeoWeaver 将学习式深度/位姿先验以概率或可调参数形式集成进传统优化框架，强调不确定性建模与测试时自适应 |
+| **3D/4D 重建** | GeoWeaver、UniQuery4R、InitFree BA | 长序列与动态场景重建转向“分块处理+全局对齐”策略：GeoWeaver 用 GPM+TTA 解决分块尺度漂移；UniQuery4R 用查询条件化实现多帧特征复用；InitFree BA 则警示低目标函数值不等于有效重建，度量升级是关键挑战 |
+| **神经场景表示与渲染** | GS-Voxel、3DGART、VoroTracing、SplatGuide | 围绕 3DGS 的两大主线：一是表示压缩与结构化（GS-Voxel 的稀疏体素化潜空间），二是渲染效率的系统级优化（3DGART 的基元中心反向传播、VoroTracing 的协同设计）；SplatGuide 则关注如何最大化利用已有重建的信息 |
+| **动态/4D 场景理解** | UniQuery4R、GaussianDWM++、LaGSplat | 从“重建动态几何”走向“理解动态语义+物理规律”：UniQuery4R 统一对应、几何、运动与相机估计；GaussianDWM++ 将 VLM 特征蒸馏进高斯原语实现开放词汇语义场；LaGSplat 引入拉格朗日力学实现物理可控交互 |
+| **机器人/AR 应用** | MetaSapiens v2、SPVC、ViHaTeleop、V-JEPA4A | 应用侧强调“极致效率+物理真实性”：MetaSapiens v2 用注视点渲染+立体扭曲实现 VR/AR 实时渲染；ViHaTeleop 用低成本视觉-触觉遥操作解决灵巧操作示教数据采集；V-JEPA4A 用显著性引导掩码提升自动驾驶预训练效率 |
 
-值得注意的横向特征：多个工作（VGGT-Align、GeoUP、GaussianDWM++、SplatGuide）都共享一种"将大模型/基础模型的特征或潜表示嵌入 3D 表示中"的范式，差异在于嵌入的层次（逐高斯 vs. 场景级 token）和用途（重建、感知、编辑）。
-
----
 
 #### 值得优先阅读的论文
 
-**1. SplatGuide（2608.16863）**
-将同一 3DGS 场景复用于三种互补信号，直接解决"信息断开"问题，且无额外计算开销。对 3DGS 前馈重建 + 扩散的管线设计具有较强的方法论启发价值。
+1. **GenRec (2608.17832)**  
+   **优先级最高。** 该文将“重建-生成”的划分直接内置于架构、监督和梯度流，这一设计理念很可能成为后续生成式新视角合成的标准范式；且作者阵容含 Pollefeys、Niemeyer 等学界核心人物，完整方法值得仔细研读。
 
-**2. VGGT-Align（2608.15260）**
-聚焦长序列 3D 重建核心痛点——尺度漂移，提出即插即用框架（SGIA + 测试时自适应），无需重训即可直接挂载到现有 VGGT 类管线，实用性和增量贡献明显。
+2. **3DGART (2608.17298)**  
+   它指出了光线追踪高斯训练的真正瓶颈是反向传播而非前向遍历，并将梯度计算从“散射”重组为“聚集”。这一洞察对所有基于高斯原语的训练系统都有借鉴价值，是实现实时全光线追踪渲染的关键一步。
 
-**3. QAGaussian（2608.16103）**
-明确指出现有 3DGS 指代分割基于全局相似性匹配的不足，提出系统的结构化推理框架（多尺度槽 + 图推理 + 粒度路由）。对"语言-3D"交互方向有较强的范式意义。
+3. **LaGSplat (2608.16324)**  
+   首次将显式物理定律（拉格朗日力学）与高斯泼溅表示结合，实现了从单目视频到可交互物理仿真的跨越。该工作的归纳偏置设计（显式点随广义坐标移动）值得深入理解，为“重建到仿真”提供了新的可能性。
 
-**4. Gaussian-JEPA（2608.15651）**
-首次将 JEPA 潜空间预测范式引入 3DGS 表示学习，解决高斯原语耦合属性与异质空间支撑的难题。对 3D 自监督预训练方向有前瞻性价值，可能影响后续 3D 基础模型的预训练方式。
+4. **InitFree BA (2608.18028)**  
+   它揭示了一个常被忽视的关键问题：无初始化束调整中低 OSE 目标值并不保证有效的度量重建。这对所有依赖端到端优化的 3D 重建方法都构成警示，其受控实验方法论也值得借鉴。
 
-**5. LaGSplat（2608.16324）**
-将物理可解释的拉格朗日动力学与 3DGS 解码器结合，实现用户可在推理时交互施力。这是"可交互物理 + 神经渲染"的跨域创新，值得跟踪其后续扩展。
+5. **GS-Voxel (2608.17988)**  
+   提出了无需逐场景拟合的结构化潜空间框架，将预优化 3DGS 转换为稀疏体素化表示。这对大规模场景生成和 3DGS 的工业级部署具有重要意义，其“容量随占用体素数增长”的设计绕过了固定预算限制。
 
----
 
 #### 可能的研究机会
 
-**1. 3DGS 的多角色统一复用 + 下游任务联合学习**
-SplatGuide 展示了同一 3DGS 场景可产生几何、可见性、特征三种信号，GaussianDWM++ 则展示了语言语义蒸馏的可行性。将这两种思路结合，探索"一个 3DGS 表示同时服务重建、理解、编辑、交互"的统一框架，是一个明确的空白。
+1. **“重建-生成”划分的通用化框架**  
+   GenRec 为静态场景提出了掩码门控的重建-生成分离，但动态场景、驾驶场景或任意传感器模型下的泛化尚未充分探索。如何将观测掩码的计算与相机模型（如卷帘快门、鱼眼）解耦，形成通用的重建-生成协调框架？
 
-**2. 3DGS 的 JEPA 式预训练 + 下游任务微调**
-Gaussian-JEPA 刚提出潜空间预测范式，但下游验证还限于部件分割和物体分类。将其扩展到语言引导的指代分割（QAGaussian）、场景理解（GaussianDWM++）、乃至驾驶场景，是一个自然的延伸方向。
+2. **3DGS 安全与隐私的深度扩展**  
+   NGS-Marker 解决了局部侵权（部分高斯提取）问题，但针对“语义级侵权”（提取某一类物体的高斯子集）、“水印与渲染质量之间的最优权衡”以及“对抗性水印移除攻击”的鲁棒性尚待研究。版权保护正随 3DGS 的普及成为刚需。
 
-**3. 尺度/位姿一致性的跨任务复用**
-VGGT-Align 的 SGIA 利用了驾驶场景的几何不变量，GeoUP 则适配了 VGGT 潜表示到多相机驾驶感知。两者核心都是"利用场景结构约束重建/感知一致性"，但尚未被统一。可探索一个通用的"几何不变量约束模块"，跨数据集、跨任务复用。
-
-**4. 物理交互合成数据的生成与自监督**
-LaGSplat 从单目视频推断物理交互，DreamX-Phi 1.0 是动作条件视频世界模型，SRF 则用语义辐射场做模拟器。三者的共性都是"用可交互/可查询的神经场景表示生成训练数据"。探索用物理可解释的 3DGS 场景生成机器人操作或空间推理的训练数据，是一个有潜力的组合方向。
-
-**5. 高频感知（SCI / 压缩成像）与几何基础模型的结合**
-GS²CI 已证明快照压缩成像 + 3DGS + 视觉基础模型先验的可行性。但
+3. **物理仿真与神经表示的更紧密结合**  
+   LaGSplat 证明了隐式拉格朗日力学与高斯泼溅的统一是可行的，但其验证范围有限。将类似物理归纳偏置扩展到流体、布料等更复杂可变形体，或与驾驶世界模型（如
 
 ### interests.md 指令分析
 
@@ -370,6 +360,44 @@ Metric 3D object detection is a core capability for embodied agents, yet most re
 **Matched keywords:** dynamic 4D, scene flow, scene reconstruction, dense reconstruction
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：UniQuery4R: Unified 4D Scene Reconstruction from a Single Query
+- 作者：Tiancheng Chen, Sheng Tang, Wenhua Jin, Weiqi Zhang, Juntong Fang, Junsheng Zhou, Zesong Li
+- 出版日期：2026-08-18
+- 分类：Dynamic / 4D Reconstruction（次要：3D Reconstruction & Multi-view Geometry）
+- 链接：https://arxiv.org/abs/2608.17283
+
+### 一句话总结
+本文提出UniQuery4R，一种基于查询条件的统一4D场景重建框架，通过对多帧片段进行一次性编码并在解码时按需选择源视图、目标视图与坐标，实现高效且可复用的动态场景重建。
+
+### 研究问题
+现有的前馈式动态4D场景重建方法通常需要预测密集的任务特定映射，或独立处理源-目标图像对，导致在稀疏查询场景下产生不必要的计算，且在不同帧对之间特征复用有限。本文旨在解决这一问题。
+
+### 核心思路/方法
+UniQuery4R采用查询条件化框架，具体步骤为：
+1. 将多帧片段一次性编码为共享表示；
+2. 在解码阶段，通过源到目标的交叉注意力，仅需指定源视图、目标视图和连续的源图像坐标即可生成查询；
+3. 每个查询同时预测目标对应关系、目标时刻的三维位置、场景流以及源深度，并逐视图估计相机参数；
+4. 编码后的片段可跨任意源-目标选择重复使用，支持通过批量查询实现稀疏推理和密集重建，且无需依赖固定片段长度的学习型时间嵌入；
+5. 引入场景流的“方向-幅度”参数化，并对运动点和静态点进行分离监督。
+
+### 主要贡献
+1. 提出查询条件化的统一4D重建框架，实现编码特征的跨帧对复用，减少冗余计算；
+2. 支持任意源-目标视图选择，统一支持稀疏查询推理与密集重建；
+3. 提出场景流的“方向-幅度”参数化及运动/静态点分离监督策略；
+4. 在WorldTrack数据集上，该方法在场景流估计和动态点重建两项任务中均取得最优宏平均结果。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**中**。理由：该工作针对动态4D重建中的计算效率和特征复用问题提出了新颖的框架设计，技术上较为完整，且实验指标在WorldTrack上领先。但摘要未涵盖与更广泛方法（如逐对处理基线）的详细对比效率数据、运行时间或局限性分析，因此适合对4D重建/动态场景理解方向感兴趣的读者精读，若仅关注其他子领域可暂缓。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Reconstructing dynamic 4D scenes requires jointly estimating correspondence, geometry, object motion, and camera motion. Existing feed-forward methods typically predict dense task-specific maps or independently process source-target pairs, leading to unnecessary computation for sparse queries and limited feature reuse across different frame pairs. We present UniQuery4R, a query-conditioned framework that encodes a multi-frame clip once and selects the source view, target view, and continuous source-image coordinate only at decoding time via source-to-target cross-attention. Each query jointly predicts target correspondence, target-time 3D position, and scene flow, along with source depth, while camera parameters are estimated per view. This design allows the encoded clip to be reused across arbitrary source-target selections and supports both sparse inference and dense reconstruction through batched queries, without learned temporal embeddings tied to a fixed clip length. We further introduce a direction-magnitude parameterization of scene flow with separate supervision for moving and static points. Among the evaluated methods, UniQuery4R achieves the best macro-average results on WorldTrack for both scene-flow estimation and dynamic-point reconstruction.
@@ -389,6 +417,43 @@ Reconstructing dynamic 4D scenes requires jointly estimating correspondence, geo
 **Matched keywords:** 3D reconstruction, structure from motion, bundle adjustment
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Initialization-Free Bundle Adjustment Revisited: A Controlled Experimental Study
+- 作者：Simon Weber, Mateo de Mayo, Je Hyeong Hong, Carl Olsson, Daniel Cremers, Ronald Clark
+- 出版日期：2026-08-18T17:23:06Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.18028
+
+### 一句话总结
+本文通过统一评估框架和受控实验，揭示了无初始化束调整（InitFree BA）中“低目标函数值不等于有效重建”的优化-重建鸿沟，指出获得可可靠度量升级的射影重建才是核心挑战。
+
+### 研究问题
+现有InitFree BA评估主要关注优化是否成功（即能否降低目标函数值），但未明确低目标函数值是否保证有效的度量三维重建。因此，本文旨在通过受控实验重新审视InitFree BA，探究从随机相机配置出发的射影解在度量升级后是否产生有效的欧氏重建，以及哪些因素决定重建成功。
+
+### 核心思路/方法
+构建统一评估框架，包含两部分：
+1. 现有OSE（Object-Space Error）公式的C++实现；
+2. 基于Blender的数据集生成器，提供精确真值并可控相机配置和观测密度。
+
+在此框架下，对InitFree BA进行受控实验，观察不同条件下的优化行为和最终重建质量。
+
+### 主要贡献
+- 揭示了此前被忽视的“优化-重建鸿沟”：OSE值相近的射影解在度量升级后可能得到显著不同的欧氏重建。
+- 识别了影响重建成功的关键因素：初始化先验、地标观测密度和度量升级稳定性。
+- 提出结论：InitFree BA的主要挑战不仅是最小化OSE目标函数，更在于获得能可靠进行度量升级的射影重建。
+- 公开了基准、实现和分析（提供项目页面链接），为未来研究奠定实验基础。
+
+### 局限性
+摘要未提供足够信息。摘要仅提及“难以获得可靠度量升级的射影重建”是主要挑战，但未明确给出该方法或实验本身的局限性（如计算复杂度、数据集覆盖面、OSE公式适用范围等）。
+
+### 阅读优先级
+**高**。理由：该论文针对无初始化束调整这一较新方向，提出了受控实验基准和关键发现（优化-重建鸿沟），并公开代码和数据集，对从事三维重建、SLAM和多视图几何的研究者有直接参考价值；且识别出不同于传统评价指标的核心问题，可能影响该领域未来的评估标准。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Initialization-free bundle adjustment (InitFree BA) aims to recover camera poses and scene structure directly from image observations, avoiding the geometric initialization stages of conventional structure-from-motion pipelines. Recent methods based on Object-Space Error (OSE) formulations and Variable Projection (VarPro) show encouraging optimization behavior from random camera configurations. However, existing evaluations primarily measure optimization success, leaving unclear whether a low OSE objective yields a valid metric 3D reconstruction. We revisit InitFree BA experimentally through a unified evaluation framework combining a C++ implementation of existing OSE formulations with a Blender-based dataset generator providing exact ground truth and controlled camera configurations and observation densities. Our experiments reveal a previously overlooked optimization--reconstruction gap: projective solutions with similarly low OSE values can lead to substantially different Euclidean reconstructions after metric upgrade. We identify initialization priors, landmark observation density, and metric-upgrade stability as key factors governing reconstruction success. Overall, our results suggest that the main challenge of InitFree BA is not merely minimizing OSE objectives, but obtaining projective reconstructions that admit reliable metric upgrade. We believe that the proposed benchmark, implementation, and analysis establish stronger experimental foundations for future research on initialization-free bundle adjustment, a problem largely unexplored within the computer vision community. Project page is available at https://github.com/simonwebertum/InitFreeBA.git.
@@ -402,6 +467,43 @@ Initialization-free bundle adjustment (InitFree BA) aims to recover camera poses
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** SLAM, monocular depth, robotics
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Scalix: Uncertainty-Aware Scale-Consistent Monocular SLAM
+- 作者：Sebastian Barbas Laina, Tianyi Zhang, Panagiotis Petropoulakis, Simon Schaefer, Simon Boche, Jaehyung Jung, Cedric Le Gentil, Stefan Leutenegger
+- 出版日期：2026-08-18
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.17553
+
+### 一句话总结
+提出一个名为 Scalix 的实时单目 SLAM 框架，通过将带不确定性建模的学习式深度线索集成到概率因子图中，实现度量尺度的状态估计和尺度一致性。
+
+### 研究问题
+单目 SLAM 存在固有的尺度模糊问题。常见的多模态方案（如视觉惯性系统）在机器人匀速运动时尺度不可观，而基于深度学习的方法虽然引入几何基础模型，但其深度图往往包含噪声且跨帧尺度不一致。因此，如何利用学习式深度线索实现准确、鲁棒且实时运行的度量尺度单目 SLAM 是本文的核心问题。
+
+### 核心思路/方法
+Scalix 将学习到的深度线索集成到一个概率因子图公式中。具体来说，它给现有的单目深度模型增加了两类不确定性建模：
+1. **逐像素深度不确定性**
+2. **逐帧尺度不确定性**
+
+通过将尺度预测视为优化中的独立测量，并利用多视图数据关联，Scalix 能够提升尺度一致性，从而获得度量尺度的状态估计。
+
+### 主要贡献
+- 提出 Scalix，一种实时的单目 SLAM 框架，可实现度量尺度状态估计；
+- 将深度线索以概率方式（包含像素级深度不确定性和帧级尺度不确定性）集成到因子图优化中；
+- 通过多视图数据关联提升了尺度一致性；
+- 在大型室外和室内场景的实验中，在度量尺度基准和 up-to-scale 基准上均达到最优性能，同时保持实时性和泛化能力。
+
+### 局限性
+摘要未提供足够信息。摘要未明确讨论方法的局限性，例如对训练数据分布的依赖、极端光照或动态场景下的表现、计算资源的具体需求等，均未提及。
+
+### 阅读优先级
+**中**。理由：该工作针对单目 SLAM 的尺度模糊这一实际问题，提出了结合深度模型不确定性的因子图方案，实验表明在多个基准上达到 SOTA 且保持实时性，对机器人感知领域有一定参考价值。但摘要中未提供方法细节（如具体网络结构、优化策略、实验配置），若需要深入了解需阅读全文。对于非单目 SLAM 或非几何方向的研究者，优先级可相应降低。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -419,6 +521,42 @@ Cameras are ubiquitous sensors in robotics due to their compact form factor and 
 **Matched keywords:** 3D reconstruction
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GeoWeaver: Accurate Long-Sequence 3D Reconstruction via Hierarchical Geometric Assembly
+- 作者：Tinghao Jiang, Sheng Tang, Shengzhe Wei, Juntong Fang, Weiqi Zhang, Junsheng Zhou, Zesong Li
+- 出版日期：2026-08-18T05:29:31Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.17389
+
+### 一句话总结
+GeoWeaver 提出一个由几何先验模型和测试时自适应组成的统一框架，通过分层几何组装实现精确的长序列三维重建。
+
+### 研究问题
+从 RGB 视频进行长序列三维重建时，现有前馈模型受限于内存无法联合推理长序列；分块处理虽提升可扩展性，但独立预测的分块存在尺度漂移、位姿误差和点云错位问题。
+
+### 核心思路/方法
+- 构建统一框架 GeoWeaver，包含两个核心组件：
+  1. **几何先验模型（GPM）**：逐块预测深度、置信度和相机参数，作为可调整的几何先验。
+  2. **测试时自适应（TTA）**：依次执行顺序初始化、全局分块级 Sim(3) 对齐、以及相机位姿/仿射深度修正/内参的由粗到细优化。
+- 利用稠密对应关系提供相邻块、跨块和长距离约束。
+- 采用鲁棒的 CDF 风格目标函数，联合优化加权二维重投影残差和三维一致性残差。
+
+### 主要贡献
+- 提出 GeoWeaver 统一框架，在保持局部几何精度的同时校正累积的位姿、尺度、深度和标定误差。
+- 在多个长序列基准上验证了相机精度、全局一致性和点云质量的提升。
+- 消融实验证实每个自适应阶段均有贡献；将相同 TTA 流程应用于不同几何先验模型均能一致改善轨迹估计，表明方法与特定 GPM 无关。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该工作聚焦长序列三维重建这一核心难题，提出结合几何先验与测试时自适应的通用框架，且方法不依赖特定先验模型，具有较强泛化潜力。对于从事三维重建、SLAM 和多视角几何的研究人员而言，具有较高的参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Long-sequence 3D reconstruction from RGB videos requires both accurate local geometry and globally consistent camera motion. Feed-forward models provide strong depth and pose predictions, but their memory cost prevents joint inference over long sequences. Chunk-wise processing improves scalability, yet independently predicted chunks often exhibit scale drift, pose errors, and point-cloud misalignment. We present GeoWeaver, a unified framework comprising a Geometric Prior Model (GPM) and Test-Time Adaptation (TTA). The GPM predicts chunk-wise depth, confidence, and camera parameters as adjustable geometric priors. TTA then performs sequential initialization, global chunk-level Sim(3) alignment, and coarse-to-fine refinement of camera poses, affine depth corrections, and intrinsics. Dense correspondences provide adjacent, cross-chunk, and long-range constraints, while a robust CDF-style objective jointly optimizes weighted 2D reprojection and 3D consistency residuals. This design preserves local geometric accuracy while correcting accumulated pose, scale, depth, and calibration errors. Experiments across diverse long-sequence benchmarks demonstrate improved camera accuracy, global consistency, and point-cloud quality. Ablations verify the contribution of each adaptation stage, and applying the same TTA procedure to different geometric prior models consistently improves their trajectory estimates, demonstrating that GeoWeaver is not tied to a specific GPM.
@@ -432,6 +570,44 @@ Long-sequence 3D reconstruction from RGB videos requires both accurate local geo
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** depth prediction, depth estimation, monocular depth
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：PXDepth: Pixel-Space Modeling for Structure Preserving Monocular Depth Estimation
+- 作者：Zhiyuan Yuan, Guanying Chen, Lingteng Qiu, Ruimao Zhang, Shuguang Cui, Xiaochun Cao
+- 出版日期：2026-08-17T18:00:02Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.16984
+
+### 一句话总结
+PXDepth提出一种将全局上下文建模与像素级深度预测分离的单目深度估计模型，通过像素空间变换器块保持高分辨率空间表征，以在零样本基准上同时改善结构保持和深度精度。
+
+### 研究问题
+现有单目深度估计器在零样本泛化上表现良好，但常难以保持细粒度结构和物体边界，作者认为其原因在于大块ViT编码器与卷积解码器的组合中，粗粒度token化削弱了像素级线索，且上采样难以完整恢复这些信息。
+
+### 核心思路/方法
+- 将深度估计分解为两个部分：全局上下文建模和像素级深度预测。
+- 使用大块ViT捕获全局场景上下文。
+- 引入像素空间预测器，由“Context-Modulated Pixel Transformer”块构成，在整个深度估计过程中维持高分辨率空间表征。
+- 该设计旨在保留精细结构与锐利边界，同时不牺牲全局深度一致性。
+
+### 主要贡献
+- 提出PXDepth，一种判别式单目深度模型，明确分离全局上下文建模与像素级深度预测。
+- 设计像素空间预测器（含Context-Modulated Pixel Transformer块）以保持高分辨率空间信息。
+- 在多样零样本基准上，PXDepth在保持局部几何结构的同时获得有竞争力的全局深度精度，且推理高效。
+- 公开代码和模型。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**
+
+理由：该论文针对当前单目深度估计中结构保持的明确痛点（ViT粗粒度token化与上采样信息丢失）提出新的架构分离方案，具备清晰的动机和设计创新，且涉及零样本泛化与效率，对深度估计、3D重建领域研究者有较高参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -907,6 +1083,41 @@ Transformer-based methods have achieved strong performance in monocular 3D human
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, rendering, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GS-Voxel: Fitting-Free Structured Latents for Large-Scale 3DGS Generation
+- 作者：Ming Qian, Zijian Wang, Minchao Sun, Jincheng Xiong, Hang Zhang, Mu Xu, Chi Wang, Baoquan Chen
+- 出版日期：2026-08-18
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.17988
+
+### 一句话总结
+GS-Voxel 提出了一种无需逐场景拟合的稀疏体素化结构化潜空间框架，用于大规模航拍 3DGS 场景的生成，潜变量容量随占用体素数增长。
+
+### 研究问题
+如何为大规模、无序且基元数量不固定的预优化 3DGS 重建结果，构建可扩展的结构化潜表示，以支持高效的场景生成。
+
+### 核心思路/方法
+- 将兼容的预优化 3DGS 重建结果确定性地转换为稀疏激活体素，无需额外的逐场景优化，同时保留基元的亚体素位置和渲染属性。
+- 设计一个面向 3DGS 的因子化 VAE，分别编码体素几何和局部高斯属性，形成稀疏 3D 潜变量；潜变量大小随占用体素数增长，而非受固定全局基元数限制。
+- 在该潜空间上训练以图像为条件的流模型，用于生成航拍 3DGS 场景。
+- 支持重叠感知的平铺推理，使得生成可扩展到单个训练裁剪区域之外，并基于卫星视角图像进行条件生成。
+
+### 主要贡献
+- 提出拟合自由的稀疏体素化框架 GS-Voxel，将预优化 3DGS 重建转换为结构化的稀疏潜表示。
+- 证明该潜表示容量随占用体素数增长，适用于大规模场景生成。
+- 实现了基于卫星图像条件的大面积航拍 3DGS 场景生成，支持平铺式扩展推理。
+
+### 局限性
+摘要未提供足够信息，未明确讨论方法的局限性（如体素化精度损失、推理效率、对输入重建质量的依赖等）。
+
+### 阅读优先级
+**中**。理由：该工作聚焦于大规模 3DGS 生成的表示与扩展性问题，方法上有一定创新（拟合自由 + 稀疏结构化），但摘要未提供定量结果或与现有方法的直接对比，适合相关方向研究者阅读，非该领域者优先级可降低。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Many scalable latent 3D generators operate on structured tensors, whereas pre-optimized 3D Gaussian Splatting (3DGS) reconstructions are unordered, spatially irregular, and vary widely in primitive count. We present GS-Voxel, a fitting-free structured latent framework, and evaluate it for large-scale aerial 3D Gaussian scene generation. GS-Voxel deterministically converts a compatible pre-optimized 3DGS reconstruction into sparse active voxels without additional per-scene optimization, retaining the sub-voxel positions and rendering attributes of the selected primitives. A GS-specific factorized VAE then separately encodes voxel geometry and local Gaussian attributes into sparse 3D latents whose size grows with the number of occupied voxels rather than being limited by a fixed scene-wide primitive count. We train image-conditioned flow models in the GS-Voxel latent space to generate aerial 3DGS scenes. A key application enabled by GS-Voxel is large-area scene generation: overlap-aware tiled inference extends synthesis beyond a single training crop conditioned on satellite-view images. Our results show that GS-Voxel provides structured latents for pre-optimized aerial 3DGS reconstructions, with latent capacity that grows with the number of occupied voxels.
@@ -920,6 +1131,44 @@ Many scalable latent 3D generators operate on structured tensors, whereas pre-op
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** neural rendering, rendering, AR, VR
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：MetaSapiens v2: Advancing Real-Time Foveated Neural Rendering via Foveation-Aware Pruning and Stereo Warping
+- 作者：Weikai Lin, Yu Feng
+- 出版日期：2026-08-18
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.17969
+
+### 一句话总结
+本文提出MetaSapiens v2，一种面向VR/AR设备的点基神经渲染（PBNR）系统，通过结合效率感知剪枝、注视点渲染、选择性立体扭曲和专用加速器设计，在保持人类视觉质量的同时实现实时渲染，并获得数量级的加速。
+
+### 研究问题
+如何在VR/AR设备上实现实时的高质量点基神经渲染（PBNR），以克服现有PBNR模型在实时性方面的不足。
+
+### 核心思路/方法
+MetaSapiens v2整合了四项关键技术：
+1. **效率感知剪枝**：优化渲染速度的剪枝技术。
+2. **注视点渲染（FR）**：利用人眼外周视觉敏锐度较低的特性，在PBNR中引入高效的注视点渲染原语，放松外周区域的渲染质量以提升速度。
+3. **选择性立体扭曲**：利用双眼视觉之间的冗余，通过选择性扭曲方法降低双目渲染的计算开销。
+4. **加速器设计**：针对双目注视点渲染的专用加速器，解决基于FR的PBNR中存在的负载不均衡问题，并支持高效的双目渲染扭曲操作。
+
+### 主要贡献
+- 提出了一个完整、高效的PBNR系统，实现VR/AR设备上的实时神经渲染。
+- 首次将效率感知剪枝与注视点渲染结合，适配PBNR场景。
+- 提出选择性立体扭曲方法，利用双眼冗余进一步削减计算量。
+- 设计了专用加速器架构，解决FR-PBNR的负载不均衡问题并支持扭曲操作。
+- 实验表明，相较于现有PBNR模型，MetaSapiens v2在保持视觉质量的同时达到数量级的速度提升。
+
+### 局限性
+摘要未提供足够信息，未说明具体的数据集、基线对比细节、硬件平台、视觉质量评估指标、剪枝率与质量权衡的定量结果，以及加速器实现的能耗或面积开销。
+
+### 阅读优先级
+**中**。理由：该工作面向AR/VR实时渲染，有明确的工程和系统设计贡献（含硬件加速器），适合对神经渲染效率优化和端侧部署感兴趣的读者；但摘要未提供充分的实验细节和对比基准，若需要严格评估方法有效性，需阅读全文。若读者关注点基渲染或注视点渲染算法本身，优先级可适度提高。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -937,6 +1186,41 @@ Point-Based Neural Rendering (PBNR) is emerging as a promising class of renderin
 **Matched keywords:** monocular depth, NeRF, novel view synthesis, view synthesis
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GenRec: Knowing Where to Reconstruct and Where to Generate
+- 作者：Ata Çelen, Jaewoo Jung, Federico Tombari, Marc Pollefeys, Sunghwan Hong, Michael Niemeyer, Daniel Barath
+- 出版日期：2026-08-18T14:31:19Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.17832
+
+### 一句话总结
+GenRec 提出一种多视角流匹配模型，通过观测掩码显式区分“重建”与“生成”区域，在观测像素上保持几何保真度，在未观测区域保留生成多样性，从而同时提升重建精度与感知质量。
+
+### 研究问题
+现有生成式新视角合成方法对所有像素施加统一的损失，混淆了“可唯一重建的观测区域”与“存在多种合理补全的未观测区域”，导致几何保真与生成幻觉之间的界限模糊。如何将重建—生成的划分直接融入模型架构、监督信号与梯度流，是本工作的核心问题。
+
+### 核心思路/方法
+- 构建一个多视角流匹配模型，将重建与生成的区分内置于架构、监督和梯度流中。
+- 利用由源相机和单目深度估计器导出的观测掩码，引导流匹配主干联合去噪所有目标视角的 RGB 与场景坐标图。
+- 在像素空间增加细化阶段，用于恢复观测像素上的高频细节。
+- 同一掩码同时控制监督信号，避免回归损失污染生成先验。
+
+### 主要贡献
+- 首次将重建—生成划分显式构建到模型架构、监督与梯度流中，而非仅依赖统一损失。
+- 在 RealEstate10K、DL3DV-10K 和 Mip-NeRF 360 上，单视角外推与双视角插值设置下，观测区域的重建保真度达到最佳，同时未观测区域的感知质量超越纯生成基线。
+- 证明通过掩码门控监督可以同时优化两个互为冲突的目标（重建与生成）而不互相干扰。
+
+### 局限性
+摘要未提供足够信息，无法获知该方法在极端稀疏视角、动态场景、计算开销或失败案例等方面的具体限制。
+
+### 阅读优先级
+**高**。理由：该工作针对生成式新视角合成中重建与生成冲突这一核心问题，提出了架构级解决方案，并在多个基准数据集上同时改善重建与感知指标，且发表于 2026 年，方法新颖、实验广泛，值得深入阅读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Generative novel view synthesis from sparse input images is rarely all reconstruction or all generation: pixels visible in some source view have a unique correct value modulated only by view-dependent shading, while pixels in disocclusions or beyond the captured volume admit a distribution of plausible completions. Existing generative novel-view-synthesis methods conflate these regimes under a single uniform loss, blurring the line between geometric fidelity and creative hallucinations even when scene geometry is injected through warped point clouds or projected depth. We introduce GenRec, a multi-view flow matching model that builds the reconstruction--generation split directly into its architecture, supervision, and gradient flow. Guided by an observation mask derived from the source cameras and a monocular depth estimator, a flow matching backbone jointly denoises RGB and scene-coordinate maps across all target views, while a pixel-space refinement stage restores high-frequency detail on observed pixels; the same mask gates supervision so regression signals do not contaminate the generative prior. Across RealEstate10K, DL3DV-10K, and Mip-NeRF~360, in both single-view extrapolation and two-view interpolation, GenRec attains the best reconstruction fidelity in observed regions while also surpassing purely generative baselines on perceptual quality in unobserved ones, showing the effectiveness of our approach.
@@ -950,6 +1234,46 @@ Generative novel view synthesis from sparse input images is rarely all reconstru
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** NeRF, Gaussian Splatting, 3D Gaussian Splatting, novel view synthesis, view synthesis, scene representation, rendering, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Differentiable Voronoi Ray Tracing Beyond Rasterization Speeds
+- 作者：Bernardo Taveira, Carl Lindström, Joakim Johnander, Fredrik Kahl
+- 出版日期：2026-08-18
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.17682
+
+### 一句话总结
+本文提出VoroTracing，一种可微Voronoi光线追踪渲染器，通过场景表示、优化与GPU执行的协同设计，在保持重建质量的同时超越光栅化方法的速度，并自然支持多种非针孔相机效果。
+
+### 研究问题
+如何在保持光线追踪表达灵活性的前提下，使其渲染速度超越基于光栅化的实时新视角合成方法？具体而言，作者分析了可微Voronoi光线追踪中影响吞吐量的关键因素，并探索如何系统性降低这些成本。
+
+### 核心思路/方法
+1. **瓶颈分析**：识别出遍历长度、每单元计算量（per-cell work）和内存局部性为决定吞吐量的三个主要因素。
+2. **协同设计**：VoroTracing同时优化场景表示、优化过程和GPU执行：
+   - 紧凑的八面体外观纹理减少内存流量；
+   - 表面集中的不透明度分布促进光线及早终止；
+   - 固定预算的表示无需剪枝或稠密化；
+   - GPU实现针对连贯遍历（coherent traversal）设计。
+3. **效果支持**：通过光线生成和采样直接支持鱼眼、卷帘快门、运动模糊和景深效果，无需专门的光栅化扩展。
+
+### 主要贡献
+- 提出VoroTracing，首个在速度上超越光栅化方法（3D Gaussian Splatting）的基于光线追踪的可微渲染器，在RTX 5090上达到623 FPS，比最快的既有光线追踪方法快3.2倍，比3DGS快2.8倍，同时保持有竞争力的重建质量（在Mip-NeRF 360上评估）。
+- 提供了对可微Voronoi光线追踪吞吐量决定性因素的清晰分析。
+- 展示了光线追踪的灵活性（多种非针孔效果）可以与实时吞吐量同时实现。
+- 开源代码。
+
+### 局限性
+摘要未提供足够信息：未提及方法的显式局限性（如场景规模限制、特定效果下的性能下降、与某些重建质量指标的绝对差距等）。
+
+### 阅读优先级
+**高**
+理由：该方法在渲染领域具有突破性意义——首次展示了基于光线追踪的可微渲染在速度上超越当前主流的光栅化方法（3DGS），同时保留了光线追踪的效果灵活性。对于神经渲染、实时图形学和非针孔成像相关研究者，该工作可能改变技术路线选择。发表时间为2026年，属于较新工作，建议优先阅读。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -967,6 +1291,40 @@ Real-time novel view synthesis is dominated by rasterized explicit primitives. T
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, rendering, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GroupForward: Building Referable 3D Scenes via Instance-Grouped Feed-Forward Gaussian Splatting
+- 作者：Qijian Tian, Zimeng Wu, Xuhong Wang, Lizhuang Ma, Xin Tan
+- 出版日期：2026-08-18
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.17535
+
+### 一句话总结
+本文提出GroupForward模型，通过实例分组的前馈3D高斯泼溅重建可引用的3D场景，并配套引用场景推理框架（RSRF）实现复杂3D指代分割。
+
+### 研究问题
+现有前馈语义3D高斯泼溅方法缺乏显式实例判别能力，主要支持基于类别或短语的语义查询，无法完成复杂的指代性场景推理（如根据自然语言指代表达定位特定实例）。
+
+### 核心思路/方法
+- 提出GroupForward，一种实例分组的前馈高斯泼溅模型，能从稀疏、无位姿、无标定的多视图图像中重建几何、外观、实例结构和语义。
+- 不同于现有方法为每个高斯附加高维语义特征，GroupForward学习紧凑的实例嵌入，将高斯分组为跨视图一致的3D实例，将前馈语义3DGS从逐高斯语义特征渲染重构为实例级语义聚合与传播。
+- 基于实例分组，进一步提出引用场景推理框架（RSRF）：构建实例分组的3D场景图，对给定指代表达检索候选实例，再由视觉-语言模型基于结构化实例证据和多视图观测进行推理，从候选中识别所指实例。
+
+### 主要贡献
+- 提出实例分组的前馈3D高斯泼溅模型，实现跨视图一致的3D实例重建与语义聚合。
+- 提出引用场景推理框架（RSRF），将语言交互从简单语义查询扩展至复杂指代场景推理。
+- 在语义重建和指代推理实验上验证了实例分组重建与推理框架的有效性（摘要提及实验结果，但未提供具体数值）。
+
+### 局限性
+摘要未提供足够信息（未讨论模型在遮挡、实例数量、计算开销、泛化能力等方面的限制）。
+
+### 阅读优先级
+**中**。理由：该工作针对前馈语义3DGS的实例级判别和指代推理这一具体问题，属于领域内细化改进，适合对3D场景理解、高斯泼溅与多模态推理交叉方向感兴趣的读者；但摘要未提供量化实验结果，需进一步阅读正文评估其实际性能与适用场景。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Simultaneously reconstructing and understanding 3D environments is essential for embodied agents. Toward this goal, feed-forward semantic 3D Gaussian Splatting (3DGS) efficiently constructs semantic scene representations from sparse multi-view observations. However, existing methods lack explicit instance discrimination and mainly support category- or phrase-based semantic queries. To this end, we propose GroupForward, an instance-grouped feed-forward Gaussian splatting model that reconstructs geometry, appearance, instance structure, and semantics from sparse, unposed, and uncalibrated multi-view images. Unlike existing methods that attach high-dimensional semantic features to each Gaussian, GroupForward learns compact instance embeddings that group Gaussians into cross-view consistent 3D instances, reformulating feed-forward semantic 3DGS from per-Gaussian semantic feature rendering to instance-level semantic aggregation and propagation. Building on these instance groups, we further propose a Referential Scene Reasoning Framework (RSRF) for complex 3D referring segmentation. RSRF constructs an instance-grouped 3D scene graph and retrieves candidate instances for a given referring expression. A vision-language model then reasons over structured instance evidence and multi-view observations to identify the referred instance among the candidates. RSRF thereby extends language interaction from simple semantic querying to complex referential scene reasoning. Experiments on semantic reconstruction and referential reasoning demonstrate the effectiveness of our instance-grouped reconstruction and reasoning framework.
@@ -980,6 +1338,43 @@ Simultaneously reconstructing and understanding 3D environments is essential for
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：NGS-Marker: Robust Native Watermarking for 3D Gaussian Splatting
+- 作者：Hao Qin, Yukai Sun, Luyuan Chen, Mengxu Lu, Feng Zhang, Ming Kong, Zhenhong Du, Qiang Zhu
+- 出版日期：2026-08-18T07:28:18Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.17447
+
+### 一句话总结
+NGS-Marker 是一种面向 3D 高斯泼溅（3DGS）的原生水印框架，通过渐进式注入策略实现全场景覆盖，从而抵御局部侵权（partial infringement）攻击。
+
+### 研究问题
+现有 3DGS 水印技术主要依赖预训练解码器保护渲染图像，但无法有效保护底层 3D 高斯基元本身，尤其当攻击者仅提取和重用部分高斯子集时（即局部侵权），现有方法失效。NGS-Marker 旨在解决这一版权保护漏洞。
+
+### 核心思路/方法
+- 提出原生水印框架 NGS-Marker，将水印注入器与消息解码器联合训练；
+- 采用基于梯度的渐进式注入策略，确保水印覆盖整个场景；
+- 使所有权解码可从任意局部区域稳健进行；
+- 扩展了混合保护模式（原生水印与间接水印结合）以及多模态水印支持。
+
+### 主要贡献
+- 提出首个面向 3DGS 的原生水印框架，直接保护 3D 高斯基元而非仅渲染图像；
+- 渐进式注入策略保证全场景覆盖，实现对局部侵权的鲁棒防御；
+- 提供混合保护与多模态水印扩展，增强了实际部署中的灵活性。
+
+### 局限性
+摘要未提供足够信息来评估局限性，例如对非局部侵权攻击的鲁棒性、水印对渲染质量的影响、计算开销或实验对比细节等均未在摘要中说明。
+
+### 阅读优先级
+**高**
+
+理由：3DGS 是当前神经渲染领域的热门方向，版权保护是实际部署中的关键问题。该文针对现有方法无法防御局部侵权的明确缺陷提出了新的原生水印方案，具有较强的问题针对性和应用价值，值得优先关注。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -997,6 +1392,44 @@ With the rapid development and adoption of 3D Gaussian Splatting (3DGS), the nee
 **Matched keywords:** scene reconstruction, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, rendering, splatting, autonomous driving, driving scene, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：SPVC: Structured and Panoptic Video Fixing for Cross-Dataset Driving Scene Rendering
+- 作者：Gen Li, Shu Han, Yun Xi Qiao, Hua Chen, Xuyang Dai, Bohan Li, Hao Zhao, Chaojian Li
+- 出版日期：2026-08-18
+- 分类：Neural Scene Representations & Rendering（次要分类：Embodied / Robotics / AR Applications）
+- 链接：https://arxiv.org/abs/2608.17420
+
+### 一句话总结
+SPVC 提出一种基于结构化与全景式视频修复的统一框架，用于跨数据集驾驶场景渲染中的伪影消除与前景-背景对齐。
+
+### 研究问题
+驾驶场景重建与渲染（尤其是基于 3D Gaussian Splatting）在外推轨迹或场景编辑下容易出现模糊结构、时间闪烁以及前景-背景错位等问题，现有修复方法通常局限于特定设置（如图像级新视角修复或物体编辑校正），缺乏统一且跨数据集适用的修复方案。
+
+### 核心思路/方法
+- 提出四个设计原则：
+  1. **结构化修复**：显式使用相机位姿、3D 边界框和高精地图等空间条件引导修复，减少不可控幻觉。
+  2. **全景式修复**：同时修正背景渲染伪影（如道路、建筑、车道线畸变）和前景车辆编辑引入的外观不一致伪影。
+  3. **视频级修复**：在驾驶序列上进行修复而非孤立帧，利用时间线索辅助伪影校正。
+  4. **跨数据集修复**：单一共享网络在多个驾驶数据集上训练和应用，避免数据集/场景特定的修复器。
+- 具体实现：通过模拟欠约束 3DGS 渲染和前景车辆插入伪影，构建配对退化-干净训练数据；训练一个两阶段可控视频扩散模型，先处理视频级外观，再用结构化控制细化场景布局。
+
+### 主要贡献
+- 提出首个面向跨数据集驾驶场景渲染的结构化与全景视频修复框架，整合空间条件、全景伪影修复、时间一致性和跨数据集泛化。
+- 设计了配对数据构造策略，模拟真实渲染劣化与前景编辑伪影，用于训练统一修复模型。
+- 采用两阶段可控视频扩散模型，分别处理外观修复与结构化布局细化，提升修复可控性。
+
+### 局限性
+摘要未提供实验评估细节、定量指标、与基线方法对比结果、具体性能边界或失败模式分析，因此无法判断该方法在真实部署中的具体局限；摘要未提供足够信息。
+
+### 阅读优先级
+**高**  
+理由：该工作针对自动驾驶仿真中 3DGS 渲染的核心痛点（外推轨迹下的伪影与编辑不一致），提出统一修复框架并强调跨数据集泛化，对神经场景表示和驾驶仿真方向具有较强实用价值；且方法设计（结构化+全景式+视频级+跨数据集）具备系统性，适合关注驾驶渲染和扩散修复的读者精读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Driving scene reconstruction and rendering, especially with 3D Gaussian Splatting, has become an important component of autonomous driving simulation. However, rendered views often degrade under extrapolated ego trajectories and scene edits, producing blurry structures, temporal flicker, and foreground-background misalignment. Existing refinement methods are commonly designed for a specific setting, such as image-level novel-view repair or object-editing correction. In this paper, we introduce SPVC, a structured and panoptic video fixing framework for cross-dataset driving scene rendering. The name summarizes four design principles. (1) Structured fixing denotes the use of explicit spatial conditions, including camera pose, 3D bounding boxes, and HD maps, to guide the repair process and reduce uncontrolled hallucination. (2) Panoptic fixing refers to correcting both background rendering artifacts, such as distorted roads, buildings, and lanes, and foreground vehicle artifacts introduced by scene editing, such as inconsistent object appearance. (3) Video fixing means that the model operates on driving sequences rather than isolated frames, allowing temporal cues to be used during artifact correction. (4) Cross-dataset fixing means that a single shared network is trained and applied across multiple driving datasets, reducing the need for dataset-specific or scene-specific fixers. Concretely, we construct paired degraded-clean training data by simulating under-constrained 3DGS rendering and foreground vehicle insertion artifacts, and train a two-stage controllable video diffusion model that first addresses video-level appearance and then refines scene layout with structured controls.
@@ -1012,6 +1445,39 @@ Driving scene reconstruction and rendering, especially with 3D Gaussian Splattin
 **Matched keywords:** novel view synthesis, view synthesis
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Scanline-Aware Animatable Gaussian Avatars from Rolling-Shutter Videos
+- 作者：Youxiang Wang
+- 出版日期：2026-08-18
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.17314
+
+### 一句话总结
+RS-Avatar 通过将渲染流程中的模糊算子替换为按扫描线合成的卷帘快门模型，直接从卷帘快门视频重建清晰、无畸变且可动画化的 3D 高斯人体化身。
+
+### 研究问题
+现有可动画人体化身重建方法假设每帧所有像素在同一瞬间观测到身体运动，但卷帘快门传感器逐行曝光，导致单帧内不同扫描线对应不同姿态，且多相机各自读取时序不一，破坏了重建所需的多视角一致性，从而在重建结果中引入畸变（如剪切和抖动）。
+
+### 核心思路/方法
+核心思路极为简洁：利用可动画化身已有的亚帧级渲染能力——该渲染器能在多个子帧时刻生成身体图像——将传统的模糊模型（对子帧渲染结果做平均）替换为卷帘快门模型（按扫描线对各子帧渲染结果进行拼接合成）。仅改变这一合成算子，即可直接从未经矫正的卷帘快门视频中重建清晰且可动画化的高斯化身。
+
+### 主要贡献
+1. 提出了 RS-Avatar，一个能直接从卷帘快门视频重建清晰、无畸变、可动画化的 3D 高斯化身的框架。
+2. 阐明了核心洞见：亚帧渲染机制可以复用，但合成算子必须从“平均”改为“按扫描线拼接”。
+3. 构建了 RS-ZJU 基准（基于 ZJU-MoCap），并在每个测试对象上证实了所提方法优于将视频当作瞬时帧进行训练的基线。
+4. 对比实验显示，基于相同亚帧机制的模糊模型无法迁移到卷帘快门场景，性能甚至低于忽略快门效应的基线，说明合成算子的选择至关重要。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**中**。理由：该工作针对卷帘快门视频下可动画人体化身重建这一具体实际问题，提出了一个极简且有效的解决方案，并提供了对比实验验证。对于从事人体重建、神经渲染或卷帘快门成像相关研究的读者有较高参考价值；但若不在上述领域，其影响力相对有限。由于摘要未披露训练数据量、推理速度、与现有最先进方法的定量对比等细节，因此优先级定为中等。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Animatable human avatars are routinely reconstructed from multi-view video under a silent assumption: that every pixel of a frame observes the same instant of the body's motion. Rolling-shutter (RS) sensors expose image rows sequentially, so within one frame the head and the feet of a moving person are separated by tens of milliseconds of articulated motion, and every scanline sees a different pose. Feeding such video to a state-of-the-art avatar bakes the distortion into the canonical representation, where it survives as shear and wobble under novel views and novel poses. Worse, every camera in a rig follows its own readout schedule, so the multi-view consistency that drives the reconstruction is violated even when the geometry is correct. We present RS-Avatar, which reconstructs a sharp, undistorted, animatable 3D Gaussian avatar directly from RS video. The formulation is minimal: a motion-aware avatar already renders the body at several sub-frame instants, and where a blur model averages those renderings, a rolling-shutter model composites them scanline by scanline. Changing that operator is the only modification required. On RS-ZJU, a benchmark we build from ZJU-MoCap, this improves novel-view synthesis over training as if the frames were instantaneous, on every subject. A motion-aware blur model built on the same sub-frame machinery does not transfer, and in fact falls below the shutter-oblivious baseline: the machinery is reusable, the operator is not.
@@ -1025,6 +1491,39 @@ Animatable human avatars are routinely reconstructed from multi-view video under
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** NeRF, Gaussian Splatting, 3D Gaussian Splatting, novel view synthesis, view synthesis, rendering, splatting, mapping
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：3D Gaussian Accelerated Ray Tracing: Fast training through particle-based backward propagation
+- 作者：Laurent Vit, Oliver Batchelor, Richard Green
+- 出版日期：2026-08-18T02:50:46Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.17298
+
+### 一句话总结
+本文提出3DGART训练框架，通过将光线追踪高斯渲染的反向传播从像素视角重组为基元视角，显著加速了训练过程，使全光线追踪高斯训练在速度上可与光栅化管线竞争。
+
+### 研究问题
+高斯光线追踪虽能解决3D高斯溅射中基于光栅化的屏幕空间近似带来的视角排序和次级光线效果（反射、折射、阴影）问题，但其训练成本高昂，主要瓶颈在于像素中心的反向传播中大量线程并发累积梯度到同一基元参数，造成严重原子争用和线程串行化。因此，如何加速高斯光线追踪的训练过程是本文研究的核心问题。
+
+### 核心思路/方法
+核心思想是将反向传播从“以像素为中心”重新组织为“以基元为中心”。具体方法包括：利用保守的透视校正屏幕空间边界，构建紧凑的中间缓冲区和“瓦片-基元”映射，使每个线程在瓦片内累积一个基元覆盖像素的贡献。这使梯度计算从竞争密集的“散射”操作转变为结构化的“聚集”过程，从而消除原子争用和线程串行化。
+
+### 主要贡献
+- 识别出高斯光线追踪训练的主要瓶颈并非光线遍历本身，而是像素中心反向传播中的原子争用和线程串行化。
+- 提出3DGART框架，通过基元中心的反向传播重组，将梯度计算从散射式转变为聚集式，有效提升训练效率。
+- 在Mip-NeRF 360数据集上，相比逐像素基线获得约3-3.5倍的原始训练加速，相比3DGRT获得约4倍加速，同时质量得到提升。
+- 使全光线追踪高斯训练变得实用，运行时间可与光栅化管线竞争，同时保留光线追踪的优势。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该工作针对高斯光线追踪训练效率这一实际瓶颈，提出了一种明确的加速机制，并在多个基线比较中显示出显著加速和质量提升。研究结果使光线追踪高斯渲染在实用性与光栅化管线竞争，对神经场景表征与渲染领域具有较大的潜在应用价值，适合优先阅读。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1558,6 +2057,39 @@ Recent query-based feed-forward 3DGS methods represent a scene using learnable q
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** depth estimation, autonomous driving
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Mask What Matters: Saliency-Guided Video Self-Supervised Learning for Autonomous Driving
+- 作者：Christopher Lang, Alexander Braun, Abhinav Valada
+- 出版日期：2026-08-17
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.17178
+
+### 一句话总结
+本文提出了一种基于显著性引导的掩码策略（V-JEPA4A），用于自动驾驶场景下的视频自监督预训练，通过优先保留和预测语义与时间上重要的区域，提升了下游感知任务的性能。
+
+### 研究问题
+现有的视频自监督学习通常采用随机掩码策略，忽略了区域在语义和时间上的重要性。在自动驾驶的第一视角视频中，安全关键目标（如行人、车辆、车道边界）仅占画面小部分，随机掩码会削弱预训练信号，如何设计更有效的掩码策略以提升表征学习质量是本文的核心问题。
+
+### 核心思路/方法
+作者提出了V-JEPA4A，一种针对自动驾驶领域专门化的V-JEPA变体。其核心创新在于一种新颖的显著性驱动的掩码策略，该策略根据区域的语义重要性和时间相关性来决定保留和预测的上下文，从而在保持掩码预测效率的同时，引导模型学习更富信息量的特征表示。
+
+### 主要贡献
+- 提出了适用于自动驾驶视频预训练的显著性驱动掩码策略，替代随机掩码。
+- 在公开驾驶视频上预训练了领域专用模型V-JEPA4A。
+- 在四个驾驶基准（跟踪、语义分割、深度估计）上验证了有效性：在BDD100k MOT上相比随机掩码V-JEPA减少25%的身份切换，Cityscapes上达到73.2 mIoU，KITTI-2015深度上达到3.75 RMSE，预训练迭代开销仅增加约14%。
+
+### 局限性
+摘要未提供关于方法局限性讨论、消融实验细节、失败案例分析或计算资源具体要求的信息。
+
+### 阅读优先级
+**高**
+理由：该工作针对自动驾驶这一重要应用场景，直接改进自监督预训练的核心掩码策略，并在多个下游任务上展现了显著提升，且增量成本可控；对于从事自动驾驶感知、自监督学习或视频表征学习的研究者具有较高的参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
