@@ -1,5 +1,305 @@
 [
   {
+    "arxiv_id": "2608.20335",
+    "version": "v1",
+    "title": "4DAnyone: Create Anyone in 4D from a Casual Monocular Video",
+    "authors": [
+      "Yudong Jin",
+      "Tao Xie",
+      "Qihang Zhang",
+      "Zehong Shen",
+      "Zhen Xu",
+      "Yujun Shen",
+      "Hujun Bao",
+      "Xiaowei Zhou",
+      "Yinghao Xu"
+    ],
+    "abstract": "We present 4DAnyone, a framework for reconstructing 4D humans from an uncalibrated monocular video by generating reconstruction-grade multiview-consistent videos and lifting them into 4D Gaussian Splatting (4DGS). Existing camera-controlled video diffusion models synthesize plausible novel-view videos but fail to maintain consistency when scaled to the tens of target views required for 4DGS reconstruction. We identify this failure as a bounded-attention-context problem: when target views exceed the capacity of a single DiT forward pass, they must be split into groups, exposing two coupled bottlenecks. On the reference-context side, conditioning on all previously generated views grows as $O(N)$, weakening cross-view appearance guidance. On the target-context side, disjoint groups cannot directly exchange information, causing global structural drift. 4DAnyone addresses both bottlenecks with two complementary designs: Reference Context Packing (RCP) compresses growing reference views into a fixed-length mixed-resolution context with $O(1)$ reference-context complexity, while Target Context Routing (TCR) rotates target-view groupings during denoising to share context across groups at high-noise steps and stabilize details at low-noise steps. We further build the MVGameHuman dataset using our in-house game engine and combine it with light-stage and in-the-wild video datasets for training. Experiments on DNA-Rendering and DyMVHumans show that 4DAnyone outperforms prior methods in both novel-view video quality and downstream 4DGS reconstruction, with robust in-the-wild generalization. See our project page for video results and source code: https://4danyone.github.io.",
+    "published": "2026-08-20T17:59:53Z",
+    "updated": "2026-08-20T17:59:53Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Neural Scene Representations & Rendering",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "4D Gaussian",
+      "Gaussian Splatting",
+      "rendering",
+      "splatting"
+    ],
+    "classification_score": 6,
+    "classification_reasons": [
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched abstract phrase: 4D Gaussian",
+      "Matched abstract keyword: rendering",
+      "Matched abstract keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.20335",
+    "pdf_url": "https://arxiv.org/pdf/2608.20335",
+    "first_seen": "2026-08-21T09:08:58-04:00",
+    "last_seen": "2026-08-21T09:08:58-04:00"
+  },
+  {
+    "arxiv_id": "2608.20093",
+    "version": "v1",
+    "title": "HandMvNet: Real-Time 3D Hand Pose Estimation Using Multi-View Cross-Attention Fusion",
+    "authors": [
+      "Muhammad Asad Ali",
+      "Nadia Robertini",
+      "Didier Stricker"
+    ],
+    "abstract": "In this work, we present HandMvNet, one of the first real-time method designed to estimate 3D hand motion and shape from multi-view camera images. Unlike previous monocular approaches, which suffer from scale-depth ambiguities, our method ensures consistent and accurate absolute hand poses and shapes. This is achieved through a multi-view attention-fusion mechanism that effectively integrates features from multiple viewpoints. In contrast to previous multi-view methods, our approach eliminates the need for camera parameters as input to learn 3D geometry. HandMvNet also achieves a substantial reduction in inference time while delivering competitive results compared to the state-of-the-art methods, making it suitable for real-time applications. Evaluated on publicly available datasets, HandMvNet qualitatively and quantitatively outperforms previous methods under identical settings. Code is available at github.com/pyxploiter/handmvnet.",
+    "published": "2026-08-20T14:24:35Z",
+    "updated": "2026-08-20T14:24:35Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "3D Reconstruction & Multi-view Geometry",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "pose estimation"
+    ],
+    "classification_score": 4,
+    "classification_reasons": [
+      "Matched title phrase: pose estimation"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.20093",
+    "pdf_url": "https://arxiv.org/pdf/2608.20093",
+    "first_seen": "2026-08-21T09:08:58-04:00",
+    "last_seen": "2026-08-21T09:08:58-04:00"
+  },
+  {
+    "arxiv_id": "2608.20056",
+    "version": "v1",
+    "title": "Gravity-aware partially calibrated absolute pose estimation from affine- or rotation-covariant features",
+    "authors": [
+      "Marcus Valtonen Örnhag",
+      "Alberto Jaenal",
+      "Stefan Adalbjörnsson"
+    ],
+    "abstract": "Inertial measurement units (IMUs) are now standard in most consumer devices, such as smartphones, drones, and extended reality (XR) headsets. By fusing visual and inertial data, localization systems gain significantly in speed and robustness compared to vision-only or IMU-only approaches. However, traditional pose estimation methods fail to utilize the local geometric information embedded in feature descriptors like SIFT. Recent work has proved the advantages of leveraging this information for relative and absolute pose estimation, but its application to partially calibrated absolute pose estimation remains unexplored. In this paper, we derive novel constraints for joint estimation of absolute pose and focal length, making use of a gravity vector obtained from IMU data and the feature-induced local geometry, which we use to construct two efficient solvers: UP1PfAC, that operates given a single affine correspondence and UP2PfORI, which requires two orientation-covariant features. Unlike traditional, semi-calibrated absolute pose methods requiring four point correspondences, our solvers benefit from fewer samples and lower computational cost, simplifying robust estimation in modern RANSAC-like frameworks. We evaluate the proposed solvers against the state-of-the-art on large-scale public datasets and demonstrate that our method achieves fast and accurate localization and focal length estimation.",
+    "published": "2026-08-20T13:52:54Z",
+    "updated": "2026-08-20T13:52:54Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "3D Reconstruction & Multi-view Geometry",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "pose estimation",
+      "localization"
+    ],
+    "classification_score": 6,
+    "classification_reasons": [
+      "Matched title phrase: pose estimation",
+      "Matched abstract phrase: pose estimation"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.20056",
+    "pdf_url": "https://arxiv.org/pdf/2608.20056",
+    "first_seen": "2026-08-21T09:08:58-04:00",
+    "last_seen": "2026-08-21T09:08:58-04:00"
+  },
+  {
+    "arxiv_id": "2608.20000",
+    "version": "v1",
+    "title": "Point-Based 3D Reconstruction from Sparse Views under Known Illumination",
+    "authors": [
+      "Magnus Kaufmann Gjerde",
+      "Joakim Bruslund Haurum",
+      "Jeppe Revall Frisvad",
+      "Markus Worchel",
+      "J. Andreas Bærentzen",
+      "Thomas B. Moeslund"
+    ],
+    "abstract": "Sparse view 3D reconstruction is commonly addressed with neural implicit surfaces or dense point-based representations such as Gaussian splatting. Surface-aware splatting methods improve extracted geometry through oriented primitives and regularization, while RadiosityGS incorporates differentiable light transport through a radiosity inspired finite-element surfel formulation. We propose a differentiable point rendering method based on opacity-bearing beta surfels. An opacity explicit adjoint light transport formulation provides gradients for surfel geometry and appearance parameters, allowing physically based light transport to constrain reconstruction. Across five synthetic objects reconstructed from ten posed views, our method achieves the lowest mean symmetric Chamfer distance among the evaluated baselines and reduces mean Chamfer distance by 28.5% relative to the strongest point-based baseline while using only 267 surfels on average, approximately ~161 fewer primitives. Directional Chamfer results further show improved accuracy and competitive completion relative to related point-based methods. These results show that, in the controlled direct illumination setting, compact beta surfels combined with transport-based optimization can recover surfaces without relying on the tens to hundreds of thousands of primitives used by the evaluated baselines.",
+    "published": "2026-08-20T13:15:27Z",
+    "updated": "2026-08-20T13:15:27Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "3D Reconstruction & Multi-view Geometry",
+    "secondary_categories": [
+      "Neural Scene Representations & Rendering"
+    ],
+    "matched_keywords": [
+      "3D reconstruction",
+      "Gaussian Splatting",
+      "rendering",
+      "splatting"
+    ],
+    "classification_score": 6,
+    "classification_reasons": [
+      "Matched title phrase: 3D reconstruction",
+      "Matched abstract phrase: 3D reconstruction",
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched abstract keyword: rendering",
+      "Matched abstract keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.20000",
+    "pdf_url": "https://arxiv.org/pdf/2608.20000",
+    "first_seen": "2026-08-21T09:08:58-04:00",
+    "last_seen": "2026-08-21T09:08:58-04:00"
+  },
+  {
+    "arxiv_id": "2608.19743",
+    "version": "v1",
+    "title": "Gallileo-4D: Frozen Backbone Ensemble for Dynamic 4D Reconstruction",
+    "authors": [
+      "Nicolò Savioli"
+    ],
+    "abstract": "We describe our entry to the PhysAI Dynamic 4D Reconstruction Challenge, which placed third of 27 teams at 0.58356 APD on the final leaderboard, without a single gradient update. This was not the plan: of thirteen fine-tuning configurations of a pre-trained 4D backbone, twelve degraded the challenge score, and eleven of those twelve improved local validation at the same time. We trace this inversion to the structure of the benchmark: only 25% of the evaluation set belongs to the data variant released for training, so updates that fit the available data damage the pre-trained features the remaining 75% relies on. Our system therefore freezes the backbone and spends its budget at inference time, fusing three decoding configurations -- temporal stride-3, horizontal-flip test-time augmentation, and dense stride-1 -- under a convex weighting. The ensemble recovers +0.041 APD over the frozen baseline, more than any training run achieved, at zero training cost.",
+    "published": "2026-08-20T07:42:51Z",
+    "updated": "2026-08-20T07:42:51Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Dynamic / 4D Reconstruction",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "4D reconstruction",
+      "dynamic 4D"
+    ],
+    "classification_score": 12,
+    "classification_reasons": [
+      "Matched title phrase: 4D reconstruction",
+      "Matched abstract phrase: 4D reconstruction",
+      "Matched title phrase: dynamic 4D",
+      "Matched abstract phrase: dynamic 4D"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.19743",
+    "pdf_url": "https://arxiv.org/pdf/2608.19743",
+    "first_seen": "2026-08-21T09:08:58-04:00",
+    "last_seen": "2026-08-21T09:08:58-04:00"
+  },
+  {
+    "arxiv_id": "2608.19639",
+    "version": "v1",
+    "title": "S$^2$GS: Structured Sparse Gaussian Streaming for Efficient Free-Viewpoint Video Reconstruction on Edge-IoT Devices",
+    "authors": [
+      "Yiwei Li",
+      "Jiannong Cao",
+      "Weixun Gao",
+      "Rui Cao",
+      "Songye Zhu",
+      "Yinfeng Cao",
+      "Mingjin Zhang"
+    ],
+    "abstract": "Streaming reconstruction of Free-Viewpoint Videos (FVVs) supports immersive Internet of Things (IoT) services, such as telepresence and digital twin visualization. Existing methods suffer from high per-frame optimization time and large storage footprints, limiting deployment on resource-constrained Edge-IoT devices. To address these challenges, we propose Structured Sparse Gaussian Streaming (S$^2$GS), an FVV reconstruction framework that exploits structure-aware temporal sparsity to selectively update Gaussian residuals, enabling efficient streaming without compromising visual fidelity. In the spatial domain, a streaming octree hierarchically organizes Gaussian residuals, capturing spatial correlations that guide residual updates. In the temporal domain, a structured gating mechanism, comprising hierarchical feature propagation (HFP) and Gumbel-Sigmoid sampling, converts hierarchical dynamic cues into sparse residual update decisions under differentiable optimization. A multi-level discrete scheme is further adopted to provide fine-grained control over residual updates while preserving intricate dynamic details. Extensive experiments across consumer GPUs, industrial edge IoT devices, and a physical telepresence testbed demonstrate that S$^2$GS consistently reduces per-frame optimization time and storage footprint while maintaining competitive visual quality. Compared with QUEEN, S$^2$GS reduces per-frame optimization time by 59% and storage costs by 85% on an RTX 4090 GPU. On the Jetson AGX Orin, S$^2$GS delivers the highest rendering throughput (60+ FPS) and the lowest energy consumption among the evaluated methods, demonstrating its potential for deployment in resource-constrained systems.",
+    "published": "2026-08-20T05:12:53Z",
+    "updated": "2026-08-20T05:12:53Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Dynamic / 4D Reconstruction",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "video reconstruction",
+      "rendering",
+      "digital twin"
+    ],
+    "classification_score": 4,
+    "classification_reasons": [
+      "Matched title phrase: video reconstruction"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.19639",
+    "pdf_url": "https://arxiv.org/pdf/2608.19639",
+    "first_seen": "2026-08-21T09:08:58-04:00",
+    "last_seen": "2026-08-21T09:08:58-04:00"
+  },
+  {
+    "arxiv_id": "2608.19556",
+    "version": "v1",
+    "title": "Stream4D: 4D-Consistency for Streaming Autoregressive Diffusion Video Models",
+    "authors": [
+      "Yuanhao Ban",
+      "Jiaqi Feng",
+      "Hengguang Zhou",
+      "Xiaohuan Pei",
+      "Justin Cui",
+      "Cho-Jui Hsieh"
+    ],
+    "abstract": "Streaming autoregressive diffusion models enable real-time, long-horizon video generation, but their training objectives optimize local frame prediction rather than the geometry and dynamics of a coherent world: long rollouts accumulate geometric drift and degrade into static or unnatural motion. Recent bidirectional approaches address this problem using rewards signals built upon 3D Gaussian-Splatting reconstruction. However, a single rigid 3d reconstruction cannot model a dynamic scene, so this critic penalizes genuine object motion as reconstruction error and is maximized by freezing the video. This shortcut is especially detrimental in the AR setting, where each chunk can propagate an already-static configuration. In this work, we propose Stream4D, which replaces the static critic with a feed-forward 4D reconstruction reward that explicitly models scene dynamics, allowing coherent motion to receive high consistency rewards. To further guide motion magnitude and quality, we add a motion prior that rewards natural scene-flow magnitude while penalizing jitter and non-rigid artifacts. Our final recipe combines these two terms with a lightweight perceptual anchor. Across various autoregressive video backbones and various generation horizons, Stream4D improves 4D reconstruction quality, preserves motion more effectively, and achieves higher human-aligned preference. Project page: https://banyuanhao.github.io/Stream4D/",
+    "published": "2026-08-20T01:54:26Z",
+    "updated": "2026-08-20T01:54:26Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV",
+      "cs.AI"
+    ],
+    "primary_category": "Dynamic / 4D Reconstruction",
+    "secondary_categories": [
+      "Neural Scene Representations & Rendering"
+    ],
+    "matched_keywords": [
+      "4D reconstruction",
+      "scene flow",
+      "3D reconstruction",
+      "Gaussian Splatting",
+      "3D Gaussian Splatting",
+      "splatting",
+      "AR"
+    ],
+    "classification_score": 4,
+    "classification_reasons": [
+      "Rescued from exclusion by geometry keywords: 3D reconstruction, 4D reconstruction, reconstruction, geometry, geometric, Gaussian Splatting",
+      "Matched abstract phrase: 4D reconstruction",
+      "Matched abstract phrase: scene flow",
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched abstract phrase: 3D Gaussian Splatting",
+      "Matched abstract keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.19556",
+    "pdf_url": "https://arxiv.org/pdf/2608.19556",
+    "first_seen": "2026-08-21T09:08:58-04:00",
+    "last_seen": "2026-08-21T09:08:58-04:00"
+  },
+  {
+    "arxiv_id": "2608.19298",
+    "version": "v1",
+    "title": "SceneGTMM: A Conformal Mapping-based Scene-Aware Transferable GNN-Transformer Dual-Graph Interaction Framework for Map Matching",
+    "authors": [
+      "Yongliang Zhang",
+      "Feng Song",
+      "Ji Chen",
+      "Lishuai Guo",
+      "Yong Deng",
+      "Yue Zheng",
+      "Tianyi Liu",
+      "Zhixiong Chen",
+      "Qixin Zhang"
+    ],
+    "abstract": "Map matching is a key technology connecting positioning data with high precision road networks, but it faces challenges in noise robustness, cross regional transfer, and interpretability. To addr ess the limitations of existing methods in local global fusion, dynamic road network adaptation, and reliance on black box mod els, this paper proposes SceneGTMM, a transferable GNN Transformer dual graph interaction map matching framework based on a conformal mapping based scene relative strategy. 1) Conformal mapping based scene relative strategy: constructs trajectory centric local coordinate systems to reduce dependence on the training road network, supporting cross regional transfer and dynamic road network updates; 2) GNN Transformer dual graph interaction architecture: a GNN modeled road graph captures local topological constraints, while a Transformer modeled trajectory graph captures global temporal dependencies, and cross graph attention achieves noise suppression and semantic alignment; 3) CRF enhanced structured prediction: combines the global context of the Transformer with the topological transition constraints of CRF to improve path connectivity and robustness. Experiments show that SceneGTM achieves over 80% accuracy on multi source trajectories with positioning errors of 16 50 meters, representing a 5.3% improvement over HMM. In cross city transfer scenarios, it outperforms MTrajRec, GraphMM, and TMM, and enhances interpretability through attention and relative coordinate visualization. This study provides a new paradigm for high precision, transferable map matching for real time traffic perception and autonomous driving path planning.",
+    "published": "2026-08-19T16:46:20Z",
+    "updated": "2026-08-19T16:46:20Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Embodied / Robotics / AR Applications",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "autonomous driving",
+      "mapping"
+    ],
+    "classification_score": 5,
+    "classification_reasons": [
+      "Matched abstract phrase: autonomous driving",
+      "Matched title keyword: mapping",
+      "Matched abstract keyword: mapping"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2608.19298",
+    "pdf_url": "https://arxiv.org/pdf/2608.19298",
+    "first_seen": "2026-08-21T09:08:58-04:00",
+    "last_seen": "2026-08-21T09:08:58-04:00"
+  },
+  {
     "arxiv_id": "2608.19066",
     "version": "v1",
     "title": "GS-VLA: Plug-and-Play Viewpoint Canonicalization for Frozen VLA Policies via Gaussian Splatting",
@@ -33,7 +333,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.19066",
     "pdf_url": "https://arxiv.org/pdf/2608.19066",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.19059",
@@ -66,7 +366,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.19059",
     "pdf_url": "https://arxiv.org/pdf/2608.19059",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.19036",
@@ -115,7 +415,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.19036",
     "pdf_url": "https://arxiv.org/pdf/2608.19036",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.18864",
@@ -148,7 +448,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.18864",
     "pdf_url": "https://arxiv.org/pdf/2608.18864",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.18632",
@@ -183,7 +483,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.18632",
     "pdf_url": "https://arxiv.org/pdf/2608.18632",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.18624",
@@ -216,7 +516,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.18624",
     "pdf_url": "https://arxiv.org/pdf/2608.18624",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.18593",
@@ -255,7 +555,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.18593",
     "pdf_url": "https://arxiv.org/pdf/2608.18593",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.18498",
@@ -291,7 +591,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.18498",
     "pdf_url": "https://arxiv.org/pdf/2608.18498",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.18413",
@@ -351,11 +651,11 @@
     "abstract_url": "https://arxiv.org/abs/2608.18413",
     "pdf_url": "https://arxiv.org/pdf/2608.18413",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.18388",
-    "version": "v1",
+    "version": "v2",
     "title": "Depth Anything V4: Dynamic 4D Scene Reconstruction via Riemannian Flow Matching on 4D Gaussian Splatting",
     "authors": [
       "Jiaming Fan",
@@ -365,7 +665,7 @@
     ],
     "abstract": "We present Depth Anything V4 (DAV4), a framework for dynamic 4D scene reconstruction from monocular video. Our key contribution is the application of Riemannian Flow Matching (RFM) to 4D Gaussian Splatting parameters, defining probability paths directly on non-Euclidean manifolds (scale, rotation, opacity), ensuring all intermediate states are valid. Through controlled experiments, we isolate RFM's contribution from test-time optimization (TTO) and pre-training. A deterministic MLP baseline with the same data, architecture, and TTO achieves F-score 0.762; RFM achieves 0.806 - the +0.044 gain is RFM's isolated contribution. We provide corrected computational cost analysis: pre-training is 360 GPU-hours, amortizing for large-scale deployment (over 10,000 scenes). Uncertainty is quantified via Negative Gaussian Log-Likelihood and Expected Calibration Error. DAV4 outperforms prior Depth Anything models and per-scene 4D-GS on dynamic reconstruction and novel-view synthesis, while using no human-annotated depth labels as training losses.",
     "published": "2026-08-18T23:44:19Z",
-    "updated": "2026-08-18T23:44:19Z",
+    "updated": "2026-08-20T09:04:46Z",
     "primary_arxiv_category": "cs.CV",
     "arxiv_categories": [
       "cs.CV"
@@ -404,7 +704,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.18388",
     "pdf_url": "https://arxiv.org/pdf/2608.18388",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.18285",
@@ -457,7 +757,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.18285",
     "pdf_url": "https://arxiv.org/pdf/2608.18285",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.18270",
@@ -489,7 +789,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.18270",
     "pdf_url": "https://arxiv.org/pdf/2608.18270",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.18234",
@@ -539,7 +839,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.18234",
     "pdf_url": "https://arxiv.org/pdf/2608.18234",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.18215",
@@ -572,7 +872,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.18215",
     "pdf_url": "https://arxiv.org/pdf/2608.18215",
     "first_seen": "2026-08-20T09:09:18-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.18028",
@@ -610,7 +910,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.18028",
     "pdf_url": "https://arxiv.org/pdf/2608.18028",
     "first_seen": "2026-08-19T09:06:53-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.17988",
@@ -654,7 +954,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.17988",
     "pdf_url": "https://arxiv.org/pdf/2608.17988",
     "first_seen": "2026-08-19T09:06:53-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.17969",
@@ -689,7 +989,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.17969",
     "pdf_url": "https://arxiv.org/pdf/2608.17969",
     "first_seen": "2026-08-19T09:06:53-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.17832",
@@ -728,7 +1028,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.17832",
     "pdf_url": "https://arxiv.org/pdf/2608.17832",
     "first_seen": "2026-08-19T09:06:53-04:00",
-    "last_seen": "2026-08-20T09:09:18-04:00"
+    "last_seen": "2026-08-21T09:08:58-04:00"
   },
   {
     "arxiv_id": "2608.17682",
@@ -1660,88 +1960,5 @@
     "pdf_url": "https://arxiv.org/pdf/2608.15251",
     "first_seen": "2026-08-18T09:05:58-04:00",
     "last_seen": "2026-08-18T09:05:58-04:00"
-  },
-  {
-    "arxiv_id": "2608.13502",
-    "version": "v1",
-    "title": "GS$^{2}$CI: Robust Gaussian Splatting For Snapshot Compressive Imaging via Large Vision Model Priors",
-    "authors": [
-      "Yanming Yang",
-      "Chenxi Song",
-      "Ping Wang",
-      "Xin Yuan",
-      "Chi Zhang"
-    ],
-    "abstract": "Snapshot Compressive Imaging (SCI) offers an efficient solution for high-speed video acquisition and, under exposure-time camera--scene relative motion, multi-view scene capture by compressing temporal or spatial information into a single 2D measurement. While recent studies have explored SCI for 3D scene reconstruction, existing methods struggle with significant challenges due to information loss, limited viewpoint diversity, and the computational burden of jointly optimizing 3D representations and camera poses. In this work, we propose a novel framework that reconstructs high-quality 3D scenes from a single SCI measurement by leveraging 3D Gaussian Splatting (3DGS) and the powerful priors of large-scale vision foundation models (VFMs). Our primary reconstruction combines measurement-derived 3D VFM initialization with SCI-aware Gaussian optimization. After coarse-stage convergence, an auxiliary 2D VFM provides pseudo-view supervision at synthesized viewpoints for local appearance refinement. To further address the instability caused by ambiguous SCI supervision during 3DGS optimization, we introduce Opacity-Guided Splitting and Growth Regulation (OSGR), an SCI-specific densification strategy that augments split candidates using local opacity statistics, discourages loss-compensating opacity inflation through mean-opacity regulation, and bounds representation growth with explicit candidate-ratio and Gaussian-count constraints. Extensive experiments across multiple benchmarks demonstrate that our method achieves the strongest overall performance, combining leading reconstruction quality and robustness to viewpoint variation with competitive computational efficiency.",
-    "published": "2026-08-13T17:29:53Z",
-    "updated": "2026-08-13T17:29:53Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "scene reconstruction",
-      "Gaussian Splatting",
-      "3D Gaussian Splatting",
-      "3DGS",
-      "splatting"
-    ],
-    "classification_score": 12,
-    "classification_reasons": [
-      "Matched title phrase: Gaussian Splatting",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: 3D Gaussian Splatting",
-      "Matched abstract keyword: 3DGS",
-      "Matched title keyword: splatting",
-      "Matched abstract keyword: splatting"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.13502",
-    "pdf_url": "https://arxiv.org/pdf/2608.13502",
-    "first_seen": "2026-08-14T09:39:26-04:00",
-    "last_seen": "2026-08-16T08:59:13-04:00"
-  },
-  {
-    "arxiv_id": "2608.13489",
-    "version": "v1",
-    "title": "DreamX-Phi 1.0: Action-Conditioned Video World Model for Robotic Manipulation",
-    "authors": [
-      "DreamX Team",
-      "Rui Chen",
-      "Xiangxiang Chu",
-      "Geng Li",
-      "Jifan Li",
-      "Qingfeng Shi",
-      "Datao Tang",
-      "Jing Tang",
-      "Jun Wang",
-      "Pengfei Zhang"
-    ],
-    "abstract": "We present \\textbf{DreamX-Phi 1.0}, an action-conditioned video world model for robotic manipulation that, given an observed frame, a language instruction, and a prescribed action sequence comprising end-effector poses and gripper states, predicts the resulting future observations. Yet realism alone does not guarantee faithfulness: a convincing rollout can still move the wrong arm or lose the manipulated object. To ensure the prediction respects each arm's commanded path, we inject per-arm $\\mathrm{SE}(3)$ transformations into attention via \\textbf{PRoPE-style geometric encoding}, preserving arm identity and rigid-motion structure. Action control alone does not fully constrain scene geometry or the evolution of small manipulated objects. We therefore add a lightweight \\textbf{depth branch} for scene-level geometry and use \\textbf{SAM3 masks} with a frozen \\textbf{V-JEPA teacher} to maintain object consistency throughout grasping. We further distill the multi-step generator into a few-step student via distribution-matching distillation for efficient deployment. At the time of writing, \\model{} achieves first place on Track~1 and second place on Track~2 of the WorldArena~2.0 Challenge. Our model and code will be publicly available.",
-    "published": "2026-08-13T17:18:09Z",
-    "updated": "2026-08-13T17:18:09Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.RO"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "manipulation",
-      "world model"
-    ],
-    "classification_score": 9,
-    "classification_reasons": [
-      "Matched title keyword: manipulation",
-      "Matched abstract keyword: manipulation",
-      "Matched title phrase: world model",
-      "Matched abstract phrase: world model"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.13489",
-    "pdf_url": "https://arxiv.org/pdf/2608.13489",
-    "first_seen": "2026-08-14T09:39:26-04:00",
-    "last_seen": "2026-08-16T08:59:13-04:00"
   }
 ]
