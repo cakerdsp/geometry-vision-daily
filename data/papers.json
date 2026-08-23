@@ -39,7 +39,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.20335",
     "pdf_url": "https://arxiv.org/pdf/2608.20335",
     "first_seen": "2026-08-21T09:08:58-04:00",
-    "last_seen": "2026-08-22T08:58:51-04:00"
+    "last_seen": "2026-08-23T09:00:34-04:00"
   },
   {
     "arxiv_id": "2608.20093",
@@ -69,7 +69,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.20093",
     "pdf_url": "https://arxiv.org/pdf/2608.20093",
     "first_seen": "2026-08-21T09:08:58-04:00",
-    "last_seen": "2026-08-22T08:58:51-04:00"
+    "last_seen": "2026-08-23T09:00:34-04:00"
   },
   {
     "arxiv_id": "2608.20056",
@@ -101,7 +101,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.20056",
     "pdf_url": "https://arxiv.org/pdf/2608.20056",
     "first_seen": "2026-08-21T09:08:58-04:00",
-    "last_seen": "2026-08-22T08:58:51-04:00"
+    "last_seen": "2026-08-23T09:00:34-04:00"
   },
   {
     "arxiv_id": "2608.20000",
@@ -143,7 +143,7 @@
     "abstract_url": "https://arxiv.org/abs/2608.20000",
     "pdf_url": "https://arxiv.org/pdf/2608.20000",
     "first_seen": "2026-08-21T09:08:58-04:00",
-    "last_seen": "2026-08-22T08:58:51-04:00"
+    "last_seen": "2026-08-23T09:00:34-04:00"
   },
   {
     "arxiv_id": "2608.19743",
@@ -1765,200 +1765,5 @@
     "pdf_url": "https://arxiv.org/pdf/2608.15785",
     "first_seen": "2026-08-18T09:05:58-04:00",
     "last_seen": "2026-08-19T09:06:53-04:00"
-  },
-  {
-    "arxiv_id": "2608.15651",
-    "version": "v1",
-    "title": "Gaussian-JEPA: Joint-Embedding Predictive Learning for 3D Gaussian Splats",
-    "authors": [
-      "Bin Ren",
-      "Qi Ma",
-      "Yue Li",
-      "Zongyan Han",
-      "Yidi Li",
-      "Yuqian Fu",
-      "Rao Muhammad Anwer",
-      "Theo Gevers",
-      "Fahad Shahbaz Khan",
-      "Salman Khan"
-    ],
-    "abstract": "3D Gaussian Splatting (3DGS) represents 3D content with anisotropic primitives that jointly encode geometry and appearance. Fixed-budget encoders consume sampled observations of Gaussian assets, so the same object may be observed through different primitive realizations. Existing self-supervised methods mainly reconstruct masked Gaussian attributes, tying supervision to one sampled realization and requiring an input-space decoder. Latent prediction offers an alternative, but its application to Gaussian tokens requires targets that accommodate coupled attributes and heterogeneous spatial support. We introduce Gaussian-JEPA, which predicts representations of held-out Gaussian token blocks from visible context. An online encoder processes the context, while a shared exponential-moving-average encoder supplies stop-gradient features for multi-scale targets. Complementary target projections and feature-space grounding provide latent supervision without reconstructing Gaussian attributes. We evaluate the features under Gaussian resampling, partial observations, and renderable shape completion, together with transfer to part segmentation and object classification. Compared with matched reconstruction pretraining, Gaussian-JEPA is more consistent across resampled inputs, retains more instance information under partial observations, and provides stronger frozen features for Gaussian completion. These results support latent prediction as an effective objective for reusable 3D Gaussian representations. Code is on the project page (https://amazingren.github.io/Gaussian-JEPA/).",
-    "published": "2026-08-16T09:43:50Z",
-    "updated": "2026-08-16T09:43:50Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "Gaussian Splatting",
-      "3D Gaussian Splatting",
-      "3DGS",
-      "splatting"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: 3D Gaussian Splatting",
-      "Matched abstract keyword: 3DGS",
-      "Matched abstract keyword: splatting"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.15651",
-    "pdf_url": "https://arxiv.org/pdf/2608.15651",
-    "first_seen": "2026-08-18T09:05:58-04:00",
-    "last_seen": "2026-08-18T09:05:58-04:00"
-  },
-  {
-    "arxiv_id": "2608.15420",
-    "version": "v1",
-    "title": "HistReNeRF: Historic Image Relocalisation within Contemporary Neural Radiance Field Reconstructions",
-    "authors": [
-      "Benjamin T. Hughes",
-      "Stuart James"
-    ],
-    "abstract": "Relocalising archival photographs within a contemporary scene model is challenging because historic and modern views can differ in photographic appearance, visible objects, and spatial layout. Therefore, we present HistReNeRF, a framework that estimates the 6-DoF pose of a historic photograph by matching adapted DINOv2 patch features to candidate rays sampled from a contemporary Neural Radiance Field (NeRF) reconstruction. The continuous representation of a NeRF provides a queryable scene interface from which candidate rays can be sampled and matched, enabling domain adaptation between historic photography and contemporary images directly in the feature representation used for localisation. We evaluate embedding-space-based domain adaptation against pixel-space methods on a new cross-temporal dataset comprising 10,545 contemporary street-level images and 230 archival photographs from three European landmarks. Embedding-space adaptation reduces translation and rotation errors by an average of 11% and 16%, respectively, across the three scenes. These results show that neural scene relocalisation provides a natural interface for feature-space adaptation, reducing cross-temporal appearance shift without modifying the query image. Code and dataset at https://github.com/ARTUROLab/HistReNeRF.",
-    "published": "2026-08-15T21:40:13Z",
-    "updated": "2026-08-15T21:40:13Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "NeRF",
-      "neural radiance field",
-      "radiance field",
-      "radiance"
-    ],
-    "classification_score": 16,
-    "classification_reasons": [
-      "Matched abstract keyword: NeRF",
-      "Matched title phrase: neural radiance field",
-      "Matched abstract phrase: neural radiance field",
-      "Matched title phrase: radiance field",
-      "Matched abstract phrase: radiance field",
-      "Matched title keyword: radiance",
-      "Matched abstract keyword: radiance"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.15420",
-    "pdf_url": "https://arxiv.org/pdf/2608.15420",
-    "first_seen": "2026-08-18T09:05:58-04:00",
-    "last_seen": "2026-08-18T09:05:58-04:00"
-  },
-  {
-    "arxiv_id": "2608.15297",
-    "version": "v1",
-    "title": "TinyDETR-Pose: Towards End-to-End Real-Time Single-Stage 6DoF Object Pose Estimation with Lightweight Transformers",
-    "authors": [
-      "Paul Julius Kühn",
-      "Duc Anh Nguyen",
-      "Saptarshi Neil Sinha",
-      "Michael Weinmann",
-      "Arjan Kuijper"
-    ],
-    "abstract": "Real-time 6DoF object pose estimation on resource-constrained hardware remains challenging, as accurate correspondence-based and refinement pipelines typically rely on non-differentiable PnP/RANSAC stages or costly iterative refinement, while recent foundation-model-based approaches incur inference costs that are prohibitive for edge deployment. We present TinyDETR-Pose, a lightweight, end-to-end, single-stage framework that jointly detects objects and regresses their full 6D pose in a single forward pass. Built on the efficient LW-DETR architecture, TinyDETR-Pose formulates detection and pose estimation as a set-prediction problem and attaches dedicated MLP heads for rotation, monocular depth, and projected object center regression to each decoder query, eliminating the need for PnP, NMS (non-maximum suppression), or iterative pose refinement. Object symmetries are handled through a ADD-S loss applied uniformly to all objects, without the need for object-specific loss schedules or separate geodesic/ADD supervision. In addition, predictions are assigned to ground truth using a symmetry-safe Hungarian matcher based on class and 2D spatial cues, yielding stable assignment under symmetry and depth ambiguity. On YCB-V, TinyDETR-Pose achieves a comparable ADD-S AUC of 85.9, while requiring up to 72.7% fewer parameters than other DETR-based single-stage pose-estimation approaches. Due to its compact design, TinyDETR-Pose runs in real time and achieves an inference latency of only ~4.5 ms per frame on an NVIDIA Jetson Nano using TensorRT, demonstrating that accurate end-to-end transformer-based 6D pose estimation can be made practical for edge deployment.",
-    "published": "2026-08-15T16:02:51Z",
-    "updated": "2026-08-15T16:02:51Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "pose estimation",
-      "monocular depth"
-    ],
-    "classification_score": 8,
-    "classification_reasons": [
-      "Matched title phrase: pose estimation",
-      "Matched abstract phrase: pose estimation",
-      "Matched abstract phrase: monocular depth"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.15297",
-    "pdf_url": "https://arxiv.org/pdf/2608.15297",
-    "first_seen": "2026-08-18T09:05:58-04:00",
-    "last_seen": "2026-08-18T09:05:58-04:00"
-  },
-  {
-    "arxiv_id": "2608.15260",
-    "version": "v1",
-    "title": "VGGT-Align: Bridging Local Reconstruction and Global Consistency for Long-Sequence 3D Reconstruction",
-    "authors": [
-      "Wei Zhang",
-      "Yihang Wu",
-      "Songhua Li",
-      "Qi Wang"
-    ],
-    "abstract": "Maintaining global geometric consistency is a central challenge in long-sequence 3D reconstruction, with scale drift being the most critical failure mode. In chunk-based inference pipelines, the scale degree of freedom in sequential Sim(3) alignment is left unconstrained, causing estimation errors to compound multiplicatively and distort global trajectories and point cloud geometry. We present a scale-consistency enhancement framework built on a key insight: in structured environments such as driving scenes, geometric quantities arising from environmental regularity remain inherently invariant across temporal segments, and discrepancies in their per-chunk measurements directly expose inter-chunk scale drift. We propose Scene Geometric Invariant Anchoring (SGIA), which extracts dominant geometric invariants from each chunk's predicted point cloud via coarse-to-fine robust estimation and exploits their cross-chunk consistency to establish scale constraints independent of point cloud registration, explicitly degenerating 7-DoF Sim(3) alignment into 6-DoF rigid-body transformation and severing chain-wise scale error propagation at its source. We further introduce a lightweight test-time adaptation strategy that fine-tunes only normalization-layer parameters via multi-objective self-supervision, progressively improving intra-chunk predictions along the sequence. Both modules are plug-and-play and require no offline retraining. Experiments on multiple long-sequence benchmarks demonstrate state-of-the-art performance, reducing absolute trajectory error by up to 32% with significant gains in trajectory stability and reconstruction quality. Code: https://github.com/WZ-CS/VGGT-Align",
-    "published": "2026-08-15T14:32:55Z",
-    "updated": "2026-08-15T14:32:55Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.AI"
-    ],
-    "primary_category": "Geometry Foundation Models",
-    "secondary_categories": [
-      "3D Reconstruction & Multi-view Geometry"
-    ],
-    "matched_keywords": [
-      "VGGT",
-      "3D reconstruction"
-    ],
-    "classification_score": 14,
-    "classification_reasons": [
-      "Matched representative model name in title: VGGT",
-      "Matched representative model name in abstract: VGGT",
-      "Matched title phrase: 3D reconstruction",
-      "Matched abstract phrase: 3D reconstruction"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.15260",
-    "pdf_url": "https://arxiv.org/pdf/2608.15260",
-    "first_seen": "2026-08-18T09:05:58-04:00",
-    "last_seen": "2026-08-18T09:05:58-04:00"
-  },
-  {
-    "arxiv_id": "2608.15251",
-    "version": "v1",
-    "title": "Robust structure from motion for aerial-ground images via detector-free feature matching and multi-view track refinement",
-    "authors": [
-      "San Jiang",
-      "Hui Wang",
-      "Xing Zhang",
-      "Zhongwen Hu",
-      "Zhijun Wang",
-      "Ruisheng Wang",
-      "Wanshou Jiang",
-      "Qingquan Li"
-    ],
-    "abstract": "Integrated 3D reconstruction from aerial-ground images is essential for generating high-precision urban 3D models, yet severe variations in viewpoint, scale, and rotation make robust feature matching highly challenging. To address these limitations, this study introduces a rotation-robust detector-free matching network coupled with multi-view track refinement for incremental Structure from Motion (ISfM). The proposed workflow features four key modules. First, rotation-aware feature extraction replaces traditional convolutions with an Omnidirectional State Space Block (OSS Block) that selectively scans across eight symmetrical directions to model long-range spatial dependencies and synthesize rotation-invariant feature maps. Second, multi-scale attention transformation utilizes quadtree attention to build a hierarchical token pyramid that isolates high-association token regions and discards irrelevant areas, capturing long-range context with linear computational complexity. Third, bi-directional feature matching executes a symmetric coarse-to-fine matching scheme where coarse alignment computes dual-direction Softmax confidence matrices under mutual nearest neighbor constraints, and fine alignment uses a multi-layer perceptron to regress sub-pixel coordinate offsets. Finally, multi-view track refinement employs an integrated indexing structure to evaluate localized spatial proximity and link disjoint sub-tracks to the highest-confidence anchor point, ensuring stable feature repeatability across the ISfM pipeline. By using real aerial-ground datasets, experimental results demonstrate that the proposed method improves AUC at 5° pose error by 93.9% compared with LoFTR and achieves the highest precision in ISfM reconstruction, with the improved accuracy ranging from 27.6% to 32.7%. The proposed method provides a reliable solution for integrated 3D reconstruction of aerial-ground images.",
-    "published": "2026-08-15T14:16:02Z",
-    "updated": "2026-08-15T14:16:02Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "3D reconstruction",
-      "structure from motion",
-      "feature matching"
-    ],
-    "classification_score": 14,
-    "classification_reasons": [
-      "Matched abstract phrase: 3D reconstruction",
-      "Matched title phrase: structure from motion",
-      "Matched abstract phrase: structure from motion",
-      "Matched title phrase: feature matching",
-      "Matched abstract phrase: feature matching"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.15251",
-    "pdf_url": "https://arxiv.org/pdf/2608.15251",
-    "first_seen": "2026-08-18T09:05:58-04:00",
-    "last_seen": "2026-08-18T09:05:58-04:00"
   }
 ]
