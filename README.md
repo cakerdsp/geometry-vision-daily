@@ -11,9 +11,9 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：44
+- 当前滚动窗口论文数：41
 - 分类分布：
-  - Neural Scene Representations & Rendering: 18
+  - Neural Scene Representations & Rendering: 15
   - 3D Reconstruction & Multi-view Geometry: 10
   - Dynamic / 4D Reconstruction: 8
   - Embodied / Robotics / AR Applications: 6
@@ -25,49 +25,60 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-**趋势一：从“静态重建”全面迈向“动态/4D 场景理解”**
-今日论文最显著的趋势是研究重心从静态三维重建转向动态场景（时间维度）的重建与理解。该方向集中了 8 篇论文，且研究维度从早期的“如何重建出动态几何”延伸至“如何压缩流式传输”“如何用物理约束动态重建”“如何用统一框架耦合动态重建与感知”等更高层次。典型代表包括：`Depth Anything V4`（将黎曼流匹配用于 4D 高斯溅射参数）、`Stream4D`（为流式自回归视频模型引入 4D 一致性奖励）、`DyG²T`（以粒子图 Transformer 建模物体动力学）、`QuARC-GS` 与 `S²GS`（动态场景的紧凑流式传输）、`USR-Drive`（统一动态几何重建与实例级检测）、`Gallileo-4D`（零训练动态 4D 重建集成方案）、`RVLoss`（自监督动态场景流估计的刚性约束损失设计）。
+1. **动态 4D 场景重建成为绝对热点，且明显向“流式/在线”与“生成式/概率”两条路线分化**。今日论文中动态/4D 重建类占比最高（约 1/3），其中一类侧重流式传输与边缘部署（`S²GS`、`QuARC-GS`、`Stream4D`），强调低存储、低延迟、实时视频流；另一类侧重用生成模型或流匹配等概率方法驱动 4D 重建（`Depth Anything V4`、`Stream4D`、`4DAnyone`）。这表明 4D 重建正从“离线高质量”走向“实时可用”与“生成式引导”两个新阶段。
 
-**趋势二：3D 高斯溅射（3DGS）成为核心表示，但正在与“几何学派”加速碰撞融合**
-3DGS 已从最初的渲染工具演变为一个开放的研究平台，今日论文几乎覆盖了 3DGS 的各个生命周期阶段：初始化（`CoMVS-GS`）、参数空间建模（`Depth Anything V4`）、压缩编码（`QuARC-GS`）、流式传输（`S²GS`）、作为机器人策略的观测适配模块（`GS-VLA`）。更值得注意的是，本轮论文显示 3DGS 正在与经典几何方法深度融合：`CoMVS-GS` 将 MVS（多视角立体几何）与 3DGS 相互监督，`USR-Drive` 将 3D 框（几何/语义感知）与 3DGS（渲染）联合去噪。这表明“渲染最优”与“几何精确”之间的鸿沟正被主动弥合。
+2. **“评测与基准”类论文回归，暴露基础方法的短板**。两篇无人机视觉里程计/SLAM 评测论文（`Evaluation of Monocular SLAM Systems...`、`Evaluation of Image Matching Methods...`）均指出当前方法在纯视觉、GNSS 失效场景下表现不足——垂直定位差、长轨迹扭曲、深度方法未充分超越传统 SIFT。这提示领域在追求新方法的同时，重新审视已有方法在真实边角场景的鲁棒性。
 
-**趋势三：单目/稀疏输入条件下的重建与生成成为共同挑战**
-多条技术路线（4D 重建、重拍摄、视频生成等）都在聚焦“如何从极稀疏或单目输入中恢复高保真 4D/3D 结构”。代表性工作包括：`4DAnyone`（从随意单目视频重建 4D 人体）、`Depth Anything V4`（单目视频 -> 动态 4D 场景）、`Point-Based 3D Reconstruction from Sparse Views`（已知光照下稀疏视角重建）、`ReX-Shot`（单张图像重拍摄）。这背后反映的共性问题是：如何在观测严重不足时，用先验（物理先验、生成先验、几何先验）弥补信息缺失。
+3. **几何先验与物理约束正在被系统性注入神经表示**。多篇论文不约而同地把“几何/物理先验”作为核心改进手段：`CoMVS-GS` 用 MVS 点云初始化与 PatchMatch 双向监督改进高斯表面重建；`Point-Based 3D Reconstruction...` 用显式光传输物理约束稀疏视角重建；`Gravity-aware...` 用 IMU 重力向量与特征局部几何联合求解位姿；`4DAnyone` 则揭示视频扩散模型在 4DGS 重建上的“有界注意力上下文”问题。这些工作共同指向“纯数据驱动 → 几何/物理/传感器先验引导”的范式转移。
 
-**趋势四：重建/感知框架与“下游应用”的耦合日益紧密**
-论文不再仅仅追求重建精度，而是明确面向机器人、AR/VR、自动驾驶、手术等应用场景进行联合设计。典型代表：`USR-Drive`（面向自动驾驶的“重建+检测”统一生成框架）、`GS-VLA`（面向机器人 VLA 策略的视角鲁棒性适配）、`LT-Mem`（面向长期作业机器人的场景记忆演化）、`Transferable Tool-Tissue Contact Detection`（面向手术机器人的接触检测）、`SceneGTMM`（面向定位导航的地图匹配）。这反映“重建即服务”的思路——重建结果需服务于更高层的决策与交互任务。
+4. **多模态统一表示与“单一框架解耦多任务”趋势明显**。`USR-Drive` 将 3D 高斯与 3D 边界框统一为共享潜在 token 流联合去噪；`DyG²T` 将粒子图与关键点动力学建模统一；`SceneGTMM` 用 GNN-Transformer 双图交互统一局部拓扑与全局时序。这反映领域正从“任务专用模型”走向“共享表示 + 多任务互约束”的架构范式。
 
-**趋势五：蒸馏/冻结骨干 + 推理时策略成为低资源场景下的务实选择**
-`Gallileo-4D` 通过冻结骨干网络，在推理时融合三种解码配置，以零训练成本取得挑战赛第三名，并揭示了一个重要现象：当评估集分布与训练集不一致时，微调反而会损伤预训练特征的泛化能力。`GS-VLA` 同样采用“冻结 VLA 策略 + 即插即用模块”的思路，在不重训练策略的条件下恢复视角偏移带来的性能损失。这一趋势对资源受限场景（边缘设备、不具微调条件的部署环境）具有现实价值。
+5. **零训练/免训练与即插即用方案受到重视**。`Gallileo-4D` 直接冻结骨干网络、用推理时集成获得挑战赛第三名；`GS-VLA` 用 3D 高斯视角归一化模块为冻结的 VLA 策略提升视角鲁棒性，且仅 400 万参数、无需重训练；`Stream3Dv2` 也是免训练框架。这与大规模微调的主流路线形成鲜明对比，反映了对低成本、快速适配的实用需求。
 
+---
 
 #### 技术路线观察
 
-| 方向 | 代表性论文 | 技术侧重点 |
-|------|-----------|-----------|
-| **4D重建/动态重建** | Depth Anything V4, Stream4D, Gallileo-4D, DyG²T | 从单目/多视角视频恢复动态几何与运动；倾向于把流匹配、扩散模型、粒子图 Transformer 等生成/概率模型引入 4DGS 参数空间；对“动态”的建模方式多样（参数流匹配、重建奖励、物体动力学图）。 |
-| **稀疏视角/单目重建** | 4DAnyone, Point-Based 3D Reconstruction, ReX-Shot | 依赖强先验（多视角一致性生成、物理光照传输、基础模型特征）来弥补观测不足；普遍采用“先合成中间视角/特征，再重建”的管线。 |
-| **神经场景表示与渲染（3DGS为主）** | QuARC-GS, S²GS, CoMVS-GS, GS-VLA | 3DGS 的生命周期问题（初始化、压缩、流式传输、物理约束）是核心；在保留 3DGS 高效渲染优势的同时，通过引入几何先验（MVS、八叉树）、量化编码、门控机制来提升几何精度与压缩率。 |
-| **几何基础模型/经典几何与学习融合** | Gravity-aware Absolute Pose, CoMVS-GS, Evaluation of Monocular SLAM, Evaluation of Image Matching | 经典几何（特征、位姿求解器、SLAM）仍具竞争力，但正在与深度特征/基础模型结合；本轮出现了“基础模型特征用于位姿求解”“MVS 与 3DGS 相互监督”等融合范式；同时也有对现有基础模型（DROID-SLAM、MASt3R-SLAM）在极端场景（无人机俯视）下的批判性评估。 |
-| **机器人/AR/自动驾驶应用** | USR-Drive, GS-VLA, LT-Mem, SceneGTMM, Tool-Tissue Contact | 强调感知/重建与其他模态（语言指令、时间历史、接触力）的耦合；关注点从“重建得准”转向“在任务中好用”，例如视角鲁棒性、跨会话身份一致性、跨区域迁移能力。 |
+| 方向 | 代表论文 | 技术侧重点 |
+|---|---|---|
+| **动态/4D 重建** | `S²GS`、`QuARC-GS`、`Stream4D`、`Depth Anything V4` | 走向流式/压缩（八叉树+门控、锚定残差编码）与生成式/概率方法（4D 重建奖励、黎曼流匹配）；强调实时性、低存储、不确定性量化 |
+| **3D 重建与多视角几何** | `CoMVS-GS`、`Point-Based 3D Reconstruction...`、`Gravity-aware...`、`HandMvNet` | 传统几何先验（MVS、IMU、特征局部几何）注入神经表示；关注稀疏视角、部分标定、无需相机参数、实时推理 |
+| **神经场景表示** | `4DAnyone`、`ReX-Shot`、`GS-VLA`、`USR-Drive` | 以 3DGS/4DGS 为中枢，向生成、视角归一化、统一检测重建等应用延展；注意力上下文与定位（positional encoding）成为设计关键 |
+| **机器人/AR 应用** | `GS-VLA`、`LT-Mem`、`Stream3Dv2`、`SceneGTMM` | 关注长期记忆、跨会话身份保持、视角偏移鲁棒性、流式感知；强调即插即用、不重训练策略 |
+| **几何基础模型** | 两篇 UAV 评测论文 | 以系统评估为主，强调纯视觉定位在边角场景（高空俯视、GNSS 失效）的不足，提示传统特征（SIFT）仍有竞争力 |
 
+一个显著的横向观察是：**3DGS/4DGS 已从“渲染工具”升级为“共享场景表示中枢”**——它被用于视角归一化（`GS-VLA`）、统一检测与重建（`USR-Drive`）、动力学建模（`DyG²T`）、流式传输压缩（`S²GS`、`QuARC-GS`），成为连接感知、重建与生成的公共底座。
+
+---
 
 #### 值得优先阅读的论文
 
-1. **Depth Anything V4（2608.18388）**：该文将黎曼流匹配（RFM）直接应用于 4DGS 参数空间，并通过受控实验严格分离了 RFM 的独立贡献（F-score +0.044）。这对“如何将概率生成模型用于非欧几何参数空间”具有方法论层面的示范意义，值得精读其实验设计。
+1. **Depth Anything V4**（2608.18388）  
+   将 Riemannian Flow Matching 应用于 4DGS 参数空间，并用受控实验隔离出 RFM 的独立贡献（F-score +0.044）。这是“生成式方法驱动 4D 重建”的典型代表，方法设计与消融思路都很值得精读。
 
-2. **USR-Drive（2608.19036）**：以统一条件生成框架同时恢复动态几何（3DGS）与实例级布局（3D 框），将两类过去分离的任务置于共享的扩散去噪框架下。这一思路可能重塑自动驾驶场景表示学习的范式，值得关注其模态对齐的具体实现。
+2. **USR-Drive**（2608.19036）  
+   用统一扩散 Transformer 联合去噪 3D 高斯与 3D 边界框，把检测与动态重建从解耦变为互约束。这种“共享表示 + 多任务联合生成”的范式很可能是自动驾驶场景理解的重要方向。
 
-3. **QuARC-GS（2608.18285）** & **S²GS（2608.19639）**：两者都面向动态场景的流式传输，但技术路线截然不同（量化锚定残差编码 vs 结构化稀疏高斯流）。对比阅读有助于理解“动态 4D 表示压缩”这一前沿问题的不同解法，且对边缘部署有直接参考价值。
+3. **CoMVS-GS**（2608.18413）  
+   系统展示了如何把传统 MVS 几何先验（稠密点云初始化、PatchMatch 双向监督）注入 3DGS 表面重建，对解决高斯重建“弱观测/遮挡区域不稳定”这一核心痛点有直接借鉴意义。
 
-4. **4DAnyone（2608.20335）**：系统性地诊断并形式化了视频扩散模型在多视角生成中的“有界注意力上下文”问题，拆解为参考上下文与目标上下文两个耦合瓶颈，并分别设计了解决方案。其对问题本质的分析值得借鉴。
+4. **Stream3Dv2**（2608.21136）  
+   免训练流式 3D 场景理解，几何-语义融合 + 流形距离细化，是“零训练、实时、鲁棒”路线的代表，兼顾工程实用性与方法论创新。
 
-5. **CoMVS-GS（2608.18413）**：展示了“经典几何（MVS、PatchMatch）”与“现代表示（3DGS）”如何通过相互监督实现互惠。对于关注 3DGS 几何质量提升问题的读者，这篇文章提供了一个新颖且务实的融合范式。
+5. **Gravity-aware partially calibrated absolute pose estimation**（2608.20056）  
+   首次将特征诱导的局部几何信息用于部分标定绝对位姿估计，用 IMU 重力先验将所需对应点降到 1-2 个，兼具理论推导与工程价值，对视觉-惯性融合定位有重要参考意义。
 
+---
 
 #### 可能的研究机会
 
-- **4D 重建的“保真-紧凑”联合优化
+- **“4D 生成一致性”的进一步理论化**：`Stream4D` 用 4D 重建奖励解决静态批评器的缺陷，`Depth Anything V4` 用黎曼流匹配保证 4DGS 中间状态有效。两者的结合点（在流匹配框架中引入动态一致性奖励）尚属空白，值得探索。
+
+- **边缘设备上的“稀疏 + 流式 + 生成”三重约束**：`S²GS` 解决了流式与稀疏，`QuARC-GS` 解决了压缩，但尚未看到把生成式 4D 先验（如 4D 扩散/流匹配）与边缘低算力约束结合的工作。
+
+- **长期跨会话记忆与 4D 重建的统一**：`LT-Mem` 关注跨会话对象身份，`USR-Drive`/`S²GS` 关注动态场景表示。把“持久实例身份”与“动态 4D 表示”统一进一个框架（例如带记忆的 4D 高斯表示）是很有前景的组合方向。
+
+- **评测方法论输出**：两篇 UAV 评测已指出纯视觉 SLAM/VO 的短板，但仅止步于“评估”。可跟进工作包括：专门面向高空俯视场景的几何基础模型设计、结合 IMU 的轻量级单目 4D 重建
 
 ### interests.md 指令分析
 
@@ -1953,6 +1964,43 @@ Generating photorealistic novel views from unposed images requires both 3D geome
 **Matched keywords:** scene understanding
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Stream3Dv2: Geometric-Semantic Fusion Enhanced Streaming Zero-Shot 3D Scene Understanding
+- 作者：Jie Xu, Na Zhao
+- 出版日期：2026-08-21
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.21136
+
+### 一句话总结
+Stream3Dv2 是一个免训练的流式零样本 3D 场景理解框架，通过几何-语义融合机制和流式局部-历史架构，解决实时 RGB-D 输入下的噪声掩码与计算开销问题。
+
+### 研究问题
+现有的开放词汇零样本 3D 场景理解方法无法高效处理流式 RGB-D 输入，且对 2D 分割掩码的噪声敏感，限制了其在真实世界场景中的部署。本文旨在解决这两个关键缺陷。
+
+### 核心思路/方法
+- 提出 Stream3Dv2，一个新颖的免训练框架，用于鲁棒的流式 3D 感知。
+- 通过嵌套的“局部到历史”（nested local-to-historical）架构处理序列数据，捕获多视角一致性，同时避免高计算开销以支持及时响应。
+- 引入几何-语义融合机制，显式利用语义引导，将 3D 分割形式化为点-集合合并与划分问题，以解决几何噪声和语义歧义。
+- 提出基于流形距离的点云细化策略：使用局部流形图进行点-流形优化，缓解欧氏距离度量导致的边界划分失败；利用几何包围盒动态激活和更新历史实例，实现快速流形-流形细化。
+
+### 主要贡献
+- 提出 Stream3Dv2，用于鲁棒流式 3D 感知的免训练框架。
+- 设计几何-语义融合机制，解决流式 3D 分割中的几何噪声与语义歧义。
+- 提出基于流形距离的点云细化策略，改善边界划分并支持快速历史实例更新。
+- 在公开数据集上的实验表明，Stream3Dv2 在基础开放词汇流式 3D 分割和检测任务上持续优于现有基线。
+- 与基于 LLM 的智能体集成，支持语言驱动的 3D 场景理解，展示其在开放世界具身智能中的潜力。
+
+### 局限性
+摘要未提供足够信息。摘要中未讨论方法的失败案例、对特定场景（如极端噪声或动态遮挡）的鲁棒性边界、运行效率的具体数值（如推理速度或显存占用），也未提及与既有流式方法的计算复杂度对比细节。
+
+### 阅读优先级
+**高**。理由：该工作针对流式零样本 3D 理解这一实际部署关键问题提出了免训练的解决方案，技术上融合了几何-语义融合与流形优化，且与 LLM 智能体结合，具备较强的应用前景和扩展价值。摘要中显示出在公开数据集上的一致性能提升，适合关注 3D 感知、开放词汇理解和具身智能的研究者优先阅读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Recently, open-vocabulary zero-shot 3D scene understanding using vision foundation models has emerged as a promising alternative to data-intensive supervised methods. However, deploying these models in real-world scenarios is severely hindered by their inability to efficiently handle streaming RGB-D inputs and their inherent vulnerability to noise 2D segmentation masks. To address these critical limitations, we propose Stream3Dv2, a novel training-free framework designed for robust streaming 3D perception. Stream3Dv2 processes sequential data through an original nested local-to-historical architecture, capturing multi-view consistency while circumventing the high computational overhead so as to support timely responses. At its core, we introduce a comprehensive geometric-semantic fusion mechanism that resolves geometric noise and semantic ambiguity by explicitly utilizing semantic guidance and formulating 3D segmentation as solving point-and-set merging and partitioning problems. Furthermore, we present an innovative manifold-distance-based point cloud refinement strategy. This approach leverages local manifold graphs for point-to-manifold optimization that mitigates the boundary delineation failures caused by Euclidean-distance metrics, and employs geometric bounding boxes to dynamically activate and update historical instances for achieving rapid manifold-to-manifold refinement. Extensive experiments on public datasets demonstrate that Stream3Dv2 consistently outperforms existing baselines in foundational open-vocabulary streaming 3D segmentation and detection. Finally, we show that integrating our framework with an LLM-based agent enables advanced language-driven 3D scene understanding, underscoring its potential for open-world embodied intelligence. Code will be updated at https://github.com/SubmissionsIn/Stream3D.
@@ -2157,55 +2205,6 @@ Whole-body motion tracking policies turn a humanoid into a robust control interf
 <summary>Abstract</summary>
 
 Video self-supervised learning through masked spatiotemporal prediction has emerged as a promising paradigm for learning feature representations from unlabeled data. However, existing methods typically rely on random masking, which indiscriminately removes regions irrespective of their semantic or temporal relevance. In ego-centric driving videos, this can weaken the pretext signal since safety-critical cues such as pedestrians, vehicles, lane boundaries, and dynamic interactions often occupy only a small portion of the frame, yet are central to downstream perception. We introduce V-JEPA4A, a domain-specialized variant of V-JEPA for autonomous driving that is pre-trained on publicly available driving videos with a novel saliency-driven masking policy. It accounts for semantically and temporally relevant context. The proposed policy preserves and predicts context according to semantic importance and temporal relevance, yielding more informative representation learning while retaining the efficiency of masked prediction. We evaluate the resulting encoders on four driving benchmarks spanning tracking, semantic segmentation, and depth estimation. The results demonstrate that V-JEPA4A reduces identity switches on BDD100k MOT by 25% over V-JEPA with random masking, achieves 73.2 mIoU on Cityscapes, and 3.75 RMSE on KITTI-2015 depth, while incurring only ~14% additional pre-training iteration overhead.
-
-</details>
-
-#### 2026-08-17 - ViHaTeleop: A Low-Cost, Lightweight Visual-Haptic Teleoperation System for Dexterous Manipulation Learning
-
-**Authors:** Fucai Zhu, Yanhou Lai, Paul Maestre, Koichi Hashimoto
-**Links:** [abs](https://arxiv.org/abs/2608.16572) - [pdf](https://arxiv.org/pdf/2608.16572)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** SLAM, manipulation, simulation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：ViHaTeleop: A Low-Cost, Lightweight Visual-Haptic Teleoperation System for Dexterous Manipulation Learning
-- 作者：Fucai Zhu, Yanhou Lai, Paul Maestre, Koichi Hashimoto
-- 出版日期：2026-08-17
-- 分类：Embodied / Robotics / AR Applications
-- 链接：https://arxiv.org/abs/2608.16572
-
-### 一句话总结
-本文提出了一种低成本、轻量级的视觉-触觉遥操作系统 ViHaTeleop，通过引入指级振动触觉反馈，显著提升了接触关键型灵巧操作任务的示教质量与成功率。
-
-### 研究问题
-如何以低成本硬件实现高质量的接触关键型灵巧操作示教数据采集，即解决低成本遥操作硬件难以采集接触关键演示数据的问题。
-
-### 核心思路/方法
-- 构建轻量（0.7 kg）低成本（$550）的视觉-触觉遥操作系统，融合 SLAM 腕部追踪、相机手部追踪以及基于线性谐振致动器（LRA）的指级振动触觉反馈。
-- 引入若干设计选择：LED 照明、鱼眼手部相机、触觉感知重定向约束。
-- 在真实环境（Franka + LEAP Hand + 9DTact）与仿真环境（Isaac Sim）中部署系统，并集成基于深度相机的轻量触觉代理，实现从多模态示教采集到视觉-触觉策略训练的完整流程。
-
-### 主要贡献
-- 首次提出结合低成本视觉追踪与指级振动触觉反馈的遥操作系统，并通过消融实验验证触觉反馈的有效性。
-- 在六项接触关键任务、九名参与者的匹配实验中，触觉反馈使所有任务的成功率提升（+2.2～+15.6 个百分点），主观评分在触觉清晰度和抓取信心方面有显著提升（Wilcoxon 符号秩检验，p<0.05）。
-- 提供从多模态示教采集到视觉-触觉策略训练的完整管线，初步下游验证表明触觉线索对接触关键子任务（如插销入孔）有显著增益（相较纯视觉提升 +17 个百分点）。
-
-### 局限性
-摘要未提供足够信息；未报告硬件耐久性、系统延迟、大规模任务泛化能力、参与者多样性等细节。
-
-### 阅读优先级
-**高**。理由：该工作直击灵巧操作示教学习中接触关键数据采集困难的核心痛点，系统成本低、重量轻，且提供了真实与仿真环境下的多任务验证以及消融实验，对遥操作硬件设计和触觉反馈在人机交互中的价值均有明确的数据支撑，适合机器人操作、示教学习与人机交互方向的研究者阅读。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Learning from demonstration is a promising approach for dexterous manipulation, but collecting high-quality contact-critical demonstrations remains difficult with low-cost teleoperation hardware. We present ViHaTeleop, a lightweight (0.7 kg), low-cost (\$550) visual-haptic teleoperation system with SLAM-based wrist tracking, camera-based hand tracking, and finger-wise vibrotactile feedback through Linear Resonant Actuators (LRA). The system includes several design choices (LED illumination, fisheye hand camera, and tactile-aware retargeting constraints) and is deployed on Franka + LEAP Hand + 9DTact in both real and simulated environments. Under matched with/without-haptic conditions with nine participants across six contact-critical tasks, haptics improved success rates across all tasks (+2.2 to +15.6 percentage points), while completion-time effects were task-dependent. Subjective ratings showed significant gains in contact clarity and grasp confidence in both simulation and real-world settings (Wilcoxon signed-rank, $p<0.05$). We also integrate a lightweight depth-camera-based tactile proxy in Isaac Sim, enabling a full pipeline from multi-modal demonstration collection to visual-tactile policy training. Preliminary downstream validation by training visual-tactile policies from collected demonstrations shows tactile cues benefit contact-critical subtasks (peg-in-hole: +17 percentage points over vision-only).
 
 </details>
 
