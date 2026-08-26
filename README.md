@@ -11,87 +11,76 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：47
+- 当前滚动窗口论文数：39
 - 分类分布：
-  - Neural Scene Representations & Rendering: 14
-  - 3D Reconstruction & Multi-view Geometry: 14
-  - Dynamic / 4D Reconstruction: 11
-  - Embodied / Robotics / AR Applications: 6
-  - Geometry Foundation Models: 2
+  - 3D Reconstruction & Multi-view Geometry: 13
+  - Embodied / Robotics / AR Applications: 9
+  - Neural Scene Representations & Rendering: 9
+  - Dynamic / 4D Reconstruction: 7
+  - Geometry Foundation Models: 1
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-## 今日计算机视觉与三维重建科研趋势综合分析
+## 今日科研趋势综合分析报告
+
+> 覆盖时间窗口：2026-08-24 至 25 | 论文总数：17 篇
 
 
-### 今日主要趋势
+### 一、今日主要趋势
 
-#### 趋势一：高斯泼溅（3DGS）全面进入"工程化"与"生态建设"阶段
+#### 趋势 1：世界模型从"像素预测"向"几何/语义状态预测"转型
 
-今日论文显示3DGS已从“能否重建”转向“如何高效、紧凑、可控地重建”。具体表现为：
-- **紧凑化与加速训练**：`Fast and Compact 3D Gaussian Splatting with Polarized Opacity Prior`直接挑战3DGS“模型膨胀”问题，用极化不透明度先验（POP）替代“先稠密化后剪枝”的范式，从训练开始就构建紧凑表示。
-- **基准与评估体系**：`M³ISR`提出专门面向3DGS/4DGS的受控合成多模态基准，划分五个赛道（合成、流式、压缩等），意图建立统一的评估标准，标志该领域进入系统性评估阶段。
-- **生成模型协同**：`FixAnything`将预训练视频生成模型作为修复渲染伪影的统一工具，利用其隐式多视图先验，可同时适配3DGS、NeRF、网格、点云等多种表示，体现了3DGS正在被纳入更大的生成式生态中。
+这是今日最显著的趋势信号。两篇独立工作 **GeoWAM**（自动驾驶领域）和 **GaussianWAM**（机器人操作领域）同时挑战了世界动作模型（WAM）在像素空间学习场景动态的既有范式，提出将预测目标从图像转向显式几何表征——GeoWAM 直接预测未来点云，GaussianWAM 则通过 3D 高斯场将几何与语义监督蒸馏进模型表示。两者互不引用、几乎同期发布，指向一个正在形成的领域共识：**像素作为状态空间对几何与运动建模是间接且低效的**，"几何即状态"可能成为下一代世界模型的核心理念。
 
-#### 趋势二：物理先验与显式几何正成为动态重建/渲染的核心约束
+#### 趋势 2：单目/稀疏输入下的场景生成式重建加速兴起
 
-动态场景重建（Dynamic/4D Reconstruction）领域出现明显趋势——不再满足于纯视觉拟合，而是引入物理规律或显式几何约束来提升预测与外推能力：
-- `LagrangeGS`将动态3DGS建模为非保守拉格朗日系统，从原理上解决物理不一致轨迹、时间不可逆和长期外推几何坍塌问题。
-- `Learning Implicit Constitutive Laws for Dynamic 3D Gaussian Splatting from Monocular Videos`从单目视频学习隐式本构规律，并用经典本构模型作为可微软先验（CPR模块）正则化优化。
-- `GeoWAM`将世界模型从像素空间搬到几何空间（点云），主张显式捕捉刚体/非刚体变换比像素间接推断更对齐驾驶动作空间。这些工作共同指向一个共识：**纯粹的视觉损失不够了，物理规律和显式几何是高质量动态重建的关键**。
+**SceneReGen** 将单图像三维场景重建重新定义为"完整物体资产的生成与装配"；**NeoWorld-Pro** 则用多模态大语言模型将单目图像转化为可交互场景程序。两者互补地展示了同一趋势的两个侧面：一是**几何驱动的生成式补全**（SceneReGen），利用物体级生成先验弥补观测缺失；二是**基于物理验证的程序化场景编程**（NeoWorld-Pro），把重建问题转化为可执行代码的生成与验证。结合 **FixAnything** 对稀疏视角渲染伪影的通用修复，可以看出领域正在从"重建观测到的"转向"生成观测不到的"。
 
-#### 趋势三：水下/退化环境成为3D重建与SLAM的新战场
+#### 趋势 3：3D 高斯泼溅成为跨表征、跨媒体、跨任务的"粘合剂"
 
-水下场景因光衰减、散射等视觉退化问题，成为检验方法鲁棒性的“极限测试场”，今日出现两篇聚焦水下重建的论文：
-- `AquaFlow`：单目高斯泼溅流式重建框架，微调3D视觉基础模型+介质引导的高斯初始化。
-- `NemoSplat`：首个前馈式4D高斯泼溅框架，面向未标定海洋视频的介质感知动态重建。
+今日多篇论文以 3DGS 为核心或关联组件，但侧重点各异：**GaussianWAM** 将异构语义/几何信号绑定到共享高斯原语进行蒸馏；**SeeU** 在高斯空间中注入语义进行条件化精化以解决稀疏视角欠约束问题；**AquaFlow** 与 **NemoSplat** 分别将单目流式重建和前馈 4D 重建扩展到水下场景；**LagrangeGS** 将动态 3DGS 建模为非保守拉格朗日系统；**ExMesh++** 则试图将重建结果导出为可编辑的 UV-PBR 网格资产。这一分布表明 3DGS 已从"新视角渲染方法"演变为一个**基础设施层**——不同子领域正在围绕它解决各自的核心痛点（几何一致性、物理一致性、场景可编辑性、媒体退化鲁棒性）。
 
-二者共同展示了应对介质退化的一般策略：**将物理光学模型（如介质参数估计）与神经场景表示融合**，并为水下专门构建大规模数据集（NemoSplat）或微调基础模型（AquaFlow）。
+#### 趋势 4：输入数据层面的"预处理革命"——解决杂乱信号与真实世界数据
 
-#### 趋势四：定位与三维重建中的隐私保护与鲁棒性并重
+**Game2World Engine** 直面游戏视频中 UI 覆盖层对世界模型训练的干扰，通过自动化 UI 提取与合成构建干净的成对训练数据；**Spotter** 通过语义分割与多视立体将街景全景转化为紧凑的地理参考数据库；**SiZeUp** 利用单目深度先验与有序深度损失直接从航拍影像估计建筑高度。这些工作共同指向一个趋势：**重建与生成模型的下限由训练数据质量决定，而数据质量的核心瓶颈正从"采集"转向"范式化清洗与结构化提取"**。
 
-在视觉定位/SfM方向，今日论文不再只关注精度和速度，隐私与鲁棒性成为显性议题：
-- `Misanthrope`创新性地从源头解决隐私问题——通过自蒸馏训练关键点检测器**不检测人物身上的关键点**，从而抑制针对局部特征的反演攻击，而不是事后混淆。
-- `Robust Global Structure-from-Motion via View Graph Pruning`利用子图内部一致性剪枝视图图中的错误边，解决视觉模糊导致的全局SfM崩溃问题。
-- `ORBIT++`提出了基于360°全景视频的野外SfM基准，直面现有方法在动态场景和复杂相机运动下失效的评测缺口。
-- `DECO`和`Spotter`则分别用深度引导的共同可见性推理和立面地标解决GNSS/GPS拒止环境下的UAV/可穿戴平台定位，显示了真实部署场景（无人机、可穿戴）对鲁棒定位的持续需求。
+#### 趋势 5：模型效率与轻量化微调成为通用诉求
 
-#### 趋势五：物体级空间智能——理解与生成的统一范式
-
-`Object-Uni`和`Seeing the Unseen`共同指向“物体级”三维智能的兴起：
-- `Object-Uni`将物体姿态作为显式几何变量，统一了姿态感知、空间推理、姿态条件生成和物体级新视角合成四个任务。
-- SeeU（Seeing the Unseen）将语义信息注入高斯空间（Semantic-in-Gaussian），通过跨视角熵感知模块聚合多视角语义线索，解决稀疏视角下的遮挡与未观测区域的恢复问题。
-- `Photorealistic Novel View Synthesis of Human Faces using Next-Scale Transformers`聚焦人脸，利用下一尺度自回归范式实现高分辨率多视角一致的人脸新视角合成。这显示出：**以“物体/类别为中心”而不是“场景为中心”的建模范式正在成形**，理解和生成正在同一几何表示下统一。
+**FixAnything** 仅通过二进制掩码与轻量微调即复用预训练视频生成模型完成多表示渲染修复；**NemoSplat** 以前馈方式实现无需逐场景优化的 4D 水下重建；**SiZeUp** 通过降维参数化将重建速度提升 23–52 倍；**LagrangeGS** 通过近似速度-海森矩阵为单位矩阵绕开大规模求逆计算瓶颈。这些工作展示了从"每场景逐优化"走向"前馈/轻量适配"的范式迁移，契合边缘设备与实时应用需求。
 
 
-### 技术路线观察
+### 二、技术路线观察
 
-| 技术方向 | 代表论文 | 技术侧重点 |
-|---------|---------|-----------|
-| **生成模型作为3D先验** | FixAnything；Object-Uni | 复用预训练视频/多模态生成模型，以视频到视频转换或条件生成的方式解决重建或修复问题；强调轻量微调与统一框架 |
-| **物理约束动态3DGS** | LagrangeGS；GCA | 将拉格朗日力学、本构模型等显式物理规律嵌入3DGS，解决长时外推与物理一致性；核心是处理数百万粒子的计算效率 |
-| **几何作为状态空间** | GeoWAM；DECO；SiZeUp | 主张以点云/深度/高度等显式几何表示替代像素或隐式表示，作为世界模型状态空间或监督信号；追求与操作/动作空间的对齐 |
-| **介质感知重建** | AquaFlow；NemoSplat | 将物理光学模型（介质衰减、散射参数）与神经表示融合，或微调视觉基础模型适配退化域；强调从“通用”到“专用域”的迁移 |
-| **统一/紧凑表示** | Object-Uni；POP；Spherical Occupancy Profiles | 用统一中间表示（姿态、球面占用剖面、极化不透明度）同时服务理解与生成，或从训练开始构建紧凑表示避免后处理 |
-| **评估体系构建** | M³ISR；ORBIT++ | 通过受控合成数据或全景视频构建带真值的难度递增基准，为领域建立可量化的评估标准 |
-| **隐私/鲁棒性设计** | Misanthrope；View Graph Pruning | 从模型训练或管线设计源头规避隐私泄露或错误累积，而非事后修复 |
+| 技术路线 | 代表性论文 | 核心表征/监督信号 | 关键瓶颈 |
+|---------|-----------|------------------|----------|
+| **几何基础模型** | GaussianWAM | 深度 + 相机参数 + 稠密语义特征绑定高斯原语 | 如何在训练后移除教师模型不掉点 |
+| **世界模型（驾驶/机器人）** | GeoWAM, GaussianWAM, Game2World | 点云（GeoWAM）vs 像素+高斯场蒸馏（GaussianWAM）vs 清洗后游戏视频（Game2World） | 几何监督如何与动作生成协调统一 |
+| **前馈 3D/4D 重建** | NemoSplat, AquaFlow, SeeU | 显式高斯/点云 + 物理媒体模型 | 动态场景解耦、媒体退化补偿 |
+| **物理感知动态建模** | LagrangeGS | 非保守拉格朗日系统 + 局部刚体正则 | 大规模粒子计算效率 |
+| **生成式场景重建** | SceneReGen, NeoWorld-Pro | 物体先验 + 场景坐标装配（SceneReGen）；MLLM 代码生成 + 物理在环验证（NeoWorld-Pro） | 物体生成本位坐标与场景坐标之间的表征差距 |
+| **渲染修复/编辑** | FixAnything, ExMesh++, Object-Uni | 视频生成先验 + 二进制掩码锚定；分阶段网格-UV-材质解耦 | 3D 一致性维持、分解歧义 |
+| **定位与导航应用** | Spotter | 建筑立面语义分割 + 多视立体 + 级联检索 | GPS 退化环境的实时性要求 |
+| **特定领域适配** | Misanthrope, 姿态评估框架 | 隐私感知关键点检测（自蒸馏）；BlazePose 运动学分析 | 任务特定性与泛化能力的权衡 |
+
+**侧重点对比：**
+- **视觉表征重心**从"像素/图像空间"向"几何空间（点云、深度、高斯）"迁移，且语义信息（而非仅几何）正成为第三极监督信号。
+- **实现范式**从"每场景优化"向"前馈推理 + 轻量微调"转变，但具体路径分化：有的复用视频生成先验（FixAnything），有的用基础模型前馈预测（NemoSplat），有的用 MLLM 代码生成（NeoWorld-Pro）。
+- **场景覆盖**从室内/郊外数字建模（Object-Uni、SceneReGen）扩展到水下（AquaFlow、NemoSplat）、城市 GPS 退化（Spotter）、运动健身（姿态评估）等真实应用场景。
+- **一致性保障手段**呈现多元化：FixAnything 用相机位姿精度做 DPO 奖励信号，LagrangeGS 用拉格朗日力学约束保证时间可逆性，SeeU 用熵感知跨视角聚合恢复欠约束区域，ExMesh++ 用分阶段优化减轻分解歧义。
 
 
-### 值得优先阅读的论文
+### 三、值得优先阅读的论文
 
-1. **FixAnything**（2608.23549）
-解析：这篇论文提供了一种将预训练视频生成模型转换为通用渲染修复工具的范式，仅需最小改动和轻量微调即可适配多种3D表示（3DGS、NeRF、网格、点云）。其提出的“带噪声渲染序列仍保留相机运动和粗略结构”的洞察，以及用SfM相机位姿精度作为DPO奖励信号来保证3D一致性，是一条通用且可迁移的技术路线。阅读它可以理解生成式先验如何高效地服务三维重建，是连接生成模型与3D渲染的重要样例。
+#### 1. GaussianWAM（arXiv:2608.24714）⭐ 最优先
+**理由**：与 GeoWAM 构成今日最重要的"合流"信号——两篇独立工作同时挑战世界模型像素空间范式。GaussianWAM 的技术路线（异构教师信号 → 3D 高斯场统一组织 → 训练时蒸馏、推理时零开销）具有高度可迁移性，且对机器人操作这一热门方向直接适用。理解它可同时把握世界模型演进与 3DGS 基础设施化两大趋势的交汇点。
 
-2. **GeoWAM**（2608.23486）
-解析：将世界模型的状态空间从像素改为点云几何，提出“预测未来场景几何”作为自动驾驶预训练目标——这是对世界模型设计原则的一次重要重定义。点云显式捕捉空间结构并直接对齐驾驶动作空间，实验显示优于基于图像的方案。这篇论文对从事自动驾驶、世界模型、具身智能研究的读者有方向性启示。
+#### 2. GeoWAM（arXiv:2608.23486）⭐ 最优先
+**理由**：将世界模型预训练目标从"未来图像"切换为"未来点云"，是一个简洁而深刻的问题重构。自动驾驶场景动作执行空间本身就是三维的，这一改动直击像素表征的本质缺陷。开闭环实验对比结果值得细读，它可能预示 WAM 领域的重要转向。
 
-3. **M³ISR**（2608.22465）
-解析：该基准为3DGS/4DGS的系统性评估建立了五个受控赛道（合成、流式、压缩等），并提供密集多模态标注（RGB、深度、语义/实例分割、静态-动态掩码）。在研究规范化评估方面有潜在价值，适合作为后续工作的评测基础设施；对研究3DGS压缩、流式重建和率失真优化的同行尤其值得阅读。
-
-4. **LagrangeGS**（2608.22773）
-解析：首次将动态3DGS建模为非保守拉格朗日系统，通过近似速度
+#### 3. SceneReGen（arXiv:2608.23930）⭐ 高
+**理由**：选择性位姿分解（朝向编码在生成网格中，平移与尺度从场景证据估计）是一个精巧的设计洞察，直面物体级生成与场景级重建之间的
 
 ### interests.md 指令分析
 
@@ -163,6 +152,44 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 **Matched keywords:** VGGT, manipulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GaussianWAM: Distilling Geometry and Semantics from 3D Gaussian Fields into World-Action Models
+- 作者：Zijian Zhang, Yuqing Jiang, Weitao Zhou, Minglei Li, Jinhao Zhang, Yao Mu, Xiaofan Li, Hao Zhao, Haibao Yu
+- 出版日期：2026-08-25
+- 分类：几何基础模型（Geometry Foundation Models）
+- 链接：https://arxiv.org/abs/2608.24714
+
+### 一句话总结
+GaussianWAM 通过将 3D 高斯场中的几何与语义监督蒸馏进世界-动作模型（WAM）的训练表示中，在不改变推理架构的前提下显著提升了机器人操作任务的性能。
+
+### 研究问题
+世界-动作模型（WAM）在联合学习未来视觉预测和动作生成时，其视频潜在表示主要针对视觉预测优化，未被显式地鼓励保持跨视角几何结构以及空间局部化、与物体相关的语义信息。本文旨在解决这一问题，探索如何在训练阶段为 WAM 表示注入几何与语义监督，而不增加部署时的计算负担。
+
+### 核心思路/方法
+GaussianWAM 是一个训练时的表示增强框架，其核心流程为：
+1. 利用同步多视角观测，由冻结的几何基础模型和视觉基础模型提供深度、相机参数和稠密语义特征；
+2. 将这些异构信号绑定到共享的 3D 高斯原语（Gaussian primitives）上，并渲染出空间对齐的语义、深度和覆盖目标；
+3. 将渲染目标蒸馏到 WAM 的当前观测表示中；
+4. 训练结束后，所有教师模型、高斯组件和辅助预测头均被移除，保留原始 WAM 推理路径，不增加额外模块或前向计算。
+
+### 主要贡献
+- 提出 GaussianWAM，一种训练时表示增强框架，通过 3D 高斯场组织几何与语义监督，并蒸馏到 WAM 表示中；
+- 展示了将异构教师信号在空间上统一组织的优势：在 LIBERO-Plus 上，FastWAM 从 52.05% 提升至 71.29%，Cosmos Policy 从 71.52% 提升至 77.30%；
+- 消融结果显示，直接 CLIP 和 VGGT 蒸馏建立了 FastWAM 的强基线 69.37%，而高斯场统一进一步将其提升至 71.29%，验证了空间组织异构教师信号的有效性；
+- GaussianWAM 在标准 LIBERO 上也提升了性能，并在 RoboTwin 和真实世界操作上呈现正迁移趋势；
+- 方法不影响部署架构，训练后额外组件全部移除。
+
+### 局限性
+摘要未提供足够信息。摘要中未讨论方法的计算开销、训练时间成本、对多视角数据质量/数量要求的敏感性、失败模式或更广泛泛化性的边界条件。
+
+### 阅读优先级
+**高**。理由：该方法在多个基准（LIBERO-Plus、LIBERO、RoboTwin、真实世界操作）上均获得显著性能提升，且设计上不改变部署架构，具备实际应用价值；同时其核心思路——利用 3D 高斯场组织异构教师信号进行训练时蒸馏——具有一定新颖性，对 WAM 和机器人操作研究方向具有参考意义。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 World-Action Models (WAMs) jointly learn future visual prediction and action generation, using video dynamics as a representation-learning signal for robotic manipulation. However, their video latents are primarily optimized for visual prediction and are not explicitly encouraged to preserve cross-view geometric structure or spatially localized, object-relevant semantics. We propose \textbf{GaussianWAM}, a training-time representation-enhancement framework that organizes geometric and semantic supervision through a 3D Gaussian field. Given synchronized multi-view observations, frozen geometry and vision foundation models provide depth, camera parameters, and dense semantic features. GaussianWAM binds these heterogeneous signals to shared Gaussian primitives and renders spatially aligned semantic, depth, and coverage targets, which are distilled into the current-observation representations of the WAM. All teacher models, Gaussian components, and auxiliary prediction heads are removed after training, leaving the original WAM inference path without additional modules or forward computation. On LIBERO-Plus, GaussianWAM improves FastWAM from 52.05\% to 71.29\% and Cosmos Policy from 71.52\% to 77.30\%. Direct CLIP and VGGT distillation already establishes a strong FastWAM baseline of 69.37\%, while Gaussian-field unification further improves it to 71.29\%, supporting the benefit of spatially organizing heterogeneous teacher signals. GaussianWAM also improves performance on standard LIBERO and shows positive transfer trends on RoboTwin and real-world manipulation. These results suggest that training-time Gaussian distillation provides a practical way to inject geometry- and semantics-related supervision into WAM representations without changing their deployment architecture.
@@ -192,30 +219,28 @@ World-Action Models (WAMs) jointly learn future visual prediction and action gen
 - 链接：https://arxiv.org/abs/2608.22888
 
 ### 一句话总结
-NemoSplat 是首个前馈式 4D 高斯泼溅框架，专门面向水下动态场景，通过感知介质衰减与解耦动态物体实现高保真重建。
+NemoSplat 是首个面向水下动态场景的前馈式 4D 高斯泼溅框架，通过媒体感知和时间解耦设计，直接从无标定海洋视频中实现高保真重建与跟踪。
 
 ### 研究问题
-水下非约束环境中，光散射与动态目标干扰导致前馈视觉模型在相机位姿估计、稠密深度预测和动态追踪上严重失效，难以直接用于水下视频的 4D 重建。本文旨在解决这一介质感知的动态重建问题。
+如何在存在光散射、运动干扰和动态物体的非受控水下环境中，实现稳健、高保真的 4D 动态场景重建。
 
 ### 核心思路/方法
-- 提出前馈式 4D 高斯泼溅框架，直接从未标定海洋视频中进行动态重建，无需逐场景优化。
-- 估计相机位姿与稠密场景深度。
-- 设计 **Promptable Dynamic Disentangler**：结合学习到的动态概率与可选的语义文本先验，使用置信度感知融合策略，将大规模瞬态物体与静态场景分离。
-- 构建 **Media-Aware Gaussian Predictor**：联合估计内部 3D 高斯属性与物理介质参数，单次前向传播即可渲染无退化外观。
-- 引入包含大量动态元素的大规模水下数据集用于训练与评估。
+- 利用前馈式视觉基础模型提供相机位姿与稠密深度估计。
+- 提出 **Promptable Dynamic Disentangler**：融合学习到的动态概率和可选语义文本先验，采用置信度感知策略，隔离大规模瞬态动态实体。
+- 设计 **Media-Aware Gaussian Predictor**：联合估计 3D 高斯固有属性与物理媒体参数，在单次前向传播中恢复纯净场景外观。
+- 构建含大规模动态元素的水下数据集，用于训练与评估。
 
 ### 主要贡献
-- 首次提出面向水下介质感知动态重建的前馈式 4D 高斯泼溅框架。
-- 提出基于置信度感知融合的动态解耦模块，有效隔离瞬态实体。
-- 提出联合估计高斯属性与介质参数的预测器，克服视觉退化。
-- 构建大规模水下动态数据集。
-- 实验表明在追踪精度与渲染保真度上达到最先进水平。
+- 提出 NemoSplat，首个面向媒体感知动态重建的前馈 4D 高斯泼溅框架，可直接处理无标定海洋视频。
+- 设计 Promptable Dynamic Disentangler，实现鲁棒的瞬态实体分离。
+- 提出 Media-Aware Gaussian Predictor，在重建中显式建模媒体干扰。
+- 引入大规模水下动态数据集，并证明 NemoSplat 在跟踪精度与渲染质量上达到当前最优水平。
 
 ### 局限性
-摘要未提供足够信息。摘要仅提及在自建数据集上的实验表现，未给出关于真实场景泛化能力、计算开销、对不同水质条件的鲁棒性、失败模式或与现有方法在未见数据集上对比的细节。
+摘要未提供足够信息。摘要未提及方法对极端浑浊水体、计算开销、实时性、泛化到其他水下环境或数据集的局限性分析。
 
 ### 阅读优先级
-**高**。理由：该工作首次将前馈式 4D 高斯泼溅引入水下介质感知重建，方法上融合了动态解耦与介质参数联合估计，具有较强的新颖性；同时自建大规模数据集并达到最先进结果，对水下视觉及 4D 重建社区有实际参考价值。
+**高**。理由：该工作将 4D 高斯泼溅扩展到水下非受控场景，提出新的媒体感知预测器与动态解耦机制，并自建大规模数据集，对动态重建和水下视觉领域均有显著推进意义；且摘要明确报告了 SOTA 跟踪与渲染结果，实验支持较充分。
 
 </details>
 
@@ -540,6 +565,43 @@ Streaming autoregressive diffusion models enable real-time, long-horizon video g
 **Matched keywords:** pose estimation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Markerless Pose Estimation for Resistance Training Technique Assessment
+- 作者：Joseph Turner, Jeff Clark, Nawid Keshtmand
+- 出版日期：2026-08-25
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2608.24384
+
+### 一句话总结
+本文提出一种基于BlazePose的无标记姿态估计框架，从普通视频中提取关节角度轨迹，用于抗阻力训练（深蹲、卧推、硬拉）的技术评估，并以深蹲为主要案例验证其可行性。
+
+### 研究问题
+如何在无实验室设备、无物理标记点的条件下，利用普通视频实现对抗阻力训练动作的量化技术评估，以替代实验室-based运动分析的高门槛方案。
+
+### 核心思路/方法
+- 采用BlazePose模型从深蹲、卧推、硬拉视频中提取解剖学关键点。
+- 将关键点转换为关节角度轨迹，以深蹲作为主要案例研究。
+- 使用均方根误差（RMSE）将每次重复的轨迹与定义的参考重复进行对比评估。
+- 通过轨迹对比实现重复间定量比较及组内技术变异性识别。
+
+### 主要贡献
+- 提出一个可直接从普通视频评估抗阻力训练技术的无标记姿态估计框架。
+- 证明该框架能够恢复深蹲和硬拉有意义的运动学模式，实现重复间定量比较和技术变异性检测。
+- 表明无标记姿态估计可在实验室外环境支持可访问的生物力学评估。
+
+### 局限性
+- 性能强烈依赖摄像机视角和视觉遮挡，非矢状面视角会扭曲二维关节角度估计。
+- 摘要未提供更多详细信息（如模型精度指标、数据集规模、与其他方法对比等），故无法进一步展开；摘要未提供足够信息。
+
+### 阅读优先级
+**中**  
+理由：研究面向运动训练中防损伤的实际应用，方法创新性一般（基于现成BlazePose），但结果受视角限制明显，且摘要未披露验证细节和对比实验，适用于关注运动分析、姿态估计应用的读者，学术突破性有限。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Resistance training can be a high risk activity, and safe form is essential to avoiding injury. Laboratory-based movement analysis provides quantitive technique assessment, yet is not easily accessible. Markerless pose estimation infers body landmarks from images or video without physical markers and could offer a feasible alternative for technique assessment. We present a pose estimation framework to evaluate resistance-training technique from ordinary video footage. Using BlazePose, anatomical landmarks were extracted from squat, bench press, and deadlift videos and converted into joint-angle trajectories, with the squat serving as the primary case study. Trajectories were assessed against a defined reference repetition using root mean square error (RMSE). Results show that the framework recovers meaningful kinematic patterns for the squat and deadlift, enabling quantitative comparison between repetitions and identification of technique variability within a set. Performance depended strongly on camera orientation and visual occlusion, with non-sagittal views distorting 2D joint-angle estimates. The findings demonstrate that markerless pose estimation can support accessible biomechanical assessment outside laboratory environments.
@@ -553,6 +615,43 @@ Resistance training can be a high risk activity, and safe form is essential to a
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** Neural Scene Representations & Rendering
 **Matched keywords:** multi-view reconstruction, surface reconstruction, inverse rendering, relighting, rendering
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：ExMesh++: From Multi-View Images to Relightable UV-PBR Mesh Assets via Topology-Adaptive Reconstruction and Decomposition
+- 作者：Chuanjin Fan, Lifan Wu, Wenjie Chang, Hanzhi Chang, Wenfei Yang, Tianzhu Zhang
+- 出版日期：2026-08-25T06:16:03Z
+- 分类：3D Reconstruction & Multi-view Geometry；Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.24109
+
+### 一句话总结
+ExMesh++提出了一种分阶段框架，从多视角图像直接重建可重打光的UV-PBR网格资产，通过拓扑自适应优化和稳定的网格-UV载体实现几何、材质与光照的联合优化。
+
+### 研究问题
+如何从多视角图像重建不仅包含表面几何、还具备良好拓扑、有效UV参数化和显式PBR材质贴图的可编辑、可重打光的网格资产，同时缓解逆渲染中几何、材质与光照相互补偿导致的分解模糊问题。
+
+### 核心思路/方法
+- 采用分阶段（staged）框架，而非端到端联合优化。
+- 第一阶段：自适应顶点分裂与合并，显式细化网格几何和拓扑，并在拓扑变化过程中保持UV一致性。
+- 第二阶段：固定已得到的网格-UV载体，在UV空间中优化PBR贴图并联合优化环境光照。
+- 在稳定载体基础上，通过次级光线追踪建模单次弹射的漫反射间接光照，并共享UV-PBR材质。
+
+### 主要贡献
+- 提出ExMesh++分阶段框架，能够从多视角图像重建可直接使用的可重打光UV-PBR网格资产。
+- 通过自适应顶点分裂/合并实现拓扑优化，同时保持UV一致性。
+- 在固定网格-UV载体上解耦优化PBR材质与光照，减少分解歧义。
+- 引入基于次级光线追踪的单次弹射漫反射间接光照建模。
+- 实验表明重建几何精度具有竞争力、重打光性能强，且导出资产可直接用于标准DCC工作流。
+
+### 局限性
+摘要未提供足够信息（未提及具体失败案例、方法在特定场景下的限制或量化误差分析）。
+
+### 阅读优先级
+**中**。理由：该工作面向可编辑、可重打光的PBR网格资产重建，属于三维重建与渲染的交叉方向，对关注工业级DCC工作流可用性的研究者有参考价值；但摘要未给出具体实验数值或对比基线细节，创新性主要体现在分阶段框架设计，若不属于该细分方向，优先级可适当降低。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1596,6 +1695,42 @@ Spatial representation learning for autonomous driving aims to map raw visual si
 **Matched keywords:** world model
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Game2World Engine: Unlocking In-the-Wild Gameplay Videos for World Model Training
+- 作者：Wenxuan Shen, Dongna Jin, Dongping Chen
+- 出版日期：2026-08-25
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.24680
+
+### 一句话总结
+本文提出Game2World引擎和GameCleaner模型，用于从真实游戏视频中自动去除UI覆盖层，从而将海量互联网游戏视频转化为高质量的世界模型训练数据。
+
+### 研究问题
+原始游戏视频中，游戏世界与屏幕空间界面（UI/HUD）混杂在一起，引入了游戏特定的偏差和无关动态，阻碍了视频世界模型的训练效果。因此，如何自动、高效地从真实游戏视频中去除UI元素，同时保留场景内容与时间动态，是一个关键挑战。
+
+### 核心思路/方法
+- 提出**GameUI-Taxonomy**，形式化定义了游戏UI的类别体系。
+- 构建全栈框架**G2WEngine**，能够从真实游戏视频中自动提取可复用的UI资产，并在干净画面上合成时间上连贯的UI叠加层，用于生成成对训练数据。
+- 基于该引擎构建**Game2World**数据集，包含96K合成成对视频（带精确重建目标）和来自303款游戏的1,079条真实世界视频片段，用于真实场景评估。
+- 提出**GameCleaner**，一种无需掩码的游戏UI去除模型，结合多模态语义理解与视频编辑能力，直接识别并去除多种HUD元素，同时保留底层场景内容与时间动态。
+
+### 主要贡献
+- 提出形式化的GameUI-Taxonomy和全栈G2WEngine框架。
+- 构建大规模Game2World数据集及包含5,132个已验证UI元素的资产库（覆盖21个类别，来自1,010个代表性游戏帧）。
+- 提出无需掩码的UI去除模型GameCleaner，并证明其在合成和真实视频上的有效性。
+- 实验显示，基于去除UI后视频训练的世界模型，VideoReward比基于带UI视频训练的模型提升6.83%；GameCleaner在合成视频上平均AAR达到95.36，比最强的时序掩码基线提升57.3%，在真实视频上达到80.05的AAR，且背景保持率达99.8%。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该工作针对世界模型训练数据预处理这一关键问题，提出了完整的数据工程框架和模型，并展示了显著的量化收益；数据集和代码即将开源，对游戏视频理解和世界模型领域研究者具有直接参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Video games provide a scalable source of training data for video world models, offering diverse environments, complex interactions, and abundant in-the-wild gameplay videos. However, raw gameplay footage entangles the game world with screen-space interfaces, introducing game-specific biases and irrelevant dynamics that hinder world-model training. To address this problem, we introduce GameUI-Taxonomy and G2WEngine, a full-stack framework that formalizes gameplay UI grounding and removal. G2WEngine automatically extracts reusable UI assets from real gameplay videos and synthesizes temporally coherent UI overlays on clean footage. Using this engine, we construct Game2World, comprising 96K synthetic paired videos with precise reconstruction targets and 1,079 in-the-wild clips from 303 games for realistic evaluation. Its asset library contains 5,132 verified UI elements across 21 taxonomy categories, collected from 1,010 representative gameplay frames. Based on Game2World, we propose GameCleaner, a mask-free gameplay UI removal model that combines multimodal semantic understanding with video editing capabilities. Unlike mask-based methods, GameCleaner directly identifies and removes diverse HUD elements while preserving the underlying scene content and temporal dynamics. In a controlled pilot, world models trained on UI-free gameplay improve overall VideoReward by 6.83% over those trained on UI-overlaid data. On UI-removal evaluation, GameCleaner achieves an average AAR of 95.36 on synthetic videos, outperforming the strongest temporal mask baseline by 57.3%, and obtains the best in-the-wild AAR of 80.05 with 99.8 background preservation. These results demonstrate the scalable potential of transforming Internet gameplay videos into high-quality world-model training data. Code, dataset, and model will be available at https://github.com/Dongping-Chen/Game2World.
@@ -1609,6 +1744,46 @@ Video games provide a scalable source of training data for video world models, o
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** manipulation, localization
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：VizAnchor: Decoding Manipulation Intent from Tampering Visualizations via Dual-Anchor Reasoning
+- 作者：Xiaotian Zhang, Huayuan Ye, Haiyang Zhang, Chenhui Li, Changbo Wang, Sicheng Song
+- 出版日期：2026-08-25
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.24535
+
+### 一句话总结
+VizAnchor是一个基于双锚点（语义锚与空间锚）和VLM推理的框架，用于理解可视化图表中的操纵行为，包括定位篡改区域、还原原始信息并推断误导意图。
+
+### 研究问题
+现有方法只能定位被篡改的区域或恢复隐藏信息，无法解释可视化是如何被操纵的，以及这些改动为何会误导观众。本文旨在解决这一空白，实现从篡改可视化中解码操纵意图。
+
+### 核心思路/方法
+VizAnchor分为两个阶段：
+1. **双锚点构建**：构建语义锚点以恢复真实的图表信息，构建空间锚点以定位被篡改的区域。
+2. **三智能体推理**：
+   - **误导者定位智能体**：通过分析四面板视觉提示，预测误导性信息；
+   - **图表叙事重建智能体**：以原始图表和篡改图表为输入，分别重建其视觉叙事；
+   - **意图推断智能体**：整合视觉证据与误导者信息，推断误导意图。
+
+此外，作者构建了两个数据集，分别用于篡改定位和误导意图推断。
+
+### 主要贡献
+- 提出VizAnchor框架，首次将篡改可视化的理解从“定位/恢复”推进到“意图解码”层面；
+- 设计双锚点证据构建机制，结合VLM推理进行多层次分析；
+- 构建用于篡改定位和误导意图推断的数据集；
+- 实验表明VizAnchor能准确定位篡改区域，并对操纵方式、误导者和误导意图产生可信的解释。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**中**。理由：该工作聚焦数据可视化安全与误导性图表理解，属于交叉方向，方法上采用了VLM+多智能体框架，有一定新颖性。但摘要中未给出定量实验细节或与现有方法的对比结果，且分类为Embodied/Robotics/AR方向，与可视化安全略显错位，建议对可视化和AI安全交叉领域感兴趣的读者优先关注。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1626,6 +1801,40 @@ Data visualizations are widely used for communicating information, but they are 
 **Matched keywords:** scene reconstruction, embodied AI, manipulation, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：NeoWorld-Pro: Programming Interactive Scenes from Monocular Images for Embodied Simulation
+- 作者：Yumeng He, Yichen Song, Xiaotian Yang, Weijia Zhang, Zanwei Zhou, Junru Gong, Xiaokang Yang, Yunbo Wang
+- 出版日期：2026-08-25
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.24212
+
+### 一句话总结
+NeoWorld-Pro 提出一种将单目图像重建为可交互3D场景的程序化编程框架，利用多模态大语言模型生成场景程序，并通过物理引擎闭环迭代优化，实现对物体几何、关节和物理属性的可验证重建。
+
+### 研究问题
+如何将单张RGB图像转换为具备物理合理性、场景级交互性和精确空间关系的仿真就绪3D场景，以克服现有图像到URDF方法缺乏物理支撑和交互能力的问题。
+
+### 核心思路/方法
+- 将单目场景重建重新定义为“程序化编程”任务：使用多模态大语言模型（MLLM）的零样本推理与代码合成能力，将一张RGB图像转换为可执行程序，程序中指定物体几何、关节结构和物理属性。
+- 引入“物理在环”（physics-in-the-loop）迭代机制：生成程序后在物理引擎中执行并验证，根据执行结果不断修正程序，确保关节运动合理、物体组合与交互有效、空间关系准确。
+
+### 主要贡献
+- 提出针对单目图像重建的交互式场景编程框架，将重建问题转化为程序生成与验证问题。
+- 设计了物理在环的迭代优化机制，使生成场景具备物理合理性和可交互性。
+- 实验表明方法优于开环方法和先前单目重建方法，并可支持复杂下游任务（如稳定堆叠和精细操作）。
+
+### 局限性
+摘要未提供足够信息，包括对失败案例的讨论、对计算开销或运行效率的分析、以及对不同场景类型（如动态场景或极端光照）的适用性评估。摘要也未提及与现有重建方法在定量指标上的具体对比数值。
+
+### 阅读优先级
+**高**  
+理由：该工作直接面向具身智能对高质量仿真资产的需求，提出结合MLLM代码生成与物理闭环验证的新范式，创新性强且实验表明能支撑堆叠、精细操作等关键下游任务，对Embodied AI和仿真领域具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 The advancement of Embodied AI necessitates high-quality simulation assets that faithfully mirror the real world. However, transforming raw visual observations into simulation-ready scenes remains challenging due to the lack of physical grounding and scene-level interactivity in current image-to-URDF methods. We propose NeoWorld-Pro, a framework that reformulates monocular scene reconstruction as procedural programming for interactive 3D environments. Leveraging the zero-shot reasoning and code synthesis capabilities of MLLMs, NeoWorld-Pro converts a single RGB image into executable programs specifying object geometry, articulation, and physical properties. A physics-in-the-loop mechanism then iteratively refines the generated programs by validating their execution in a physics engine, enforcing physically plausible articulations, valid object compositions and interactions, and accurate spatial relationships. Experiments show that NeoWorld-Pro outperforms open-loop and prior monocular reconstruction methods, while enabling complex downstream tasks such as stable stacking and fine-grained manipulation.
@@ -1639,6 +1848,41 @@ The advancement of Embodied AI necessitates high-quality simulation assets that 
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** scene reconstruction, embodied AI, autonomous driving
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：SceneReGen: Generative Reconstruction of 3D Scenes from a Single Image
+- 作者：Zefan Tian, Yuteng Ye, Yiheng Zhang, Yuhang Yang, Xueqiang Lv, Shizhou Zhang, Le Liu, Di Xu
+- 出版日期：2026-08-25
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.23930
+
+### 一句话总结
+SceneReGen 提出一种生成式重建框架，将单图像三维场景重建转化为在共享观测对齐场景坐标系中生成并装配完整物体资产，通过选择性位姿分解弥补物体生成与场景重建间的表征差距。
+
+### 研究问题
+如何从单张图像进行三维场景重建，在补全部分被遮挡物体的同时，将其连贯地放置于共享的、与观测对齐的场景坐标系中。核心难点在于物体级生成先验的输出是居中、尺度归一化的物体坐标系表达，与场景级重建所需的观测对齐场景坐标系存在表征差距。
+
+### 核心思路/方法
+- 将场景重建重新定义为“完整物体资产的生成与装配”问题，所有资产统一在共享的观测对齐场景坐标系中表达。
+- 通过选择性位姿分解（selective pose factorization）处理生成-重建差距：物体的观测朝向直接编码在生成网格中，而平移和尺度则从实例级与全局场景证据中估计。
+- 网络结构包括：几何编码器（从场景图像和实例掩码提取密集线索）、可学习的形状查询（条件化预训练的基于 DiT 的三维生成器，生成保持观测朝向的完整网格）、以及位置查询（融合物体与场景特征，用于在共享坐标系中装配物体）。
+
+### 主要贡献
+- 提出 SceneReGen 框架，弥合物体级生成先验与场景级重建之间的表征差距。
+- 设计选择性位姿分解策略，将朝向编码于生成网格中，平移和尺度通过实例与全局证据估计。
+- 在 3D-FUTURE 评估子集上，场景级 CD、场景级 F-Score 和三维边界框 IoU 均取得最优，物体级 CD 并列最优，物体级 F-Score 排名第二。
+- 在自动驾驶与具身智能场景中的定性结果展示了面向资产生成的重建方法在室内家具之外的潜力。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该工作针对单图像三维场景重建中的表征差距问题提出了新的生成式框架，在标准数据集上取得了多项最优指标，且应用场景涉及自动驾驶与具身智能等热门领域，方法新颖且评估结果明确，值得细读。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1660,33 +1904,35 @@ Single-image 3D scene reconstruction must complete partially observed objects an
 
 ### Metadata
 - 标题：GeoWAM: Visual Geometry World Action Models for Autonomous Driving
-- 作者：Yiren Lu, Xin Ye, Jiaming Liu, Jin Yao, Yi-chung Chen, Liam Merino, Dhruva Dixith Kurra, Min Cai, Tom Lampo, Yu Yin, Danhua Guo, Burhan Yaman
+- 作者：Yiren Lu, Xin Ye, Jiaming Liu, Philip Jacobson, Jin Yao, Yi-chung Chen, Liam Merino, Dhruva Dixith Kurra, Min Cai, Tom Lampo, Yu Yin, Danhua Guo, Burhan Yaman
 - 出版日期：2026-08-24
 - 分类：Embodied / Robotics / AR Applications
 - 链接：https://arxiv.org/abs/2608.23486
 
 ### 一句话总结
-GeoWAM 提出以点云表示的几何作为状态空间，通过预测未来场景几何而非未来图像来预训练世界行为模型，从而获得更强的自动驾驶策略。
+GeoWAM 提出以未来场景几何（点云）预测替代传统像素级视频预测，作为自动驾驶世界动作模型的预训练目标，从而学习更符合驾驶动作执行空间的场景动态表征。
 
 ### 研究问题
-现有世界行为模型（WAMs）在像素空间中学习场景动态，但像素将几何、运动与外观、纹理、光照纠缠在一起，迫使模型从二维观测推断三维变换，无法自然对齐驾驶动作执行的空间。本文研究的问题是：能否用几何状态空间替代像素空间，以更直接地建模场景演化与自我动作，从而提升自动驾驶策略性能。
+现有世界动作模型（WAM）在像素空间学习场景动态，但像素将几何、运动与外观、纹理、光照纠缠在一起，迫使模型从二维观测推断三维变换，这种间接表征不利于驾驶场景的几何与运动建模。研究问题为：能否直接用三维几何（点云）作为状态空间来建模场景演化与驾驶动作？
 
 ### 核心思路/方法
-- 核心状态表示：使用点云表示的几何作为驾驶状态空间，显式捕捉空间结构及刚体/非刚体变换，与驾驶动作空间直接对齐。
-- 预训练目标：不预测未来图像，而是预训练模型预测未来场景几何，使表征同时编码空间结构与时间演化。
-- 动作头：设计一个几何条件化的动作头，利用学到的几何动态来预测未来自我轨迹。
-- 评估方式：进行开环与闭环评估，与基于图像的替代模型进行对比。
+- 构建视觉几何世界动作模型（GeoWAM），核心是用点云表示驾驶场景的几何状态。
+- 预训练阶段：预测未来场景几何（点云），而非未来图像，使模型表征同时编码空间结构与时间演化。
+- 动作预测阶段：设计几何条件化的动作头（geometry-conditioned action head），利用学到的几何动态信息预测未来自车轨迹。
+- 评估方式：进行开环与闭环评估，对比基于图像的世界模型方法。
 
 ### 主要贡献
-- 提出 GeoWAM，一种以视觉几何为状态空间的世界行为模型。
-- 论证了几何（点云）相比像素是更适合驾驶场景演化的状态表示。
-- 确立“预测未来几何”作为自动驾驶的有效预训练目标，实验显示其产生的驾驶策略显著优于基于图像的方案。
+1. 提出以未来几何预测作为驾驶世界模型预训练目标的新范式，替代像素空间的视频生成。
+2. 引入 GeoWAM 模型架构，将点云作为驾驶动作执行的自然状态空间。
+3. 通过开环与闭环实验证明：视觉几何世界建模相比基于图像的方法能产生显著更强的驾驶策略。
 
 ### 局限性
-摘要未提供足够信息：未披露具体数据集、实验设置、模型规模、计算成本、失败案例或对遮挡/动态物体等复杂场景的处理细节。
+摘要未提供足够信息。摘要未提及具体数据规模、评估场景范围、计算资源需求、模型在极端场景下的表现，以及与基线方法的具体量化差距等细节。
 
 ### 阅读优先级
-**高**。理由：该工作针对自动驾驶世界模型的根基性表征问题提出新视角，且实验证据显示几何状态显著优于像素基线，对后续 WAM 设计与预训练目标选择有较强启示意义；适合关注自动驾驶决策、世界模型表征学习的读者优先阅读。
+**高**
+
+理由：该工作提出将世界动作模型从像素空间转向几何（点云）空间，这是一个具有范式意义的方向转变，且摘要报告了开环与闭环评估中的显著性能提升。对从事自动驾驶决策建模、世界模型、几何深度学习的研究者具有较高参考价值。
 
 </details>
 
