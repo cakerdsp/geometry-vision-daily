@@ -11,76 +11,72 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：39
+- 当前滚动窗口论文数：35
 - 分类分布：
-  - 3D Reconstruction & Multi-view Geometry: 13
+  - 3D Reconstruction & Multi-view Geometry: 12
   - Embodied / Robotics / AR Applications: 9
-  - Neural Scene Representations & Rendering: 9
-  - Dynamic / 4D Reconstruction: 7
-  - Geometry Foundation Models: 1
+  - Neural Scene Representations & Rendering: 7
+  - Dynamic / 4D Reconstruction: 5
+  - Geometry Foundation Models: 2
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
 ### 科研趋势综合分析
 
-## 今日科研趋势综合分析报告
+#### 今日主要趋势
 
-> 覆盖时间窗口：2026-08-24 至 25 | 论文总数：17 篇
+**1. “世界动作模型”（WAM）加速向几何/3D 表征迁移，像素表征正在被显式重构**
 
+今日多篇论文（GaussianWAM、GeoWAM、4DGS-WAM、GaussianDream++）不约而同地指向一个方向：世界动作模型（联合场景演化预测与动作生成）不再满足于在像素空间或 2D 视频潜空间中学习动力学，而是主动引入显式的三维几何或对象级结构作为状态空间和预测目标。GeoWAM 直接用点云替代像素作为未来场景预测目标；GaussianWAM 和 GaussianDream++ 通过 3D 高斯场在训练时向模型蒸馏几何与语义监督；4DGS-WAM 则以 4D 高斯泼溅显式分离动态对象与静态背景进行未来外推。这一趋势表明，“几何超级信号”正从可选的辅助监督，变成 WAM 训练的核心表征组织方式。
 
-### 一、今日主要趋势
+**2. 高斯泼溅（3DGS/4DGS）继续向“世界模型 + 几何基础模型”双栖角色演进**
 
-#### 趋势 1：世界模型从"像素预测"向"几何/语义状态预测"转型
+高斯泼溅在本批论文中出现两种定位的合流：一是作为**统一的表征中间层**——GaussianWAM 用它绑定深度、语义、相机参数等异构信号再蒸馏，GaussianDream++ 用它作为 VLA 的世界表示头，PAGS 则用高斯源表示声学压力场，说明高斯原语已成为跨模态、跨任务的对齐枢纽；二是作为**显式世界状态**——4DGS-WAM 将对象高斯泼溅的变换作为未来预测对象。结合 ExMesh++ 试图从高斯等中间表示进一步落地为可重打光的 UV-PBR 网格资产，可以看出高斯泼溅正从“渲染表示”走向“世界表示”，并开始向可编辑、可交互的资产管线延伸。
 
-这是今日最显著的趋势信号。两篇独立工作 **GeoWAM**（自动驾驶领域）和 **GaussianWAM**（机器人操作领域）同时挑战了世界动作模型（WAM）在像素空间学习场景动态的既有范式，提出将预测目标从图像转向显式几何表征——GeoWAM 直接预测未来点云，GaussianWAM 则通过 3D 高斯场将几何与语义监督蒸馏进模型表示。两者互不引用、几乎同期发布，指向一个正在形成的领域共识：**像素作为状态空间对几何与运动建模是间接且低效的**，"几何即状态"可能成为下一代世界模型的核心理念。
+**3. 评测基准正从“干净重建”走向“现实退化条件”，方法结论出现反转**
 
-#### 趋势 2：单目/稀疏输入下的场景生成式重建加速兴起
+PIVOT 提出专门的多轨迹评测平台，分离位姿、内参、训练/测试轨迹覆盖三个因素对 NeRF/3DGS 的影响；水下高斯泼溅的受控跨场景研究（Gaussian Splatting Underwater）直接表明“方法效果更多取决于采集设置而非架构”，且出现“光度领先者在几何上落败”的反转结论；FixAnything 则针对稀疏输入/远视点下渲染伪影这一退化条件提出统一修复。这些论文共同揭示：在更贴近机器人、无人机实际部署的采集条件下（缺失相机、声速异质、水下浊度、GPS退化、硬件故障），既有方法排行榜的可靠性正被系统性重估。
 
-**SceneReGen** 将单图像三维场景重建重新定义为"完整物体资产的生成与装配"；**NeoWorld-Pro** 则用多模态大语言模型将单目图像转化为可交互场景程序。两者互补地展示了同一趋势的两个侧面：一是**几何驱动的生成式补全**（SceneReGen），利用物体级生成先验弥补观测缺失；二是**基于物理验证的程序化场景编程**（NeoWorld-Pro），把重建问题转化为可执行代码的生成与验证。结合 **FixAnything** 对稀疏视角渲染伪影的通用修复，可以看出领域正在从"重建观测到的"转向"生成观测不到的"。
+**4. 单图/稀疏观测的三维重建转向“生成式装配 + 程序化物理”范式**
 
-#### 趋势 3：3D 高斯泼溅成为跨表征、跨媒体、跨任务的"粘合剂"
+SceneReGen 将单图场景重建重构为“完整物体资产生成 + 共享场景坐标系装配”，通过选择性位姿分解弥合物件级生成先验与场景级重建之间的表征差距；NeoWorld-Pro 则更进一步，将单目重建视为“程序化编程”——由多模态大模型生成描述几何、关节与物理属性的可执行程序，并用物理引擎闭环验证。这代表单图重建正从纯几何补全，演化为**生成先验 + 物理合理性 + 可交互性**的综合问题。
 
-今日多篇论文以 3DGS 为核心或关联组件，但侧重点各异：**GaussianWAM** 将异构语义/几何信号绑定到共享高斯原语进行蒸馏；**SeeU** 在高斯空间中注入语义进行条件化精化以解决稀疏视角欠约束问题；**AquaFlow** 与 **NemoSplat** 分别将单目流式重建和前馈 4D 重建扩展到水下场景；**LagrangeGS** 将动态 3DGS 建模为非保守拉格朗日系统；**ExMesh++** 则试图将重建结果导出为可编辑的 UV-PBR 网格资产。这一分布表明 3DGS 已从"新视角渲染方法"演变为一个**基础设施层**——不同子领域正在围绕它解决各自的核心痛点（几何一致性、物理一致性、场景可编辑性、媒体退化鲁棒性）。
+**5. 训练效率与推理开销成为核心设计约束，多处出现“训练时重监督、推理时裁剪”的范式**
 
-#### 趋势 4：输入数据层面的"预处理革命"——解决杂乱信号与真实世界数据
+GaussianDream++ 明确采用“世界表示头仅在训练时使用、推理时裁剪”的设计，只保留 20 个世界令牌；GaussianWAM 训练结束后移除所有教师模型、高斯组件与辅助预测头，原始 WAM 推理路径不加任何模块；FixAnything 复用预训练视频生成模型仅做轻量微调；PAGS 用紧凑球谐参数化的声速场替代显式稠密介质模型。这些做法表明：随着监督信号越来越丰富（多视角、深度、语义、未来预测），如何避免将这些重监督的代价带入推理期，已成为方案设计的一等约束。
 
-**Game2World Engine** 直面游戏视频中 UI 覆盖层对世界模型训练的干扰，通过自动化 UI 提取与合成构建干净的成对训练数据；**Spotter** 通过语义分割与多视立体将街景全景转化为紧凑的地理参考数据库；**SiZeUp** 利用单目深度先验与有序深度损失直接从航拍影像估计建筑高度。这些工作共同指向一个趋势：**重建与生成模型的下限由训练数据质量决定，而数据质量的核心瓶颈正从"采集"转向"范式化清洗与结构化提取"**。
+---
 
-#### 趋势 5：模型效率与轻量化微调成为通用诉求
+#### 技术路线观察
 
-**FixAnything** 仅通过二进制掩码与轻量微调即复用预训练视频生成模型完成多表示渲染修复；**NemoSplat** 以前馈方式实现无需逐场景优化的 4D 水下重建；**SiZeUp** 通过降维参数化将重建速度提升 23–52 倍；**LagrangeGS** 通过近似速度-海森矩阵为单位矩阵绕开大规模求逆计算瓶颈。这些工作展示了从"每场景逐优化"走向"前馈/轻量适配"的范式迁移，契合边缘设备与实时应用需求。
+| 方向 | 技术侧重点 | 代表论文 |
+|------|-----------|---------|
+| **几何基础模型** | 利用 3D 高斯场作为异构监督信号的统一组织者，向 WAM/VLA 蒸馏几何与语义；强调“训练时增强、推理时零开销” | GaussianWAM、GaussianDream++ |
+| **世界动作模型（WAM）** | 分歧明显：一派坚持像素/视频潜空间但引入几何蒸馏（GaussianWAM），一派直接改以点云/4DGS为状态空间（GeoWAM、4DGS-WAM），后者更激进但更贴合动作执行空间 | GeoWAM、4DGS-WAM、GaussianWAM |
+| **3D/4D 重建与资产管线** | 从“仅重建几何”走向“可编辑可重打光资产”（ExMesh++）与“生成式场景装配”（SceneReGen），重建结果越发强调拓扑、UV、PBR 等下游可用性 | ExMesh++、SceneReGen |
+| **神经场景表示与渲染** | 从“提出新表示”转向“修复/补全/评测既有表示”——FixAnything 统一修复多种表示伪影，Neighbor-Aware View Synthesis 恢复光场缺失视图，水下研究重估 3DGS 在退化介质中的表现 | FixAnything、Gaussian Splatting Underwater、Neighbor-Aware View Synthesis |
+| **机器人/AR 应用** | 物理在环的程序化场景生成（NeoWorld-Pro）、GPS 退化环境下的立面地标定位（Spotter）、自动驾驶意图门控（Gating Before Commitment），强调可部署性与实际环境鲁棒性 | NeoWorld-Pro、Spotter、Gating Before Commitment |
 
+关键对比：**几何基础模型路线**倾向于“几何只做监督信号，不改变推理架构”（GaussianWAM、GaussianDream++），而 **WAM 激进派**直接要求模型在三维状态空间中推理（GeoWAM、4DGS-WAM）。前者部署友好但几何信息是“蒸馏过的”，后者表征更直接但面临点云累积误差、动态场景表达等挑战。此外，**ExMesh++ 与 SceneReGen 代表重建产物的两极**：前者追求工业级可编辑资产，后者追求生成先验驱动下的完整补全与装配，二者未来可能在“生成式资产级重建”上合流。
 
-### 二、技术路线观察
+---
 
-| 技术路线 | 代表性论文 | 核心表征/监督信号 | 关键瓶颈 |
-|---------|-----------|------------------|----------|
-| **几何基础模型** | GaussianWAM | 深度 + 相机参数 + 稠密语义特征绑定高斯原语 | 如何在训练后移除教师模型不掉点 |
-| **世界模型（驾驶/机器人）** | GeoWAM, GaussianWAM, Game2World | 点云（GeoWAM）vs 像素+高斯场蒸馏（GaussianWAM）vs 清洗后游戏视频（Game2World） | 几何监督如何与动作生成协调统一 |
-| **前馈 3D/4D 重建** | NemoSplat, AquaFlow, SeeU | 显式高斯/点云 + 物理媒体模型 | 动态场景解耦、媒体退化补偿 |
-| **物理感知动态建模** | LagrangeGS | 非保守拉格朗日系统 + 局部刚体正则 | 大规模粒子计算效率 |
-| **生成式场景重建** | SceneReGen, NeoWorld-Pro | 物体先验 + 场景坐标装配（SceneReGen）；MLLM 代码生成 + 物理在环验证（NeoWorld-Pro） | 物体生成本位坐标与场景坐标之间的表征差距 |
-| **渲染修复/编辑** | FixAnything, ExMesh++, Object-Uni | 视频生成先验 + 二进制掩码锚定；分阶段网格-UV-材质解耦 | 3D 一致性维持、分解歧义 |
-| **定位与导航应用** | Spotter | 建筑立面语义分割 + 多视立体 + 级联检索 | GPS 退化环境的实时性要求 |
-| **特定领域适配** | Misanthrope, 姿态评估框架 | 隐私感知关键点检测（自蒸馏）；BlazePose 运动学分析 | 任务特定性与泛化能力的权衡 |
+#### 值得优先阅读的论文
 
-**侧重点对比：**
-- **视觉表征重心**从"像素/图像空间"向"几何空间（点云、深度、高斯）"迁移，且语义信息（而非仅几何）正成为第三极监督信号。
-- **实现范式**从"每场景优化"向"前馈推理 + 轻量微调"转变，但具体路径分化：有的复用视频生成先验（FixAnything），有的用基础模型前馈预测（NemoSplat），有的用 MLLM 代码生成（NeoWorld-Pro）。
-- **场景覆盖**从室内/郊外数字建模（Object-Uni、SceneReGen）扩展到水下（AquaFlow、NemoSplat）、城市 GPS 退化（Spotter）、运动健身（姿态评估）等真实应用场景。
-- **一致性保障手段**呈现多元化：FixAnything 用相机位姿精度做 DPO 奖励信号，LagrangeGS 用拉格朗日力学约束保证时间可逆性，SeeU 用熵感知跨视角聚合恢复欠约束区域，ExMesh++ 用分阶段优化减轻分解歧义。
+**1. GaussianWAM（2608.24714）**
+优先理由：它代表了当前最实用的一类技术路线——不改变 WAM/VLA 推理架构，只通过训练时蒸馏将几何与语义注入表示，训练后零额外开销。这是“几何基础模型赋能机器人操作”最具工程落地潜力的范式之一，且作者与 GaussianDream++ 有重叠，连续追踪同一团队的两篇工作可快速理解该路线演进。
 
+**2. GeoWAM（2608.23486）**
+优先理由：它挑战了 WAM 的像素表征根基，直接以点云作为未来场景预测目标，这是对“世界模型该用什么状态空间”这一根本问题的正面回答。其开环/闭环评估设计也值得参考，若该路线成立，将深刻影响自动驾驶世界模型的建模范式。
 
-### 三、值得优先阅读的论文
+**3. Gaussian Splatting Underwater（2608.25483）**
+优先理由：本批论文中最具“祛魅”价值的工作。它采用统一受控协议比较五种开源 3DGS 系统，结论是“效果由采集设置而非架构决定”，甚至出现光度与几何排名反转。任何基于 3DGS 做实际部署的研究者都应对此保持警惕，其评测设计与代码发布也具有直接参考意义。
 
-#### 1. GaussianWAM（arXiv:2608.24714）⭐ 最优先
-**理由**：与 GeoWAM 构成今日最重要的"合流"信号——两篇独立工作同时挑战世界模型像素空间范式。GaussianWAM 的技术路线（异构教师信号 → 3D 高斯场统一组织 → 训练时蒸馏、推理时零开销）具有高度可迁移性，且对机器人操作这一热门方向直接适用。理解它可同时把握世界模型演进与 3DGS 基础设施化两大趋势的交汇点。
+**4. PIVOT（2608.25401）**
+优先理由：它直击 NeRF/3DGS 评测体系的方法论缺陷——将位姿、内参、轨迹覆盖三个因素从“混在一起”变为“独立可控制”，并引入了训练位姿覆盖度的量化指标。在重建评测普遍“报喜不报忧”的现状下，这类基准工作对社区长期价值极高。
 
-#### 2. GeoWAM（arXiv:2608.23486）⭐ 最优先
-**理由**：将世界模型预训练目标从"未来图像"切换为"未来点云"，是一个简洁而深刻的问题重构。自动驾驶场景动作执行空间本身就是三维的，这一改动直击像素表征的本质缺陷。开闭环实验对比结果值得细读，它可能预示 WAM 领域的重要转向。
-
-#### 3. SceneReGen（arXiv:2608.23930）⭐ 高
-**理由**：选择性位姿分解（朝向编码在生成网格中，平移与尺度从场景证据估计）是一个精巧的设计洞察，直面物体级生成与场景级重建之间的
+**5. FixAnything（2608.23549）**
+优先理由：它用一个统一模型修复 3DGS、Ne
 
 ### interests.md 指令分析
 
@@ -150,6 +146,42 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 **Primary category:** Geometry Foundation Models
 **Secondary categories:** Embodied / Robotics / AR Applications
 **Matched keywords:** VGGT, manipulation, world modeling
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GaussianDream++: Efficient 3D Gaussian World Modeling for Robotic Manipulation
+- 作者：Yuqing Jiang, Zijian Zhang, Weitao Zhou, Jiawei Wang, Junjie He, Lei Yang, Haifang Qing, Si Liu, Ding Zhao, Ping Luo, Haibao Yu
+- 出版日期：2026-08-26
+- 分类：Geometry Foundation Models（主分类）；Embodied / Robotics / AR Applications（次分类）
+- 链接：https://arxiv.org/abs/2608.25659
+
+### 一句话总结
+GaussianDream++ 通过在 VLA 骨干网络中直接插入世界状态令牌和世界预测令牌，并以训练阶段专用的世界表示头解码为共享高斯原语的当前/未来三维表达，实现了高效、轻量且鲁棒的机器人操作世界建模。
+
+### 研究问题
+如何在视觉-语言-动作（VLA）策略中，以高效的方式引入具备度量三维结构与短期物理演化预测能力的监督信号，从而提升语言条件下的机器人操作性能，同时避免在线高斯解码或推理阶段的高昂部署成本。
+
+### 核心思路/方法
+- 在 VLA 骨干网络中直接插入**World State Tokens（世界状态令牌）**和**World Prediction Tokens（世界预测令牌）**，使世界建模信息与策略主干深度融合。
+- 引入**训练专用**的 World Representation Head，将上述令牌解码为共享高斯原语下的**当前世界**与**未来预测**的耦合表示。
+- 通过**静态-动态因子分解**，保留场景的持久结构，并将残差运动聚焦于交互相关区域。
+- **推理时裁剪**：模型头部、渲染器、辅助目标及 VGGT/TGE 路径全部移除，仅保留 20 个世界令牌，无需在线高斯解码或 rollout，实现高效闭环控制。
+
+### 主要贡献
+- 提出 GaussianDream++ 方法，作为 GaussianDream 的紧凑、策略原生扩展，将世界状态与预测令牌无缝融入 VLA 骨干。
+- 实现训练期三维监督（当前重建 + 未来预测），在不增加推理负担的前提下增强策略的几何与动态感知能力。
+- 在 LIBERO 上达到 **98.6%**、LIBERO-Plus 上达到 **87.8%** 的成功率，在相机与场景布局移位下表现明显提升。
+- 真实机器人实验中，相较于复现的 π₀.₅，平均成功率从 **29.2%** 提升至 **52.5%**，同时保持高效的闭环控制。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**高**。理由：该方法在机器人操作与三维视觉交叉领域提出了在 VLA 策略内高效引入三维世界建模的新思路，并展示了在仿真与真实机器人上的显著性能提升；同时推理阶段极为轻量，具备明确的工程实用价值，对从事机器人学习、三维表示学习及具身智能的研究者具有较高参考意义。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -222,6 +254,41 @@ World-Action Models (WAMs) jointly learn future visual prediction and action gen
 **Primary category:** Dynamic / 4D Reconstruction
 **Secondary categories:** Neural Scene Representations & Rendering
 **Matched keywords:** 4D Gaussian, Gaussian Splatting, splatting, world model
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：4DGS-WAM: Bridging Past and Future with an Object-Centric World Action Model based on 4D Gaussian Splatting
+- 作者：Yueen Ma, Zenglin Xu, Irwin King
+- 出版日期：2026-08-26
+- 分类：Dynamic / 4D Reconstruction（次要分类：Neural Scene Representations & Rendering）
+- 链接：https://arxiv.org/abs/2608.25956
+
+### 一句话总结
+本文提出一个基于4D高斯泼溅的对象中心世界动作模型（4DGS-WAM），通过分离动态对象与静态背景，实现仅预测动态物体变化而复用已观察静态内容的未来状态外推。
+
+### 研究问题
+现有世界动作模型（WAMs）基于2D视觉数据，缺乏显式的对象级空间结构，且反复处理冗余背景内容；而点云虽能表示3D空间，但在跨视角对齐和累积上存在困难，如何构建一个兼具显式空间结构与高效未来预测的世界动作模型是本文要解决的问题。
+
+### 核心思路/方法
+- 使用显式4D高斯泼溅（4DGS）表示，将场景中的动态对象与静态背景分别建模。
+- 对于动态对象：采用策略模型预测未来的执行者动作，世界模型预测这些对象所对应高斯泼溅的变换。
+- 对于静态背景：由于在过去的帧中大部分已被观察，无需在未来状态中重新生成，可直接复用。
+- 该设计将2D观测提升为持久化的4D表示，使未来预测只需专注于动态对象演化，形成对象中心的世界动作模型。
+
+### 主要贡献
+- 提出4DGS-WAM，一个对象中心的世界动作模型，基于4D高斯泼溅显式建模动态与静态场景分量。
+- 通过复用已观察的静态背景，避免对未来状态中冗余背景的重复生成，从而将计算资源集中于动态对象演化。
+- 在KITTI-MOT数据集上进行了短时程预测与过去重建的实验评估。
+
+### 局限性
+摘要未提供足够信息——实验具体指标、与基线方法的量化比较、推理效率、动态对象数量限制或场景复杂度适用性均未在摘要中说明。
+
+### 阅读优先级
+**中**。理由：该工作将对象中心思想与4DGS结合，方法上有一定创新性，且静态背景复用的思路对未来预测类任务具有参考价值；但摘要中未见对比实验细节和量化结果，实际性能仍需阅读全文确认。适合关注4D重建、世界模型或动作预测方向的研究者优先阅读。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -445,6 +512,44 @@ We present GCA (Gaussian Constitutive Alignment), a framework for learning impli
 **Matched keywords:** 3D reconstruction, structure from motion, Gaussian Splatting, 3DGS, rendering, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Gaussian Splatting Underwater: A Controlled Cross-Regime Study
+- 作者：Olaya Álvarez-Tuñón, Stella Graßhof
+- 出版日期：2026-08-26
+- 分类：3D Reconstruction & Multi-view Geometry；Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.25483
+
+### 一句话总结
+本文在受控协议下系统比较了五种高斯泼溅方法在水下不同浊度、光照和色彩衰减条件下的重建性能，发现方法效果主要由数据采集设置而非算法架构决定。
+
+### 研究问题
+高斯泼溅（Gaussian splatting）方法在水下不同环境条件（浊度、光照损失、颜色衰减）下的表现如何？不同方法各自的优劣势与局限性是什么？
+
+### 核心思路/方法
+- 使用多个公开水下数据集，覆盖不同浊度、光照衰减和色彩衰减程度，并加入一个工业巡检场景。
+- 选取五个具有公开代码的高斯泼溅系统，在统一协议下运行：共享位姿、初始化、预算和评估器。
+- 通过控制变量比较各方法在几何与光度上的表现，分析环境因素对方法相对性能的影响。
+
+### 主要贡献
+- 提供了高斯泼溅在水下多环境条件下的系统化跨场景对比研究。
+- 发现方法性能更多依赖采集设置（如水质、光照几何）而非网络架构。
+- 揭示了水清晰度对上游运动恢复结构（SfM）的强约束（清晰水注册率99.5%，12 NTU时降至0.0%）。
+- 指出光照几何决定介质建模是否有用：随相机移动的人工光下，不考虑介质的泼溅法优于两种介质感知方法。
+- 在工业巡检场景中，基准的光度领先者在几何上落败，而恢复预处理（restoration pre-pass）+ vanilla 3DGS 在几何上胜出；且该差异在已有报告得分中不可见。
+- 发布场景构建、逐次运行配置和评估代码。
+
+### 局限性
+摘要未提供足够信息（未详细说明各方法的具体实现差异、评估指标细节、数据集规模、计算开销等）。
+
+### 阅读优先级
+**高**  
+理由：该研究针对水下三维重建这一重要且难度高的场景，对高斯泼溅方法进行了严格受控的跨条件基准，结论具有较强实际指导意义（如设置对性能的决定性影响），并对现有方法在非常规环境下的适用性提出质疑，适合关注三维重建、水下视觉及高斯泼溅的读者。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 The underwater environment is challenging for 3D reconstruction, because particles suspended in the water scatter and diffuse light, turbidity varies, absorption depends on wavelength, and illumination is rarely uniform. Methods based on Gaussian splatting have generally been developed for conditions that allow good image quality, and have primarily been tested on relatively shallow water. This paper examines how well Gaussian splatting performs across publicly available underwater datasets representing different degrees of turbidity, loss of illumination, and colour attenuation, together with an industrial survey. Five systems with public code are run under one protocol, with shared poses, initialisation, budget, and evaluator, to establish their relative advantages, disadvantages, and limitations. What these methods can do turns out to depend more on the setup than on the architecture. Water clarity binds upstream of rendering, since structure-from-motion registers 99.5 \% of frames in clear water and 0.0 \% at 12 NTU. Illumination geometry decides whether a medium model helps at all: under an artificial light that moves with the camera, medium-blind splatting beats both medium-aware systems. On the survey the benchmark's photometric leader comes last, beaten on geometry by a restoration pre-pass in front of vanilla 3DGS---and none of it is visible in the scores the field reports. Scene builds, per-run configurations, and evaluation code are released at https://github.com/olayasturias/uw3dgs
@@ -458,6 +563,50 @@ The underwater environment is challenging for 3D reconstruction, because particl
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** Neural Scene Representations & Rendering
 **Matched keywords:** 3D reconstruction, camera calibration, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, radiance, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：PIVOT: A Multi-Trajectory Dataset and Testbed for Pose, Intrinsics, and Novel Viewpoint Evaluation in Real-World 3D Reconstruction
+- 作者：Mary Raymond
+- 出版日期：2026-08-26T06:02:32Z
+- 分类：3D Reconstruction & Multi-view Geometry（主要）；Neural Scene Representations & Rendering（次要）
+- 链接：[摘要](https://arxiv.org/abs/2608.25401) | [PDF](https://arxiv.org/pdf/2608.25401)
+
+### 一句话总结
+PIVOT是一个多轨迹真实场景数据集与评测平台，用于独立评估相机位姿、内参和训练/测试轨迹差异对NeRF和3DGS等新视角合成方法性能的影响。
+
+### 研究问题
+现有新视角合成方法的评测通常在比实际机器人/无人机/自动驾驶场景更“干净”的条件下进行（如重建友好的轨迹、优化过的位姿和内参、从训练轨迹中采样的测试视图），这些假设可能掩盖方法在实测位姿、可复用标定和结构不同的相机轨迹下的真实表现。PIVOT旨在建立一个能独立研究这些因素的基准。
+
+### 核心思路/方法
+- 构建一个多轨迹数据集：对每个场景使用多种不同的相机轨迹进行采集，并同时保留传感器测量得到的位姿（实测位姿）和COLMAP优化后的位姿，以及标定和优化后的相机内参。
+- 定义三类基准测试族：
+  1. 已见轨迹 vs. 未见轨迹的新视角泛化能力；
+  2. 实测位姿 vs. 优化位姿的敏感性；
+  3. 标定内参 vs. 优化内参的敏感性。
+- 引入一种“定向位姿空间Chamfer距离”，用于量化训练位姿对评测轨迹的覆盖程度。
+- PIVOT v1包含5个真实场景（由DJI Mini 4 Pro采集），并提供开放的处理流程和基于Nerfstudio的评测工具链。
+
+### 主要贡献
+- 提出了PIVOT数据集与评测平台，明确将位姿、内参和轨迹结构作为独立评测变量，填补现有基准的空白。
+- 定义了三个针对性的基准评测族，分别用于评估轨迹泛化、位姿敏感性和内参敏感性。
+- 提出了定向位姿空间Chamfer距离这一新度量，用于描述训练位姿对评测轨迹的覆盖质量。
+- 提供了包含5个真实场景的开源数据集和完整工具链（基于Nerfstudio）。
+- 基准结果显示：已表示轨迹上的留出视图与未见轨迹之间存在一致的质量差距，且方法对位姿来源和相机内参存在显著敏感性。
+
+### 局限性
+摘要未提供足够信息。摘要中未涉及数据规模细节（如每个场景的轨迹数量、帧数）、计算资源需求、对方法性能差距的量化数值、以及是否有失败案例或场景类型限制（如动态物体、光照变化等）等内容，这些无法从摘要中确认。
+
+### 阅读优先级
+**高**。理由：
+1. 该工作直接针对新视角合成评测中常见的“理想化假设”问题，对NeRF/3DGS领域的实践者有较强的现实指导意义。
+2. 提出的三类基准评测族和新的覆盖度量具有方法论价值，适合从事三维重建、位姿估计和视角合成研究的读者。
+3. 提供开源数据和工具链，具备直接复现和扩展应用的潜力。
+4. 结果揭示的“轨迹未见时质量下降”和“位姿/内参敏感”等问题，对系统部署（如机器人、无人机）具有实际参考意义。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -991,6 +1140,43 @@ Structure-from-Motion (SfM) is a cornerstone of 3D perception, yet current metho
 **Matched keywords:** Gaussian Splatting, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：PAGS: Autofocusing Photoacoustic Tomography via Speed-of-Sound-Adaptive Gaussian Splatting
+- 作者：Jiarui Ge, Jintao Ma, Bangxu Fan, Jinyan Zhang, Xiaokang Yang, Shuai Na, Xiaoyun Yuan
+- 出版日期：2026-08-26
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2608.25472
+
+### 一句话总结
+本文提出一种基于高斯溅射与声速自适应场联合优化的可微框架PAGS，用于在不依赖标定声速先验的情况下，对光声计算断层成像（PACT）中的声速异质性导致的失焦伪影进行盲自动对焦。
+
+### 研究问题
+PACT成像中，未知的声速（SoS）异质性会改变声波飞行时间，导致在假设均匀声速进行重建时出现失焦伪影。现有方法要么依赖标定的声学先验，要么优化稠密的物理介质模型，在三维场景下计算代价高且难以扩展。因此，需要一种无需先验、可扩展且高效的盲对焦重建方法。
+
+### 核心思路/方法
+- 用稀疏高斯光声（PA）源表示初始压力场，替代显式的介质恢复。
+- 引入由球谐函数参数化的紧凑各向异性路径平均声速（ASoS）场，作为潜传播场，直接控制源到换能器的到达时间对齐。
+- 通过解析高斯声学投影，将源表示高效映射为换能器信号。
+- 构建闭环信号域优化：从测量数据中联合更新高斯PA源参数与ASoS场，全程无需标定SoS先验。
+
+### 主要贡献
+- 提出PAGS，一个用于PACT盲自动对焦的可微框架，统一了源表示与声速场估计。
+- 用紧凑的球谐参数化ASoS场替代显式稠密介质模型，降低三维扩展难度与计算开销。
+- 解析高斯声学投影带来计算效率优势。
+- 在模拟与物理体模实验上验证了异质声学介质下的重建清晰度提升、稀疏视图采样下的稳健性，以及计算上的收益。
+
+### 局限性
+摘要未提供足够信息。论文未明确讨论对极端声速异质性、真实组织非均匀性的泛化边界、可扩展性的具体量化指标，也未提及对噪声或数据缺失的具体鲁棒性分析。
+
+### 阅读优先级
+**中**  
+理由：该方法将高斯溅射引入光声断层成像，新颖性较高，且无需声速先验和稠密介质建模，对计算成像方向有一定参考价值。但属于专业性强的交叉领域，且摘要未提供与其他SOTA方法的定量对比，影响快速判断其相对优势的紧迫性。若关注无先验声速校正或可微成像，建议阅读；否则可暂缓。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Photoacoustic computed tomography (PACT) combines optical absorption contrast with acoustic detection for high-resolution deep-tissue imaging. A persistent challenge is that unknown speed-of-sound (SoS) heterogeneity changes acoustic time-of-flight, causing defocusing artifacts when reconstruction assumes a uniform SoS. Existing SoS-adaptive methods either rely on calibrated acoustic priors or optimize dense physical medium models, which becomes expensive and difficult to scale in 3D. We propose PAGS, a differentiable framework for blind autofocusing PACT via speed-of-sound-adaptive Gaussian splatting. PAGS represents the initial pressure field with sparse Gaussian photoacoustic (PA) sources and replaces explicit medium recovery with a compact anisotropic path-averaged SoS (ASoS) field parameterized by spherical harmonic probes. This latent propagation field directly controls source-to-transducer arrival-time alignment, while an analytic Gaussian acoustic projection maps the source representation to transducer signals efficiently. The resulting closed-loop signal-domain optimization jointly updates the Gaussian PA source parameters and the ASoS field from measured data, without calibrated SoS priors. Experiments on simulated and physical phantom data demonstrate improved reconstruction sharpness under heterogeneous acoustic media, robustness to sparse-view sampling, and computational benefits from the analytic Gaussian projection.
@@ -1314,6 +1500,48 @@ Generalizable 3D Gaussian Splatting (G-3DGS) has emerged as a promising approach
 **Matched keywords:** autonomous driving
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Gating Before Commitment: Anticipating Intent Divergence to Prevent Post-Interaction Decision Failures in Autonomous Driving
+- 作者：Cong Xu, Ravi Sankar
+- 出版日期：2026-08-26
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.26074
+
+### 一句话总结
+本文提出一种在自动驾驶规划提交前进行“意图分歧门控”的决策层，通过在结构化描述符上计算平滑的意图-几何分歧分数，对计划进行提前拦截，从而防止交互后决策失败。
+
+### 研究问题
+自动驾驶中车辆交互时的意图误读会导致反复出现的规划失败，本文研究如何在计划承诺之前预判意图分歧并采取门控干预，以避免事后决策失效。
+
+### 核心思路/方法
+- 设计一个决策层，包含语言引导的意图模块，读取结构化描述符并计算平滑的意图-几何分歧得分。
+- 在规划走廊包络（corridor envelope）之前设置门控机制，在计划提交前拦截有问题的规划动作。
+- 在冻结、公开的实现下，对重放的越野偏离和四个碰撞片段进行测试。
+- 通过初步校准和预注册重设计（将不确定性视为弃权）来减少误触发。
+- 通过两个消融实验评估模型贡献：对比完整得分与其他规则（如未否决规则和几何规则）的检测性能。
+
+### 主要贡献
+- 提出并验证了“门控在承诺之前”的决策机制，是所测试中唯一能修复计划的层。
+- 主案例中，门控在漂移开始后72 ms触发，但在走廊出口前161 ms触发，并在全部十次重放中保持轨迹在走廊内。
+- 预注册重设计将首次校准中每5.9分钟出现9次误触发的情况降至每分钟0.341次。
+- 消融实验表明：完整得分在四个（部署资格条件）或三个（未否决规则）失败案例中检测最快；几何规则在域内轨道上同等误报率下检测数量增加三倍以上。
+- 证据支持门控机制本身有效，模型的具体作用既包括在失败案例上最快检测，也包括对几何规则提供不确定性否决。
+
+### 局限性
+- 摘要未明确列出实验环境的具体规模、真实路测条件或泛化性评估，因此缺乏对更广泛驾驶场景的验证信息。
+- 摘要未提供关于计算开销、实时性要求或集成到完整自动驾驶系统的具体细节。
+- 摘要未描述误触发减少的具体机制参数（除了“不确定性作为弃权”）及其在更复杂交互中的适用性，摘要未提供足够信息。
+- 未披露数据集的规模和多样性、基线方法对比的完整范围等信息，摘要未提供足够信息。
+
+### 阅读优先级
+**中**  
+理由：该文聚焦于自动驾驶交互决策中的意图分歧检测与门控机制，问题具体且方法有一定创新性，但摘要中实验规模、对比基线和泛化细节有限，对非专门从事自动驾驶决策层的研究者参考价值相对有限。对于从事机器人规划、人机交互和可解释决策系统的读者而言，其门控思路与不确定性处理方式具有参考意义。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Intent misinterpretation during vehicle interactions causes recurring planning failures. We study a decision layer in which a language-guided intent module reads structured descriptors, computes a smoothed intent-geometry divergence score, and gates the planned maneuver before commitment, upstream of a corridor envelope. On a replayed off-road departure and four crash clips under a frozen, disclosed implementation, gating is the only layer that repairs the plan: on the main case it fires 72 ms after the drift onset but 161 ms before the corridor exit, keeping the trajectory in the corridor in all ten replays. The first calibration draws nine false triggers in 5.9 minutes, each from scoring uncertainty as half a conflict; a preregistered redesign treating uncertainty as abstention cuts this to 0.341 per minute. Two ablations bound the model's contribution: the full score detects fastest on four of five failures under the deployed eligibility, three of five against the unvetoed rule (000871 by one cycle; 000228 by a pre-onset fire on an uncertain stretch that five clips cannot classify as signal or coincidence; dropping the confidence term costs two detections), while on in-domain tracks at equal false positives the geometric rule more than triples its detection. The evidence supports the gating mechanism; the model's demonstrated roles are the fastest detection on these failures and an uncertainty veto on the geometric rule.
@@ -1327,6 +1555,42 @@ Intent misinterpretation during vehicle interactions causes recurring planning f
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** manipulation, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：One Policy, Many Embodiments: Unified Camera-Centric Action Geometry Pre-training for Heterogeneous Embodied Manipulation
+- 作者：小米具身智能团队，澳门大学，Shaoqing Xu, Fang Li, Guozhi Zhan, Zhixiang Duan, Yuhan Wang, Yuechen Luo, Shengyin Jiang, Hanbing Li, Zhiying Du, Longlong Wang, Longmei Jiang, Weixiang Liang, Ying Gong, Yong Pan, Ziping Zhao, Zhiyuan Chen, Yangwei You, Kun Ma, Qinyuan Liu, Hangjun Ye, Zhi-xin Yang
+- 出版日期：2026-08-26
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2608.26058
+
+### 一句话总结
+UCAG-P提出了一种以相机为中心的几何统一动作表示方法，将异构具身操作数据对齐到共享几何空间，使单个视觉-语言-动作（VLA）策略能在多种机器人形态上训练并实现跨形态泛化。
+
+### 研究问题
+异构具身数据的固有差异（不同的机器人形态、相机配置和底层动作空间）严重限制了通用VLA策略的规模化训练，现有方法通常依赖显式动作重定向、人-机器人视频合成或数据集专属适配分支，难以实现统一策略的联合学习。
+
+### 核心思路/方法
+- 提出**相机中心统一动作公式（UCAG-P）**，将异构具身数据集在结构上对齐到一个共享的几何动作空间。
+- 不再将机器人专属指令作为共享策略目标，而是通过**图像坐标和相机坐标系中的可观测锚点运动**来表示操作，将机械臂、人形机器人和人手视为统一动作模式的不同具体形态。
+- 设计**几何条件动作翻译器（geometry-conditioned action translator）**，将预测的运动与目标形态的运动学结合，生成可执行控制指令。
+- 采用**解耦架构**，使共享VLA策略学习可迁移的操作几何，同时保留形态专属的可控性。
+
+### 主要贡献
+- 提出一种新的相机中心统一动作公式，从结构上解决异构具身数据的对齐问题，无需显式动作重定向或数据集专属分支。
+- 构建解耦的预训练架构，在共享策略学习与形态专属控制之间取得平衡。
+- 在**4.03K小时机器人/仿真数据与2.34K小时人类演示数据**上进行训练。
+- 单一检查点无需基准专属微调即达到：LIBERO 98.3%、RoboTwin Easy/Hard 88.7%/89.2%、LIBERO-Plus零样本 82.0%、RoboCasa GR-1 62.0%。
+
+### 局限性
+摘要未提供足够信息，例如方法在未见过的极端形态或复杂动态场景下的表现、几何翻译器的计算开销、以及不同相机配置下的鲁棒性等均未提及。
+
+### 阅读优先级
+**高**。理由是：该工作针对VLA策略规模化训练中的核心瓶颈（异构数据对齐）提出了新颖的统一动作几何公式，训练数据规模大（累计超过6K小时），并在多个基准上取得了无需微调的高性能，同时包含零样本泛化评测，对具身智能和机器人操作领域具有直接参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
