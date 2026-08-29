@@ -25,73 +25,79 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-**1. 几何基础模型（如VGGT）成为下游任务的通用“几何先验”来源**
-多篇论文不再从零训练几何网络，而是直接蒸馏或调用VGGT等视觉几何基础模型获取3D先验。例如，`Glass Surface Detection Grounded in 3D Visual Geometry`从VGGT蒸馏3D先验进行玻璃检测；`CGS-SLAM`使用VGGT做多智能体子图对齐；`GaussianDream++`则指出其前身依赖VGGT/TGE路径但引入较大开销。这表明**几何基础模型正从“单一任务工具”转化为“通用几何感知层”**，被嵌入到SLAM、检测、重建、机器人策略等多种任务中。
+1. **3D 高斯泼溅（3DGS）从“可重建”走向“可编辑、可压缩、可丢弃”**
+   3DGS 已成为当前场景表示的事实标准，但今日论文显示研究重心正在从“如何重建”转向“如何处理重建后的数据”。典型代表包括：
+   - **KISS-GS**（2608.26948）：将压缩与训练完全解耦，实现 85x–319x 的场景体积缩减；
+   - **CoGeo-GS**（2608.26656）：面向多物体移除的场景编辑，解决遮挡与语义纠缠；
+   - **Per-View Gaussian Predictions...**（2608.26951）：不重训练即可过滤视角不一致的瞬态干扰物。
+   这三篇共同指向：3DGS 场景的生命周期管理（存储、编辑、清理）正在成为独立于重建本身的研究方向。
 
-**2. 3DGS走向“实用化工程”：压缩、去干扰、鲁棒性、跨域评测成为焦点**
-3DGS的核心渲染架构已趋于成熟，今日论文大量聚焦于其部署问题：`KISS-GS`强调与训练解耦的模块化压缩管线；`Per-View Gaussian Predictions Enable Training-Free Distractor Filtering`解决随手拍中的瞬态干扰物；`Gaussian Splatting Underwater`在受控协议下评测水下多环境鲁棒性；`Cross-Platform Benchmark of Neural 3D Reconstruction`跨平台评测实时性。**3DGS研究正从“如何建得好”转向“如何用得起、用得稳、用得广”。**
+2. **“几何基础模型”成为通用先验，被蒸馏到下游任务**
+   以 **VGGT** 为代表的视觉几何 Transformer 正被广泛用作 3D 先验提取器，出现在多个看似不相关的任务中：
+   - **Glass Surface Detection**（2608.26752）：从 VGGT 蒸馏 3D 先验用于玻璃检测；
+   - **CGS-SLAM**（2608.26868）：用 VGGT 作为全局子图对齐模型；
+   - **GaussianDream++**（2608.25659）：训练时使用 VGGT/TGE 路径（推理时裁剪）提供 3D 监督。
+   这说明“预训练几何基础模型 + 下游蒸馏/微调”正成为 3D 视觉的通用范式，替代以往从零训练的多视角几何管线。
 
-**3. 世界模型与机器人策略深度结合，且显式3D/4D结构成为关键设计**
-多篇论文将世界模型或预测建模与具身智能结合：`4DGS-WAM`用4DGS显式分离动态对象与静态背景做未来预测；`GaussianDream++`将世界状态/预测令牌插入VLA骨干；`Decoupling Planning and Control for Instructable Agents`将VLM规划与世界模型控制器解耦。**显式几何结构（Gaussian/4DGS）被视为弥补2D世界模型缺乏空间结构、计算冗余的关键方案。**
+3. **大重建模型（LRM）与视频扩散模型（VDM）推动“单图到世界”生成**
+   从单张图像生成可探索、几何一致的 3D 场景，是当前具身智能与 AR 的核心诉求：
+   - **SpatialCrafter**（2608.27073）：先用全局 3D 代理保证几何一致，再用视频扩散模型细化外观，克服 VDM 的长期漂移；
+   - **MILO**（2608.27407）：利用 LRM 的几何骨架进行单图人-物交互重建，将传统“重投影拟合”转变为“解释 LRM 网格”。
+   趋势是：LRM/VDM 不再只是场景重建工具，而是作为“几何先验生成器”，为高层任务（交互理解、世界建模）提供稳定骨架。
 
-**4. 数据层面（而非模型层面）的几何优化成为新发力点**
-`A Geometry-Driven, Framework-Agnostic Optimization for Object Pose Estimation`明确采用“数据为中心”路线，在主惯性轴对齐层面解决对称歧义，不修改任何网络结构即显著提升精度。这代表一股**与“模型中心”主流研究不同的潮流：通过重定义标注空间/表示空间来提升性能**，具有即插即用和跨框架泛化的吸引力。
+4. **世界模型（World Model）与 4D 表示的结合，推动具身策略的“预测性”监督**
+   具身智能不再满足于静态场景理解，开始要求策略具备短期物理演化预测能力：
+   - **GaussianDream++**（2608.25659）：在 VLA 骨干中插入世界状态/预测令牌，以 4D 高斯作为监督信号；
+   - **4DGS-WAM**（2608.25956）：用 4DGS 分别建模动态物体与静态背景，只预测动态部分的变化，实现高效未来状态外推；
+   - **Instruct-to-Act**（2608.26788）：解耦高层语言规划与低层世界模型控制。
+   结合方向是：显式 4D/3D 表示正替代 RGB 或潜在空间成为世界模型的输出/监督形式，以提供场景中对象的度量结构与物理演化。
 
-**5. 从“视觉重建”到“多模态/多传感器融合与退化环境鲁棒性”**
-多篇论文关注模态差异或环境退化下的几何估计：`DPA-I2P`融合深度与视觉线索做图像-点云配准；`Contact-Aided Factor-Graph Localization`将物理接触事件作为几何约束引入水下定位；`SSMB`专门解决运动模糊下的关键点检测；`Camera Calibration Using Inaccurate GPS`处理非同步离散GPS标定。**退化环境、跨模态对齐、物理交互辅助成为几何估计的重要战场。**
+5. **数据层面（Data-Centric）的几何优化成为新方法论**
+   今日出现多篇不修改网络架构、纯粹在数据/表示层面进行几何优化的论文：
+   - **A Geometry-Driven, Framework-Agnostic Optimization**（2608.26859）：用主惯性轴对齐改变旋转表示，从数据层面消除对称物体的标签歧义；
+   - **UCAG-P**（2608.26058）：提出以相机为中心的几何统一动作表示，将异构具身数据集对齐到共享几何空间；
+   - **SSMB**（2608.27181）：自监督关键点检测，无需手工检测器或伪标签。
+   这种方法论层面的“数据/几何先验 > 架构创新”取向，标志着领域内对训练范式本身的反思。
 
 ---
 
 #### 技术路线观察
 
-| 方向 | 代表论文 | 技术侧重点 |
-|---|---|---|
-| **几何基础模型** | Glass Detection (VGGT蒸馏)、CGS-SLAM (VGGT对齐)、GaussianDream++ (去VGGT化) | 将VGGT作为先验提供者；同时出现“如何在部署时摆脱VGGT开销”的反向趋势（轻量化/裁剪） |
-| **3D/4D重建** | KISS-GS、Per-View Distractor Filtering、Gaussian Splatting Underwater、4DGS-WAM | 3DGS压缩/过滤/鲁棒性评测；引入4DGS做动态-静态分解，提升预测效率 |
-| **神经场景表示** | CoGeo-GS、Comparative Evaluation (NeRF vs 3DGS vs LiDAR)、KISS-GS | 探索编辑（多物体移除）、应用场景评测（教育）、面向部署的编码格式设计 |
-| **机器人/AR/具身** | UCAG-P、Instruct-to-Act、GaussianDream++、4DGS-WAM、Contact-Aided Localization | 统一异质动作空间；解耦规划与控制；世界模型显式3D监督；物理交互辅助定位 |
-| **跨模态/退化鲁棒** | DPA-I2P、SSMB、GPS Calibration、Underwater 3DGS | 深度引导对齐、去模糊特征、非同步传感器标定、水质/光照鲁棒性 |
+| 方向 | 技术侧重点 | 代表论文 |
+|------|------------|----------|
+| **几何基础模型** | 将预训练几何 Transformer（如 VGGT）蒸馏为下游任务的 3D 先验；强调“训练时可依赖重模型、推理时裁剪”的部署策略 | Glass Surface Detection、CGS-SLAM、GaussianDream++ |
+| **3D/4D 重建与表示** | 3DGS 后处理（压缩、编辑、过滤）成为主流；4DGS 用于动态场景中的物体级建模；LRM 提供单图几何骨架 | KISS-GS、CoGeo-GS、4DGS-WAM、MILO |
+| **神经场景表示与渲染** | 从“网络结构设计”转向“系统评估与部署”：跨平台基准测试、跨环境（水下）受控对比、跨方法一致性检验成为新热点 | Cross-Platform Benchmark、Gaussian Splatting Underwater |
+| **机器人/AR 应用** | 世界模型与语言/动作策略的深度融合；强调低延迟、低通信、跨形态泛化；物理交互（接触事件）作为定位的几何约束 | Instruct-to-Act、UCAG-P、Contact-Aided FGL、CGS-SLAM |
 
-整体来看，**“几何结构”正在成为连接视觉感知与机器人决策的中间表示**，从离线重建走向在线策略注入；同时研究开始重视数据采集/标注层面的优化，而非一味堆叠网络模块。
+关键观察：**架构创新的边际收益递减，评测、压缩、蒸馏、数据对齐等工程性/方法论层面的贡献正在崛起**。多篇论文明确表示“方法效果更多取决于数据采集设置或评测协议，而非网络架构”（如 Gaussian Splatting Underwater、KISS-GS），这暗示领域正在进入一个“工程成熟期”。
 
 ---
 
 #### 值得优先阅读的论文
 
-1. **GaussianDream++: Efficient 3D Gaussian World Modeling for Robotic Manipulation**
-   - 原因：直接面向VLA策略的3D世界建模效率痛点，提出训练专用头+推理裁剪，兼顾监督信号与部署成本，是“几何+策略”融合的代表性工作，对具身智能/机器人方向读者价值高。
+1. **KISS-GS**（2608.26948）—— **高**
+   理由：3DGS 部署的核心痛点（文件过大）第一次被以“完全解耦训练”的模块化方式解决，组件可独立复用，对各类 3DGS 应用都有直接价值。为 3DGS 的工程实践提供了清晰的压缩协议基准。
 
-2. **KISS-GS: 3D Gaussian Splatting Compression Kept Simple**
-   - 原因：将压缩与训练完全解耦，模块化设计透明可复用，解决了3DGS落地部署中文件体积过大的实际问题，对工程与应用导向的研究者极具参考价值。
+2. **SpatialCrafter**（2608.27073）—— **高**
+   理由：单图到可探索场景是具身智能、AR 的关键能力。其“全局 3D 代理 + VDM 外观细化”的两阶段分解，直击视频扩散模型几何不一致的痛点，且已配套 115K 大规模数据集，很可能成为后续图像到场景生成的工作基础。
 
-3. **A Geometry-Driven, Framework-Agnostic Optimization for Object Pose Estimation**
-   - 原因：罕见的“数据为中心”姿态估计优化，通过物理主轴对齐在数据层面解决对称歧义，框架无关即插即用，代表一种值得关注的新研究范式。
+3. **Per-View Gaussian Predictions Enable Training-Free Distractor Filtering**（2608.26951）—— **高**
+   理由：针对前馈 3DGS 中“瞬态干扰物”这一实际常见问题，提出无需重新训练的即插即用过滤方案，已在三个模型和两个基准上验证。实用性强，且方法简洁（基于单一冻结预测）。
 
-4. **Gaussian Splatting Underwater: A Controlled Cross-Regime Study**
-   - 原因：首个在受控协议下跨环境系统评测3DGS的工作，发现“效果更多取决于采集设置而非架构”这一反直觉结论，提醒社区注意评测标准化与场景依赖性问题。
+4. **GaussianDream++**（2608.25659）—— **高**
+   理由：代表了“世界建模进 VLA 策略”的最前沿实践：训练时用 4D 高斯作为度量监督，推理时完全裁剪重模块（仅保留 20 个令牌）。对机器人学习社区有直接的参考价值和复现意义。
 
-5. **Per-View Gaussian Predictions Enable Training-Free Distractor Filtering in Feed-Forward 3DGS**
-   - 原因：针对前馈3DGS实际应用中的瞬态干扰物问题，提供了无需重训练的即插即用过滤方案，已在多模型基准上验证，实用性强，适合关注新视角合成质量与后处理策略的读者。
+5. **A Geometry-Driven, Framework-Agnostic Optimization**（2608.26859）—— **中**
+   理由：展示了“不改架构只改数据”也能显著提升姿态估计的精度，尤其是对对称物体标签歧义的处理思路新。方法即插即用，适合在现有姿态估计管线上快速验证。
 
 ---
 
 #### 可能的研究机会
 
-- **“去基础模型化”的轻量化几何先验**：今日多篇论文依赖VGGT获取3D先验，但`GaussianDream++`已显式指出其部署开销问题。研究如何将几何基础模型蒸馏为轻量模块、或仅在训练时使用而推理时裁剪，是一个明确的空白。
+1. **3DGS 场景生命周期的自动化管理**：现有论文分别解决了压缩（KISS-GS）、编辑（CoGeo-GS）、干扰物过滤（Per-View Filtering），但缺乏一个统一的“场景库”框架，将这三个环节连同增量更新、版本管理整合为一个闭环系统。尤其在持续运行的长时机器人场景中，该问题尚未被解决。
 
-- **训练-推理解耦几何处理范式**：`GaussianDream++`（训练专用头+推理裁剪）与`KISS-GS`（压缩与训练解耦）共同指向一个趋势：将重计算放在训练阶段，部署阶段保持轻量。这一范式可推广到更多视觉任务（如检测、分割、位姿估计）。
-
-- **物理交互作为几何约束的泛化**：`Contact-Aided Factor-Graph Localization`将机械臂接触事件作为隐式回环约束，这是具身智能中“物理感知几何”的新方向，可延伸到其他接触场景（足式机器人、灵巧手操作）或与非接触传感器（力觉、触觉）融合。
-
-- **多物体场景下的3DGS编辑与语义解耦**：`CoGeo-GS`针对多物体移除提出概念驱动方案，但多物体同时编辑、语义边界模糊仍难处理。如何将概念标签与物体级几何解析更好地结合，是内容编辑领域可跟进的课题。
-
-- **跨平台/跨环境的评测方法论**：`Underwater 3DGS`与`Cross-Platform Benchmark`均表明评测设置会颠倒方法优劣。建立统一、受控、可复现的跨环境/跨平台评测协议，本身就是一个高价值研究问题。
-
----
-
-#### 风险和不确定性
-
-- **定量结果依赖全文验证**：多数论文摘要仅给出一句“优于基线/达到最先进”，未提供具体数值（如`MILO`、`SSMB`、`CGS-S
+2. **几何基础模型的“蒸馏即服务”模式**：VGGT 已显示出作为通用 3D
 
 ### interests.md 指令分析
 
@@ -1504,54 +1510,6 @@ Unmanned aerial vehicles (UAVs) increasingly require robust visual localization 
 <summary>Abstract</summary>
 
 Structure-from-Motion (SfM) aims to estimate camera poses and reconstruct 3D structures from a collection of unordered images. Compared with incremental SfM, global SfM achieves better scalability by jointly estimating camera poses based on a view graph constructed from pairwise correspondences. However, its performance is highly sensitive to erroneous edges caused by visually ambiguous matches, which may lead to incorrect camera registration and reconstruction artifacts. In this work, we propose a subgraph-guided view graph pruning framework for robust global SfM. Our key idea is to exploit the internal consistency of reliable subgraphs to identify and remove unreliable connections. Specifically, we first partition the view graph into locally consistent subgraphs and perform global SfM within each subgraph to obtain reliable camera poses. We then apply RANSAC-based edge pruning across subgraphs to remove inconsistent edges, and finally perform global SfM on the refined view graph. Extensive experiments on ambiguous, sequential, and unordered image datasets demonstrate that our method improves the robustness of global SfM under challenging conditions. Further evaluation with neural rendering shows that the improved camera estimation leads to higher-quality novel view synthesis results.
-
-</details>
-
-#### 2026-08-22 - ORBIT++: Benchmarking SfM in the Wild with 360° Video
-
-**Authors:** Sara Sabour, Linyi Jin, Richard Tucker, Amir Hertz, Marcus Brubaker, Saurabh Saxena, Junhwa Hur, Andrea Tagliasacchi, Deqing Sun, David J. Fleet, Richard Szeliski, Noah Snavely
-**Links:** [abs](https://arxiv.org/abs/2608.22039) - [pdf](https://arxiv.org/pdf/2608.22039)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** None
-**Matched keywords:** structure from motion, SfM, camera pose estimation, pose estimation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：ORBIT++: Benchmarking SfM in the Wild with 360° Video
-- 作者：Sara Sabour, Linyi Jin, Richard Tucker, Amir Hertz, Marcus Brubaker, Saurabh Saxena, Junhwa Hur, Andrea Tagliasacchi, Deqing Sun, David J. Fleet, Richard Szeliski, Noah Snavely
-- 出版日期：2026-08-22
-- 分类：3D Reconstruction & Multi-view Geometry
-- 链接：https://arxiv.org/abs/2608.22039
-
-### 一句话总结
-本文提出了一个基于360°全景视频构建的、用于评估相机位姿估计的新基准ORBIT，该基准包含复杂真实场景且具备可靠的轨迹真值。
-
-### 研究问题
-现有SfM（运动恢复结构）方法在复杂视频（如挑战性相机运动、动态场景）中经常失效，而领域内缺乏针对这些困难场景的可靠真值基准，难以衡量实际进展并定位待改进环节。
-
-### 核心思路/方法
-关键洞察是利用在线全景360°视频作为数据源：全景视频提供更丰富的视觉上下文以跟踪相机运动，即使部分视图受模糊、运动或动态物体影响。具体流程为：先在全景视频中跟踪完整相机运动，再裁剪并重投影所选部分，生成透视视角片段，最终构成名为ORBIT的基准。
-
-### 主要贡献
-- 提出了ORBIT：一个用于评估相机位姿估计的新基准，基于360°视频构建，包含困难真实场景且具备可靠轨迹真值。
-- 实验表明COLMAP以及近期基于优化的和前馈式SfM方法在本基准上难以准确估计相机位姿。
-- 为研究者提供一个有价值的测试平台，用于在真实挑战性SfM问题上衡量实质进展。
-
-### 局限性
-摘要未提供足够信息：未说明基准的规模（如片段数量）、评估指标的具体细节、与其他基准的定量对比，以及构建过程中的潜在偏差或失败模式。
-
-### 阅读优先级
-**高**  
-理由：该工作针对SfM领域缺乏困难场景真值基准的关键空白，提出创新性数据来源（360°视频），并直接验证了现有主流及前沿方法在该基准上的不足，对评估和改进相机位姿估计方法具有直接参考价值，适合3D视觉研究者优先阅读。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Structure-from-Motion (SfM) is a cornerstone of 3D perception, yet current methods often fail when applied to complex videos involving challenging camera motions or dynamic scenes. Compounding the problem, the field lacks reliable ground-truth benchmarks for such difficult scenarios, making it hard to gauge real-world progress or to pinpoint where improvements are most needed. To address this gap, we introduce a new benchmark for evaluating camera pose estimation. Our key insight is to leverage online panoramic 360° video as a source of data from which to construct challenging clips, while still enabling robust ground-truth trajectory recovery. The panoramic nature of these videos provides richer visual context for tracking camera motion, even when parts of the view are affected by blur, motion, or dynamic objects. After tracking camera motion across full 360° videos, we crop and reproject selected portions to generate perspective-view clips that serve as our benchmark, called ORBIT. Experiments show that COLMAP, as well as recent optimization-based and feed-forward SfM methods struggle to accurately estimate camera poses on our benchmark. Hence, ORBIT provides a valuable testbed where researchers can meaningfully measure progress on truly challenging, real-world SfM problems.
 
 </details>
 
