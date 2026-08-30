@@ -11,13 +11,13 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：49
+- 当前滚动窗口论文数：42
 - 分类分布：
-  - 3D Reconstruction & Multi-view Geometry: 18
-  - Embodied / Robotics / AR Applications: 12
-  - Neural Scene Representations & Rendering: 10
-  - Dynamic / 4D Reconstruction: 5
+  - 3D Reconstruction & Multi-view Geometry: 15
+  - Embodied / Robotics / AR Applications: 11
+  - Neural Scene Representations & Rendering: 9
   - Geometry Foundation Models: 4
+  - Dynamic / 4D Reconstruction: 3
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
@@ -25,79 +25,67 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-1. **3D 高斯泼溅（3DGS）从“可重建”走向“可编辑、可压缩、可丢弃”**
-   3DGS 已成为当前场景表示的事实标准，但今日论文显示研究重心正在从“如何重建”转向“如何处理重建后的数据”。典型代表包括：
-   - **KISS-GS**（2608.26948）：将压缩与训练完全解耦，实现 85x–319x 的场景体积缩减；
-   - **CoGeo-GS**（2608.26656）：面向多物体移除的场景编辑，解决遮挡与语义纠缠；
-   - **Per-View Gaussian Predictions...**（2608.26951）：不重训练即可过滤视角不一致的瞬态干扰物。
-   这三篇共同指向：3DGS 场景的生命周期管理（存储、编辑、清理）正在成为独立于重建本身的研究方向。
+**1. 几何基础模型（Geometry Foundation Models）从“重建工具”向“通用先验库”转化**
 
-2. **“几何基础模型”成为通用先验，被蒸馏到下游任务**
-   以 **VGGT** 为代表的视觉几何 Transformer 正被广泛用作 3D 先验提取器，出现在多个看似不相关的任务中：
-   - **Glass Surface Detection**（2608.26752）：从 VGGT 蒸馏 3D 先验用于玻璃检测；
-   - **CGS-SLAM**（2608.26868）：用 VGGT 作为全局子图对齐模型；
-   - **GaussianDream++**（2608.25659）：训练时使用 VGGT/TGE 路径（推理时裁剪）提供 3D 监督。
-   这说明“预训练几何基础模型 + 下游蒸馏/微调”正成为 3D 视觉的通用范式，替代以往从零训练的多视角几何管线。
+今日多篇论文不再将 VGGT 等几何基础模型仅视为一个深度/位姿估计器，而是将其蒸馏为更广泛任务的先验来源。`Glass Surface Detection Grounded in 3D Visual Geometry` 从 VGGT 蒸馏 3D 先验用于玻璃表面检测；`CGS-SLAM` 直接使用 VGGT 作为子图视图对齐模型；`GaussianDream++` 则将 VGGT/TGE 路径视为训练期专用组件，在推理时裁剪掉。值得注意的反向信号来自 `Cross-Platform Benchmark of Neural 3D Reconstruction for Autonomous Laboratory Robots`——该工作将 Meta 的 SAM3D 这类单图重建模型与逐场景优化方法放在同一基准上比较，显示出“前馈大模型 vs 逐场景优化”的性能-延迟差距正在成为关键评估维度。几何基础模型正从“被调用的 API”演化为“被蒸馏、被裁剪、被对齐、被基准化的基础设施”。
 
-3. **大重建模型（LRM）与视频扩散模型（VDM）推动“单图到世界”生成**
-   从单张图像生成可探索、几何一致的 3D 场景，是当前具身智能与 AR 的核心诉求：
-   - **SpatialCrafter**（2608.27073）：先用全局 3D 代理保证几何一致，再用视频扩散模型细化外观，克服 VDM 的长期漂移；
-   - **MILO**（2608.27407）：利用 LRM 的几何骨架进行单图人-物交互重建，将传统“重投影拟合”转变为“解释 LRM 网格”。
-   趋势是：LRM/VDM 不再只是场景重建工具，而是作为“几何先验生成器”，为高层任务（交互理解、世界建模）提供稳定骨架。
+**2. 3D 高斯泼溅（3DGS）进入“工程化收敛期”：压缩、过滤、编辑、跨平台适配并行推进**
 
-4. **世界模型（World Model）与 4D 表示的结合，推动具身策略的“预测性”监督**
-   具身智能不再满足于静态场景理解，开始要求策略具备短期物理演化预测能力：
-   - **GaussianDream++**（2608.25659）：在 VLA 骨干中插入世界状态/预测令牌，以 4D 高斯作为监督信号；
-   - **4DGS-WAM**（2608.25956）：用 4DGS 分别建模动态物体与静态背景，只预测动态部分的变化，实现高效未来状态外推；
-   - **Instruct-to-Act**（2608.26788）：解耦高层语言规划与低层世界模型控制。
-   结合方向是：显式 4D/3D 表示正替代 RGB 或潜在空间成为世界模型的输出/监督形式，以提供场景中对象的度量结构与物理演化。
+今日论文中 3DGS 相关的工作不再是架构层面的激进创新，而是围绕部署痛点展开的系统性工程优化：
+- **压缩**：`KISS-GS` 将压缩与训练彻底解耦，提出模块化管线，实现 85x-319x 体积缩减；
+- **干扰物过滤**：`Per-View Gaussian Predictions Enable Training-Free Distractor Filtering in Feed-Forward 3DGS` 利用前馈模型的逐视角预测结构，实现无需训练的瞬态物体剔除；
+- **场景编辑**：`CoGeo-GS` 针对多物体移除场景，引入语义标签与几何补全管线；
+- **平台评估**：`Cross-Platform Benchmark` 系统比较 NeRF 与 3DGS 在不同 GPU 设备上的训练/渲染性能。
+这一系列工作共同指向：3DGS 已经走过“能不能重建”的阶段，进入“好不好部署、好不好集成、好不好维护”的工程化周期。
 
-5. **数据层面（Data-Centric）的几何优化成为新方法论**
-   今日出现多篇不修改网络架构、纯粹在数据/表示层面进行几何优化的论文：
-   - **A Geometry-Driven, Framework-Agnostic Optimization**（2608.26859）：用主惯性轴对齐改变旋转表示，从数据层面消除对称物体的标签歧义；
-   - **UCAG-P**（2608.26058）：提出以相机为中心的几何统一动作表示，将异构具身数据集对齐到共享几何空间；
-   - **SSMB**（2608.27181）：自监督关键点检测，无需手工检测器或伪标签。
-   这种方法论层面的“数据/几何先验 > 架构创新”取向，标志着领域内对训练范式本身的反思。
+**3. 世界模型与操作策略的融合走向“3D/4D 显式表示”**
 
----
+今日有 4 篇论文从不同角度将世界模型/操作策略与显式几何表示结合：
+- `4DGS-WAM` 用 4D 高斯泼溅构建对象中心的动态世界模型，只预测动态物体变换而复用静态背景；
+- `GaussianDream++` 在 VLA 骨干中插入 World State Tokens / World Prediction Tokens，以共享高斯原语作为 3D 监督信号，推理时仅保留 20 个 token；
+- `SpatialCrafter` 引入全局 3D Proxy 作为视频扩散模型的几何条件，解决图像到场景生成中的 3D 一致性问题；
+- `Decoupling Planning and Control for Instructable Agents` 将 VLM 规划器与世界模型控制器解耦，以语言指令作为中间接口。
+这 4 篇的共同假设是：**2D 潜空间或纯 RGB 预测缺乏物理/几何结构，显式 3D/4D 表示是通向可靠具身智能的必要条件**，但在“如何将 3D 表示嵌入策略学习”这一点上采取了完全不同的路线（4DGS 对象中心、token 化高斯、3D Proxy 条件化、VLM-控制器解耦），说明该方向尚未收敛，处于路线竞争期。
+
+**4. 自监督与无训练后处理成为鲁棒性提升的主要手段**
+
+在数据标注成本高、领域差异大的背景下，今日多篇论文选择以自监督或无训练方式处理鲁棒性问题：
+- `SSMB` 在运动模糊条件下实现无需去模糊、无需手工检测器、无外部伪标签的自监督关键点检测；
+- `Per-View Gaussian Predictions` 的干扰物过滤完全不需训练；
+- `KISS-GS` 的压缩管线对已有场景直接后处理；
+- `A Geometry-Driven, Framework-Agnostic Optimization for Object Pose Estimation` 将姿态优化嵌入数据集层面，无需修改任何网络结构。
+这种“框架无关（Framework-Agnostic）”、“训练无关（Training-Free）”、“无需伪标签（Pseudo-Label-Free）”的取向，反映研究社区对生成/重建方法通用性和插拔性的重视。
+
+**5. 评估研究浮出水面：受控对比与真实平台基准成为独立贡献**
+
+今日出现 3 篇以“评估/基准”为主导贡献的论文，这是该领域成熟度提升的重要信号：
+- `Cross-Platform Benchmark of Neural 3D Reconstruction for Autonomous Laboratory Robots` 系统对比 NeRF 与 3DGS 在多种 GPU 平台上的实时性；
+- `Gaussian Splatting Underwater` 在统一协议下比较五种高斯泼溅方法在水下不同浊度、光照条件下的表现，核心结论是“方法效果更取决于采集设置而非架构”；
+- `Comparative Evaluation of 3D Reconstruction Methods for Immersive Visualization of Laboratory Objects` 以用户研究方式比较摄影测量、NeRF、高斯泼溅与 LiDAR 的全息模型保真度。
+这类工作的共同价值在于：**揭示基线实验报告中的得分无法反映真实场景中的优劣关系**，为方法选择提供更可靠的依据。
+
 
 #### 技术路线观察
 
-| 方向 | 技术侧重点 | 代表论文 |
-|------|------------|----------|
-| **几何基础模型** | 将预训练几何 Transformer（如 VGGT）蒸馏为下游任务的 3D 先验；强调“训练时可依赖重模型、推理时裁剪”的部署策略 | Glass Surface Detection、CGS-SLAM、GaussianDream++ |
-| **3D/4D 重建与表示** | 3DGS 后处理（压缩、编辑、过滤）成为主流；4DGS 用于动态场景中的物体级建模；LRM 提供单图几何骨架 | KISS-GS、CoGeo-GS、4DGS-WAM、MILO |
-| **神经场景表示与渲染** | 从“网络结构设计”转向“系统评估与部署”：跨平台基准测试、跨环境（水下）受控对比、跨方法一致性检验成为新热点 | Cross-Platform Benchmark、Gaussian Splatting Underwater |
-| **机器人/AR 应用** | 世界模型与语言/动作策略的深度融合；强调低延迟、低通信、跨形态泛化；物理交互（接触事件）作为定位的几何约束 | Instruct-to-Act、UCAG-P、Contact-Aided FGL、CGS-SLAM |
+**几何基础模型方向**：`Glass Surface Detection`、`CGS-SLAM`、`GaussianDream++` 均以 VGGT 为核心先验来源，但使用方式差异明显——蒸馏成 3D 先验（蒸馏路线）、直接作为对齐模块（推理路线）、训练期辅助+推理期裁剪（嵌入式路线）。这说明 VGGT 社区正在探索将同一基础模型适配到不同任务范式的多种集成策略。
 
-关键观察：**架构创新的边际收益递减，评测、压缩、蒸馏、数据对齐等工程性/方法论层面的贡献正在崛起**。多篇论文明确表示“方法效果更多取决于数据采集设置或评测协议，而非网络架构”（如 Gaussian Splatting Underwater、KISS-GS），这暗示领域正在进入一个“工程成熟期”。
+**3D/4D 重建方向**：传统多视角几何（`Camera Calibration`、`DPA-I2P`、`SSMB`、`A Geometry-Driven Optimization`）与神经表示（`Gaussian Splatting Underwater`、`Cross-Platform Benchmark`、`Comparative Evaluation`）并行推进。前者侧重经典问题的鲁棒性提升（模糊、标定误差、模态差异），后者侧重部署可行性和不同环境条件下的性能刻画。
 
----
+**神经场景表示方向**：3DGS 的工程化（压缩、过滤、编辑）明显多于 NeRF 相关工作；NeRF 仅出现在评估类论文中作为比较基线。4DGS 则开始被用于世界模型（`4DGS-WAM`），这是 4D 表示从“重建/渲染”向“预测/规划”延伸的信号。
+
+**机器人/AR 应用方向**：出现两条并行技术路线——相机中心统一动作表示的 `UCAG-P`（统一异构数据学习单一策略）与 VLM+世界模型解耦的 `Instruct-to-Act`（分工合作而非统一）。前者追求“一个策略覆盖多种形态”，后者追求“不同组件各司其职”。水下机器人的 `Contact-Aided Factor-Graph Localization` 则通过物理接触事件作为几何约束，代表多传感器融合与物理交互建模的结合。
+
 
 #### 值得优先阅读的论文
 
-1. **KISS-GS**（2608.26948）—— **高**
-   理由：3DGS 部署的核心痛点（文件过大）第一次被以“完全解耦训练”的模块化方式解决，组件可独立复用，对各类 3DGS 应用都有直接价值。为 3DGS 的工程实践提供了清晰的压缩协议基准。
+**1. `SpatialCrafter: Single Image World Modeling with Generative 3D Proxies`**
+首次将“全局 3D Proxy”作为视频扩散模型生成场景的几何条件，直接回应了 VDM 在图像到场景生成中的 3D 不一致顽疾，且包含 115K 场景的混合数据集发布，对视频生成、具身智能、3D 场景理解三个社区的读者都有借鉴价值。
 
-2. **SpatialCrafter**（2608.27073）—— **高**
-   理由：单图到可探索场景是具身智能、AR 的关键能力。其“全局 3D 代理 + VDM 外观细化”的两阶段分解，直击视频扩散模型几何不一致的痛点，且已配套 115K 大规模数据集，很可能成为后续图像到场景生成的工作基础。
+**2. `GaussianDream++`**
+提出了将 3D 世界建模信息以 token 形式嵌入 VLA 骨干并实现推理期裁剪的轻量方案——这是“如何在不过度增加部署成本的前提下给策略注入 3D 结构”这一核心问题的直接回答。对从事机器人学习与 VLA 研究的人而言，该路线比在线解码高斯更加务实。
 
-3. **Per-View Gaussian Predictions Enable Training-Free Distractor Filtering**（2608.26951）—— **高**
-   理由：针对前馈 3DGS 中“瞬态干扰物”这一实际常见问题，提出无需重新训练的即插即用过滤方案，已在三个模型和两个基准上验证。实用性强，且方法简洁（基于单一冻结预测）。
-
-4. **GaussianDream++**（2608.25659）—— **高**
-   理由：代表了“世界建模进 VLA 策略”的最前沿实践：训练时用 4D 高斯作为度量监督，推理时完全裁剪重模块（仅保留 20 个令牌）。对机器人学习社区有直接的参考价值和复现意义。
-
-5. **A Geometry-Driven, Framework-Agnostic Optimization**（2608.26859）—— **中**
-   理由：展示了“不改架构只改数据”也能显著提升姿态估计的精度，尤其是对对称物体标签歧义的处理思路新。方法即插即用，适合在现有姿态估计管线上快速验证。
-
----
-
-#### 可能的研究机会
-
-1. **3DGS 场景生命周期的自动化管理**：现有论文分别解决了压缩（KISS-GS）、编辑（CoGeo-GS）、干扰物过滤（Per-View Filtering），但缺乏一个统一的“场景库”框架，将这三个环节连同增量更新、版本管理整合为一个闭环系统。尤其在持续运行的长时机器人场景中，该问题尚未被解决。
-
-2. **几何基础模型的“蒸馏即服务”模式**：VGGT 已显示出作为通用 3D
+**3. `Per-View Gaussian Predictions Enable Training-Free Distractor Filtering in Feed-Forward 3DGS`**
+方法简洁（单次冻结前向+渲染验证+特征相似度）且
 
 ### interests.md 指令分析
 
