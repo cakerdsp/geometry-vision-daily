@@ -106,7 +106,7 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 <!-- DAILY_REPORT_END -->
 
 **Last updated:** 2026-08-28T18:16:42-04:00
-**Total number of papers:** 49
+**Total number of papers:** 42
 **Number of papers added in the latest update:** 15
 **Categories tracked:** cs.CV, cs.GR, cs.RO, eess.IV
 
@@ -519,105 +519,6 @@ Reconstructing photorealistic scenes in unconstrained underwater environments re
 <summary>Abstract</summary>
 
 Dynamic 3D Gaussian Splatting (3DGS) achieves photorealistic reconstruction of time-varying scenes, and recent physics-aware extensions improve extrapolation by explicitly predicting velocity fields. However, these extensions merely fit vector fields to visual deformations without satisfying Lagrangian mechanics, leading to three major issues: (i) physically inconsistent trajectories, (ii) lack of time-reversibility, and (iii) geometric collapse during long-term extrapolation. In this paper, we propose LagrangeGS, which formulates dynamic 3DGS as a non-conservative Lagrangian system. While this Lagrangian formulation fundamentally solves (i), a direct application of general LNNs to dynamic 3DGS requires a large velocity-Hessian inversion for millions of Gaussian particles. To overcome this computational bottleneck, we approximate the velocity-Hessian as an identity matrix, decoupling particle dynamics for computational tractability. For (ii), we restrict the non-conservative forces to be explicitly time independent, enabling consistent backward integration. Finally, to address (iii), we introduce local rigid alignment that regularizes particle trajectories. Extensive evaluations on dynamic scene benchmarks demonstrate that LagrangeGS enables stable long-term extrapolation, consistent time reversal, and counterfactual physics-based editing without retraining.
-
-</details>
-
-#### 2026-08-23 - M$^3$ISR: A Multi-Modal Multi-View Benchmark for 3D/4D Gaussian Splatting and Feedforward Compression
-
-**Authors:** Xinhui Liu, Lei Liu, Zhenghao Chen, Lebin Zhou, Wei Wang, Wei Jiang
-**Links:** [abs](https://arxiv.org/abs/2608.22465) - [pdf](https://arxiv.org/pdf/2608.22465)
-**Primary category:** Dynamic / 4D Reconstruction
-**Secondary categories:** Neural Scene Representations & Rendering
-**Matched keywords:** dynamic reconstruction, 4D Gaussian, Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, rendering, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：M³ISR：用于3D/4D高斯泼溅与前馈压缩的多模态多视角基准
-- 作者：Xinhui Liu, Lei Liu, Zhenghao Chen, Lebin Zhou, Wei Wang, Wei Jiang
-- 出版日期：2026-08-23
-- 分类：Dynamic / 4D Reconstruction（主要）；Neural Scene Representations & Rendering（次要）
-- 链接：https://arxiv.org/abs/2608.22465
-
-### 一句话总结
-本文提出了一个受控合成的多模态多视角基准M³ISR，用于系统评估3D/4D高斯泼溅的重建、压缩和流式传输性能。
-
-### 研究问题
-现有动态多视角视频基准虽提供真实拍摄内容，但难以分离相机几何、表示效率和时域冗余等因素对高斯泼溅方法的影响，缺乏一个能对3DGS/4DGS重建、压缩与流式传输进行受控评估的基准。
-
-### 核心思路/方法
-构建包含25个场景（来自5个室内外场景组）、两种相机/运动配置、6路同步1080p视角的合成基准，提供RGB、相机参数、深度、语义/实例分割和静态-动态掩码等密集真值标注。采用共享中心相机设计以隔离视角变化因素，并设计五个互补赛道：3DGS合成、4DGS合成、4DGS流式传输、3DGS压缩、4DGS压缩。同时定义3DGS/4DGS前馈压缩任务，提供参考率-失真公式和初步基线评估。
-
-### 主要贡献
-1. 提出M³ISR——一个专门为3D/4D高斯泼溅设计的受控合成基准，包含丰富的多模态标注。
-2. 设计共享中心相机配置，可隔离视角变化并实现新视角合成和表示效率的受控评估。
-3. 组织五个互补评估赛道，覆盖重建、流式传输和压缩三大任务方向。
-4. 定义3DGS/4DGS前馈压缩任务，并提供参考率-失真公式和基线评估。
-
-### 局限性
-摘要未提供足够信息。摘要仅提及初步基线评估显示流式方法在训练/重建成本上显著高于离线动态重建基线，以及静态重建质量差异小但存储差异大，但未明确说明基准自身的覆盖范围限制（如合成场景与真实场景的域差距、场景规模上限等）。
-
-### 阅读优先级
-**中**。理由：该工作提供了一个结构化的受控基准，对从事3D/4DGS压缩和流式传输研究的读者有较高参考价值；但作为基准论文，不涉及新算法突破，对非该细分领域的读者参考价值有限。摘要显示了基准设计和初步基线结果，但缺乏更深入的方法论细节。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-High-fidelity free-viewpoint video (FVV) and interactive rendering increasingly rely on explicit Gaussian representations, yet practical deployment remains constrained by representation size, dynamic updates, and computational cost. Existing multi-view video benchmarks provide valuable real-captured content, but they make it difficult to isolate the effects of controlled camera geometry, representation efficiency, and temporal redundancy. We introduce M$^3$ISR, a controlled synthetic benchmark for 3D and 4D Gaussian Splatting (3DGS/4DGS). The benchmark contains 25 scenes from five indoor and outdoor scene groups, two camera/motion configurations, six synchronized 1080p views, and dense ground-truth annotations including RGB, camera parameters, depth, semantic and instance segmentation, and static--dynamic masks. The shared-center camera design intentionally isolates angular view variation and enables controlled evaluation of novel-view synthesis and representation efficiency. We organize M$^3$ISR into five complementary tracks covering 3DGS synthesis, 4DGS synthesis, 4DGS streaming, 3DGS compression, and 4DGS compression. Representative baseline results show small differences in static reconstruction quality but substantial differences in representation storage, while the evaluated streaming methods exhibit substantially higher reported training or reconstruction cost than the corresponding offline dynamic reconstruction baselines. We further define feedforward compression tasks for 3DGS and 4DGS and provide reference rate--distortion formulations and preliminary baseline evaluations. The benchmark is intended as a controlled and complementary testbed for systematic study of Gaussian-based FVV reconstruction, compression, and streaming.
-
-</details>
-
-#### 2026-08-22 - Learning Implicit Constitutive Laws for Dynamic 3D Gaussian Splatting from Monocular Videos
-
-**Authors:** Xiaoyang Liu, Kai Han
-**Links:** [abs](https://arxiv.org/abs/2608.22102) - [pdf](https://arxiv.org/pdf/2608.22102)
-**Primary category:** Dynamic / 4D Reconstruction
-**Secondary categories:** Neural Scene Representations & Rendering
-**Matched keywords:** dynamic 3D, Gaussian Splatting, 3D Gaussian Splatting, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Learning Implicit Constitutive Laws for Dynamic 3D Gaussian Splatting from Monocular Videos
-- 作者：Xiaoyang Liu, Kai Han
-- 出版日期：2026-08-22T20:47:17Z
-- 分类：Dynamic / 4D Reconstruction（次要分类：Neural Scene Representations & Rendering）
-- 链接：https://arxiv.org/abs/2608.22102
-
-### 一句话总结
-本文提出GCA框架，通过隐式本构规律学习与多模态对齐模块，从单目视频中驱动3D高斯表示的可变形物体动态重建，显著优于现有方法。
-
-### 研究问题
-如何从单目动态视频中学习可变形物体的隐式物理本构规律，以避免现有隐式方法在噪声监督下的局部最优问题和显式方法依赖预定义本构方程、在单目设定下不稳定的问题。
-
-### 核心思路/方法
-- 整体框架：GCA（Gaussian Constitutive Alignment），以静态多视角扫描作为几何初始化，仅从单一固定视角的动态视频学习内在物理动态。
-- 关键模块一：Rank-based Depth-Geometric Anchors（RDGA）——通过尺度不变的基于秩的深度对齐，从单目动态观测建立鲁棒的几何约束，减少对不可靠像素级颜色监督的依赖。
-- 关键模块二：Constitutive Prior Regularizer（CPR）——将经典本构模型作为可微软先验集成，在保持隐式建模灵活性的同时正则化优化过程，即使真实材料不在假设集合中也能工作。
-- 统一机制：基于LoRA的适应性调整将两个模块统一在框架内。
-
-### 主要贡献
-- 提出GCA框架，实现从单目视频学习隐式本构规律并驱动3D高斯动态重建。
-- 设计RDGA模块，通过秩基深度几何锚定克服单目监督中的颜色噪声问题。
-- 设计CPR模块，将经典本构模型作为可微先验，提升物理可解释性与优化稳定性。
-- 实验验证：在合成、真实到仿真及真实世界数据集上优于现有方法，在合成基准上比最强基线Chamfer Distance降低48%。
-
-### 局限性
-摘要未提供足够信息。摘要中未明确讨论方法的失败案例、计算开销、对初始化质量的具体依赖程度、真实世界数据上的详细误差范围或对其他场景（如多物体交互、极端形变）的适用性限制。
-
-### 阅读优先级
-**高**。理由：该工作针对动态3D高斯重建中单目监督这一关键痛点，提出新颖的隐式本构学习框架，并报告了显著的定量提升（Chamfer Distance降低48%），同时涵盖合成、真实到仿真和真实世界多类评估，对从事动态重建、物理仿真与神经渲染交叉方向的研究者有较高参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-We present GCA (Gaussian Constitutive Alignment), a framework for learning implicit constitutive laws from monocular dynamic video of deformable objects represented by 3D Gaussians. Given a static multi-view scan for geometric initialization, our method learns intrinsic physical dynamics solely from a single fixed-viewpoint video of the moving object. Existing implicit methods often suffer from local minima under noisy supervision and lack physical interpretability, while explicit approaches rely on predefined constitutive equations, limiting generalizability and becoming unstable in monocular settings. To address these challenges, our framework unifies LoRA-based adaptation with two key alignment modules. First, we propose Rank-based Depth-Geometric Anchors (RDGA) to establish robust geometric constraints from monocular dynamic observations via scale-invariant rank-based depth alignment, reducing the reliance on unreliable pixel-level color supervision. Second, a Constitutive Prior Regularizer (CPR) integrates classical constitutive models as soft differentiable priors, regularizing the optimization while preserving the flexibility of implicit modeling---even when the actual material is absent from the hypotheses. Extensive experiments on synthetic, real-to-sim, and real-world datasets demonstrate that GCA outperforms existing methods, achieving 48% lower Chamfer Distance than the strongest baseline on synthetic benchmarks while remaining robust under monocular supervision.
 
 </details>
 
@@ -1406,113 +1307,6 @@ We present SiZeUp, a fast and scalable approach for constructing large-scale 3D 
 
 </details>
 
-#### 2026-08-23 - DECO: Depth-Guided Co-Visibility Reasoning for Low-Altitude UAV Visual Localization
-
-**Authors:** Yibin Ye, Xichao Teng, Shuo Chen, Xiaokai Song, Dongdong Guan, Qifeng Yu, Zhang Li
-**Links:** [abs](https://arxiv.org/abs/2608.22289) - [pdf](https://arxiv.org/pdf/2608.22289)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** Embodied / Robotics / AR Applications
-**Matched keywords:** pose estimation, monocular depth, feature matching, localization
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：DECO: Depth-Guided Co-Visibility Reasoning for Low-Altitude UAV Visual Localization
-- 作者：Yibin Ye, Xichao Teng, Shuo Chen, Xiaokai Song, Dongdong Guan, Qifeng Yu, Zhang Li
-- 出版日期：2026-08-23
-- 分类：3D Reconstruction & Multi-view Geometry；Embodied / Robotics / AR Applications
-- 链接：https://arxiv.org/abs/2608.22289
-
-### 一句话总结
-DECO 提出了一种利用单目深度先验来推理无人机图像与正射参考图之间共同可见区域的方法，从而提升低空无人机在 GNSS 拒止环境下的视觉定位精度。
-
-### 研究问题
-低空无人机视觉定位中，正射参考图主要记录俯视表面（如屋顶、地面），而垂直结构（如立面、墙体）被压缩或缺失，导致低空图像中大量显著关键点在参考图中没有有效对应，产生冗余匹配和位姿估计不准确。
-
-### 核心思路/方法
-- 使用单目深度先验推断局部表面几何，估计无人机图像与参考图之间的共同可见区域。
-- 提出“几何-显著性耦合共同可见性评分”（Geometry-Saliency Coupled Co-visibility Score），联合考虑几何共同可见性与检测器显著性，对关键点进行排序。
-- 保留既视觉显著又几何共同可见的关键点，用于改进特征匹配和 PnP 位姿求解。
-
-### 主要贡献
-- 提出 DECO，一个深度引导的共同可见性推理框架，用于低空无人机视觉定位。
-- 引入几何-显著性耦合的共同可见性评分，改善关键点选择。
-- 实验表明 DECO 在不同深度模型、特征检测器和匹配器下均能提升定位性能。
-- 代码将开源（https://github.com/UAV-AVL/DECO）。
-
-### 局限性
-摘要未提供足够信息，包括未提及具体实验数据集、与哪些基线方法比较、不同深度模型/检测器/匹配器组合下的具体性能差距、计算开销或实时性分析等。
-
-### 阅读优先级
-**高**
-
-理由：该工作针对低空无人机视觉定位中的实际痛点（正射参考图缺失垂直结构导致匹配退化），提出了新颖的深度引导共同可见性推理方法，具有明确的工程应用价值，且模块化设计可适配多种现有深度模型和匹配器，对相关方向研究者有较强参考意义。
-
-### 阅读优先级
-**高**
-
-理由：该方法面向GNSS拒止环境下无人机视觉定位这一实用场景，创新性地引入深度先验解决正射图与低空视角间的几何域差异问题，且框架与不同组件（深度模型、检测器、匹配器）兼容，具备较强通用性和实用潜力，适合该方向研究者优先阅读。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Unmanned aerial vehicles (UAVs) increasingly require robust visual localization in GNSS-denied environments. A common solution estimates UAV poses by matching keypoints between UAV images and geo-tagged orthographic reference maps derived from satellite or aerial imagery, followed by Perspective-\(n\)-Point (PnP) pose solving. However, such reference maps mainly record top-down surfaces such as roofs and ground planes, while vertical structures such as facades and walls are often compressed or missing. Consequently, many visually distinctive keypoints in low-altitude UAV images have no valid counterparts in the reference map, leading to redundant matches and inaccurate pose estimation. To address this issue, we propose DECO, a DEpth-guided CO-visibility reasoning framework for low-altitude UAV visual localization. DECO uses monocular depth priors to infer local surface geometry and estimate co-visible regions between UAV images and the reference map. Based on this prior, a Geometry-Saliency Coupled Co-visibility Score is introduced to jointly consider geometric co-visibility and detector saliency for keypoint ranking. In this way, DECO retains keypoints that are both visually distinctive and geometrically co-visible, improving feature matching and PnP-based pose estimation. Extensive experiments demonstrate that DECO achieves superior localization performance and can be integrated with different depth models, feature detectors, and matchers. The source code will be available at https://github.com/UAV-AVL/DECO.
-
-</details>
-
-#### 2026-08-22 - Robust Global Structure-from-Motion via View Graph Pruning
-
-**Authors:** Jiamin Xu, Lixing Yao, Weichen Dai, Renshu Gu, Zunjie Zhu, Weiwei Xu, Gang Xu
-**Links:** [abs](https://arxiv.org/abs/2608.22054) - [pdf](https://arxiv.org/pdf/2608.22054)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** Neural Scene Representations & Rendering
-**Matched keywords:** structure from motion, SfM, neural rendering, novel view synthesis, view synthesis, rendering
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Robust Global Structure-from-Motion via View Graph Pruning
-- 作者：Jiamin Xu, Lixing Yao, Weichen Dai, Renshu Gu, Zunjie Zhu, Weiwei Xu, Gang Xu
-- 出版日期：2026-08-22T17:40:47Z
-- 分类：3D Reconstruction & Multi-view Geometry；Neural Scene Representations & Rendering
-- 链接：https://arxiv.org/abs/2608.22054
-
-### 一句话总结
-本文提出一种基于子图引导的视图图剪枝框架，通过先在各子图内执行全局SfM获得可靠位姿，再剔除跨子图的不一致边，从而提升全局运动恢复结构方法在视觉模糊等挑战性条件下的鲁棒性。
-
-### 研究问题
-全局SfM方法性能高度敏感于视图图中由视觉模糊匹配导致的错误边，这些错误边会引发相机位姿注册错误和重建伪影。因此，研究问题是如何在全局SfM框架下识别并移除视图图中的不可靠连接。
-
-### 核心思路/方法
-核心思路是利用可靠子图的内部一致性来识别并移除不可靠连接。具体方法分为三步：
-1. 将视图图划分为局部一致的子图，并在每个子图内执行全局SfM以获得可靠相机位姿；
-2. 跨子图应用基于RANSAC的边剪枝，剔除不一致的边；
-3. 在精化后的视图图上执行全局SfM。
-
-### 主要贡献
-- 提出一种子图引导的视图图剪枝框架，用于提升全局SfM的鲁棒性；
-- 在模糊、序列化、无序图像数据集上验证了方法在挑战条件下对全局SfM鲁棒性的改进；
-- 通过神经渲染进一步评估，表明改进后的相机估计能够提升新视角合成的质量。
-
-### 局限性
-摘要未提供足够信息：未详细说明方法在极端模糊或大规模数据上的具体性能边界，也未讨论计算开销、失败案例或方法的适用范围限制。
-
-### 阅读优先级
-**高**。理由：该工作针对全局SfM的已知脆弱性问题（视觉模糊导致的错误匹配）提出了一种结构化的剪枝框架，且实验结果覆盖了多种挑战性数据，并额外通过神经渲染验证了下游应用收益，对三维重建与多视角几何方向的研究和实践均有较强参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Structure-from-Motion (SfM) aims to estimate camera poses and reconstruct 3D structures from a collection of unordered images. Compared with incremental SfM, global SfM achieves better scalability by jointly estimating camera poses based on a view graph constructed from pairwise correspondences. However, its performance is highly sensitive to erroneous edges caused by visually ambiguous matches, which may lead to incorrect camera registration and reconstruction artifacts. In this work, we propose a subgraph-guided view graph pruning framework for robust global SfM. Our key idea is to exploit the internal consistency of reliable subgraphs to identify and remove unreliable connections. Specifically, we first partition the view graph into locally consistent subgraphs and perform global SfM within each subgraph to obtain reliable camera poses. We then apply RANSAC-based edge pruning across subgraphs to remove inconsistent edges, and finally perform global SfM on the refined view graph. Extensive experiments on ambiguous, sequential, and unordered image datasets demonstrate that our method improves the robustness of global SfM under challenging conditions. Further evaluation with neural rendering shows that the improved camera estimation leads to higher-quality novel view synthesis results.
-
-</details>
-
 ## Neural Scene Representations & Rendering
 
 ### 2026-08
@@ -1976,58 +1770,6 @@ Unified models for visual understanding and generation have made rapid progress,
 <summary>Abstract</summary>
 
 Generalizable 3D Gaussian Splatting (G-3DGS) has emerged as a promising approach for novel view synthesis undersparse-view settings. However, existing frameworks remain restricted by pixel-aligned Gaussian estimation, whichstruggles in partially observed or occluded regions and often leads to incomplete surfaces or structural collapse. Toaddress these challenges, we propose SeeU (Seeing the Unseen), a novel G-3DGS framework. We frame its core design asSemantic-in-Gaussian: semantic-conditioned refinement in Gaussian space. Specifically, we introduce a Cross-viewEntropy-Aware (CEA) module that aggregates multi-view semantic and geometric cues into compact embeddings. Theseembeddings guide the Conditional Gaussian Transformer, which applies residual updates to coarse Gaussians, helpingrecover under-constrained regions of partially observed structures while preserving surface consistency. Comprehensiveexperiments on multiple benchmarks demonstrate that SeeU consistently improves rendering quality and structuralcompleteness while retaining efficient feed-forward inference. Especially under challenging extrapolation settings,SeeU achieves an average improvement of 2.44 dB in PSNR compared to recent SOTA G-3DGS methods.
-
-</details>
-
-#### 2026-08-23 - Fast and Compact 3D Gaussian Splatting with Polarized Opacity Prior
-
-**Authors:** Zi-Ming Wang, Kai-Wen Duan, Kowei Huang, Akihiro Sugimoto, Shang-Hong Lai
-**Links:** [abs](https://arxiv.org/abs/2608.22344) - [pdf](https://arxiv.org/pdf/2608.22344)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** None
-**Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, rendering, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Fast and Compact 3D Gaussian Splatting with Polarized Opacity Prior
-- 作者：Zi-Ming Wang, Kai-Wen Duan, Kowei Huang, Akihiro Sugimoto, Shang-Hong Lai
-- 出版日期：2026-08-23
-- 分类：Neural Scene Representations & Rendering
-- 链接：https://arxiv.org/abs/2608.22344
-
-### 一句话总结
-本文提出一种以极化不透明度先验（POP）为核心的训练框架，通过替代传统的“先稠密化后剪枝”流程，实现了3D高斯泼溅的快速、紧凑训练，在保持重建质量的同时显著减少高斯数量。
-
-### 研究问题
-3D高斯泼溅（3DGS）在实时渲染中达到先进质量，但存在“模型膨胀”问题：大量冗余、低不透明度的高斯导致内存占用和训练成本过高。该低效源于标准“稠密化-剪枝”范式——先激进扩展模型，再依赖剪枝实现紧凑。本文旨在构建一种本质紧凑的表示，替代该传统循环。
-
-### 核心思路/方法
-本文提出一个高效的训练框架，包含两个协同设计组件：
-1. **L2重建损失**：提供与误差成比例的梯度，稳定优化过程。
-2. **极化不透明度先验（POP）**：主动管理高斯群体，将信息丰富的高斯基元推向完全不透明，将无信息基元推向透明，从而实现自然剪枝，并通过早期光线终止（Early Ray Termination）加速渲染。
-
-该方法替代了传统的“稠密化-剪枝”循环，从训练开始就构建紧凑表示。
-
-### 主要贡献
-- 提出一种新的训练框架，用内在紧凑表示取代传统“稠密化-剪枝”循环，避免模型膨胀。
-- 设计极化不透明度先验（POP），主动管理高斯不透明度，实现自然剪枝和渲染加速。
-- 在三个公开数据集上的实验表明，该方法在保持相当视觉重建质量的同时，显著减少高斯数量并加速3DGS训练。
-- 提供了一个简单有效的路径，实现快速且本质紧凑的3DGS训练。
-
-### 局限性
-摘要未提供足够信息。摘要中未提及方法的失败案例、限制条件（如对特定场景或数据集类型的适用边界）、计算开销对比、以及对极端复杂场景的鲁棒性等。实验细节（如具体数据集名称、指标数值）也未给出。
-
-### 阅读优先级
-**高**。理由：3DGS是当前神经渲染领域的热点方向，模型膨胀问题直接影响实际部署效率。本文提出替代经典流程的训练框架，方法设计简洁且有公开实验支持（三数据集验证），对从事三维重建、实时渲染或模型压缩研究的读者具有直接参考价值。结合POP和L2损失的协同设计思路可能启发后续改进工作。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-3D Gaussian Splatting (3DGS) achieves state-of-the-art rendering quality at real-time speeds but suffers from "model bloat" - a large number of redundant, low-opacity Gaussians that inflate memory usage and training costs. This inefficiency stems from the standard "densify-then-prune" paradigm, which expands the model aggressively before relying on pruning to achieve compactness. To mitigate this problem, we present an efficient training framework that builds an intrinsically compact representation, replacing the conventional densify-then-prune cycle. Our method leverages a synergistic design: an L2 reconstruction loss to provide error-proportional gradients that stabilize optimization, and a novel Polarized Opacity Prior (POP) to actively manage the Gaussian population. POP steers informative primitives toward full opacity and uninformative ones toward transparency, enabling natural pruning and accelerating rendering through Early Ray Termination. Experiments on three public datasets demonstrate that our approach consistently achieves accelerated 3DGS training with significantly fewer Gaussians while maintaining comparable visual reconstruction quality. These results show that the proposed framework provides a simple and effective path toward fast and inherently compact 3DGS training.
 
 </details>
 
@@ -2604,61 +2346,6 @@ GeoWAM 提出以未来场景几何（点云）预测替代传统像素级视频�
 <summary>Abstract</summary>
 
 World action models (WAMs) have recently gained increasing attention as a framework for jointly modeling scene evolution and ego actions in autonomous driving. Most existing WAMs learn scene dynamics in pixel space by combining a video-generation backbone for future-observation prediction with an action head for ego-trajectory prediction. Pixels, however, provide only an indirect representation of these dynamics: they entangle geometry and motion with appearance, texture, and illumination, forcing the model to infer three-dimensional transformations from two-dimensional observations. We argue that geometry, represented by point clouds, offers a more natural state space for driving because it explicitly captures spatial structure and the rigid and non-rigid transformations that govern scene evolution while directly aligning with the space in which driving actions are executed. Building on this insight, we introduce \textbf{GeoWAM}, a visual geometry world action model for autonomous driving. Rather than predicting future images, GeoWAM is pretrained to forecast future scene geometry, yielding representations that jointly encode spatial structure and temporal evolution. A geometry-conditioned action head then leverages these learned geometric dynamics to predict future ego trajectories. Extensive open-loop and closed-loop evaluations show that visual geometry world modeling yields substantially stronger driving policies than image-based alternatives, establishing future-geometry prediction as an effective pretraining objective for autonomous driving.
-
-</details>
-
-#### 2026-08-23 - DreamMimic: Learning Visuomotor Whole-Body Loco-Manipulation via World Model
-
-**Authors:** Jie Yin, Xingyu Lai
-**Links:** [abs](https://arxiv.org/abs/2608.22278) - [pdf](https://arxiv.org/pdf/2608.22278)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** manipulation, world model
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：DreamMimic: Learning Visuomotor Whole-Body Loco-Manipulation via World Model
-- 作者：Jie Yin, Xingyu Lai
-- 出版日期：2026-08-23T08:08:39Z
-- 分类：Embodied / Robotics / AR Applications
-- 链接：https://arxiv.org/abs/2608.22278
-
-### 一句话总结
-DreamMimic 提出一种基于世界模型辅助蒸馏的框架，将特权教师策略蒸馏为基于视觉的类人机器人全身移动操作控制器，并在 OMOMO 和 BEHAVE 基准上超越强视觉基线。
-
-### 研究问题
-如何利用世界模型稳定地将特权教师策略蒸馏为基于视觉输入的类人机器人全身移动操作策略，以应对部分可观测性、接触丰富的动力学以及从高维视觉输入学习长期行为带来的挑战。
-
-### 核心思路/方法
-- 将 Dreamer 风格的 RSSM 重新用于学习预测性潜在动力学，而非规划，同时作为表示空间和动作条件多步监督信号。
-- 向学生策略暴露紧凑的预测特征以减少长期漂移。
-- 在标准重建目标之外，增加针对特权状态、接触、物体状态和奖励估计的辅助预测头，以强化与智能体-物体交互及任务进展相关的潜在表示。
-- 提出性能条件引导（PCG），一种奖励驱动的自适应蒸馏调度，通过计算教师和学生策略的性能分数来动态平衡引导与探索，避免过早教师退化和过度教师干扰。
-
-### 主要贡献
-- 提出 DreamMimic 框架，利用世界模型辅助蒸馏解决基于视觉的类人机器人移动操作策略学习问题。
-- 通过辅助预测头（包括特权状态、接触、物体状态和奖励）增强潜在表示对接触丰富交互的适用性。
-- 引入性能条件引导（PCG）自适应蒸馏调度机制，改善视觉场景下的训练稳定性。
-- 在 OMOMO 和 BEHAVE 上展示了相对于强视觉基线的跟踪式移动操作性能提升，且部署时不向学生暴露在线特权交互状态。
-
-### 局限性
-- 摘要未提供关于计算成本、模型规模、训练稳定性、泛化边界或失败案例等具体局限性信息。
-- 摘要中提到“定性仿真进一步检验形态和模拟器变化”，但未提供详细实验细节或定量结果。
-- 摘要未提供足够信息说明该方法在真实机器人上的部署表现。
-
-### 阅读优先级
-**中**
-
-理由：该工作面向类人机器人全身移动操作这一特定且有挑战的方向，方法上结合世界模型蒸馏与自适应引导，具有一定创新性且基准结果优于强基线。但作者仅两位且无机构信息，论文发表于 arXiv（2026年），未提供会议/期刊发表信息，且摘要未给出详细的实验设置与量化对比，验证强度有限。适合关注机器人学习、视觉策略蒸馏和世界模型应用的读者阅读，但优先级不宜过高。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Vision-based whole-body loco-manipulation on humanoid robots is challenging due to partial observability, contact-rich dynamics, and the difficulty of learning long-horizon behaviors from high-dimensional visual inputs. We present \href{https://github.com/DreamMimic/DreamMimic}{DreamMimic}, a framework that distills privileged teacher policies into vision-based humanoid controllers via world-model-assisted distillation. Instead of using a Dreamer-style RSSM for planning, we repurpose it to learn predictive latent dynamics that serve as both a representation space and an action-conditioned multi-step supervision signal, while exposing compact predictive features to the student policy to reduce long-term drift. Beyond standard reconstruction objectives for proprioceptive and visual observations, we add auxiliary prediction heads for privileged state, contact, object state, and reward estimation. These heads provide additional supervision related to agent--object interaction and task progress, encouraging the latent representation to retain signals that are useful for contact-rich loco-manipulation. We further introduce Performance-Conditioned Guidance (PCG), a reward-driven adaptive distillation schedule that computes performance scores for both teacher and student to dynamically balance guidance and exploration. PCG prevents both premature teacher annealing and excessive teacher interference in challenging visual settings. Experiments on OMOMO and BEHAVE show improved tracking-based loco-manipulation performance over strong vision-based baselines, without exposing online privileged interaction states to the student at deployment. Qualitative simulations further examine morphology and simulator changes. These results suggest that world models can provide a useful mechanism for stabilizing visual policy distillation in contact-rich humanoid behaviors.
 
 </details>
 
