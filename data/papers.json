@@ -33,7 +33,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.04201",
     "pdf_url": "https://arxiv.org/pdf/2609.04201",
     "first_seen": "2026-09-04T12:19:32-04:00",
-    "last_seen": "2026-09-05T11:11:08-04:00"
+    "last_seen": "2026-09-06T11:26:09-04:00"
   },
   {
     "arxiv_id": "2609.04193",
@@ -77,7 +77,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.04193",
     "pdf_url": "https://arxiv.org/pdf/2609.04193",
     "first_seen": "2026-09-04T12:19:32-04:00",
-    "last_seen": "2026-09-05T11:11:08-04:00"
+    "last_seen": "2026-09-06T11:26:09-04:00"
   },
   {
     "arxiv_id": "2609.04174",
@@ -107,7 +107,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.04174",
     "pdf_url": "https://arxiv.org/pdf/2609.04174",
     "first_seen": "2026-09-04T12:19:32-04:00",
-    "last_seen": "2026-09-05T11:11:08-04:00"
+    "last_seen": "2026-09-06T11:26:09-04:00"
   },
   {
     "arxiv_id": "2609.04026",
@@ -141,7 +141,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.04026",
     "pdf_url": "https://arxiv.org/pdf/2609.04026",
     "first_seen": "2026-09-04T12:19:32-04:00",
-    "last_seen": "2026-09-05T11:11:08-04:00"
+    "last_seen": "2026-09-06T11:26:09-04:00"
   },
   {
     "arxiv_id": "2609.03970",
@@ -2333,167 +2333,6 @@
     ],
     "abstract_url": "https://arxiv.org/abs/2608.29881",
     "pdf_url": "https://arxiv.org/pdf/2608.29881",
-    "first_seen": "2026-09-01T12:39:10-04:00",
-    "last_seen": "2026-09-01T12:39:10-04:00"
-  },
-  {
-    "arxiv_id": "2608.29705",
-    "version": "v1",
-    "title": "A Calibration Audit of Confidence in Feed-Forward 3D Reconstruction",
-    "authors": [
-      "Nanxing Nick Deng",
-      "Qing Cheng",
-      "Niclas Zeller",
-      "Daniel Cremers"
-    ],
-    "abstract": "Feed-forward 3D reconstruction models emit a per-pixel confidence that downstream systems read as a reliability signal. It is trained as a loss weight, not as an uncertainty magnitude, and whether it can be used as an error prediction has not been measured. We audit seven released backbones on thirteen datasets and score the confidence on four properties, how well it ranks error, whether its level is right on average, whether it holds across the confidence range, and whether its intervals cover the truth. The confidence ranks error well, but the predicted uncertainty is too low when it is read under conditions that are not exactly those of training. The median case is off by 2.4x across all seven models, and the error prediction is further off the more confident the model is. We show that this phenomenon can appear even though the loss's optimum is reached. A released model resumed under its own loss reaches that optimum on its training data within a few hundred updates and stays overconfident on unseen frames. A power law with two constants per backbone and dataset corrects the overall magnitude of the predicted uncertainty and leaves the ranking untouched. What no rescaling reaches is the scene, which we attribute to the model's missing knowledge of scale across predictions. Every correction we tried is close to right on average and still leaves two thirds of held-out scenes outside a five-point band, because what a scene is missing is a shape rather than a shift. We release the audit protocol, its results, and the fitted constants per model and dataset. Fitted with the target dataset held out, the constants bring the median case from 2.4x off to 1.35x, and a refit on a few labelled scenes of that dataset reaches 1.12x.",
-    "published": "2026-08-30T10:21:34Z",
-    "updated": "2026-08-30T10:21:34Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.AI"
-    ],
-    "primary_category": "Geometry Foundation Models",
-    "secondary_categories": [
-      "3D Reconstruction & Multi-view Geometry"
-    ],
-    "matched_keywords": [
-      "feed-forward 3D reconstruction",
-      "3D reconstruction"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched title phrase: feed-forward 3D reconstruction",
-      "Matched abstract phrase: feed-forward 3D reconstruction",
-      "Matched title phrase: 3D reconstruction",
-      "Matched abstract phrase: 3D reconstruction"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.29705",
-    "pdf_url": "https://arxiv.org/pdf/2608.29705",
-    "first_seen": "2026-09-01T12:39:10-04:00",
-    "last_seen": "2026-09-01T12:39:10-04:00"
-  },
-  {
-    "arxiv_id": "2608.29680",
-    "version": "v1",
-    "title": "GeoRay: Gauge-Aware Feed-Forward Satellite 3D Reconstruction in the Geodetic Frame",
-    "authors": [
-      "Zhe Dong",
-      "Wanqing Wu",
-      "Yuzhe Sun",
-      "Haochen Jiang",
-      "Yuchen Ma",
-      "Lecheng Ren",
-      "Tianzhu Liu",
-      "Yanfeng Gu"
-    ],
-    "abstract": "Feed-forward 3D foundation models reconstruct perspective scenes in one pass. Satellite photogrammetry needs a different product, one that domain adaptation alone does not deliver: dense surface height in an absolute geodetic frame under non-central rational polynomial cameras (RPCs). Perspective-pretrained features are not reliably observable along RPC height rays, absolute elevation carries a low-order height--datum gauge exchangeable with sensor bias to first order, and monocular and multi-view cues fail in different regions. \\method{} treats all three. Lightweight ray-consistent adapters make a frozen backbone matchable along native RPC rays. An explicit datum mechanism separates relief from absolute level and is equivariant to the vertical origin by construction, so one trained model serves zero-, one-, and sparse-control inference. Calibrated inverse-variance fusion combines the two relief streams. \\bench{}, our absolute-frame benchmark of eighteen systems across in-domain, cross-dataset, and cross-city tiers, scores absolute placement without registration or test-reference leakage. On 26 held-out US3D tiles, \\method{} attains $2.99$\\,m absolute MAE at $91.9\\%$ coverage, improves completeness-aware accuracy by $46.4$ points over the strongest compliant feed-forward baseline, remains the most accurate such system under both transfer shifts, and runs in $24$\\,s model-forward time per tile. Code and models will be released at https://github.com/HIT-SIRS/GeoRay",
-    "published": "2026-08-30T09:27:36Z",
-    "updated": "2026-08-30T09:27:36Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "3D reconstruction",
-      "photogrammetry"
-    ],
-    "classification_score": 5,
-    "classification_reasons": [
-      "Matched title phrase: 3D reconstruction",
-      "Matched abstract keyword: photogrammetry"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.29680",
-    "pdf_url": "https://arxiv.org/pdf/2608.29680",
-    "first_seen": "2026-09-01T12:39:10-04:00",
-    "last_seen": "2026-09-01T12:39:10-04:00"
-  },
-  {
-    "arxiv_id": "2608.29538",
-    "version": "v1",
-    "title": "As-Rigid-As-Possible Deformation of Gaussian Radiance Fields",
-    "authors": [
-      "Xinhao Tong",
-      "Tianjia Shao",
-      "Yanlin Weng",
-      "Yin Yang",
-      "Kun Zhou"
-    ],
-    "abstract": "3D Gaussian Splatting (3DGS) models radiance fields as sparsely distributed 3D Gaussians, providing a compelling solution to novel view synthesis at high resolutions and real-time frame rates. However, deforming objects represented by 3D Gaussians remains a challenging task. Existing methods deform a 3DGS object by editing Gaussians geometrically. These approaches ignore the fact that it is the radiance field that rasterizes and renders the final image. The inconsistency between the deformed 3D Gaussians and the desired radiance field inevitably leads to artifacts in the final results. In this paper, we propose an interactive method for as-rigid-as-possible (ARAP) deformation of the Gaussian radiance fields. Specifically, after performing geometric edits on the Gaussians, we further optimize Gaussians to ensure its rasterization yields a similar result as the deformed radiance field. To facilitate this objective, we design radial features to mathematically describe the radial difference before and after the deformation, which are densely sampled across the radiance field. Additionally, we propose an adaptive anisotropic spatial low-pass filter to prevent aliasing issues during sampling and to preserve the field with the varying non-uniform sampling intervals. Users can interactively employ this tool to achieve large-scale ARAP deformations of the radiance field. Since our method maintains the consistency of the Gaussian radiance field before and after deformation, it avoids artifacts that are common in existing 3DGS deformation frameworks. Meanwhile, our method keeps the high quality and efficiency of 3DGS in rendering.",
-    "published": "2026-08-30T03:51:14Z",
-    "updated": "2026-08-30T03:51:14Z",
-    "primary_arxiv_category": "cs.GR",
-    "arxiv_categories": [
-      "cs.GR"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "radiance field",
-      "Gaussian Splatting",
-      "3D Gaussian Splatting",
-      "3DGS",
-      "novel view synthesis",
-      "view synthesis",
-      "rendering",
-      "radiance",
-      "splatting"
-    ],
-    "classification_score": 16,
-    "classification_reasons": [
-      "Matched abstract phrase: radiance field",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: 3D Gaussian Splatting",
-      "Matched abstract keyword: 3DGS",
-      "Matched abstract phrase: novel view synthesis",
-      "Matched abstract phrase: view synthesis",
-      "Matched abstract keyword: rendering",
-      "Matched title keyword: radiance",
-      "Matched abstract keyword: radiance",
-      "Matched abstract keyword: splatting"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.29538",
-    "pdf_url": "https://arxiv.org/pdf/2608.29538",
-    "first_seen": "2026-09-01T12:39:10-04:00",
-    "last_seen": "2026-09-01T12:39:10-04:00"
-  },
-  {
-    "arxiv_id": "2608.29396",
-    "version": "v1",
-    "title": "Toward Trustworthy Robot-Assisted Sliding Palpation for Shallow Vessel Localisation with a Calibrated Digital Twin",
-    "authors": [
-      "Piotr Blaszyk",
-      "Wen Fan",
-      "Kaizhong Deng",
-      "Daniel Elson",
-      "Dandan Zhang"
-    ],
-    "abstract": "Reliable localisation of shallow subsurface vessels is important for safe robot-assisted venous access and vessel-aware manipulation, but collecting diverse tactile data on physical hardware is costly, time-consuming, and can degrade soft vision-based tactile sensors. We present a robot-assisted sliding-palpation framework in which a calibrated digital twin generates labelled tactile sequences, reducing reliance on real-world data. The twin models sensor-vessel contact, is calibrated against real palpation trajectories using Bayesian-optimisation-based domain adaptation, and is randomised over sliding direction and contact conditions. A spatio-temporal graph neural network trained on simulated marker trajectories performs per-node vessel classification and produces a human-verifiable top-view localisation map through 2D-to-3D-to-2D geometric projection. We evaluate three datasets: Sim, Silicone, and Meat, the latter a raw-meat phantom with vessel models at nominal depths of 0 to 30 mm, using four train-to-test configurations: Sim to Sim, Sim to Silicone, Sim to Meat, and Meat to Silicone. The calibrated twin achieves a simulated-to-real marker-alignment mean absolute error of 0.50 mm at deepest contact across four canonical interactions. After reprojection onto a 1 mm top-view grid, predicted vessel pixels lie on average 1.05 to 5.49 mm from the nearest true vessel pixel across the four models, with 1.05 to 1.31 mm for all except Sim to Meat. The larger error for Sim to Meat reflects the greater domain shift and current limit of simulation transfer. These results demonstrate progress toward trustworthy tactile palpation through calibrated simulation, interpretable localisation, and transparent cross-domain evaluation. Code, model weights, and data are publicly available on GitHub and Zenodo.",
-    "published": "2026-08-29T18:36:00Z",
-    "updated": "2026-08-29T18:36:00Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "manipulation",
-      "digital twin",
-      "simulation"
-    ],
-    "classification_score": 8,
-    "classification_reasons": [
-      "Matched abstract keyword: manipulation",
-      "Matched title phrase: digital twin",
-      "Matched abstract phrase: digital twin",
-      "Matched abstract keyword: simulation"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2608.29396",
-    "pdf_url": "https://arxiv.org/pdf/2608.29396",
     "first_seen": "2026-09-01T12:39:10-04:00",
     "last_seen": "2026-09-01T12:39:10-04:00"
   }

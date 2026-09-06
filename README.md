@@ -86,7 +86,7 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 <!-- DAILY_REPORT_END -->
 
 **Last updated:** 2026-09-04T12:19:32-04:00
-**Total number of papers:** 63
+**Total number of papers:** 59
 **Number of papers added in the latest update:** 20
 **Categories tracked:** cs.CV, cs.GR, cs.RO, eess.IV
 
@@ -293,61 +293,6 @@ OptiGeo 提出一种偏差感知训练框架，利用少量透明目标渲染数
 <summary>Abstract</summary>
 
 Monocular depth estimation has achieved strong open-domain generalization, yet reliable robotic deployment remains difficult in transparent, reflective, and specular environments, where depth sensors often produce missing or biased depth. Existing methods often handle such optical failures with scene-specific preprocessing, auxiliary modules, or post-hoc fine-tuning. While effective in constrained settings, these designs increase architectural redundancy and can over-specialize general geometry models to narrow optical scenarios. We revisit this problem as a localized failure mode within base-model training and identify sensor-induced supervision bias as a key bottleneck: models inherit sensor failure patterns from biased real-depth supervision in optically challenging regions. We then introduce OptiGeo, a bias-aware training framework that rehabilitates biased real supervision using a clean-geometry teacher and residual-trimmed alignment. We redefine transparency-targeted rendering as a compact source of clean optical geometry, rather than a large domain-specific fine-tuning set. With only a small targeted rendering set, OptiGeo learns the geometric structure of transparent objects and regions, correcting local geometry distortions that real sensors cannot reliably supervise. Despite only 30M parameters, OptiGeo outperforms substantially larger 300M-scale monocular models and billion-scale multi-view baselines on transparent-scene benchmarks, while remaining competitive on general zero-shot depth and boundary sharpness. Real-world navigation cases further validate its practicality as an efficient perception module in optically challenging scenes.
-
-</details>
-
-#### 2026-08-30 - A Calibration Audit of Confidence in Feed-Forward 3D Reconstruction
-
-**Authors:** Nanxing Nick Deng, Qing Cheng, Niclas Zeller, Daniel Cremers
-**Links:** [abs](https://arxiv.org/abs/2608.29705) - [pdf](https://arxiv.org/pdf/2608.29705)
-**Primary category:** Geometry Foundation Models
-**Secondary categories:** 3D Reconstruction & Multi-view Geometry
-**Matched keywords:** feed-forward 3D reconstruction, 3D reconstruction
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：A Calibration Audit of Confidence in Feed-Forward 3D Reconstruction
-- 作者：Nanxing Nick Deng, Qing Cheng, Niclas Zeller, Daniel Cremers
-- 出版日期：2026-08-30
-- 分类：Geometry Foundation Models（主要）；3D Reconstruction & Multi-view Geometry（次要）
-- 链接：https://arxiv.org/abs/2608.29705
-
-### 一句话总结
-本文系统审计了七种前馈式三维重建模型的逐像素置信度，发现其误差排名表现良好，但不确定性幅度在非训练条件下系统性偏低（中位数偏差2.4倍），且无法通过简单重缩放修正场景级校准问题。
-
-### 研究问题
-前馈式三维重建模型输出的逐像素置信度虽被下游系统当作可靠性信号使用，但其训练目标是损失权重而非不确定性幅度，因此该置信度是否可用于误差预测从未被定量检验。本文围绕这一问题展开审计。
-
-### 核心思路/方法
-- 对七种已发布骨干模型、十三个数据集进行系统审计。
-- 从四个维度评估置信度质量：误差排名能力、平均水平的正确性、置信度范围内的稳定性、区间覆盖真实值的程度。
-- 发现置信度在排名误差上表现良好，但预测的不确定性幅度过低（中位数偏差2.4倍），且模型越自信偏差越大。
-- 通过实验说明该现象在损失达到最优时仍可出现。
-- 提出一种每骨干+每数据集仅含两个常数的幂律校正方法，可修正整体幅度而不影响排名。
-- 展示了所有重缩放方法都无法修正的“场景级”偏差。
-
-### 主要贡献
-- 首次对前馈式三维重建模型的置信度进行系统校准审计。
-- 量化了跨模型、跨数据集的置信度偏差（中位数2.4倍）。
-- 揭示模型越自信则误差预测偏差越大的现象。
-- 展示即使损失达到最优，模型仍可能保持过度自信。
-- 提出并公开审计协议、结果及每模型每数据集拟合常数：目标数据集留出时可将中位数偏差从2.4x降至1.35x，用少量标注场景重拟合可进一步达1.12x。
-
-### 局限性
-摘要未提供足够信息：未明确提及具体数据集名称、模型架构细节、计算成本、校正方法在不同场景下的适用边界，以及“场景级”偏差的定量描述（仅提及约三分之二的留出场景落在五点区间外）。
-
-### 阅读优先级
-**高**  
-理由：本文针对一个广泛使用但未被验证的置信度信号进行了严格的跨模型、跨数据集审计，发现系统性的校准问题并提出实用校正方法；其成果对三维重建（尤其是视觉定位、导航等依赖可靠不确定性的任务）具有直接参考价值，且审计协议和拟合常数的公开便于复现与扩展。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Feed-forward 3D reconstruction models emit a per-pixel confidence that downstream systems read as a reliability signal. It is trained as a loss weight, not as an uncertainty magnitude, and whether it can be used as an error prediction has not been measured. We audit seven released backbones on thirteen datasets and score the confidence on four properties, how well it ranks error, whether its level is right on average, whether it holds across the confidence range, and whether its intervals cover the truth. The confidence ranks error well, but the predicted uncertainty is too low when it is read under conditions that are not exactly those of training. The median case is off by 2.4x across all seven models, and the error prediction is further off the more confident the model is. We show that this phenomenon can appear even though the loss's optimum is reached. A released model resumed under its own loss reaches that optimum on its training data within a few hundred updates and stays overconfident on unseen frames. A power law with two constants per backbone and dataset corrects the overall magnitude of the predicted uncertainty and leaves the ranking untouched. What no rescaling reaches is the scene, which we attribute to the model's missing knowledge of scale across predictions. Every correction we tried is close to right on average and still leaves two thirds of held-out scenes outside a five-point band, because what a scene is missing is a shape rather than a shift. We release the audit protocol, its results, and the fitted constants per model and dataset. Fitted with the target dataset held out, the constants bring the median case from 2.4x off to 1.35x, and a refit on a few labelled scenes of that dataset reaches 1.12x.
 
 </details>
 
@@ -1431,59 +1376,6 @@ This work presents $\textbf{Lapis}$, a $\textbf{l}$inear-$\textbf{a}$ttention-ba
 
 </details>
 
-#### 2026-08-30 - GeoRay: Gauge-Aware Feed-Forward Satellite 3D Reconstruction in the Geodetic Frame
-
-**Authors:** Zhe Dong, Wanqing Wu, Yuzhe Sun, Haochen Jiang, Yuchen Ma, Lecheng Ren, Tianzhu Liu, Yanfeng Gu
-**Links:** [abs](https://arxiv.org/abs/2608.29680) - [pdf](https://arxiv.org/pdf/2608.29680)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** None
-**Matched keywords:** 3D reconstruction, photogrammetry
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：GeoRay: Gauge-Aware Feed-Forward Satellite 3D Reconstruction in the Geodetic Frame
-- 作者：Zhe Dong, Wanqing Wu, Yuzhe Sun, Haochen Jiang, Yuchen Ma, Lecheng Ren, Tianzhu Liu, Yanfeng Gu
-- 出版日期：2026-08-30
-- 分类：3D Reconstruction & Multi-view Geometry
-- 链接：https://arxiv.org/abs/2608.29680
-
-### 一句话总结
-GeoRay 提出了一种面向卫星影像的、在大地测量坐标系下直接重建稠密地表高程的前馈三维重建方法，通过射线一致性适配器、显式基准机制和融合策略，仅需24秒即可在一张瓦片上实现绝对MAE为2.99米的重建精度。
-
-### 研究问题
-传统前馈三维基础模型针对透视相机场景，而卫星摄影测量需要在非中心有理多项式相机（RPC）模型下，在绝对大地测量坐标系中重建稠密地表高度。该任务面临三个核心挑战：预训练的透视特征沿RPC高度射线不可靠、绝对高程存在低阶基准模糊（可与传感器偏差互换）、以及单目与多视角线索在不同区域各失效。
-
-### 核心思路/方法
-- **射线一致性适配器**：使用轻量级适配器使冻结的骨干网络能够沿原生RPC射线进行特征匹配。
-- **显式基准机制**：将地表起伏（relief）与绝对高程（level）分离，构造对垂直原点具有等变性的机制，使单一训练模型可同时支持零控制点、单控制点和稀疏控制点推断。
-- **标定逆方差融合**：结合单目与多视角两条推理流，按各自置信度加权融合。
-- 构建了绝对坐标系下的新基准（Bench），涵盖域内、跨数据集和跨城市三个层级，无需配准或测试参考泄漏即可评估绝对位置精度。
-
-### 主要贡献
-- 提出GeoRay，首个面向卫星RPC相机的、在大地测量框架下的前馈稠密高程重建方法。
-- 设计射线一致性适配器，使冻结的透视预训练特征可用于非中心RPC射线。
-- 提出显式基准机制，解决绝对高程与传感器偏差的低阶互换问题，实现控制点数量可变的统一推断。
-- 引入标定逆方差融合策略，结合单目与多视角线索。
-- 构建绝对坐标系评估基准；在26个US3D瓦片上达到2.99米绝对MAE（覆盖率91.9%），完备性感知精度较最强合规基线提升46.4个百分点，且在两个迁移场景下保持最优精度。
-
-### 局限性
-摘要未提供足够信息，无法获知该方法在极端地形、密集遮挡、大倾角成像或不同分辨率传感器上的表现，也未提及内存占用、失败模式或融合策略在特定区域的退化情况。
-
-### 阅读优先级
-**高**  
-理由：该工作针对卫星摄影测量这一实际高价值场景，解决了透视预训练模型向非中心RPC相机迁移的适配问题，并提出了绝对高程基准模糊的显式处理机制。实验显示相较最强合规基线有大幅精度提升，且代码与模型将开源，值得关注其技术细节与基准设计。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Feed-forward 3D foundation models reconstruct perspective scenes in one pass. Satellite photogrammetry needs a different product, one that domain adaptation alone does not deliver: dense surface height in an absolute geodetic frame under non-central rational polynomial cameras (RPCs). Perspective-pretrained features are not reliably observable along RPC height rays, absolute elevation carries a low-order height--datum gauge exchangeable with sensor bias to first order, and monocular and multi-view cues fail in different regions. \method{} treats all three. Lightweight ray-consistent adapters make a frozen backbone matchable along native RPC rays. An explicit datum mechanism separates relief from absolute level and is equivariant to the vertical origin by construction, so one trained model serves zero-, one-, and sparse-control inference. Calibrated inverse-variance fusion combines the two relief streams. \bench{}, our absolute-frame benchmark of eighteen systems across in-domain, cross-dataset, and cross-city tiers, scores absolute placement without registration or test-reference leakage. On 26 held-out US3D tiles, \method{} attains $2.99$\,m absolute MAE at $91.9\%$ coverage, improves completeness-aware accuracy by $46.4$ points over the strongest compliant feed-forward baseline, remains the most accurate such system under both transfer shifts, and runs in $24$\,s model-forward time per tile. Code and models will be released at https://github.com/HIT-SIRS/GeoRay
-
-</details>
-
 ## Neural Scene Representations & Rendering
 
 ### 2026-09
@@ -2562,56 +2454,6 @@ When does 3D Gaussian Splatting (3DGS) recover the true scene surface rather tha
 
 </details>
 
-#### 2026-08-30 - As-Rigid-As-Possible Deformation of Gaussian Radiance Fields
-
-**Authors:** Xinhao Tong, Tianjia Shao, Yanlin Weng, Yin Yang, Kun Zhou
-**Links:** [abs](https://arxiv.org/abs/2608.29538) - [pdf](https://arxiv.org/pdf/2608.29538)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** None
-**Matched keywords:** radiance field, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, rendering, radiance, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：As-Rigid-As-Possible Deformation of Gaussian Radiance Fields
-- 作者：Xinhao Tong, Tianjia Shao, Yanlin Weng, Yin Yang, Kun Zhou
-- 出版日期：2026-08-30
-- 分类：Neural Scene Representations & Rendering
-- 链接：https://arxiv.org/abs/2608.29538
-
-### 一句话总结
-本文提出一种交互式方法，通过对3D高斯辐射场进行几何编辑后再优化高斯参数，实现保持辐射场一致性的刚体（ARAP）变形，避免现有3DGS变形框架中常见的伪影。
-
-### 研究问题
-如何对3D Gaussian Splatting（3DGS）表示的对象进行变形，同时保持高斯辐射场在变形前后的一致性，从而避免因几何编辑与辐射场渲染不一致而产生的伪影。
-
-### 核心思路/方法
-- 首先对高斯体进行几何编辑（几何变形），随后进一步优化高斯参数，确保其光栅化结果与变形后的辐射场一致。
-- 设计“径向特征”（radial features）数学描述变形前后的径向差异，并在辐射场中密集采样。
-- 提出自适应各向异性空间低通滤波器，防止采样过程中的混叠问题，并适应非均匀采样间隔。
-- 最终实现用户可交互的大尺度ARAP辐射场变形。
-
-### 主要贡献
-- 提出一种面向高斯辐射场的ARAP变形方法，兼顾几何编辑与辐射场渲染一致性。
-- 设计径向特征用于量化变形前后辐射场的差异，并引入自适应各向异性低通滤波解决采样混叠。
-- 保持3DGS的高渲染质量与实时效率，同时避免现有3DGS变形方法中常见的伪影。
-
-### 局限性
-摘要未提供足够信息。文中未明确讨论方法的计算开销、交互实时性具体指标、适用范围限制或失败案例等局限性细节。
-
-### 阅读优先级
-**高**。理由：该工作针对3DGS变形中的核心一致性问题提出新方法，属于当前热门的神经场景表示与渲染方向，方法新颖且有明确的问题动机，适合关注3D编辑与实时渲染的读者阅读。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-3D Gaussian Splatting (3DGS) models radiance fields as sparsely distributed 3D Gaussians, providing a compelling solution to novel view synthesis at high resolutions and real-time frame rates. However, deforming objects represented by 3D Gaussians remains a challenging task. Existing methods deform a 3DGS object by editing Gaussians geometrically. These approaches ignore the fact that it is the radiance field that rasterizes and renders the final image. The inconsistency between the deformed 3D Gaussians and the desired radiance field inevitably leads to artifacts in the final results. In this paper, we propose an interactive method for as-rigid-as-possible (ARAP) deformation of the Gaussian radiance fields. Specifically, after performing geometric edits on the Gaussians, we further optimize Gaussians to ensure its rasterization yields a similar result as the deformed radiance field. To facilitate this objective, we design radial features to mathematically describe the radial difference before and after the deformation, which are densely sampled across the radiance field. Additionally, we propose an adaptive anisotropic spatial low-pass filter to prevent aliasing issues during sampling and to preserve the field with the varying non-uniform sampling intervals. Users can interactively employ this tool to achieve large-scale ARAP deformations of the radiance field. Since our method maintains the consistency of the Gaussian radiance field before and after deformation, it avoids artifacts that are common in existing 3DGS deformation frameworks. Meanwhile, our method keeps the high quality and efficiency of 3DGS in rendering.
-
-</details>
-
 ## Embodied / Robotics / AR Applications
 
 ### 2026-09
@@ -3343,59 +3185,6 @@ HDR图像包含丰富的色调与细节信息，对自动驾驶等计算机视�
 <summary>Abstract</summary>
 
 High-dynamic-range (HDR) images, with their rich tone and detail reproduction, hold significant potential to enhance computer vision systems, particularly in autonomous driving. However, most neural networks for embedded systems are trained on low-dynamic-range (LDR) inputs and suffer substantial performance degradation when handling high-bit-depth HDR images due to the challenges posed by extreme dynamic ranges. In this paper, we propose a novel tone mapping method that not only bridges the gap between HDR RAW inputs and the LDR sRGB requirements of detection networks but also achieves end-to-end optimization with downstream tasks. Instead of relying on the traditional image signal processing (ISP) pipeline, we introduce neural photometric calibration to regularize dynamic ranges and a scaling-invariant local tone mapping model to preserve image details. In addition, our architecture also supports performance transfer finetuning, enabling efficient adaptation from the LDR sRGB images to the HDR RAW images with minimal cost. The proposed method outperforms traditional tone mapping algorithms and advanced AI-ISP methods in challenging automotive HDR scenes. Moreover, our pipeline achieves real-time processing of 4K high-bit-depth HDR inputs on NVIDIA Jetson platforms.
-
-</details>
-
-#### 2026-08-29 - Toward Trustworthy Robot-Assisted Sliding Palpation for Shallow Vessel Localisation with a Calibrated Digital Twin
-
-**Authors:** Piotr Blaszyk, Wen Fan, Kaizhong Deng, Daniel Elson, Dandan Zhang
-**Links:** [abs](https://arxiv.org/abs/2608.29396) - [pdf](https://arxiv.org/pdf/2608.29396)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** manipulation, digital twin, simulation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Toward Trustworthy Robot-Assisted Sliding Palpation for Shallow Vessel Localisation with a Calibrated Digital Twin
-- 作者：Piotr Blaszyk, Wen Fan, Kaizhong Deng, Daniel Elson, Dandan Zhang
-- 出版日期：2026-08-29
-- 分类：Embodied / Robotics / AR Applications
-- 链接：https://arxiv.org/abs/2608.29396
-
-### 一句话总结
-本文提出一种基于校准数字孪生的机器人辅助滑动触诊框架，通过仿真生成标记触觉序列，训练时空图神经网络实现浅表血管定位，并给出了跨域评估结果。
-
-### 研究问题
-如何在不依赖大量真实触觉数据的前提下，可靠定位浅表皮下血管，以实现安全的机器人辅助静脉穿刺和血管感知操作？核心挑战在于真实触觉数据采集成本高、耗时且可能损坏基于视觉的软触觉传感器。
-
-### 核心思路/方法
-- 构建一个校准的数字孪生，用于生成带标签的触觉序列，减少对真实数据的依赖。
-- 数字孪生建模传感器-血管接触，并通过基于贝叶斯优化的域自适应对真实滑动轨迹进行校准。
-- 在滑动方向和接触条件上进行随机化，增强仿真多样性。
-- 使用时空图神经网络对仿真生成的标记轨迹进行逐节点血管分类，并通过2D-3D-2D几何投影生成人类可验证的俯视定位图。
-- 在四个数据集（Sim、Silicone、Meat）上进行四种训练-测试配置（Sim→Sim、Sim→Silicone、Sim→Meat、Meat→Silicone）的跨域评估。
-
-### 主要贡献
-- 提出一种结合校准数字孪生的机器人滑动触诊框架，降低对真实数据的依赖。
-- 引入贝叶斯优化域自适应，使数字孪生与真实滑动轨迹对齐，实现模拟到真实的标记对齐（最深接触处平均绝对误差0.50 mm）。
-- 实现基于图神经网络的血管分类和可解释的俯视定位图生成。
-- 提供跨域评估结果：除Sim→Meat外，预测血管像素距真实血管像素平均距离为1.05–1.31 mm；所有模型平均为1.05–5.49 mm。
-- 公开代码、模型权重和数据（GitHub和Zenodo）。
-
-### 局限性
-摘要未提供足够信息。摘要仅提及Sim→Meat配置误差较大，归因于更大的域偏移和当前仿真迁移的局限，但未提供其他具体局限性，如模型在更深血管、更复杂组织上的表现、计算成本、实时性等。
-
-### 阅读优先级
-**高**。理由：该工作针对机器人辅助医疗操作中的关键问题（血管定位），提出结合数字孪生、域自适应和图神经网络的完整方案，跨域评估设计清晰，数值结果具体，且开放代码与数据，对仿真到真实迁移和触觉感知方向的研究者有较高参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Reliable localisation of shallow subsurface vessels is important for safe robot-assisted venous access and vessel-aware manipulation, but collecting diverse tactile data on physical hardware is costly, time-consuming, and can degrade soft vision-based tactile sensors. We present a robot-assisted sliding-palpation framework in which a calibrated digital twin generates labelled tactile sequences, reducing reliance on real-world data. The twin models sensor-vessel contact, is calibrated against real palpation trajectories using Bayesian-optimisation-based domain adaptation, and is randomised over sliding direction and contact conditions. A spatio-temporal graph neural network trained on simulated marker trajectories performs per-node vessel classification and produces a human-verifiable top-view localisation map through 2D-to-3D-to-2D geometric projection. We evaluate three datasets: Sim, Silicone, and Meat, the latter a raw-meat phantom with vessel models at nominal depths of 0 to 30 mm, using four train-to-test configurations: Sim to Sim, Sim to Silicone, Sim to Meat, and Meat to Silicone. The calibrated twin achieves a simulated-to-real marker-alignment mean absolute error of 0.50 mm at deepest contact across four canonical interactions. After reprojection onto a 1 mm top-view grid, predicted vessel pixels lie on average 1.05 to 5.49 mm from the nearest true vessel pixel across the four models, with 1.05 to 1.31 mm for all except Sim to Meat. The larger error for Sim to Meat reflects the greater domain shift and current limit of simulation transfer. These results demonstrate progress toward trustworthy tactile palpation through calibrated simulation, interpretable localisation, and transparent cross-domain evaluation. Code, model weights, and data are publicly available on GitHub and Zenodo.
 
 </details>
 
