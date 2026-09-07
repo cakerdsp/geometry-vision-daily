@@ -8429,6 +8429,26 @@
         "path": "summaries/brief/2609.03055.md",
         "markdown": "### Metadata\n- 标题：Seeing Less Is Not Seeing Safely: Privacy Leakage from Task-Scoped Robot Perception Exports\n- 作者：Yuqiao Xu, Erman Ayday\n- 出版日期：2026-09-02\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2609.03055\n\n### 一句话总结\n本文提出任务限定感知导出框架TFPD，通过系统性评估发现机器人在隐私风险与任务效用之间不存在单一的“少看即安全”规律，不同表示方式在任务表现相同的情况下隐私泄露程度差异巨大。\n\n### 研究问题\n家庭机器人在将原始感知数据保留本地、仅导出结构化表示给下游规划器/云服务/日志/学习管道时，这些任务限定的感知导出仍可能通过语义、几何、空间结构及任务目标泄露家庭隐私；核心研究问题是如何系统衡量并缓解“任务限定”导出中的残余隐私风险，并检验更抽象或更少的感知信息是否必然带来更安全的隐私保护。\n\n### 核心思路/方法\n提出 Task-Functional Perception Distillation (TFPD) 框架，将丰富的感知保留在本地，同时对下游导出按照任务效用、直接暴露程度、和多种残余推断风险进行多维度刻画。实验采用120个AI2-THOR场景，划分场景不相交的训练/验证/测试集，使用冻结的攻击者选择和表示感知的留出攻击，评估导航、碰撞检测和目标目标执行三个任务。此外用ProcTHOR数据集进行复现，检验结论的稳健性。\n\n### 主要贡献\n- 揭示“字段移除或更强抽象不产生普遍性隐私排序”的现象，即减少感知信息并不自动带来更高隐私安全。\n- 多个导航导出在任务表现完全一致（成功率为1.000，平均路径比为0.898）时，表示级链接性可在0.532至0.970之间大幅波动，隐私性能不能由任务效用推断。\n- 将显式目标标签替换为目标区域使目标类别macro-F1从1.000降至0.077，同时保持任务成功率达0.995，验证了目标层面的隐私与效用可分离性。\n- 几何粗化可使物体类别macro-F1从0.704降至0.556，但伴随可测的碰撞效用代价。\n- ProcTHOR复现保持了任务等价性与隐私不等价性的核心发现，但改变了归一化与拓扑导出的相对排序，提示隐私评定需针对完整公开表示做任务特定、多风险评价。\n\n### 局限性\n摘要中未提供足够的局限性信息，例如计算开销、真实物理机器人场景验证、更广任务类型覆盖或对攻击者能力更细粒度的假设等均未提及。\n\n### 阅读优先级\n**中**。理由：该研究面向具身机器人感知导出的隐私评估，问题重要且方法框架（TFPD）具有参考价值，实验规模（120个场景）有限，但结论具备启发意义；若关注机器人隐私或具身AI安全方向，值得阅读；若属于其他方向，可暂缓。"
       }
+    },
+    "2609.05416": {
+      "brief": {
+        "status": "success",
+        "input_hash": "e29f47e6fdcdb7a887b12c930166d339e86d8ef8eb5e0454161228fc6d301d1b",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-09-07T18:06:48Z",
+        "path": "summaries/brief/2609.05416.md",
+        "markdown": "### Metadata\n- 标题：WorldSculpt: Generating Compositional Worlds from Grounded Videos\n- 作者：Muyao Niu, Jixuan He, Ruihan Yu, Lian Fu, Yonghao Yu, Zheng-Hui Huang, Yifan Zhan, Fengbo Lan, Yongtao Ge, Yinqiang Zheng, Kaipeng Zhang, Zhixiang Wang\n- 出版日期：2026-09-04\n- 分类：Embodied / Robotics / AR Applications\n- 链接：https://arxiv.org/abs/2609.05416\n\n### 一句话总结\n本文提出WorldSculpt方法，通过将强单物体3D生成先验扩展为多视角条件路径，仅用单物体数据微调即可生成包含数百个物体、严重遮挡场景的组合式3D网格表示。\n\n### 研究问题\n如何从多视角视频中生成由数百个独立物体网格组成的、处于共享世界坐标系下的组合式3D场景表示，尤其是在密集遮挡、单个视角仅能观测到部分几何的复杂场景下准确重建每个物体的完整形状。\n\n### 核心思路/方法\n采用\"将强单物体3D生成先验适配到多视角观测\"的范式：以Pixal3D为基础，扩展多视角条件路径，使模型在生成每个物体时能利用多个带位姿的观测信息进行grounding。关键设计是，模型仅在规范空间的单物体数据上微调，无需场景级训练即可泛化到包含严重遮挡的大规模场景。\n\n### 主要贡献\n- 提出WorldSculpt范式，证明复杂数百物体场景可通过适配单物体生成先验实现组合式生成，无需场景级训练。\n- 引入UE-MeshyScene基准：包含密集杂乱场景、数百物体、逐物体标注和真值网格，用于评估此类任务。\n- 在单物体、受控多物体及UE-MeshyScene上均优于先前方法，且场景越复杂、遮挡越严重，性能优势越明显。\n- 展示将现有3DGS世界（如Marble、HY-World 2.0）转换为组合式网格场景的适用性。\n\n### 局限性\n摘要未提供足够信息，无法得知方法在实时性、内存开销、物体数量上限、泛化到未见场景类型等方面的局限。\n\n### 阅读优先级\n**高**\n理由：该工作针对\"密集遮挡场景的组合式3D生成\"这一具挑战且具实际应用价值的问题，提出无需场景级训练的可扩展范式，并配套新基准，适合从事三维重建、生成模型及具身智能/AR应用的研究者关注。"
+      }
+    },
+    "2609.05397": {
+      "brief": {
+        "status": "success",
+        "input_hash": "cee1b8d48e542365e2e1827d68e300c487aee054ec838c121103ec124b96b5c5",
+        "prompt_version": "brief-v2-no-related-methods",
+        "updated_at": "2026-09-07T18:06:53Z",
+        "path": "summaries/brief/2609.05397.md",
+        "markdown": "### Metadata\n- 标题：CrossDepth: Geometry-Constrained Attention for Generalizable Multi-View Surround Depth Estimation\n- 作者：Samer Abualhanud, Max Mehltretter\n- 出版日期：2026-09-04\n- 分类：3D Reconstruction & Multi-view Geometry\n- 链接：https://arxiv.org/abs/2609.05397\n\n### 一句话总结\nCrossDepth 提出一种基于几何约束注意力的多视角环视深度估计方法，通过相机感知射线嵌入与跨图像注意力提升深度精度与跨图像一致性，并在 DDAD 和 nuScenes 上优于现有自监督方法。\n\n### 研究问题\n在多视角环视相机系统中，相邻图像重叠极小，导致大多数像素的深度需要依赖单目外观线索推断；然而这些线索在不同图像间可能表现不一致（受相机内参差异和每张图像感受野有限影响），从而造成跨图像深度估计不一致。\n\n### 核心思路/方法\n- 针对相机内参差异：在特征上引入逐像素的相机感知射线嵌入，让网络适应相机相关的外观线索变化。\n- 针对感受野有限：通过几何约束的跨图像注意力机制，将每个像素的上下文扩展到自身图像之外，仅关注由标定系统导出的几何合理区域。\n- 训练方式：全自监督，基于光度一致性（photometric consistency）进行训练。\n\n### 主要贡献\n- 提出相机感知射线嵌入，以缓解不同相机内参导致的单目线索解释差异。\n- 设计几何约束的跨图像注意力，在标定约束下扩展像素上下文，提升跨图像深度一致性。\n- 在 DDAD 和 nuScenes 上的域内与跨域评估中，整体深度精度和跨图像一致性均优于现有自监督方法。\n- 代码已公开。\n\n### 局限性\n摘要未提供足够信息。\n\n### 阅读优先级\n**中**。理由：该方法面向自动驾驶环视深度估计，提出可泛化的跨图像一致性改进思路，属于应用导向的增量创新；但摘要未给出具体数值比较或消融细节，适用性与改进幅度需进一步阅读原文验证。若您关注多视角几何或自监督深度估计方向，可考虑优先阅读。"
+      }
     }
   },
   "reports": {
@@ -9059,6 +9079,13 @@
       "status": "success",
       "updated_at": "2026-09-06T15:59:44Z",
       "path": "reports/daily/2026-09-06.md",
+      "tasks": [],
+      "ai_trend_report": true
+    },
+    "2026-09-07": {
+      "status": "success",
+      "updated_at": "2026-09-07T18:07:11Z",
+      "path": "reports/daily/2026-09-07.md",
       "tasks": [],
       "ai_trend_report": true
     }

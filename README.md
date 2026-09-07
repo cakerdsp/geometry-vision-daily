@@ -11,13 +11,13 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：59
+- 当前滚动窗口论文数：46
 - 分类分布：
-  - Neural Scene Representations & Rendering: 21
-  - 3D Reconstruction & Multi-view Geometry: 15
-  - Embodied / Robotics / AR Applications: 14
-  - Dynamic / 4D Reconstruction: 6
-  - Geometry Foundation Models: 3
+  - Neural Scene Representations & Rendering: 15
+  - Embodied / Robotics / AR Applications: 13
+  - 3D Reconstruction & Multi-view Geometry: 12
+  - Dynamic / 4D Reconstruction: 4
+  - Geometry Foundation Models: 2
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
@@ -25,53 +25,54 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-1. **从"重建"走向"完成"：可控生成与场景补全成为核心交汇点** — 今日多篇论文不约而同地将三维重建的目标从"恢复可见表面"扩展为"生成未观测内容"。SPAR3S 从稀疏多视图图像补全完整场景，OctWorld 从单图沿相机轨迹生成世界一致的长距离视频，Z3D 则尝试从 3D 基础模型的内部表征解码新视角深度。这三篇论文横跨生成模型与重建表征，反映出"重建+生成"一体化建模的加速势头。
+**1. 表征解耦与“冻结骨干+轻量适配”范式扩散**
 
-2. **在线与长序列场景中的漂移抑制成为 3D 重建新焦点** — Scal3R 直接面向长视频在线重建的几何崩溃问题，将固定首帧锚点改为多参考相对位姿查询，并结合位姿图优化抑制累计漂移；OctWorld 则用持久化 3D 记忆（OctMap）解决长距离生成中重新访问区域的几何不一致。两篇论文从不同入口（在线重建 vs 视频生成）抵达同一问题——如何在大范围、长时间跨度下维持全局一致性。
+本窗口多篇论文不约而同地放弃了“端到端全量重训”，转而保留大模型的既有能力，只在边缘插入轻量可学习模块。Scal3R（2609.04201）向完全冻结的骨干注入约占参数1%的可学习token做多参考相对位姿查询；GIFT（2609.04193）在预训练VLA/世界模型之上引导中间特征以对齐控制相关结构；Z3D（2609.04174）直接解码3D基础模型（VGGT）内部表征，经潜在扩散合成未见视角深度。MINERVA（2609.03715）从另一端给出佐证——LIBERO基准下0.54M参数即达95.1%成功率，揭示主流VLA在该任务上严重过参数化。整体可见“能力可迁移、微调须极轻”的设计共识正在形成。
 
-3. **3DGS 工程化加速与训练效率优化进入精细化阶段** — 3DGS 的基础渲染与训练机制仍在大幅演进。TileGS 深入 GPU 光栅化内核，用瓦片级深度分箱重排加速渲染；Laplacian Frequency Hierarchies 通过频率分层归档降低训练中活跃高斯数量；TruncGradGS 从优化器角度修复梯度消失问题。三者分别从渲染管线、训练调度和梯度更新三个层面优化 3DGS 效率与稳定性，表明该领域已从"能否重建"走向"多快多稳地重建"。
+**2. 相机可控视频生成与在线3D重建的“长程一致性”攻坚**
 
-4. **点基神经表示的几何与外观联合编辑成为可编辑渲染新主线** — P-CORE 与 PointGT 两篇论文均由同一组学者牵头，立足点基表示无固定拓扑的优势，分别提出自监督表面一致性（应对大形变）和几何与纹理同步编辑。连同标题涉及的 3DGS 调色板级编辑工作，可编辑渲染正在从单一属性（颜色或几何）走向多属性、多模态交互的集成框架。
+OctWorld（2609.03919）以动态稀疏八叉树TSDF融合构建持久3D记忆，支持沿长相机轨迹的自回归世界生成；CamTrol++（2609.03639）发现将相机运动分解为小步自回归即可稳定单图新视角合成，且步长超过18°–20°性能骤降；Scal3R则用多参考位姿图优化替代固定首帧锚点。三者分别从记忆机制、步长分解、多参考帧三个角度回应同一问题：如何在长程生成/长时间在线重建中抑制漂移与几何崩溃。
 
-5. **机器人领域的"容量质疑"与"知识蒸馏式感知出口"带来反思性研究** — MINERVA 以 0.54M 参数的紧凑策略在 LIBERO 上逼近 70 亿参数模型的性能，对当前 VLA 模型"越大越好"的范式提出实证层面的挑战；隐私泄漏论文则系统揭示了任务限定感知导出中"抽象程度 ≠ 安全程度"的反直觉结论。两篇论文共同折射出机器人社区对模型规模、感知表示与任务效用之间真实关系的重新审视。
+**3. 3DGS从“重建工具”走向“可编辑、可加速、可组织”的工程化基座**
 
----
+3DGS相关论文在本窗口呈多点开花态势：TruncGradGS（2609.03534）用分段截断梯度缓解梯度消失；TileGS（2609.03613）以瓦片内深度局部重排实现1.44x内核加速；调色板编辑工作（2609.03897）重参数化3DGS球谐以支持实时色彩/亮度独立编辑；STARS-GS（2609.03447）引入结构感知场景划分与自适应表面正则化服务大规模航拍重建。另一条与之互补的线索是P-CORE（2609.03349）与PointGT（2609.03341），它们刻意绕开3DGS的固定高斯核，采用注意力式点表示与可学习核以支撑大幅几何形变与纹理同步编辑。3DGS的工程化优化与点基表示的编辑灵活性正在并行推进。
+
+**4. 几何先验全面降本：无真值、无优化、无配对数据**
+
+Z3D直接在3D基础模型表征上做潜在扩散，实现零样本新视角深度合成；SPAR3S（2609.03931）仅以多视图光度监督（可微3DGS）学习稀疏体素隐空间，完全规避3D真值标注；3D形态扰动方法（2609.03657）以无优化的尺度/旋转/剪枝扰动替代逐场景重建的配对数据采集；P-CORE以随机变形前后的表面一致性约束实现自监督大变形适应。多条路线同时指向“摆脱昂贵真值或重建管线”的轻监督/自监督训练范式。
+
+**5. 场景级生成与结构化理解的“务实化”转向**
+
+WorldSculpt（2609.05416）将一个强单物体3D生成先验适配到多视角观测，组合生成含数百物体的严重遮挡场景，无需场景级训练；ReRoom（2609.03596）将虚拟房间代理空间配准到真实房间，以技能引导的布局智能体支持原位的、可延续迭代的MR房间设计。二者共同体现“生成或理解整个场景”从端到端暴力重建/生成，转向模块化调用已有能力、以物理或语义上下文约束输出的实用路线。
+
 
 #### 技术路线观察
 
-- **几何基础模型（Geometry Foundation Models）** 仍然稀缺。今日仅 Z3D 一篇直接利用 VGGT 这类 3D 基础模型的内部表征做下游解码。值得注意的是，Z3D 选择对内部表征施加潜在扩散，而非简单地线性解码，暗示此类模型的表征虽然信息丰富但并非"可直接读取"，中间需要生成式解码器。这可能与 Scal3R 中"冻结骨干 + 轻量 token 注入"的技术路线互补：一个在输入端用少量参数引导模型，一个在输出端用生成模型挖掘隐含几何知识。
+**几何基础模型方向**（Z3D、WorldSculpt）侧重“榨取”预训练模型内部表征的通用3D知识。Z3D直接对3DFM表征做潜在扩散解码隐藏表面并支持零样本新视角深度合成；WorldSculpt则把单物体3D生成先验改造为多视角条件路径。两者共同假设：足够强的模型学到的表征已隐式覆盖大量未直接监督的3D信息，只需设计轻量的“解码/适配”侧枝即可。
 
-- **3D/4D 重建** 明显分化为两个技术阵营：其一，经典几何路线（Bundle Adjustment、摄影测量）仍在演进——有论文将高阶几何关系（共面、平行）建模为"类相机实体"从而在保持 BA 稀疏结构的同时扩展优化对象；其二，生成式重建路线（SPAR3S、OctWorld）将扩散或自回归模型与显式空间结构（稀疏体素、八叉树）结合。这两条线路并非互相替代，而是逐步形成"几何提供约束、生成提供先验"的互补格局。
+**3D/4D重建方向**（Scal3R、STARS-GS、焊缝管线）呈现“基础方法+工程约束”的混合气质。Scal3R观察并巧妙利用“深度稳、位姿崩”的失败解耦现象；STARS-GS以结构感知划分为大规模航拍服务；焊缝识别（2609.03970）则用语义分割+摄影测量的务实组合替代高精度传感器全表面扫描。该方向的典型路径是：以鲁棒的分析性观察（解耦、划分、粗定位）驱动对既有重建管线的最小侵入式改进。
 
-- **神经场景表示与渲染** 高度集中在 3DGS 生态的增量改良与编辑功能扩展。渲染层面关注内核效率（TileGS）与训练策略（Laplacian Frequency Hierarchies、TruncGradGS）；编辑层面则分化为基于点表示的统一编辑（PointGT、P-CORE）与基于 3DGS 的调色板/亮度专业编辑。前者走"通用理论"路线，后者走"工业可用"路线。
+**神经场景表示方向**（3DGS系列、P-CORE、PointGT、SPAR3S）最为活跃：3DGS侧集中做工程优化（梯度截断、加速栅格化）与应用扩展（实时调色/亮度编辑、大规模航拍），点表示侧则以注意力机制与可学习插值核换取几何/纹理编辑的自由度。SPAR3S以“稀疏体素隐空间+光度监督+掩码自回归”开辟了无3D真值的生成路径。3DGS与点基表示并非竞争关系——它们分别用“显式性便于编辑”和“可学习核适应形变”回答不同编辑场景的问题。
 
-- **机器人/AR 应用** 的技术谱系更广：从 MINERVA 对操作策略容量的极限压测，到 GIFT 对 VLA 中间特征施加结构化监督（几何、姿态、目标区域），从焊缝识别的多视角摄影测量+语义分割管线，到本体驱动的动态语义建图。值得注意的是，这些工作中反复出现的共同技术元件是：几何先验（无论是焊缝的 3D 映射还是机器人的运动可行性）与语义/指令约束的关系——这正是 GIFT 称为"动作充分性差距"的核心问题。
+**机器人/AR应用方向**（GIFT、MINERVA、ReRoom、语义映射）出现值得注意的张力：MINERVA证明LIBERO基准对容量的要求极低（~1M饱和、0.25M崩溃），GIFT则致力于弥合“视觉丰富性与控制效用”的差距——这两篇合在一起暗示机器人学界的注意力正从端到端暴力堆参数转向结构化特征监督与任务容量边界的审慎测量。ReRoom和语义映射工作（2609.03891）则展示真实场景中的“混合”（物理/虚拟、几何/本体）系统集成价值。
 
----
 
 #### 值得优先阅读的论文
 
-1. **Scal3R（2609.04201）** — 它对"深度保持稳定但位姿头崩溃"这一失败模式的观察与利用极具启发性，暗示局部几何与全局位姿的解耦可能成为一种通用设计原则；此外"冻结骨干 + 1% 参数 token"的高效范式与其在 KITTI 上 60% 以上的 ATE 降幅均值得仔细验证。
+**1. MINERVA（2609.03715）**——当前VLA领域“堆参数量级”的主流叙事的强有力反例。0.54M参数在LIBERO上接近7,700×参数的π0.5，且系统揭示action-chunk长度与视觉容量是唯二稳健影响因素。它提醒研究者：基准饱和≠问题解决，并给轻量策略落地提供了硬数据。
 
-2. **OctWorld（2609.03919）** — 它将 3D 表示（TSDF + 八叉树）作为扩散模型的持久记忆，直面长距离生成中最棘手的"重访区域一致性"问题。论文将 3D 重建技术反哺视频生成，这种交叉方向很可能成为后续热点。
+**2. Scal3R（2609.04201）**——将在线重建长视频漂移问题拆解为“局部深度稳定、全局位姿崩溃”的可操作观察，并以此设计多参考相对位姿查询+冻结骨干注入。对任何面对长序列重建/生成漂移问题的人，这是一个清晰的范式级参考。
 
-3. **SPAR3S（2609.03931）** — 它提出无 3D 真值、仅靠多视图图像光度监督学习的稀疏体素隐空间，配合掩码自回归 Transformer 生成。该方法完全回避了 3D 标注瓶颈，思路简洁却有很强的扩展性，值得关注其在真实数据上的完整表现。
+**3. Z3D（2609.04174）**——首次系统验证从3D基础模型内部表征解码隐藏表面的可行性，并以潜在扩散实现跨数据集的零样本新视角深度预测。该方向刚刚起步，后续空间大。
 
-4. **Stable and Scalable Bundle Adjustment（2609.04026）** — 经典 BA 领域少有的统一化扩展。将高阶几何关系（共面、平行）建模为类相机实体并保持经典稀疏结构，这一数学构造既优雅又具有明确的实际管线价值，对多视几何研究者是必读。
+**4. OctWorld（2609.03919）**——用“TSDF融合+动态稀疏八叉树”解决长距离开放式视频生成的再访问区域一致性问题，是“视频扩散×显式3D记忆”交叉路口的代表作，给生成模型加“外挂空间记忆”提供了一个坚实的工程化样本。
 
-5. **MINERVA（2609.03715）** — 以极小参数规模逼近超大 VLA 模型的性能，并系统揭示了 action-chunk 长度和视觉容量是唯一显著影响因子。这项研究对 LIBERO 基准的"任务容量下限"给出了迄今最直接的实证估计，对机器人社区理解当前基准的真实难度具有方法论意义。
+**5. TruncGradGS（2609.03534）**——简短、直接、通用。一个截断梯度公式同时提升随机与COLMAP初始化下的静态/动态3DGS重建，并附带动态基准。这类优化层面“小而关键”的修正往往容易被忽视，但实际影响力可能高于架构级改动。
 
----
 
 #### 可能的研究机会
 
-- **"重建-生成"的统一中间表征**：SPAR3S 的稀疏体素隐空间与 OctWorld 的动态八叉树记忆在概念上高度相似，都在寻找一种既能高效存储已观测几何、又能支持生成模型补齐未观测内容的中间状态。如果引入 Scal3R 的"冻结 3D 基础模型 + 旁路 token"策略，可能得到一种无需从头训练、直接对现有重建大模型进行场景补全的快捷路径。
-
-- **在线一致性保持方法的跨域迁移**：Scal3R 的多参考位姿查询解决的是在线重建的累积漂移，OctWorld 的 3D 记忆解决的是长视频生成的重访不一致——两者本质都服务于"持续积累中的全局一致性"。这套方法论有望迁移到增量式语义建图、长期 SLAM、在线场景编辑等需要随数据流入持续性更新全局状态的任务中。
-
-- **点基表示 + 3DGS 的编辑生态整合**：PointGT/P-CORE 展示的点基统一编辑框架与 3DGS 调色板级编辑（基于 SH 重参数化）各有优势：前者支持几何大形变，后者渲染质量和生态成熟度更高。目前尚未见到一个能同时支持自由几何形变和高效 SH/纹理编辑的统一框架；此外，如何将编辑能力扩展为多实例、跨场景可复用的"编辑先验"，也是一个开放问题。
-
-- **面向可编辑性与生成性的正则化理论**：TruncGradGS 针对
+- **为视频扩散模型构造轻量的“空间外挂记忆”**：OctWorld展示了八叉树TSDF融合作为持久3D记忆的可行性。后续可探索更紧凑的记忆表征（
 
 ### interests.md 指令分析
 
@@ -453,6 +454,41 @@ In indoor environments, object positions frequently change due to human activiti
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** depth estimation, autonomous driving
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：CrossDepth: Geometry-Constrained Attention for Generalizable Multi-View Surround Depth Estimation
+- 作者：Samer Abualhanud, Max Mehltretter
+- 出版日期：2026-09-04
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2609.05397
+
+### 一句话总结
+CrossDepth 提出一种基于几何约束注意力的多视角环视深度估计方法，通过相机感知射线嵌入与跨图像注意力提升深度精度与跨图像一致性，并在 DDAD 和 nuScenes 上优于现有自监督方法。
+
+### 研究问题
+在多视角环视相机系统中，相邻图像重叠极小，导致大多数像素的深度需要依赖单目外观线索推断；然而这些线索在不同图像间可能表现不一致（受相机内参差异和每张图像感受野有限影响），从而造成跨图像深度估计不一致。
+
+### 核心思路/方法
+- 针对相机内参差异：在特征上引入逐像素的相机感知射线嵌入，让网络适应相机相关的外观线索变化。
+- 针对感受野有限：通过几何约束的跨图像注意力机制，将每个像素的上下文扩展到自身图像之外，仅关注由标定系统导出的几何合理区域。
+- 训练方式：全自监督，基于光度一致性（photometric consistency）进行训练。
+
+### 主要贡献
+- 提出相机感知射线嵌入，以缓解不同相机内参导致的单目线索解释差异。
+- 设计几何约束的跨图像注意力，在标定约束下扩展像素上下文，提升跨图像深度一致性。
+- 在 DDAD 和 nuScenes 上的域内与跨域评估中，整体深度精度和跨图像一致性均优于现有自监督方法。
+- 代码已公开。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+**中**。理由：该方法面向自动驾驶环视深度估计，提出可泛化的跨图像一致性改进思路，属于应用导向的增量创新；但摘要未给出具体数值比较或消融细节，适用性与改进幅度需进一步阅读原文验证。若您关注多视角几何或自监督深度估计方向，可考虑优先阅读。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1803,6 +1839,40 @@ Faithfully capturing diverse real-world objects with fuzzy, anisotropic structur
 **Matched keywords:** 3DGS, robotics, AR, VR, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：WorldSculpt: Generating Compositional Worlds from Grounded Videos
+- 作者：Muyao Niu, Jixuan He, Ruihan Yu, Lian Fu, Yonghao Yu, Zheng-Hui Huang, Yifan Zhan, Fengbo Lan, Yongtao Ge, Yinqiang Zheng, Kaipeng Zhang, Zhixiang Wang
+- 出版日期：2026-09-04
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2609.05416
+
+### 一句话总结
+本文提出WorldSculpt方法，通过将强单物体3D生成先验扩展为多视角条件路径，仅用单物体数据微调即可生成包含数百个物体、严重遮挡场景的组合式3D网格表示。
+
+### 研究问题
+如何从多视角视频中生成由数百个独立物体网格组成的、处于共享世界坐标系下的组合式3D场景表示，尤其是在密集遮挡、单个视角仅能观测到部分几何的复杂场景下准确重建每个物体的完整形状。
+
+### 核心思路/方法
+采用"将强单物体3D生成先验适配到多视角观测"的范式：以Pixal3D为基础，扩展多视角条件路径，使模型在生成每个物体时能利用多个带位姿的观测信息进行grounding。关键设计是，模型仅在规范空间的单物体数据上微调，无需场景级训练即可泛化到包含严重遮挡的大规模场景。
+
+### 主要贡献
+- 提出WorldSculpt范式，证明复杂数百物体场景可通过适配单物体生成先验实现组合式生成，无需场景级训练。
+- 引入UE-MeshyScene基准：包含密集杂乱场景、数百物体、逐物体标注和真值网格，用于评估此类任务。
+- 在单物体、受控多物体及UE-MeshyScene上均优于先前方法，且场景越复杂、遮挡越严重，性能优势越明显。
+- 展示将现有3DGS世界（如Marble、HY-World 2.0）转换为组合式网格场景的适用性。
+
+### 局限性
+摘要未提供足够信息，无法得知方法在实时性、内存开销、物体数量上限、泛化到未见场景类型等方面的局限。
+
+### 阅读优先级
+**高**
+理由：该工作针对"密集遮挡场景的组合式3D生成"这一具挑战且具实际应用价值的问题，提出无需场景级训练的可扩展范式，并配套新基准，适合从事三维重建、生成模型及具身智能/AR应用的研究者关注。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 We study the problem of generating a compositional 3D representation of a cluttered scene containing hundreds of objects. The goal is to represent the scene as a collection of individual object meshes placed in a shared world frame, as required by downstream applications such as gaming, AR/VR, simulation, and robotics. This task is challenging in densely cluttered scenes, where objects heavily occlude one another and each view reveals only a fraction of their geometry. Geometry-based approaches typically reconstruct the scene as a single representation and leave incomplete geometry in occluded regions, while existing compositional methods with generative priors are largely limited to relatively simple scenes. We show that complex scenes with hundreds of objects can instead be generated compositionally by adapting a strong single-object 3D generative prior to multi-view observations. We instantiate this paradigm with Pixal3D, extending it with a multi-view conditioning pathway that grounds object generation in multiple posed observations. Although the model is finetuned entirely on single objects in canonical space, it generalizes to large scenes with severe occlusion without any scene-level training, demonstrating the feasibility and scalability of this paradigm. We further introduce UE-MeshyScene, a photorealistic benchmark of densely cluttered scenes with hundreds of objects, per-object annotations, and ground-truth meshes. Across single-object, controlled multi-object, and UE-MeshyScene evaluations, our method consistently outperforms prior approaches, with larger gains as scene complexity and occlusion increase. Finally, we demonstrate broader applicability by converting generated 3DGS worlds, such as Marble and HY-World 2.0, into compositional mesh scenes.
@@ -2380,59 +2450,6 @@ Multi-camera systems are increasingly practical for robotics, AR/VR, and autonom
 <summary>Abstract</summary>
 
 Conventional soft robot actuators excel in compliance, but their uncontrolled deformations compromise accuracy and hinder scaling to multi-degree-of-freedom (DoF) systems. We introduce a MONOlithic ORIGAMI-inspired soft folding actuator design (MONORIGAMI) that establishes a design strategy based on spatially programmed stiffness anisotropy to preserve material compliance along desired folding directions while selectively restricting deformation in unwanted directions. The actuator leverages stiffness tiers based on material thickness, patterned in an origami-inspired geometry with facets and creases, converting unconstrained soft deformation into accurate, repeatable, and composable folding motions without additional reinforcements. The design is fully 3D-printable through a single-material, single-print process that requires no assembly. Each actuator serves as a scalable motion primitive, and linking and orienting multiple actuators mechanically programs multi-DoF trajectories. Using the same fundamental module, we demonstrate three 3D-printed soft multi-DoF robotic systems spanning distinct application domains: (1) a compact 4-DoF wearable haptic device for high-fidelity cutaneous feedback in virtual reality (VR), (2) a 3-DoF joystick for kinesthetic feedback in teleoperation, and (3) a modular robotic gripper capable of underwater operation with geometry-encoded grasp trajectories. These systems demonstrate the module's capabilities for compact multi-axis integration, controlled physical interaction, and geometry-programmed operation across different environments. Together, these results show that MONORIGAMI provides a general, composable, accessible, reliable, and scalable platform for high-precision soft multi-DoF robotics, addressing long-standing limitations in both soft actuator design and fabrication.
-
-</details>
-
-### 2026-08
-
-#### 2026-08-31 - IMPACT: Attention Is the Interaction Map for Scalable Interaction-Aware World Model Training
-
-**Authors:** Rongze Tang, Jianjie Fang, Zhaolu Wang, Ziyou Wang, Xvyuan Liu, Haisheng Su, Xin Zhang, Wei Wu, Chen Gao, Yong Li, Zhibo Chen
-**Links:** [abs](https://arxiv.org/abs/2609.00161) - [pdf](https://arxiv.org/pdf/2609.00161)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** manipulation, world model
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：IMPACT: Attention Is the Interaction Map for Scalable Interaction-Aware World Model Training
-- 作者：Rongze Tang, Jianjie Fang, Zhaolu Wang, Ziyou Wang, Xvyuan Liu, Haisheng Su, Xin Zhang, Wei Wu, Chen Gao, Yong Li, Zhibo Chen
-- 出版日期：2026-08-31
-- 分类：Embodied / Robotics / AR Applications
-- 链接：https://arxiv.org/abs/2609.00161
-
-### 一句话总结
-本文提出IMPACT框架，通过将跨注意力作为内部时空先验来生成交互图并对去噪监督进行加权，从而在不依赖外部表示或推理时改动的情况下提升世界模型在交互生成中的物理合理性与视觉质量。
-
-### 研究问题
-世界模型在动作条件下未来预测中难以建模物理上合理的交互；现有方法依赖外部表示（如运动、几何、语义）约束生成，但这些表示获取成本高（需辅助估计器或人工标注），限制了训练的可扩展性。作者指出根本原因在于全局平均MSE去噪目标下存在监督分配失配问题——静态内容主导优化信号，动态交互区域被欠监督。
-
-### 核心思路/方法
-IMPACT的核心是识别MSE监督分配失配问题，并提出无需外部表示的解决方案：
-1. 使用与操作对象token关联的交叉注意力作为动作条件变化的内部时空先验；
-2. 从该先验中采样候选区域，并用分离的局部预测误差对候选区域进行校准，构建“交互图”；
-3. 利用交互图对去噪监督进行重新加权，使稀疏的动态交互区域获得更充分的监督。
-该方法无需外部表示，也不需要在推理时修改模型。
-
-### 主要贡献
-- 识别了全局平均MSE去噪目标下的监督分配失配问题，指出其是限制世界模型交互建模能力的根本原因之一；
-- 提出IMPACT训练框架，利用内部交叉注意力先验与局部预测误差构建交互图以重新加权监督，免除了外部表示和人工标注的需求；
-- 在机械臂与机械手操作任务上，跨越不同控制模态和DiT骨干网络，一致优于MSE训练的基线，在交互保真度、物理合理性、视觉质量上均有提升。
-
-### 局限性
-摘要未提供足够信息以判断该方法在非操作类交互场景、更大规模数据集、长时程预测等方面的泛化性能，也未讨论计算开销或失败案例。
-
-### 阅读优先级
-**高**。理由：该工作针对世界模型交互建模这一重要难题提出了无需外部标注的通用训练方案，核心思路（从监督分配失配切入并用内部注意力构建交互图）具有一定新颖性和可扩展性；实验覆盖多个任务与骨干网络，适合关注具身智能、世界模型与扩散模型训练的研究者阅读。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-World models have made remarkable progress in action-conditioned future prediction for embodied agents, yet still struggle to model physically plausible interactions. Existing approaches address this limitation by constraining the generation process with external representations encoding motion, geometry, or semantics. Obtaining these spatiotemporally dense representations typically requires auxiliary estimators or manual annotations, limiting training scalability. We instead revisit the training objective and identify a supervision-allocation mismatch under the globally averaged mean squared error (MSE) denoising objective: prevalent static content dominates the optimization signal, leaving sparse dynamic-object regions critical to interaction generation disproportionately under-supervised. Motivated by this observation, we introduce IMPACT, a scalable Interaction-aware Model training framework with Prior-guided Attention Calibration and Targeting. IMPACT uses cross-attention associated with manipulated-object tokens as an internal spatiotemporal prior for action-conditioned changes. It samples candidate regions from this prior, calibrates them with detached local prediction errors to construct an interaction map, and uses the map to reweight denoising supervision, requiring neither external representations nor inference-time modifications. Extensive experiments on robot-arm and human-hand manipulation, spanning diverse control modalities and DiT backbones, show that IMPACT consistently outperforms the corresponding MSE-trained baselines, improving interaction fidelity, physical plausibility, and visual quality.
 
 </details>
 
