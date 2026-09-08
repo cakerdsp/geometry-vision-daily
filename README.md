@@ -11,13 +11,13 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：46
+- 当前滚动窗口论文数：35
 - 分类分布：
-  - Neural Scene Representations & Rendering: 15
-  - Embodied / Robotics / AR Applications: 13
-  - 3D Reconstruction & Multi-view Geometry: 12
-  - Dynamic / 4D Reconstruction: 4
+  - Neural Scene Representations & Rendering: 13
+  - Embodied / Robotics / AR Applications: 11
+  - 3D Reconstruction & Multi-view Geometry: 7
   - Geometry Foundation Models: 2
+  - Dynamic / 4D Reconstruction: 2
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
@@ -25,54 +25,46 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-**1. 表征解耦与“冻结骨干+轻量适配”范式扩散**
+**1. 3D 基础模型与生成模型开始“跨界互融”，内部表征被重新挖掘利用。**
+多条工作不再将 3D 重建/生成视为终端任务，而是将 3D 基础模型（如 VGGT）的内部表征视作可复用的“资产”。Z3D（2609.04174）直接尝试从 3DFM 内部表征中解码隐藏表面，并通过潜在扩散合成新视角深度；WorldSculpt（2609.05416）则展示了如何将单物体生成先验迁移到数百物体的大规模场景；SPAR3S（2609.03931）与 OctWorld（2609.03919）也都在探索如何在无 3D 真值监督条件下，利用可微渲染与稀疏表征构建“从多视图图像到可生成 3D 场景”的新范式。这反映了从“炼丹式重建”向“表征即知识、知识可生成”方向演进的苗头。
 
-本窗口多篇论文不约而同地放弃了“端到端全量重训”，转而保留大模型的既有能力，只在边缘插入轻量可学习模块。Scal3R（2609.04201）向完全冻结的骨干注入约占参数1%的可学习token做多参考相对位姿查询；GIFT（2609.04193）在预训练VLA/世界模型之上引导中间特征以对齐控制相关结构；Z3D（2609.04174）直接解码3D基础模型（VGGT）内部表征，经潜在扩散合成未见视角深度。MINERVA（2609.03715）从另一端给出佐证——LIBERO基准下0.54M参数即达95.1%成功率，揭示主流VLA在该任务上严重过参数化。整体可见“能力可迁移、微调须极轻”的设计共识正在形成。
+**2. “长程一致性”与“在线可扩展性”成为重建与生成的双重瓶颈与主战场。**
+长视频在线重建在 Scal3R（2609.04201）中被明确诊断为“局部深度稳定、全局位姿崩溃”，进而以多参考相对位姿查询解决长距离漂移；视频生成侧，OctWorld（2609.03919）与 CamTrol++（2609.03639）分别从“持久化 3D 记忆”与“相机步长分解”两个不同角度应对长距离/大视角变化下的空间一致性崩溃。两者殊途同归，均指向同一个核心问题：跨越时间与空间的全局几何记忆如何紧凑、稳定地维护与更新。
 
-**2. 相机可控视频生成与在线3D重建的“长程一致性”攻坚**
+**3. 高斯泼溅从“重建利器”走向“可编辑、可加速、可结构化的工程系统”。**
+3DGS 相关论文密集出现且分工明确：底层优化稳定性（TruncGradGS，分段截断梯度解决梯度消失）、栅格化工程加速（TileGS，瓦片内深度分箱重排）、上层编辑能力（球谐重参数化实现调色板级颜色/亮度编辑）、大规模结构感知表面重建（STARS-GS，结构感知场景划分与自适应正则化）。这表明 3DGS 正从“能否重建”全面转向“能否用好”：追求加速、稳定、可编辑、可扩展至大规模场景。
 
-OctWorld（2609.03919）以动态稀疏八叉树TSDF融合构建持久3D记忆，支持沿长相机轨迹的自回归世界生成；CamTrol++（2609.03639）发现将相机运动分解为小步自回归即可稳定单图新视角合成，且步长超过18°–20°性能骤降；Scal3R则用多参考位姿图优化替代固定首帧锚点。三者分别从记忆机制、步长分解、多参考帧三个角度回应同一问题：如何在长程生成/长时间在线重建中抑制漂移与几何崩溃。
+**4. 机器人操控领域出现“规模祛魅”与“特征可解释性回归”的并行思潮。**
+MINERVA（2609.03715）以 0.54M 参数在 LIBERO 上达到 95.1% 成功率，直接挑战当前 VLA 模型的“大即是好”预设，为模型容量与任务复杂度匹配提出实证基线。GIFT（2609.04193）则从另一角度指出视觉预训练特征与动作控制之间存在“动作充分性差距”，主张通过几何、姿态、目标区域等显式结构监督来引导中间特征。二者都在质疑盲目堆规模的路线，一个在做减法（最小容量），一个在加结构（几何/语义约束）。此外，3D 形态扰动（2609.03657）还展示了用 3DGS 形态参数空间正则化来提升下游机器人策略性能，进一步说明 3D 表征研究正在与操控学习深度绑定。
 
-**3. 3DGS从“重建工具”走向“可编辑、可加速、可组织”的工程化基座**
-
-3DGS相关论文在本窗口呈多点开花态势：TruncGradGS（2609.03534）用分段截断梯度缓解梯度消失；TileGS（2609.03613）以瓦片内深度局部重排实现1.44x内核加速；调色板编辑工作（2609.03897）重参数化3DGS球谐以支持实时色彩/亮度独立编辑；STARS-GS（2609.03447）引入结构感知场景划分与自适应表面正则化服务大规模航拍重建。另一条与之互补的线索是P-CORE（2609.03349）与PointGT（2609.03341），它们刻意绕开3DGS的固定高斯核，采用注意力式点表示与可学习核以支撑大幅几何形变与纹理同步编辑。3DGS的工程化优化与点基表示的编辑灵活性正在并行推进。
-
-**4. 几何先验全面降本：无真值、无优化、无配对数据**
-
-Z3D直接在3D基础模型表征上做潜在扩散，实现零样本新视角深度合成；SPAR3S（2609.03931）仅以多视图光度监督（可微3DGS）学习稀疏体素隐空间，完全规避3D真值标注；3D形态扰动方法（2609.03657）以无优化的尺度/旋转/剪枝扰动替代逐场景重建的配对数据采集；P-CORE以随机变形前后的表面一致性约束实现自监督大变形适应。多条路线同时指向“摆脱昂贵真值或重建管线”的轻监督/自监督训练范式。
-
-**5. 场景级生成与结构化理解的“务实化”转向**
-
-WorldSculpt（2609.05416）将一个强单物体3D生成先验适配到多视角观测，组合生成含数百物体的严重遮挡场景，无需场景级训练；ReRoom（2609.03596）将虚拟房间代理空间配准到真实房间，以技能引导的布局智能体支持原位的、可延续迭代的MR房间设计。二者共同体现“生成或理解整个场景”从端到端暴力重建/生成，转向模块化调用已有能力、以物理或语义上下文约束输出的实用路线。
+**5. 语义场景理解与具身/AR 应用走向“混合管线”，强调先验知识与实际几何的融合。**
+ReRoom（2609.03596）将虚拟房间代理与真实空间对齐，实现原位家居布局设计并将室内设计准则技能化；语义建图的混合管线（2609.03891）将外部标定相机、单应投影、对象检测/追踪与本体驱动的动态更新结合；焊缝识别（2609.03970）将语义分割、摄影测量与机器人后处理流程打通，作为高精度测量前的预定位阶段。三维视觉正加速进入行业细分场景，以“视觉粗定位 + 先验知识校正 + 机器人/AR执行”的模式落地。
 
 
 #### 技术路线观察
 
-**几何基础模型方向**（Z3D、WorldSculpt）侧重“榨取”预训练模型内部表征的通用3D知识。Z3D直接对3DFM表征做潜在扩散解码隐藏表面并支持零样本新视角深度合成；WorldSculpt则把单物体3D生成先验改造为多视角条件路径。两者共同假设：足够强的模型学到的表征已隐式覆盖大量未直接监督的3D信息，只需设计轻量的“解码/适配”侧枝即可。
+- **几何基础模型（Geometry Foundation Models）**：目前主要回答“如何用”（Z3D 挖掘 VGGT 内部表征），而非“如何训”。核心矛盾在于现有 3DFM 是否已蕴含足以支持零样本新视角推理的通用 3D 知识，以及如何以轻量解码（潜在扩散）将其释放。
+- **3D/4D 重建（传统几何路线）**：Scal3R 与 BA 扩展（2609.04026）都偏向“在经典框架内做结构创新”——前者将冻结骨干+轻量 token 注入引入 SLAM/在线重建，后者以类相机实体建模高阶几何关系并保持稀疏结构。保守但扎实，在可解释性和工程稳定性上占优。
+- **神经场景表示与渲染（NeRF/3DGS 衍生）**：最大特点是分化明显且内部自迭代极快。可归纳为四条支线：(a) 编辑能力（P-CORE、PointGT、调色板重参数化）；(b) 工程加速（TileGS）；(c) 优化稳定性（TruncGradGS）；(d) 大规模扩展与结构感知（STARS-GS）。其中 P-CORE 与 PointGT 两篇同作者/同团队论文均聚焦基于点表示的几何+纹理编辑，显示出“可编辑性正在成为表示学习的核心评价维度”之迹象。
+- **视频生成与 3D 记忆**：OctWorld 与 CamTrol++ 都试图以“扩散模型 + 几何约束”回答长程一致性；区别在于前者维护显式的、可扩展的八叉树 TSDF 记忆，后者则利用小步自回归与无配准变形在推理层面寻求稳定。两者均不修改或极少修改扩散主干，强调推理时/外围模块增益。
+- **机器人/AR 应用（Embodied/Robotics）**：出现了明显的“反思”与“混合”特征。反思在于 MINERVA 对 VLA 参数规模与基准任务复杂度匹配的怀疑与量化；混合在于系统级方案（如本体语义建图、焊缝识别管线、GIFT在线操作蒸馏框架、WorldSculpt 的场景网格输出）越来越多地从头到尾贯通感知、几何、语义与执行环节。
 
-**3D/4D重建方向**（Scal3R、STARS-GS、焊缝管线）呈现“基础方法+工程约束”的混合气质。Scal3R观察并巧妙利用“深度稳、位姿崩”的失败解耦现象；STARS-GS以结构感知划分为大规模航拍服务；焊缝识别（2609.03970）则用语义分割+摄影测量的务实组合替代高精度传感器全表面扫描。该方向的典型路径是：以鲁棒的分析性观察（解耦、划分、粗定位）驱动对既有重建管线的最小侵入式改进。
-
-**神经场景表示方向**（3DGS系列、P-CORE、PointGT、SPAR3S）最为活跃：3DGS侧集中做工程优化（梯度截断、加速栅格化）与应用扩展（实时调色/亮度编辑、大规模航拍），点表示侧则以注意力机制与可学习插值核换取几何/纹理编辑的自由度。SPAR3S以“稀疏体素隐空间+光度监督+掩码自回归”开辟了无3D真值的生成路径。3DGS与点基表示并非竞争关系——它们分别用“显式性便于编辑”和“可学习核适应形变”回答不同编辑场景的问题。
-
-**机器人/AR应用方向**（GIFT、MINERVA、ReRoom、语义映射）出现值得注意的张力：MINERVA证明LIBERO基准对容量的要求极低（~1M饱和、0.25M崩溃），GIFT则致力于弥合“视觉丰富性与控制效用”的差距——这两篇合在一起暗示机器人学界的注意力正从端到端暴力堆参数转向结构化特征监督与任务容量边界的审慎测量。ReRoom和语义映射工作（2609.03891）则展示真实场景中的“混合”（物理/虚拟、几何/本体）系统集成价值。
+总体而言，几何基础模型与扩散生成之间正在形成围绕“表征复用”合流的主干；纯几何与神经渲染两条路径并行演进，前者稳、后者快；机器人侧则呈现明显的“效率优先”转向。
 
 
 #### 值得优先阅读的论文
 
-**1. MINERVA（2609.03715）**——当前VLA领域“堆参数量级”的主流叙事的强有力反例。0.54M参数在LIBERO上接近7,700×参数的π0.5，且系统揭示action-chunk长度与视觉容量是唯二稳健影响因素。它提醒研究者：基准饱和≠问题解决，并给轻量策略落地提供了硬数据。
+**1. OctWorld（2609.03919）—— 理解“3D 记忆”在长程生成中的角色**
+将显式稀疏八叉树 + TSDF 融合引入扩散模型作为持久 3D 记忆，是当前“生成式世界模型必须维护几何一致性”趋势下非常具象、可借鉴的系统性方案。阅读优先级最高，因其跨越了视频生成、3D重建与记忆机制三个交叉领域。
 
-**2. Scal3R（2609.04201）**——将在线重建长视频漂移问题拆解为“局部深度稳定、全局位姿崩溃”的可操作观察，并以此设计多参考相对位姿查询+冻结骨干注入。对任何面对长序列重建/生成漂移问题的人，这是一个清晰的范式级参考。
+**2. Scal3R（2609.04201）—— 在线重建长程漂移问题的一份“诊断书 + 药方”**
+其对失败模式的归因（局部深度稳定、全局位姿崩溃）奠定了设计合理性的基础，而“冻结骨干 + ~1% 可学习 token 查询多参考位姿 + 在线位姿图优化”的方案极简且训练成本低（单 GPU 8 小时），在工程与科研之间取得良好平衡。
 
-**3. Z3D（2609.04174）**——首次系统验证从3D基础模型内部表征解码隐藏表面的可行性，并以潜在扩散实现跨数据集的零样本新视角深度预测。该方向刚刚起步，后续空间大。
+**3. STARS-GS（2609.03447）—— 大规模 3DGS 表面重建的“组织与编排”**
+从场景划分、邻域组织到自适应正则化三个层面系统解决大规模航拍重建问题，是 3DGS 从“室内物体级”迈向“城市级地理空间”的代表性工作，对工程落地有直接参考价值。
 
-**4. OctWorld（2609.03919）**——用“TSDF融合+动态稀疏八叉树”解决长距离开放式视频生成的再访问区域一致性问题，是“视频扩散×显式3D记忆”交叉路口的代表作，给生成模型加“外挂空间记忆”提供了一个坚实的工程化样本。
-
-**5. TruncGradGS（2609.03534）**——简短、直接、通用。一个截断梯度公式同时提升随机与COLMAP初始化下的静态/动态3DGS重建，并附带动态基准。这类优化层面“小而关键”的修正往往容易被忽视，但实际影响力可能高于架构级改动。
-
-
-#### 可能的研究机会
-
-- **为视频扩散模型构造轻量的“空间外挂记忆”**：OctWorld展示了八叉树TSDF融合作为持久3D记忆的可行性。后续可探索更紧凑的记忆表征（
+**4. MINERVA（2609.03715）—— 对 VLA 膨胀潮流的冷静审视**
+0.54M 参数在 LIBERO 上逼近 π0.5（7700 倍参数）的水平，并给出容量崩溃阈值（~0.25M 以下）与饱和点（~1M），极可能倒逼后续 VLA/操控策略论文重新审视基线设置与基准设计的质量，建议作为回应性
 
 ### interests.md 指令分析
 
@@ -183,57 +175,6 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 <summary>Abstract</summary>
 
 3D Foundation Models (3DFMs) such as VGGT have recently pushed the boundaries of 3D vision by predicting rich unified representations with feed-foward transformers. The scene representations learned by these models enable strong performance on multiple 3D vision tasks. In this paper, we investigate using their internal representations to infer 3D in the scene from new views. Our hypothesis is that in order to solve the task of 3D reconstruction, these models need to learn a representation that includes a large amount of general knowledge about 3D scenes. After showing that it is possible to decode hidden surfaces from internal 3DFM representations, we propose a method, Z3D, that estimates pointmaps in unseen views by doing latent diffusion on 3DFM representation. We show that Z3D can predict realistic depth maps for new views across multiple datasets.
-
-</details>
-
-#### 2026-09-01 - Revisiting Cross-View Completion: Self-Supervised Pre-Training via Reconstruction Error Comparison
-
-**Authors:** Thibaut Loiseau, Guillaume Bourmaud, Vincent Lepetit
-**Links:** [abs](https://arxiv.org/abs/2609.01530) - [pdf](https://arxiv.org/pdf/2609.01530)
-**Primary category:** Geometry Foundation Models
-**Secondary categories:** None
-**Matched keywords:** CroCo, pointmap, pose estimation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Revisiting Cross-View Completion: Self-Supervised Pre-Training via Reconstruction Error Comparison  
-- 作者：Thibaut Loiseau, Guillaume Bourmaud, Vincent Lepetit  
-- 出版日期：2026-09-01  
-- 分类：Geometry Foundation Models  
-- 链接：https://arxiv.org/abs/2609.01530
-
-### 一句话总结
-本文提出Gekko，一种将跨视图补全与掩码自编码的误差差异作为共视性代理信号、从而为所有掩码区域提供双目监督的自监督预训练方法。
-
-### 研究问题
-跨视图补全自监督预训练方法在重建非共视区域时参考视图提供信息不足，导致这些区域实质上退化为单目训练信号；如何将这一局限转化为有用的双向（双目）监督信号。
-
-### 核心思路/方法
-- 观察：跨视图重建误差相对于掩码自编码误差的相对改进程度可作为共视性的自监督代理——改进大表示共视区域，改进小表示非共视区域。
-- 设计：Gekko网络从零开始联合训练三个任务：跨视图补全、掩码自编码，以及逐像素预测上述相对误差改进。
-- 通过该相对改进预测，为所有掩码区域提供额外的双目信号，无需任何真值3D标注。
-- 支持直接从原始视频训练，采用基于步长的课程学习，免去先前方法的复杂3D预处理。
-
-### 主要贡献
-- 提出Gekko框架，将跨视图补全的局限性转为可用的共视性代理信号，并引入额外的双目监督。
-- 在零样本对应估计、相对位姿估计和点图回归上一致优于CroCo；在最严格相对位姿阈值下精度提升高达6倍，ETH3D端点误差降低22%。
-- Gekko学习的额外通道本身即成为强共视性检测器；冻结特征优于同规模或更大规模的已发布跨视图骨干网络。
-- 可从原始视频训练，匹配基于精选数据训练的模型，同时去除繁琐的3D预处理。
-
-### 局限性
-摘要未提供足够信息：未讨论方法在何种场景下失效、计算开销、对训练数据规模/多样性的依赖、与更大规模模型的比较细节等局限性均未提及。
-
-### 阅读优先级
-**高**。理由：该方法在3D视觉自监督预训练核心方向上提出新训练信号，并报告了跨多任务的一致性能提升；附带公开代码和模型，便于复现与验证，适合该领域研究者优先阅读。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Self-supervised pre-training via cross-view completion learns strong features for 3D vision from co-visible regions of image pairs. However, the reference view provides little information for reconstructing non-co-visible patches, implicitly yielding a monocular training signal in these regions. We introduce Gekko, which turns this limitation into a useful signal. The relative improvement of the cross-view reconstruction error over a masked-autoencoder error is a self-supervised proxy for co-visibility: large improvements indicate co-visible regions, negligible ones non-co-visible areas. Gekko is a network, trained from scratch, that jointly performs cross-view completion, masked autoencoding, and per-pixel prediction of this relative improvement, providing an additional binocular signal for all masked regions without any ground-truth 3D annotation. Under identical architectures and training data, Gekko consistently outperforms CroCo on zero-shot correspondence estimation, relative pose estimation, and pointmap regression, with up to 6 times higher accuracy at the strictest relative-pose threshold and a 22% drop in end-point error on ETH3D. The extra channel it learns is itself a strong co-visibility detector on unseen scenes, and Gekko's frozen features outperform released cross-view backbones of comparable or larger size. It can also be trained directly from raw videos with a simple stride-based curriculum, removing the cumbersome 3D preprocessing prior methods require while matching models trained on curated data. Code and pre-trained models are publicly available.
 
 </details>
 
@@ -1313,55 +1254,6 @@ LightBridge 提出一种前馈式生成框架，无需逐场景优化即可对�
 <summary>Abstract</summary>
 
 3D Gaussian Splatting (3DGS) achieves high-quality, real-time novel view synthesis, but the resulting assets have baked-in illumination and cannot be easily relit. Inverse rendering methods optimize simplified reflectance and illumination models for each scene, limiting efficiency and relighting quality. Recent generative approaches leverage large diffusion models for realistic lighting edits, but applying them to 3DGS typically requires an additional per-scene optimization stage to bake the edited appearance into the representation. We present LightBridge, a feed-forward generative framework for controllable relighting of complete 3DGS assets in a single pass. To enable feed-forward training, we construct a large-scale Multi-Illumination Relighting Dataset with paired source and target observations of the same scenes. Latent Bridge Relighting Diffusion models relighting as source-to-target transport in latent space, enabling one-step extraction of 2D visual tokens without iterative diffusion sampling. A Gaussian Propagation Transformer uses a point transformer with sparse image-to-point self-attention followed by point-to-image cross-attention to efficiently propagate these cues across the complete 3DGS, while avoiding full attention over all image and Gaussian tokens. Experiments validate these designs, demonstrating competitive relighting quality and efficient single-pass prediction of complete relit 3DGS assets without scene-specific optimization. The code and dataset will be made publicly available upon acceptance.
-
-</details>
-
-#### 2026-09-01 - DualDiff3D: Dual Structure-Appearance Diffusion Priors for Reliability-Enhanced 3D Gaussian Splatting
-
-**Authors:** Qian Wang, Yu Wang, Weiqi Li, Xinhua Cheng, Xiandong Meng, Ronggang Wang, Jian Zhang
-**Links:** [abs](https://arxiv.org/abs/2609.01516) - [pdf](https://arxiv.org/pdf/2609.01516)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** None
-**Matched keywords:** 3D reconstruction, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：DualDiff3D: Dual Structure-Appearance Diffusion Priors for Reliability-Enhanced 3D Gaussian Splatting
-- 作者：Qian Wang, Yu Wang, Weiqi Li, Xinhua Cheng, Xiandong Meng, Ronggang Wang, Jian Zhang
-- 出版日期：2026-09-01T16:45:53Z
-- 分类：Neural Scene Representations & Rendering
-- 链接：https://arxiv.org/abs/2609.01516（摘要页）/ https://arxiv.org/pdf/2609.01516（PDF）
-
-### 一句话总结
-本文提出DualDiff3D，通过引入结构-外观双扩散先验及可靠性增强的渲染-细化-优化循环，改善少视图条件下3D高斯泼溅的重建质量和新视角渲染效果。
-
-### 研究问题
-在输入视图数量有限的情况下，3D高斯泼溅（3DGS）重建质量差、渲染的新视角存在伪影。现有利用扩散先验的方法通常将渲染视图与参考视图沿额外维度拼接输入单一网络，忽略了不同视图间“外观应相似但结构因视角变化而不同”的固有特性，导致两类属性相互冲突并产生模糊。
-
-### 核心思路/方法
-- 提出**DualDiff**管线：利用双扩散先验，其中一个扩散分支专注从低质量新视角中提取结构信息，另一分支确保与参考视图的外观一致性；引入**结构-外观注意力（SAA）模块**实现参考引导，细化从有缺陷的3D表示中渲染出的低质量新视角。
-- 提出**DualDiff3D**重建框架：集成**可靠性增强的渲染-细化-优化（RRO）循环**，逐步且鲁棒地将细化后的新视角融入优化过程，从而获得更精确的3DGS模型。
-
-### 主要贡献
-- 提出DualDiff双扩散先验管线及SAA模块，分别处理结构信息与外观一致性，避免单一网络中的属性冲突。
-- 提出DualDiff3D框架及RRO循环，稳健集成细化新视角以提升3DGS重建精度。
-- 实验表明，在仅推理（inference-only）设置下即取得优于现有方法的效果，且通过训练可进一步提升性能。
-- 开源代码与预训练权重。
-
-### 局限性
-摘要未提供足够信息，无法获取关于方法在极端少视图、复杂场景、计算开销或失败案例等方面的局限性。
-
-### 阅读优先级
-**高**。理由：该工作针对3DGS在少视图下的关键缺陷提出双扩散先验与注意力机制，创新性强；且在推理-only设置下即优于现有方法，训练后进一步提升，具备实际应用潜力；代码与权重已开源，便于复现和后续研究。该方向属于3D重建与渲染的热点领域，适合相关研究者优先精读。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-While 3D Gaussian Splatting (3DGS) has revolutionized 3D reconstruction and novel-view synthesis, scenarios with limited input views often lead to poor reconstruction quality and artifacts in rendered novel views. Recent efforts attempt to utilize powerful diffusion priors, yet they typically process rendered and reference views concatenated along an additional dimension in a single network. These methods overlook an inherent nature that different views should maintain appearance similarity but differ in structure due to view shifts, leading to blur caused by conflicts between the two properties. In this paper, we propose DualDiff, a novel pipeline that leverages dual diffusion priors with a Structure-Appearance Attention (SAA) module to introduce reference guidance for refining low-quality novel views rendered from flawed 3D representations. Specifically, we retain one diffusion branch to focus on extracting structural information from the low-quality novel views, while introducing another branch to ensure appearance consistency with reference views. Furthermore, we present a 3D reconstruction framework named DualDiff3D, which integrates a reliability-enhanced Render-Refine-Optimize (RRO) loop to progressively and robustly incorporate the refined novel views, yielding more accurate 3DGS. Extensive experiments demonstrate that our approach outperforms state-of-the-art methods even in the inference-only setting, with further performance gains achievable through training. Our code and pre-trained weights are available at https://github.com/Akaneqwq/DualDiff3D.
 
 </details>
 
