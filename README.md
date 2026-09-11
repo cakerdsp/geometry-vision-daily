@@ -11,11 +11,11 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：48
+- 当前滚动窗口论文数：53
 - 分类分布：
+  - 3D Reconstruction & Multi-view Geometry: 17
   - Embodied / Robotics / AR Applications: 17
-  - 3D Reconstruction & Multi-view Geometry: 15
-  - Neural Scene Representations & Rendering: 12
+  - Neural Scene Representations & Rendering: 15
   - Geometry Foundation Models: 2
   - Dynamic / 4D Reconstruction: 2
 - 当前兴趣方向：未指定
@@ -25,55 +25,39 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-1. **前馈式重建正从“场景级几何”走向“对象级可交互资产”。**
-   FIRE3D、Point4D、RoMa-$\Omega$ 共同指向一个方向：用一次前向推理直接输出可用于下游任务的显式表示，而不是依赖每场景优化。FIRE3D 强调对象级解耦与仿真就绪，Point4D 强调长程 4D 轨迹的前馈推断，RoMa-$\Omega$ 则把前馈 3D 模型的表征直接迁移到匹配任务。三者分别从场景资产、动态轨迹、匹配表征三个层面削弱了“测试时优化”的必要性。
+1. **跨表示与跨模态的“物理一致性”成为新竞争点**。今日多篇论文不再满足于纯视觉保真度，而是尝试把物理模型（雷达方程、散射介质模型、材料刚度、相位波前）嵌入到可微渲染或仿真中。3DPS（3D Point Splatting for mmWave Radar NVS）与 CVQPG（Hologram Representation via Quadratic Phase Gaussian Splatting）分别从雷达方程和二次相位函数出发，把复数相位与材质模型放回渲染基元；Tri-DehazeGS 用场景—介质解耦的三平面场显式建模参与介质；RealSimLoop 用可微降阶仿真把视觉像素反馈转成材料参数梯度。这一组论文共同指向“渲染/仿真基元必须携带物理量”的方向，而非仅靠不透明学习特征。
 
-2. **神经场景表示的“可信度与可压缩性”成为独立研究议题。**
-   VSCP、LinearMask-GS、CVT-GS、RouteBridge、PIC 五篇都围绕 3DGS/NeRF/INR 展开，但关注点不在渲染质量本身，而在覆盖率保证、剪枝稳定性、后处理压缩、跨表示蒸馏路由和编码速度。这说明该方向正从“如何重建得更像”转向“如何让已有表示更可信、更小、更快、更可组合”。
+2. **实例级与结构化解耦从 2D 掩码向 3D 重建内生融合**。SAMV-DUSt3R 把 SAM2 的 2D 掩码通过 Cross Flow Mask Block 注入 MV-DUSt3R，在稀疏多视角下做物体级解耦，避免多阶段流水线；GoDeep 则在语言空间对实体级描述做地面化与聚合，以文本为中间表示实现开放词汇 3D 理解。两者路径不同（视觉掩码注入 vs. 语言空间提升），但都在回答同一个问题：如何让 3D 表示天然携带实例/实体语义，而不是先重建再分割。
 
-3. **几何基础模型的角色正在被重新定义：从特征抽取器变为匹配与位姿估计的可复用底座。**
-   RoMa-$\Omega$ 直接检验前馈 3D 模型对匹配的“知识”，并用 VGGT-$\Omega$ 替换 DINO 骨干；PROSE 用多模态基础特征做无先验相对 6D 位姿；GoDeep 把视觉-语言模型仅当作“翻译器”，在纯语言空间做 3D 语义理解。三者都减少了对专用 3D 编码器或对象先验的依赖，倾向于复用通用基础模型。
+3. **不确定性量化与紧凑性开始进入 3DGS 的“工程化”阶段**。VSCP 把新视图合成建模为结构化回归，用视图难度因子做共形预测，要求视图级覆盖率的有限样本有效性；LinearMask-GS 则诊断出 Gumbel-Sigmoid 在短掩码训练窗口内过早双峰化的问题，改用线性增量激活稳定重要性排序。这反映出 3DGS 研究从“能不能渲”转向“渲染结果能否被认证、模型能否被压缩”。
 
-4. **机器人/具身方向出现“仿真—真实—生成”三者的闭环缝合。**
-   RealSimLoop 用视觉反馈做在线 real-to-sim 参数自适应；Grounding Generated Video Plans 把生成 HOI 视频作为仿真跟踪器的参考运动；SyncWorld 用视觉校准片段把世界模型变成零样本模拟器；Rethinking Learned Occupancy 则揭示占用精度与闭环覆盖并非单调关系。这些工作共同表明：仿真不再只是训练环境，而是与真实观测、生成模型、规划器在线耦合的中间层。
+4. **几何基础模型与匹配器的边界正在被系统性质问**。RoMa-Ω 直接追问前馈式 3D 模型（VGGT 等）究竟“知道”多少图像匹配信息，并据此用 VGGT-Ω 替换 RoMa v2 的 DINO 骨干；同步地，Learning Global Camera Poses from Noisy View-Graphs 用置换等变、边条件 GNN 从带噪相对位姿回归全局外参，且不依赖真值监督。这两篇表明匹配、位姿估计与稠密 3D 回归的表征正在趋同，评价体系也在从单一任务指标转向表征能力的系统分析。
 
-5. **球面/鱼眼/多相机等非标准成像几何重新受到关注。**
-   Spheriverse 构建球面图像-LiDAR 数据集并处理球面-笛卡尔表示差异；MFVINS 用多鱼眼相机+IMU 提升 VINS 鲁棒性；Field Converter 则依赖已标定足球转播的相机与球场几何。这些工作说明，在标准针孔视角之外，全向、鱼眼、体育转播等成像条件正成为 3D 理解与位姿估计的独立子问题。
+5. **机器人与具身应用从“感知—规划”向“运行时闭环与零样本迁移”扩展**。HROS 把四足巡检组织为机器人运行时、具身技能、认知智能体运行时与交互运维平面；SyncWorld 用视觉校准片段在上下文中指定动作—视觉映射，使世界模型成为零样本模拟器；Grounding Generated Video Plans 把生成 HOI 视频在仿真中 grounding 成可执行灵巧控制；RealSimLoop 用视觉反馈在线适配材料参数。这一组论文的共同点是：部署侧的“上下文适配能力”被当作一等公民，而非训练完就固定。
 
 #### 技术路线观察
 
-- **几何基础模型方向**：核心问题从“预训练特征是否通用”转向“前馈 3D 模型内部到底编码了什么”。RoMa-$\Omega$ 通过零样本匹配、点图直接匹配、表征上训练匹配器三种场景做诊断；PROSE 则把多模态基础特征用于无 CAD/模板/参考图的相对 6D 位姿。技术侧重点在于：减少任务特定监督、减少对象先验、利用环一致性等几何约束做全局细化。
-
-- **3D/4D 重建方向**：FIRE3D 走对象级组合表示，输出 6-DoF 位姿、包围框、网格、纹理，强调仿真就绪与物理解耦；Point4D 走长程逐点 3D 轨迹，用 3D query 解码器把轨迹预测与图像平面可见性解耦；Learning Global Camera Poses 走视图图聚合，用置换等变边条件 GNN 从噪声相对位姿回归全局外参，训练不依赖真值。三者共同趋势是：不再只输出点云或隐式场，而是输出结构化、可组合、可长程追踪的中间表示。
-
-- **神经场景表示与渲染方向**：VSCP 把新视图合成视为结构化回归，要求视图级覆盖率保证；LinearMask-GS 和 CVT-GS 都针对 3DGS 基元冗余，前者在训练时用线性增量激活稳定掩码排序，后者在训练后做免优化 CVT 聚类合并；RouteBridge 按光线选择 NeRF↔3DGS 蒸馏方向或弃权；PIC 则把 INR 图像编码推向 20 FPS 编码、2000 FPS 解码。技术侧重点从“更高 PSNR”转向覆盖率有效性、剪枝稳定性、后处理兼容性、蒸馏可靠性、编解码速度。
-
-- **机器人/AR 应用方向**：RealSimLoop 在降阶神经子空间内做可微仿真，用可微渲染反传梯度在线更新材料参数；Grounding Generated Video Plans 用生成视频提供多物体多轨迹参考，再在仿真中学习 HOI 跟踪器；SyncWorld 用视觉校准片段在上下文中指定 action-visual mapping；Rethinking Learned Occupancy 则直接质疑“占用越准，主动建图越好”的假设，提出观测门控滤波。技术侧重点在于：在线自适应、零样本迁移、闭环规划接口的在线修正。
-
-- **交叉观察**：Field Converter、ArmPoser、MFVINS 分别代表体育转播、可穿戴 IMU、多鱼眼 VINS 三种“非标准输入”的位姿估计路线。它们共同说明，当输入模态或成像几何偏离标准设定时，几何初始化、物理约束和传感器融合仍是提升鲁棒性的关键手段。
+- **几何基础模型**：RoMa-Ω 与 Learning Global Camera Poses 代表两条互补路线。前者做表征分析并替换骨干，关注“冻结特征是否仍是最优选择”；后者用边条件 GNN 直接在视图图上回归全局位姿，强调无真值监督与图密度鲁棒性。SAMV-DUSt3R 则把基础模型（SAM2、MV-DUSt3R）组合成端到端实例解耦系统，体现“基础模型拼装化”的趋势。
+- **3D/4D 重建**：Point4D 用 3D 查询式运动解码器把轨迹预测与图像平面可见性解耦，解决数百帧长序列问题，是今日 4D 方向最明确的突破；Field Converter 则在体育转播这一受限场景里用几何初始化加时序残差把根误差从 49cm 降到 10cm 量级。两者都说明：长时序与外参几何先验是 4D/动态重建的两个主要抓手。
+- **神经场景表示**：今日共 6 篇左右集中在 Neural Scene Representations & Rendering。技术侧重明显分化——3DPS 与 CVQPG 走“物理/相位基元”路线；Tri-DehazeGS 走“场景—介质解耦 + 梯度补偿”路线；VSCP 走“共形预测认证”路线；LinearMask-GS 走“剪枝稳定性”路线；RouteBridge 走“按光线可靠性路由的双向蒸馏”路线。整体看，单纯提升 PSNR 的空间在收窄，表示层面的物理正确性、可认证性与紧凑性成为新战场。
+- **机器人/AR 应用**：HROS、SyncWorld、Grounding Generated Video Plans、RealSimLoop、GoDeep、RIDE 都落在 Embodied / Robotics / AR Applications 或与之交叉。技术侧重从“单点感知”转向“运行时—技能—认知—交互”的分层系统，以及“仿真中 grounding 生成计划”的闭环。RIDE 与 GRADE 则分别代表两条深度估计路线：前者用重定位几何信息加视频深度先验做稠密度量深度，后者用雷达几何条件化潜在扩散在视觉退化下估计深度。
 
 #### 值得优先阅读的论文
 
-1. **Point4D: Long-range 4D Motion Reconstruction**
-   理由：直接针对 4D 重建中“最多几十帧”的公认瓶颈，提出 3D query 解码器将轨迹预测与可见性解耦，并在超过 200 帧的基准上取得领先。对动态场景理解、长视频追踪、4D 表示学习都有直接参考价值。
+1. **Point4D: Long-range 4D Motion Reconstruction**（2609.09145）。它直接针对“现有 4D 方法只能处理几十帧”的公认瓶颈，提出 3D 查询式解码器解耦轨迹与可见性，并在 200 帧以上长视频基准上报告领先结果。对动态场景理解与长视频追踪方向的读者，这是今日最应通读全文的一篇。
 
-2. **RoMa-$\Omega$: What Feed-Forward 3D Models Know About Image Matching**
-   理由：它不只是提出一个新匹配器，而是系统诊断前馈 3D 模型在匹配任务中的表征能力，并用 VGGT-$\Omega$ 替换 DINO 骨干。对理解几何基础模型的内部能力边界、以及匹配与重建的融合趋势都很关键。
+2. **3D Point Splatting for mmWave Radar Novel View Synthesis**（2609.11894）。它是首个面向雷达的可微点渲染器，从雷达方程立体角形式推导，复数输出可经同一 FFT 流水线产出 ADC、CRP 与 RA。若关注非光学 NVS 或雷达感知，这篇提供了完整的物理—可微—多视角可优化三性合一的框架。
 
-3. **FIRE3D: Feed-forward Interactive 3D Scene Reconstruction Within A Minute**
-   理由：把单图/视频到仿真就绪对象级资产的流程压缩到一分钟内，且无需测试时优化。对游戏、交互应用、机器人仿真资产生成都有直接落地意义，代表前馈重建走向对象级可交互表示的方向。
+3. **RoMa-Ω: What Feed-Forward 3D Models Know About Image Matching**（2609.09507）。它不只是提出一个匹配器，而是系统分析前馈 3D 模型在零样本匹配、点预测直接匹配、表征上训练匹配器三种场景下的表现，并据此替换骨干。对理解几何基础模型表征边界有方法论价值。
 
-4. **VSCP: View-Structured Conformal Prediction for 3D Gaussian Splatting**
-   理由：3DGS 的不确定性量化目前仍不成熟，该工作把覆盖率保证从像素级边际提升到视图级有效，并给出有限样本有效性分析。对需要安全保证的渲染、规划、决策下游任务有较高参考价值。
+4. **SyncWorld: Visual Calibration Enables World Models as Zero-Shot Simulators**（2609.09155）。它把“动作不是像素空间通用语言”这一部署痛点形式化为动作—视觉映射的上下文指定问题，并用视觉校准片段在无需额外训练下实现零样本模拟。对机器人世界模型与策略测试时改进方向有直接参考价值。
 
-5. **RealSimLoop: Online Real-to-Sim Adaptation via Differentiable Reduced-Order Simulation with Vision Feedback**
-   理由：同时触及可微仿真、降阶神经子空间、可微渲染、在线材料参数自适应四个技术点，且强调准实时和时变材料跟踪。对机器人操作、可变形物体建模、real-to-sim 方向有较强组合启发。
+5. **Tri-DehazeGS: Scene–Medium Decoupled Gaussian Splatting with Transmittance-Aware Optimization**（2609.11223）。它把“场景—介质解耦”与“透射率感知的梯度补偿”结合，指出低透射区域监督弱导致重建不足，并给出 MD-TGC 在不改变前向渲染的前提下补偿梯度。对恶劣天气下 3DGS 重建有较强借鉴意义。
 
 #### 可能的研究机会
 
-- **前馈重建与可信度保证的结合**：FIRE3D、Point4D 等前馈模型输出结构化资产，但摘要未讨论其不确定性。VSCP 的视图级共形预测思路能否迁移到对象级位姿、网格或 4D 轨迹的覆盖率保证，是一个自然组合方向。
-
-- **3DGS 压缩与蒸馏的联合优化**：LinearMask-GS 关注训练时掩码稳定性，CVT-GS 关注训练后免优化合并，RouteBridge 关注 NeRF↔3DGS 双向蒸馏。三者可以组合成“
+- **物理基元与几何基础模型的结合**：3DPS 把 ITU-R P.2040 材质模型绑定到有向 3D 点，CVQPG 把二次相位函数替代 2D 高斯。一个自然延伸是：能否把这类物理/相位基元接入 VGGT、MASt3R 等前馈几何模型，使前馈重建输出本身携带相位或材质参数，从而服务雷达、全息或非光学 NVS。
+- **共形预测与物理仿真的联合认证**：VSCP
 
 ### interests.md 指令分析
 
@@ -143,6 +127,44 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 **Primary category:** Geometry Foundation Models
 **Secondary categories:** Embodied / Robotics / AR Applications
 **Matched keywords:** DUSt3R, robotics, AR, VR
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：SAMV-DUSt3R: Instance-Centric 3D Scene Decoupling from Sparse Multi-Views
+- 作者：Langxu Zhao, Zuan Gu, Yingdan Zhang, Pengfei Zhao, Tianhan Gao
+- 出版日期：2026-09-10T09:12:48Z
+- 分类：主分类 Geometry Foundation Models；次分类 Embodied / Robotics / AR Applications
+- 链接：摘要页 https://arxiv.org/abs/2609.11279 ；PDF https://arxiv.org/pdf/2609.11279
+
+### 一句话总结
+该论文提出端到端模型 SAMV-DUSt3R，将 SAM2 的 2D 掩码注入 MV-DUSt3R 重建流程，以在稀疏多视角下实现以实例为中心的三维场景解耦，并报告了重建精度与参考视图选择方面的提升。
+
+### 研究问题
+从三维场景中解耦物体（实例级分离）的需求日益增长，论文关注在稀疏多视角条件下实现实例级的三维场景解耦与重建。摘要指出其目标是在不依赖多阶段流水线的情况下完成物体级解耦，并同时提升形状精度与重建稳定性。
+
+### 核心思路/方法
+- 提出端到端模型 SAMV-DUSt3R，将 SAM2 的二维掩码注入到 MV-DUSt3R 的重建过程中。
+- 设计 Cross Flow Mask Block，利用这些掩码引导网络朝向目标实例，从而联合提升形状精度并实现物体级解耦，且无需多阶段流水线。
+- 为保证重建稳定性，引入轻量级 Spatial RankGNN 来选择最优参考视图，摘要给出选择准确率为 73.5%。
+
+### 主要贡献
+- 提出将 SAM2 二维掩码注入 MV-DUSt3R 重建的端到端方法，实现以实例为中心的三维场景解耦，避免多阶段流水线。
+- 通过 Cross Flow Mask Block 引导网络关注目标实例，联合改善形状精度并实现物体级解耦。
+- 引入轻量级 Spatial RankGNN 进行最优参考视图选择，报告选择准确率为 73.5%。
+- 摘要称大量实验表明，与最先进基线相比，该方法在多种指标上平均重建精度提升 11%，并展现出较强的实例解耦能力，对驾驶、机器人、AR/VR 和遗产数字化具有明显益处。
+
+### 局限性
+- 摘要未提供足够信息说明实验数据集、评价指标细节、对比基线的具体配置以及消融实验设置。
+- 摘要未提供足够信息说明方法在不同稀疏视角数量、遮挡、动态场景或类别分布下的失效条件与适用范围。
+- 摘要未提供足够信息说明 Spatial RankGNN 选择错误时对重建结果的影响程度，以及 Cross Flow Mask Block 对 SAM2 掩码质量的依赖与鲁棒性。
+- 摘要未提供足够信息说明计算开销、推理速度、模型规模与训练数据需求。
+
+### 阅读优先级
+高。理由：该论文聚焦稀疏多视角下的实例级三维场景解耦，提出端到端注入 2D 掩码与参考视图选择的组合方案，并在摘要中报告了明确的重建精度提升与选择准确率；主题同时关联几何基础模型与具身/机器人/AR 应用，对三维重建与实例解耦方向具有直接参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -326,6 +348,46 @@ We present EdMCGS (Event-driven Markov chain Gaussian Splatting), an end-to-end 
 **Matched keywords:** structure from motion, SLAM, visual SLAM, mapping, localization
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Visual-SLAM for the detection of hidden tomatoes in greenhouses by Hierarchical Localization and GLOMAPfor robotized harvesting
+- 作者：Fernando Cañadas-Aránega, José C. Moreno, José L. Blanco-Claraco, Francisco Rodríguez
+- 出版日期：2026-09-10T16:19:36Z
+- 分类：主分类 3D Reconstruction & Multi-view Geometry；次分类 Embodied / Robotics / AR Applications
+- 链接：摘要页 https://arxiv.org/abs/2609.11766 ；PDF https://arxiv.org/pdf/2609.11766
+
+### 一句话总结
+该工作提出一种面向温室番茄作物建图的低成本单目 Visual-SLAM 系统，结合 Hierarchical Localization 与基于 Structure-From-Motion 的 GLOMAP，实现对被遮挡番茄的识别与三维重建。
+
+### 研究问题
+温室内部先进的作物监测是研究中心的重点目标之一。传统上常使用 LiDAR 或立体相机等高性能传感器，但成本往往较高。论文关注的是：能否用成本显著更低的单目相机 Visual-SLAM 系统，面向农业应用（如温室番茄作物建图）完成检测与建图任务，尤其是识别被遮挡、经典视觉技术难以访问的番茄。
+
+### 核心思路/方法
+论文提出使用单目相机的 Visual-SLAM 系统，针对农业应用（温室番茄作物建图）定制。测试在 Agroconnect 实验温室的真实番茄串上进行。开发了一个 ROS 2 Humble 节点，运行在机器人上以采集作物图像，随后存储用于离线处理。为生成温室作物的三维建图模型，将基于 Structure-From-Motion 的 GLOMAP 建图器与 Hierarchical Localization 工具箱集成。系统采用基于由粗到细策略的分层定位范式：先进行全局检索以生成位置假设，再在识别出的候选区域内结合局部特征。
+
+### 主要贡献
+- 提出一种使用单目相机的 Visual-SLAM 系统，相比 LiDAR 或立体相机等方案成本显著更低，并面向农业应用定制。
+- 将基于 Structure-From-Motion 的 GLOMAP 建图器与 Hierarchical Localization 工具箱集成，用于生成温室作物的三维建图模型。
+- 采用由粗到细的分层定位范式：先全局检索生成位置假设，再在候选区域内结合局部特征。
+- 开发 ROS 2 Humble 节点用于机器人端图像采集与离线处理。
+- 结果显示能够正确识别番茄簇，并正确表征被经典视觉技术遮挡且不可访问的番茄。
+- 重建的三维模型通过人工真值测量（果实大小、质心位置和朝向）进行了验证，确认了所提低成本单目流程的几何精度。
+
+### 局限性
+- 摘要未提供足够信息说明系统在更多温室场景、不同作物或更大规模环境中的泛化能力。
+- 摘要未提供足够信息说明实时性能、计算资源消耗或在线运行能力。
+- 摘要未提供足够信息说明与 LiDAR 或立体相机方案在精度、鲁棒性上的系统对比。
+- 摘要未提供足够信息说明对光照变化、遮挡程度差异、相机运动等干扰因素的鲁棒性。
+- 摘要未提供足够信息说明数据集规模、测试样本数量及统计显著性。
+- 摘要仅提到该初始建图是未来更高级算法分析生长模式、优化农业管理的基础，因此面向机器人化采收的完整闭环能力在摘要中未提供足够信息。
+
+### 阅读优先级
+中。理由：该论文主题明确，聚焦低成本单目 Visual-SLAM 在温室番茄检测与三维重建中的应用，并涉及 Hierarchical Localization 与 GLOMAP 的集成，对农业机器人、三维重建和视觉定位方向有一定参考价值。但摘要未提供足够信息说明实验规模、实时性、泛化性和与高成本传感器的系统对比，若读者关注机器人化采收的完整系统或大规模验证，需进一步阅读全文确认。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Advanced crop monitoring inside greenhouses is becoming one of the primary objectives of research centers. High-performance sensors, such as LiDAR or stereo cameras, have traditionally been employed for this purpose, though these often have a high cost. This work proposes a Visual-SLAM system using a monocular camera, which is significantly more cost-effective and specifically tailored for agricultural applications, such as mapping tomato crops in a greenhouse. Tests were carried out on a real tomato bunch, located in the Agroconnect experimental greenhouse. A ROS 2 Humble node was developed to run on the robot in order to capture images of these crops, which were then stored for offline processing. To generate a 3D mapped model for the crop in the greenhouse, the GLOMAP mapper, based on Structure-From-Motion, was integrated with the Hierarchical Localization toolbox. This initial mapping is a foundation for future, more advanced algorithms to analyze growth patterns, and optimize agricultural management. The system leverages a hierarchical localization paradigm based on a coarse-to-fine strategy: it first performs global retrieval to generate location hypotheses, then combines local features within the identified candidate regions. The results show a correct identification of the tomato cluster, correctly characterising the tomato that is occluded and inaccessible by classical vision technologies. The reconstructed 3D model was further validated against manual ground-truth measurements of fruit size, centroid position, and orientation, confirming the geometric accuracy of the proposed low-cost monocular pipeline.
@@ -341,6 +403,43 @@ Advanced crop monitoring inside greenhouses is becoming one of the primary objec
 **Matched keywords:** metric depth, depth estimation, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, splatting, robot perception, localization
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：RIDE: Relocalization-Informed Depth Estimation with 3D Gaussian Splatting
+- 作者：Jiarong Lian, Zhe Xiao, Zhaoyang Zhang, Wei Li, Ruizhi Chen
+- 出版日期：2026-09-10T04:36:58Z
+- 分类：3D Reconstruction & Multi-view Geometry（主类别）；Neural Scene Representations & Rendering, Embodied / Robotics / AR Applications（次类别）
+- 链接：摘要页 https://arxiv.org/abs/2609.11079 ；PDF https://arxiv.org/pdf/2609.11079
+
+### 一句话总结
+RIDE 利用 render–match–PnP 重定位中获得的稀疏度量深度观测，结合预训练视频深度模型的几何先验，从机器人 RGB 流中估计稠密度量深度。
+
+### 研究问题
+论文关注的是：render–match–PnP 重定位虽能建立查询图像像素与 3D 地图点之间的对应关系以恢复相机位姿，但其支持稠密深度估计的潜力常被忽视。RIDE 旨在利用这类几何信息，在给定度量尺度的 3D Gaussian Splatting（3DGS）模型条件下，从机器人 RGB 流中估计稠密度量深度。
+
+### 核心思路/方法
+- 以度量尺度的 3DGS 模型为基础，利用 PnP-RANSAC 内点对应关系导出稀疏度量深度观测。
+- 将这些稀疏度量深度观测与预训练视频深度模型的几何先验相结合。
+- 针对观测不均匀和间歇性的问题，引入全局与局部深度校正以及时间记忆机制。
+- 在度量尺度初始化后，支持在短观测间隔内继续进行深度估计。
+- 在公开 RGB-D 视频上训练，并在机器人序列上不做微调进行评估。
+
+### 主要贡献
+- 提出 RIDE，将重定位几何信息用于稠密度量深度估计。
+- 结合 PnP-RANSAC 内点对应得到的稀疏度量深度与预训练视频深度模型的几何先验。
+- 通过全局/局部深度校正与时间记忆，应对不均匀、间歇的稀疏观测，并支持短观测间隔下的深度估计。
+- 实验显示，相比仅做尺度校准，RIDE 在深度精度和时间一致性上有所提升，表明定位几何可同时支持位姿恢复与稠密机器人感知。
+
+### 局限性
+摘要未提供足够信息。摘要未给出具体实验平台、序列数量、失败情形、计算开销、实时性、对 3DGS 模型质量或重定位成功率的依赖程度等细节。
+
+### 阅读优先级
+中。理由：该工作位于 3D 重建、神经场景表示与机器人/AR 应用的交叉点，核心思路明确，且强调无需微调即可在机器人序列上评估；但摘要未提供充分的实验细节与对比设置，是否值得精读取决于读者对重定位辅助稠密深度估计、3DGS 机器人感知这一具体方向的关注程度。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Render--match--PnP relocalization establishes correspondences between query image pixels and 3D map points for camera pose recovery, but their potential to support dense depth estimation is often overlooked. To exploit this geometric information, we present RIDE, which estimates dense metric depth from a robot's RGB stream. Given a metrically scaled 3D Gaussian Splatting (3DGS) model, RIDE combines sparse metric depth observations derived from PnP-RANSAC inlier correspondences with the geometric prior of a pretrained video-depth model. To handle uneven and intermittent observations, it integrates global and local depth correction with temporal memory, supporting depth estimation through short observation gaps after metric scale initialization. Trained on public RGB-D videos, RIDE is evaluated on robot sequences without fine tuning. Experiments show improved depth accuracy and temporal consistency over scale-only calibration, demonstrating how localization geometry can support both pose recovery and dense robot perception.
@@ -354,6 +453,40 @@ Render--match--PnP relocalization establishes correspondences between query imag
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** metric depth, depth estimation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GRADE: Single-Frame Generative Radar Depth Estimation Under Visual Degradation
+- 作者：Bin Zhao, Patrick Chiou, Nakul Garg
+- 出版日期：2026-09-09T18:57:05Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2609.10756
+
+### 一句话总结
+GRADE 将预训练生成先验与单帧雷达几何相融合，在烟雾、雾气和黑暗等视觉退化条件下实现高保真度量深度估计。
+
+### 研究问题
+在烟雾、雾气和黑暗等条件下，光学传感器无法穿透空气中的颗粒物，导致密集 3D 深度感知失效。毫米波雷达在这些条件下仍可使用并能准确测距，但其小孔径限制了角分辨率。论文旨在解决：如何在视觉退化条件下，利用单帧雷达几何与生成先验估计高保真度量深度。
+
+### 核心思路/方法
+GRADE 首先将原始 4D 雷达频谱映射为粗略的度量深度。随后，一个潜在扩散骨干网络在恢复结构细节的同时，将每个去噪步骤都条件化在该深度估计上。一个像素空间适配器在有可用信息时利用残余相机线索，并在清晰、烟雾退化和遮挡输入上进行训练，使得随着能见度下降，整体输出趋近于雷达条件化路径。
+
+### 主要贡献
+- 提出 GRADE，将预训练生成先验锚定在单帧雷达几何中，用于估计高保真度量深度。
+- 设计了两阶段方法：先将原始 4D 雷达频谱映射为粗略度量深度，再通过潜在扩散骨干网络恢复结构细节并条件化每一去噪步骤。
+- 引入像素空间适配器，利用残余相机线索，并在清晰、烟雾退化和遮挡输入上训练，使输出随能见度下降趋近雷达条件化路径。
+- 在 12 栋建筑约 95K 帧（含真实烟雾）上训练与评估，清晰场景 MAE 为 0.303 m，烟雾下为 0.313 m，优于现有基线。
+- 代码与数据集已公开。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+高。理由：该论文针对视觉退化条件下的深度感知这一明确难题，结合雷达与生成先验，给出了具体量化结果，且涉及 3D 重建与多视角几何方向，摘要信息显示其方法路径与评估结果较为完整，值得优先阅读。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1092,6 +1225,50 @@ Reliable 3D understanding of the surrounding environment is a core requirement f
 **Matched keywords:** NeRF, novel view synthesis, view synthesis, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：3D Point Splatting for mmWave Radar Novel View Synthesis
+- 作者：Adnan Armouti, Yixuan Gao, Rajalakshmi Nandakumar
+- 出版日期：2026-09-10T17:52:17Z
+- 分类：Neural Scene Representations & Rendering（主分类）；无二级分类
+- 链接：摘要页 https://arxiv.org/abs/2609.11894 ；PDF https://arxiv.org/pdf/2609.11894
+
+### 一句话总结
+论文提出 3DPS——首个面向毫米波雷达的可微点渲染器，直接从雷达方程立体角形式推导，以复数相位输出实现与格式无关的新视角合成，在保持物理保真度的同时将训练时间压缩到单卡约 3 分钟/场景。
+
+### 研究问题
+毫米波雷达新视角合成（NVS）需要一个同时满足三个性质的渲染器：物理忠实、复数值、多视角可优化。摘要指出此前没有方法能同时具备这三点：
+- 可微蒙特卡洛（MC）光线追踪器直接实现雷达前向模型，具有显式材质建模和复数输出，但无法扩展到 NVS 所需的多视角优化规模；
+- 从光学 NVS 移植的 NeRF、哈希网格和 3D 高斯训练快，但丢弃了相位，并以不透明的学习特征替代显式材质建模，因此只限于功率域的距离-方位（RA）幅度。
+
+### 核心思路/方法
+- 从雷达方程的标准立体角形式直接推导出可微点渲染器 3DPS。
+- 每个有向 3D 点携带 ITU-R P.2040 材质模型，并以闭式求值。
+- 将得到的复数相量通过预计算的点扩散函数（PSF）splat 到距离单元中。
+- 复数输出使渲染器与下游输出格式无关：同一个优化后的场景可通过标准 FFT 流水线产出 ADC、复数距离剖面（CRP）和 RA 输出，无需针对每种格式重新训练。
+
+### 主要贡献
+- 提出 3DPS，据摘要所述为首个面向雷达的可微点渲染器。
+- 从雷达方程立体角形式直接推导，赋予渲染器物理忠实性。
+- 通过 ITU-R P.2040 材质模型与闭式复数相量计算，兼顾显式材质建模与复数输出。
+- 借助复数输出实现格式无关性，一套优化场景即可支持 ADC、CRP、RA 多种输出。
+- 在六个户外 ColoRadar 场景上，持出 RA 图像达到 0.587 的平均皮尔逊相关，为三个光学 NVS 基线（RadarSplat、Radar Fields、DART）的 1.7 倍至 5.2 倍；单张 RTX 4090 上每场景训练约 3 分钟。
+
+### 局限性
+- 摘要未提供足够信息说明方法在非户外场景、其他雷达频段或不同硬件条件下的泛化表现。
+- 摘要未提供足够信息说明 3DPS 在 ADC、CRP 输出上的定量评估结果，仅给出 RA 图像的皮尔逊相关指标。
+- 摘要未提供足够信息说明与 MC 光线追踪器在物理保真度上的直接定量对比。
+- 摘要未提供足够信息说明多视角优化中视角数量、稀疏度或场景规模对性能的影响。
+- 摘要未提供足够信息说明 0.587 平均皮尔逊相关的方差、逐场景分布或失败案例。
+- 摘要未提供足够信息说明材质模型参数是否可学习、初始化方式或对 ITU-R P.2040 假设的敏感性。
+
+### 阅读优先级
+中。理由：雷达 NVS 属于相对专门的方向，但该工作提出的“物理忠实 + 复数 + 多视角可训练”三性合一问题定位清晰，且报告了显著的相对基线提升与极短训练时间；若关注可微渲染、雷达感知或 NeRF/3D 高斯之外的非光学传感器 NVS，则值得优先阅读。由于摘要未给出代码、完整实验设置与 ADC/CRP 定量结果，是否精读可待正文确认。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Solving novel view synthesis (NVS) for millimeter-wave (mmWave) radar requires a renderer that is physically faithful, complex-valued, and multi-viewpoint-tractable. No prior method achieves these three properties simultaneously. Differentiable Monte Carlo (MC) ray tracers implement the radar forward model directly with explicit material modeling and complex outputs, but do not scale to the multi-view optimization NVS demands. Optical-NVS ports of NeRF, hash grids, and 3D Gaussians train fast but discard phase and replace explicit material modeling with opaque learned features, restricting them to power-only range-azimuth (RA) magnitudes. We propose 3D Point Splatting (3DPS), the first differentiable point renderer for radar, derived directly from the standard solid-angle form of the radar equation. Each oriented 3D point carries an ITU-R P.2040 material model, evaluated in closed form, with the resulting complex phasor splatted into range bins through a precomputed point spread function (PSF). The complex-valued output makes the renderer product-agnostic. The same optimized scene yields analog-to-digital converter (ADC), complex range profile (CRP), and RA outputs through standard fast Fourier transform (FFT) pipelines without retraining for each format. On six outdoor ColoRadar scenes, 3DPS reaches 0.587 mean Pearson correlation on held-out RA images. This is between 1.7x and 5.2x the three optical-NVS baselines (RadarSplat, Radar Fields, DART). Training takes approximately 3 minutes per scene on a single RTX 4090.
@@ -1107,6 +1284,43 @@ Solving novel view synthesis (NVS) for millimeter-wave (mmWave) radar requires a
 **Matched keywords:** Gaussian Splatting, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Hologram Representation via Quadratic Phase Gaussian Splatting
+- 作者：Haolong Wang, Yicheng Zhan, Kaan Akşit, Simeng Qiu
+- 出版日期：2026-09-10T12:06:11Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：[摘要](https://arxiv.org/abs/2609.11434) / [PDF](https://arxiv.org/pdf/2609.11434)
+
+### 一句话总结
+该论文提出复数域二次相位高斯（CVQPG），用可学习的二维二次相位函数替代 2D Gaussian Splatting 中的标准二维高斯表示，以提升全息重建的视觉质量。
+
+### 研究问题
+如何改进全息图表示方法，使其在重建质量上优于现有先进方法，同时保持参数高效。摘要指出，作者希望验证“调制基元的波前”是否是一种有效且轻量的全息表示增强方式。
+
+### 核心思路/方法
+- 提出 Complex-Valued Quadratic Phase Gaussian (CVQPG)。
+- 将 2D Gaussian Splatting 中使用的标准二维高斯表示替换为二维二次相位函数。
+- 引入额外可学习参数，用于控制这些基元的曲率。
+- 通过等参数数量评估，比较该方法与现有先进方法在全息重建中的表现。
+- 进行频域分析，观察自然图像中高频与中高频段的保留情况。
+
+### 主要贡献
+- 提出 CVQPG，一种新的全息图表示方法，核心是用二维二次相位函数替代标准二维高斯基元。
+- 在等参数数量评估中，表明调制基元波前可作为全息表示的有效且轻量增强。
+- 在全息重建视觉质量上平均超过现有先进方法：RGB 提升 +0.19 dB，灰度提升 +0.33 dB。
+- 频域分析显示，CVQPG 成功保留了自然图像的中高频段。
+
+### 局限性
+摘要未提供足够信息。未说明计算开销、训练时间、数据集规模、泛化能力、硬件依赖性、失败案例或与其他表示方法的全面比较。等参数数量评估之外的其他实验设置也未在摘要中给出。
+
+### 阅读优先级
+中。理由：该工作与神经场景表示、Gaussian Splatting 和全息显示相关，提出的二次相位基元替代思路较直接，且摘要给出了明确的定量提升和频域分析；但摘要未披露数据集、实现细节和完整实验设置，是否具有广泛适用性需阅读正文确认。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 We introduce Complex-Valued Quadratic Phase Gaussian (CVQPG), a novel hologram representation method that replaces standard 2D Gaussian representations used in 2D Gaussian Splatting with 2D quadratic phase functions. CVQPG incorporates additional learnable parameters to control the curvature of these bases. We evaluate our approach against state-of-the-art methods, exceeding the visual quality by +0.19 dB (RGB) and +0.33 dB (grayscale) on average in holographic reconstructions. Specifically, our equal parameter count evaluations show that modulating the primitive's wavefront is an effective and lightweight enhancement for hologram representations. In addition, our frequency domain analysis illustrates that CVQPG has successfully preserved the mid-to-high frequency band of natural images.
@@ -1120,6 +1334,42 @@ We introduce Complex-Valued Quadratic Phase Gaussian (CVQPG), a novel hologram r
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** Gaussian Splatting, rendering, radiance, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Tri-DehazeGS: Scene--Medium Decoupled Gaussian Splatting with Transmittance-Aware Optimization
+- 作者：Kui Jiang, Yang Gu, Jiacheng Liu, Shiyu Liu, Youyu Chen, Hui Liu
+- 出版日期：2026-09-10T08:24:16Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2609.11223
+
+### 一句话总结
+Tri-DehazeGS 提出一种场景—介质解耦的高斯泼溅框架，用独立视图共享三平面场建模参与介质，并通过透射率梯度补偿优化低透射区域，以改善雾天多视角图像下的干净新视角重建。
+
+### 研究问题
+从有雾多视角图像中恢复干净三维场景具有挑战性，因为雾会衰减场景辐射并引入大气散射。现有散射感知高斯泼溅方法虽引入物理雾模型，但常在图像空间施加退化，或把介质相关变量绑定到高斯基元上，导致干净场景辐射与大气效应相互纠缠；同时低透射率区域对高斯优化提供的监督较弱，使远处或浓雾区域重建不足。
+
+### 核心思路/方法
+论文认为雾下干净重建需要同时实现场景—介质解耦与透射率感知的优化重平衡。为此提出 Tri-DehazeGS：
+- 用高斯基元表示干净场景；
+- 用独立的视图共享三平面场建模参与介质；
+- 通过物理散射模型合成有雾观测。
+此外引入 Medium-Decoupled Transmittance Gradient Compensation（MD-TGC），在介质冻结后补偿被雾抑制的梯度，且不改变前向渲染。
+
+### 主要贡献
+- 提出 Tri-DehazeGS，一个场景—介质解耦的高斯泼溅框架，将干净场景与参与介质分别表示并依据物理散射模型组合。
+- 引入 MD-TGC，在介质冻结后补偿雾抑制的梯度，以重平衡低透射率区域的优化。
+- 在真实与合成雾基准上实验显示，Tri-DehazeGS 改善了干净新视角重建，并提供代码链接。
+
+### 局限性
+摘要未提供足够信息说明方法的具体失败情形、计算开销、对极端天气或动态场景的适用性，也未给出定量指标、消融细节或与基线方法的完整对比。
+
+### 阅读优先级
+高。理由：该论文针对雾天三维重建中场景与介质纠缠、低透射率区域监督不足两个明确问题，提出解耦表示与梯度补偿机制，属于神经场景表示与渲染方向中物理模型与高斯泼溅结合的前沿工作，且提供代码，便于复现与后续研究。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1753,6 +2003,49 @@ Synthesizing photorealistic driving videos along specified trajectories is essen
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** stereo depth, robot navigation, mapping, localization, scene understanding
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Harness Robotic OS: A Unified Embodied-Agent Runtime for Closed-Loop Quadruped Inspection
+- 作者：Yaoyuan Yan, Zhiyou Heng, Haoxiang Jie, Gang Liu, Hongjie Yan, Wei Zhou
+- 出版日期：2026-09-10T08:25:46Z
+- 分类：Embodied / Robotics / AR Applications（主要分类）；次要分类：摘要未提供足够信息
+- 链接：摘要页 https://arxiv.org/abs/2609.11225 ；PDF https://arxiv.org/pdf/2609.11225
+
+### 一句话总结
+论文提出统一的具身智能体运行时 HROS 及其住宅小区巡检实现 Argos，将四足机器人导航、感知、认知推理、语音交互与安全约束下的自演化整合为可追踪的闭环巡检系统。
+
+### 研究问题
+自主物业巡检不仅需要稳健的机器人导航，还需要在可追踪的运行闭环中连接异构传感、可复用的自主能力、多模态场景理解、人机交互与企业响应。现有四足巡检系统常通过任务专用接口集成这些功能，导致上下文协调、知识复用和受控适应变得困难。
+
+### 核心思路/方法
+- 提出 Harness Robotic OS（HROS），一个统一的具身智能体运行时；Argos 是其面向住宅小区巡检的具体实现。
+- HROS 将系统组织为机器人运行时、具身自主技能、认知智能体运行时、交互与运维平面。
+- 通过共享上下文连接物理状态与智能体推理。
+- 支持流式 ASR/TTS 的语音任务交互。
+- 采用分层的工作记忆、情景记忆与语义记忆来保存运行知识。
+- 设计安全门控的自演化闭环，将执行轨迹转化为带版本的候选更新，不允许无约束的在线修改。
+- Argos 原型集成 Vbot 四足机器人、Fast-LIO2 定位与建图、Hobot-Stereo 深度感知、PCT-Planner 全局规划、EGO-Planner 局部运动生成，以及 OpenClaw 编排的 Qwen3-VL 巡检分析。
+
+### 主要贡献
+- 提出统一的具身智能体运行时 HROS，用于闭环四足巡检，缓解任务专用接口带来的上下文协调与知识复用困难。
+- 给出 Argos 实现，将机器人运行时、自主技能、认知推理、语音交互和安全门控自演化组织为分层系统。
+- 在住宅物业环境中验证部署的导航与巡检闭环，报告了 100% 航点可达率、户外定位误差低于 10 cm、局部障碍响应延迟低于 200 ms、代表性危险检测率 85–95%、告警投递与结构化报告生成成功率 99%。
+- 摘要称 HROS 为记忆增强、语音感知且可持续改进的具身巡检智能体提供可扩展软件基础。
+
+### 局限性
+- 论文仅提供摘要，未提供关于实验规模、场景数量、基线对比、消融研究、失败案例和统计显著性的细节；这些信息摘要未提供足够信息。
+- 危险检测率 85–95% 的具体类别、测试条件与误报情况，摘要未提供足够信息。
+- 自演化闭环的版本管理机制、安全门控具体策略及其长期有效性，摘要未提供足够信息。
+- 系统在住宅小区之外的泛化能力、不同机器人平台的可移植性，摘要未提供足够信息。
+- 真实部署中的成本、维护、隐私与法规问题，摘要未提供足够信息。
+
+### 阅读优先级
+高。理由：该论文聚焦具身智能体运行时与四足机器人闭环巡检的系统集成，涉及导航、感知、认知记忆、语音交互与安全自演化等完整链路，并给出可量化的部署指标；对具身智能系统落地、机器人操作系统架构和物业巡检应用有直接参考价值。但需注意仅凭摘要无法评估实验严谨性与泛化性，建议获取全文后重点核查实验细节与自演化机制。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
