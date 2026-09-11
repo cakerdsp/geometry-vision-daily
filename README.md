@@ -81,9 +81,9 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 <!-- DAILY_REPORT_END -->
 
-**Last updated:** 2026-09-10T12:22:12-04:00
-**Total number of papers:** 48
-**Number of papers added in the latest update:** 9
+**Last updated:** 2026-09-11T12:26:17-04:00
+**Total number of papers:** 53
+**Number of papers added in the latest update:** 8
 **Categories tracked:** cs.CV, cs.GR, cs.RO, eess.IV
 
 Paper metadata is collected from the public arXiv API and stored as structured JSON. PDF files are not mirrored or redistributed; full-text analysis only downloads PDFs temporarily during the workflow run and deletes them afterward.
@@ -135,6 +135,21 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 ## Geometry Foundation Models
 
 ### 2026-09
+
+#### 2026-09-10 - SAMV-DUSt3R: Instance-Centric 3D Scene Decoupling from Sparse Multi-Views
+
+**Authors:** Langxu Zhao, Zuan Gu, Yingdan Zhang, Pengfei Zhao, Tianhan Gao
+**Links:** [abs](https://arxiv.org/abs/2609.11279) - [pdf](https://arxiv.org/pdf/2609.11279)
+**Primary category:** Geometry Foundation Models
+**Secondary categories:** Embodied / Robotics / AR Applications
+**Matched keywords:** DUSt3R, robotics, AR, VR
+
+<details>
+<summary>Abstract</summary>
+
+With the rising demand to decouple objects from 3D scenes, we propose SAMV-DUSt3R, an end-to-end model that injects SAM2 2D masks into MV-DUSt3R reconstruction. A Cross Flow Mask Block uses these masks to steer the network toward the target instance, jointly improving shape accuracy and achieving object-level disentanglement without multi-stage pipelines. To ensure reconstruction stability, a lightweight Spatial RankGNN selects the optimal reference view with a selection accuracy of 73.5\%. Extensive experiments demonstrate that our method boosts average reconstruction precision by 11\% across various metrics compared to state-of-the-art baselines. These results reveal a strong instance-disentanglement capability and clear benefits for driving, robotics, AR/VR, and heritage digitisation.
+
+</details>
 
 #### 2026-09-08 - RoMa-$Ω$: What Feed-Forward 3D Models Know About Image Matching
 
@@ -188,57 +203,6 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 <summary>Abstract</summary>
 
 Learned image matching has experienced significant progress in recent years, culminating in robust and accurate matchers such as RoMa, whose robustness is often attributed to its use of frozen DINO features. In a parallel development, feed-forward reconstruction models, such as VGGT, have been trained on ever-growing datasets to accurately regress dense 3D point maps and camera poses. The distinction between matchers and feed-forward reconstruction models has become increasingly blurred with the introduction of matching losses in models such as MASt3R and VGGT-$Ω$. This raises a natural question: what do feed-forward 3D models know about image matching? In this work, we answer this question by analyzing three scenarios: (i) zero-shot matching of patch features, (ii) direct matching of 3D point predictions, and (iii) training a full matcher on top of the learned representations. We find that, despite performing poorly in zero-shot matching, especially in later layers, feed-forward reconstruction models provide strong representations for linear probing and full matching pipelines. We further show that, even without any training, their raw predictions alone enable competitive matching, albeit only under moderate viewpoint changes and modality gaps. Based on these insights, we retrain RoMa v2 by replacing its DINO backbone with VGGT-$Ω$. Our resulting model, \ours, outperforms state-of-the-art matchers on a wide range of benchmarks, e.g. +8.1 mAA compared to RoMa v2 on WxBS.
-
-</details>
-
-#### 2026-09-03 - Zero-Shot Novel Depth Synthesis Using 3D Foundation Models Scene Representations
-
-**Authors:** Denis M. Akola, David F. Fouhey
-**Links:** [abs](https://arxiv.org/abs/2609.04174) - [pdf](https://arxiv.org/pdf/2609.04174)
-**Primary category:** Geometry Foundation Models
-**Secondary categories:** None
-**Matched keywords:** VGGT, 3D reconstruction
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Zero-Shot Novel Depth Synthesis Using 3D Foundation Models Scene Representations
-- 作者：Denis M. Akola, David F. Fouhey
-- 出版日期：2026-09-03（arXiv 发布时间）
-- 分类：Geometry Foundation Models（几何基础模型）
-- 链接：https://arxiv.org/abs/2609.04174
-
-### 一句话总结
-本文提出 Z3D 方法，利用 3D 基础模型（如 VGGT）的内部场景表征，通过潜在扩散在未见视角上合成真实的新颖深度图，实现零样本深度预测。
-
-### 研究问题
-3D 基础模型内部学习到的场景表征，是否包含可用于推断新视角下三维结构（尤其是隐藏表面）的通用知识？如何有效地从这些表征中解码出新视角的深度信息？
-
-### 核心思路/方法
-1. **假设验证**：作者假设 3D 基础模型在解决三维重建任务时，必须学习包含大量通用三维场景知识的内部表征，因此这些表征可能蕴含可解码的隐藏表面信息。
-2. **先验验证**：首先证明可以从 3DFM 内部表征中解码出隐藏表面（即模型表征并非仅用于已知视角）。
-3. **方法 Z3D**：在 3DFM 表征上执行潜在扩散（latent diffusion），以此估计未见视角下的点图（pointmaps），进而得到新颖视图的深度图。
-4. **零样本能力**：该方法无需针对特定数据集进行训练，可直接在多个数据集上为新视角生成合理的深度预测。
-
-### 主要贡献
-- 首次研究从 3D 基础模型内部表征解码隐藏表面的可行性，并给出正面证据。
-- 提出 Z3D 方法，将潜在扩散应用于 3DFM 表征，实现未见视角的深度估计。
-- 实验表明 Z3D 能在多个数据集上为新视角预测真实合理的深度图，展示跨数据集的零样本泛化能力。
-
-### 局限性
-摘要未提供足够信息。具体局限（如对遮挡严重场景、复杂拓扑、计算成本、定量精度上限等）均未在摘要中明确说明，无法评估。
-
-### 阅读优先级
-**中**  
-理由：该工作针对 3D 基础模型内部表征的可重用性进行探索，思想新颖且具有一定启发性，适合关注三维视觉与几何基础模型交叉方向的读者。但目前仅摘要显示初步可行性，未给出定量评测细节或应用场景深度，若追求具体方法实现或严格对比结论，需进一步阅读全文。对于非相关方向读者优先级可降低。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-3D Foundation Models (3DFMs) such as VGGT have recently pushed the boundaries of 3D vision by predicting rich unified representations with feed-foward transformers. The scene representations learned by these models enable strong performance on multiple 3D vision tasks. In this paper, we investigate using their internal representations to infer 3D in the scene from new views. Our hypothesis is that in order to solve the task of 3D reconstruction, these models need to learn a representation that includes a large amount of general knowledge about 3D scenes. After showing that it is possible to decode hidden surfaces from internal 3DFM representations, we propose a method, Z3D, that estimates pointmaps in unseen views by doing latent diffusion on 3DFM representation. We show that Z3D can predict realistic depth maps for new views across multiple datasets.
 
 </details>
 
@@ -352,6 +316,51 @@ We present EdMCGS (Event-driven Markov chain Gaussian Splatting), an end-to-end 
 ## 3D Reconstruction & Multi-view Geometry
 
 ### 2026-09
+
+#### 2026-09-10 - Visual-SLAM for the detection of hidden tomatoes in greenhouses by Hierarchical Localization and GLOMAPfor robotized harvesting
+
+**Authors:** Fernando Cañadas-Aránega, José C. Moreno, José L. Blanco-Claraco, Francisco Rodríguez
+**Links:** [abs](https://arxiv.org/abs/2609.11766) - [pdf](https://arxiv.org/pdf/2609.11766)
+**Primary category:** 3D Reconstruction & Multi-view Geometry
+**Secondary categories:** Embodied / Robotics / AR Applications
+**Matched keywords:** structure from motion, SLAM, visual SLAM, mapping, localization
+
+<details>
+<summary>Abstract</summary>
+
+Advanced crop monitoring inside greenhouses is becoming one of the primary objectives of research centers. High-performance sensors, such as LiDAR or stereo cameras, have traditionally been employed for this purpose, though these often have a high cost. This work proposes a Visual-SLAM system using a monocular camera, which is significantly more cost-effective and specifically tailored for agricultural applications, such as mapping tomato crops in a greenhouse. Tests were carried out on a real tomato bunch, located in the Agroconnect experimental greenhouse. A ROS 2 Humble node was developed to run on the robot in order to capture images of these crops, which were then stored for offline processing. To generate a 3D mapped model for the crop in the greenhouse, the GLOMAP mapper, based on Structure-From-Motion, was integrated with the Hierarchical Localization toolbox. This initial mapping is a foundation for future, more advanced algorithms to analyze growth patterns, and optimize agricultural management. The system leverages a hierarchical localization paradigm based on a coarse-to-fine strategy: it first performs global retrieval to generate location hypotheses, then combines local features within the identified candidate regions. The results show a correct identification of the tomato cluster, correctly characterising the tomato that is occluded and inaccessible by classical vision technologies. The reconstructed 3D model was further validated against manual ground-truth measurements of fruit size, centroid position, and orientation, confirming the geometric accuracy of the proposed low-cost monocular pipeline.
+
+</details>
+
+#### 2026-09-10 - RIDE: Relocalization-Informed Depth Estimation with 3D Gaussian Splatting
+
+**Authors:** Jiarong Lian, Zhe Xiao, Zhaoyang Zhang, Wei Li, Ruizhi Chen
+**Links:** [abs](https://arxiv.org/abs/2609.11079) - [pdf](https://arxiv.org/pdf/2609.11079)
+**Primary category:** 3D Reconstruction & Multi-view Geometry
+**Secondary categories:** Neural Scene Representations & Rendering, Embodied / Robotics / AR Applications
+**Matched keywords:** metric depth, depth estimation, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, splatting, robot perception, localization
+
+<details>
+<summary>Abstract</summary>
+
+Render--match--PnP relocalization establishes correspondences between query image pixels and 3D map points for camera pose recovery, but their potential to support dense depth estimation is often overlooked. To exploit this geometric information, we present RIDE, which estimates dense metric depth from a robot's RGB stream. Given a metrically scaled 3D Gaussian Splatting (3DGS) model, RIDE combines sparse metric depth observations derived from PnP-RANSAC inlier correspondences with the geometric prior of a pretrained video-depth model. To handle uneven and intermittent observations, it integrates global and local depth correction with temporal memory, supporting depth estimation through short observation gaps after metric scale initialization. Trained on public RGB-D videos, RIDE is evaluated on robot sequences without fine tuning. Experiments show improved depth accuracy and temporal consistency over scale-only calibration, demonstrating how localization geometry can support both pose recovery and dense robot perception.
+
+</details>
+
+#### 2026-09-09 - GRADE: Single-Frame Generative Radar Depth Estimation Under Visual Degradation
+
+**Authors:** Bin Zhao, Patrick Chiou, Nakul Garg
+**Links:** [abs](https://arxiv.org/abs/2609.10756) - [pdf](https://arxiv.org/pdf/2609.10756)
+**Primary category:** 3D Reconstruction & Multi-view Geometry
+**Secondary categories:** None
+**Matched keywords:** metric depth, depth estimation
+
+<details>
+<summary>Abstract</summary>
+
+Dense 3D depth perception fails under smoke, fog, and darkness because optical sensors cannot penetrate airborne particulates. mmWave radar remains usable and measures range accurately under these conditions, but its small aperture limits angular resolution. We present GRADE, which grounds a pretrained generative prior in single-frame radar geometry to estimate high-fidelity metric depth. GRADE first maps raw 4D radar spectra to coarse metric depth. A latent diffusion backbone then recovers structural detail while conditioning every denoising step on this estimate. A pixel-space adapter uses residual camera cues when available and is trained across clear, smoke-degraded, and occluded inputs so the full output approaches the radar-conditioned path as visibility degrades. Trained and evaluated on ~95K frames across 12 buildings with real smoke, GRADE achieves an MAE of 0.303 m in clear scenes and 0.313 m under smoke, outperforming existing baselines. Code and datasets are available at https://phi-lab-rice.github.io/GRADE.
+
+</details>
 
 #### 2026-09-09 - Field Converter: Geometry-Initialized Temporal Residual Refinement for World-Grounded Player Pose Estimation from Soccer Broadcasts
 
@@ -1070,59 +1079,54 @@ Reliable 3D understanding of the surrounding environment is a core requirement f
 
 </details>
 
-#### 2026-09-03 - Scal3R: Learning Efficient Multi-Relative Pose Query for Scalable Online 3D Reconstruction
+## Neural Scene Representations & Rendering
 
-**Authors:** Chin-Yang Lin, Yang-Che Sun, Cheng Sun, Fu-En Yang, Min-Hung Chen, Yen-Yu Lin, Wei-Chen Chiu, Yu-Lun Liu
-**Links:** [abs](https://arxiv.org/abs/2609.04201) - [pdf](https://arxiv.org/pdf/2609.04201)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
+### 2026-09
+
+#### 2026-09-10 - 3D Point Splatting for mmWave Radar Novel View Synthesis
+
+**Authors:** Adnan Armouti, Yixuan Gao, Rajalakshmi Nandakumar
+**Links:** [abs](https://arxiv.org/abs/2609.11894) - [pdf](https://arxiv.org/pdf/2609.11894)
+**Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
-**Matched keywords:** 3D reconstruction
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Scal3R: Learning Efficient Multi-Relative Pose Query for Scalable Online 3D Reconstruction
-- 作者：Chin-Yang Lin, Yang-Che Sun, Cheng Sun, Fu-En Yang, Min-Hung Chen, Yen-Yu Lin, Wei-Chi Chiu, Yu-Lun Liu
-- 出版日期：2026-09-03T17:59:53Z
-- 分类：3D Reconstruction & Multi-view Geometry
-- 链接：https://arxiv.org/abs/2609.04201
-
-### 一句话总结
-Scal3R 提出一种基于多参考相对位姿查询的在线 3D 重建方法，通过轻量可学习 token 与冻结骨干网络的非对称注意力注入，配合在线位姿图优化，显著抑制长视频场景下的累积漂移。
-
-### 研究问题
-在线 3D 重建模型在长视频上表现不佳，原因是将位姿回归到固定的首帧锚点会导致外推远超训练分布，微小漂移逐渐累积并放大为严重的几何崩溃。
-
-### 核心思路/方法
-- 观察到逐帧深度在重建失败时仍保持稳定，即骨干网络的局部几何完好，只有全局位姿头崩溃，基于这一解耦现象进行设计。
-- 将在线重建重构为多参考相对位姿查询：使用约占总参数 1% 的轻量可学习 token，通过非对称注意力注入到完全冻结的骨干网络中，查询相对多个历史关键帧的位姿。
-- 引入在线位姿图优化系统，结合回环检测（loop closure）以抑制长距离漂移。
-
-### 主要贡献
-- 揭示在线重建中局部几何（深度）与全局位姿解耦的失败模式，并据此设计新方法。
-- 提出 Scal3R，利用冻结骨干+轻量 token 进行多参考相对位姿查询，训练效率高（单 GPU 8 小时收敛）。
-- 在 KITTI 上将平均 ATE（绝对轨迹误差）较在线基线降低超过 60%。
-- 在 Virtual KITTI、Sintel、TUM-Dynamic、ScanNet 和 7-Scenes 上达到最先进性能。
-
-### 局限性
-摘要未提供足够信息，无法确知方法在极端退化场景（如严重遮挡、纹理缺失）下的表现、对回环检测失败的敏感性、内存/推理速度开销、以及不同数据集间的泛化边界等细节。
-
-### 阅读优先级
-**高**。理由：该工作针对在线 3D 重建中长期存在的长视频漂移问题提供了新的问题洞察（几何-位姿解耦），方法设计轻量且训练高效，在多个基准上取得显著提升，兼具理论动机与实际应用价值。摘要信息完整，适合快速阅读以了解核心思想；若需复现或深入比较，需进一步阅读全文。
-
-</details>
+**Matched keywords:** NeRF, novel view synthesis, view synthesis, splatting
 
 <details>
 <summary>Abstract</summary>
 
-Online 3D reconstruction models perform poorly on long videos. This happens because regressing poses relative to a fixed first-frame anchor forces extrapolation far beyond the training distribution. Small drifts accumulate and amplify into significant geometric collapse. However, we observe that per-frame depth remains stable throughout this failure. The backbone's local geometry remains intact; only the global pose head breaks down. Motivated by this decoupling, we introduce Scal3R. This approach reformulates online reconstruction as multi-reference relative pose querying. We use lightweight learnable tokens, which make up about ~1% of the parameters, and inject them into a completely frozen backbone via asymmetric attention. This setup queries poses relative to multiple past keyframes. An online pose-graph optimization system with loop closure suppresses long-range drift. Scal3R reaches convergence in 8 hours on a single GPU. It reduces the average ATE by over 60% on KITTI compared to the online baseline. It also achieves state-of-the-art performance across Virtual KITTI, Sintel, TUM-Dynamic, ScanNet, and 7-Scenes. Project page: https://linjohnss.github.io/scal3r/
+Solving novel view synthesis (NVS) for millimeter-wave (mmWave) radar requires a renderer that is physically faithful, complex-valued, and multi-viewpoint-tractable. No prior method achieves these three properties simultaneously. Differentiable Monte Carlo (MC) ray tracers implement the radar forward model directly with explicit material modeling and complex outputs, but do not scale to the multi-view optimization NVS demands. Optical-NVS ports of NeRF, hash grids, and 3D Gaussians train fast but discard phase and replace explicit material modeling with opaque learned features, restricting them to power-only range-azimuth (RA) magnitudes. We propose 3D Point Splatting (3DPS), the first differentiable point renderer for radar, derived directly from the standard solid-angle form of the radar equation. Each oriented 3D point carries an ITU-R P.2040 material model, evaluated in closed form, with the resulting complex phasor splatted into range bins through a precomputed point spread function (PSF). The complex-valued output makes the renderer product-agnostic. The same optimized scene yields analog-to-digital converter (ADC), complex range profile (CRP), and RA outputs through standard fast Fourier transform (FFT) pipelines without retraining for each format. On six outdoor ColoRadar scenes, 3DPS reaches 0.587 mean Pearson correlation on held-out RA images. This is between 1.7x and 5.2x the three optical-NVS baselines (RadarSplat, Radar Fields, DART). Training takes approximately 3 minutes per scene on a single RTX 4090.
 
 </details>
 
-## Neural Scene Representations & Rendering
+#### 2026-09-10 - Hologram Representation via Quadratic Phase Gaussian Splatting
 
-### 2026-09
+**Authors:** Haolong Wang, Yicheng Zhan, Kaan Akşit, Simeng Qiu
+**Links:** [abs](https://arxiv.org/abs/2609.11434) - [pdf](https://arxiv.org/pdf/2609.11434)
+**Primary category:** Neural Scene Representations & Rendering
+**Secondary categories:** None
+**Matched keywords:** Gaussian Splatting, splatting
+
+<details>
+<summary>Abstract</summary>
+
+We introduce Complex-Valued Quadratic Phase Gaussian (CVQPG), a novel hologram representation method that replaces standard 2D Gaussian representations used in 2D Gaussian Splatting with 2D quadratic phase functions. CVQPG incorporates additional learnable parameters to control the curvature of these bases. We evaluate our approach against state-of-the-art methods, exceeding the visual quality by +0.19 dB (RGB) and +0.33 dB (grayscale) on average in holographic reconstructions. Specifically, our equal parameter count evaluations show that modulating the primitive's wavefront is an effective and lightweight enhancement for hologram representations. In addition, our frequency domain analysis illustrates that CVQPG has successfully preserved the mid-to-high frequency band of natural images.
+
+</details>
+
+#### 2026-09-10 - Tri-DehazeGS: Scene--Medium Decoupled Gaussian Splatting with Transmittance-Aware Optimization
+
+**Authors:** Kui Jiang, Yang Gu, Jiacheng Liu, Shiyu Liu, Youyu Chen, Hui Liu
+**Links:** [abs](https://arxiv.org/abs/2609.11223) - [pdf](https://arxiv.org/pdf/2609.11223)
+**Primary category:** Neural Scene Representations & Rendering
+**Secondary categories:** None
+**Matched keywords:** Gaussian Splatting, rendering, radiance, splatting
+
+<details>
+<summary>Abstract</summary>
+
+Recovering clean 3D scenes from hazy multi-view images is challenging because haze attenuates scene radiance and introduces atmospheric scattering. Recent scattering-aware Gaussian Splatting methods introduce physical haze models into reconstruction, but they often apply degradation in image space or bind medium-related variables to Gaussian primitives, which can entangle clean scene radiance with atmospheric effects. Moreover, low-transmittance regions provide weakened supervision for Gaussian optimization, causing distant or dense-haze areas to be under-reconstructed. We argue that clean reconstruction under haze requires both scene--medium disentanglement and transmittance-aware optimization rebalancing. To this end, we propose Tri-DehazeGS, a scene--medium decoupled Gaussian Splatting framework. It represents the clean scene with Gaussian primitives, models the participating medium using an independent view-shared tri-plane field, and composes hazy observations through a physical scattering model. We further introduce Medium-Decoupled Transmittance Gradient Compensation (MD-TGC), which compensates haze-suppressed gradients after medium freezing without altering forward rendering. Experiments on real and synthetic haze benchmarks show that Tri-DehazeGS improves clean novel-view reconstruction. Code is available at https://github.com/aptx46/Tri-DehazeGS.
+
+</details>
 
 #### 2026-09-09 - View-Structured Conformal Prediction for 3D Gaussian Splatting
 
@@ -1741,6 +1745,21 @@ Synthesizing photorealistic driving videos along specified trajectories is essen
 ## Embodied / Robotics / AR Applications
 
 ### 2026-09
+
+#### 2026-09-10 - Harness Robotic OS: A Unified Embodied-Agent Runtime for Closed-Loop Quadruped Inspection
+
+**Authors:** Yaoyuan Yan, Zhiyou Heng, Haoxiang Jie, Gang Liu, Hongjie Yan, Wei Zhou
+**Links:** [abs](https://arxiv.org/abs/2609.11225) - [pdf](https://arxiv.org/pdf/2609.11225)
+**Primary category:** Embodied / Robotics / AR Applications
+**Secondary categories:** None
+**Matched keywords:** stereo depth, robot navigation, mapping, localization, scene understanding
+
+<details>
+<summary>Abstract</summary>
+
+Autonomous property inspection requires more than robust robot navigation: a deployable system must connect heterogeneous sensing, reusable autonomy capabilities, multimodal scene understanding, human interaction, and enterprise response within a traceable operational loop. Existing quadruped inspection systems commonly integrate these functions through task-specific interfaces, making contextual coordination, knowledge reuse, and controlled adaptation difficult. This paper presents \textit{Harness Robotic OS} (HROS), a unified embodied-agent runtime, and Argos, its realization for residential-community inspection. HROS organizes the system into robot runtime, embodied autonomy skills, cognitive agent runtime, and interaction and operations planes. A shared context connects physical state with agent reasoning; streaming ASR/TTS supports voice-based mission interaction; hierarchical working, episodic, and semantic memory preserves operational knowledge; and a safety-gated self-evolution loop converts execution traces into versioned candidate updates without permitting unconstrained online modification. The Argos prototype integrates a Vbot quadruped, Fast-LIO2 localization and mapping, Hobot-Stereo depth perception, PCT-Planner global planning, EGO-Planner local motion generation, and OpenClaw-orchestrated Qwen3-VL inspection analysis. Experiments in a residential property environment achieved 100\% waypoint reachability, outdoor localization error below 10~cm, local obstacle-response latency below 200~ms, representative hazard-detection rates of 85--95\%, and 99\% success in alarm delivery and structured-report generation. These results validate the deployed navigation and inspection closed loop, while HROS provides an extensible software foundation for memory-augmented, voice-aware, and continuously improvable embodied inspection agents.
+
+</details>
 
 #### 2026-09-09 - Grounding Generated Video Plans in Simulation Towards Versatile Dexterous Controllers
 
@@ -2554,62 +2573,6 @@ Active mapping requires a robot to select camera viewpoints that efficiently rec
 <summary>Abstract</summary>
 
 We study the problem of generating a compositional 3D representation of a cluttered scene containing hundreds of objects. The goal is to represent the scene as a collection of individual object meshes placed in a shared world frame, as required by downstream applications such as gaming, AR/VR, simulation, and robotics. This task is challenging in densely cluttered scenes, where objects heavily occlude one another and each view reveals only a fraction of their geometry. Geometry-based approaches typically reconstruct the scene as a single representation and leave incomplete geometry in occluded regions, while existing compositional methods with generative priors are largely limited to relatively simple scenes. We show that complex scenes with hundreds of objects can instead be generated compositionally by adapting a strong single-object 3D generative prior to multi-view observations. We instantiate this paradigm with Pixal3D, extending it with a multi-view conditioning pathway that grounds object generation in multiple posed observations. Although the model is finetuned entirely on single objects in canonical space, it generalizes to large scenes with severe occlusion without any scene-level training, demonstrating the feasibility and scalability of this paradigm. We further introduce UE-MeshyScene, a photorealistic benchmark of densely cluttered scenes with hundreds of objects, per-object annotations, and ground-truth meshes. Across single-object, controlled multi-object, and UE-MeshyScene evaluations, our method consistently outperforms prior approaches, with larger gains as scene complexity and occlusion increase. Finally, we demonstrate broader applicability by converting generated 3DGS worlds, such as Marble and HY-World 2.0, into compositional mesh scenes.
-
-</details>
-
-#### 2026-09-03 - GIFT: Guided Intermediate Feature Training via Action-Oriented Structural Supervision for Robotic Manipulation
-
-**Authors:** Yupeng Zheng, Xiang Li, Songen Gu, Yuhang Zheng, Shuai Tian, Weize Li, Linbo Wang, Chaoyue Li, Qichao Zhang, Haoran Li, Zhongpu Xia, Ya-Qin Zhang, Shuicheng Yan, Dongbin Zhao
-**Links:** [abs](https://arxiv.org/abs/2609.04193) - [pdf](https://arxiv.org/pdf/2609.04193)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** manipulation, world modeling
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：GIFT: Guided Intermediate Feature Training via Action-Oriented Structural Supervision for Robotic Manipulation
-- 作者：Yupeng Zheng, Xiang Li, Songen Gu, Yuhang Zheng, Shuai Tian, Weize Li, Linbo Wang, Chaoyue Li, Qichao Zhang, Haoran Li, Zhongpu Xia, Ya-Qin Zhang, Shuicheng Yan, Dongbin Zhao
-- 出版日期：2026-09-03
-- 分类：Embodied / Robotics / AR Applications
-- 链接：https://arxiv.org/abs/2609.04193
-
-### 一句话总结
-本文提出GIFT框架，通过几何对齐、姿态预测与目标区域重建等结构监督来引导机器人操作的中间特征学习，弥补视觉丰富性与控制效用之间的“动作充分性差距”，并在多个操作任务上显著提升性能。
-
-### 研究问题
-机器人视觉语言预训练和世界模型提供的视觉特征虽丰富，但其原生的动作/视觉预测目标可能遗漏关键物理与任务结构，并保留与控制无关的视觉冗余。作者研究能否通过引导中间特征保留三种控制相关结构——几何（运动可行性）、姿态（指令相关实体）、目标（任务相关区域中的指令接地）——来弥合这一“动作充分性差距”。
-
-### 核心思路/方法
-提出GIFT（Guided Intermediate Feature Training）框架，一个架构灵活的中间特征学习方法。该方法将上述三种结构转化为训练时约束：
-1. 几何对齐（geometry alignment）
-2. 姿态预测（affordance prediction）
-3. 目标区域重建（goal-region reconstruction）
-
-GIFT被实例化到三种模型中：Vision-Language-Action（VLA）策略、直接动作世界动作模型（WAM）和逆动力学WAM，同时保留各模型原有的动作生成方式。
-
-### 主要贡献
-1. 提出动作充分性差距概念，指出视觉特征与控制效用之间的失配问题。
-2. 提出GIFT框架，首次以显式结构监督（几何、姿态、目标区域）引导中间特征学习，跨模型架构适用。
-3. 在LIBERO-Plus零样本迁移中，GIFT-VLA、GIFT-WAM-Fast、GIFT-WAM-IDM分别达到79.6%、72.6%、87.8%，较基线高出4.6、12.6、5.2个百分点。
-4. 在RoboCasa上，三个变体分别达到61.4%、83.6%、82.3%，较对应基线高出12.6、9.0、8.4个百分点。
-5. 尤其在与铰接物体任务及高精度真实操作中，在未见视觉与空间扰动下取得显著提升。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-**高**
-
-理由：该工作针对机器人操作中视觉-控制失配的核心问题，提出了一种不改变模型动作生成方式的轻量特征引导训练方法，且在多种模型架构和任务基准上均获得一致且显著提升。对从事视觉语言动作模型、世界模型与机器人操纵控制的研究者具有较强参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Vision-language pre-training and predictive world modeling provide robot policies with rich semantic and dynamic visual features, but their native action and visual-prediction objectives may omit critical physical and task structure while retaining control-irrelevant visual redundancy. We call this mismatch between visual richness and control utility the action-sufficiency gap. We investigate whether this gap can be bridged by guiding intermediate features to preserve three control-relevant structure in robotic manipulation: geometry governing motion feasibility, affordance encoding instruction-relevant entities, and goals grounding instructions in task-relevant regions. To this end, we present GIFT (Guided Intermediate Feature Training), an architecture-flexible framework for learning intermediate features that translates these structures into training-time constraints through geometry alignment, affordance prediction, and goal-region reconstruction. We instantiate GIFT in a Vision-Language-Action (VLA) policy, a direct-action World-Action Model (WAM), and an inverse-dynamics WAM while retaining each model's action formulation. Under zero-shot transfer to LIBERO-Plus, GIFT-VLA, GIFT-WAM-Fast, and GIFT-WAM-IDM outperform StarVLA-OFT, Fast-WAM, and Fast-WAM-IDM by 4.6, 12.6, and 5.2 points, reaching 79.6%, 72.6%, and 87.8%, respectively. On RoboCasa, the three GIFT variants reach 61.4%, 83.6%, and 82.3%, outperforming their counterparts by 12.6, 9.0, and 8.4 points, respectively. Together, these results establish learning functionally structured intermediate features as a reusable principle across model-specific action formulations, with especially large gains on articulated-object tasks and high-precision real-world manipulation under unseen visual and spatial perturbations. Project page: https://openphoenix-team.github.io/GIFT-pages.
 
 </details>
 

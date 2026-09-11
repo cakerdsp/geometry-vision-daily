@@ -1,5 +1,334 @@
 [
   {
+    "arxiv_id": "2609.11894",
+    "version": "v1",
+    "title": "3D Point Splatting for mmWave Radar Novel View Synthesis",
+    "authors": [
+      "Adnan Armouti",
+      "Yixuan Gao",
+      "Rajalakshmi Nandakumar"
+    ],
+    "abstract": "Solving novel view synthesis (NVS) for millimeter-wave (mmWave) radar requires a renderer that is physically faithful, complex-valued, and multi-viewpoint-tractable. No prior method achieves these three properties simultaneously. Differentiable Monte Carlo (MC) ray tracers implement the radar forward model directly with explicit material modeling and complex outputs, but do not scale to the multi-view optimization NVS demands. Optical-NVS ports of NeRF, hash grids, and 3D Gaussians train fast but discard phase and replace explicit material modeling with opaque learned features, restricting them to power-only range-azimuth (RA) magnitudes. We propose 3D Point Splatting (3DPS), the first differentiable point renderer for radar, derived directly from the standard solid-angle form of the radar equation. Each oriented 3D point carries an ITU-R P.2040 material model, evaluated in closed form, with the resulting complex phasor splatted into range bins through a precomputed point spread function (PSF). The complex-valued output makes the renderer product-agnostic. The same optimized scene yields analog-to-digital converter (ADC), complex range profile (CRP), and RA outputs through standard fast Fourier transform (FFT) pipelines without retraining for each format. On six outdoor ColoRadar scenes, 3DPS reaches 0.587 mean Pearson correlation on held-out RA images. This is between 1.7x and 5.2x the three optical-NVS baselines (RadarSplat, Radar Fields, DART). Training takes approximately 3 minutes per scene on a single RTX 4090.",
+    "published": "2026-09-10T17:52:17Z",
+    "updated": "2026-09-10T17:52:17Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV",
+      "cs.GR",
+      "cs.LG",
+      "eess.SP"
+    ],
+    "primary_category": "Neural Scene Representations & Rendering",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "NeRF",
+      "novel view synthesis",
+      "view synthesis",
+      "splatting"
+    ],
+    "classification_score": 16,
+    "classification_reasons": [
+      "Matched abstract keyword: NeRF",
+      "Matched title phrase: novel view synthesis",
+      "Matched abstract phrase: novel view synthesis",
+      "Matched title phrase: view synthesis",
+      "Matched abstract phrase: view synthesis",
+      "Matched title keyword: splatting",
+      "Matched abstract keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2609.11894",
+    "pdf_url": "https://arxiv.org/pdf/2609.11894",
+    "first_seen": "2026-09-11T12:26:17-04:00",
+    "last_seen": "2026-09-11T12:26:17-04:00"
+  },
+  {
+    "arxiv_id": "2609.11766",
+    "version": "v1",
+    "title": "Visual-SLAM for the detection of hidden tomatoes in greenhouses by Hierarchical Localization and GLOMAPfor robotized harvesting",
+    "authors": [
+      "Fernando Cañadas-Aránega",
+      "José C. Moreno",
+      "José L. Blanco-Claraco",
+      "Francisco Rodríguez"
+    ],
+    "abstract": "Advanced crop monitoring inside greenhouses is becoming one of the primary objectives of research centers. High-performance sensors, such as LiDAR or stereo cameras, have traditionally been employed for this purpose, though these often have a high cost. This work proposes a Visual-SLAM system using a monocular camera, which is significantly more cost-effective and specifically tailored for agricultural applications, such as mapping tomato crops in a greenhouse. Tests were carried out on a real tomato bunch, located in the Agroconnect experimental greenhouse. A ROS 2 Humble node was developed to run on the robot in order to capture images of these crops, which were then stored for offline processing. To generate a 3D mapped model for the crop in the greenhouse, the GLOMAP mapper, based on Structure-From-Motion, was integrated with the Hierarchical Localization toolbox. This initial mapping is a foundation for future, more advanced algorithms to analyze growth patterns, and optimize agricultural management. The system leverages a hierarchical localization paradigm based on a coarse-to-fine strategy: it first performs global retrieval to generate location hypotheses, then combines local features within the identified candidate regions. The results show a correct identification of the tomato cluster, correctly characterising the tomato that is occluded and inaccessible by classical vision technologies. The reconstructed 3D model was further validated against manual ground-truth measurements of fruit size, centroid position, and orientation, confirming the geometric accuracy of the proposed low-cost monocular pipeline.",
+    "published": "2026-09-10T16:19:36Z",
+    "updated": "2026-09-10T16:19:36Z",
+    "primary_arxiv_category": "cs.RO",
+    "arxiv_categories": [
+      "cs.RO"
+    ],
+    "primary_category": "3D Reconstruction & Multi-view Geometry",
+    "secondary_categories": [
+      "Embodied / Robotics / AR Applications"
+    ],
+    "matched_keywords": [
+      "structure from motion",
+      "SLAM",
+      "visual SLAM",
+      "mapping",
+      "localization"
+    ],
+    "classification_score": 11,
+    "classification_reasons": [
+      "Matched abstract phrase: structure from motion",
+      "Matched title keyword: SLAM",
+      "Matched abstract keyword: SLAM",
+      "Matched title phrase: visual SLAM",
+      "Matched abstract phrase: visual SLAM",
+      "Matched abstract keyword: mapping",
+      "Matched title keyword: localization",
+      "Matched abstract keyword: localization"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2609.11766",
+    "pdf_url": "https://arxiv.org/pdf/2609.11766",
+    "first_seen": "2026-09-11T12:26:17-04:00",
+    "last_seen": "2026-09-11T12:26:17-04:00"
+  },
+  {
+    "arxiv_id": "2609.11434",
+    "version": "v1",
+    "title": "Hologram Representation via Quadratic Phase Gaussian Splatting",
+    "authors": [
+      "Haolong Wang",
+      "Yicheng Zhan",
+      "Kaan Akşit",
+      "Simeng Qiu"
+    ],
+    "abstract": "We introduce Complex-Valued Quadratic Phase Gaussian (CVQPG), a novel hologram representation method that replaces standard 2D Gaussian representations used in 2D Gaussian Splatting with 2D quadratic phase functions. CVQPG incorporates additional learnable parameters to control the curvature of these bases. We evaluate our approach against state-of-the-art methods, exceeding the visual quality by +0.19 dB (RGB) and +0.33 dB (grayscale) on average in holographic reconstructions. Specifically, our equal parameter count evaluations show that modulating the primitive's wavefront is an effective and lightweight enhancement for hologram representations. In addition, our frequency domain analysis illustrates that CVQPG has successfully preserved the mid-to-high frequency band of natural images.",
+    "published": "2026-09-10T12:06:11Z",
+    "updated": "2026-09-10T12:06:11Z",
+    "primary_arxiv_category": "cs.GR",
+    "arxiv_categories": [
+      "cs.GR",
+      "cs.CV",
+      "cs.LG"
+    ],
+    "primary_category": "Neural Scene Representations & Rendering",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "Gaussian Splatting",
+      "splatting"
+    ],
+    "classification_score": 9,
+    "classification_reasons": [
+      "Matched title phrase: Gaussian Splatting",
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched title keyword: splatting",
+      "Matched abstract keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2609.11434",
+    "pdf_url": "https://arxiv.org/pdf/2609.11434",
+    "first_seen": "2026-09-11T12:26:17-04:00",
+    "last_seen": "2026-09-11T12:26:17-04:00"
+  },
+  {
+    "arxiv_id": "2609.11279",
+    "version": "v1",
+    "title": "SAMV-DUSt3R: Instance-Centric 3D Scene Decoupling from Sparse Multi-Views",
+    "authors": [
+      "Langxu Zhao",
+      "Zuan Gu",
+      "Yingdan Zhang",
+      "Pengfei Zhao",
+      "Tianhan Gao"
+    ],
+    "abstract": "With the rising demand to decouple objects from 3D scenes, we propose SAMV-DUSt3R, an end-to-end model that injects SAM2 2D masks into MV-DUSt3R reconstruction. A Cross Flow Mask Block uses these masks to steer the network toward the target instance, jointly improving shape accuracy and achieving object-level disentanglement without multi-stage pipelines. To ensure reconstruction stability, a lightweight Spatial RankGNN selects the optimal reference view with a selection accuracy of 73.5\\%. Extensive experiments demonstrate that our method boosts average reconstruction precision by 11\\% across various metrics compared to state-of-the-art baselines. These results reveal a strong instance-disentanglement capability and clear benefits for driving, robotics, AR/VR, and heritage digitisation.",
+    "published": "2026-09-10T09:12:48Z",
+    "updated": "2026-09-10T09:12:48Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Geometry Foundation Models",
+    "secondary_categories": [
+      "Embodied / Robotics / AR Applications"
+    ],
+    "matched_keywords": [
+      "DUSt3R",
+      "robotics",
+      "AR",
+      "VR"
+    ],
+    "classification_score": 14,
+    "classification_reasons": [
+      "Matched representative model name in title: DUSt3R",
+      "Matched representative model name in abstract: DUSt3R",
+      "Matched abstract keyword: robotics",
+      "Matched abstract keyword: AR",
+      "Matched abstract keyword: VR"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2609.11279",
+    "pdf_url": "https://arxiv.org/pdf/2609.11279",
+    "first_seen": "2026-09-11T12:26:17-04:00",
+    "last_seen": "2026-09-11T12:26:17-04:00"
+  },
+  {
+    "arxiv_id": "2609.11225",
+    "version": "v1",
+    "title": "Harness Robotic OS: A Unified Embodied-Agent Runtime for Closed-Loop Quadruped Inspection",
+    "authors": [
+      "Yaoyuan Yan",
+      "Zhiyou Heng",
+      "Haoxiang Jie",
+      "Gang Liu",
+      "Hongjie Yan",
+      "Wei Zhou"
+    ],
+    "abstract": "Autonomous property inspection requires more than robust robot navigation: a deployable system must connect heterogeneous sensing, reusable autonomy capabilities, multimodal scene understanding, human interaction, and enterprise response within a traceable operational loop. Existing quadruped inspection systems commonly integrate these functions through task-specific interfaces, making contextual coordination, knowledge reuse, and controlled adaptation difficult. This paper presents \\textit{Harness Robotic OS} (HROS), a unified embodied-agent runtime, and Argos, its realization for residential-community inspection. HROS organizes the system into robot runtime, embodied autonomy skills, cognitive agent runtime, and interaction and operations planes. A shared context connects physical state with agent reasoning; streaming ASR/TTS supports voice-based mission interaction; hierarchical working, episodic, and semantic memory preserves operational knowledge; and a safety-gated self-evolution loop converts execution traces into versioned candidate updates without permitting unconstrained online modification. The Argos prototype integrates a Vbot quadruped, Fast-LIO2 localization and mapping, Hobot-Stereo depth perception, PCT-Planner global planning, EGO-Planner local motion generation, and OpenClaw-orchestrated Qwen3-VL inspection analysis. Experiments in a residential property environment achieved 100\\% waypoint reachability, outdoor localization error below 10~cm, local obstacle-response latency below 200~ms, representative hazard-detection rates of 85--95\\%, and 99\\% success in alarm delivery and structured-report generation. These results validate the deployed navigation and inspection closed loop, while HROS provides an extensible software foundation for memory-augmented, voice-aware, and continuously improvable embodied inspection agents.",
+    "published": "2026-09-10T08:25:46Z",
+    "updated": "2026-09-10T08:25:46Z",
+    "primary_arxiv_category": "cs.RO",
+    "arxiv_categories": [
+      "cs.RO"
+    ],
+    "primary_category": "Embodied / Robotics / AR Applications",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "stereo depth",
+      "robot navigation",
+      "mapping",
+      "localization",
+      "scene understanding"
+    ],
+    "classification_score": 6,
+    "classification_reasons": [
+      "Matched abstract phrase: robot navigation",
+      "Matched abstract keyword: mapping",
+      "Matched abstract keyword: localization",
+      "Matched abstract phrase: scene understanding"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2609.11225",
+    "pdf_url": "https://arxiv.org/pdf/2609.11225",
+    "first_seen": "2026-09-11T12:26:17-04:00",
+    "last_seen": "2026-09-11T12:26:17-04:00"
+  },
+  {
+    "arxiv_id": "2609.11223",
+    "version": "v1",
+    "title": "Tri-DehazeGS: Scene--Medium Decoupled Gaussian Splatting with Transmittance-Aware Optimization",
+    "authors": [
+      "Kui Jiang",
+      "Yang Gu",
+      "Jiacheng Liu",
+      "Shiyu Liu",
+      "Youyu Chen",
+      "Hui Liu"
+    ],
+    "abstract": "Recovering clean 3D scenes from hazy multi-view images is challenging because haze attenuates scene radiance and introduces atmospheric scattering. Recent scattering-aware Gaussian Splatting methods introduce physical haze models into reconstruction, but they often apply degradation in image space or bind medium-related variables to Gaussian primitives, which can entangle clean scene radiance with atmospheric effects. Moreover, low-transmittance regions provide weakened supervision for Gaussian optimization, causing distant or dense-haze areas to be under-reconstructed. We argue that clean reconstruction under haze requires both scene--medium disentanglement and transmittance-aware optimization rebalancing. To this end, we propose Tri-DehazeGS, a scene--medium decoupled Gaussian Splatting framework. It represents the clean scene with Gaussian primitives, models the participating medium using an independent view-shared tri-plane field, and composes hazy observations through a physical scattering model. We further introduce Medium-Decoupled Transmittance Gradient Compensation (MD-TGC), which compensates haze-suppressed gradients after medium freezing without altering forward rendering. Experiments on real and synthetic haze benchmarks show that Tri-DehazeGS improves clean novel-view reconstruction. Code is available at https://github.com/aptx46/Tri-DehazeGS.",
+    "published": "2026-09-10T08:24:16Z",
+    "updated": "2026-09-10T08:24:16Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV"
+    ],
+    "primary_category": "Neural Scene Representations & Rendering",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "Gaussian Splatting",
+      "rendering",
+      "radiance",
+      "splatting"
+    ],
+    "classification_score": 11,
+    "classification_reasons": [
+      "Matched title phrase: Gaussian Splatting",
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched abstract keyword: rendering",
+      "Matched abstract keyword: radiance",
+      "Matched title keyword: splatting",
+      "Matched abstract keyword: splatting"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2609.11223",
+    "pdf_url": "https://arxiv.org/pdf/2609.11223",
+    "first_seen": "2026-09-11T12:26:17-04:00",
+    "last_seen": "2026-09-11T12:26:17-04:00"
+  },
+  {
+    "arxiv_id": "2609.11079",
+    "version": "v1",
+    "title": "RIDE: Relocalization-Informed Depth Estimation with 3D Gaussian Splatting",
+    "authors": [
+      "Jiarong Lian",
+      "Zhe Xiao",
+      "Zhaoyang Zhang",
+      "Wei Li",
+      "Ruizhi Chen"
+    ],
+    "abstract": "Render--match--PnP relocalization establishes correspondences between query image pixels and 3D map points for camera pose recovery, but their potential to support dense depth estimation is often overlooked. To exploit this geometric information, we present RIDE, which estimates dense metric depth from a robot's RGB stream. Given a metrically scaled 3D Gaussian Splatting (3DGS) model, RIDE combines sparse metric depth observations derived from PnP-RANSAC inlier correspondences with the geometric prior of a pretrained video-depth model. To handle uneven and intermittent observations, it integrates global and local depth correction with temporal memory, supporting depth estimation through short observation gaps after metric scale initialization. Trained on public RGB-D videos, RIDE is evaluated on robot sequences without fine tuning. Experiments show improved depth accuracy and temporal consistency over scale-only calibration, demonstrating how localization geometry can support both pose recovery and dense robot perception.",
+    "published": "2026-09-10T04:36:58Z",
+    "updated": "2026-09-10T04:36:58Z",
+    "primary_arxiv_category": "cs.RO",
+    "arxiv_categories": [
+      "cs.RO"
+    ],
+    "primary_category": "3D Reconstruction & Multi-view Geometry",
+    "secondary_categories": [
+      "Neural Scene Representations & Rendering",
+      "Embodied / Robotics / AR Applications"
+    ],
+    "matched_keywords": [
+      "metric depth",
+      "depth estimation",
+      "Gaussian Splatting",
+      "3D Gaussian Splatting",
+      "3DGS",
+      "splatting",
+      "robot perception",
+      "localization"
+    ],
+    "classification_score": 6,
+    "classification_reasons": [
+      "Matched title phrase: depth estimation",
+      "Matched abstract phrase: depth estimation",
+      "Matched title phrase: Gaussian Splatting",
+      "Matched abstract phrase: Gaussian Splatting",
+      "Matched title phrase: 3D Gaussian Splatting",
+      "Matched abstract phrase: 3D Gaussian Splatting",
+      "Matched abstract keyword: 3DGS",
+      "Matched title keyword: splatting",
+      "Matched abstract keyword: splatting",
+      "Matched abstract phrase: robot perception",
+      "Matched abstract keyword: localization"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2609.11079",
+    "pdf_url": "https://arxiv.org/pdf/2609.11079",
+    "first_seen": "2026-09-11T12:26:17-04:00",
+    "last_seen": "2026-09-11T12:26:17-04:00"
+  },
+  {
+    "arxiv_id": "2609.10756",
+    "version": "v1",
+    "title": "GRADE: Single-Frame Generative Radar Depth Estimation Under Visual Degradation",
+    "authors": [
+      "Bin Zhao",
+      "Patrick Chiou",
+      "Nakul Garg"
+    ],
+    "abstract": "Dense 3D depth perception fails under smoke, fog, and darkness because optical sensors cannot penetrate airborne particulates. mmWave radar remains usable and measures range accurately under these conditions, but its small aperture limits angular resolution. We present GRADE, which grounds a pretrained generative prior in single-frame radar geometry to estimate high-fidelity metric depth. GRADE first maps raw 4D radar spectra to coarse metric depth. A latent diffusion backbone then recovers structural detail while conditioning every denoising step on this estimate. A pixel-space adapter uses residual camera cues when available and is trained across clear, smoke-degraded, and occluded inputs so the full output approaches the radar-conditioned path as visibility degrades. Trained and evaluated on ~95K frames across 12 buildings with real smoke, GRADE achieves an MAE of 0.303 m in clear scenes and 0.313 m under smoke, outperforming existing baselines. Code and datasets are available at https://phi-lab-rice.github.io/GRADE.",
+    "published": "2026-09-09T18:57:05Z",
+    "updated": "2026-09-09T18:57:05Z",
+    "primary_arxiv_category": "cs.CV",
+    "arxiv_categories": [
+      "cs.CV",
+      "cs.RO"
+    ],
+    "primary_category": "3D Reconstruction & Multi-view Geometry",
+    "secondary_categories": [],
+    "matched_keywords": [
+      "metric depth",
+      "depth estimation"
+    ],
+    "classification_score": 4,
+    "classification_reasons": [
+      "Matched title phrase: depth estimation"
+    ],
+    "abstract_url": "https://arxiv.org/abs/2609.10756",
+    "pdf_url": "https://arxiv.org/pdf/2609.10756",
+    "first_seen": "2026-09-11T12:26:17-04:00",
+    "last_seen": "2026-09-11T12:26:17-04:00"
+  },
+  {
     "arxiv_id": "2609.10498",
     "version": "v1",
     "title": "Field Converter: Geometry-Initialized Temporal Residual Refinement for World-Grounded Player Pose Estimation from Soccer Broadcasts",
@@ -29,7 +358,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.10498",
     "pdf_url": "https://arxiv.org/pdf/2609.10498",
     "first_seen": "2026-09-10T12:22:12-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.10307",
@@ -75,7 +404,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.10307",
     "pdf_url": "https://arxiv.org/pdf/2609.10307",
     "first_seen": "2026-09-10T12:22:12-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.10095",
@@ -121,7 +450,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.10095",
     "pdf_url": "https://arxiv.org/pdf/2609.10095",
     "first_seen": "2026-09-10T12:22:12-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.10050",
@@ -160,7 +489,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.10050",
     "pdf_url": "https://arxiv.org/pdf/2609.10050",
     "first_seen": "2026-09-10T12:22:12-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.09828",
@@ -209,7 +538,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.09828",
     "pdf_url": "https://arxiv.org/pdf/2609.09828",
     "first_seen": "2026-09-10T12:22:12-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.09606",
@@ -253,7 +582,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.09606",
     "pdf_url": "https://arxiv.org/pdf/2609.09606",
     "first_seen": "2026-09-10T12:22:12-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.09507",
@@ -294,7 +623,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.09507",
     "pdf_url": "https://arxiv.org/pdf/2609.09507",
     "first_seen": "2026-09-10T12:22:12-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.09503",
@@ -327,7 +656,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.09503",
     "pdf_url": "https://arxiv.org/pdf/2609.09503",
     "first_seen": "2026-09-10T12:22:12-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.09491",
@@ -367,7 +696,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.09491",
     "pdf_url": "https://arxiv.org/pdf/2609.09491",
     "first_seen": "2026-09-10T12:22:12-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.09155",
@@ -407,7 +736,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.09155",
     "pdf_url": "https://arxiv.org/pdf/2609.09155",
     "first_seen": "2026-09-09T12:36:09-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.09145",
@@ -440,7 +769,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.09145",
     "pdf_url": "https://arxiv.org/pdf/2609.09145",
     "first_seen": "2026-09-09T12:36:09-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.09082",
@@ -474,7 +803,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.09082",
     "pdf_url": "https://arxiv.org/pdf/2609.09082",
     "first_seen": "2026-09-09T12:36:09-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.09069",
@@ -509,7 +838,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.09069",
     "pdf_url": "https://arxiv.org/pdf/2609.09069",
     "first_seen": "2026-09-09T12:36:09-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.09020",
@@ -546,7 +875,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.09020",
     "pdf_url": "https://arxiv.org/pdf/2609.09020",
     "first_seen": "2026-09-09T12:36:09-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.09012",
@@ -589,7 +918,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.09012",
     "pdf_url": "https://arxiv.org/pdf/2609.09012",
     "first_seen": "2026-09-09T12:36:09-04:00",
-    "last_seen": "2026-09-10T12:22:12-04:00"
+    "last_seen": "2026-09-11T12:26:17-04:00"
   },
   {
     "arxiv_id": "2609.08949",
@@ -1764,115 +2093,5 @@
     "pdf_url": "https://arxiv.org/pdf/2609.05397",
     "first_seen": "2026-09-07T13:44:33-04:00",
     "last_seen": "2026-09-07T13:44:33-04:00"
-  },
-  {
-    "arxiv_id": "2609.04201",
-    "version": "v1",
-    "title": "Scal3R: Learning Efficient Multi-Relative Pose Query for Scalable Online 3D Reconstruction",
-    "authors": [
-      "Chin-Yang Lin",
-      "Yang-Che Sun",
-      "Cheng Sun",
-      "Fu-En Yang",
-      "Min-Hung Chen",
-      "Yen-Yu Lin",
-      "Wei-Chen Chiu",
-      "Yu-Lun Liu"
-    ],
-    "abstract": "Online 3D reconstruction models perform poorly on long videos. This happens because regressing poses relative to a fixed first-frame anchor forces extrapolation far beyond the training distribution. Small drifts accumulate and amplify into significant geometric collapse. However, we observe that per-frame depth remains stable throughout this failure. The backbone's local geometry remains intact; only the global pose head breaks down. Motivated by this decoupling, we introduce Scal3R. This approach reformulates online reconstruction as multi-reference relative pose querying. We use lightweight learnable tokens, which make up about ~1% of the parameters, and inject them into a completely frozen backbone via asymmetric attention. This setup queries poses relative to multiple past keyframes. An online pose-graph optimization system with loop closure suppresses long-range drift. Scal3R reaches convergence in 8 hours on a single GPU. It reduces the average ATE by over 60% on KITTI compared to the online baseline. It also achieves state-of-the-art performance across Virtual KITTI, Sintel, TUM-Dynamic, ScanNet, and 7-Scenes. Project page: https://linjohnss.github.io/scal3r/",
-    "published": "2026-09-03T17:59:53Z",
-    "updated": "2026-09-03T17:59:53Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "3D reconstruction"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched title phrase: 3D reconstruction",
-      "Matched abstract phrase: 3D reconstruction"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2609.04201",
-    "pdf_url": "https://arxiv.org/pdf/2609.04201",
-    "first_seen": "2026-09-04T12:19:32-04:00",
-    "last_seen": "2026-09-06T11:26:09-04:00"
-  },
-  {
-    "arxiv_id": "2609.04193",
-    "version": "v1",
-    "title": "GIFT: Guided Intermediate Feature Training via Action-Oriented Structural Supervision for Robotic Manipulation",
-    "authors": [
-      "Yupeng Zheng",
-      "Xiang Li",
-      "Songen Gu",
-      "Yuhang Zheng",
-      "Shuai Tian",
-      "Weize Li",
-      "Linbo Wang",
-      "Chaoyue Li",
-      "Qichao Zhang",
-      "Haoran Li",
-      "Zhongpu Xia",
-      "Ya-Qin Zhang",
-      "Shuicheng Yan",
-      "Dongbin Zhao"
-    ],
-    "abstract": "Vision-language pre-training and predictive world modeling provide robot policies with rich semantic and dynamic visual features, but their native action and visual-prediction objectives may omit critical physical and task structure while retaining control-irrelevant visual redundancy. We call this mismatch between visual richness and control utility the action-sufficiency gap. We investigate whether this gap can be bridged by guiding intermediate features to preserve three control-relevant structure in robotic manipulation: geometry governing motion feasibility, affordance encoding instruction-relevant entities, and goals grounding instructions in task-relevant regions. To this end, we present GIFT (Guided Intermediate Feature Training), an architecture-flexible framework for learning intermediate features that translates these structures into training-time constraints through geometry alignment, affordance prediction, and goal-region reconstruction. We instantiate GIFT in a Vision-Language-Action (VLA) policy, a direct-action World-Action Model (WAM), and an inverse-dynamics WAM while retaining each model's action formulation. Under zero-shot transfer to LIBERO-Plus, GIFT-VLA, GIFT-WAM-Fast, and GIFT-WAM-IDM outperform StarVLA-OFT, Fast-WAM, and Fast-WAM-IDM by 4.6, 12.6, and 5.2 points, reaching 79.6%, 72.6%, and 87.8%, respectively. On RoboCasa, the three GIFT variants reach 61.4%, 83.6%, and 82.3%, outperforming their counterparts by 12.6, 9.0, and 8.4 points, respectively. Together, these results establish learning functionally structured intermediate features as a reusable principle across model-specific action formulations, with especially large gains on articulated-object tasks and high-precision real-world manipulation under unseen visual and spatial perturbations. Project page: https://openphoenix-team.github.io/GIFT-pages.",
-    "published": "2026-09-03T17:59:03Z",
-    "updated": "2026-09-03T17:59:03Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "manipulation",
-      "world modeling"
-    ],
-    "classification_score": 5,
-    "classification_reasons": [
-      "Matched title keyword: manipulation",
-      "Matched abstract keyword: manipulation",
-      "Matched abstract phrase: world modeling"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2609.04193",
-    "pdf_url": "https://arxiv.org/pdf/2609.04193",
-    "first_seen": "2026-09-04T12:19:32-04:00",
-    "last_seen": "2026-09-06T11:26:09-04:00"
-  },
-  {
-    "arxiv_id": "2609.04174",
-    "version": "v1",
-    "title": "Zero-Shot Novel Depth Synthesis Using 3D Foundation Models Scene Representations",
-    "authors": [
-      "Denis M. Akola",
-      "David F. Fouhey"
-    ],
-    "abstract": "3D Foundation Models (3DFMs) such as VGGT have recently pushed the boundaries of 3D vision by predicting rich unified representations with feed-foward transformers. The scene representations learned by these models enable strong performance on multiple 3D vision tasks. In this paper, we investigate using their internal representations to infer 3D in the scene from new views. Our hypothesis is that in order to solve the task of 3D reconstruction, these models need to learn a representation that includes a large amount of general knowledge about 3D scenes. After showing that it is possible to decode hidden surfaces from internal 3DFM representations, we propose a method, Z3D, that estimates pointmaps in unseen views by doing latent diffusion on 3DFM representation. We show that Z3D can predict realistic depth maps for new views across multiple datasets.",
-    "published": "2026-09-03T17:54:52Z",
-    "updated": "2026-09-03T17:54:52Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Geometry Foundation Models",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "VGGT",
-      "3D reconstruction"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched representative model name in abstract: VGGT"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2609.04174",
-    "pdf_url": "https://arxiv.org/pdf/2609.04174",
-    "first_seen": "2026-09-04T12:19:32-04:00",
-    "last_seen": "2026-09-06T11:26:09-04:00"
   }
 ]
