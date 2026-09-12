@@ -39,7 +39,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.11894",
     "pdf_url": "https://arxiv.org/pdf/2609.11894",
     "first_seen": "2026-09-11T12:26:17-04:00",
-    "last_seen": "2026-09-11T12:26:17-04:00"
+    "last_seen": "2026-09-12T11:29:49-04:00"
   },
   {
     "arxiv_id": "2609.11766",
@@ -83,7 +83,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.11766",
     "pdf_url": "https://arxiv.org/pdf/2609.11766",
     "first_seen": "2026-09-11T12:26:17-04:00",
-    "last_seen": "2026-09-11T12:26:17-04:00"
+    "last_seen": "2026-09-12T11:29:49-04:00"
   },
   {
     "arxiv_id": "2609.11434",
@@ -120,7 +120,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.11434",
     "pdf_url": "https://arxiv.org/pdf/2609.11434",
     "first_seen": "2026-09-11T12:26:17-04:00",
-    "last_seen": "2026-09-11T12:26:17-04:00"
+    "last_seen": "2026-09-12T11:29:49-04:00"
   },
   {
     "arxiv_id": "2609.11279",
@@ -161,7 +161,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.11279",
     "pdf_url": "https://arxiv.org/pdf/2609.11279",
     "first_seen": "2026-09-11T12:26:17-04:00",
-    "last_seen": "2026-09-11T12:26:17-04:00"
+    "last_seen": "2026-09-12T11:29:49-04:00"
   },
   {
     "arxiv_id": "2609.11225",
@@ -201,7 +201,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.11225",
     "pdf_url": "https://arxiv.org/pdf/2609.11225",
     "first_seen": "2026-09-11T12:26:17-04:00",
-    "last_seen": "2026-09-11T12:26:17-04:00"
+    "last_seen": "2026-09-12T11:29:49-04:00"
   },
   {
     "arxiv_id": "2609.11223",
@@ -242,7 +242,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.11223",
     "pdf_url": "https://arxiv.org/pdf/2609.11223",
     "first_seen": "2026-09-11T12:26:17-04:00",
-    "last_seen": "2026-09-11T12:26:17-04:00"
+    "last_seen": "2026-09-12T11:29:49-04:00"
   },
   {
     "arxiv_id": "2609.11079",
@@ -294,7 +294,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.11079",
     "pdf_url": "https://arxiv.org/pdf/2609.11079",
     "first_seen": "2026-09-11T12:26:17-04:00",
-    "last_seen": "2026-09-11T12:26:17-04:00"
+    "last_seen": "2026-09-12T11:29:49-04:00"
   },
   {
     "arxiv_id": "2609.10756",
@@ -326,7 +326,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.10756",
     "pdf_url": "https://arxiv.org/pdf/2609.10756",
     "first_seen": "2026-09-11T12:26:17-04:00",
-    "last_seen": "2026-09-11T12:26:17-04:00"
+    "last_seen": "2026-09-12T11:29:49-04:00"
   },
   {
     "arxiv_id": "2609.10498",
@@ -358,7 +358,7 @@
     "abstract_url": "https://arxiv.org/abs/2609.10498",
     "pdf_url": "https://arxiv.org/pdf/2609.10498",
     "first_seen": "2026-09-10T12:22:12-04:00",
-    "last_seen": "2026-09-11T12:26:17-04:00"
+    "last_seen": "2026-09-12T11:29:49-04:00"
   },
   {
     "arxiv_id": "2609.10307",
@@ -2015,83 +2015,5 @@
     "pdf_url": "https://arxiv.org/pdf/2609.06726",
     "first_seen": "2026-09-09T12:36:09-04:00",
     "last_seen": "2026-09-09T12:36:09-04:00"
-  },
-  {
-    "arxiv_id": "2609.05416",
-    "version": "v1",
-    "title": "WorldSculpt: Generating Compositional Worlds from Grounded Videos",
-    "authors": [
-      "Muyao Niu",
-      "Jixuan He",
-      "Ruihan Yu",
-      "Lian Fu",
-      "Yonghao Yu",
-      "Zheng-Hui Huang",
-      "Yifan Zhan",
-      "Fengbo Lan",
-      "Yongtao Ge",
-      "Yinqiang Zheng",
-      "Kaipeng Zhang",
-      "Zhixiang Wang"
-    ],
-    "abstract": "We study the problem of generating a compositional 3D representation of a cluttered scene containing hundreds of objects. The goal is to represent the scene as a collection of individual object meshes placed in a shared world frame, as required by downstream applications such as gaming, AR/VR, simulation, and robotics. This task is challenging in densely cluttered scenes, where objects heavily occlude one another and each view reveals only a fraction of their geometry. Geometry-based approaches typically reconstruct the scene as a single representation and leave incomplete geometry in occluded regions, while existing compositional methods with generative priors are largely limited to relatively simple scenes. We show that complex scenes with hundreds of objects can instead be generated compositionally by adapting a strong single-object 3D generative prior to multi-view observations. We instantiate this paradigm with Pixal3D, extending it with a multi-view conditioning pathway that grounds object generation in multiple posed observations. Although the model is finetuned entirely on single objects in canonical space, it generalizes to large scenes with severe occlusion without any scene-level training, demonstrating the feasibility and scalability of this paradigm. We further introduce UE-MeshyScene, a photorealistic benchmark of densely cluttered scenes with hundreds of objects, per-object annotations, and ground-truth meshes. Across single-object, controlled multi-object, and UE-MeshyScene evaluations, our method consistently outperforms prior approaches, with larger gains as scene complexity and occlusion increase. Finally, we demonstrate broader applicability by converting generated 3DGS worlds, such as Marble and HY-World 2.0, into compositional mesh scenes.",
-    "published": "2026-09-04T17:59:35Z",
-    "updated": "2026-09-04T17:59:35Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "3DGS",
-      "robotics",
-      "AR",
-      "VR",
-      "simulation"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched abstract keyword: robotics",
-      "Matched abstract keyword: AR",
-      "Matched abstract keyword: VR",
-      "Matched abstract keyword: simulation"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2609.05416",
-    "pdf_url": "https://arxiv.org/pdf/2609.05416",
-    "first_seen": "2026-09-07T13:44:33-04:00",
-    "last_seen": "2026-09-07T13:44:33-04:00"
-  },
-  {
-    "arxiv_id": "2609.05397",
-    "version": "v1",
-    "title": "CrossDepth: Geometry-Constrained Attention for Generalizable Multi-View Surround Depth Estimation",
-    "authors": [
-      "Samer Abualhanud",
-      "Max Mehltretter"
-    ],
-    "abstract": "Reliable 3D understanding of the surrounding environment is a core requirement for autonomous driving. Multi-view surround camera rigs provide broad scene coverage, but the spatially adjacent images typically overlap only minimally. Consequently, the depth of most pixels must be inferred from monocular appearance cues. These cues can appear differently across images and may therefore be interpreted differently by the depth estimation model. We target two main sources of cross-image inconsistency: differences in camera intrinsics and the limited receptive field of each image. We address the former by conditioning the features on per-pixel camera-aware ray embeddings, enabling the network to account for camera-dependent variations in monocular cues. We address the latter by extending each pixel's context beyond its own image through cross-image attention constrained to geometrically plausible regions, derived from the calibrated rig setup. The model is trained in a fully self-supervised manner based on photometric consistency. Evaluations on DDAD and nuScenes show improved overall depth accuracy and cross-image depth consistency over state-of-the-art self-supervised methods under in-domain and cross-domain evaluation. Code is available at https://abualhanud.github.io/CrossDepthPage/.",
-    "published": "2026-09-04T17:45:06Z",
-    "updated": "2026-09-04T17:45:06Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV",
-      "cs.RO"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "depth estimation",
-      "autonomous driving"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Matched title phrase: depth estimation",
-      "Matched abstract phrase: depth estimation"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2609.05397",
-    "pdf_url": "https://arxiv.org/pdf/2609.05397",
-    "first_seen": "2026-09-07T13:44:33-04:00",
-    "last_seen": "2026-09-07T13:44:33-04:00"
   }
 ]
