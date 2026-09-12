@@ -11,10 +11,10 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：53
+- 当前滚动窗口论文数：51
 - 分类分布：
-  - 3D Reconstruction & Multi-view Geometry: 17
-  - Embodied / Robotics / AR Applications: 17
+  - 3D Reconstruction & Multi-view Geometry: 16
+  - Embodied / Robotics / AR Applications: 16
   - Neural Scene Representations & Rendering: 15
   - Geometry Foundation Models: 2
   - Dynamic / 4D Reconstruction: 2
@@ -25,39 +25,53 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-1. **跨表示与跨模态的“物理一致性”成为新竞争点**。今日多篇论文不再满足于纯视觉保真度，而是尝试把物理模型（雷达方程、散射介质模型、材料刚度、相位波前）嵌入到可微渲染或仿真中。3DPS（3D Point Splatting for mmWave Radar NVS）与 CVQPG（Hologram Representation via Quadratic Phase Gaussian Splatting）分别从雷达方程和二次相位函数出发，把复数相位与材质模型放回渲染基元；Tri-DehazeGS 用场景—介质解耦的三平面场显式建模参与介质；RealSimLoop 用可微降阶仿真把视觉像素反馈转成材料参数梯度。这一组论文共同指向“渲染/仿真基元必须携带物理量”的方向，而非仅靠不透明学习特征。
+1. **复数域与物理前向模型正在成为神经渲染的新前沿**
+   多篇论文不再满足于把光学 RGB 渲染范式直接移植到其他模态，而是重新推导物理前向模型并保留相位/复数信息。`3D Point Splatting for mmWave Radar Novel View Synthesis`（2609.11894）直接从雷达方程立体角形式推导可微点渲染器，保留复数相量；`Hologram Representation via Quadratic Phase Gaussian Splatting`（2609.11434）用二维二次相位函数替代标准二维高斯基元，复现波前调制。两者都反映同一判断：**在非可见光成像（雷达、全息）中，丢弃相位等于丢弃核心物理信息**。
 
-2. **实例级与结构化解耦从 2D 掩码向 3D 重建内生融合**。SAMV-DUSt3R 把 SAM2 的 2D 掩码通过 Cross Flow Mask Block 注入 MV-DUSt3R，在稀疏多视角下做物体级解耦，避免多阶段流水线；GoDeep 则在语言空间对实体级描述做地面化与聚合，以文本为中间表示实现开放词汇 3D 理解。两者路径不同（视觉掩码注入 vs. 语言空间提升），但都在回答同一个问题：如何让 3D 表示天然携带实例/实体语义，而不是先重建再分割。
+2. **3DGS 从"能重建"转向"可压缩、可校准、可路由"的工程化改造**
+   围绕 3D Gaussian Splatting 的论文呈现明显的"后训练优化"特征：`LinearMask-GS`（2609.10095）针对掩码剪枝中 Gumbel-Sigmoid 双峰化导致排序失稳的问题，改用线性增量激活；`View-Structured Conformal Prediction`（2609.10307）把新视角合成建模为结构化回归，给出视图级覆盖率的共形保证；`RouteBridge`（2609.09606）按光线可靠性在 NeRF 与 3DGS 之间做双向蒸馏路由。这三者说明 3DGS 研究热点正从表示能力本身，转向**紧凑性、统计有效性与跨表示协同**。
 
-3. **不确定性量化与紧凑性开始进入 3DGS 的“工程化”阶段**。VSCP 把新视图合成建模为结构化回归，用视图难度因子做共形预测，要求视图级覆盖率的有限样本有效性；LinearMask-GS 则诊断出 Gumbel-Sigmoid 在短掩码训练窗口内过早双峰化的问题，改用线性增量激活稳定重要性排序。这反映出 3DGS 研究从“能不能渲”转向“渲染结果能否被认证、模型能否被压缩”。
+3. **跨表示/跨模型的知识迁移与表征复用成为独立议题**
+   `RoMa-$Ω$`（2609.09507）系统追问"前馈式三维模型究竟知道多少图像匹配"，并用 VGGT-$Ω$ 替换 RoMa v2 的 DINO 骨干；`RouteBridge` 在两个渲染表示间做路由蒸馏；`RIDE`（2609.11079）把重定位 PnP 内点映射出的稀疏度量深度与视频深度先验结合。共同模式是：**不再训练单一端到端模型，而是分析并组合多个已有强模型的互补表征**。
 
-4. **几何基础模型与匹配器的边界正在被系统性质问**。RoMa-Ω 直接追问前馈式 3D 模型（VGGT 等）究竟“知道”多少图像匹配信息，并据此用 VGGT-Ω 替换 RoMa v2 的 DINO 骨干；同步地，Learning Global Camera Poses from Noisy View-Graphs 用置换等变、边条件 GNN 从带噪相对位姿回归全局外参，且不依赖真值监督。这两篇表明匹配、位姿估计与稠密 3D 回归的表征正在趋同，评价体系也在从单一任务指标转向表征能力的系统分析。
+4. **生成先验与物理几何的混合式深度/运动估计**
+   `GRADE`（2609.10756）把预训练生成先验锚定在单帧 4D 雷达几何上，并设计像素空间适配器在能见度下降时趋近雷达路径；`Point4D`（2609.09145）用基于 3D 查询的运动解码器解耦轨迹预测与图像平面可见性，实现数百帧长视频的稠密 4D 重建；`SyncWorld`（2609.09155）用"视觉校准片段"在上下文中指定动作-视觉映射。这些工作共同指向**生成模型提供结构先验、物理/几何提供度量锚点**的混合范式。
 
-5. **机器人与具身应用从“感知—规划”向“运行时闭环与零样本迁移”扩展**。HROS 把四足巡检组织为机器人运行时、具身技能、认知智能体运行时与交互运维平面；SyncWorld 用视觉校准片段在上下文中指定动作—视觉映射，使世界模型成为零样本模拟器；Grounding Generated Video Plans 把生成 HOI 视频在仿真中 grounding 成可执行灵巧控制；RealSimLoop 用视觉反馈在线适配材料参数。这一组论文的共同点是：部署侧的“上下文适配能力”被当作一等公民，而非训练完就固定。
+5. **农业、工业、体育等垂直场景对低成本三维管线的强需求**
+   `Visual-SLAM for the detection of hidden tomatoes`（2609.11766）用单目相机替代 LiDAR/立体相机做温室番茄被遮挡检测；`Agentic AI-enabled Semantic Commissioning`（2609.09503）面向可重构制造的数字孪生语义调试；`Field Converter`（2609.10498）从标定足球转播中做世界坐标球员姿态估计。这些论文不追求通用基准 SOTA，而是**在成本、遮挡、世界坐标一致性等具体约束下重构标准管线**。
 
 #### 技术路线观察
 
-- **几何基础模型**：RoMa-Ω 与 Learning Global Camera Poses 代表两条互补路线。前者做表征分析并替换骨干，关注“冻结特征是否仍是最优选择”；后者用边条件 GNN 直接在视图图上回归全局位姿，强调无真值监督与图密度鲁棒性。SAMV-DUSt3R 则把基础模型（SAM2、MV-DUSt3R）组合成端到端实例解耦系统，体现“基础模型拼装化”的趋势。
-- **3D/4D 重建**：Point4D 用 3D 查询式运动解码器把轨迹预测与图像平面可见性解耦，解决数百帧长序列问题，是今日 4D 方向最明确的突破；Field Converter 则在体育转播这一受限场景里用几何初始化加时序残差把根误差从 49cm 降到 10cm 量级。两者都说明：长时序与外参几何先验是 4D/动态重建的两个主要抓手。
-- **神经场景表示**：今日共 6 篇左右集中在 Neural Scene Representations & Rendering。技术侧重明显分化——3DPS 与 CVQPG 走“物理/相位基元”路线；Tri-DehazeGS 走“场景—介质解耦 + 梯度补偿”路线；VSCP 走“共形预测认证”路线；LinearMask-GS 走“剪枝稳定性”路线；RouteBridge 走“按光线可靠性路由的双向蒸馏”路线。整体看，单纯提升 PSNR 的空间在收窄，表示层面的物理正确性、可认证性与紧凑性成为新战场。
-- **机器人/AR 应用**：HROS、SyncWorld、Grounding Generated Video Plans、RealSimLoop、GoDeep、RIDE 都落在 Embodied / Robotics / AR Applications 或与之交叉。技术侧重从“单点感知”转向“运行时—技能—认知—交互”的分层系统，以及“仿真中 grounding 生成计划”的闭环。RIDE 与 GRADE 则分别代表两条深度估计路线：前者用重定位几何信息加视频深度先验做稠密度量深度，后者用雷达几何条件化潜在扩散在视觉退化下估计深度。
+**几何基础模型方向**（`RoMa-$Ω$`、`SAMV-DUSt3R`、`Learning Global Camera Poses from Noisy View-Graphs`）
+技术侧重正从"训练更大模型"转向"理解已有模型表征"。`RoMa-$Ω$` 的核心动作是替换骨干而非扩大训练；`SAMV-DUSt3R`（2609.11279）把 SAM2 二维掩码注入 MV-DUSt3R，做实例级解耦；`Learning Global Camera Poses`（2609.09491）用置换等变、边条件 GNN 做全局 SfM，无需真值监督。共性是把**几何一致性作为监督信号本身**，而非依赖标注。
+
+**3D/4D 重建方向**（`Point4D`、`RIDE`、`GRADE`、`Field Converter`、`Visual-SLAM`）
+出现两类路线分化：一类追求长时序与生成先验（`Point4D`、`GRADE`），一类追求特定坐标系下的度量精度（`Field Converter`、`RIDE`）。值得注意的是 `RIDE` 与 `GRADE` 都涉及雷达/重定位的稀疏度量观测与稠密先验的融合，`Field Converter` 则用射线-地面相交初始化 + 时序残差修正。**"几何初始化 + 残差学习"似乎正在取代"纯回归"成为位姿/深度估计的主流架构**。
+
+**神经场景表示方向**（`3DPS`、`CVQPG`、`LinearMask-GS`、`VSCP`、`RouteBridge`、`Tri-DehazeGS`、`RealSimLoop`）
+技术侧重点最分散，但可归纳出三条子线：
+- 物理化：`3DPS`、`CVQPG` 引入模态专属物理量（相位、雷达方程）；
+- 可靠性：`VSCP` 提供覆盖率保证，`LinearMask-GS` 解决剪枝排序稳定性；
+- 解耦：`Tri-DehazeGS`（2609.11223）把干净场景与参与介质分离开，`RealSimLoop`（2609.09828）在降阶神经子空间做实时 real-to-sim 自适应。
+
+**机器人与 AR 应用方向**（`HROS`、`SyncWorld`、`Grounding Generated Video Plans`、`GoDeep`、`Agentic AI CDT`）
+机器人侧越来越强调"运行时/闭环"而非单点算法：`HROS`（2609.11225）组织机器人与认知智能体运行时，含安全门控自演化；`SyncWorld` 强调零样本模拟器；`Grounding Generated Video Plans`（2609.10050）把生成视频作为参考运动，用仿真 grounding 超过 1500 个视频。`GoDeep`（2609.09082）则用纯语言嵌入空间做开放词汇 3D 理解，代表另一条"去 3D 编码器"的轻量化路线。
 
 #### 值得优先阅读的论文
 
-1. **Point4D: Long-range 4D Motion Reconstruction**（2609.09145）。它直接针对“现有 4D 方法只能处理几十帧”的公认瓶颈，提出 3D 查询式解码器解耦轨迹与可见性，并在 200 帧以上长视频基准上报告领先结果。对动态场景理解与长视频追踪方向的读者，这是今日最应通读全文的一篇。
+1. **`3D Point Splatting for mmWave Radar Novel View Synthesis`（2609.11894）**
+   理由：首次把可微点渲染与雷达方程立体角形式直接对接，复数输出使同一优化场景可经 FFT 产出 ADC/CRP/RA 多种格式。这是模态专属渲染器的范例，对其他非光学模态（声呐、超声、太赫兹）有直接迁移价值。
 
-2. **3D Point Splatting for mmWave Radar Novel View Synthesis**（2609.11894）。它是首个面向雷达的可微点渲染器，从雷达方程立体角形式推导，复数输出可经同一 FFT 流水线产出 ADC、CRP 与 RA。若关注非光学 NVS 或雷达感知，这篇提供了完整的物理—可微—多视角可优化三性合一的框架。
+2. **`Point4D: Long-range 4D Motion Reconstruction`（2609.09145）**
+   理由：直接攻击 4D 重建公认的短窗口瓶颈，用 3D 查询解码器解耦轨迹预测与可见性，且预测端点可直接在下一时间块重新查询。方法简洁、可扩展性强，对长视频动态理解方向影响可能较大。
 
-3. **RoMa-Ω: What Feed-Forward 3D Models Know About Image Matching**（2609.09507）。它不只是提出一个匹配器，而是系统分析前馈 3D 模型在零样本匹配、点预测直接匹配、表征上训练匹配器三种场景下的表现，并据此替换骨干。对理解几何基础模型表征边界有方法论价值。
+3. **`RoMa-$Ω$: What Feed-Forward 3D Models Know About Image Matching`（2609.09507）**
+   理由：不是提出新架构，而是系统回答"前馈三维模型对匹配知道什么"，并用 VGGT-$Ω$ 替换 DINO 骨干验证结论。这种分析型工作对理解几何基础模型的表征边界有较高参考价值。
 
-4. **SyncWorld: Visual Calibration Enables World Models as Zero-Shot Simulators**（2609.09155）。它把“动作不是像素空间通用语言”这一部署痛点形式化为动作—视觉映射的上下文指定问题，并用视觉校准片段在无需额外训练下实现零样本模拟。对机器人世界模型与策略测试时改进方向有直接参考价值。
+4. **`View-Structured Conformal Prediction for 3D Gaussian Splatting`（2609.10307）**
+   理由：把新视角合成从"点估计"推进到"有覆盖率保证的预测"，且给出视图级而非像素级有效性。对安全关键应用（机器人、AR）而言，这类统计保证可能比 PSNR 提升更重要。
 
-5. **Tri-DehazeGS: Scene–Medium Decoupled Gaussian Splatting with Transmittance-Aware Optimization**（2609.11223）。它把“场景—介质解耦”与“透射率感知的梯度补偿”结合，指出低透射区域监督弱导致重建不足，并给出 MD-TGC 在不改变前向渲染的前提下补偿梯度。对恶劣天气下 3DGS 重建有较强借鉴意义。
-
-#### 可能的研究机会
-
-- **物理基元与几何基础模型的结合**：3DPS 把 ITU-R P.2040 材质模型绑定到有向 3D 点，CVQPG 把二次相位函数替代 2D 高斯。一个自然延伸是：能否把这类物理/相位基元接入 VGGT、MASt3R 等前馈几何模型，使前馈重建输出本身携带相位或材质参数，从而服务雷达、全息或非光学 NVS。
-- **共形预测与物理仿真的联合认证**：VSCP
+5. **`Tri-DehazeGS`
 
 ### interests.md 指令分析
 
