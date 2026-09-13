@@ -23,55 +23,76 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 科研趋势综合分析
 
+## 今日科研趋势综合分析（滚动窗口）
+
+> 说明：以下分析仅基于本轮论文的标题、分类与摘要信息，不涉及全文实验细节；涉及的数值与结论均为摘要中作者自述。
+
+---
+
 #### 今日主要趋势
 
-1. **复数域与物理前向模型正在成为神经渲染的新前沿**
-   多篇论文不再满足于把光学 RGB 渲染范式直接移植到其他模态，而是重新推导物理前向模型并保留相位/复数信息。`3D Point Splatting for mmWave Radar Novel View Synthesis`（2609.11894）直接从雷达方程立体角形式推导可微点渲染器，保留复数相量；`Hologram Representation via Quadratic Phase Gaussian Splatting`（2609.11434）用二维二次相位函数替代标准二维高斯基元，复现波前调制。两者都反映同一判断：**在非可见光成像（雷达、全息）中，丢弃相位等于丢弃核心物理信息**。
+**趋势一：高斯泼溅从“光学渲染器”转向“结构化物理表示载体”**
+3DGS 不再只是新视角合成的加速工具，而正在被改造成承载物理量、不确定性与介质属性的表示底座。这一趋势在多篇论文中同时出现：
+- `Tri-DehazeGS` 把“干净场景”与“参与介质”分离为高斯基元与独立三平面场，用物理散射模型合成雾图；
+- `RIDE` 把度量尺度的 3DGS 场景当作重定位几何来源，从中导出稀疏度量深度以监督稠密深度；
+- `View-Structured Conformal Prediction` 把 3DGS 渲染结果纳入共形预测框架，要求视图级覆盖率的有限样本保证；
+- `LinearMask-GS` 则回到表示本身，修正学习掩码剪枝中 Gumbel-Sigmoid 导致的排序失稳问题。
+共同点：研究焦点从“渲得好看”转向“渲得可管、可导、可验证”。
 
-2. **3DGS 从"能重建"转向"可压缩、可校准、可路由"的工程化改造**
-   围绕 3D Gaussian Splatting 的论文呈现明显的"后训练优化"特征：`LinearMask-GS`（2609.10095）针对掩码剪枝中 Gumbel-Sigmoid 双峰化导致排序失稳的问题，改用线性增量激活；`View-Structured Conformal Prediction`（2609.10307）把新视角合成建模为结构化回归，给出视图级覆盖率的共形保证；`RouteBridge`（2609.09606）按光线可靠性在 NeRF 与 3DGS 之间做双向蒸馏路由。这三者说明 3DGS 研究热点正从表示能力本身，转向**紧凑性、统计有效性与跨表示协同**。
+**趋势二：雷达/复值/相位域渲染成为神经渲染的新前沿**
+`3D Point Splatting for mmWave Radar` 与 `Hologram Representation via Quadratic Phase Gaussian Splatting` 构成本轮最鲜明的一组对照：
+- 前者从雷达方程立体角形式直接推导可微点渲染器，点为有向点、携带 ITU-R P.2040 材质模型、输出为复数相量，可经标准 FFT 流水线导出 ADC/CRP/RA；
+- 后者则把 2D 高斯替换为二维二次相位函数，为全息重建引入可学习波前曲率。
+两者都指向同一件事：**相位/复值信息正在被纳入可微渲染的显式建模**，而非被丢弃或隐式学习。
 
-3. **跨表示/跨模型的知识迁移与表征复用成为独立议题**
-   `RoMa-$Ω$`（2609.09507）系统追问"前馈式三维模型究竟知道多少图像匹配"，并用 VGGT-$Ω$ 替换 RoMa v2 的 DINO 骨干；`RouteBridge` 在两个渲染表示间做路由蒸馏；`RIDE`（2609.11079）把重定位 PnP 内点映射出的稀疏度量深度与视频深度先验结合。共同模式是：**不再训练单一端到端模型，而是分析并组合多个已有强模型的互补表征**。
+**趋势三：几何基础模型开始被反过来“审视”和“复用”**
+`RoMa-Ω` 直接提问“前馈 3D 模型到底知道多少图像匹配”，并用 VGGT-Ω 替换 RoMa v2 的 DINO 骨干；`SAMV-DUSt3R` 把 SAM2 掩码注入 MV-DUSt3R 做实例级解耦；`Learning Global Camera Poses from Noisy View-Graphs` 用置换等变图神经网络从带噪相对位姿回归全局外参，且不依赖真值监督。
+这反映出一条清晰的路径分化：一部分工作把基础模型当**特征源**，另一部分当**可被重新训练的组件**，还有一部分当**被评测对象**。
 
-4. **生成先验与物理几何的混合式深度/运动估计**
-   `GRADE`（2609.10756）把预训练生成先验锚定在单帧 4D 雷达几何上，并设计像素空间适配器在能见度下降时趋近雷达路径；`Point4D`（2609.09145）用基于 3D 查询的运动解码器解耦轨迹预测与图像平面可见性，实现数百帧长视频的稠密 4D 重建；`SyncWorld`（2609.09155）用"视觉校准片段"在上下文中指定动作-视觉映射。这些工作共同指向**生成模型提供结构先验、物理/几何提供度量锚点**的混合范式。
+**趋势四：稀疏/退化/长时程条件下的重建成为共同压力测试**
+本轮多篇论文的问题设定都刻意回避“理想输入”：
+- 稀疏多视角：`SAMV-DUSt3R`；
+- 视觉退化（烟雾/雾/黑暗）：`GRADE`；
+- 有雾多视角：`Tri-DehazeGS`；
+- 长时程视频（200+ 帧）：`Point4D`；
+- 带噪视图图：`Learning Global Camera Poses from Noisy View-Graphs`；
+- 遮挡目标（被叶片遮蔽的番茄）：`Visual-SLAM for greenhouse tomatoes`。
+这说明 reconstruction 社区的评价重心正在从“稠密清晰数据上的峰值精度”向“退化条件下的稳定性与可用性”迁移。
 
-5. **农业、工业、体育等垂直场景对低成本三维管线的强需求**
-   `Visual-SLAM for the detection of hidden tomatoes`（2609.11766）用单目相机替代 LiDAR/立体相机做温室番茄被遮挡检测；`Agentic AI-enabled Semantic Commissioning`（2609.09503）面向可重构制造的数字孪生语义调试；`Field Converter`（2609.10498）从标定足球转播中做世界坐标球员姿态估计。这些论文不追求通用基准 SOTA，而是**在成本、遮挡、世界坐标一致性等具体约束下重构标准管线**。
+**趋势五：具身与机器人侧的“运行时/闭环”抽象开始成形**
+`Harness Robotic OS` 提出统一的具身智能体运行时（机器人运行时、自主技能、认知智能体运行时、交互与运维平面，共享上下文 + 分层记忆 + 安全门控自演化）；`SyncWorld` 用视觉校准片段在上下文中指定动作—视觉映射，使世界模型成为零样本模拟器；`Grounding Generated Video Plans in Simulation` 用生成 HOI 视频训练追踪器并在部署时执行；`RealSimLoop` 在降阶神经子空间内做可微仿真以实现在线 real-to-sim 自适应。
+这些论文的共同诉求是：把感知/重建/仿真/控制串成一个可追踪、可复用的闭环，而不是孤立的模块指标。
+
+---
 
 #### 技术路线观察
 
-**几何基础模型方向**（`RoMa-$Ω$`、`SAMV-DUSt3R`、`Learning Global Camera Poses from Noisy View-Graphs`）
-技术侧重正从"训练更大模型"转向"理解已有模型表征"。`RoMa-$Ω$` 的核心动作是替换骨干而非扩大训练；`SAMV-DUSt3R`（2609.11279）把 SAM2 二维掩码注入 MV-DUSt3R，做实例级解耦；`Learning Global Camera Poses`（2609.09491）用置换等变、边条件 GNN 做全局 SfM，无需真值监督。共性是把**几何一致性作为监督信号本身**，而非依赖标注。
+**几何基础模型方向**
+- `RoMa-Ω` 属于“分析驱动”路线：先系统区分零样本 patch 匹配、3D 点直接匹配、表征上训练完整匹配器三种情形，再据此做骨干替换。
+- `SAMV-DUSt3R` 属于“注入式”路线：不重训基础重建模型，而是把 SAM2 的 2D 掩码经 Cross Flow Mask Block 注入重建网络，端到端避免多阶段流水线，并额外用 Spatial RankGNN 选参考视图（摘要称选择准确率 73.5%）。
+- `Learning Global Camera Poses` 则走“经典 SfM + 学习聚合”的混合路线：GNN 输出全局外参后用三角化 + 鲁棒 bundle adjustment 收尾，且仅以相对位姿一致性为监督。
+三者对比可见：基础模型领域的接口设计尚未收敛，是“替换骨干”“注入条件”“替换优化器”并存的状态。
 
-**3D/4D 重建方向**（`Point4D`、`RIDE`、`GRADE`、`Field Converter`、`Visual-SLAM`）
-出现两类路线分化：一类追求长时序与生成先验（`Point4D`、`GRADE`），一类追求特定坐标系下的度量精度（`Field Converter`、`RIDE`）。值得注意的是 `RIDE` 与 `GRADE` 都涉及雷达/重定位的稀疏度量观测与稠密先验的融合，`Field Converter` 则用射线-地面相交初始化 + 时序残差修正。**"几何初始化 + 残差学习"似乎正在取代"纯回归"成为位姿/深度估计的主流架构**。
+**3D/4D 重建方向**
+- `Point4D` 的关键设计是把轨迹预测与图像平面可见性解耦，预测的 3D 端点直接在下个 chunk 被重新查询，无需重投影或匹配；并复用任意可见帧的视觉描述符。
+- `Field Converter` 采用“几何初始化 + 时序残差修正”的范式：射线—地面相交给根节点（49cm），逐帧 MLP 降到 14cm、TCN 到 10cm、Transformer 11cm，世界空间 MPJPE 13.2cm。
+- `Visual-SLAM for greenhouse tomatoes` 走低成本单目 + ROS 2 节点采集 + 离线 GLOMAP 建图的工程化路线。
+这三者分别代表：长时程前馈重建、强先验几何 + 残差学习、以及面向具体农业场景的 SLAM 落地。
 
-**神经场景表示方向**（`3DPS`、`CVQPG`、`LinearMask-GS`、`VSCP`、`RouteBridge`、`Tri-DehazeGS`、`RealSimLoop`）
-技术侧重点最分散，但可归纳出三条子线：
-- 物理化：`3DPS`、`CVQPG` 引入模态专属物理量（相位、雷达方程）；
-- 可靠性：`VSCP` 提供覆盖率保证，`LinearMask-GS` 解决剪枝排序稳定性；
-- 解耦：`Tri-DehazeGS`（2609.11223）把干净场景与参与介质分离开，`RealSimLoop`（2609.09828）在降阶神经子空间做实时 real-to-sim 自适应。
+**神经场景表示方向**
+- 物理/介质解耦：`Tri-DehazeGS`（场景—介质解耦 + MD-TGC 透射率梯度补偿）。
+- 表示形态改造：`CVQPG`（二次相位基元）、`3DPS`（有向 3D 点 + 复数相量 + PSF splatting）。
+- 表示压缩：`LinearMask-GS`（用线性增量激活替代 Gumbel-Sigmoid，维持单峰掩码分布）。
+- 跨表示交互：`RouteBridge`（按光线做可靠性路由的双向蒸馏，可向任一方向或弃权，渲染器无关接口传颜色/不透明度/归一化深度）。
+- 可靠性保证：`VSCP`（把预校准尺度拆成空间形状与可迁移视图难度因子，用留出分位数给出视图级覆盖保证）。
+可以看出该方向已分化为：**几何/物理正确性、表示效率、跨表示迁移、统计保证**四条相对独立的赛道。
 
-**机器人与 AR 应用方向**（`HROS`、`SyncWorld`、`Grounding Generated Video Plans`、`GoDeep`、`Agentic AI CDT`）
-机器人侧越来越强调"运行时/闭环"而非单点算法：`HROS`（2609.11225）组织机器人与认知智能体运行时，含安全门控自演化；`SyncWorld` 强调零样本模拟器；`Grounding Generated Video Plans`（2609.10050）把生成视频作为参考运动，用仿真 grounding 超过 1500 个视频。`GoDeep`（2609.09082）则用纯语言嵌入空间做开放词汇 3D 理解，代表另一条"去 3D 编码器"的轻量化路线。
-
-#### 值得优先阅读的论文
-
-1. **`3D Point Splatting for mmWave Radar Novel View Synthesis`（2609.11894）**
-   理由：首次把可微点渲染与雷达方程立体角形式直接对接，复数输出使同一优化场景可经 FFT 产出 ADC/CRP/RA 多种格式。这是模态专属渲染器的范例，对其他非光学模态（声呐、超声、太赫兹）有直接迁移价值。
-
-2. **`Point4D: Long-range 4D Motion Reconstruction`（2609.09145）**
-   理由：直接攻击 4D 重建公认的短窗口瓶颈，用 3D 查询解码器解耦轨迹预测与可见性，且预测端点可直接在下一时间块重新查询。方法简洁、可扩展性强，对长视频动态理解方向影响可能较大。
-
-3. **`RoMa-$Ω$: What Feed-Forward 3D Models Know About Image Matching`（2609.09507）**
-   理由：不是提出新架构，而是系统回答"前馈三维模型对匹配知道什么"，并用 VGGT-$Ω$ 替换 DINO 骨干验证结论。这种分析型工作对理解几何基础模型的表征边界有较高参考价值。
-
-4. **`View-Structured Conformal Prediction for 3D Gaussian Splatting`（2609.10307）**
-   理由：把新视角合成从"点估计"推进到"有覆盖率保证的预测"，且给出视图级而非像素级有效性。对安全关键应用（机器人、AR）而言，这类统计保证可能比 PSNR 提升更重要。
-
-5. **`Tri-DehazeGS`
+**机器人/AR 应用方向**
+- 系统级抽象：`Harness Robotic OS`（四平面 + 共享上下文 + 分层记忆 + 安全门控演化）。
+- 数据/仿真闭环：`Grounding Generated Video Plans`（1500+ 生成视频被 grounding，仿真训练成功率超基线 25 个百分点以上）、`RealSimLoop`（降阶神经子空间准实时可微仿真 + 可微渲染反传）。
+- 部署时适配：`SyncWorld`（视觉校准片段实现零样本跨环境模拟与测试时策略改进）。
+- 感知输入替换：`GRADE`（4D 雷达谱 → 粗略度量深度 → 潜扩散恢复结构，清晰 0.303m / 烟雾 0.313m MAE）。
+- 语义/工业落地：`GoDeep`（语言空间提升，无需 3D 语料与 3D 编码器）、`Agentic AI Semantic Commissioning`（LangGraph 编排 + R
 
 ### interests.md 指令分析
 
