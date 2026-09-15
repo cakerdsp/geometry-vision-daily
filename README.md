@@ -11,13 +11,13 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：34
+- 当前滚动窗口论文数：21
 - 分类分布：
-  - 3D Reconstruction & Multi-view Geometry: 13
-  - Neural Scene Representations & Rendering: 9
-  - Embodied / Robotics / AR Applications: 8
+  - Neural Scene Representations & Rendering: 7
+  - Embodied / Robotics / AR Applications: 6
+  - 3D Reconstruction & Multi-view Geometry: 5
   - Geometry Foundation Models: 2
-  - Dynamic / 4D Reconstruction: 2
+  - Dynamic / 4D Reconstruction: 1
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
@@ -25,53 +25,41 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-1. **物理感知渲染从"光学移植"转向"原生推导"**。多篇论文不再把光学 NVS 的表示直接搬到新模态，而是从目标模态的物理方程出发重新设计渲染器：3DPS 直接从雷达方程立体角形式推导可微点渲染器，输出复数相量；Tri-DehazeGS 将参与介质与干净场景分离并按物理散射模型合成观测；CVQPG 用二次相位函数替换纯高高斯基元以匹配全息波前。这一线索指向"表示必须匹配信号物理"的共识正在形成。
+1. **从“新视角合成”走向“物理量渲染”：雷达、全息、雾天介质成为新前沿**
+   今日多篇论文不再满足于 RGB 意义上的“看起来对”，而是要求渲染器输出可被下游物理系统直接使用的量。`3DPS` 直接从雷达方程立体角形式推导可微点渲染，输出复数相量而非功率幅度；`CVQPG` 把 2D 高斯基元替换为二次相位函数，直接调制全息波前；`Tri-DehazeGS` 把场景与参与介质显式解耦，用独立三平面场建模散射介质。三者共同指向一个趋势：**神经渲染器正在从“图像逼真”转向“物理保真”**，且介质、相位、材质被显式建模而非交给不透明隐特征。
 
-2. **前馈几何基础模型正在重新定义下游任务的边界**。RoMa-$\Omega$ 直接追问前馈 3D 模型"知道多少匹配信息"，并用 VGGT-$\Omega$ 替换 DINO 骨干；Point4D 用前馈方式做数百帧 4D 轨迹；SAMV-DUSt3R 把 SAM2 语义掩码注入 MV-DUSt3R 实现实例级解耦；RIDE 反过来把重定位几何当作深度监督。基础模型与专用任务的界限在被主动拆解。
+2. **3DGS 生态进入“精细化治理”阶段：剪枝、不确定性认证、跨表示蒸馏、重定位耦合**
+   3DGS 不再只是“如何建得更快更好”，而是围绕其工程与可信度缺陷做系统性补丁。`LinearMask-GS` 聚焦学习掩码剪枝中 Gumbel-Sigmoid 导致的早熟双峰分布，改线性增量激活；`VSCP` 关注 3DGS 渲染的视图级覆盖保证，把新视角合成当作结构化回归做共形预测；`RouteBridge` 处理 NeRF 与 3DGS 之间“全局固定教师会传播局部误差”的问题，按光线做可靠性路由；`RIDE` 则把 render–match–PnP 重定位的稀疏度量深度与视频深度先验结合，让 3DGS 地图反过来服务稠密深度。这类工作数量最多，说明**3DGS 正从表示创新期转入可靠性与可部署性补课期**。
 
-3. **机器人/具身应用从"单点算法"走向"运行时与闭环系统"**。HROS 提出统一的具身智能体运行时（机器人运行时、自主技能、认知智能体、交互运维四平面）；RealSimLoop 用降阶可微仿真做在线 real-to-sim 参数标定；SyncWorld 用视觉校准片段让世界模型成为零样本模拟器；Grounding Generated Video Plans 把生成视频锚定到仿真训练灵巧控制器。这一方向的关键词是"闭环、上下文、可追踪"，而非单一精度指标。
+3. **几何基础模型与图像匹配的边界正在消融，但“零样本匹配”本身仍未解决**
+   `RoMa-$Ω$` 直接追问“前馈 3D 模型到底知道多少图像匹配”，通过三种场景（patch 特征零样本匹配、3D 点预测直接匹配、在其表征上训练完整匹配器）进行分析，并以 VGGT-$Ω$ 替换 DINO 骨干。`SAMV-DUSt3R` 则把 SAM2 2D 掩码注入 MV-DUSt3R，做实例级场景解耦。`Learning Global Camera Poses from Noisy View-Graphs` 用置换等变边条件 GNN 从带噪相对位姿回归全局外参，无需真值监督。这些工作共同反映：**几何基础模型正在吸收匹配与解耦能力，但“零样本深层特征直接做匹配”表现不佳，仍需要在其表征之上训练任务头**，这本身是一个被实验明确化的空白。
 
-4. **不确定性与可靠性开始成为渲染/重建的一等公民**。VSCP 把新视角合成建模为结构化回归，给出视图级共形覆盖保证，并指出像素级边际覆盖（89.9%）与视图事件覆盖（61.4%）之间存在显著落差；RouteBridge 亦引入可靠性估计器为每条光线选择教师方向或弃权。对"渲染结果是否可信"的量化需求正在从边缘议题变成核心议题。
+4. **动态/4D 重建向长时程突破，前馈模型开始处理数百帧**
+   `Point4D` 明确针对现有 4D 方法“至多几十帧”的窗口限制，用基于 3D 查询的运动解码器解耦轨迹预测与图像平面可见性，预测的 3D 端点可在下一时间块直接重新查询，无需重投影或匹配。这代表 **4D 重建的竞赛焦点从“短窗口精度”转向“长时程稳定跟踪”**，且“跨帧复用视觉描述符优于仅用源 patch”是一个可复用的设计结论。
 
-5. **压缩与高效化出现"机制级"反思**。LinearMask-GS 不是简单加正则，而是指出 Gumbel-Sigmoid 过陡导致掩码训练窗口内过早双峰化、重要性排序失稳，改用线性增量激活维持中间置信区。这类"诊断范式缺陷再替换组件"的工作，比单纯堆指标更有方法论价值。
+5. **具身与机器人应用层开始整合“感知—仿真—控制—运维”全链路，而非单点算法**
+   `HROS`/Argos 把四足巡检组织为机器人运行时、自主技能、认知智能体运行时、交互运维平面，并用共享上下文连接物理状态与推理；`SyncWorld` 用“视觉校准片段”在上下文里指定动作-视觉映射，使世界模型成为零样本模拟器；`Grounding Generated Video Plans` 用生成 HOI 视频提供运动参考、在仿真中 grounding 超过 1500 个视频；`RealSimLoop` 在降阶神经子空间做可微仿真，用视觉反馈在线校正材料参数。**机器人方向今日的关键词是“闭环”与“校准”**——动作不是像素空间的通用语言，视觉校准、可靠性路由、安全门控都是为了让闭环可控。
 
 #### 技术路线观察
 
-- **几何基础模型方向**：RoMa-$\Omega$ 与 SAMV-DUSt3R 代表两种路线——前者做表征能力分析与骨干替换，后者做多模态（语义掩码）注入重建。共同点是都不再训练"从零开始的几何网络"，而是复用大规模预训练表征，把研究重心移到接口设计与条件注入上。
+- **几何基础模型**：`RoMa-$Ω$` 和 `Learning Global Camera Poses` 代表两条不同路线。前者是“表征复用”——把前馈重建模型（VGGT）的内部表征迁移到匹配器；后者是“端到端学习全局 SfM”——用图神经网络直接回归全局外参，训练信号仅为相对位姿一致性。`SAMV-DUSt3R` 则走“注入式”路线，把 2D 基础模型（SAM2）的掩码作为条件信号注入重建网络。三者的共同点是不再迷信单一基础模型的零样本能力，而是**显式地在其上做条件化、路由或重训练**。
 
-- **3D/4D 重建方向**：全局 SfM 论文用置换等变、边条件 GNN 从带噪视图图回归全局外参，且训练无需真值监督，只靠相对位姿一致性目标，可扩展至千张图像；Point4D 用 3D query 解码器解耦轨迹预测与图像可见性，实现超 200 帧的长程 4D 重建。两者都在解决"规模与鲁棒性"，但一个偏静态全局优化，一个偏动态长时序。
+- **3D/4D 重建**：`Point4D` 是今日唯一明确的长时程 4D 工作，技术核心是“查询解耦”——3D 端点跨块直接重查询，绕过重投影与匹配，这对长视频中的漂移控制有直接价值。`Field Converter` 则代表体育/转播场景的世界坐标人体姿态，用相机与球场几何初始化根节点、再预测时序残差，其“几何初始化+残差精修”的范式与 `Point4D` 的“查询+重查询”形成有趣对照：都是用几何或查询提供稳定锚点，再让网络学习修正量。
 
-- **神经场景表示方向**：这一块分化最明显，可粗分三支——(a) 新模态/新物理：3DPS（雷达）、CVQPG（全息）、Tri-DehazeGS（雾介质）；(b) 表示间协同：RouteBridge 的按光线双向蒸馏；(c) 可靠性与压缩：VSCP、LinearMask-GS。共同趋势是 3DGS 作为"默认底座"被广泛复用，创新点集中在物理正确性、监督路由与存储效率，而非底座本身。
+- **神经场景表示**：分化最明显。雷达（`3DPS`）走物理方程推导路线，强调复值与材质；全息（`CVQPG`）走波前调制路线，强调频域保留；雾天（`Tri-DehazeGS`）走场景-介质解耦路线，强调梯度重平衡；3DGS 压缩（`LinearMask-GS`）与可靠性（`VSCP`）走工程治理路线；跨表示（`RouteBridge`）走按光线路由路线。**没有单一主导技术路线，而是按输出物理量、介质假设和可靠性需求分层演化**。
 
-- **机器人/AR 应用方向**：RIDE、SyncWorld、RealSimLoop、Grounding Generated Video Plans、HROS、GoDeep 覆盖了从感知标定到运行时编排的全链条。值得注意的是，几何/渲染技术在这里是被"消费"的一方：RIDE 把 3DGS 当度量地图，SyncWorld 把世界模型当模拟器，RealSimLoop 把可微渲染当物理反馈通道。这说明场景表示研究的下游出口正在向具身智能集中。
-
-- **交叉信号**：GRADE 与 3DPS 都指向毫米波雷达这一模态，分别在深度估计与 NVS 两个任务上展开；雷达正在从"退化的视觉替代品"变成独立的研究对象。
+- **机器人/AR 应用**：`HROS`、`SyncWorld`、`Grounding Generated Video Plans`、`RealSimLoop` 共同显示，应用层论文的贡献越来越难用单一算法指标衡量，而是以系统能力（闭环可追踪、零样本迁移、参考运动可扩展、在线自适应）来主张价值。`GoDeep` 则代表另一条线：用语言空间做 3D 开放词汇理解，把 VLM 当“翻译器”而非特征提取器，强调离散文本带来的可解释性。
 
 #### 值得优先阅读的论文
 
-1. **Point4D（2609.09145）**：直接突破 4D 重建的长序列瓶颈，3D query 解码器解耦轨迹与可见性、端点直接 re-query 无需重投影，机制简洁且可迁移到跟踪、动态 NVS 等任务。优先级最高。
+1. **`3DPS` (3D Point Splatting for mmWave Radar NVS, 2609.11894)**
+   优先理由：它是今日唯一明确“首个”定位的工作，且技术推导路径清晰（从雷达方程立体角形式直接推导可微点渲染器），复数输出使同一优化场景可通过 FFT 流水线产出 ADC、CRP、RA 多种格式，避免了按格式重训练。对雷达感知、物理渲染、复值神经表示三个方向都有交叉参考价值。建议重点验证其“单卡约 3 分钟/场景”是否在摘要之外有完整实验支撑。
 
-2. **RoMa-$\Omega$（2609.09507）**：不是刷点，而是系统回答"前馈 3D 模型知道多少匹配信息"，三种场景的分析结论对判断几何基础模型的表征边界有直接参考价值，且结论已转化为一个更强的匹配器。
+2. **`Point4D` (Long-range 4D Motion Reconstruction, 2609.09145)**
+   优先理由：直接针对 4D 重建公认的短窗口瓶颈，提出 3D 查询解耦与跨块重查询机制，且在 200 帧以上长视频追踪基准上取得领先。其“视觉描述符从任意可见帧提取优于仅用源 patch”的结论具有可迁移性，适合做长视频动态重建的基线或改进起点。
 
-3. **3DPS（2609.11894）**：首个雷达可微点渲染器，从雷达方程直接推导、复数输出、输出格式无关（同一场景可产 ADC/CRP/RA），单卡约 3 分钟/场景。对想做新模态 NVS 的人是一个可复用的方法论模板。
-
-4. **VSCP（2609.10307）**：把 NVS 从"渲染质量"推进到"覆盖保证"，视图级共形预测与像素级覆盖的对比数据（89.9% vs 61.4%）很有冲击力，可能开启渲染可靠性这一子方向。
-
-5. **SyncWorld（2609.09155）**：视觉校准片段的思路务实，零样本跨环境作为模拟器、免额外训练即可支持测试时策略改进，对具身智能与世界模型交叉方向的人优先度高。
-
-#### 可能的研究机会
-
-- **新模态渲染器的通用配方**：3DPS（雷达）与 CVQPG（全息）都在做"把光学 NVS 表示替换为物理匹配的基元"。可提炼出其共性——从模态物理方程出发、保留相位/复数、闭式求值材质——并尝试推广到声呐、LiDAR 强度、偏振成像等尚未被充分覆盖的模态。
-
-- **渲染可靠性的场景化与任务化**：VSCP 给出视图级覆盖率，但尚未与下游任务挂钩。一个自然延伸是：把共形覆盖保证接入机器人导航或抓取的决策回路，研究"未覆盖区域"如何转化为主动感知/重观测指令。
-
-- **退化条件下的多模态互补**：GRADE（雷达深度）与 Tri-DehazeGS（雾中 3DGS）、RIDE（重定位+视频深度先验）形成了三篇关于"某一路信号退化时如何兜底"的工作。可跟进的是统一框架：显式建模各模态的可用性并动态路由，而非针对单一退化条件定制。
-
-- **前馈模型与优化式重建的混合**：全局 SfM 论文用无真值监督的一致性目标训练 GNN，Point4D 用前馈方式做长程轨迹。二者的结合点在于——前馈模型给出初值/先验，可微优化负责精修与保证。RIDE、RouteBridge 已隐含这一思路，但缺少系统性的"何时前馈、何时优化"的判据研究。
-
-- **实例级解耦与语义-几何联合蒸馏**：SAMV-DUSt3R 用 SAM2 掩码引导重建，GoDeep 用语言空间提升做开放词汇 3D 理解。二者都利用外部基础模型提供语义先验，可探索的方向是把语义先验同时用于几何监督路由（类似 RouteBridge 的可靠性估计器），实现语义与几何互为教师。
-
-- **具身运行时的可复用性评估**：HROS 类工作目前多以单个场景（住宅巡检）验证。缺乏的是跨
+3. **`RoMa-$Ω$` (What Feed-Forward 3D Models Know About Image Matching, 2609.09507)**
+   优先理由：它不是单纯提出一个匹配器，而是系统回答了“前馈
 
 ### interests.md 指令分析
 
@@ -1194,58 +1182,6 @@ GoDeep 提出一种无需 2D-3D 标注、也无需 3D 训练语料库或专用 3
 <summary>Abstract</summary>
 
 Open vocabulary 3D semantic segmentation methods typically lift CLIP features into 3D. This embeds points in a joint vision-language space known to behave like a bag-of-words on compositional tasks. Furthermore, even annotation free variants often require a large 3D training corpus and a dedicated 3D encoder per domain. Instead we use a vision-language model purely as a translator. It produces structured, entity-level descriptions of each posed image. These descriptions are grounded, projected, and aggregated directly in a general-purpose, language-only embedding space, with no 3D training corpus or encoder required. On ScanNet++, our pipeline is competitive with strong annotation free baselines trained on ScanNet. On a 5-building cultural heritage benchmark, raw scores initially favor a CLIP-based variant, but a single systematic vocabulary correction reverses this ranking. An effect confirmed by a second, independent correction on a different class, indicating that language-space embeddings track physical content more faithfully. This fidelity extends to genuinely out-of-vocabulary (OOV) objects on ScanNet++ proving that language-space embeddings separate presence from absence objects far more sharply than CLIP-based embeddings do. GoDeep also localize these OOV objects within the scene, all without any 2D-3D annotation. Because every representation remains discrete text, predictions are also explainable at the point level. Finally, exploiting both a heuristic weighting, that favors precise over merely frequent observations and GoDeep's explainability property, we propose an aggregation strategy, as a proof of concept, that favors finer elements localization.
-
-</details>
-
-#### 2026-09-08 - Rethinking Learned Occupancy in Autonomous Active Mapping with Observation-Gated Filtering
-
-**Authors:** Jiahui Zhang, Bonian Han, Gongbo Liang, Yu Zhang
-**Links:** [abs](https://arxiv.org/abs/2609.09069) - [pdf](https://arxiv.org/pdf/2609.09069)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** mapping, localization
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Rethinking Learned Occupancy in Autonomous Active Mapping with Observation-Gated Filtering
-- 作者：Jiahui Zhang, Bonian Han, Gongbo Liang, Yu Zhang
-- 出版日期：2026-09-08
-- 分类：Embodied / Robotics / AR Applications
-- 链接：https://arxiv.org/abs/2609.09069
-
-### 一句话总结
-本文通过受控闭环基准实验揭示占用预测精度与主动建图覆盖性能之间不存在单调关系，并提出一种观测门控滤波器以在线修正规划器使用的占用几何。
-
-### 研究问题
-在自主三维主动建图中，学习式占用补全同时充当两个规划角色——打分期望表面增益与约束无碰撞运动，导致不准确的预测可能同时扭曲观测决策与可通行性判断。核心研究问题为：占用补全精度与闭环覆盖绩效之间是否存在一致的促进关系，以及如何在不重新训练或使用真值的情况下改进该耦合接口。
-
-### 核心思路/方法
-- 构建受控闭环基准，固定主动建图系统，仅改变规划器面对的占用条件：仅观测（observation-only）、学习式（learned）、Oracle校正（oracle-corrected）、真值（ground-truth）。
-- 对比不同条件下的闭环覆盖率与收敛速度。
-- 基于诊断结果设计观测门控滤波器：在欠观测区域保留补全预测；仅当预测区域经历多次视锥暴露却缺乏附近RGB-D支持时，抑制该预测。
-
-### 主要贡献
-1. 揭示占用精度提升并不单调改进闭环覆盖：与学习式基线相比，使用真值占用平均提前12.7步达到70%最终覆盖率，但最终覆盖率仅提升0.031。
-2. 提出不依赖重训练或真值的观测门控滤波方法，显著改善针对性失败启动场景。
-3. 结果表明自主任务应在通信间隔期间对规划器面向的几何进行在线修订。
-
-### 局限性
-- 摘要提及当前研究假设基准RGB-D观测和足够精确的位姿估计，行星感知条件与累积定位漂移的影响尚未评估。
-- 观测门控滤波器在多种场景下的平均性能提升幅度、失败类型覆盖范围等具体数值摘要未提供足够信息。
-- 与其它占用学习方法或滤波策略的横向对比摘要未提供足够信息。
-- 受控基准之外的泛化性（真实平台部署等）摘要未提供足够信息。
-
-### 阅读优先级
-**中**。理由：该文关注主动建图中占用预测与规划耦合的诊断性发现，并对现有学习占用方法提出一个务实的轻量修正策略。对从事机器人主动感知、占用建图或规划交互的研究者有启发性，但方法针对性较窄且实验以受控基准为主，普适性尚未验证；若您专注于闭环自主感知系统设计，建议优先阅读。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Autonomous 3D active mapping requires a space robot to choose where to sense while building the geometry needed for navigation. Learned occupancy completion extends spatial context beyond the current field of view, but one predicted map often serves two planning roles: it scores expected surface gain and constrains collision-free motion. Unsupported occupancy can therefore distort both where the robot looks and where it believes it can travel. We study this coupled interface in a controlled closed-loop benchmark by holding the active-mapping system fixed and varying only its planner-facing occupancy across observation-only, learned, oracle-corrected, and ground-truth conditions. Improving occupancy accuracy does not monotonically improve closed-loop coverage: across 25 starts, planning with ground-truth occupancy reaches 70% of the learned baseline's final coverage 12.7 steps earlier on average, while increasing final coverage by only 0.031. Guided by this diagnosis, we introduce an observation-gated filter that retains completion in insufficiently observed regions and suppresses predictions only after repeated frustum exposure without nearby RGB-D support. The filter improves both targeted failure-prone starts without retraining or ground truth. These results motivate online revision of planner-facing geometry during autonomous intervals between communication windows. The current study assumes benchmark RGB-D observations and sufficiently accurate pose estimates; planetary sensing conditions and accumulated localization drift remain to be evaluated.
 
 </details>
 
