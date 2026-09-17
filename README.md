@@ -80,9 +80,9 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 <!-- DAILY_REPORT_END -->
 
-**Last updated:** 2026-09-16T12:51:30-04:00
-**Total number of papers:** 40
-**Number of papers added in the latest update:** 31
+**Last updated:** 2026-09-17T12:57:45-04:00
+**Total number of papers:** 50
+**Number of papers added in the latest update:** 18
 **Categories tracked:** cs.CV, cs.GR, cs.RO, eess.IV
 
 Paper metadata is collected from the public arXiv API and stored as structured JSON. PDF files are not mirrored or redistributed; full-text analysis only downloads PDFs temporarily during the workflow run and deletes them afterward.
@@ -134,6 +134,36 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 ## Geometry Foundation Models
 
 ### 2026-09
+
+#### 2026-09-16 - AdaGeoVLN: Selective Geometry Across Representation Depth and Navigation Time for Vision-Language Navigation
+
+**Authors:** Quan-Dung Pham, Anh Dao, Danh Vinh Le, Nguyen Viet Tri Pham, The-Anh Nguyen, Zhirui Dai, Yiyu Chen, Tuyen P. Le, Truong Nguyen, Quan Nguyen
+**Links:** [abs](https://arxiv.org/abs/2609.18789) - [pdf](https://arxiv.org/pdf/2609.18789)
+**Primary category:** Geometry Foundation Models
+**Secondary categories:** None
+**Matched keywords:** VGGT
+
+<details>
+<summary>Abstract</summary>
+
+Vision-language navigation requires aligning language with visual observations while maintaining spatial understanding over time. Geometry foundation models (GFMs) expose intermediate representations throughout their hierarchy, but how navigation policies should use these features and retain historical geometric evidence remains unresolved. We introduce \method{}, a streaming VLN framework that addresses these questions across \textbf{representation depth} and \textbf{navigation time}. Hierarchical GFM--VLM fusion couples earlier, intermediate, and later GFM representations to successive policy stages instead of repeatedly injecting a terminal feature. Navigation-aware GFM memory retains historical VGGT global-attention KV states according to instruction relevance, geometric confidence, and transition novelty under a bounded per-layer budget. Retained states provide geometric context for subsequent observations before fusion with the policy. Across R2R-CE and RxR-CE, \method{} achieves strong performance using a single RGB stream without additional navigation-specific external data. Controlled ablations show that multi-depth coupling substantially outperforms repeated terminal-feature injection at matched fusion locations. Bounded navigation-aware retention preserves navigation performance while considerably reducing GFM-KV memory relative to larger-memory temporal retention. These findings support jointly examining the geometric representations exposed to the policy and the historical evidence retained for future inference. Code will be released upon acceptance at https://humanoid-research.github.io/adageovln/.
+
+</details>
+
+#### 2026-09-16 - GeoCond: A Conditioning-Aware Reliability Adapter for Feed-Forward 3D Reconstruction
+
+**Authors:** David Ahmedt-Aristizabal, Mohammad Ali Armin, Russell Tsuchida, Lars Petersson
+**Links:** [abs](https://arxiv.org/abs/2609.18465) - [pdf](https://arxiv.org/pdf/2609.18465)
+**Primary category:** Geometry Foundation Models
+**Secondary categories:** 3D Reconstruction & Multi-view Geometry
+**Matched keywords:** VGGT, feed-forward 3D reconstruction, 3D reconstruction, bundle adjustment
+
+<details>
+<summary>Abstract</summary>
+
+Feed-forward 3D foundation models such as VGGT predict cameras, depth, and point maps in a single pass, but can fail silently under low overlap, low parallax, and extreme relative rotation. Stratified analyses over these factors show that these failures are governed by geometric conditioning and are poorly captured by native aleatoric confidence. We introduce GeoCond, a lightweight reliability adapter for frozen feed-forward 3D backbones. GeoCond reads the backbone's predicted geometry and outputs pose-level uncertainty and a refinement gate. During training, it can be supervised by frame-permutation orbit variance, ground-truth pose error when labels are available, or cycle residuals from unlabelled independent pose graphs. At inference, the default head requires only one backbone pass and a small MLP. On VGGT, GeoCond improves out-of-distribution (OOD) AUSE (area under the sparsification-error curve; lower is better) from $0.32$ to $0.20$ over native confidence, transfers zero-shot to outdoor extreme-view scenes, and avoids the collapse caused by applying bundle adjustment uniformly. Across multiple backbones, cycle-distilled variants provide a ground-truth-free adaptation route, including cases where permutation variance vanishes on equivariant models. The same reliability signal supports gated refinement, pose-graph weighting, calibration, curation, and capture decisions. Reliable feed-forward 3D reconstruction requires not only predicting geometry, but also knowing when that geometry should be trusted.
+
+</details>
 
 #### 2026-09-15 - G3AR: Graph-Guided Neural Visual Geometry for Scalable Multi-Sequence Aerial Registration
 
@@ -300,62 +330,24 @@ Live free-viewpoint visualization of real humans is critical for immersive commu
 
 </details>
 
-#### 2026-09-10 - SAMV-DUSt3R: Instance-Centric 3D Scene Decoupling from Sparse Multi-Views
+## Dynamic / 4D Reconstruction
 
-**Authors:** Langxu Zhao, Zuan Gu, Yingdan Zhang, Pengfei Zhao, Tianhan Gao
-**Links:** [abs](https://arxiv.org/abs/2609.11279) - [pdf](https://arxiv.org/pdf/2609.11279)
-**Primary category:** Geometry Foundation Models
-**Secondary categories:** Embodied / Robotics / AR Applications
-**Matched keywords:** DUSt3R, robotics, AR, VR
+### 2026-09
 
-<details>
-<summary>AI 简析</summary>
+#### 2026-09-15 - Wind on Trees: Testing Physical Grounding in Dynamic 4D Gaussian Splatting
 
-### Metadata
-- 标题：SAMV-DUSt3R: Instance-Centric 3D Scene Decoupling from Sparse Multi-Views
-- 作者：Langxu Zhao, Zuan Gu, Yingdan Zhang, Pengfei Zhao, Tianhan Gao
-- 出版日期：2026-09-10T09:12:48Z
-- 分类：主分类 Geometry Foundation Models；次分类 Embodied / Robotics / AR Applications
-- 链接：摘要页 https://arxiv.org/abs/2609.11279 ；PDF https://arxiv.org/pdf/2609.11279
-
-### 一句话总结
-该论文提出端到端模型 SAMV-DUSt3R，将 SAM2 的 2D 掩码注入 MV-DUSt3R 重建流程，以在稀疏多视角下实现以实例为中心的三维场景解耦，并报告了重建精度与参考视图选择方面的提升。
-
-### 研究问题
-从三维场景中解耦物体（实例级分离）的需求日益增长，论文关注在稀疏多视角条件下实现实例级的三维场景解耦与重建。摘要指出其目标是在不依赖多阶段流水线的情况下完成物体级解耦，并同时提升形状精度与重建稳定性。
-
-### 核心思路/方法
-- 提出端到端模型 SAMV-DUSt3R，将 SAM2 的二维掩码注入到 MV-DUSt3R 的重建过程中。
-- 设计 Cross Flow Mask Block，利用这些掩码引导网络朝向目标实例，从而联合提升形状精度并实现物体级解耦，且无需多阶段流水线。
-- 为保证重建稳定性，引入轻量级 Spatial RankGNN 来选择最优参考视图，摘要给出选择准确率为 73.5%。
-
-### 主要贡献
-- 提出将 SAM2 二维掩码注入 MV-DUSt3R 重建的端到端方法，实现以实例为中心的三维场景解耦，避免多阶段流水线。
-- 通过 Cross Flow Mask Block 引导网络关注目标实例，联合改善形状精度并实现物体级解耦。
-- 引入轻量级 Spatial RankGNN 进行最优参考视图选择，报告选择准确率为 73.5%。
-- 摘要称大量实验表明，与最先进基线相比，该方法在多种指标上平均重建精度提升 11%，并展现出较强的实例解耦能力，对驾驶、机器人、AR/VR 和遗产数字化具有明显益处。
-
-### 局限性
-- 摘要未提供足够信息说明实验数据集、评价指标细节、对比基线的具体配置以及消融实验设置。
-- 摘要未提供足够信息说明方法在不同稀疏视角数量、遮挡、动态场景或类别分布下的失效条件与适用范围。
-- 摘要未提供足够信息说明 Spatial RankGNN 选择错误时对重建结果的影响程度，以及 Cross Flow Mask Block 对 SAM2 掩码质量的依赖与鲁棒性。
-- 摘要未提供足够信息说明计算开销、推理速度、模型规模与训练数据需求。
-
-### 阅读优先级
-高。理由：该论文聚焦稀疏多视角下的实例级三维场景解耦，提出端到端注入 2D 掩码与参考视图选择的组合方案，并在摘要中报告了明确的重建精度提升与选择准确率；主题同时关联几何基础模型与具身/机器人/AR 应用，对三维重建与实例解耦方向具有直接参考价值。
-
-</details>
+**Authors:** Weiying Chen, Edmond Lou
+**Links:** [abs](https://arxiv.org/abs/2609.17810) - [pdf](https://arxiv.org/pdf/2609.17810)
+**Primary category:** Dynamic / 4D Reconstruction
+**Secondary categories:** Neural Scene Representations & Rendering
+**Matched keywords:** dynamic 4D, 4D Gaussian, Gaussian Splatting, splatting
 
 <details>
 <summary>Abstract</summary>
 
-With the rising demand to decouple objects from 3D scenes, we propose SAMV-DUSt3R, an end-to-end model that injects SAM2 2D masks into MV-DUSt3R reconstruction. A Cross Flow Mask Block uses these masks to steer the network toward the target instance, jointly improving shape accuracy and achieving object-level disentanglement without multi-stage pipelines. To ensure reconstruction stability, a lightweight Spatial RankGNN selects the optimal reference view with a selection accuracy of 73.5\%. Extensive experiments demonstrate that our method boosts average reconstruction precision by 11\% across various metrics compared to state-of-the-art baselines. These results reveal a strong instance-disentanglement capability and clear benefits for driving, robotics, AR/VR, and heritage digitisation.
+Monocular reconstruction of wind-driven vegetation is severely underconstrained: motion along the viewing direction is largely unobservable, a moving canopy offers few reliable correspondences, and nearly the entire scene is dynamic, providing little static reference. Directly-learned deformation fields in 4D Gaussian Splatting therefore optimize photometric consistency rather than recover the motion that produced it. We replace that field with a physically parameterized deformation prior: one damped harmonic oscillator per rigid part, driven by the observed wind and integrated by differentiable RK4, supervised photometrically alone. To test whether such a prior is physically grounded rather than merely well fit, we build a controlled synthetic testbed of three procedurally generated trees spanning an order of magnitude in skeleton complexity, whose per-part natural frequency follows from its own geometry and whose damping ratio is a fixed constant, both held out of training. On it, we measure held-out views, temporal extrapolation, zero-shot transfer to unseen wind speeds, and recovery of the physical parameters themselves. The prior costs appearance fidelity on in-distribution views and extrapolates markedly better outside the training window and the training wind, while parameter recovery is far weaker than it first appears: frequency recovery survives an untrained null control on only the sparsest of the three trees, and damping is not recovered at all.
 
 </details>
-
-## Dynamic / 4D Reconstruction
-
-### 2026-09
 
 #### 2026-09-14 - Racing in Volume with Flow Ensembles
 
@@ -411,6 +403,51 @@ Streaming 4D reconstruction has been demonstrated only indoors, on dense camera 
 ## 3D Reconstruction & Multi-view Geometry
 
 ### 2026-09
+
+#### 2026-09-16 - SOL-SLAM: Inverse Compositional Gauss-Newton Direct Registration for Fast Sonar-Only Local SLAM
+
+**Authors:** Kalvik Jakkala, Jason O'Kane
+**Links:** [abs](https://arxiv.org/abs/2609.18893) - [pdf](https://arxiv.org/pdf/2609.18893)
+**Primary category:** 3D Reconstruction & Multi-view Geometry
+**Secondary categories:** None
+**Matched keywords:** simultaneous localization and mapping, SLAM, mapping, localization
+
+<details>
+<summary>Abstract</summary>
+
+Autonomous underwater navigation typically relies on complex and expensive multi-modal sensor suites designed to prioritize global Simultaneous Localization and Mapping (SLAM) accuracy. However, local reactive behaviors such as coarse navigation and obstacle avoidance require only local consistency---a capability that should be feasible using only a Forward-Looking Sonar (FLS), yet remains largely unaddressed, leaving a critical gap in FLS-only local SLAM. Moreover, existing acoustic SLAM frameworks predominantly rely on sparse feature extraction methods that discard substantial portions of the already information-sparse acoustic returns. To overcome these limitations, this work introduces a dense direct registration approach that aligns full acoustic intensity scans to a recursively updated local map. Real-time execution is achieved via an Inverse Compositional Gauss-Newton optimization strategy that minimizes computational overhead. Experimental evaluations show that this dense method yields significant improvements on translation error compared to sparse keypoint baselines, maintaining stable sub-meter tracking precision over wide displacement gaps. Moreover, this approach delivers odometry performance comparable to multi-sensor fusion pipelines (FLS, DVL, and IMU), bypassing expensive payload dependencies in feature-rich environments. We validate real-world applicability through AUV field trials, running the full local SLAM approach onboard an embedded, resource-constrained computer.
+
+</details>
+
+#### 2026-09-16 - Active perception for robotic harvesting: 3D reconstruction and localisation of tomatoes hidden within clusters in a Mediterranean greenhouse
+
+**Authors:** Fernando Cañadas-Aránega, Rowan Border, José C. Moreno, José L. Blanco-Claraco
+**Links:** [abs](https://arxiv.org/abs/2609.18738) - [pdf](https://arxiv.org/pdf/2609.18738)
+**Primary category:** 3D Reconstruction & Multi-view Geometry
+**Secondary categories:** None
+**Matched keywords:** 3D reconstruction, pose estimation, localization, simulation
+
+<details>
+<summary>Abstract</summary>
+
+Automating robotic harvesting in intensive agriculture within Mediterranean greenhouses requires overcoming significant challenges related to the geometric complexity of plants and occluded fruits. Although existing literature offers solutions targeting crops that grow in isolation (e.g., apples, sweet peppers, or peaches), the fundamental challenge lies in cluster-growing vegetables, where fixed sensors mounted on robotic systems fail to detect fruits hidden behind the visible surface. To address this limitation, this study presents a comprehensive pipeline for the 3D reconstruction and precise localization of each fruit within a cluster, including heavily occluded instances. The proposed methodology is structured into five sequential stages: i) point cloud acquisition using the AgriSEE Next Best View (NBV) active planner; ii) stochastic noise filtering via Statistical Outlier Removal (SOR); iii) surface classification and segmentation using Region Growing (RG); iv) isolation and recovery of occluded fruits through Density-Based Spatial Clustering of Applications with Noise (DBSCAN); and v) 3D pose estimation (position and orientation). This approach extracts the complete cluster geometry, ensuring the reliable identification of partially hidden tomatoes. Evaluated across multiple scenarios with varying occlusion levels within a simulation framework rigorously validated against real-world conditions, the system achieves a precision exceeding 90\%, an average recall of 82.8\%, and a mean Intersection over Union (mIoU) of 80.7\%. Furthermore, it demonstrates high repeatability in centroid estimation with a Root Mean Square Error (RMSE) of merely 4.2~mm, verifying its technical feasibility and high accuracy for autonomous harvesting operations.
+
+</details>
+
+#### 2026-09-16 - Prosthesis-Aware 3D Human Pose Estimation: A Dataset and Benchmark for RSP Users
+
+**Authors:** Yilin Wen, Kechuan Dong, Fumiya Suginaka, Ken Endo, Yusuke Sugano
+**Links:** [abs](https://arxiv.org/abs/2609.18406) - [pdf](https://arxiv.org/pdf/2609.18406)
+**Primary category:** 3D Reconstruction & Multi-view Geometry
+**Secondary categories:** None
+**Matched keywords:** pose estimation
+
+<details>
+<summary>Abstract</summary>
+
+Recovering 3D human body motion from video is important for applications such as rehabilitation assessment and sports performance evaluation. For prosthesis users, this requires capturing both natural body joints and the geometry of the prosthetic device, a challenge that existing methods are not designed to address. Model-based estimators rely on body models trained on non-amputee individuals and cannot represent prosthesis geometry, while model-free methods lack body kinematic priors and are unreliable under occlusion. This challenge is particularly prominent for users of running-specific prostheses (RSPs), where the RSP has a complex curved geometry and moves dynamically during exercise. To fill this gap, we collect RSP3D, the first 3D dataset of RSP users, covering essential daily-life and exercise actions from participants with varied amputation conditions, using a multi-camera marker-based motion capture setup. We formally define the task of prosthesis-aware 3D pose estimation, evaluate representative methods in a zero-shot setting, and confirm their individual limitations. We further propose a hybrid baseline combining model-based body joint estimation with model-free RSP shape recovery, establishing a starting point for future research.
+
+</details>
 
 #### 2026-09-15 - EventEgoHands++: Event-based Egocentric 3D Hand Mesh Reconstruction with Real Dataset
 
@@ -825,219 +862,99 @@ Continuous-environment vision-and-language navigation (VLN-CE) requires interpre
 
 </details>
 
-#### 2026-09-10 - Visual-SLAM for the detection of hidden tomatoes in greenhouses by Hierarchical Localization and GLOMAPfor robotized harvesting
-
-**Authors:** Fernando Cañadas-Aránega, José C. Moreno, José L. Blanco-Claraco, Francisco Rodríguez
-**Links:** [abs](https://arxiv.org/abs/2609.11766) - [pdf](https://arxiv.org/pdf/2609.11766)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** Embodied / Robotics / AR Applications
-**Matched keywords:** structure from motion, SLAM, visual SLAM, mapping, localization
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Visual-SLAM for the detection of hidden tomatoes in greenhouses by Hierarchical Localization and GLOMAPfor robotized harvesting
-- 作者：Fernando Cañadas-Aránega, José C. Moreno, José L. Blanco-Claraco, Francisco Rodríguez
-- 出版日期：2026-09-10T16:19:36Z
-- 分类：主分类 3D Reconstruction & Multi-view Geometry；次分类 Embodied / Robotics / AR Applications
-- 链接：摘要页 https://arxiv.org/abs/2609.11766 ；PDF https://arxiv.org/pdf/2609.11766
-
-### 一句话总结
-该工作提出一种面向温室番茄作物建图的低成本单目 Visual-SLAM 系统，结合 Hierarchical Localization 与基于 Structure-From-Motion 的 GLOMAP，实现对被遮挡番茄的识别与三维重建。
-
-### 研究问题
-温室内部先进的作物监测是研究中心的重点目标之一。传统上常使用 LiDAR 或立体相机等高性能传感器，但成本往往较高。论文关注的是：能否用成本显著更低的单目相机 Visual-SLAM 系统，面向农业应用（如温室番茄作物建图）完成检测与建图任务，尤其是识别被遮挡、经典视觉技术难以访问的番茄。
-
-### 核心思路/方法
-论文提出使用单目相机的 Visual-SLAM 系统，针对农业应用（温室番茄作物建图）定制。测试在 Agroconnect 实验温室的真实番茄串上进行。开发了一个 ROS 2 Humble 节点，运行在机器人上以采集作物图像，随后存储用于离线处理。为生成温室作物的三维建图模型，将基于 Structure-From-Motion 的 GLOMAP 建图器与 Hierarchical Localization 工具箱集成。系统采用基于由粗到细策略的分层定位范式：先进行全局检索以生成位置假设，再在识别出的候选区域内结合局部特征。
-
-### 主要贡献
-- 提出一种使用单目相机的 Visual-SLAM 系统，相比 LiDAR 或立体相机等方案成本显著更低，并面向农业应用定制。
-- 将基于 Structure-From-Motion 的 GLOMAP 建图器与 Hierarchical Localization 工具箱集成，用于生成温室作物的三维建图模型。
-- 采用由粗到细的分层定位范式：先全局检索生成位置假设，再在候选区域内结合局部特征。
-- 开发 ROS 2 Humble 节点用于机器人端图像采集与离线处理。
-- 结果显示能够正确识别番茄簇，并正确表征被经典视觉技术遮挡且不可访问的番茄。
-- 重建的三维模型通过人工真值测量（果实大小、质心位置和朝向）进行了验证，确认了所提低成本单目流程的几何精度。
-
-### 局限性
-- 摘要未提供足够信息说明系统在更多温室场景、不同作物或更大规模环境中的泛化能力。
-- 摘要未提供足够信息说明实时性能、计算资源消耗或在线运行能力。
-- 摘要未提供足够信息说明与 LiDAR 或立体相机方案在精度、鲁棒性上的系统对比。
-- 摘要未提供足够信息说明对光照变化、遮挡程度差异、相机运动等干扰因素的鲁棒性。
-- 摘要未提供足够信息说明数据集规模、测试样本数量及统计显著性。
-- 摘要仅提到该初始建图是未来更高级算法分析生长模式、优化农业管理的基础，因此面向机器人化采收的完整闭环能力在摘要中未提供足够信息。
-
-### 阅读优先级
-中。理由：该论文主题明确，聚焦低成本单目 Visual-SLAM 在温室番茄检测与三维重建中的应用，并涉及 Hierarchical Localization 与 GLOMAP 的集成，对农业机器人、三维重建和视觉定位方向有一定参考价值。但摘要未提供足够信息说明实验规模、实时性、泛化性和与高成本传感器的系统对比，若读者关注机器人化采收的完整系统或大规模验证，需进一步阅读全文确认。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Advanced crop monitoring inside greenhouses is becoming one of the primary objectives of research centers. High-performance sensors, such as LiDAR or stereo cameras, have traditionally been employed for this purpose, though these often have a high cost. This work proposes a Visual-SLAM system using a monocular camera, which is significantly more cost-effective and specifically tailored for agricultural applications, such as mapping tomato crops in a greenhouse. Tests were carried out on a real tomato bunch, located in the Agroconnect experimental greenhouse. A ROS 2 Humble node was developed to run on the robot in order to capture images of these crops, which were then stored for offline processing. To generate a 3D mapped model for the crop in the greenhouse, the GLOMAP mapper, based on Structure-From-Motion, was integrated with the Hierarchical Localization toolbox. This initial mapping is a foundation for future, more advanced algorithms to analyze growth patterns, and optimize agricultural management. The system leverages a hierarchical localization paradigm based on a coarse-to-fine strategy: it first performs global retrieval to generate location hypotheses, then combines local features within the identified candidate regions. The results show a correct identification of the tomato cluster, correctly characterising the tomato that is occluded and inaccessible by classical vision technologies. The reconstructed 3D model was further validated against manual ground-truth measurements of fruit size, centroid position, and orientation, confirming the geometric accuracy of the proposed low-cost monocular pipeline.
-
-</details>
-
-#### 2026-09-10 - RIDE: Relocalization-Informed Depth Estimation with 3D Gaussian Splatting
-
-**Authors:** Jiarong Lian, Zhe Xiao, Zhaoyang Zhang, Wei Li, Ruizhi Chen
-**Links:** [abs](https://arxiv.org/abs/2609.11079) - [pdf](https://arxiv.org/pdf/2609.11079)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** Neural Scene Representations & Rendering, Embodied / Robotics / AR Applications
-**Matched keywords:** metric depth, depth estimation, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, splatting, robot perception, localization
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：RIDE: Relocalization-Informed Depth Estimation with 3D Gaussian Splatting
-- 作者：Jiarong Lian, Zhe Xiao, Zhaoyang Zhang, Wei Li, Ruizhi Chen
-- 出版日期：2026-09-10T04:36:58Z
-- 分类：3D Reconstruction & Multi-view Geometry（主类别）；Neural Scene Representations & Rendering, Embodied / Robotics / AR Applications（次类别）
-- 链接：摘要页 https://arxiv.org/abs/2609.11079 ；PDF https://arxiv.org/pdf/2609.11079
-
-### 一句话总结
-RIDE 利用 render–match–PnP 重定位中获得的稀疏度量深度观测，结合预训练视频深度模型的几何先验，从机器人 RGB 流中估计稠密度量深度。
-
-### 研究问题
-论文关注的是：render–match–PnP 重定位虽能建立查询图像像素与 3D 地图点之间的对应关系以恢复相机位姿，但其支持稠密深度估计的潜力常被忽视。RIDE 旨在利用这类几何信息，在给定度量尺度的 3D Gaussian Splatting（3DGS）模型条件下，从机器人 RGB 流中估计稠密度量深度。
-
-### 核心思路/方法
-- 以度量尺度的 3DGS 模型为基础，利用 PnP-RANSAC 内点对应关系导出稀疏度量深度观测。
-- 将这些稀疏度量深度观测与预训练视频深度模型的几何先验相结合。
-- 针对观测不均匀和间歇性的问题，引入全局与局部深度校正以及时间记忆机制。
-- 在度量尺度初始化后，支持在短观测间隔内继续进行深度估计。
-- 在公开 RGB-D 视频上训练，并在机器人序列上不做微调进行评估。
-
-### 主要贡献
-- 提出 RIDE，将重定位几何信息用于稠密度量深度估计。
-- 结合 PnP-RANSAC 内点对应得到的稀疏度量深度与预训练视频深度模型的几何先验。
-- 通过全局/局部深度校正与时间记忆，应对不均匀、间歇的稀疏观测，并支持短观测间隔下的深度估计。
-- 实验显示，相比仅做尺度校准，RIDE 在深度精度和时间一致性上有所提升，表明定位几何可同时支持位姿恢复与稠密机器人感知。
-
-### 局限性
-摘要未提供足够信息。摘要未给出具体实验平台、序列数量、失败情形、计算开销、实时性、对 3DGS 模型质量或重定位成功率的依赖程度等细节。
-
-### 阅读优先级
-中。理由：该工作位于 3D 重建、神经场景表示与机器人/AR 应用的交叉点，核心思路明确，且强调无需微调即可在机器人序列上评估；但摘要未提供充分的实验细节与对比设置，是否值得精读取决于读者对重定位辅助稠密深度估计、3DGS 机器人感知这一具体方向的关注程度。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Render--match--PnP relocalization establishes correspondences between query image pixels and 3D map points for camera pose recovery, but their potential to support dense depth estimation is often overlooked. To exploit this geometric information, we present RIDE, which estimates dense metric depth from a robot's RGB stream. Given a metrically scaled 3D Gaussian Splatting (3DGS) model, RIDE combines sparse metric depth observations derived from PnP-RANSAC inlier correspondences with the geometric prior of a pretrained video-depth model. To handle uneven and intermittent observations, it integrates global and local depth correction with temporal memory, supporting depth estimation through short observation gaps after metric scale initialization. Trained on public RGB-D videos, RIDE is evaluated on robot sequences without fine tuning. Experiments show improved depth accuracy and temporal consistency over scale-only calibration, demonstrating how localization geometry can support both pose recovery and dense robot perception.
-
-</details>
-
-#### 2026-09-09 - GRADE: Single-Frame Generative Radar Depth Estimation Under Visual Degradation
-
-**Authors:** Bin Zhao, Patrick Chiou, Nakul Garg
-**Links:** [abs](https://arxiv.org/abs/2609.10756) - [pdf](https://arxiv.org/pdf/2609.10756)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** None
-**Matched keywords:** metric depth, depth estimation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：GRADE: Single-Frame Generative Radar Depth Estimation Under Visual Degradation
-- 作者：Bin Zhao, Patrick Chiou, Nakul Garg
-- 出版日期：2026-09-09T18:57:05Z
-- 分类：3D Reconstruction & Multi-view Geometry
-- 链接：https://arxiv.org/abs/2609.10756
-
-### 一句话总结
-GRADE 将预训练生成先验与单帧雷达几何相融合，在烟雾、雾气和黑暗等视觉退化条件下实现高保真度量深度估计。
-
-### 研究问题
-在烟雾、雾气和黑暗等条件下，光学传感器无法穿透空气中的颗粒物，导致密集 3D 深度感知失效。毫米波雷达在这些条件下仍可使用并能准确测距，但其小孔径限制了角分辨率。论文旨在解决：如何在视觉退化条件下，利用单帧雷达几何与生成先验估计高保真度量深度。
-
-### 核心思路/方法
-GRADE 首先将原始 4D 雷达频谱映射为粗略的度量深度。随后，一个潜在扩散骨干网络在恢复结构细节的同时，将每个去噪步骤都条件化在该深度估计上。一个像素空间适配器在有可用信息时利用残余相机线索，并在清晰、烟雾退化和遮挡输入上进行训练，使得随着能见度下降，整体输出趋近于雷达条件化路径。
-
-### 主要贡献
-- 提出 GRADE，将预训练生成先验锚定在单帧雷达几何中，用于估计高保真度量深度。
-- 设计了两阶段方法：先将原始 4D 雷达频谱映射为粗略度量深度，再通过潜在扩散骨干网络恢复结构细节并条件化每一去噪步骤。
-- 引入像素空间适配器，利用残余相机线索，并在清晰、烟雾退化和遮挡输入上训练，使输出随能见度下降趋近雷达条件化路径。
-- 在 12 栋建筑约 95K 帧（含真实烟雾）上训练与评估，清晰场景 MAE 为 0.303 m，烟雾下为 0.313 m，优于现有基线。
-- 代码与数据集已公开。
-
-### 局限性
-摘要未提供足够信息。
-
-### 阅读优先级
-高。理由：该论文针对视觉退化条件下的深度感知这一明确难题，结合雷达与生成先验，给出了具体量化结果，且涉及 3D 重建与多视角几何方向，摘要信息显示其方法路径与评估结果较为完整，值得优先阅读。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Dense 3D depth perception fails under smoke, fog, and darkness because optical sensors cannot penetrate airborne particulates. mmWave radar remains usable and measures range accurately under these conditions, but its small aperture limits angular resolution. We present GRADE, which grounds a pretrained generative prior in single-frame radar geometry to estimate high-fidelity metric depth. GRADE first maps raw 4D radar spectra to coarse metric depth. A latent diffusion backbone then recovers structural detail while conditioning every denoising step on this estimate. A pixel-space adapter uses residual camera cues when available and is trained across clear, smoke-degraded, and occluded inputs so the full output approaches the radar-conditioned path as visibility degrades. Trained and evaluated on ~95K frames across 12 buildings with real smoke, GRADE achieves an MAE of 0.303 m in clear scenes and 0.313 m under smoke, outperforming existing baselines. Code and datasets are available at https://phi-lab-rice.github.io/GRADE.
-
-</details>
-
-#### 2026-09-09 - Field Converter: Geometry-Initialized Temporal Residual Refinement for World-Grounded Player Pose Estimation from Soccer Broadcasts
-
-**Authors:** Simon Khan, Laurent Gajny, Jennyfer Lecompte, Sébastien Laporte
-**Links:** [abs](https://arxiv.org/abs/2609.10498) - [pdf](https://arxiv.org/pdf/2609.10498)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** None
-**Matched keywords:** pose estimation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Field Converter: Geometry-Initialized Temporal Residual Refinement for World-Grounded Player Pose Estimation from Soccer Broadcasts
-- 作者：Simon Khan, Laurent Gajny, Jennyfer Lecompte, Sébastien Laporte
-- 出版日期：2026-09-09T17:35:16Z
-- 分类：3D Reconstruction & Multi-view Geometry
-- 链接：[摘要](https://arxiv.org/abs/2609.10498) / [PDF](https://arxiv.org/pdf/2609.10498)
-
-### 一句话总结
-该论文提出 Field Converter，通过相机与球场几何初始化球员根节点，并利用时序残差修正，实现从已标定足球转播中估计共享世界坐标系下的 3D 球员姿态。
-
-### 研究问题
-从单目体育转播中恢复 3D 人体姿态时，难点不仅在于相对自身身体的姿态重建，还在于需要将球员定位到共享的度量世界坐标系中。论文聚焦于从已标定的足球转播视频中进行世界坐标下的 3D 球员姿态估计。
-
-### 核心思路/方法
-- 使用相机和球场几何信息，通过射线-地面相交来初始化球员根节点。
-- 在几何初始化基础上，预测时序残差修正。
-- 残差预测使用姿态、图像、相机和几何线索。
-- 在匹配不重叠的评估序列上，比较了不同时序骨干：逐帧 MLP、TCN 和 Transformer。
-
-### 主要贡献
-- 提出 Field Converter，一个几何初始化与时序残差修正结合的世界坐标 3D 球员姿态估计框架。
-- 利用相机和球场几何进行根节点初始化，并通过时序残差修正降低根节点误差。
-- 报告中，几何单独使根误差为 49cm，逐帧 MLP 降至 14cm，TCN 降至 10cm，Transformer 达到可比的 11cm；世界空间 MPJPE 达到 13.2cm。
-- 消融显示，残差预测明显优于直接全局根节点回归；时序上下文比具体时序骨干更重要。
-- 失败分析指出，空中动作是基于地面几何初始化的主要局限。
-
-### 局限性
-- 摘要明确指出失败分析发现空中动作是基于地面几何初始化的主要限制。
-- 除空中动作外，其他局限性摘要未提供足够信息。
-- 实验细节、数据集规模、跨场景泛化能力、计算成本等信息摘要未提供足够信息。
-
-### 阅读优先级
-中。理由：该论文针对足球转播中的世界坐标 3D 人体姿态估计，问题设定明确，且给出了根误差、MPJPE 和消融结论；如果关注体育视频分析、单目 3D 人体姿态或几何初始化方法，具有参考价值。但摘要未提供完整实验设置、数据规模和更广泛的泛化分析，是否高优先级取决于读者对足球转播场景的具体兴趣。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Recovering 3D human pose from monocular sports broadcasts remains challenging when players must be localized in a shared metric world coordinate system rather than only reconstructed relative to their own body. We introduce Field Converter, a geometry-initialized temporal residual framework for world-grounded 3D player pose estimation from calibrated soccer broadcasts. Our method first uses camera and pitch geometry to initialize the player root through ray-ground intersection, then predicts a temporal residual correction from pose, image, camera, and geometric cues. On match-disjoint evaluation sequences, residual refinement reduces root error from 49cm with geometry alone to 14cm with a frame-wise MLP and 10cm with a TCN, while a Transformer achieves a comparable 11cm. The resulting world-space MPJPE reaches 13.2cm, and ablations show that residual prediction clearly outperforms direct global-root regression while temporal context matters more than the specific temporal backbone. Failure analysis further identifies airborne motion as the main limitation of the ground-based geometric initialization.
-
-</details>
-
 ## Neural Scene Representations & Rendering
 
 ### 2026-09
+
+#### 2026-09-16 - NormLift: From Lifted Features To Semantic Reliability In 3D Gaussian Splatting
+
+**Authors:** Yihan Zang, Da Li, Dominik Engel, Shinkyu Park, Ivan Viola
+**Links:** [abs](https://arxiv.org/abs/2609.18898) - [pdf](https://arxiv.org/pdf/2609.18898)
+**Primary category:** Neural Scene Representations & Rendering
+**Secondary categories:** None
+**Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, rendering, splatting, scene understanding
+
+<details>
+<summary>Abstract</summary>
+
+Training-free weighted aggregation is widely used to lift 2D semantic features onto 3D Gaussians for open-vocabulary scene understanding, yet its theoretical role remains insufficiently understood. Existing analyses typically justify this operation from the rendering side, treating Gaussian features as linearly composable Euclidean variables for reconstructing 2D feature maps. However, this view does not match downstream 3D usage, where each Gaussian is often queried independently in a cosine-based embedding space. We revisit feature lifting from the 3D side and formulate per-Gaussian assignment as a cosine alignment problem on the CLIP unit sphere. Under this objective, the L2-normalized semantic back-projected feature emerges as the closed-form solution, providing a complementary interpretation of the standard lifting rule from the perspective of per-Gaussian semantic assignment. The same formulation further yields a norm decomposition into intra-view and inter-view consistency, suggesting that feature magnitude itself can serve as a semantic reliability signal. Calibrated by effective multi-view support, this reliability score guides a mode-voting refinement that preserves CLIP feature validity by avoiding linear averaging. Experiments on open-vocabulary 3D semantic segmentation show that NormLift is an efficient, training-free framework that achieves strong performance across evaluation protocols.
+
+</details>
+
+#### 2026-09-16 - Geometry beneath the Waves: Dense Priors for Sparse-View Underwater 3D Gaussian Splatting
+
+**Authors:** Harvey Caldeira, Haoran Wang, Guoxi Huang, Shaoyu Cai, Rachel Fu, Nantheera Anantrasirichai
+**Links:** [abs](https://arxiv.org/abs/2609.18737) - [pdf](https://arxiv.org/pdf/2609.18737)
+**Primary category:** Neural Scene Representations & Rendering
+**Secondary categories:** None
+**Matched keywords:** 3D reconstruction, Gaussian Splatting, 3D Gaussian Splatting, rendering, radiance, splatting
+
+<details>
+<summary>Abstract</summary>
+
+Underwater 3D reconstruction supports applications ranging from marine ecosystem monitoring and subsea inspection to underwater archaeology, education, and immersive visualisation. 3D Gaussian Splatting has made real-time photorealistic novel-view rendering practical, while underwater variants incorporate physically based image-formation models to separate medium effects from scene radiance. Their reconstruction quality, however, remains fundamentally limited by the geometry used for initialisation.
+
+</details>
+
+#### 2026-09-16 - MoQSplat: Adaptive Progressive Streaming of 3D Gaussian Splatting via MoQ
+
+**Authors:** Emanuele Artioli, Mohammadreza Ghafari, Md Tariqul Islam, Farzad Tashtarian, Christian Rothenberg, Christian Timmerer
+**Links:** [abs](https://arxiv.org/abs/2609.18624) - [pdf](https://arxiv.org/pdf/2609.18624)
+**Primary category:** Neural Scene Representations & Rendering
+**Secondary categories:** None
+**Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, splatting
+
+<details>
+<summary>Abstract</summary>
+
+3D Gaussian Splatting (3DGS) enables photorealistic novel view synthesis, but transmitting gigabyte-scale scene data remains challenging for immersive applications. Traditional HTTP Adaptive Streaming over TCP introduces Head-of-Line (HOL) blocking and coarse segmenting ill-suited to fine-grained 3DGS delivery. We propose MoQSplat, which maps 3DGS content onto the Media over QUIC (MoQ) transport hierarchy. MoQSplat partitions scenes into spatial Tracks, clusters splats into semantically coherent Groups, and constructs progressive-quality Subgroups mapped to independent QUIC streams to eliminate connection-level HOL blocking. Using a stateless, subscriber-driven adaptation loop, clients dynamically request spatial regions and quality tiers based on six degrees of freedom (6-DoF) frustum visibility, distance, and foveal alignment. We evaluate the core components on a prototype implementation, showing that opacity-based pruning outperforms scale-based pruning for progressive delivery. The source code is available at https://github.com/emanuele-artioli/MoQSplat.
+
+</details>
+
+#### 2026-09-16 - CADSplat: Sparse-View 3D Gaussian Splatting Aided by CAD Models for Robust, Photorealistic Digital-Twin Reconstruction
+
+**Authors:** Kristof Overdulve, Lode Jorissen, Nick Michiels
+**Links:** [abs](https://arxiv.org/abs/2609.18473) - [pdf](https://arxiv.org/pdf/2609.18473)
+**Primary category:** Neural Scene Representations & Rendering
+**Secondary categories:** Embodied / Robotics / AR Applications
+**Matched keywords:** pose estimation, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, rendering, splatting, augmented reality, digital twin
+
+<details>
+<summary>Abstract</summary>
+
+We present CADSplat, a framework that reconstructs photorealistic, geometrically accurate digital twins from sparse ($<15$ views), wide-baseline posed images of an object by regularizing 3D Gaussian Splatting (3DGS) with an explicit CAD shape prior. Using such a prior requires finding a CAD model whose shape resembles the object depicted in the images and determining the pose of each camera relative to the object. We obtain both by matching segmented object silhouettes against silhouettes rendered from a CAD library and keeping the camera-to-object poses of the best-matching model. We then anchor 3D Gaussian primitives to the surface of the retrieved model and jointly optimize the 3DGS parameters, the camera-to-object registration, and a non-rigid deformation field to account for shape differences between the physical object and the CAD model. Across two real-world datasets, CADSplat outperforms unconstrained, few-shot, and mesh-texturing baselines and degrades gracefully to as few as 3 views. Our experiments show that most of the gain in rendering quality comes from how the splats are constrained---a fixed set of splats tied to a surface and moved by a single smooth deformation field---rather than from the CAD shape itself. The CAD model adds shape knowledge where views are scarcest, in the sparsest captures and on strongly self-occluded objects, and it places every camera in the object's own frame. This enables applications beyond novel-view synthesis, such as markerless augmented reality registration, per-image object pose estimation, physical simulations, and the transfer of part labels from the design to the reconstruction.
+
+</details>
+
+#### 2026-09-16 - IRIS: Implicit Rendering Matters for Pose-Free Novel View Synthesis
+
+**Authors:** Wenyu Li, Sidun Liu, Peng Qiao, Yong Dou, Tongrui Hu
+**Links:** [abs](https://arxiv.org/abs/2609.18034) - [pdf](https://arxiv.org/pdf/2609.18034)
+**Primary category:** Neural Scene Representations & Rendering
+**Secondary categories:** None
+**Matched keywords:** novel view synthesis, view synthesis, rendering
+
+<details>
+<summary>Abstract</summary>
+
+Novel view synthesis from unposed multi-view images remains challenging, as the model must jointly learn scene representations and camera parameters without pose supervision. Existing approaches largely fall into two extremes: implicit latent-space rendering is flexible and easy to optimize, but often yields weakly grounded camera estimation; explicit 3D representations provide stronger geometric grounding, but introduce heavier parameterization and more fragile optimization. In this paper, we present IRIS, a fully self-supervised framework that provides a practical middle ground between these two paradigms. Instead of decoding free latent tokens or reconstructing fully explicit 3D primitives, IRIS represents the scene as a latent neural field and renders novel views by querying this field under self-predicted cameras. Specifically, projected features from reference views are aggregated at sampled 3D points to form point-wise latent features, which are then composed along target rays for rendering. This design preserves the flexibility and optimization stability of implicit modeling, while introducing stronger geometric structure than unconstrained latent rendering. Extensive experiments show that IRIS achieves strong novel view synthesis quality with competitive pose accuracy under fully self-supervised learning. Our project page: https://leo-frank.github.io/IRIS
+
+</details>
+
+#### 2026-09-15 - Geometry-Driven Shadow Harmonisation for Composited Faces: A Multiplicative, Albedo-Preserving Relighting Pipeline
+
+**Authors:** Vijesh KP
+**Links:** [abs](https://arxiv.org/abs/2609.17740) - [pdf](https://arxiv.org/pdf/2609.17740)
+**Primary category:** Neural Scene Representations & Rendering
+**Secondary categories:** None
+**Matched keywords:** inverse rendering, relighting, rendering
+
+<details>
+<summary>Abstract</summary>
+
+Face swapping and face compositing pipelines routinely produce a face that is geometrically well aligned but photometrically implausible: the donor face carries flat, near-frontal studio illumination while the host body and background carry directional scene light. Most existing remedies re-synthesise the face through colour transfer, neural relighting, or inverse rendering, and therefore risk altering identity, skin tone, and texture. We present a conservative alternative: geometry-driven form-shadow injection. The pipeline never repaints the face. It estimates a per-pixel gain field $g\in[g_{\min},1]$ from a rasterised 3D face proxy and multiplies it channel-uniformly onto linear RGB, so the operator can only darken and cannot shift chromaticity. A dense landmark mesh is rasterised into a depth buffer, from which we derive surface normals, a cavity term, and screen-space cast shadows. Key-light direction is estimated from host-side cues (body, background, hair halo); on-face cues are downweighted because they recover the donor's lighting. Shadow magnitude is not matched to the host: it is set by a three-parameter transfer $(τ,σ,g_{\min})$. The shading field is divided by its 75th percentile over skin, then gated, scaled, clamped, smoothed, and re-clipped inside a feathered, skin-gated face mask. On an analytic face heightfield, the default $(τ,σ,g_{\min})=(0.90,0.45,0.82)$ modifies 56.5% of face pixels with mean gain 0.938 (0.890 on modified pixels) and drives 3.4% of pixels to the floor. Hue invariance is a corollary of the operator. We analyse the transfer in closed form, ablate its parameters, and discuss failure modes of a monotone, darkening-only formulation, including double-shadowing of non-flat donors.
+
+</details>
 
 #### 2026-09-15 - ORCA: Occlusion-Aware Refinement and Completion for Novel View Synthesis
 
@@ -1523,112 +1440,99 @@ Solving novel view synthesis (NVS) for millimeter-wave (mmWave) radar requires a
 
 </details>
 
-#### 2026-09-10 - Hologram Representation via Quadratic Phase Gaussian Splatting
-
-**Authors:** Haolong Wang, Yicheng Zhan, Kaan Akşit, Simeng Qiu
-**Links:** [abs](https://arxiv.org/abs/2609.11434) - [pdf](https://arxiv.org/pdf/2609.11434)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** None
-**Matched keywords:** Gaussian Splatting, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Hologram Representation via Quadratic Phase Gaussian Splatting
-- 作者：Haolong Wang, Yicheng Zhan, Kaan Akşit, Simeng Qiu
-- 出版日期：2026-09-10T12:06:11Z
-- 分类：Neural Scene Representations & Rendering
-- 链接：[摘要](https://arxiv.org/abs/2609.11434) / [PDF](https://arxiv.org/pdf/2609.11434)
-
-### 一句话总结
-该论文提出复数域二次相位高斯（CVQPG），用可学习的二维二次相位函数替代 2D Gaussian Splatting 中的标准二维高斯表示，以提升全息重建的视觉质量。
-
-### 研究问题
-如何改进全息图表示方法，使其在重建质量上优于现有先进方法，同时保持参数高效。摘要指出，作者希望验证“调制基元的波前”是否是一种有效且轻量的全息表示增强方式。
-
-### 核心思路/方法
-- 提出 Complex-Valued Quadratic Phase Gaussian (CVQPG)。
-- 将 2D Gaussian Splatting 中使用的标准二维高斯表示替换为二维二次相位函数。
-- 引入额外可学习参数，用于控制这些基元的曲率。
-- 通过等参数数量评估，比较该方法与现有先进方法在全息重建中的表现。
-- 进行频域分析，观察自然图像中高频与中高频段的保留情况。
-
-### 主要贡献
-- 提出 CVQPG，一种新的全息图表示方法，核心是用二维二次相位函数替代标准二维高斯基元。
-- 在等参数数量评估中，表明调制基元波前可作为全息表示的有效且轻量增强。
-- 在全息重建视觉质量上平均超过现有先进方法：RGB 提升 +0.19 dB，灰度提升 +0.33 dB。
-- 频域分析显示，CVQPG 成功保留了自然图像的中高频段。
-
-### 局限性
-摘要未提供足够信息。未说明计算开销、训练时间、数据集规模、泛化能力、硬件依赖性、失败案例或与其他表示方法的全面比较。等参数数量评估之外的其他实验设置也未在摘要中给出。
-
-### 阅读优先级
-中。理由：该工作与神经场景表示、Gaussian Splatting 和全息显示相关，提出的二次相位基元替代思路较直接，且摘要给出了明确的定量提升和频域分析；但摘要未披露数据集、实现细节和完整实验设置，是否具有广泛适用性需阅读正文确认。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-We introduce Complex-Valued Quadratic Phase Gaussian (CVQPG), a novel hologram representation method that replaces standard 2D Gaussian representations used in 2D Gaussian Splatting with 2D quadratic phase functions. CVQPG incorporates additional learnable parameters to control the curvature of these bases. We evaluate our approach against state-of-the-art methods, exceeding the visual quality by +0.19 dB (RGB) and +0.33 dB (grayscale) on average in holographic reconstructions. Specifically, our equal parameter count evaluations show that modulating the primitive's wavefront is an effective and lightweight enhancement for hologram representations. In addition, our frequency domain analysis illustrates that CVQPG has successfully preserved the mid-to-high frequency band of natural images.
-
-</details>
-
-#### 2026-09-10 - Tri-DehazeGS: Scene--Medium Decoupled Gaussian Splatting with Transmittance-Aware Optimization
-
-**Authors:** Kui Jiang, Yang Gu, Jiacheng Liu, Shiyu Liu, Youyu Chen, Hui Liu
-**Links:** [abs](https://arxiv.org/abs/2609.11223) - [pdf](https://arxiv.org/pdf/2609.11223)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** None
-**Matched keywords:** Gaussian Splatting, rendering, radiance, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Tri-DehazeGS: Scene--Medium Decoupled Gaussian Splatting with Transmittance-Aware Optimization
-- 作者：Kui Jiang, Yang Gu, Jiacheng Liu, Shiyu Liu, Youyu Chen, Hui Liu
-- 出版日期：2026-09-10T08:24:16Z
-- 分类：Neural Scene Representations & Rendering
-- 链接：https://arxiv.org/abs/2609.11223
-
-### 一句话总结
-Tri-DehazeGS 提出一种场景—介质解耦的高斯泼溅框架，用独立视图共享三平面场建模参与介质，并通过透射率梯度补偿优化低透射区域，以改善雾天多视角图像下的干净新视角重建。
-
-### 研究问题
-从有雾多视角图像中恢复干净三维场景具有挑战性，因为雾会衰减场景辐射并引入大气散射。现有散射感知高斯泼溅方法虽引入物理雾模型，但常在图像空间施加退化，或把介质相关变量绑定到高斯基元上，导致干净场景辐射与大气效应相互纠缠；同时低透射率区域对高斯优化提供的监督较弱，使远处或浓雾区域重建不足。
-
-### 核心思路/方法
-论文认为雾下干净重建需要同时实现场景—介质解耦与透射率感知的优化重平衡。为此提出 Tri-DehazeGS：
-- 用高斯基元表示干净场景；
-- 用独立的视图共享三平面场建模参与介质；
-- 通过物理散射模型合成有雾观测。
-此外引入 Medium-Decoupled Transmittance Gradient Compensation（MD-TGC），在介质冻结后补偿被雾抑制的梯度，且不改变前向渲染。
-
-### 主要贡献
-- 提出 Tri-DehazeGS，一个场景—介质解耦的高斯泼溅框架，将干净场景与参与介质分别表示并依据物理散射模型组合。
-- 引入 MD-TGC，在介质冻结后补偿雾抑制的梯度，以重平衡低透射率区域的优化。
-- 在真实与合成雾基准上实验显示，Tri-DehazeGS 改善了干净新视角重建，并提供代码链接。
-
-### 局限性
-摘要未提供足够信息说明方法的具体失败情形、计算开销、对极端天气或动态场景的适用性，也未给出定量指标、消融细节或与基线方法的完整对比。
-
-### 阅读优先级
-高。理由：该论文针对雾天三维重建中场景与介质纠缠、低透射率区域监督不足两个明确问题，提出解耦表示与梯度补偿机制，属于神经场景表示与渲染方向中物理模型与高斯泼溅结合的前沿工作，且提供代码，便于复现与后续研究。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Recovering clean 3D scenes from hazy multi-view images is challenging because haze attenuates scene radiance and introduces atmospheric scattering. Recent scattering-aware Gaussian Splatting methods introduce physical haze models into reconstruction, but they often apply degradation in image space or bind medium-related variables to Gaussian primitives, which can entangle clean scene radiance with atmospheric effects. Moreover, low-transmittance regions provide weakened supervision for Gaussian optimization, causing distant or dense-haze areas to be under-reconstructed. We argue that clean reconstruction under haze requires both scene--medium disentanglement and transmittance-aware optimization rebalancing. To this end, we propose Tri-DehazeGS, a scene--medium decoupled Gaussian Splatting framework. It represents the clean scene with Gaussian primitives, models the participating medium using an independent view-shared tri-plane field, and composes hazy observations through a physical scattering model. We further introduce Medium-Decoupled Transmittance Gradient Compensation (MD-TGC), which compensates haze-suppressed gradients after medium freezing without altering forward rendering. Experiments on real and synthetic haze benchmarks show that Tri-DehazeGS improves clean novel-view reconstruction. Code is available at https://github.com/aptx46/Tri-DehazeGS.
-
-</details>
-
 ## Embodied / Robotics / AR Applications
 
 ### 2026-09
+
+#### 2026-09-16 - PASSAGE: Scaling Scene-Aligned Motion Learning for Perceptive Humanoid Traversal in Cluttered Environments
+
+**Authors:** Yuxuan Ma, Zicheng Zeng, Chunlin Peng, Zhoujian Li, Zetong Zhao, Zhikai Zhang, Yunrui Lian, Han Xue, Sikai Liang, Weiyi Zhu, Mulin Chen, Chenghuai Lin, Jiayu Zeng, Yanwei An, Songan Zhang, Jiayuan Gu, Jilong Wang, Jingbo Wang, He Wang, Li Yi
+**Links:** [abs](https://arxiv.org/abs/2609.18732) - [pdf](https://arxiv.org/pdf/2609.18732)
+**Primary category:** Embodied / Robotics / AR Applications
+**Secondary categories:** None
+**Matched keywords:** mapping, virtual reality, simulation
+
+<details>
+<summary>Abstract</summary>
+
+Humanoid robots can step over, squeeze past, and duck under obstacles, but learning to select and coordinate these behaviors from onboard perception remains challenging. Many existing approaches rely on task-specific reinforcement-learning objectives or curated motion libraries, making broad behavioral coverage costly. We present PASSAGE, a perception-conditioned planner--tracker framework for humanoid traversal. Using virtual reality and inertial motion capture, we collect 100 h of scene-aligned human motion across 1,500 cluttered scenes. A conditional flow-matching planner generates short-horizon references from motion history, a local destination, and a robot-centric multi-layer elevation map, while a perceptive whole-body tracker executes them at 50 Hz with geometric feedback. Real-time chunking promotes inter-chunk consistency, and planner-side RL post-training under the frozen tracker further improves closed-loop performance. Without skill annotations or obstacle-specific policies, one planner--tracker pair selects and composes traversal behaviors across unseen geometries. In simulation, component ablations quantify the contribution of each stage. Across three independent training seeds, scaling captured data from 6 to 100 h increases mean contact-free success from 48.1% to 68.9% on held-out scenes, while the final model with validated scene augmentation reaches 70.3%. The fully onboard system integrates egocentric 3D LiDAR perception, online occupancy mapping, 6.25 Hz planning, and 50 Hz control on a Jetson AGX Orin; tests across 50 unseen physical layouts demonstrate traversal without prebuilt maps or offboard computation.
+
+</details>
+
+#### 2026-09-16 - DeformSmith: Physics Harness-Guided Hierarchical Generation of Deformable Assets for Robot Manipulation
+
+**Authors:** Can Li, Jie Gu, Zishun Deng, Jingmin Chen, Lei Sun
+**Links:** [abs](https://arxiv.org/abs/2609.18620) - [pdf](https://arxiv.org/pdf/2609.18620)
+**Primary category:** Embodied / Robotics / AR Applications
+**Secondary categories:** None
+**Matched keywords:** manipulation, simulation
+
+<details>
+<summary>Abstract</summary>
+
+Creating deformable assets for robot manipulation requires jointly specifying their geometry, appearance, and physical properties. This is especially challenging for deformable objects, since text and images provide limited evidence about how they deform and respond to contact, yet these responses directly affect their suitability for interaction. Automated generation therefore needs to resolve coupled physical requirements and use interaction evidence to guide construction and refinement. We present DeformSmith, a framework that enables automated generation of interactive, physically credible deformable assets from text or a single image. Through hierarchical agentic construction and a shared physics-grounded harness, it progressively builds, tests, and refines geometry, physical models, material behavior, and robot interaction until the resulting asset is ready for simulation and manipulation. Robot interaction closes the generation loop through manipulation feedback and replayable interaction data. Results show that DeformSmith generates assets with better visual quality and physical plausibility than state-of-the-art baselines, including PhysGen3D, PhysGM, and PhysX-Omni, while supporting the synthesis of data for robotic manipulation of deformable objects. Project page: https://can-lee.github.io/deformsmith-web/
+
+</details>
+
+#### 2026-09-16 - GraphPoint: Semantic Entity Graphs and Point Trajectories for Compositional Robot Manipulation
+
+**Authors:** Kang Luo, Hesheng Wang
+**Links:** [abs](https://arxiv.org/abs/2609.18358) - [pdf](https://arxiv.org/pdf/2609.18358)
+**Primary category:** Embodied / Robotics / AR Applications
+**Secondary categories:** None
+**Matched keywords:** manipulation, mapping
+
+<details>
+<summary>Abstract</summary>
+
+Robot manipulation policies often struggle to generalize beyond their demonstrations, even when new instructions involve familiar objects and behaviors. When language and scenes are strongly correlated during training, a policy can learn a fixed visual-action mapping rather than respond to the requested behavior. We investigate compositional reuse at two levels: within a subtask, combining familiar entities, action types, and action modifiers; and across subtasks, reusing learned subtasks in unseen long-horizon tasks. We introduce CoMani, a benchmark with controlled splits for evaluating both capabilities. Matched initial scenes and controlled changes to a single semantic factor encourage reliance on language rather than visual shortcuts. We further propose GraphPoint, which connects semantic entity graphs to geometric control by predicting future gripper point trajectories and converting them into actions using robot geometry. The framework organizes the gripper and objects by semantic roles and conditions their interactions on action types and modifiers, while predicted progress guides transitions during execution. Experiments and ablations on CoMani validate the effectiveness of our method for instruction-dependent generalization at both levels. Code will be released at GraphPoint.
+
+</details>
+
+#### 2026-09-16 - PRISM: Predictive Representation of Interaction Style and Motion for Social Robot Navigation
+
+**Authors:** Bo-Han Chen, Hiromu Taketsugu, Norimichi Ukita
+**Links:** [abs](https://arxiv.org/abs/2609.18125) - [pdf](https://arxiv.org/pdf/2609.18125)
+**Primary category:** Embodied / Robotics / AR Applications
+**Secondary categories:** None
+**Matched keywords:** robot navigation
+
+<details>
+<summary>Abstract</summary>
+
+Humans often observe others before interacting and adjust their behavior accordingly. Robot navigation in crowds, however, often represents pedestrians mainly by observed geometric states, leaving individual differences in interaction tendencies implicit. We propose PRISM (Predictive Representation of Interaction Style and Motion), a framework that infers interaction traits from passive observations of human-human interactions. PRISM encodes human trajectories into a continuous ordinal latent space with a transformer encoder trained by Rank-N-Contrast loss, and pairs each inferred trait with a temporal-stability score supplied to the navigation policy. In randomized crowd simulations, PRISM reduces collision rates over the geometry-only baseline and yields small improvements in navigation-time and path-length metrics. These results suggest the utility of passive latent-trait inference for social navigation in dynamic crowds.
+
+</details>
+
+#### 2026-09-16 - Characterizing Refraction-Induced Ranging Bias in Underwater Collaborative Localization
+
+**Authors:** Timothy Kogucki, Alan Papalia
+**Links:** [abs](https://arxiv.org/abs/2609.18073) - [pdf](https://arxiv.org/pdf/2609.18073)
+**Primary category:** Embodied / Robotics / AR Applications
+**Secondary categories:** None
+**Matched keywords:** localization, simulation
+
+<details>
+<summary>Abstract</summary>
+
+This work studies how refraction-induced bias on acoustic ranging affects multi-agent collaborative localization in a range of oceanographic conditions and spatial scales. While multi-agent range-aided navigation, which uses range measurements to either fixed infrastructure or other agents, is a promising solution to the challenges of large-scale underwater localization, its accuracy depends strongly on the quality of range measurements. Sound speed variability induces refraction (bending) of acoustic rays, yet, for algorithmic tractability, standard sensor fusion pipelines assume straight-line propagation. This refraction systematically biases range measurements to be longer than the straight-line assumption predicts. However, the effects of this bias on multi-agent collaborative localization on kilometer scales remains unexplored. We present a series of simulated experiments with several agents operating over kilometer scales. The simulation uses HYCOM reanalysis data to recreate realistic oceanographic conditions, ray tracing to generate refraction-informed ranges, and a centralized multi-agent factor graph estimator to quantify the resulting measurement bias on estimated trajectories. Preliminary results indicate that refraction-induced bias can induce significant degradation of estimated trajectories, particularly in regions with sharp sound-speed gradients. We also share the simulation environment to support further studies https://github.com/UMich-RobotExploration/manta-ray.
+
+</details>
+
+#### 2026-09-15 - Imitation Learning for Autonomous Driving in CARLA
+
+**Authors:** Jordy Kieto
+**Links:** [abs](https://arxiv.org/abs/2609.17757) - [pdf](https://arxiv.org/pdf/2609.17757)
+**Primary category:** Embodied / Robotics / AR Applications
+**Secondary categories:** None
+**Matched keywords:** autonomous driving
+
+<details>
+<summary>Abstract</summary>
+
+Behavioral cloning trains a policy offline on expert demonstrations, but deployment is closed loop: each action affects the observations the policy receives next. We study how much closed-loop driving competence a compact multimodal policy can acquire from offline demonstrations in the CARLA simulator. The policy uses five-frame histories of RGB images, LiDAR, vehicle telemetry, and lane waypoints to predict throttle, brake, and steering at 20 Hz. Demonstrations were collected in three stages, ending with a systematic route-generation procedure that enumerates spawn points and feasible maneuvers and verifies completed autopilot routes. The released 1.36 million parameter policy was trained on 236,882 windows, representing about 3.3 hours of driving from 448 captures. The resulting policy drives autonomously for hours on training and held-out routes. In our runs, it did so without collisions and also transferred qualitatively to an unseen CARLA town with different road geometry. We also observed recovery from large trajectory deviations, although we do not claim systematic recovery without controlled evaluation. We report offline metrics and distinguish measured results from qualitative closed-loop observations. We release the code, trained checkpoint, ONNX model, data sample, and an evidence audit for the reported claims.
+
+</details>
 
 #### 2026-09-15 - SWIM: Vision-Language-Grounded Soft Whole-Body Interactive Manipulation
 
@@ -1727,7 +1631,7 @@ This paper introduces NeuroSymbEAD, a large-scale neuro-symbolic caption dataset
 
 </details>
 
-#### 2026-09-15 - Seeing What Matters: Visual Cue Guided Video Planning for Generalizable Robot Navigation
+#### 2026-09-15 - Visual Cue Guided Video Planning for Generalizable Robot Navigation
 
 **Authors:** Hojin Lee, Sizhe Lester Li, Maximilian Hilger, Susie Lu, Achim J. Lilienthal, Vincent Sitzmann, Daniel A. Duecker
 **Links:** [abs](https://arxiv.org/abs/2609.16737) - [pdf](https://arxiv.org/pdf/2609.16737)
@@ -2213,64 +2117,6 @@ Wheel-loader excavation is a sequential decision problem in which every scoop ch
 <summary>Abstract</summary>
 
 As robotic systems grow more general, legal norms are needed to integrate them into society. This paper extends the isomorphism problem of aligning legal source texts with their encodings, and measures two key challenges to robot normative control: (1) the \textit{grounding isomorphism gap}, where perception error grounds false atoms for legal reasoning, and (2) the \textit{ontological isomorphism gap}, where one legal conclusion admits many faithful translations into planning constraints. The paper introduces a legal planning stack that employs Defeasible Deontic Logic (DDL) to constrain a motion planner. The stack leverages learned world models to plan and to provide legal context, enabling \textit{ex ante} governance that intervenes before an illegal action is executed. It was deployed on a simulated robot arm pushing a cube across a $3\times3$ grid. The findings were (1) the legislated agent abided substantially more often than the non-legislated one, and modeling perception uncertainty lifted abidance even further, (2) the legal reasoning ran efficiently at runtime and its verdicts were auditable, and (3) the stack adapted to exogenous signals and endogenous rule changes. Both gaps were measured: (4) world model and probe error corrupted the factual input for the DDL reasoner, and (5) a single law admitted several faithful metric interpretations yielding drastically different abidance. Thus, \textit{ex ante} legislation functions as intended, and closing these gaps with a standardized mapping from the law to runtime constraints and improved fact grounding from perception will yield robust laws that align robot behavior with society's norms.
-
-</details>
-
-#### 2026-09-10 - Harness Robotic OS: A Unified Embodied-Agent Runtime for Closed-Loop Quadruped Inspection
-
-**Authors:** Yaoyuan Yan, Zhiyou Heng, Haoxiang Jie, Gang Liu, Hongjie Yan, Wei Zhou
-**Links:** [abs](https://arxiv.org/abs/2609.11225) - [pdf](https://arxiv.org/pdf/2609.11225)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** stereo depth, robot navigation, mapping, localization, scene understanding
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Harness Robotic OS: A Unified Embodied-Agent Runtime for Closed-Loop Quadruped Inspection
-- 作者：Yaoyuan Yan, Zhiyou Heng, Haoxiang Jie, Gang Liu, Hongjie Yan, Wei Zhou
-- 出版日期：2026-09-10T08:25:46Z
-- 分类：Embodied / Robotics / AR Applications（主要分类）；次要分类：摘要未提供足够信息
-- 链接：摘要页 https://arxiv.org/abs/2609.11225 ；PDF https://arxiv.org/pdf/2609.11225
-
-### 一句话总结
-论文提出统一的具身智能体运行时 HROS 及其住宅小区巡检实现 Argos，将四足机器人导航、感知、认知推理、语音交互与安全约束下的自演化整合为可追踪的闭环巡检系统。
-
-### 研究问题
-自主物业巡检不仅需要稳健的机器人导航，还需要在可追踪的运行闭环中连接异构传感、可复用的自主能力、多模态场景理解、人机交互与企业响应。现有四足巡检系统常通过任务专用接口集成这些功能，导致上下文协调、知识复用和受控适应变得困难。
-
-### 核心思路/方法
-- 提出 Harness Robotic OS（HROS），一个统一的具身智能体运行时；Argos 是其面向住宅小区巡检的具体实现。
-- HROS 将系统组织为机器人运行时、具身自主技能、认知智能体运行时、交互与运维平面。
-- 通过共享上下文连接物理状态与智能体推理。
-- 支持流式 ASR/TTS 的语音任务交互。
-- 采用分层的工作记忆、情景记忆与语义记忆来保存运行知识。
-- 设计安全门控的自演化闭环，将执行轨迹转化为带版本的候选更新，不允许无约束的在线修改。
-- Argos 原型集成 Vbot 四足机器人、Fast-LIO2 定位与建图、Hobot-Stereo 深度感知、PCT-Planner 全局规划、EGO-Planner 局部运动生成，以及 OpenClaw 编排的 Qwen3-VL 巡检分析。
-
-### 主要贡献
-- 提出统一的具身智能体运行时 HROS，用于闭环四足巡检，缓解任务专用接口带来的上下文协调与知识复用困难。
-- 给出 Argos 实现，将机器人运行时、自主技能、认知推理、语音交互和安全门控自演化组织为分层系统。
-- 在住宅物业环境中验证部署的导航与巡检闭环，报告了 100% 航点可达率、户外定位误差低于 10 cm、局部障碍响应延迟低于 200 ms、代表性危险检测率 85–95%、告警投递与结构化报告生成成功率 99%。
-- 摘要称 HROS 为记忆增强、语音感知且可持续改进的具身巡检智能体提供可扩展软件基础。
-
-### 局限性
-- 论文仅提供摘要，未提供关于实验规模、场景数量、基线对比、消融研究、失败案例和统计显著性的细节；这些信息摘要未提供足够信息。
-- 危险检测率 85–95% 的具体类别、测试条件与误报情况，摘要未提供足够信息。
-- 自演化闭环的版本管理机制、安全门控具体策略及其长期有效性，摘要未提供足够信息。
-- 系统在住宅小区之外的泛化能力、不同机器人平台的可移植性，摘要未提供足够信息。
-- 真实部署中的成本、维护、隐私与法规问题，摘要未提供足够信息。
-
-### 阅读优先级
-高。理由：该论文聚焦具身智能体运行时与四足机器人闭环巡检的系统集成，涉及导航、感知、认知记忆、语音交互与安全自演化等完整链路，并给出可量化的部署指标；对具身智能系统落地、机器人操作系统架构和物业巡检应用有直接参考价值。但需注意仅凭摘要无法评估实验严谨性与泛化性，建议获取全文后重点核查实验细节与自演化机制。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Autonomous property inspection requires more than robust robot navigation: a deployable system must connect heterogeneous sensing, reusable autonomy capabilities, multimodal scene understanding, human interaction, and enterprise response within a traceable operational loop. Existing quadruped inspection systems commonly integrate these functions through task-specific interfaces, making contextual coordination, knowledge reuse, and controlled adaptation difficult. This paper presents \textit{Harness Robotic OS} (HROS), a unified embodied-agent runtime, and Argos, its realization for residential-community inspection. HROS organizes the system into robot runtime, embodied autonomy skills, cognitive agent runtime, and interaction and operations planes. A shared context connects physical state with agent reasoning; streaming ASR/TTS supports voice-based mission interaction; hierarchical working, episodic, and semantic memory preserves operational knowledge; and a safety-gated self-evolution loop converts execution traces into versioned candidate updates without permitting unconstrained online modification. The Argos prototype integrates a Vbot quadruped, Fast-LIO2 localization and mapping, Hobot-Stereo depth perception, PCT-Planner global planning, EGO-Planner local motion generation, and OpenClaw-orchestrated Qwen3-VL inspection analysis. Experiments in a residential property environment achieved 100\% waypoint reachability, outdoor localization error below 10~cm, local obstacle-response latency below 200~ms, representative hazard-detection rates of 85--95\%, and 99\% success in alarm delivery and structured-report generation. These results validate the deployed navigation and inspection closed loop, while HROS provides an extensible software foundation for memory-augmented, voice-aware, and continuously improvable embodied inspection agents.
 
 </details>
 
