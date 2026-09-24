@@ -11,13 +11,13 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：73
+- 当前滚动窗口论文数：64
 - 分类分布：
-  - Embodied / Robotics / AR Applications: 25
-  - Neural Scene Representations & Rendering: 21
-  - 3D Reconstruction & Multi-view Geometry: 19
-  - Geometry Foundation Models: 5
-  - Dynamic / 4D Reconstruction: 3
+  - Embodied / Robotics / AR Applications: 24
+  - 3D Reconstruction & Multi-view Geometry: 17
+  - Neural Scene Representations & Rendering: 15
+  - Geometry Foundation Models: 4
+  - Dynamic / 4D Reconstruction: 4
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
@@ -25,57 +25,46 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-1. **3DGS 从“重建表示”走向“可交互/可仿真基底”**
-   今天的多篇论文不再把 3D Gaussian Splatting 仅当作渲染表示，而是把它当作仿真、SLAM、配准和去噪的底层数据结构。φ-RIE 直接把重建场景里的物体转成可移动仿真资产；Dual Covariance Gaussian Splatting SLAM 把渲染协方差与跟踪协方差解耦；ArborSplat 在高斯地图上直接优化语义；Ultra-fast Neural Inference for Stochastic Gaussian Splatting Denoising 则试图弥补无排序随机泼溅带来的噪声。这反映出 3DGS 正在分化为“渲染路径”和“几何/物理/语义路径”两条并行管线。
+1. **视觉语言模型从“语义描述”转向“空间/几何落地”，成为具身智能感知的核心组件。**
+   多篇论文围绕 VLM 在机器人场景中的几何短板展开：`VLMs Can Describe, But Not Measure` 明确指出 VLM 语义强、度量弱，提出“VLM 标注 + 深度 grounding”的模块化物体中心表示；`AnchorReasoning` 用视觉 grounded 思维链把决策关键元素与轨迹规划连接；`Spatial and Semantic Reasoning for LLM-Driven Robot Navigation via MCP` 通过 MCP 标准化工具把占据栅格转成 LLM 可用的度量/位姿感知图像。共同信号是：单纯调用 VLM 不够，需要显式的空间表示层或数据监督把语义与几何对齐。
 
-2. **几何基础模型与 2D 基础模型的端到端融合**
-   SAM-V 把前馈几何模型 VGGT 的特征直接融入 SAM，而不是做离线掩码匹配；GRIP 用高斯特征泼溅把点云特征投到图像网格再融合；NaCR 把 NeRF 与相机光线回归在光线层级闭环。这条趋势的核心，是不再依赖后处理式的跨模态匹配，而是让几何先验在 2D 网络内部参与特征形成。
+2. **几何基础模型（前馈深度/点云先验）正在被“缝合”进 SLAM、检测与地图构建等经典几何管线。**
+   `DAVIO` 用 Depth Anything 3 同时做单目惯性 SLAM 的启动与建图，解决传统 VIO 等视差启动、只保留稀疏路标的问题；`Leveraging Vision-Based Point Cloud Map Priors` 用 Pi3X + DINOv3 从历史相机轨迹构建点云先验，替代昂贵的 LiDAR 建图；`Vision Foundation Models with Synthetic-Only Training` 用 DINOv3 替换小编码器提升航天器位姿估计。趋势是前馈几何模型不再只做离线预测，而是作为先验/初始化嵌入在线系统。
 
-3. **“先验地图/世界模型”成为相机感知与导航的效率杠杆**
-   多篇工作尝试用历史遍历或可学习表示提供超出当前帧的几何上下文。Leveraging Vision-Based Point Cloud Map Priors 用 Pi3X 构建纯视觉点云先验并附 DINOv3 特征；Skytopia 则主张策略真正需要的是世界模型中“产生预测的表示”，而非部署时反复执行预测。二者共同指向：先验不在于预测未来，而在于压缩和复用几何/表示上下文。
+3. **3D 高斯表示从“照片级重建”走向“可交互、可解耦、可物理驱动”。**
+   `φ-RIE` 把 3DGS 场景中选定物体转为可移动仿真资产并补全被遮挡背景，目标是机器人仿真中的物体级交互；`GaussPDE` 在不重训练的前提下把 PDE 动力学注入预训练 3DGS，通过图拉普拉斯演化修改球谐直流系数；`InfiNoVA` 用时变 3D 高斯把多相机演示重建成密集新视角用于 VLA 策略增强；`ArborSplat` 则把语义直接优化到高斯地图上。共同方向是 3DGS 从静态可视化走向可编辑、可仿真、可驱动的场景表示。
 
-4. **合成数据与仿真向“物理—视觉双高保真”收敛**
-   PhyVisGen 同时强调 IPC 软接触和路径追踪视觉真实；Vision Foundation Models with Synthetic-Only Training 探索纯合成数据训练航天器位姿估计；Metric-Bench 用参考物引导 VLM 隐式学习 2D-to-3D 度量。这些工作把“合成数据可用性”问题从单纯图像逼真，推进到物理接触、度量尺度和任务奖励的可验证性。
+4. **语义/运动先验从“二值剔除”转向“连续调制”，以保留对应密度。**
+   `KYS-SLAM` 明确反对现有语义/动态 SLAM 的二元特征拒绝，改为把语义、全景、运动先验融合为连续对应代价；`ArborSplat` 用类别特定高度带约束和标签一致性拒绝来提升细薄结构语义可靠性。两者都反映同一思路：上下文证据是分级量，不是排他性准则。
 
-5. **效率与部署约束开始反向塑造模型结构**
-   GTR 用无 softmax 的门控线性注意力替代全局 softmax；Vision Foundation Models 报告 Jetson Orin NX 上的 133.8 ms/32.0 W；Stochastic Gaussian Splatting Denoising 要求去噪开销低于省去的排序时间。这说明高分辨率、嵌入式、实时流式场景正在成为结构设计的第一约束，而非事后优化。
+5. **多模态融合继续向“物理一致性”和“鲁棒性补偿”深入，而非简单拼接。**
+   `Reflection-Aware Reasoning` 用相机 + 2D 雷达在 BEV 空间推断反射阶数与反射面，再用物理引导射线追踪定位 NLOS 行人；`Wave-Robust Passive AUV Localization` 用 IMU 对波浪引起的 6-DOF 阵列扰动做协方差去扭曲后再做 MUSIC DOA；`From LiDAR Maps to Visual Localization` 把 LiDAR 地图渲染成带 2D-3D 来源的准图像，让相机与地图共享视觉特征匹配器。这些工作都在处理模态间/物理扰动带来的系统性偏差。
 
 #### 技术路线观察
 
-- **几何基础模型方向**：SAM-V 代表“几何模型特征注入 2D 基础模型”的路线，强调端到端、免离线匹配；GRIP 代表“高斯泼溅作为跨模态桥”的路线，用可微渲染对齐图像与点云；NaCR 则代表“可微渲染闭环监督”的路线，用 NeRF 光度误差反传优化光线回归。三者的共同点是让几何先验可微地进入学习回路。
-- **3D/4D 重建方向**：Point Diffusion Mamba 面向数据稀缺下的单视图重建，用扩散+状态空间模型处理无序点云；LiFR v2 面向 RGB+事件的高帧率稠密预测，提出传播—补全—记忆框架；Fysiverse-3D-Vision 则从单图生成可执行 3D 场景，把布局推理与资产生成分离。重建正在从“静态形状”扩展到“可执行、可流式、可交互”。
-- **神经场景表示方向**：3DGS 相关论文占比最高，但技术侧重点明显分化：φ-RIE 关注物体级可移动性，ArborSplat 关注语义与细结构，Dual Covariance SLAM 关注渲染与配准的协方差冲突，Stochastic Denoising 关注无排序渲染的噪声。整体上，3DGS 的“表示能力”已经不是瓶颈，瓶颈转向语义可靠性、物理可交互性和跟踪鲁棒性。
-- **机器人/AR 应用方向**：PhyVisGen 和 JAMB 都强调几何/物理后果的显式建模，前者用 IPC 保证软接触，后者用未来 3D 点轨迹与动作联合去噪；SE(3) Neural Potential Fields 直接用图像学习势场，绕过显式重建；Relative Contact Velocity-Controlled HOM 把多指手与工具建模为统一机构。应用侧的共同趋势是：策略/规划不再满足于 2D 观测，而是要求几何可预测、接触可解释、部署可实时。
+- **几何基础模型方向**：`DAVIO`、`Leveraging Vision-Based Point Cloud Map Priors`、`Vision Foundation Models with Synthetic-Only Training` 代表了“用大规模前馈模型提供几何/语义先验”的路线。区别在于：DAVIO 把深度模型嵌入 VIO 滤波器的启动与建图闭环；点云先验论文把 Pi3X 当建图器、DINOv3 当语义增强；航天器位姿论文则是把 DINOv3 当编码器替换。共同点是基础模型仍需要下游几何约束（IMU 预积分、BEV 融合、热力图架构）来恢复度量尺度与重力。
+
+- **3D/4D 重建方向**：`RawHDRV` 处理单曝光 Raw 视频的 HDR 重建，属于 4D/动态重建中的成像前端问题，利用 Bayer 通道曝光特性而非交替曝光；`GTR` 从效率角度切入密集预测骨干，用门控线性注意力替代 softmax 注意力，服务于高分辨率 3D 感知。两者分别从“输入动态范围”和“骨干效率”两个侧面支撑 3D/4D 重建的可扩展性。
+
+- **神经场景表示方向**：`RoomLight` 提出 2.5D 室内光照先验，把 VAE 潜空间解码为 HDR radiance 与深度并参数化为面光源，纠正远场环境贴图假设；`GaussPDE` 在高斯基元上做 PDE 演化；`φ-RIE` 做高斯场景的物体解耦与背景补全；`InfiNoVA` 用时变高斯做视角增强；`ArborSplat` 做语义高斯 SLAM。整体看，神经场景表示正从“重建保真度”转向“物理先验正确性、可编辑性、语义可靠性、下游任务可用性”。
+
+- **机器人/AR 应用方向**：`AnchorReasoning` 关注长尾自动驾驶的 VG-CoT 监督；`VLMs Can Describe, But Not Measure` 关注桌面操作中的物体中心表示；`KYS-SLAM`、`From LiDAR Maps to Visual Localization`、`ArborSplat` 关注定位与建图；`BladeMaster` 关注可变形物体切割仿真；`Spatial and Semantic Reasoning for LLM-Driven Robot Navigation via MCP` 关注 LLM 与 ROS 的标准化接口；`Skytopia` 关注单目无人机导航的潜在世界模型；`Wave-Robust Passive AUV Localization` 和 `Reflection-Aware Reasoning` 关注水下/非视距等极端感知条件。应用侧的共同瓶颈是：语义可用但几何不可靠，或几何可靠但语义/交互不可用。
 
 #### 值得优先阅读的论文
 
-1. **φ-RIE: From Photorealistic Reconstruction to Interactive Environments**
-   理由：它直接回应“3DGS 重建之后如何变成可交互仿真环境”这一关键缺口，提出资产生成与源移除耦合的 Gaussian-native 流水线。若该思路成立，可能成为机器人仿真数据生成的新入口。
+1. **`DAVIO: Dense Monocular-Inertial SLAM with Feed-Forward Initialization and Pose-Conditioned Mapping`**
+   理由：它把前馈多视角深度模型与经典 VIO 滤波器做了较完整的闭环设计——五图像窗口无特征线性系统启动、缓冲重放、位姿条件化深度、沿视线残差尺度校正、保重力子图。对同时关心几何基础模型和 SLAM 的读者，这是今天最系统的一篇。
 
-2. **SAM-V: Geometry-Aware Segment Anything for Multi-View Instance Segmentation**
-   理由：端到端融合几何基础模型与 2D 分割基础模型，避免离线掩码匹配的身份歧义。多视角一致实例分割是 3D 感知和机器人操作的底层能力，方法论迁移价值高。
+2. **`AnchorReasoning: A Visual Grounding and Causal Reasoning Dataset in Long-Tail Autonomous Driving Scenarios`**
+   理由：416k 帧、395k 决策关键元素、VG-CoT 分层监督、课程式微调、物体尺寸感知 grounding 指标，规模和任务定义都较完整。它直接回应“VLM 在驾驶中缺少视觉证据与推理/规划连接”的监督缺口，是自动驾驶 VLM 方向值得优先读的数据集类工作。
 
-3. **Skytopia: Monocular Drone Navigation with Action-Conditioned Latent World Models**
-   理由：提出“策略需要的是世界模型的表示而非预测”这一反直觉主张，并据此在部署时丢弃预测器。若验证充分，可能改变世界模型在导航中的使用范式。
+3. **`φ-RIE: From Photorealistic Reconstruction to Interactive Environments`**
+   理由：把 3DGS 重建转成可交互仿真资产，核心洞察“资产构建与源移除应耦合、同一物体身份定义可移动资产与需补全内容”具有方法启发性。对机器人仿真、具身智能、3DGS 编辑交叉方向价值高。
 
-4. **Dual Covariance Gaussian Splatting SLAM**
-   理由：指出渲染与配准对协方差的冲突，并用双协方差参数化解耦。这是 3DGS SLAM 中一个具体但基础的结构性问题，工程与科研价值都明确。
+4. **`KYS-SLAM: Hierarchical Semantic-Motion Priors for Feature Matching in Stereo Visual SLAM`**
+   理由：它把“上下文不合理性”从二值剔除重构为连续对应代价，模块化扩展 ORB-SLAM3 且不改几何后端，思路清晰、工程可复用性强。对语义/动态 SLAM 的读者，这是今天最值得细读的方法论转变。
 
-5. **JAMB: Joint Action-Motion Diffusion for Bimanual Manipulation**
-   理由：把双臂动作与未来 3D 点轨迹放在同一扩散过程中联合去噪，让动作假设与几何后果互相修正。相比仅用未来状态做辅助监督，这种联合去噪更贴近协调操作的真实需求。
-
-#### 可能的研究机会
-
-- **3DGS 资产化与物理仿真的接口标准化**：φ-RIE 提出资产生成与源移除耦合，但目前看是单物体身份驱动。是否可以扩展到多物体、可变形物体、以及关节物体的批量转换？如何定义从高斯表示到仿真器资产的通用接口，是一个可跟进方向。
-- **几何基础模型作为 2D 网络的“内部先验”**：SAM-V 和 GRIP 分别用 VGGT 特征注入和点特征泼溅。可以比较不同几何基础模型特征注入方式对下游任务的影响，并研究是否需要针对几何 token 设计专门的注意力掩码或位置编码。
-- **世界模型表示与策略表示的分离**：Skytopia 的核心主张值得进一步验证：在何种任务复杂度下，“只取表示、丢弃预测”仍然成立？如果任务需要长时预测或动态障碍，表示是否足够？这可以设计成一组受控实验。
-- **事件相机与 RGB 的补全式融合**：LiFR v2 的 EGCM 专门处理传播不受支持区域。可以进一步研究：补全模块是否可用于新出现物体的语义一致性维护，或与 3DGS 结合做流式语义建图。
-- **度量推理与 VLM 的几何监督**：Metric-Bench 用参考物和数值奖励引导度量推理。一个自然延伸是：把这种参考物 grounded 的奖励与 3D 重建或 3DGS 地图结合，让 VLM 在真实场景中输出可验证的尺度估计。
-- **合成数据中“物理保真”与“视觉保真”的权衡**：PhyVisGen 同时追求两者，但计算成本可能很高。可以研究在软体接触场景中，哪些视觉细节对策略迁移最关键，从而降低路径追踪的精度要求。
-
-#### 风险和不确定性
-
-- 本文所有判断均基于论文摘要和已有简
+5. **`RoomLight: A 2.5D Illumination
 
 ### interests.md 指令分析
 
@@ -145,6 +134,54 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 **Primary category:** Geometry Foundation Models
 **Secondary categories:** None
 **Matched keywords:** VGGT
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Task-Induced Riemannian Metrics for Vision Transformer Feature Spaces
+- 作者：Andrew Bond, Ege Erdem Özlü, Tuna Çimen, Ilkin Umut Melanlioglu, Tolga Birdal, Erkut Erdem, Aykut Erdem
+- 出版日期：2026-09-23T12:17:02Z
+- 分类：Geometry Foundation Models（主要类别）；次要类别未提供
+- 链接：摘要链接 https://arxiv.org/abs/2609.27988 ；PDF 链接 https://arxiv.org/pdf/2609.27988 ；项目页 https://cyberiada.github.io/TaskInducedViTs/
+
+### 一句话总结
+论文指出 Vision Transformer 特征空间中常用的欧氏距离或余弦相似度隐含“各方向同等重要”的假设，转而用任务诱导的拉回度量刻画特征空间几何，并提出可学习低秩近似的 Spectral Pullback Network 及用于 token 剪枝的重要性头。
+
+### 研究问题
+- ViT 特征空间上的方法通常依赖欧氏距离或余弦相似度，默认所有方向同等有意义，但摘要指出没有理由相信真实任务几何具有该性质。
+- 任务敏感的特征空间几何由拉回度量 \(g(F) = J(F)^\top J(F)\) 给出，其中 \(J\) 是解码器输出相对于特征的雅可比矩阵，解码器输出被送入任务特定距离。
+- 在现代规模下存储完整 \(g\) 不可行；对于深度图等稠密输出，连构造 \(J\) 都不切实际。
+- 因此核心问题是：能否学习该度量的低秩近似，以及这种低秩近似是否可学是否取决于模型—解码器组合。
+
+### 核心思路/方法
+- 使用任务敏感的拉回度量 \(g(F) = J(F)^\top J(F)\) 描述 ViT 特征空间的真实任务几何。
+- 提出一种无矩阵诊断量 \(\kappa_{cap}(r)\)，可用少量雅可比向量积计算，用于判断低秩近似是否可学，并刻画其依赖于模型—解码器对。
+- 对可处理的模型—解码器对，提出 Spectral Pullback Network（SPN），通过随机幂迭代学习度量的低秩版本。
+- 将 SPN 蒸馏为一个约 310K 参数的重要性头，直接从特征预测 token 重要性。
+- 当雅可比谱过于分散、不适合低秩近似时，摘要提出让解码器输入特征通过 VAE 瓶颈以恢复可处理性。
+- 在 DPT、DINOv2、CLIP、VGGT 骨干上，用 \(\kappa_{cap}(r)\) 预测哪些学习度量架构可行。
+- 几何 token 剪枝在 DPT 深度任务、剪枝比例 0.5 下，将基于 ToMe 的 token 选择带来的额外深度误差降低 25%，且不微调 ViT。
+
+### 主要贡献
+- 指出现有 ViT 特征空间方法默认欧氏或余弦几何的假设问题，并引入任务诱导的拉回度量作为任务敏感几何描述。
+- 提出可计算少量雅可比向量积的无矩阵诊断 \(\kappa_{cap}(r)\)，用于判断低秩度量近似是否可学，并说明其取决于模型—解码器对。
+- 提出 Spectral Pullback Network（SPN），用随机幂迭代学习低秩度量，并蒸馏为约 310K 参数的重要性头。
+- 在多个骨干上验证 \(\kappa_{cap}(r)\) 对学习度量架构可行性的预测作用。
+- 报告重要性头在 DINOv2 CLS 上达到 Spearman \(\rho = 0.998\)，并在 DPT 深度任务上以几何 token 剪枝降低 ToMe 式 token 选择的额外深度误差 25%。
+
+### 局限性
+- 摘要未提供足够信息说明方法在非视觉任务、其他模态或更广泛数据集上的泛化能力。
+- 摘要未提供足够信息说明 \(\kappa_{cap}(r)\) 的计算成本、超参数敏感性或失败边界。
+- 摘要未提供足够信息说明 VAE 瓶颈恢复可处理性的具体代价、精度损失或适用范围。
+- 摘要未提供足够信息说明重要性头在 CLS 之外的 token 类型、不同剪枝比例或不同任务上的表现。
+- 摘要未提供足够信息说明是否与微调方法、其他 token 剪枝方法进行了全面对比。
+- 摘要未提供足够信息说明低秩近似与完整度量之间的理论误差界。
+
+### 阅读优先级
+高。理由：论文直接针对 ViT 特征空间几何这一基础假设，提出可诊断低秩可学性的 \(\kappa_{cap}(r)\)、可学习度量的 SPN 与轻量重要性头，并在 DPT、DINOv2、CLIP、VGGT 上给出验证和深度任务剪枝提升；对关注 ViT 特征几何、token 剪枝与任务感知表示的研究者具有较高参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -317,6 +354,44 @@ Feed-forward visual geometry models such as the Visual Geometry Grounded Transfo
 **Primary category:** Dynamic / 4D Reconstruction
 **Secondary categories:** None
 **Matched keywords:** video reconstruction
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：High Dynamic Range Video Reconstruction from Single-Exposure Raw Sequences
+- 作者：Tao Zhang, Peixian Su, Xingyu Gao, Yunhao Zou, Yu Lu, Zunjie Zhu, Bolun Zheng, Ying Fu, Chenggang Yan
+- 出版日期：2026-09-23T03:01:47Z
+- 分类：Dynamic / 4D Reconstruction
+- 链接：https://arxiv.org/abs/2609.27274
+
+### 一句话总结
+该论文提出 RawHDRV，一个面向单曝光 Raw 视频的端到端 HDR 重建框架，通过利用 Bayer 数据的线性响应与通道特性，在无需交替曝光或额外硬件的情况下缓解高光裁剪与暗部细节丢失问题。
+
+### 研究问题
+传统图像传感器动态范围有限，导致拍摄的低动态范围视频常出现高光裁剪和暗部细节丢失。现有交替曝光 HDR 方法会牺牲帧率并面临运动对齐困难，难以适用于真实拍摄场景。因此，如何从单曝光视频序列中高质量重建 HDR 视频是一个具有挑战性的问题。
+
+### 核心思路/方法
+论文提出 RawHDRV 端到端框架，核心在于利用 Bayer 数据的线性响应和通道特定特性：
+- 采用通道分解的时间对齐与融合策略，分别处理 Bayer 各通道以利用其不同曝光特性，并结合曝光感知加权融合。
+- 引入曝光互补性掩码引导的恢复模块，利用帧间曝光冗余自适应融合可靠信息并抑制饱和伪影。
+- 提出掩码引导的颜色损失，结合归一化误差约束与梯度平滑以增强高光恢复。
+- 同时构建了一个大规模移动端 Raw-HDR 视频数据集，并带有逐帧 HDR 标注。
+
+### 主要贡献
+- 提出 RawHDRV，一个面向单曝光 Raw 视频 HDR 重建的端到端框架。
+- 设计通道分解时间对齐与融合策略及曝光感知加权融合。
+- 引入曝光互补性掩码引导的恢复模块和掩码引导颜色损失。
+- 构建带逐帧 HDR 标注的大规模移动端 Raw-HDR 视频数据集。
+- 实验表明该方法在所有指标上达到当前最优，在极端曝光条件下具有更优的空间质量和时间稳定性。
+
+### 局限性
+摘要未提供足够信息。摘要中未说明方法的具体失败场景、计算开销、对特定硬件的依赖程度、数据集规模与多样性的详细限制，也未提及在非移动端设备或其他传感器上的泛化能力。
+
+### 阅读优先级
+中。理由：该工作针对单曝光 Raw 视频 HDR 重建这一具有实际价值的问题，提出了结合 Bayer 通道特性与掩码引导的完整框架，并构建了新数据集，且声称在所有指标上达到最优。但摘要未提供足够的实验细节、量化结果和局限性讨论，若读者关注 HDR 视频重建、Raw 域处理或动态场景重建，可作为相关方向的重要参考；若仅需泛读，则可暂列为中等优先级。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -494,6 +569,49 @@ Novel view synthesis is a key task for dynamic scene reconstruction, where high 
 **Matched keywords:** SLAM, visual SLAM, bundle adjustment, feature matching
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Know-Your-Scene (KYS)-SLAM: Hierarchical Semantic-Motion Priors for Feature Matching in Stereo Visual SLAM
+- 作者：Preeti Chatterjee, Jin Lu, Jin Sun, Suchendra M. Bhandarkar
+- 出版日期：2026-09-23T08:07:47Z
+- 分类：主分类为 3D Reconstruction & Multi-view Geometry；二级分类：摘要未提供足够信息
+- 链接：摘要页 https://arxiv.org/abs/2609.27509 ；PDF https://arxiv.org/pdf/2609.27509
+
+### 一句话总结
+KYS-SLAM 将语义、全景与运动先验转化为连续的特征匹配代价，用“惩罚而非剔除”的方式替代二值特征拒绝，作为 ORB-SLAM3 的模块化扩展以缓解立体视觉 SLAM 的数据关联退化与轨迹漂移。
+
+### 研究问题
+基于局部描述子的立体视觉 SLAM 面临三类问题：语义歧义、实例级混淆以及独立运动物体。这些问题都会破坏数据关联，并累积为轨迹漂移。
+
+现有语义与动态 SLAM 方法通过二值特征剔除来应对，但作者认为这会以牺牲对应密度为代价来抑制离群点。论文主张“上下文不合理性”更适合表达为分级量，而不是排他性准则。
+
+### 核心思路/方法
+- 将 KYS-SLAM 定位为 ORB-SLAM3 的模块化扩展，用连续的对应调制替代特征剔除。
+- 核心做法是把上下文证据重新表述为“对应代价”，应用于特征匹配阶段，并保持几何后端不变。
+- 每个关键点被赋予语义、全景和运动先验，并通过分层兼容性公式融合。
+- 融合中，语义类别与实例身份用于约束结构合理性；零样本运动分数用于降低位于独立运动物体上的特征权重。
+- 该运动分数来自一个免训练模块：将深度感知的自运动模型拟合到背景光流，并通过自校准、覆盖感知的阈值对全景片段进行分类，从而只惩罚具有充分运动证据的片段，静态结构不被惩罚。
+- 设计动机是：惩罚对应关系而不是丢弃它们，可以保留光束法平差所依赖的几何支撑集合。
+
+### 主要贡献
+- 提出 KYS-SLAM，将上下文证据从排除准则重构为对应代价，用于特征匹配。
+- 引入分层语义—全景—运动先验融合，对关键点进行连续兼容性调制。
+- 提出免训练、自校准、覆盖感知的动态片段判定方式，仅惩罚有足够运动证据的片段。
+- 在固定配置、不按序列或数据集重新调参的条件下，报告了跨域结果：在 21 条立体序列上，室外 KITTI 的逐序列 ATE RMSE 降低 17.4%，室内 EuRoC 降低 27.7%，且无回退；在 KITTI Tracking 动态子集上降低 6.6%；在 Virtual KITTI 2 上降低 17.8%，最高达 31.2%。跨域涵盖室外驾驶、室内飞行和合成图像，并使用同一组常数。
+
+### 局限性
+- 摘要未提供足够信息说明方法对极端动态场景、低纹理场景或实时性开销的具体表现。
+- 摘要未提供足够信息说明零样本运动分数模块的失败模式与阈值敏感性。
+- 摘要未提供足够信息说明与更多基线方法的完整对比细节。
+- 摘要未提供足够信息说明代码、数据集划分与完整实现配置。
+
+### 阅读优先级
+高。理由：该论文直接针对语义/动态 SLAM 中“剔除特征导致对应密度下降”的关键矛盾，提出连续对应代价这一较具方法学新意的重构思路；同时给出跨室外、室内与合成域的定量结果，且强调单一固定配置无回退，对视觉 SLAM、动态环境建图与语义几何融合方向具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Stereo visual SLAM systems built on local descriptors suffer from semantic ambiguity, instance-level confusion, and independently moving objects, each corrupting data association and accumulating as trajectory drift. Prevailing semantic and dynamic SLAM methods address this through binary feature rejection, sacrificing correspondence density for outlier suppression. We contend that contextual implausibility is better expressed as a graded quantity than an exclusion criterion. We present Know-Your-Scene (KYS)-SLAM, a modular extension of ORB-SLAM3 that supplants feature rejection with continuous correspondence modulation. The contribution is the reframing of contextual evidence as correspondence cost, applied within feature matching and leaving the geometric backend unmodified. Each keypoint is augmented with semantic, panoptic, and motion priors fused through a hierarchical compatibility formulation, in which semantic class and instance identity enforce structural plausibility while a zero-shot motion score down-weights features on independently moving objects. That score comes from a training-free module fitting a depth-aware ego-motion model to background optical flow and classifying panoptic segments via self-calibrating, coverage-aware thresholds, so only segments with sufficient motion evidence are penalized and static structure is left unpenalized. Penalizing correspondences rather than discarding them preserves the geometric support bundle adjustment depends on. Under one fixed configuration, no coefficient retuned per sequence or dataset, KYS-SLAM reduces per-sequence ATE RMSE by 17.4% on outdoor KITTI and 27.7% on indoor EuRoC across 21 stereo sequences with no regressions, and by 6.6% on dynamic subsets of KITTI Tracking and 17.8%, up to 31.2%, on Virtual KITTI 2 -- cross-domain transfer across outdoor driving, indoor flight, and synthetic imagery under one set of constants.
@@ -507,6 +625,43 @@ Stereo visual SLAM systems built on local descriptors suffer from semantic ambig
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** Embodied / Robotics / AR Applications
 **Matched keywords:** pose estimation, localization
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：From LiDAR Maps to Visual Localization: Unified Visual Association for Robust Point-Line-Plane Pose Estimation
+- 作者：Wentao Zhao, Zikun Chen, Yihe Niu, Haoyu Chen, Jingchuan Wang
+- 出版日期：2026-09-23T05:05:05Z
+- 分类：主分类为 3D Reconstruction & Multi-view Geometry；次分类为 Embodied / Robotics / AR Applications
+- 链接：摘要页 https://arxiv.org/abs/2609.27363 ；PDF https://arxiv.org/pdf/2609.27363
+
+### 一句话总结
+该论文提出一种统一视觉关联的定位框架，将已有 LiDAR 地图渲染为带 2D-3D 来源信息的准图像，使相机观测与地图渲染视图可共享视觉特征与匹配器，从而实现全局定位与连续 6-DoF 位姿跟踪。
+
+### 研究问题
+论文关注的是：在已有 LiDAR 地图作为持久几何先验的条件下，如何实现相机定位。其核心挑战在于相机图像与点云地图之间存在显著的模态差异。摘要指出，该问题面向长期机器人导航，需要在严重光照变化和动态遮挡等条件下保持定位能力。
+
+### 核心思路/方法
+论文提出一个统一定位框架，使 LiDAR 地图变得“视觉可寻址”，而不是依赖专门的图像-LiDAR 对应模型。具体做法是：将地图几何与反射率渲染为 LiDAR 衍生的准图像，并保留显式的 2D-3D 来源关系，从而让相机观测和渲染地图视图能够共享成熟的视觉特征与匹配器，用于全局定位和连续位姿跟踪。
+
+在对应关系上，通过这一共同视觉接口建立点和线对应；同时，利用保留的来源信息恢复度量 LiDAR 几何以及线支持的平面约束，用于位姿估计。
+
+为提升在模糊关联和弱几何条件下的鲁棒性，论文进一步引入一种分布感知、可观测性互补的优化策略。该策略不是把匹配歧义压缩为单一置信度，而是将候选关联分布传播为方向性位姿信息不确定性，并根据可靠结构因子对当前弱位姿方向的互补能力，选择性增强这些结构因子。
+
+### 主要贡献
+- 提出统一视觉关联框架，将 LiDAR 地图渲染为带 2D-3D 来源的准图像，使相机图像与地图视图可共享视觉特征和匹配器。
+- 通过共同视觉接口建立点、线对应，并利用来源信息恢复度量 LiDAR 几何和线支持的平面约束，用于位姿估计。
+- 提出分布感知、可观测性互补的优化策略，将候选关联分布传播为方向性位姿信息不确定性，并选择性增强能互补弱位姿方向的可靠结构因子。
+- 摘要称在 EuRoC MAV 基准和自采集真实世界序列上，仅使用预建 LiDAR 地图作为持久先验，实现了准确的全局定位和鲁棒的连续 6-DoF 跟踪，包括严重光照变化和动态遮挡条件下。
+
+### 局限性
+摘要未提供足够信息说明方法的具体失败场景、计算开销、对地图质量或环境结构的依赖程度，也未提供与基线方法的定量对比细节、消融实验细节以及自采集序列的规模与条件。上述内容均需以论文正文为准。
+
+### 阅读优先级
+高。理由：该论文直接针对 LiDAR 地图与视觉定位之间的模态差异问题，提出统一视觉关联和点-线-平面位姿估计框架，并涉及全局定位、连续 6-DoF 跟踪以及严重光照和动态遮挡下的鲁棒性；同时发表在 3D Reconstruction & Multi-view Geometry 与机器人/AR 相关分类下，对视觉定位、机器人导航和多模态地图复用方向具有较高潜在参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -528,41 +683,42 @@ Camera localization in a prior LiDAR map provides a persistent geometric referen
 
 ### Metadata
 - 标题：GTR: Gated Token Recurrence for Efficient Dense Prediction
-- 作者：Zhe Feng, Longfei Liu, Wei Liu, Kai Chen, Jiangjiang Kong, Wei Zhou, Yifeng Qian, Dexiong Chen, Xuanlong Yu, Xi Shen
+- 作者：Zhe Feng, Longfei Liu, Wei Liu, Kai Chen, Jiangang Kong, Wei Zhou, Yifeng Qian, Dexiong Chen, Xuanlong Yu, Xi Shen
 - 出版日期：2026-09-22T15:34:20Z
-- 分类：主分类为 3D Reconstruction & Multi-view Geometry；无二级分类
-- 链接：摘要页 https://arxiv.org/abs/2609.26590 ；PDF https://arxiv.org/pdf/2609.26590
+- 分类：主分类为 3D Reconstruction & Multi-view Geometry；次分类未提供
+- 链接：[摘要](https://arxiv.org/abs/2609.26590) / [PDF](https://arxiv.org/pdf/2609.26590)
 
 ### 一句话总结
-GTR 提出一种不含 softmax 的门控 token 循环视觉骨干，通过门控线性注意力、交替空间扫描方向与空间增强 SwiGLU 模块，在稠密预测任务上兼顾精度与高分辨率/边缘部署效率。
+论文提出 GTR——一种无需 softmax、基于门控线性注意力与交替空间扫描方向的循环视觉骨干，用于在高分辨率密集预测中替代全局 softmax 注意力，并报告了在 COCO 检测与多任务迁移上的精度及延迟结果。
 
 ### 研究问题
-基于自注意力的视觉骨干在稠密预测中表现良好，但全局 softmax 注意力的二次计算成本随图像分辨率上升而限制效率。论文关注的问题是如何在保持稠密预测性能的同时，提供一种比全局 softmax 注意力更高效的高分辨率与边缘部署替代方案。
+基于自注意力的视觉骨干在密集预测任务上表现良好，但全局 softmax 注意力的二次计算成本随图像分辨率增大而限制其效率。论文关注的问题是：能否用循环式的 token 混合机制，作为全局 softmax 注意力的高效替代方案，服务于高分辨率密集预测与边缘部署。
 
 ### 核心思路/方法
-论文提出 Gated Token Recurrence（GTR），一种 softmax-free 的循环视觉骨干，组合了：
-- 门控线性注意力（gated linear attention）
-- 交替空间扫描方向（alternating spatial scan directions）
-- 空间增强 SwiGLU 模块（spatially enhanced SwiGLU blocks）
-
-训练方面，GTR 从检测专用 DINOv3 教师模型蒸馏，仅使用最后一层 patch-token 对齐，通过线性投影和平方 $\ell_2$ 损失实现，不使用 masked-token prediction 或中间层监督。
-
-效率方面，论文提到专门的 chunkwise CUDA 算子，在 RTX 4090 上 1.6K tokens 时比 FLA v0.5.0 快 $4.0\times$；并在 DRIVE AGX Thor 上通过 TensorRT 部署。
+- 提出 Gated Token Recurrence（GTR），一种 softmax-free 的循环视觉骨干。
+- 方法组合了三个要素：门控线性注意力、交替空间扫描方向、以及空间增强的 SwiGLU 模块。
+- 训练上采用蒸馏策略：从一个面向检测专门化的 DINOv3 教师模型中蒸馏，仅使用最终层 patch-token 对齐，通过线性投影和平方 ℓ2 损失实现；不使用 masked-token prediction，也不使用中间层监督。
+- 使用 Objects365 检测器预训练。
+- 实现层面提供了专门的 chunkwise CUDA 算子，并涉及编译 FP16 执行与 TensorRT 部署。
 
 ### 主要贡献
-- 提出 GTR，一种 softmax-free 的循环视觉骨干，用于高效稠密预测。
-- 将门控线性注意力、交替空间扫描方向与空间增强 SwiGLU 模块结合。
-- 采用仅最后一层 patch-token 对齐的蒸馏方式，从检测专用 DINOv3 教师模型训练，不使用 masked-token prediction 或中间层监督。
-- 在 Objects365 检测器预训练后，GTR-L 在 COCO val2017 上达到 58.9 box AP，在 RTX 4090 编译 FP16 执行下 median batch-one latency 为 1.908 ms。
-- 同一骨干可迁移到实例分割、姿态估计、旋转目标检测、语义分割和单目深度估计。
-- 专门的 chunkwise CUDA 算子在 RTX 4090 上 1.6K tokens 时比 FLA v0.5.0 快 $4.0\times$。
-- TensorRT 部署在 DRIVE AGX Thor 上，所评估模型的 median batch-one latency 为 2.282–8.769 ms。
+- 提出 GTR 这一无需 softmax 的循环视觉骨干，将门控线性注意力、交替空间扫描方向与空间增强 SwiGLU 结合，用于高效密集预测。
+- 给出一种简化的蒸馏方案：仅依赖最终层 patch-token 对齐（线性投影 + 平方 ℓ2 损失），无需 masked-token prediction 与中间层监督。
+- 在 Objects365 检测器预训练后，GTR-L 在 COCO val2017 上达到 58.9 box AP，并在 RTX 4090 编译 FP16 执行下报告 1.908 ms 的 batch-one 中位延迟。
+- 同一骨干可迁移至实例分割、姿态估计、旋转检测、语义分割与单目深度估计。
+- 在 RTX 4090、1.6K tokens 的孤立 kernel 基准中，专用 chunkwise CUDA 算子比 FLA v0.5.0 快 4.0 倍。
+- 在 DRIVE AGX Thor 上的 TensorRT 部署中，所评估模型达到 2.282–8.769 ms 的 batch-one 中位延迟。
 
 ### 局限性
-摘要未提供足够信息说明方法的具体失败案例、精度上限、不同分辨率下的完整效率曲线、与其他骨干的全面对比、训练成本、数据规模影响或部署条件限制。摘要未提供足够信息说明其在大规模通用任务上的泛化边界与潜在误差来源。
+- 摘要未提供足够信息说明各迁移任务的具体精度表现、对比基线设置、数据集规模与训练细节。
+- 摘要未提供足够信息说明 GTR 在不同分辨率、不同硬件或不同 token 长度下的完整效率曲线与 scaling 行为。
+- 摘要未提供足够信息说明蒸馏方案与 masked-token prediction 或中间层监督方案的消融对比。
+- 摘要未提供足够信息说明方法在非检测类密集预测任务上是否同样需要 Objects365 检测器预训练。
+- 摘要未提供足够信息说明与全局 softmax 注意力骨干在同等精度下的系统性效率对比。
+- 主分类标注为 3D Reconstruction & Multi-view Geometry，但摘要未提供足够信息说明该工作与三维重建或多视图几何的直接关联。
 
 ### 阅读优先级
-中。理由：该论文聚焦高分辨率稠密预测与边缘部署的效率问题，给出了明确的架构思路、蒸馏策略、精度与延迟指标，并覆盖多任务迁移；但摘要未提供足够的实验细节与局限性信息，是否值得深入阅读取决于读者对 softmax-free 循环骨干、线性注意力或边缘部署的具体兴趣。
+中。理由：论文主题（高效密集预测骨干、softmax-free 循环 token 混合、边缘部署延迟）具有明确的工程与应用价值，且摘要给出了具体 AP 与延迟数字，便于快速判断相关性；但摘要未涉及具体任务精度细节、消融与完整实验设置，若关注三维重建或多视图几何方向，则需进一步确认其相关性。
 
 </details>
 
@@ -1283,68 +1439,6 @@ We present Elevator-VIGS, a visual-inertial 3D Gaussian Splatting SLAM system th
 
 </details>
 
-#### 2026-09-17 - Underwater Visual Target Tracking with Target-Specific Depth Estimation and Adaptive Model-Fusion Predictive Control
-
-**Authors:** Yuheng Zhou, Haiyang Cheng, Yanqi Feng, Pangkit Fong, Mei Xuan Lee, Marcus Gee, Chongrong Fang, Jianping He
-**Links:** [abs](https://arxiv.org/abs/2609.20731) - [pdf](https://arxiv.org/pdf/2609.20731)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** None
-**Matched keywords:** depth estimation
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Underwater Visual Target Tracking with Target-Specific Depth Estimation and Adaptive Model-Fusion Predictive Control
-- 作者：Yuheng Zhou, Haiyang Cheng, Yanqi Feng, Pangkit Fong, Mei Xuan Lee, Marcus Gee, Chongrong Fang, Jianping He
-- 出版日期：2026-09-17T17:22:01Z
-- 分类：3D Reconstruction & Multi-view Geometry（主分类）；无二级分类
-- 链接：摘要页 https://arxiv.org/abs/2609.20731 ，PDF https://arxiv.org/pdf/2609.20731
-
-### 一句话总结
-面向自主水下航行器（AUV），该论文提出一种立体视觉伺服框架，通过目标特定的深度估计与卡尔曼滤波获得稳定三维相对状态，并用自适应模型融合预测控制实现实时平移控制。
-
-### 研究问题
-摘要指出，基于视觉的水下目标跟踪面临两个主要挑战：深度测量不可靠，以及目标运动未知。论文即针对这两点，为 AUV 构建水下视觉目标跟踪方案。
-
-### 核心思路/方法
-论文方法的要点（均来自摘要）如下：
-
-- 总体框架：为 AUV 提出立体视觉伺服（stereo visual-servoing）框架。
-- 感知端：
-  - 通过目标特定的深度提取（target-specific depth extraction）和卡尔曼滤波，从立体图像得到稳定的三维相对状态。
-  - 利用颜色、视差和时间线索构建目标深度掩码（target-depth mask），以选出可靠的目标像素。
-  - 对得到的深度测量和检测到的图像中心分别进行滤波。
-- 控制端：
-  - 将偏航调节（yaw regulation）与平移控制解耦，从而避免计算开销大的耦合多自由度优化，使实时平移 MPC 成为可能。
-  - 平移控制器采用自适应模型融合预测控制，融合恒速（constant-velocity）与零速（zero-velocity）两种目标模型，以适应不同目标运动模式。
-  - 依据历史预测误差更新模型权重。
-  - 在满足执行机构、跟随距离和视场（field-of-view）约束的条件下计算平移控制指令。
-- 验证方式：通过仿真和真实世界实验验证框架有效性，并声称性能优于已有框架。
-
-### 主要贡献
-- 提出面向 AUV 的立体视觉伺服跟踪框架。
-- 感知上提出目标特定的深度提取方法，结合颜色/视差/时间线索构造目标深度掩码，并对深度与图像中心分别滤波，以缓解水下深度测量不可靠问题。
-- 控制上通过偏航与平移解耦，避免昂贵的耦合多自由度优化，实现实时平移 MPC。
-- 提出自适应模型融合预测控制，以恒速与零速目标模型的加权融合适应未知目标运动，并由历史预测误差在线更新权重。
-- 在控制中显式考虑执行机构、跟随距离与视场约束。
-- 通过仿真与真实实验验证，并报告相较现有框架更优的表现。
-
-### 局限性
-摘要未提供足够信息。摘要中未给出实验平台细节、数据集或场景规模、对比方法的具体名称与指标数值、失败案例、计算资源与实时性量化结果，也未说明该方法在何种条件下会失效或适用边界。
-
-### 阅读优先级
-中。理由：该论文聚焦水下视觉目标跟踪中“深度不可靠 + 目标运动未知”的实际问题，将目标特定深度提取与自适应模型融合 MPC 结合，问题设定清晰、模块划分明确，对水下机器人感知与控制交叉方向有参考价值；但摘要层面未提供量化结果与实验细节，是否值得精读需进一步阅读正文确认其方法新颖度与验证充分性。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Vision-based underwater target tracking is challenged by unreliable depth measurements and unknown target motion. This paper proposes a stereo visual-servoing framework for an autonomous underwater vehicle (AUV). For perception, the framework derives a stable 3D relative state from stereo images through target-specific depth extraction and Kalman filtering. It constructs a target-depth mask from color, disparity, and temporal cues to select reliable target pixels, and then filters the resulting depth measurement and detected image center separately. For control, the framework decouples yaw regulation from translational control, avoiding computationally expensive coupled multi-DOF optimization and enabling real-time translational MPC. The translational controller employs adaptive model-fusion predictive control, combining constant-velocity and zero-velocity target models to accommodate different target-motion patterns. It updates the model weights using historical prediction errors and computes translational commands subject to actuation, following-distance, and field-of-view constraints. Through simulations and real-world experiments, we validate the effectiveness of the proposed framework and show it has better performance than existing frameworks.
-
-</details>
-
 ## Neural Scene Representations & Rendering
 
 ### 2026-09
@@ -1356,6 +1450,41 @@ Vision-based underwater target tracking is challenged by unreliable depth measur
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** inverse rendering, differentiable rendering, rendering, radiance
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：RoomLight: A 2.5D Illumination Prior for Indoor Environments
+- 作者：Andreea Ardelean, Bernhard Egger
+- 出版日期：2026-09-23T15:46:46Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2609.28300 ；PDF: https://arxiv.org/pdf/2609.28300 ；项目页：https://andreead-a.github.io/RoomLight
+
+### 一句话总结
+该论文提出 RoomLight，一种基于真实室内全景图及其估计深度训练的 2.5D 空间感知光照先验，用于改进室内逆渲染中的光照恢复。
+
+### 研究问题
+逆渲染等不适定逆问题需要先验来约束解空间。现有学习式光照先验多依赖“远距离光照假设”，即把光照表示为远场环境贴图。这种表示难以适用于室内场景，因为室内光照会由于有限距离发光体、可见性变化和视差而在空间上高度变化，单一环境贴图难以近似。
+
+### 核心思路/方法
+论文提出一种空间感知的光照先验，训练数据为真实世界室内全景图及其估计深度。该方法使用变分自编码器学习一个紧凑、可优化的潜空间，解码得到 HDR radiance 和深度，并将结果参数化为面光源发射器，从而可直接集成到标准可微渲染管线中。通过联合建模 radiance 与深度，该先验捕捉室内光照的空间结构，而不是把光源视为无限远。摘要称该设计在学习先验的合理性保证与下游优化所需梯度流之间建立联系，并支持空间变化的光照建模。
+
+### 主要贡献
+- 提出 RoomLight，一种面向室内环境的空间感知光照先验。
+- 使用真实世界室内全景图及其估计深度进行训练。
+- 采用 VAE 学习紧凑、可优化的潜空间，并解码为 HDR radiance 与深度。
+- 将解码结果参数化为面光源发射器，可直接接入标准可微渲染管线。
+- 通过联合建模 radiance 与深度，捕捉室内光照的空间结构，而非假设光源在无限远处。
+- 摘要称该方法相比现有方法能实现空间变化光照建模，并获得更高保真度的室内光照恢复。
+
+### 局限性
+摘要未提供足够信息。未提供关于失败案例、计算成本、对深度估计误差的敏感性、泛化范围外场景能力、与具体基线方法比较细节等限制信息。
+
+### 阅读优先级
+中。理由：该工作聚焦室内逆渲染中的光照先验，针对远场环境贴图假设的不足提出 2.5D 空间感知建模，并强调可接入可微渲染管线，对神经渲染、逆渲染和室内光照建模方向具有相关性。但由于摘要未给出定量结果、基线细节与局限分析，是否值得优先精读取决于读者对室内光照先验与可微渲染结合的具体兴趣。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1373,6 +1502,42 @@ Ill-posed inverse problems require priors to constrain the solution space toward
 **Matched keywords:** novel view synthesis, view synthesis, scene representation, manipulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：InfiNoVA: Infinite Novel View Augmentation for Viewpoint Invariant Robot Policies
+- 作者：Sai Puneeth Reddy Gottam, Elmar Rueckert, Vedant Dave
+- 出版日期：2026-09-23T11:47:58Z
+- 分类：Neural Scene Representations & Rendering（二级分类：摘要未提供）
+- 链接：[摘要](https://arxiv.org/abs/2609.27734) | [PDF](https://arxiv.org/pdf/2609.27734)
+
+### 一句话总结
+InfiNoVA 通过将多相机演示重建为时变 3D 高斯表示并渲染新视角观测，为 VLA 策略提供密集且几何一致的视角增强，从而提升其在未见视角下的操作成功率。
+
+### 研究问题
+视觉-语言-动作（VLA）策略往往强依赖训练时所见相机视角，导致在未见视角下部署时性能显著下降。从足够多样的物理视角采集演示成本高昂，且对视角空间的覆盖仍然稀疏。
+
+### 核心思路/方法
+- 将同步多相机演示转换为密集、几何一致的训练视角分布。
+- 把每条操作轨迹重建为时变 3D 高斯表示。
+- 从采样的相机位姿渲染新观测，同时保留原始状态-动作对应关系。
+- 该显式场景表示旨在提升帧级保真度与时间一致性，并减少生成式新视角合成中出现的任务关键幻觉。
+
+### 主要贡献
+- 提出 InfiNoVA 数据增强框架，用于将同步多相机演示转化为密集的几何一致训练视角。
+- 在四个真实世界操作任务中，使用 InfiNoVA 训练的策略在未见随机视角下平均成功率比 VISTA 基线增强和未增强策略高 5.4 倍。
+- 相比直接在全部五个物理相机视角上训练，InfiNoVA 成功率再高 1.7 倍。
+- 结果表明，密集且几何 grounded 的视角增强可在不修改底层策略架构的情况下提升机器人策略的相机鲁棒性。
+
+### 局限性
+摘要未提供足够信息。
+
+### 阅读优先级
+高。理由：该工作直面 VLA 策略在视角泛化上的关键痛点，提出了不改变策略架构的数据增强方案，并报告了在真实世界任务中相对多个基线的显著提升；问题重要、方法思路清晰、结果量化明确，值得优先阅读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Vision-Language-Action (VLA) policies often rely strongly on the camera viewpoints seen during training, causing substantial performance degradation when deployed from unseen perspectives. Collecting demonstrations from sufficiently diverse physical viewpoints is expensive and still provides only sparse coverage of the viewpoint space. We introduce InfiNoVA, a data-augmentation framework that converts synchronized multi-camera demonstrations into a dense distribution of geometrically consistent training views. InfiNoVA reconstructs each manipulation trajectory as a time-varying 3D Gaussian representation and renders novel observations from sampled camera poses while preserving the original state-action correspondence. This explicit scene representation improves frame-level fidelity and temporal consistency while reducing task-critical hallucinations observed in generative novel-view synthesis. Across four real-world manipulation tasks, policies trained with InfiNoVA achieve 5.4x higher average success under unseen randomized viewpoints than both VISTA-based augmentation and the unaugmented policy. InfiNoVA further achieves 1.7x higher success than training directly on all five physical camera views. These results show that dense, geometrically grounded viewpoint augmentation provides a practical route toward camera-robust robot policies without modifying the underlying policy architecture.
@@ -1386,6 +1551,43 @@ Vision-Language-Action (VLA) policies often rely strongly on the camera viewpoin
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, rendering, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GaussPDE: Graph-Based Partial Differential Equation-Driven Rendering for 3D Gaussian Splatting
+- 作者：Haoyuan Yue, Fengyuan Ye, Ziyin Li
+- 出版日期：2026-09-23T02:48:35Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：[摘要](https://arxiv.org/abs/2609.27264) | [PDF](https://arxiv.org/pdf/2609.27264)
+
+### 一句话总结
+GaussPDE 在预训练 3D 高斯场景上直接构建高斯图并演化偏微分方程，通过修改球谐直流颜色系数实现稳定、可控且空间连贯的动态渲染，无需网格提取、体素化或重训练。
+
+### 研究问题
+如何在不进行网格提取、体素化或重训练的前提下，将物理结构化的偏微分方程动力学注入预训练的 3D 高斯场景，从而实现稳定、可控且空间连贯的动态可视化。摘要指出，PDE 渲染不仅需要准确的外观，还需要可靠的离散计算域。
+
+### 核心思路/方法
+- 在 3DGS 重建阶段引入相机感知正则化，抑制相机附近的浮动体和过大的基元，以避免它们造成不稳定的图拓扑。
+- 使用协方差感知距离以及不透明度、外观和边界感知电导，构建活跃高斯图。
+- 在高斯基元上直接进行质量加权的图拉普拉斯 PDE 演化。
+- 将演化中的标量 PDE 状态耦合回渲染：修改球谐直流颜色系数，同时保持几何、不透明度和视角相关渲染行为。
+
+### 主要贡献
+- 提出 GaussPDE 框架，将物理结构化的 PDE 动力学注入预训练 3D 高斯场景，且无需网格提取、体素化或重训练。
+- 指出 PDE 渲染依赖可靠的离散计算域，并通过相机感知正则化改善图拓扑稳定性。
+- 构建基于协方差感知距离与多属性电导的活跃高斯图，实现质量加权图拉普拉斯 PDE 演化。
+- 通过修改球谐直流颜色系数将 PDE 状态耦合到渲染，同时保持几何、不透明度和视角相关渲染行为。
+- 在真实与合成场景上的实验显示，相较基线方法，GaussPDE 产生稳定、可控、空间连贯的动态可视化，并减少跨边界泄漏。
+
+### 局限性
+摘要未提供足够信息。摘要未说明方法的计算开销、对复杂拓扑或大幅形变的适用性、对超参数的敏感性、具体失败案例，也未提供定量指标细节。
+
+### 阅读优先级
+中。理由：该工作面向 3D Gaussian Splatting 与 PDE 驱动渲染的交叉方向，提出无需网格提取、体素化或重训练的动态渲染思路，并强调图拓扑稳定性与跨边界泄漏改善，对神经场景表示与渲染方向的研究者具有参考价值；但摘要未提供定量结果、计算成本与失败案例分析，实际价值需进一步阅读全文验证。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -2059,6 +2261,47 @@ A splash lives for a fraction of a second: sheets tear into ligaments and drople
 **Matched keywords:** embodied AI, autonomous driving, localization
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：AnchorReasoning: A Visual Grounding and Causal Reasoning Dataset in Long-Tail Autonomous Driving Scenarios
+- 作者：Zhipeng Bao, Wenjie Zhao, Tianle Zhu, Haohua Que, Chence Yang, Geng Yuan, Qianwen Li
+- 出版日期：2026-09-23T16:38:06Z
+- 分类：Embodied / Robotics / AR Applications（次要分类：摘要未提供足够信息）
+- 链接：[摘要](https://arxiv.org/abs/2609.28366) / [PDF](https://arxiv.org/pdf/2609.28366)
+
+### 一句话总结
+论文提出 AnchorReasoning——一个面向长尾自动驾驶、基于 WOD-E2E 构建的视觉 grounded 推理数据集，通过 VG-CoT 监督与课程式微调，将决策关键视觉证据与推理及轨迹规划相连接。
+
+### 研究问题
+视觉语言模型（VLMs）在长尾自动驾驶中具有潜力，但现有驾驶数据集对“将决策关键的视觉证据与推理和规划相连接”所提供的监督有限。论文针对这一监督不足的问题展开研究。
+
+### 核心思路/方法
+- 构建 AnchorReasoning 数据集，基于 WOD-E2E，包含 416,119 个标注帧和 395,379 个决策关键元素，覆盖 4 个大类、19 个细粒度类型。
+- 每帧组织为视觉 grounded 的思维链（VG-CoT），连接：决策关键元素的识别与定位、元素属性与含义、驾驶动作依据，以及动作与轨迹规划。
+- 提出课程式监督微调策略，逐步学习上述分层能力。
+- 提出一个物体尺寸感知的 grounding 指标，用于评估定位质量。
+- 在八种通用、具身智能和自动驾驶专用骨干模型上进行实验。
+
+### 主要贡献
+- 提出 AnchorReasoning 数据集，为长尾自动驾驶提供视觉 grounded 的推理监督，规模为 416,119 帧、395,379 个决策关键元素，含 4 大类 19 细类。
+- 提出 VG-CoT 标注组织方式，将元素识别定位、属性含义、动作依据与轨迹规划串联为一条推理链。
+- 提出课程式监督微调策略与物体尺寸感知的 grounding 评估指标。
+- 实验显示 VG-CoT 监督提升了 grounded 推理与轨迹预测：5-s ADE 和 FDE 分别下降 7.84 和 11.86，RFS Frame 和 Cluster 分别提升 1.66 和 1.70；同时平均减少 18.5 个推理 token，每帧推理延迟降低 0.32 秒。
+
+### 局限性
+- 摘要未提供足够信息说明数据集的具体采集条件、标注质量控制与一致性验证方式。
+- 摘要未提供足够信息说明实验的完整设置、基线对比细节与消融研究。
+- 摘要未提供足够信息说明该方法在真实闭环驾驶或安全关键场景中的验证情况。
+- 摘要未提供足够信息说明物体尺寸感知 grounding 指标的具体定义与计算方式。
+- 摘要未提供足够信息说明课程式微调各阶段的具体划分与超参数。
+
+### 阅读优先级
+高。理由：该工作同时涉及数据集构建、视觉 grounded 思维链监督、课程式微调与自动驾驶轨迹预测评测，且给出了明确的量化收益（ADE/FDE 下降、效率提升），对长尾自动驾驶与 VLM 推理规划交叉方向具有直接参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Vision-language models (VLMs) offer a promising approach to long-tail autonomous driving, but existing driving datasets provide limited supervision for connecting decision-critical visual evidence with reasoning and planning. We introduce AnchorReasoning, a visually grounded reasoning dataset built on WOD-E2E, containing 416,119 annotated frames and 395,379 decision-critical elements across four major categories and 19 fine-grained types. Each frame is organized as a visually grounded chain-of-thought (VG-CoT) that links decision-critical element identification and localization, element attributes and implications, driving-action rationale, and action and trajectory planning. We further develop a curriculum supervised fine-tuning strategy that progressively learns these hierarchical capabilities, together with an object-size-aware grounding metric for evaluating localization quality. Experiments across eight general-purpose, embodied-AI, and AV-specific backbones show that VG-CoT supervision improves grounded reasoning and trajectory prediction. Across models, 5-s ADE and FDE decrease by 7.84 and 11.86, while RFS Frame and Cluster improve by 1.66 and 1.70. These gains are achieved with 18.5 fewer reasoning tokens and 0.32 s/frame lower inference latency on average, demonstrating the value of visually grounded, decision-focused supervision for VLM reasoning and planning in long-tail autonomous driving.
@@ -2072,6 +2315,39 @@ Vision-language models (VLMs) offer a promising approach to long-tail autonomous
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** depth estimation, manipulation, localization, scene understanding
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：VLMs Can Describe, But Not Measure: Object-Centric Scene Understanding for Robotic Manipulation
+- 作者：Enrico Saccon, Tommaso Faraci, Iñigo De La Ossa Zarzuelo, Luigi Palopoli, Marco Roveri, Matteo Saveriano
+- 出版日期：2026-09-23T14:26:22Z
+- 分类：Embodied / Robotics / AR Applications（次要分类：摘要未提供足够信息）
+- 链接：摘要页 https://arxiv.org/abs/2609.28184 ；PDF https://arxiv.org/pdf/2609.28184
+
+### 一句话总结
+论文提出一种由 VLM 驱动、模块化的物体级场景理解框架，通过将单次 RGB-D 观测分割为物体区域、由 VLM 标注并结合深度信息，构建与任务无关的物体中心表示，从而在保留语义能力的同时改善定位与深度估计。
+
+### 研究问题
+面向未见过环境中的机器人操作，系统既需要语义理解，也需要可靠的度量（几何）信息。摘要指出，视觉-语言模型（VLM）具备较强的语义能力，但其几何估计不够可靠。因此，论文关注如何在机器人场景理解中同时获得可靠的语义与度量信息。
+
+### 核心思路/方法
+论文提出的方法是一个 VLM 驱动、模块化的感知框架，使用现成（off-the-shelf）方法完成场景理解。具体流程为：从单次 RGB-D 观测出发，将场景分割为物体级区域；由 VLM 对这些区域进行标注；再利用深度信息进行 grounding（落地/对齐），从而构建一个与任务无关的物体中心表示。该表示还被集成到任务规划框架中，用于机器人执行。
+
+### 主要贡献
+- 提出一种模块化的、由 VLM 驱动的物体中心场景理解感知框架，基于现成方法构建。
+- 从单次 RGB-D 观测生成物体级区域分割，并由 VLM 标注，再用深度信息进行 grounding，形成任务无关的物体中心表示。
+- 在 151 个桌面场景上进行实验，摘要称该分解方法在保持较强语义性能的同时，相较直接 VLM 推理显著改善了定位与深度估计。
+- 将该表示与任务规划框架集成，用于机器人执行。
+
+### 局限性
+摘要未提供足够信息。摘要未说明具体失败案例、适用场景边界、对特定 VLM 或分割方法的依赖程度、计算开销、真实机器人实验的规模与条件，也未给出定量指标细节与消融分析。
+
+### 阅读优先级
+中。理由：该论文聚焦 VLM 在机器人操作中的语义与几何度量分工问题，并提出模块化、物体中心的表示方法，且包含桌面场景实验与任务规划集成，对具身智能与机器人感知方向有参考价值；但摘要未提供足够的实验细节、对比方法与真实机器人验证信息，是否值得深入阅读需结合全文的定量结果与实验设置进一步判断。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -2089,6 +2365,41 @@ Robotic operation in previously unseen environments requires both semantic under
 **Matched keywords:** mapping, localization
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Wave-Robust Passive AUV Localization Using FP-MUSIC
+- 作者：Usama Saqib, Ola Rønning, Andrzej Wąsowski
+- 出版日期：2026-09-23T11:29:56Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2609.27712
+
+### 一句话总结
+针对水面波浪引起的水听器阵列六自由度扰动问题，提出利用 IMU 测量对快拍协方差进行去扭曲的定点迭代 MUSIC 算法（FP-MUSIC），以实现接收端被动的 AUV 三维定位与空间建图。
+
+### 研究问题
+在无预部署海底应答器、也无法直接访问载体自身传感器的条件下，如何对自主水下航行器（AUV）进行定位。核心困难在于：水面波浪运动带来六自由度扰动，会使阵列在相邻快拍之间发生旋转，从而降低传统子空间处理的性能。
+
+### 核心思路/方法
+- 系统构成：单个浮动水面浮标，配备水听器阵列与惯性测量单元（IMU），实现接收端被动的三维定位与空间建图。
+- 核心算法 FP-MUSIC：一种定点迭代的 MUSIC 算法，利用 IMU 测量在到达方向估计之前对快拍协方差进行“去扭曲”（de-warp）。
+- 距离与前后向分辨：采用子空间投影的宽带匹配滤波器解算信标距离，并利用功率不对称性进行独立的前后向识别。
+
+### 主要贡献
+- 提出接收端被动的三维定位与空间建图系统方案，仅依赖单个配备水听器阵列和 IMU 的水面浮标。
+- 提出 FP-MUSIC，利用 IMU 测量在 DOA 估计前对快拍协方差去扭曲，以应对波浪引起的阵列旋转。
+- 采用子空间投影宽带匹配滤波器解算信标距离，并用功率不对称性实现独立的前后向识别。
+- 在多种模拟海况下评估：FP-MUSIC 相比未补偿方法显著降低定位误差，并在波浪扰动下维持稳健的三维跟踪与载体姿态估计；中等海况下，2 米信标间隔的准确率从约 45% 提升至 75%。
+
+### 局限性
+摘要未提供足够信息。摘要仅在模拟海况下给出评估结果，未提供实际海试、真实环境验证、计算复杂度、实时性、不同阵列构型或不同海况上界的表现等信息。
+
+### 阅读优先级
+中。理由：该工作面向水下被动定位中波浪扰动导致子空间处理退化的具体问题，方法思路（IMU 辅助协方差去扭曲 + 定点迭代 MUSIC）较为明确，且给出了量化的性能提升；但摘要仅覆盖模拟评估，缺乏实海况验证等关键信息，是否具备工程落地价值需进一步阅读正文确认。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Localizing an autonomous underwater vehicle without pre-deployed seabed transponders, or direct access to onboard vehicle sensors remains a core challenge. We present a receiver-passive 3-D localization and spatial mapping system utilizing a single floating surface buoy equipped with a hydrophone array and an inertial measurement unit (IMU). The central difficulty is that surface wave motion induces six-degree-of-freedom (6-DOF) perturbations that rotate the array between snapshots, degrading conventional subspace processing. We resolve this by introducing a fixed-point iterative MUltiple SIgnal Classification algorithm (FP-MUSIC) that uses IMU measurements to de-warp snapshot covariances prior to direction-of-arrival estimation. Furthermore, we employ a subspace-projected wideband matched filter to resolve beacon ranges and use power asymmetry for independent front-back identification. Evaluations across simulated sea states demonstrate that FP-MUSIC substantially reduces localization error relative to uncompensated methods and sustains robust 3-D tracking and vehicle orientation estimation under wave-induced motion. At moderate sea state, FP-MUSIC increases the 2-m beacon-separation accuracy from approximately 45% to 75%.
@@ -2102,6 +2413,50 @@ Localizing an autonomous underwater vehicle without pre-deployed seabed transpon
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** 3D Reconstruction & Multi-view Geometry
 **Matched keywords:** SLAM, mapping, localization
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：DAVIO: Dense Monocular-Inertial SLAM with Feed-Forward Initialization and Pose-Conditioned Mapping
+- 作者：Jaafar Mahmoud, Arthur Movsesyan, Mikhail Iumanov, Sergey Kolyubin
+- 出版日期：2026-09-23T11:21:38Z
+- 分类：Embodied / Robotics / AR Applications（主）；3D Reconstruction & Multi-view Geometry（次）
+- 链接：摘要页 https://arxiv.org/abs/2609.27702 ；PDF https://arxiv.org/pdf/2609.27702
+
+### 一句话总结
+DAVIO 利用单一多视角深度模型 Depth Anything 3，同时承担单目惯性 SLAM 的启动初始化与建图，实现具备真实尺度与重力约束的实时稠密 SLAM。
+
+### 研究问题
+仅用相机与 IMU 进行度量尺度定位与稠密建图时，传统视觉-惯性滤波器必须等待足够的视差才能启动，并且只能保留稀疏路标；而前馈几何模型虽然能从少量图像预测稠密结构，却无法提供度量尺度与重力方向。论文试图融合两类方法的优势，解决启动慢、定位误差与建图稠密度/精度之间的矛盾。
+
+### 核心思路/方法
+- 使用单一多视角深度模型 Depth Anything 3 同时服务于启动阶段与建图阶段。
+- 启动阶段：由五张图像窗口与预积分 IMU 测量构成一个无特征（feature-free）线性系统，通过带鲁棒性与条件数检查的求解，经缓冲重放（buffered replay）引导 VIO 滤波器完成初始化。
+- 跟踪阶段：用滤波器的度量位姿对深度模型进行条件化（conditioning）。
+- 残差尺度仅沿视线方向进行校正，以保持度量相机基线不变。
+- 使用保持重力的子图（gravity-preserving submap graph）并结合带漂移门控的重访机制对地图进行精化。
+- 论文声明发布 DAVIO 代码，定位为实时稠密度量 SLAM 系统。
+
+### 主要贡献
+- 提出用单一前馈多视角深度模型同时完成启动初始化与稠密建图的 SLAM 框架。
+- 设计无特征、带条件数检查的线性启动方案，借助 IMU 预积分实现更早启动并获得度量尺度与重力信息。
+- 提出位姿条件化建图与仅沿视线方向的尺度校正策略，在保持相机基线的同时修正残差尺度。
+- 引入保持重力的子图图结构与漂移门控重访进行地图精化。
+- 在 EuRoC 上相较 SOTA 前馈建图方法启动更早、定位误差更低、建图更准确（在相同位姿条件下）；在建筑尺度的 ORI 序列上，在相同里程计下达到或优于 SOTA 建图方法，且在将 GT 位姿替换为真实里程计时性能下降更小。
+- 向社区开源代码。
+
+### 局限性
+- 具体运行时间、帧率、内存占用等实时性指标：摘要未提供足够信息。
+- 除 EuRoC 与 ORI 之外的数据集或场景泛化能力：摘要未提供足够信息。
+- 深度模型预测偏差对系统的影响分析：摘要未提供足够信息。
+- 与更多类型基线（如非前馈方法、其他 VIO/SLAM 系统）的定量对比细节：摘要未提供足够信息。
+- 消融实验与各模块贡献的定量结果：摘要未提供足够信息。
+
+### 阅读优先级
+中。理由：该工作面向单目+IMU 的稠密度量 SLAM，将前馈深度模型与 VIO 滤波器结合，选题在机器人与 AR 应用方向具有明确价值，且涉及启动初始化、尺度校正与建图精化等实际工程问题。但由于仅提供摘要，无法判断实验规模、实时性指标与开源代码质量，是否值得精读取决于读者对单目惯性稠密 SLAM 或前馈几何先验融合方向的具体兴趣。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -2119,6 +2474,47 @@ A camera and an IMU are the minimal sensor setup for metric localization and den
 **Matched keywords:** autonomous driving, localization
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Reflection-Aware Reasoning for Non-Line-of-Sight Pedestrian Localization
+- 作者：Byeonggyu Park, Mingu Jeon, Seong-Woo Kim
+- 出版日期：2026-09-23T04:33:01Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2609.27346 ；PDF: https://arxiv.org/pdf/2609.27346
+
+### 一句话总结
+该论文提出一个反射感知框架，用于在自车运动条件下融合前视相机图像与 2D 雷达点云，通过推断反射阶数和反射面分布并借助物理引导射线追踪重建反射路径，从而定位处于非视距（NLOS）状态的行人。
+
+### 研究问题
+如何在外来自车动态的户外场景中，可靠地定位非视距（NLOS）行人。摘要指出，这一问题对城市自动驾驶安全至关重要，但在自车运动环境下极具挑战，因为自车运动会使雷达多径传播变得复杂且噪声严重。
+
+### 核心思路/方法
+- 面向户外测试场场景中移动自车的 NLOS 行人定位，提出反射感知框架。
+- 融合前视相机图像和 2D 雷达点云。
+- 在鸟瞰图（bird’s-eye-view）空间中推断反射阶数和反射面分布。
+- 使用物理引导的射线追踪重建失真的反射路径，并据此定位被遮挡行人。
+- 在自车动态条件下的户外测试场场景中进行验证。
+
+### 主要贡献
+- 提出一个面向移动自车 NLOS 行人定位的反射感知框架。
+- 将前视相机图像与 2D 雷达点云融合，并在鸟瞰图空间推断反射阶数和反射面分布。
+- 引入物理引导射线追踪以重建失真反射路径并定位隐藏行人。
+- 在户外测试场场景中、自车动态条件下验证框架有效性。摘要声称结果证明了该框架在移动自车 NLOS 行人定位中的有效性。
+
+### 局限性
+- 摘要未提供足够信息说明具体实验规模、数据集组成、评价指标和定量结果。
+- 摘要未提供足够信息说明框架在不同场景、天气、光照、交通密度或传感器配置下的泛化能力。
+- 摘要未提供足够信息说明失败案例、计算开销、实时性、对雷达噪声或多径复杂度的鲁棒性边界。
+- 摘要未提供足够信息说明与已有方法的对比情况。
+- 摘要未提供足够信息说明“户外测试场场景”的具体范围及其对真实城市开放道路的代表性。
+
+### 阅读优先级
+中。理由：该论文关注自动驾驶中 NLOS 行人定位这一安全相关且具有挑战性的问题，方法上结合多模态感知、鸟瞰图推理和物理引导射线追踪，具有一定技术针对性；但根据摘要，验证局限于户外测试场场景，且摘要未给出定量结果、对比和泛化性信息。因此对 NLOS 感知、雷达多径利用或自动驾驶行人安全方向的研究者优先级较高，对一般读者则为中等。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Reliable localization of non-line-of-sight (NLOS) pedestrians is critical for safe urban autonomous driving, yet it remains highly challenging in ego-dynamic outdoor environments, where ego-vehicle motion makes radar multipath propagation complex and noisy. In this paper, we present a reflection-aware framework for NLOS pedestrian localization with a moving ego-vehicle in outdoor testbed scenarios. Our framework fuses front-view camera images and 2D radar point clouds to infer reflection orders and reflective surface distributions in bird's-eye-view space. It then uses physics-guided ray tracing to reconstruct distorted reflection paths and localize the hidden pedestrian. We validate the framework in outdoor testbed scenarios under ego-dynamic conditions. The results demonstrate the effectiveness of the proposed framework for NLOS pedestrian localization with a moving ego-vehicle.
@@ -2134,6 +2530,52 @@ Reliable localization of non-line-of-sight (NLOS) pedestrians is critical for sa
 **Matched keywords:** manipulation, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：BladeMaster: Real-Time Robotic Cutting Simulation with Online-Generated Persistent Discontinuities
+- 作者：Zhanyu Yang, Yunuo Chen, Yanjia Huang, Joseph Masterjohn, Yin Yang, Chenfanfu Jiang
+- 出版日期：2026-09-23T04:29:39Z
+- 分类：Embodied / Robotics / AR Applications（二级分类：未提供）
+- 链接：[摘要](https://arxiv.org/abs/2609.27342) / [PDF](https://arxiv.org/pdf/2609.27342)
+
+### 一句话总结
+BladeMaster 是一个基于全拉格朗日物质点法（TLMPM）的 GPU 加速切割仿真框架，通过在物质点上在线生成持久侧标签来编码切割历史，从而在无需预设切割面或复制粒子的情况下实现实时机器人切割仿真。
+
+### 研究问题
+可变形物体的切割会同时改变其形状与拓扑结构，这给机器人操作中的精确仿真带来挑战。仿真器需要：
+- 在切割发展过程中跟踪切割工具；
+- 在工具撤出后保留产生的间断（不连续性）；
+- 使新暴露的表面能够与工具以及彼此之间发生交互。
+
+而现有方法通常预先指定切割面，或将材料分离与辅助几何场耦合，难以满足上述需求。
+
+### 核心思路/方法
+- 基于**全拉格朗日物质点法（TLMPM）**，并利用 **GPU 加速**。
+- 核心思想：将切割历史**直接编码在物质点上**，通过由刀片几何形状**在线生成**的持久侧标签（persistent side labels）实现。
+- 这些标签控制**粒子-网格耦合**：在完整材料内部保持连通性，同时在工具撤出后阻止切割面之间的虚假耦合。
+- 该形式支持**渐进切割与相交切割**，无需预定义切割面，也无需复制粒子。
+- 通过**材料-材料接触**，切割面可以重新接触并相互滑动而不会重新连接。
+- 通过**工具-材料双向耦合**，材料反作用力能够影响工具运动。
+
+### 主要贡献
+- 提出 BladeMaster，一个基于 TLMPM 的 GPU 加速切割框架。
+- 通过在线生成的持久侧标签将切割历史编码于物质点，控制粒子-网格耦合以保留切割间断。
+- 支持渐进切割与相交切割，无需预设切割面或粒子复制。
+- 支持切割面重新接触与滑动而不重新连接，并支持工具与材料的双向耦合。
+- 实验展示了工具驱动切割后的操作，并在代表性任务上实现**快于实时**的性能。
+
+### 局限性
+- 摘要未提供足够信息（未说明方法的适用边界、失败情形、精度与稳定性限制、对比基线的具体范围等）。
+- 摘要未提供足够信息（未给出实验任务的具体类型、规模、硬件配置及性能指标的量化细节）。
+- 摘要未提供足够信息（未说明该方法对特定材料模型、本构或参数选择的依赖与敏感性）。
+
+### 阅读优先级
+**高**。理由：该工作直面机器人切割仿真中拓扑变化、间断保留与实时性等核心难题，提出的在线生成持久标签思路具有方法层面的新颖性，且声称达到快于实时的性能，对机器人操作与可变形体仿真方向具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Cutting changes both the shape and topology of deformable objects, making accurate simulation challenging for robotic manipulation. A simulator must track the cutting tool as a cut develops, preserve the resulting discontinuities after tool withdrawal, and enable newly exposed surfaces to interact with the tool and with each other. Existing formulations often prescribe cut surfaces in advance or couple material separation to auxiliary geometric fields. We introduce BladeMaster, a GPU-accelerated cutting framework based on the total Lagrangian material point method (TLMPM). Our key idea is to encode the cutting history directly on material points through persistent side labels generated online from the blade geometry. These labels govern particle-grid coupling, preserving connectivity within intact material while preventing spurious coupling across cut faces after tool withdrawal. Our formulation supports progressive and intersecting cuts without predefined cut surfaces or particle duplication. Material-material contact enables cut surfaces to recontact and slide against each other without reconnecting, while two-way tool-material coupling allows material reaction forces to influence tool motion. Experiments demonstrate tool-driven cutting followed by manipulation, with faster-than-real-time performance on representative tasks.
@@ -2147,6 +2589,39 @@ Cutting changes both the shape and topology of deformable objects, making accura
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** robot navigation, mapping
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Spatial and Semantic Reasoning for LLM-Driven Robot Navigation via MCP
+- 作者：Jungsoo Lee, Jaegyun Park, Wansoo Kim
+- 出版日期：2026-09-23T04:29:01Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：摘要页 https://arxiv.org/abs/2609.27340 ；PDF https://arxiv.org/pdf/2609.27340
+
+### 一句话总结
+该论文提出一种非侵入式框架，通过面向导航的表示层并经 MCP 标准化工具，将 LLM 推理与 ROS 导航连接起来，使 LLM 能够利用度量/位姿感知图像与语义路点标注完成地图构建及空间、语义导航目标选择。
+
+### 研究问题
+论文指出现有 LLM 与 ROS 导航集成存在两个缺口：一是占据栅格等导航数据为原始几何消息，LLM 难以直接将其用作空间或语义上下文；二是添加 LLM 驱动能力通常需要自定义封装或机器人专用接口，限制了跨系统复用。
+
+### 核心思路/方法
+提出一个非侵入式框架，连接 LLM 推理与基于 ROS 的导航。框架包含面向导航的表示层，并通过 Model Context Protocol（MCP）暴露为标准化、可复用工具，使任何 MCP 兼容的 LLM 无需机器人专用封装即可访问。具体模块包括：视觉地图模块将占据栅格转换为度量、位姿感知图像以供目标推理；语义标注模块记录带有机器人位姿的路点级观测。评估任务为自主建图、基于空间推理的导航、基于语义推理的导航。
+
+### 主要贡献
+- 提出一种非侵入式框架，在不修改现有 ROS 导航栈的情况下，将 LLM 推理与 ROS 导航连接。
+- 设计导航导向表示层：视觉地图模块把占据栅格转为度量、位姿感知图像；语义标注模块记录带位姿的路点级观测。
+- 通过 MCP 将上述能力暴露为标准化、可复用工具，使任意 MCP 兼容 LLM 无需机器人专用封装即可使用。
+- 在模拟室内环境中评估三类任务，报告所评估的 LLM 后端利用这些表示达到超过 97% 的地图覆盖率，并能根据自然语言指令选择空间或语义导航目标。
+
+### 局限性
+摘要未提供足够信息。摘要未说明模拟环境的规模与多样性、所评估的具体 LLM 后端、与基线方法的对比、失败案例、真实机器人验证情况，以及 MCP 工具在跨系统复用方面的实际测试范围。
+
+### 阅读优先级
+中。理由：该工作聚焦 LLM 与 ROS 导航集成中的表示与接口复用问题，提出 MCP 标准化工具与非侵入式框架，并报告了超过 97% 地图覆盖率及空间/语义目标选择结果；但摘要仅给出模拟室内环境下的有限任务评估，未提供与基线的对比细节、真实机器人验证和跨系统复用测试信息。对关注 LLM 机器人导航、ROS 集成或 MCP 工具化的读者具有参考价值，但若需判断其泛化性与实际部署效果，摘要信息尚不充分。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
