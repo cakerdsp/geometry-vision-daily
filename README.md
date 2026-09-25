@@ -11,13 +11,13 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：64
+- 当前滚动窗口论文数：82
 - 分类分布：
-  - Embodied / Robotics / AR Applications: 24
-  - 3D Reconstruction & Multi-view Geometry: 17
-  - Neural Scene Representations & Rendering: 15
-  - Geometry Foundation Models: 4
-  - Dynamic / 4D Reconstruction: 4
+  - Embodied / Robotics / AR Applications: 30
+  - Neural Scene Representations & Rendering: 20
+  - 3D Reconstruction & Multi-view Geometry: 20
+  - Dynamic / 4D Reconstruction: 7
+  - Geometry Foundation Models: 5
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
@@ -25,46 +25,54 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-1. **视觉语言模型从“语义描述”转向“空间/几何落地”，成为具身智能感知的核心组件。**
-   多篇论文围绕 VLM 在机器人场景中的几何短板展开：`VLMs Can Describe, But Not Measure` 明确指出 VLM 语义强、度量弱，提出“VLM 标注 + 深度 grounding”的模块化物体中心表示；`AnchorReasoning` 用视觉 grounded 思维链把决策关键元素与轨迹规划连接；`Spatial and Semantic Reasoning for LLM-Driven Robot Navigation via MCP` 通过 MCP 标准化工具把占据栅格转成 LLM 可用的度量/位姿感知图像。共同信号是：单纯调用 VLM 不够，需要显式的空间表示层或数据监督把语义与几何对齐。
+1. **压缩与效率成为 3DGS 从“能重建”走向“可部署”的核心议题。**
+   今日多篇论文不再单纯追求渲染质量，而是围绕存储、内存、训练与解码效率做系统性优化。代表性工作包括 COSA-GS（面向跨平台熵解码一致性的 anchor-wise 上下文压缩）、OceanXL（大规模水下场景的分块划分与自适应剪枝）、AdaTex4D（4D 高斯纹理容量按可见性与局部尺度自适应分配）、以及 Only What Was Seen（用观测 Gram 矩阵统一球谐系数降阶、阶数分配与量化）。这说明 3DGS 的竞争焦点正从“如何表示”转向“如何以可接受的成本存储、传输和实时运行”。
 
-2. **几何基础模型（前馈深度/点云先验）正在被“缝合”进 SLAM、检测与地图构建等经典几何管线。**
-   `DAVIO` 用 Depth Anything 3 同时做单目惯性 SLAM 的启动与建图，解决传统 VIO 等视差启动、只保留稀疏路标的问题；`Leveraging Vision-Based Point Cloud Map Priors` 用 Pi3X + DINOv3 从历史相机轨迹构建点云先验，替代昂贵的 LiDAR 建图；`Vision Foundation Models with Synthetic-Only Training` 用 DINOv3 替换小编码器提升航天器位姿估计。趋势是前馈几何模型不再只做离线预测，而是作为先验/初始化嵌入在线系统。
+2. **4D/动态重建从“重建几何”扩展到“支撑下游任务与标注自动化”。**
+   SplatLabel 用 4D 高斯表示自动生成 LiDAR 分割伪标签与语义占据栅格，Ego-Exo4D-HM 为 egocentric/exocentric 视频提供稠密 4D 人体运动重建数据集，AdaTex4D 则针对形变式 4DGS 的纹理冗余。趋势是：动态表示不再只是可视化结果，而逐渐成为伪标签生成、人体运动分析、具身 AI 数据基础设施的中间层。
 
-3. **3D 高斯表示从“照片级重建”走向“可交互、可解耦、可物理驱动”。**
-   `φ-RIE` 把 3DGS 场景中选定物体转为可移动仿真资产并补全被遮挡背景，目标是机器人仿真中的物体级交互；`GaussPDE` 在不重训练的前提下把 PDE 动力学注入预训练 3DGS，通过图拉普拉斯演化修改球谐直流系数；`InfiNoVA` 用时变 3D 高斯把多相机演示重建成密集新视角用于 VLA 策略增强；`ArborSplat` 则把语义直接优化到高斯地图上。共同方向是 3DGS 从静态可视化走向可编辑、可仿真、可驱动的场景表示。
+3. **基础模型的“适配与读出”优于重新训练专用模型。**
+   M3GD 冻结 2D 图像与 3D 点云基础模型，通过相机投影后的共享空间结构做跨模态条件注入；FounRef 冻结单目基础先验，用稀疏 LiDAR 锚点做免训练度量精化；WildHSR 在尺度不确定的 3D 基础模型上轻量适配，读出度量尺度与人物身份。共同信号是：研究者倾向于把已有 foundation model 当作可组合的几何/语义先验，只训练轻量 adapter、readout 或对齐模块。
 
-4. **语义/运动先验从“二值剔除”转向“连续调制”，以保留对应密度。**
-   `KYS-SLAM` 明确反对现有语义/动态 SLAM 的二元特征拒绝，改为把语义、全景、运动先验融合为连续对应代价；`ArborSplat` 用类别特定高度带约束和标签一致性拒绝来提升细薄结构语义可靠性。两者都反映同一思路：上下文证据是分级量，不是排他性准则。
+4. **“表示即地图/表示即规划空间”在机器人方向持续升温。**
+   RWM 把状态、转移与可执行计划直接学进表示几何，推理时构造潜在路径并用逆动力学恢复动作；ReVNM 用单个远程相机同时作为观测源与隐式环境地图；Underwater C3-JEPA 在潜在空间中预测接触交互与水动力滞后下的对象状态演化。与视觉重建方向相比，机器人侧更关注表示是否可直接支撑控制、规划与策略评估，而非仅用于渲染。
 
-5. **多模态融合继续向“物理一致性”和“鲁棒性补偿”深入，而非简单拼接。**
-   `Reflection-Aware Reasoning` 用相机 + 2D 雷达在 BEV 空间推断反射阶数与反射面，再用物理引导射线追踪定位 NLOS 行人；`Wave-Robust Passive AUV Localization` 用 IMU 对波浪引起的 6-DOF 阵列扰动做协方差去扭曲后再做 MUSIC DOA；`From LiDAR Maps to Visual Localization` 把 LiDAR 地图渲染成带 2D-3D 来源的准图像，让相机与地图共享视觉特征匹配器。这些工作都在处理模态间/物理扰动带来的系统性偏差。
+5. **领域专用化与多模态物理约束并行推进。**
+   OceanXL 面向水下光衰减与散射，Underwater C3-JEPA 面向 ROV 打捞，RFlash 面向超声声影，Anatomy-Aligned Surface Field Learning 面向稀疏短轴心脏 MRI，Markerless Multi-Modal Autonomous Robotic Inspection 面向空间结构巡检。这些工作共同表明：通用 3D 表示正在被快速改造到医学、水下、海事、在轨服务等强物理约束场景中，且常常需要引入热成像、LiDAR、控制信号等非 RGB 模态。
 
 #### 技术路线观察
 
-- **几何基础模型方向**：`DAVIO`、`Leveraging Vision-Based Point Cloud Map Priors`、`Vision Foundation Models with Synthetic-Only Training` 代表了“用大规模前馈模型提供几何/语义先验”的路线。区别在于：DAVIO 把深度模型嵌入 VIO 滤波器的启动与建图闭环；点云先验论文把 Pi3X 当建图器、DINOv3 当语义增强；航天器位姿论文则是把 DINOv3 当编码器替换。共同点是基础模型仍需要下游几何约束（IMU 预积分、BEV 融合、热力图架构）来恢复度量尺度与重力。
+- **几何基础模型方向**：FounRef、WildHSR、M3GD 体现出“冻结大模型 + 轻量校正/读出”的路线分化。FounRef 强调免训练、模块化的全局与局部度量校正；WildHSR 强调用伪标签预训练 Scale Readout 再用精确监督微调；M3GD 强调不单独预训练跨模态翻译器，而是利用投影后冻结特征的共享空间结构。三者共同点是不重训基础模型，差异在于校正发生在深度输出、尺度读出还是跨模态条件注入层面。
 
-- **3D/4D 重建方向**：`RawHDRV` 处理单曝光 Raw 视频的 HDR 重建，属于 4D/动态重建中的成像前端问题，利用 Bayer 通道曝光特性而非交替曝光；`GTR` 从效率角度切入密集预测骨干，用门控线性注意力替代 softmax 注意力，服务于高分辨率 3D 感知。两者分别从“输入动态范围”和“骨干效率”两个侧面支撑 3D/4D 重建的可扩展性。
+- **3D/4D 重建方向**：Ego-Exo4D-HM 和 Anatomy-Aligned Surface Field Learning 代表“数据集/结构化参数化”路线，前者补足稠密 4D 人体运动标注，后者把心肌表面参数化到 UV 域做坐标场补全。SplatLabel、PlenoCI、PePESeg3D 则代表“用 4D/3DGS 表示支撑语义、变化检测与分割”路线。前者的瓶颈在数据与解剖对应关系，后者的瓶颈在欠约束表示带来的误报、语义不完整监督以及几何与语义的对齐。
 
-- **神经场景表示方向**：`RoomLight` 提出 2.5D 室内光照先验，把 VAE 潜空间解码为 HDR radiance 与深度并参数化为面光源，纠正远场环境贴图假设；`GaussPDE` 在高斯基元上做 PDE 演化；`φ-RIE` 做高斯场景的物体解耦与背景补全；`InfiNoVA` 用时变高斯做视角增强；`ArborSplat` 做语义高斯 SLAM。整体看，神经场景表示正从“重建保真度”转向“物理先验正确性、可编辑性、语义可靠性、下游任务可用性”。
+- **神经场景表示方向**：可分为三条子路线。压缩与效率：COSA-GS、OceanXL、AdaTex4D、Only What Was Seen；视角/外观建模：M3GD、PlenoCI；语义与任务耦合：PePESeg3D、SplatLabel。整体上，这一方向正在从“单一场景高质量渲染”转向“多尺度、多模态、可压缩、可跨平台解码、可支撑下游任务”的综合表示系统。
 
-- **机器人/AR 应用方向**：`AnchorReasoning` 关注长尾自动驾驶的 VG-CoT 监督；`VLMs Can Describe, But Not Measure` 关注桌面操作中的物体中心表示；`KYS-SLAM`、`From LiDAR Maps to Visual Localization`、`ArborSplat` 关注定位与建图；`BladeMaster` 关注可变形物体切割仿真；`Spatial and Semantic Reasoning for LLM-Driven Robot Navigation via MCP` 关注 LLM 与 ROS 的标准化接口；`Skytopia` 关注单目无人机导航的潜在世界模型；`Wave-Robust Passive AUV Localization` 和 `Reflection-Aware Reasoning` 关注水下/非视距等极端感知条件。应用侧的共同瓶颈是：语义可用但几何不可靠，或几何可靠但语义/交互不可用。
+- **机器人/AR 应用方向**：RWM、Underwater C3-JEPA、ReVNM、S2Planner 都在尝试减少对显式地图、接触传感器或精确几何定位的依赖。RWM 取消递归 rollout 与动作空间搜索；Underwater C3-JEPA 在无接触传感器条件下预测对象状态；ReVNM 用远程相机替代预建地图；S2Planner 用自车条件初始化与几何引导采样细化路点。这些工作的共同技术侧重点是“隐式表示 + 控制条件 + 轻量规划接口”，而非传统 SLAM/建图管线。
+
+- **多模态与领域适配方向**：Markerless Multi-Modal Autonomous Robotic Inspection 把 RGB-D、热像仪、2D LiDAR 与机械臂规划结合；Frame-to-Panorama Localization 用 SuperPoint+LightGlue 做历史 PTZ 视频整理；RFlash 用可微辐射场分解处理超声衰减。它们说明：在真实部署场景中，多模态不是简单拼接，而是用于恢复缺失元数据、补偿物理退化或提供几何锚点。
 
 #### 值得优先阅读的论文
 
-1. **`DAVIO: Dense Monocular-Inertial SLAM with Feed-Forward Initialization and Pose-Conditioned Mapping`**
-   理由：它把前馈多视角深度模型与经典 VIO 滤波器做了较完整的闭环设计——五图像窗口无特征线性系统启动、缓冲重放、位姿条件化深度、沿视线残差尺度校正、保重力子图。对同时关心几何基础模型和 SLAM 的读者，这是今天最系统的一篇。
+1. **COSA-GS: Towards Practical Compression of 3D Gaussian Splatting**
+   优先理由：它直接触及 3DGS 部署中的两个关键痛点——不规则表示上的复杂上下文建模，以及浮点上下文推理导致的跨平台熵解码不一致。其 anchor-wise causal factorization、量化感知训练与整数推理，可能成为后续压缩工作的可复用基线。
 
-2. **`AnchorReasoning: A Visual Grounding and Causal Reasoning Dataset in Long-Tail Autonomous Driving Scenarios`**
-   理由：416k 帧、395k 决策关键元素、VG-CoT 分层监督、课程式微调、物体尺寸感知 grounding 指标，规模和任务定义都较完整。它直接回应“VLM 在驾驶中缺少视觉证据与推理/规划连接”的监督缺口，是自动驾驶 VLM 方向值得优先读的数据集类工作。
+2. **Only What Was Seen: Observation-Gram Compaction of View-Dependent Appearance in 3D Gaussian Splatting**
+   优先理由：它把“每个高斯只被训练相机窄锥观测”这一事实转化为可计算的失真度量，并统一解释降阶、阶数分配与向量量化。对做 3DGS 压缩、球谐系数优化或率失真分析的研究者，这篇提供了理论性和实用性兼具的切入点。
 
-3. **`φ-RIE: From Photorealistic Reconstruction to Interactive Environments`**
-   理由：把 3DGS 重建转成可交互仿真资产，核心洞察“资产构建与源移除应耦合、同一物体身份定义可移动资产与需补全内容”具有方法启发性。对机器人仿真、具身智能、3DGS 编辑交叉方向价值高。
+3. **M3GD: Multi-Modal Multi-View Geometric Diffusion for Camera–LiDAR Novel View Synthesis**
+   优先理由：它展示了如何在不单独预训练跨模态翻译器的前提下，组合冻结的 2D 图像与 3D 点云基础模型。对机器人 NVS、多模态生成、基础模型组合方向都有直接参考价值，且方法思路较简洁。
 
-4. **`KYS-SLAM: Hierarchical Semantic-Motion Priors for Feature Matching in Stereo Visual SLAM`**
-   理由：它把“上下文不合理性”从二值剔除重构为连续对应代价，模块化扩展 ORB-SLAM3 且不改几何后端，思路清晰、工程可复用性强。对语义/动态 SLAM 的读者，这是今天最值得细读的方法论转变。
+4. **WildHSR: Metric Feed-Forward 4D People-Scene Reconstruction from a 3D Foundation Model**
+   优先理由：它同时处理尺度不确定性和持续人物身份两个联合人物-场景重建中的核心缺口，且用伪标签预训练 + 精确监督微调的方式解决度量标签稀缺问题。对做前馈式 4D 重建、人体运动与基础模型适配的研究者优先级较高。
 
-5. **`RoomLight: A 2.5D Illumination
+5. **SplatLabel: Pseudo-Labelling through 4D Gaussian Splatting**
+   优先理由：它把 4D 高斯表示用于自动伪标签生成与语义占据预测，并重新定义评估方式。对自动驾驶、动态场景理解、3D 语义标注自动化方向的研究者，这篇提供了“表示支撑标注”的完整案例。
+
+#### 可能的研究机会
+
+- **压缩与跨平台一致性结合**：COSA-GS 的整数推理与跨平台 bit-exact 熵解码，可与 Only What Was Seen 的观测 Gram 失真度量结合，探索在统一失真准则下的量化、熵编码与跨平台部署方案。
+- **4D 表示支撑伪标签的闭环验证**：SplatLabel 生成伪标签，Ego-
 
 ### interests.md 指令分析
 
@@ -134,6 +142,40 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 **Primary category:** Geometry Foundation Models
 **Secondary categories:** None
 **Matched keywords:** depth prediction, metric depth
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：FounRef: Robust, Structure-Preserving, and Fast Metric Refinement of Frozen Monocular Foundation Priors with Sparse Anchors
+- 作者：Dan Halperin, Mirko Mählisch
+- 出版日期：2026-09-24T08:32:29Z
+- 分类：主分类为 Geometry Foundation Models；二级分类摘要未提供足够信息
+- 链接：摘要页 https://arxiv.org/abs/2609.29224 ；PDF https://arxiv.org/pdf/2609.29224
+
+### 一句话总结
+FounRef 是一种免训练方法，通过稀疏度量锚点对冻结的单目基础模型先验进行全局与局部度量校正，在保持几何结构的同时输出稠密度量深度，并在域外数据上实现更低误差、更低表面法向噪声和更快推理。
+
+### 研究问题
+从相机获取稠密度量深度对现实三维应用很重要，但同时实现精度、可靠表面几何和快速推理仍然困难。单目基础模型提供丰富、可迁移的几何先验，但缺乏可靠的度量尺度；深度补全网络虽能恢复度量深度，却可能牺牲几何保真度、跨域鲁棒性或速度。论文关注如何在不进行任务特定训练的前提下，将冻结的单目基础先验与稀疏度量锚点对齐，得到稠密度量深度。
+
+### 核心思路/方法
+FounRef 是一种免训练方法，用于将冻结的单目基础先验与稀疏度量锚点对齐以产生稠密度量深度。其设计是模块化的：深度先验、锚点来源和精化求解器都可以独立替换。论文实例化时使用 MoGe-2 和 LiDAR 锚点。方法会针对先验的稠密深度预测验证每个锚点，拒绝由跨传感器错位引起、仅靠几何过滤器无法检测的不一致锚点。随后通过保持结构的求解器施加全局和局部度量校正，保留先验的细粒度几何。FounRef 不需要任务特定训练，可在陌生相机和场景中开箱即用。
+
+### 主要贡献
+- 提出 FounRef，一种免训练、模块化的稠密度量深度精化方法，可独立替换深度先验、锚点来源和精化求解器。
+- 以 MoGe-2 与 LiDAR 锚点进行实例化，并通过对先验稠密深度预测验证锚点，拒绝跨传感器错位导致的不一致。
+- 通过保持结构的全局与局部度量校正，在获得度量深度的同时保留先验的细粒度几何。
+- 在域外数据上，相比先进深度补全网络 DMD3C，实现最高降低 24% 的深度误差、降低 92% 的表面法向噪声，以及接近 15 倍的推理加速。
+- 将度量对齐与几何预测解耦，使方法可直接受益于未来基础模型和度量传感器的进展。
+
+### 局限性
+摘要未提供足够信息。摘要未给出具体失败场景、对锚点稀疏程度或质量的敏感性、跨传感器设置范围、计算资源需求细节，也未提供与更多基线或数据集的完整对比。
+
+### 阅读优先级
+高。理由：该工作针对稠密度量深度的精度、几何保真与速度权衡提出免训练模块化方案，并在摘要中报告了相对先进深度补全网络的显著定量改进；对关注单目基础模型度量对齐、深度补全、跨域鲁棒性和三维视觉应用的研究者有较强相关性。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -371,6 +413,40 @@ Feed-forward visual geometry models such as the Visual Geometry Grounded Transfo
 **Matched keywords:** motion reconstruction, embodied AI
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Ego-Exo4D Human Meshes Dataset: 4D Human Motion Reconstruction for Ego-Exo Captures
+- 作者：Abhiram Maddukuri, Georgios Pavlakos
+- 出版日期：2026-09-24T17:30:36Z
+- 分类：Dynamic / 4D Reconstruction
+- 链接：[摘要](https://arxiv.org/abs/2609.30187) / [PDF](https://arxiv.org/pdf/2609.30187) / [项目页](https://abhiram824.github.io/egoexo4d_human_meshes)
+
+### 一句话总结
+针对 Ego-Exo4D 仅提供稀疏 3D 人体姿态标注的问题，本文构建了大规模 4D 人体运动重建数据集 Ego-Exo4D-HM，并公开了配套的重建流程。
+
+### 研究问题
+Ego-Exo4D 虽然提供了同步的自我中心与多视角外中心视频，是技能学习与评估、程序性活动理解以及具身 AI 的丰富资源，但其自带的人体标注仅有稀疏 3D 姿态。从这些多视角拍摄中重建稠密的人体运动并非易事。因此，本文关注的核心问题是：如何为 Ego-Exo4D 的拍摄数据提供稠密的 4D 人体运动重建，并给出可复用的重建方案。
+
+### 核心思路/方法
+摘要仅说明本文提出了 Ego-Exo4D-HM——一个面向 Ego-Exo4D 拍摄数据的大规模 4D 人体运动重建数据集，并同时发布了配套的重建流程（reconstruction pipeline）。摘要未提供足够信息说明该重建流程的具体技术细节、网络结构、优化策略或监督方式。
+
+### 主要贡献
+- 提出 Ego-Exo4D-HM：面向 Ego-Exo4D 拍摄数据的大规模 4D 人体运动重建数据集。
+- 发布配套的人体运动重建流程。
+- 公开代码、数据集与文档（项目页链接已给出）。
+
+摘要未提供足够信息说明该数据集的具体规模、覆盖范围、精度指标或与稀疏姿态标注的定量对比。
+
+### 局限性
+摘要未提供足够信息说明方法或数据集的局限性、失败情形、计算成本与精度上限。
+
+### 阅读优先级
+中。理由：该工作面向 4D 人体运动重建与自我-外中心多视角数据这一明确任务，对从事人体运动捕捉、具身 AI 与多视角重建的研究者具有直接参考价值；但摘要内容较简短，未给出方法细节与量化结果，因此难以仅凭摘要判断其技术新颖性与性能水平，优先级定为中。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Ego-Exo4D is a large-scale dataset providing synchronized egocentric and multi-view exocentric video, a rich resource for skill learning and assessment, procedural activity understanding, and embodied AI. However, the dataset ships with only sparse 3D human pose annotations, and reconstructing dense human motion from its multi-view captures is nontrivial. To this end, we present Ego-Exo4D-HM, a large-scale dataset of 4D human motion reconstructions for Ego-Exo4D's captures, and release the accompanying reconstruction pipeline. The code, dataset, and documentation can be found at https://abhiram824.github.io/egoexo4d_human_meshes.
@@ -386,6 +462,42 @@ Ego-Exo4D is a large-scale dataset providing synchronized egocentric and multi-v
 **Matched keywords:** 4D Gaussian, Gaussian Splatting, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：ADATEX4D: adaptive texture capacity allocation for 4D gaussian splatting
+- 作者：De Jiang, Peiqiang Wang, Kehong Yuan, Shaohua Ma
+- 出版日期：2026-09-24T15:19:23Z
+- 分类：Primary: Dynamic / 4D Reconstruction；Secondary: Neural Scene Representations & Rendering
+- 链接：摘要页 https://arxiv.org/abs/2609.29963 ；PDF https://arxiv.org/pdf/2609.29963
+
+### 一句话总结
+AdaTex4D 为基于形变的 4D 高斯泼溅引入自适应纹理容量分配模块，让每个高斯的打包 RGBA 三平面按可见性归一化的屏幕空间梯度与形变后的局部尺度独立增长两轴，从而在保持重建质量的同时将纹理存储减少一半以上。
+
+### 研究问题
+带纹理的高斯能提升局部外观表达能力，但为每个基元分配相同的纹理分辨率，会在低细节或弱可见区域浪费存储。论文要解决的问题是：如何在 4D 高斯表示中更高效地分配局部外观容量。
+
+### 核心思路/方法
+- 面向基于形变的 4D Gaussian Splatting，提出自适应纹理容量模块 AdaTex4D。
+- 每个高斯携带打包的 RGBA 三平面（packed RGBA triplanes）。
+- 三平面的两个轴根据两种信号独立增长：可见性归一化的屏幕空间梯度，以及形变后的局部尺度。
+- 由此实现动态、各向异性的纹理分配，而非对所有基元统一纹理分辨率。
+
+### 主要贡献
+- 提出 AdaTex4D，一个用于基于形变的 4D 高斯泼溅的自适应纹理容量模块。
+- 在 N3DV 和 PanopticSports 上，纹理存储减少一半以上，同时保持重建质量。
+- 在固定内存预算下，自适应分配相比统一纹理分配提升质量，并降低整体模型内存与峰值内存。
+- 结果表明，动态、各向异性的纹理分配是 4D 高斯表示中分配局部外观容量更高效的方式。
+
+### 局限性
+摘要未提供足够信息。摘要未提及方法的具体失败情形、对特定场景或运动类型的敏感性、额外计算开销的细节，也未给出定量指标、消融实验细节或与更多基线方法的比较，以上均无法基于现有信息判断。
+
+### 阅读优先级
+高。理由：该论文直接针对 4D 高斯泼溅中纹理容量分配效率这一明确问题，摘要给出了存储减半以上、固定内存预算下质量提升与内存下降等具体结论，且发表于 Dynamic / 4D Reconstruction 方向，对该方向的研究者具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Textured Gaussians improve local appearance capacity, but assigning the same texture resolution to every primitive wastes storage on low-detail or weakly visible regions. We introduce AdaTex4D, an adaptive texture-capacity module for deformation-based 4D Gaussian Splatting. Each Gaussian carries packed RGBA triplanes whose two axes grow independently according to visibility normalized screen-space gradients and deformed local scales. Experiments on N3DV and PanopticSports show that AdaTex4D reduces texture storage by more than half while preserving reconstruction quality. Under fixed memory budgets, adaptive allocation also improves quality over uniform texture assignment and reduces overall model and peak memory. These results show that dynamic, anisotropic texture allocation provides a more efficient way to distribute local appearance capacity in 4D Gaussian representations.
@@ -399,6 +511,40 @@ Textured Gaussians improve local appearance capacity, but assigning the same tex
 **Primary category:** Dynamic / 4D Reconstruction
 **Secondary categories:** Neural Scene Representations & Rendering
 **Matched keywords:** 4D Gaussian, Gaussian Splatting, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：SplatLabel: Pseudo-Labelling through 4D Gaussian Splatting
+- 作者：Nitya Nanvani, Andras Palffy, Holger Caesar
+- 出版日期：2026-09-24T14:05:59Z
+- 分类：主分类 Dynamic / 4D Reconstruction；次分类 Neural Scene Representations & Rendering
+- 链接：摘要 https://arxiv.org/abs/2609.29836 ；PDF https://arxiv.org/pdf/2609.29836
+
+### 一句话总结
+SplatLabel 提出一种基于 4D 高斯表示的自动化流程，用于从 2D 视觉基础模型蒸馏语义先验，从而生成带预测置信度的 LiDAR 分割伪标签和任意体素分辨率的语义占据栅格。
+
+### 研究问题
+论文关注如何将 2D 视觉基础模型的先验自动转化为稳健的 3D 语义伪标签。摘要指出，通常这一转化需要复杂的启发式方法或多模型集成；同时，动态环境中的运动物体跟踪与物体出现/消失的界定也构成挑战。SplatLabel 试图在无需预标注 3D 边界框的情况下，处理动态环境并完成 LiDAR 分割与语义占据预测的伪标签生成。
+
+### 核心思路/方法
+SplatLabel 以 4D 高斯表示为核，通过显式的时间流形建模单个 3D 基元的轨迹和生命周期，从而跟踪运动主体并严格定义物体出现与消失，且完全不需要预标注 3D 边界框。该表示由结构与语义先验支撑：一方面通过虚拟深度图整合 360 度 LiDAR，以引导未观测区域的场景几何；另一方面不依赖特定领域的提示工程，而是直接从 2D 模型蒸馏连续软概率，以在时间和空间上消解语义歧义。此外，论文将伪标签评估重新表述为选择性分类任务，并采用广义风险-召回指标，以反映精度与召回之间的真实权衡。
+
+### 主要贡献
+- 提出 SplatLabel，一种利用 4D 高斯表示从 2D 视觉基础模型自动提取 LiDAR 分割伪标签和语义占据栅格的流程，并带有预测置信度。
+- 通过显式时间流形建模 3D 基元的轨迹与生命周期，实现动态主体的准确跟踪以及物体出现/消失的严格界定，且无需预标注 3D 边界框。
+- 通过虚拟深度图整合 360 度 LiDAR 来引导未观测区域的场景几何，并直接蒸馏 2D 模型的连续软概率以解决语义歧义，避免领域特定提示工程。
+- 将伪标签评估重新表述为选择性分类任务，使用广义风险-召回指标来反映精度与召回的权衡。
+- 摘要称在 SemanticKITTI 上，SplatLabel 在多个召回水平上持续优于当前最优基线，为 3D LiDAR 分割和占据预测建立了稳健框架。
+
+### 局限性
+摘要未提供足够信息。未提及计算开销、对特定数据集的依赖程度、在 SemanticKITTI 之外场景的泛化能力、失败案例或实现细节等潜在局限。
+
+### 阅读优先级
+高。理由：该论文涉及 4D 高斯表示、2D 基础模型到 3D 伪标签的蒸馏、动态场景跟踪以及伪标签评估指标重构，属于动态/4D 重建与神经场景表示交叉方向；摘要声称在 SemanticKITTI 上多个召回水平优于现有基线，若关注 3D 语义伪标签、LiDAR 分割或占据预测，具有较高参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -629,6 +775,47 @@ Novel view synthesis is a key task for dynamic scene reconstruction, where high 
 **Matched keywords:** 3D reconstruction, surface reconstruction, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Anatomy-Aligned Surface Field Learning for Myocardial Reconstruction from Sparse Short-Axis Cine MRI
+- 作者：Xiaohan Yuan, Xuan Yang, Qingya Li, Yangang Wang, Lei Li
+- 出版日期：2026-09-24T13:58:16Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：摘要页 https://arxiv.org/abs/2609.29825 ；PDF https://arxiv.org/pdf/2609.29825
+
+### 一句话总结
+该论文提出一种解剖对齐的表面场学习框架，将心内膜与心外膜表面参数化到共享的环形-纵向 UV 域，从而把稀疏短轴电影 MRI 的不规则三维重建转化为结构化坐标场补全问题。
+
+### 研究问题
+患者特异性的 4D 心肌重建有助于定量功能评估、区域运动分析和基于仿真的建模。但常规采集的短轴（SAX）电影 MRI 在穿平面方向上采样稀疏，导致密集且解剖一致的心肌表面重建具有挑战性。
+
+### 核心思路/方法
+- 将心外膜和心内膜表面参数化到共享的环形-纵向 UV 域，把不规则三维重建转化为结构化的坐标场补全，并在受试者与心动相位之间建立显式对应。
+- 将稀疏 SAX 轮廓编码为 UV 观测场。
+- 采用覆盖感知采样，以提升对切片覆盖不完整的鲁棒性。
+- 使用拓扑与失真感知学习，以保持环形连续性与局部表面质量。
+
+### 主要贡献
+- 提出解剖对齐的 UV 学习方法，用于稀疏电影 MRI 的心肌重建与心肌建模，作者称其具备准确、高效且对应关系感知的表示能力。
+- 在三个公开电影 MRI 数据集上进行实验，报告所提方法持续优于代表性基于网格和隐式重建方法。
+- 报告整体 Chamfer 距离：ACDC 为 2.887 mm，M&Ms 为 2.641 mm，M&Ms-2 为 2.810 mm。
+- 重建序列保持心室功能，报告舒张末期容积误差为 3.3 mL，射血分数误差为 1.1%。
+- 声明源代码将发布于 https://github.com/yuan-xiaohan/SAX2MyoSurf 。
+
+### 局限性
+- 摘要未提供足够信息说明方法在极端稀疏采样、切片缺失模式或不同病理群体中的失败情形与泛化边界。
+- 摘要未提供足够信息说明计算效率的具体指标、训练与推理耗时、显存需求等。
+- 摘要未提供足够信息说明三个数据集上对比方法的完整设置、统计显著性检验或消融实验细节。
+- 摘要未提供足够信息说明 UV 参数化对心肌拓扑异常或配准误差的敏感性与处理策略。
+- 摘要未提供足够信息说明心室功能指标之外的其他临床验证结果。
+
+### 阅读优先级
+高。理由：该工作直接针对稀疏短轴电影 MRI 的四维心肌重建这一具有临床与建模价值的问题，提出结构化的 UV 域学习思路，并给出多数据集定量结果与功能指标误差；同时涉及 3D 重建、解剖对应和稀疏观测补全，适合关注医学图像重建与心肌建模的读者优先阅读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Patient-specific 4D myocardial reconstruction from cine MRI supports quantitative functional assessment, regional motion analysis, and simulation-based modeling. However, routinely acquired short-axis (SAX) cine MRI is sparsely sampled along the through-plane direction, making dense and anatomically consistent surface reconstruction challenging. In this study, we propose an anatomy-aligned surface learning framework that parameterizes the epicardial and endocardial surfaces on a shared circumferential-longitudinal UV domain. This formulation converts irregular 3D reconstruction into structured coordinate-field completion with explicit correspondence across subjects and cardiac phases. Sparse SAX contours are encoded as UV observation fields, coverage-aware sampling improves robustness to incomplete slice coverage, and topology- and distortion-aware learning preserves circumferential continuity and local surface quality. Experiments on three public cine MRI datasets showed that the proposed method consistently outperformed representative mesh-based and implicit reconstruction approaches, achieving overall Chamfer distances of $2.887$~mm on ACDC, $2.641$~mm on M\&Ms, and $2.810$~mm on M\&Ms-2. The reconstructed sequences also preserved ventricular function, with end-diastolic volume and ejection fraction errors of $3.3$~mL and $1.1 \%$, respectively. These results demonstrate that anatomy-aligned UV learning provides an accurate, efficient, and correspondence-aware representation for sparse cine MRI reconstruction and myocardial modeling. The source code will be available at https://github.com/yuan-xiaohan/SAX2MyoSurf.
@@ -642,6 +829,48 @@ Patient-specific 4D myocardial reconstruction from cine MRI supports quantitativ
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** 3D reconstruction, geometric reconstruction, rendering
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Markerless Multi-Modal Autonomous Robotic Inspection of Large Space Structures
+- 作者：Juan De Dios Alfaro, Arturo Ríos, David Rodríguez-Martínez, Carlos Pérez-del-Pulgar
+- 出版日期：2026-09-24T12:37:21Z
+- 分类：主分类为 3D Reconstruction & Multi-view Geometry；无二级分类
+- 链接：[摘要](https://arxiv.org/abs/2609.29644) / [PDF](https://arxiv.org/pdf/2609.29644)
+
+### 一句话总结
+该论文提出一种无标记、多模态的自主机器人巡检流程，以三维重建作为巡检支撑表示，在缺乏合作标记与先验信息的情况下采集空间相干数据并生成可用于视觉与几何评估的重建结果。
+
+### 研究问题
+未来轨道基础设施（如可展开天线、太阳能电站和大规模轨道平台）需要能在有限先验知识、无合作标记条件下运行的自主巡检系统。现有在轨服务方法通常依赖预定义轨迹、标准接口、基准标记或精确目标模型，面对大型、异构或部分未知的结构时扩展性受限。论文要解决的问题是如何在没有标记和准确目标模型的前提下，实现面向大型空间结构的自主巡检与多模态数据采集。
+
+### 核心思路/方法
+- 构建一个无标记的自主机器人巡检流程，将三维重建作为巡检的支撑性表示。
+- 硬件系统为 Kinova Gen2 机械臂，末端安装多模态传感器头，包含 RGB-D 相机、热像仪和 2D LiDAR。
+- 流程包括：估计近似巡检体积、生成视点、使用 MoveIt 规划无碰撞运动，并在 ROS2 中同步记录 RGB-D 图像、热数据和机器人位姿。
+- 对候选重建方法进行评估以选择适用于该流程的实用方法，最终使用 Nerfacto 做几何重建，并使用 Thermal-Nerfacto 演示面向巡检的热感知渲染。
+
+### 主要贡献
+- 提出一种将三维重建作为巡检支撑表示的无标记自主巡检流程，面向大型非合作空间结构。
+- 集成机械臂与 RGB-D、热像、2D LiDAR 多模态传感，实现视点生成、无碰撞运动规划和多模态数据同步记录。
+- 通过候选重建方法评估选择 Nerfacto 与 Thermal-Nerfacto，展示了热感知渲染在巡检中的可行性。
+- 在基于 Gazebo 的仿真器和初步实验室测试中进行验证，表明系统能自主获取空间相干的巡检数据并产生适用于视觉和几何评估的重建结果。
+
+### 局限性
+- 验证仅在基于 Gazebo 的仿真器和初步实验室测试中完成，摘要未提供在真实在轨环境或大型空间结构上的验证信息。
+- 摘要未提供定量性能指标（如重建精度、巡检覆盖率、规划成功率、运行时间等）。
+- 摘要未说明所生成视点对部分未知或异构结构的适应能力的具体边界。
+- 摘要未提供与现有依赖标记或预定义轨迹方法的对比实验细节。
+- 摘要未提供 Thermal-Nerfacto 热感知渲染结果的具体质量评估。
+- 摘要未提供系统在通信延迟、计算资源受限或动态环境下的表现。
+（以上未提及内容均因“摘要未提供足够信息”。）
+
+### 阅读优先级
+中。理由：该论文面向大型空间结构自主巡检这一具有明确应用价值的问题，并给出无标记、多模态、结合三维重建与运动规划的完整流程；但摘要仅报告仿真与初步实验室验证，未提供定量结果或与基线方法的对比，若读者关注在轨真实部署或性能评估，需要进一步阅读全文确认实验细节；若关注无标记巡检流程设计与多模态重建集成，则具有一定参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -659,6 +888,60 @@ Future orbital infrastructures, such as deployable antennas, solar farms, and la
 **Matched keywords:** scene reconstruction
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：WildHSR: Metric Feed-Forward 4D People-Scene Reconstruction from a 3D Foundation Model
+- 作者：Jerrin Bright, John Zelek
+- 出版日期：2026-09-24T06:37:54Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：[摘要](https://arxiv.org/abs/2609.29106) | [PDF](https://arxiv.org/pdf/2609.29106)
+
+### 一句话总结
+WildHSR 通过轻量适配一个仅有尺度不确定性的 3D 基础模型，补足“度量尺度”与“持续人物身份”两个缺失输出，实现单目视频的前馈式度量级人物-场景 4D 重建。
+
+### 研究问题
+论文关注的核心矛盾是：部分最强的 3D 基础模型能在一次前向传播中恢复视频相机与几何，但其结果只具有“up-to-scale”（尺度不确定）性质。而联合的人物-场景重建需要两个该表示并未直接提供的输出：
+1. **度量尺度（metric scale）**：如何从尺度不确定的基础表示中恢复真实世界尺度。
+2. **持续人物身份（persistent person identity）**：如何在跨帧中保持同一人物的对应关系。
+
+作者进一步提出：一个尺度不确定的基础表示，能否仅通过轻量适配同时支持这两者。
+
+### 核心思路/方法
+论文的方法围绕两个“读出”展开：
+
+**1. 度量尺度读出（Scale Readout）**
+- 精确度量标签稀缺，但无标注的野外视频充足。
+- 利用精选网络视频中的人物进行初始化：一个带姿态的度量人体与 2D 关键点可给出近似的、闭式解形式的尺度伪标签。
+- 这些伪标签用于预训练 Scale Readout，随后结合标准真实视频训练划分中的精确度量监督，与一个轻量 adapter 一起微调。
+- 推理时，该 head 直接从基础模型 token 预测度量尺度，不再需要标尺或其教师。
+
+**2. 人物身份读出**
+- 作者单独探查预训练基础模型，发现其中间 query-key 特征有跨帧编码人物对应关系的证据。
+- 在多数被评估的运动人物片段中，一个中间层 token 更偏好该人物，而非其离开的位置或其他人。
+- 用一个很小的投影读取这种对应关系；它与度量骨盆运动、提议置信度一起，驱动对逐帧人体的 **dustbin-aware Sinkhorn association**。
+
+**3. 整体流程**
+- WildHSR 结合上述两个读出，从单目视频重建度量相机、场景与人物。
+- 每个窗口以前馈方式预测；通过解析关联与 Sim(3) 组合连接各窗口。
+
+### 主要贡献
+- 提出 WildHSR，从单一尺度不确定的 3D 基础表示出发，通过轻量适配同时补足度量尺度与持续人物身份。
+- 提出利用网络视频人物构造近似闭式尺度伪标签，并以此预训练 Scale Readout，再以精确度量监督微调。
+- 发现并利用基础模型中间 query-key 特征中隐含的跨帧人物对应关系，以极小投影读取并驱动关联。
+- 在 EMDB-2 上，WildHSR 是已发表比较中首个在 WA-MPJPE 与 RTE 上超过最佳优化类方法的前馈方法，并在三项世界坐标系指标上领先前馈方法。
+- 在 RICH 上，其在 WA-MPJPE 与 W-MPJPE 上领先前馈式人物-场景方法。
+- 完整流程在单张 GPU 上以 10.1 fps 运行。
+
+### 局限性
+摘要未提供足够信息。摘要未给出失败案例、适用场景限制、对基础模型具体类型或规模的依赖、伪标签质量的下界、以及在更广泛数据集上的泛化表现等信息。
+
+### 阅读优先级
+**高**。理由：该论文同时触及 3D 基础模型的尺度不确定性、人物-场景联合重建、跨帧身份关联与前馈式 4D 重建等关键问题，并声称在 EMDB-2 与 RICH 上取得相对优化类与前馈类方法的可比或领先结果，且给出 10.1 fps 的推理速度，对 3D 重建与多人场景理解方向具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 3D foundation models recover video cameras and geometry in one forward pass, but some of the strongest are up to scale. Joint people-scene reconstruction then requires two missing outputs: metric scale and persistent person identity. We ask whether one up-to-scale foundation representation can support both through lightweight adaptation. Exact metric labels are scarce, but unlabeled in-the-wild video is abundant. We use people in curated web video to initialise the solution: a posed metric body and 2D keypoints give an approximate, closed-form scale pseudo-label. These pseudo-labels pretrain a Scale Readout, which is then fine-tuned together with a lightweight adapter using exact metric supervision from standard real-video training splits. At inference the head predicts metric scale from foundation-model tokens, without the ruler or its teachers. For person identity, we probe the pretrained foundation model alone and find evidence that its intermediate query-key features encode person correspondence across frames. In most evaluated moving-person clips, a mid-layer token prefers that person over the vacated location and other people. A tiny projection reads this correspondence; together with metric pelvis motion and proposal confidence, it drives dustbin-aware Sinkhorn association of per-frame bodies. WildHSR combines both readouts to reconstruct metric cameras, scene and people from monocular video. Each window is predicted feed-forward; analytic association and Sim(3) composition connect windows. On EMDB-2, WildHSR is the first feed-forward method in the published comparison to beat the best optimization-based WA-MPJPE and RTE while leading feed-forward methods on all three world-frame metrics. On RICH, it leads feed-forward people-and-scene methods on WA-MPJPE and W-MPJPE. The complete pipeline runs at 10.1 fps on one GPU.
@@ -672,6 +955,43 @@ Future orbital infrastructures, such as deployable antennas, solar farms, and la
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** Neural Scene Representations & Rendering
 **Matched keywords:** scene reconstruction, monocular depth, NeRF, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：PePESeg3D: Perception Prior Enhances Multi-Scale Segmentation for 3D Gaussian Splatting
+- 作者：Sungjae Choi, Seunghee Koh, Junmo Kim
+- 出版日期：2026-09-23T18:00:11Z
+- 分类：3D Reconstruction & Multi-view Geometry（主）；Neural Scene Representations & Rendering（次）
+- 链接：摘要页 https://arxiv.org/abs/2609.28645 ；PDF https://arxiv.org/pdf/2609.28645 ；代码 https://github.com/BeCow5X5/PePESeg3D
+
+### 一句话总结
+PePESeg3D 将感知先验同时注入 3D 高斯泼溅的几何重建与对比特征学习，以提升多尺度 3D 分割与场景重建性能。
+
+### 研究问题
+现有 3D Gaussian Splatting（3DGS）多尺度分割方法存在两点不足：
+1. 场景由高斯原语重建、多尺度分割特征被单独学习，导致几何不感知语义结构；
+2. 特征学习依赖不完整的掩码监督。
+
+### 核心思路/方法
+提出 PePESeg3D 框架，将感知先验注入多尺度 3D 高斯分割流程，并同时用于对比特征学习和上游几何重建：
+- **PePE Reconstruction**：引入单目深度与掩码约束，使物体结构具有语义一致性，从而获得对齐的几何。
+- **PePE Contrastive Learning**：在已对齐的几何基础上，利用密集的深度-颜色线索和视图一致的中心点监督，补偿由 2D 基础模型获得的多尺度掩码的不完整性。
+
+### 主要贡献
+- 提出 PePESeg3D，将感知先验同时整合进几何优化与特征学习，用于准确的多尺度 3D 分割。
+- 设计 PePE Reconstruction，通过单目深度与掩码约束保证语义连贯的物体结构。
+- 设计 PePE Contrastive Learning，利用深度-颜色线索与视图一致的中心点监督，缓解多尺度掩码不完整问题。
+- 在 SPIn-NeRF、LERF-Mask 和 NVOS 基准上的大量实验表明，该方法在多尺度分割与场景重建上均达到 state-of-the-art 性能。代码已公开。
+
+### 局限性
+摘要未提供足够信息。摘要未给出具体失败案例、计算开销、对特定数据类型或基础模型质量的依赖程度等局限说明。
+
+### 阅读优先级
+**高**。理由：该工作针对 3DGS 多尺度分割中“几何与语义脱节”和“掩码监督不完整”两个明确问题，提出将感知先验同时用于几何与特征学习的方案，并在三个基准上声称取得 state-of-the-art；主题与 3D 重建、多视图几何及神经场景表示高度相关，且代码公开，适合优先阅读。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1572,6 +1892,48 @@ We present Elevator-VIGS, a visual-inertial 3D Gaussian Splatting SLAM system th
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Towards Practical Compression of 3D Gaussian Splatting
+- 作者：Pengpeng Yu, Yueru Chen, Fei Song, Tai Qin, Qi Zhang, Jing Wang, Yulan Guo
+- 出版日期：2026-09-24T17:57:56Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：[摘要](https://arxiv.org/abs/2609.30245) / [PDF](https://arxiv.org/pdf/2609.30245)
+
+### 一句话总结
+论文提出 COSA-GS，通过基于 anchor 的因果分解构建上下文，避免对不规则 3D 表示做空间聚合，并结合量化感知训练与整数推理，在提升 3DGS 压缩性能的同时实现跨平台一致的熵解码。
+
+### 研究问题
+3D Gaussian Splatting（3DGS）虽然能实现高质量新视角合成，但存储开销很大。现有压缩方法通常依赖对不规则 3D 表示进行空间上下文建模，这会增加训练和编码复杂度；同时，浮点上下文推理可能在不同平台之间引入数值不一致，导致熵解码失败。因此，论文关注的是如何在保持实用性的前提下，实现高效且跨平台一致的 3DGS 压缩。
+
+### 核心思路/方法
+论文提出 COSA-GS，其核心是不通过空间聚合来构建上下文，而是采用 anchor-wise causal factorization。具体来说：
+- 使用每个 anchor 坐标导出的几何上下文来建模紧凑的可学习 anchor latent；
+- 将 anchor latent 与几何上下文融合，形成用于属性编码的 anchor context；
+- 该上下文模型架构简单，仅由线性变换和激活函数组成；
+- 训练时使用率失真优化，并结合自适应 Gaussian 剪枝；
+- 进一步开发量化感知训练和上下文模型的整数推理，以实现跨平台熵解码符号的 bit-exact 一致性。
+
+### 主要贡献
+- 提出 COSA-GS，用 anchor-wise causal factorization 构建上下文，避免对不规则 3D 表示做空间聚合，从而降低训练和编码复杂度。
+- 设计了一个简单的上下文模型，仅包含线性变换和激活函数，并将 anchor latent 与几何上下文融合用于属性编码。
+- 采用率失真优化与自适应 Gaussian 剪枝进行训练。
+- 引入量化感知训练和整数推理，以实现跨平台熵解码符号的 bit-exact 一致性。
+- 摘要声称实验表明 COSA-GS 达到 state-of-the-art 压缩性能，同时保持快速且一致的跨平台解码。
+
+### 局限性
+- 摘要未提供足够信息说明其在不同数据集、场景类型或硬件平台上的泛化能力。
+- 摘要未提供足够信息说明量化感知训练和整数推理带来的额外训练成本或实现复杂度。
+- 摘要未提供足够信息说明与具体已有压缩方法相比的完整实验设置、消融结果和失败案例。
+- 摘要未提供足够信息说明自适应 Gaussian 剪枝的具体策略、超参数敏感性及其对重建质量的影响。
+
+### 阅读优先级
+高。理由：该论文聚焦 3DGS 压缩中的实际部署问题，尤其是跨平台熵解码一致性，这类问题对实际应用很重要；同时摘要声称在压缩性能和快速一致解码方面达到 state-of-the-art，并提供了代码链接，适合关注 3DGS 压缩、神经场景表示和实用编解码实现的研究者优先阅读。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 3D Gaussian Splatting (3DGS) enables high-quality novel-view synthesis but requires substantial storage. Existing compression methods often rely on spatial context modeling over irregular 3D representations, increasing the complexity of training and coding. Meanwhile, floating-point context inference can introduce numerical inconsistencies across platforms, causing entropy-decoding failures. To address these practical challenges, we propose COSA-GS, which constructs context without spatial aggregation through anchor-wise causal factorization. Specifically, we use geometry context derived from each anchor's coordinates to model a compact learnable anchor latent. The anchor latent is then fused with the geometry context to form an anchor context for attribute coding. The resulting context model features a simple architecture composed solely of linear transformations and activations. We train COSA-GS using rate--distortion optimization with adaptive Gaussian pruning. Further, we develop quantization-aware training and integer inference for the context model to achieve bit-exact consistency of entropy-decoded symbols across platforms. Experiments demonstrate that COSA-GS achieves state-of-the-art compression performance while retaining fast and consistent cross-platform decoding, providing a simple yet effective framework for practical 3DGS compression. Code is available at https://github.com/pengpeng-yu/COSA-GS.
@@ -1585,6 +1947,41 @@ We present Elevator-VIGS, a visual-inertial 3D Gaussian Splatting SLAM system th
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** novel view synthesis, view synthesis
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：M3GD: Multi-Modal Multi-View Geometric Diffusion for Camera--LiDAR Novel View Synthesis
+- 作者：Yang Zhou, Jiuhong Xiao, Shizhao Ye, Long Quang, Carlos Nieto-Granda, Giuseppe Loianno
+- 出版日期：2026-09-24T16:14:00Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2609.30056 ；PDF：https://arxiv.org/pdf/2609.30056
+
+### 一句话总结
+M3GD 提出一种 Camera–LiDAR 多模态表示，将冻结的 2D 图像与 3D 点云基础模型组合用于生成式新视角合成，并通过像素对齐的 LiDAR 信息提升目标视角 RGB 与深度合成效果。
+
+### 研究问题
+机器人新视角合成（NVS）需要同时恢复视觉外观和度量 3D 结构，但多数生成式 NVS 方法只依赖图像，忽略了机器人平台上常见的 LiDAR 这一互补传感器。论文要解决的问题是：如何在不单独预训练跨模态翻译器的前提下，把 Camera 与 LiDAR 结合用于生成式 NVS。
+
+### 核心思路/方法
+M3GD 组合独立预训练的 2D 图像基础模型与 3D 点云基础模型。作者指出，在相机投影之后，冻结的 LiDAR 特征与图像特征表现出显著共享的空间结构，从而构成一种自然的跨模态表示。基于这一结构，M3GD 用 LiDAR 条件化生成：将显式几何统计与学习到的点云描述子组合成图像潜变量网格上的视角对齐 packet，并通过轻量级残差适配器注入多视角 flow-matching 生成器；该生成器的潜空间、解码器和训练目标保持不变。目标视角 LiDAR 被用作几何查询，将请求视角与源观测关联起来。
+
+### 主要贡献
+- 提出 M3GD，一种用于生成式 NVS 的 Camera–LiDAR 多模态表示，无需单独预训练跨模态翻译器。
+- 利用相机投影后冻结 LiDAR 与图像特征之间的共享空间结构，作为自然的跨模态表示。
+- 通过轻量级残差适配器将视角对齐的 LiDAR packet 注入多视角 flow-matching 生成器，同时保持生成器原有潜空间、解码器与训练目标不变。
+- 在 GrandTour 数据集上，相比同一骨干的纯图像版本，提升了目标视角 RGB 与深度合成效果。
+- 消融表明增益来自像素对齐的 LiDAR 内容，且目标视角 LiDAR 起到连接请求视角与源观测的几何查询作用。
+- 在地面机器人上部署，展示实际运行能力，并可通过 Euler 积分步数配置质量—成本权衡。
+
+### 局限性
+摘要未提供足够信息。摘要未说明方法在更广泛数据集、不同传感器配置、极端视角变化或实时性上限等方面的具体限制。
+
+### 阅读优先级
+中。理由：该工作聚焦机器人 NVS 中 Camera–LiDAR 多模态生成式合成，问题明确，方法思路具有启发性，并且包含数据集实验、消融与真实机器人部署；但摘要未提供与更多基线或更广泛场景的对比细节，是否具有普遍优势仍需阅读全文确认。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1602,6 +1999,41 @@ Robotic novel view synthesis (NVS) must recover both visual appearance and metri
 **Matched keywords:** 3D reconstruction, NeRF, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, rendering, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：OceanXL: Large-scale Underwater 3D Gaussian Splatting via Block Partitioning and Adaptive Pruning
+- 作者：Haoran Wang, Shaoyu Cai, Adrian Azzarelli, Zhuodong Jiang, Guoxi Huang, Eng Tat Khoo, Brett Seymour, Fan Zhang, David Bull, Nantheera Anantrasirichai
+- 出版日期：2026-09-24T15:35:08Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：[摘要](https://arxiv.org/abs/2609.29985) / [PDF](https://arxiv.org/pdf/2609.29985)
+
+### 一句话总结
+OceanXL 提出一种面向大规模水下场景的 3D Gaussian Splatting 框架，通过分块划分与自适应剪枝，在保持全局几何一致性的同时提升训练效率与渲染性能，并构建了一个大规模水下数据集。
+
+### 研究问题
+水下三维重建对海洋探索、生态监测和海底基础设施检测至关重要，但在大规模场景下仍面临困难，主要原因是光衰减、散射以及捕获覆盖范围有限。3D Gaussian Splatting（3DGS）虽能实现高质量实时渲染，但将其应用于大规模水下场景时，受限于高内存消耗和在大范围区域上的低效优化。
+
+### 核心思路/方法
+论文提出 OceanXL，一个快速且可扩展的、基于 3DGS 的大规模水下重建框架。方法采用分而治之策略，将场景划分为空间上连贯的块，以实现高效优化，同时保持全局几何一致性。论文还引入一种针对水下条件定制的自适应剪枝方案，去除冗余 primitives，从而在不牺牲视觉保真度的情况下产生紧凑表示。上述组件共同提升了大规模场景的训练效率和渲染性能。此外，论文还引入了一个覆盖多样海洋环境的大规模水下数据集。
+
+### 主要贡献
+- 提出 OceanXL，一个面向大规模水下重建的快速、可扩展 3DGS 框架。
+- 采用分而治之的空间连贯块划分策略，在高效优化的同时保持全局几何一致性。
+- 引入针对水下条件的自适应剪枝方案，去除冗余 primitives，得到紧凑表示且不牺牲视觉保真度。
+- 引入一个覆盖多样海洋环境的大规模水下数据集。
+- 在五个大规模场景上的实验表明，相较大规模场景基线，方法在可扩展性、紧凑性和效率—质量权衡方面表现良好。
+- 在小规模 SeaThru-NeRF 数据集上的受控比较进一步显示，与水下专用方法相比，方法具有有竞争力的重建质量，且模型尺寸显著更小。
+
+### 局限性
+摘要未提供足够信息。摘要未说明方法的具体失败情形、计算资源需求上限、数据集规模与采集细节、定量指标数值，以及与其他方法比较时的具体限制条件。局限性的详细内容需参见论文全文。
+
+### 阅读优先级
+中。理由：该论文聚焦水下大规模 3DGS 重建，针对光衰减、散射、覆盖有限、内存消耗高和优化效率低等明确问题，提出分块划分与自适应剪枝的组合方案，并附带大规模水下数据集；研究主题和应用场景较具体，对水下重建、3DGS 扩展性与大规模场景优化方向的研究者有参考价值。但摘要未提供定量结果和详细实验设置，是否具有广泛方法学影响需依赖全文判断，因此优先级定为中。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Underwater 3D reconstruction is critical for marine exploration, ecological monitoring, and subsea infrastructure inspection, yet remains challenging at large scale due to light attenuation, scattering, and limited capture coverage. While 3D Gaussian Splatting (3DGS) enables high-quality real-time rendering, its application to large underwater scenes is constrained by high memory consumption and inefficient optimization over extensive areas. We propose OceanXL, a fast and scalable 3DGS-based framework for large-scale underwater reconstruction. OceanXL adopts a divide-and-conquer strategy, partitioning scenes into spatially coherent blocks to enable efficient optimization while preserving global geometric consistency. We further introduce an adaptive pruning scheme tailored to underwater conditions that removes redundant primitives, producing compact representations without sacrificing visual fidelity. Together, these components improve training efficiency and rendering performance for large scenes. We also introduce a large-scale underwater dataset covering diverse marine environments. Experiments on five large-scale scenes demonstrate favorable scalability, compactness, and efficiency--quality trade-offs over large-scene baselines. Controlled comparisons on the small-scale SeaThru-NeRF dataset further show competitive reconstruction quality with substantially smaller model sizes than underwater-specific methods.
@@ -1615,6 +2047,40 @@ Underwater 3D reconstruction is critical for marine exploration, ecological moni
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** radiance field, rendering, radiance, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Shadow Reduction in Ultrasound Imaging Using Differentiable Simulation and Radiance Field Decomposition
+- 作者：Valentin Bacher, Pak Hei Yeung, Bernhard Kainz, Madeleine K. Wyburd, Nicola K. Dinsdale, Michael Gray, Ana I. L. Namburete
+- 出版日期：2026-09-24T10:55:49Z
+- 分类：Neural Scene Representations & Rendering（主要分类）；次要分类摘要未提供足够信息
+- 链接：摘要页 https://arxiv.org/abs/2609.29373 ；PDF https://arxiv.org/pdf/2609.29373
+
+### 一句话总结
+提出 RFlash，一种基于可微辐射场分解的物理信息后处理方法，将波束形成后的超声图像分解为衰减图与散射强度图，并通过衰减自适应重渲染减轻声影，无需原始扫描数据或硬件改动。
+
+### 研究问题
+超声中来自骨骼等强衰减组织的声影会遮挡临床重要结构。在胎儿脑成像中，颅骨引起的伪影对靠近探头一侧（近端）半球造成的不利影响尤为严重，限制了左右半球的对称评估。现有校正方法需要原始扫描仪数据、对组织属性施加限制性假设，或依赖可能产生解剖结构幻觉的生成模型。
+
+### 核心思路/方法
+RFlash 是一种物理信息后处理方法，利用图像形成的可微辐射场表述，将波束形成后的超声图像分解为显式的衰减图与散射强度图。随后通过衰减自适应重渲染，去除每个深度处信号对中间组织的依赖，相当于虚拟地将探头推进到组织内部。该方法无需硬件修改，也无需访问原始扫描仪数据，并支持线性与曲率探头的 2D 和 3D 采集。
+
+### 主要贡献
+- 提出 RFlash，将波束形成超声图像分解为衰减图与散射强度图，并借助衰减自适应重渲染减轻声影。
+- 在 1,261 例 3D 胎儿脑体积、143 例真实 2D 曲率腹部扫描和 1,200 例模拟 2D 线性探头肝脏扫描上，比经典 Hughes-Duck 衰减校正更有效地降低阴影相关强度差异。
+- 对在远端半球（远离探头）训练并应用于近端半球的孕龄模型，预测误差相对原始图像降低 5.1 天（40%）。
+- 估计的衰减图产生阴影置信图，可改善随机森林骨影分割，并在 SHAP 重要性上高于现有神经置信图基线，提示更好的物理一致性。
+- 方法无需硬件修改或原始扫描仪数据，支持线性与曲率探头的 2D 和 3D 采集。
+
+### 局限性
+摘要未提供足够信息。摘要中未说明方法的失败情形、计算开销、对特定解剖或探头类型的适用边界、分解唯一性或潜在伪影等局限。
+
+### 阅读优先级
+中。理由：该工作针对超声声影这一明确临床问题，提出无需原始数据、可后处理且覆盖 2D/3D 与多种探头的物理信息方案，并在较大规模数据上给出定量改善，与可微渲染和神经场景表示方向相关。但摘要未提供方法细节、失败案例和计算成本，是否值得深入阅读取决于对超声后处理、可微仿真或辐射场分解的具体兴趣。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1632,6 +2098,44 @@ Acoustic shadows from bone and other highly attenuating tissues obscure clinical
 **Matched keywords:** NeRF, Gaussian Splatting, 3D Gaussian Splatting, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Only What Was Seen: Observation-Gram Compaction of View-Dependent Appearance in 3D Gaussian Splatting
+- 作者：Krzysztof Pietroszek
+- 出版日期：2026-09-24T04:06:12Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：[摘要](https://arxiv.org/abs/2609.28997) / [PDF](https://arxiv.org/pdf/2609.28997)
+
+### 一句话总结
+论文提出用“每高斯观测 Gram 矩阵”作为系数变化到图像平方误差的一阶映射指标，并据此统一处理 3D Gaussian Splatting 中球谐颜色系数的降阶、阶数分配与向量量化压缩。
+
+### 研究问题
+3D Gaussian Splatting 模型的大部分内存用于存储球谐颜色系数，但每个高斯在训练时实际只被训练相机的狭窄方向锥观测到。论文关注的问题是：如何利用这种“只被部分方向观测”的特性，更有效地压缩视角相关外观表示。
+
+### 核心思路/方法
+论文将每个高斯的观测方向与混合权重累积为 per-Gaussian observation Gram matrix。该矩阵被描述为从系数变化到平方图像误差的精确一阶映射，且只需要模型和相机位姿即可计算。基于该失真度量：
+- 阶数降低可写为闭式投影，并推广了截断操作；
+- 阶数分配可建模为拉格朗日率失真问题；
+- 向量量化可转化为矩阵加权的 Lloyd 算法，而 Compressed3D 的量化器是其标量情形。
+
+作者将该度量替换进 Compressed3D 且保持其他部分不变，并报告了在微调前、匹配码率下以及无需训练图像场景中的效果。
+
+### 主要贡献
+- 提出 per-Gaussian observation Gram matrix，作为可用于其他压缩器的失真度量，用于描述系数变化到平方图像误差的一阶关系。
+- 在该度量下，将球谐降阶、阶数分配和向量量化分别形式化为闭式投影、拉格朗日率失真问题和矩阵加权 Lloyd 算法。
+- 将度量替换进 Compressed3D 后，摘要报告微调前 PSNR 提升 +0.49 dB，SSIM 与 LPIPS 也随之改善；在匹配码率下仍获得 +0.32 dB，且无需任何训练图像。
+- 仅基于该度量的免训练压缩栈在 Mip-NeRF 360 上同等质量下比 image-free GSICO 小 15%。
+
+### 局限性
+摘要未提供足够信息说明计算观测 Gram 矩阵与矩阵加权量化带来的额外计算开销、内存峰值或运行时间。摘要未提供足够信息说明在训练相机覆盖不足或视角外推条件下的表现。摘要未提供足够信息说明除 Mip-NeRF 360 与 Compressed3D 相关设置外的泛化实验。摘要未提供足够信息说明代码、完整实现细节及消融实验范围。
+
+### 阅读优先级
+高。理由：该工作直接针对 3D Gaussian Splatting 的视角相关外观内存瓶颈，提出可插入现有压缩器的失真度量，并在摘要中给出明确的 PSNR、码率与模型体积收益；对神经渲染压缩、球谐系数压缩和率失真优化方向具有较强相关性。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Most of the memory of a 3D Gaussian Splatting model holds spherical-harmonic colour coefficients, yet each Gaussian is seen only from the narrow cone of directions of the training cameras. We turn this into a distortion metric that other compressors can adopt: a per-Gaussian observation Gram matrix, accumulated from viewing directions and blending weights, is the exact first-order map from coefficient changes to squared image error and needs only the model and the camera poses. Under it, degree reduction becomes a closed-form projection that generalises truncation, degree allocation a Lagrangian rate-distortion problem, and vector quantisation the matrix-weighted Lloyd algorithm, of which Compressed3D's quantiser is the scalar case. Swapped into Compressed3D with everything else unchanged, the metric raises PSNR by +0.49 dB before fine-tuning, with SSIM and LPIPS following, and at matched rate still gains +0.32 dB without a single training image. A training-free stack built on the metric alone is 15% smaller than the image-free GSICO at equal quality on Mip-NeRF 360.
@@ -1645,6 +2149,48 @@ Most of the memory of a 3D Gaussian Splatting model holds spherical-harmonic col
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** radiance field, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, radiance, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：PlenoCI: Plenoptic CharacterIstics for View Dependence Aware Change Classification
+- 作者：Jason Lai, Chamuditha Jayanga Galappaththige, Niko Suenderhauf, Dimity Miller, Donald G. Dansereau
+- 出版日期：2026-09-24T02:27:24Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：[摘要](https://arxiv.org/abs/2609.28930) / [PDF](https://arxiv.org/pdf/2609.28930)
+
+### 一句话总结
+论文提出 PlenoCI——一种从 3DGS 所近似的全光场中导出的特征，通过解析全光导数捕捉视角相关视觉行为并忽略朗伯纹理，用于缓解欠约束辐射场重建在变化检测中的误报问题，并支持变化分类。
+
+### 研究问题
+辐射场表示（如 3DGS）虽能编码遮挡与视角依赖等复杂视觉现象，但本质上是欠约束的：即使场景未发生改变，独立优化的重建也会收敛到不同的基元配置。摘要指出，这一特性会给变化检测/分类带来困难，需要一种对欠约束表示具有鲁棒性的特征来区分真实变化与重建差异。
+
+### 核心思路/方法
+- 提出 PlenoCI（Plenoptic CharacterIstics），从辐射场近似所对应的全光场构建特征。
+- PlenoCI 直接捕捉丰富的视觉行为，同时忽略朗伯纹理。
+- 通过从 3DGS 表示推导闭式解析全光导数，高效检测这些 5D 结构。
+- 方法在设计上对欠约束表示具有鲁棒性。
+- 将 PlenoCI 用于变化分类：先用实例感知的 3DGS 流程检测变化，再借助 PlenoCI 将变化分类为几何变化或外观变化。
+
+### 主要贡献
+- 提出 PlenoCI 特征及其基于 3DGS 的闭式解析全光导数计算方式。
+- 在未改变场景的独立重建之间，相比同期工作报告少两个数量级的假阳性。
+- 在变化检测上，于 CL-Splats 取得当前最优结果，较最强竞争者提升 25.7% mIoU，同时在更具挑战性的 PASLCD 基准上保持竞争力。
+- 借助 PlenoCI 将变化分类为几何/外观两类，平衡准确率为 0.735，与最佳基线相当。
+- 作者认为全光导数与 PlenoCI 为视觉复杂环境中视角依赖感知的理解开辟了新方向；代码与数据已公开。
+
+### 局限性
+- 摘要未提供足够信息说明方法在非 3DGS 表示或其他辐射场表示上的适用性。
+- 摘要未提供足够信息说明计算开销、实时性或可扩展性的具体表现。
+- 摘要未提供足够信息说明在 PASLCD 上与最强方法的具体差距及失败案例。
+- 摘要未提供足够信息说明变化分类中几何/外观类别定义、数据标注方式与评估细节。
+- 摘要未提供足够信息说明对视角依赖极端场景或动态场景的泛化能力。
+
+### 阅读优先级
+高。理由：该工作针对辐射场欠约束这一核心问题提出新特征与解析导数方法，并在变化检测基准上报告了显著指标提升（CL-Splats 上 +25.7% mIoU，假阳性降低两个数量级），对神经场景表示、3DGS 变化检测与视角依赖理解方向具有直接参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -2420,6 +2966,48 @@ Feed-forward 3D Gaussian Splatting now reconstructs renderable scenes from unpos
 **Matched keywords:** simulation, world model
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Underwater C3-JEPA: An Object-Centric Cross-View World Model for ROV Salvage
+- 作者：Yuncong Yang, Jinlong Li, Yulong Xue, Feng Wu, Chunwen Zhang, Lei Qiao, Xuyang Wang
+- 出版日期：2026-09-24T17:45:42Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2609.30214
+
+### 一句话总结
+该论文提出一种面向近场重载水下 ROV 打捞任务的对象中心多视角预测世界模型，在不依赖接触传感器的情况下，从同步多视角 RGB 观测与载具控制信号中预测任务对象状态在接触交互和水动力滞后下的潜在演化。
+
+### 研究问题
+近场重载水下 ROV 打捞任务中，缺少接触传感器时，如何从同步多视角 RGB 观测和载具控制信号中预测任务对象状态随接触交互与载具水动力滞后的演化。
+
+### 核心思路/方法
+- 提出 Underwater C3-JEPA（cross-view, control-conditioned, context-extended），一种对象中心多视角预测世界模型。
+- 将多相机观测编码为任务对象 token 与上下文 token。
+- 通过 held-out-view attention 融合跨相机证据。
+- 以控制信号为条件直接预测未来状态。
+- 使用弱绑定（weak binding）以低标注成本锚定目标与夹爪。
+- 使用 SIGReg 锐化几何表示。
+- 所得预测接口支持模型预测控制（MPC）候选评估与 imagined-rollout 行为智能体训练。
+
+### 主要贡献
+- 提出对象中心、跨视角、控制条件化、上下文扩展的水下预测世界模型架构。
+- 在不使用接触传感器的条件下，于潜在空间中预测接触交互与水动力滞后下的任务对象状态演化。
+- 采用 held-out-view attention 进行跨相机证据融合，并引入弱绑定与 SIGReg 降低标注成本、增强几何表示。
+- 实验表明，相比无重建的潜在基线，所学表示向下游探针传递了显著更多任务相关信息，同时保持预测器轻量。
+- 在真实水下视频上验证同一架构可恢复被留出相机的对象状态并优于 persistence 基线，表明该方案可迁移至仿真之外。
+
+### 局限性
+- 摘要未提供足够信息说明具体实验设置、数据集规模、任务成功率、MPC 实际部署效果与计算开销细节。
+- 摘要未提供足够信息说明弱绑定与 SIGReg 的消融结果、失败案例或跨域泛化边界。
+- 摘要未提供足够信息说明与更广泛世界模型或水下感知方法的系统对比。
+
+### 阅读优先级
+中。理由：该工作面向水下 ROV 打捞这一具体具身任务，提出多视角、控制条件化、对象中心的预测世界模型，并强调无接触传感器下的潜在状态预测与真实水下视频验证，对水下机器人操作、世界模型与 MPC 结合方向有参考价值；但摘要未提供充分的实验细节与对比信息，需进一步阅读正文才能判断其实际性能与通用性。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 We present Underwater C$^{3}$-JEPA (cross-view, control-conditioned, context-extended), an object-centric multi-view predictive world model for near-field heavy-load underwater ROV salvage. Without contact sensors, it predicts in latent space how the task-object state evolves through contact interaction and under the hydrodynamic lag of the vehicle, from synchronized multi-view RGB observations and vehicle control signals. C$^{3}$-JEPA encodes multi-camera observations into task-object and context tokens, fuses cross-camera evidence through held-out-view attention, and directly predicts future states conditioned on control. Weak binding anchors the target and gripper at low annotation cost, while SIGReg sharpens the geometric representation. Experiments show that the learned representation transfers substantially more task-relevant information to downstream probes than a reconstruction-free latent baseline, while keeping the predictor lightweight. The resulting predictive interface supports model-predictive-control (MPC) candidate evaluation and imagined-rollout behavior-agent training. Validation on real underwater video shows the same architecture recovering a withheld camera's object state and staying ahead of persistence, so the recipe transfers beyond simulation.
@@ -2433,6 +3021,43 @@ We present Underwater C$^{3}$-JEPA (cross-view, control-conditioned, context-ext
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** autonomous driving
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：S2Planner: Multi-Scale Semantic Planner for End-to-End Autonomous Driving
+- 作者：Zhaowei Lu, Liguo Zhou, Yujie Guo, Lei Yu, Alois Knoll
+- 出版日期：2026-09-24T13:48:08Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2609.29813 ，PDF：https://arxiv.org/pdf/2609.29813
+
+### 一句话总结
+S2Planner 是一种结合三个前视相机、自车运动历史与当前驾驶指令的轨迹规划器，通过自车条件化的轨迹初始化与多尺度图像特征的迭代几何引导采样来细化候选路点。
+
+### 研究问题
+面向端到端自动驾驶的轨迹规划问题：如何利用多相机图像、自车运动历史与驾驶指令，生成并细化候选路点，以提升规划性能。摘要未提供足够信息说明该问题在其他方法中的具体不足或论文所针对的确切研究缺口。
+
+### 核心思路/方法
+- 输入：三个前视相机、自车运动历史、当前驾驶指令。
+- 视觉特征：使用微调后的 DINOv3 骨干网络与 Spatial Tuning Adapter，生成多尺度图像特征。
+- 解码：采用粗到细解码器，结合轨迹自注意力（trajectory self-attention）与相机投影交叉注意力（camera-projected cross-attention）来细化候选路点。
+- 方法定位：作者强调贡献在于“自车条件化的轨迹初始化”与“对多尺度图像特征的迭代、几何引导采样”的整合，而非提出新的视觉骨干网络或注意力算子。
+
+### 主要贡献
+- 提出 S2Planner 轨迹规划器，整合自车条件化轨迹初始化与迭代、几何引导的多尺度图像特征采样。
+- 在 NAVSIM v1 non-reactive 评测上，先前报告的 navtest 运行获得 88.03 PDMS。
+- 明确说明该结果因基于 navtest 性能进行选择而属于探索性结果，不能解释为无偏测试估计。
+
+### 局限性
+- 88.03 PDMS 来自基于 navtest 性能选择的运行，属于探索性结果，不能作为无偏测试估计。
+- 摘要指出仍需在未曝光数据上进行验证集选择的评测、重复运行以及计算量测量，以确立泛化性与效率。
+- 除上述内容外，摘要未提供足够信息说明其他局限性（如具体失败场景、消融细节、真实道路测试等）。
+
+### 阅读优先级
+中。理由：该工作聚焦端到端自动驾驶轨迹规划，方法整合了自车条件初始化与多尺度特征迭代采样，并给出 NAVSIM v1 上的 PDMS 数值，具有一定相关性；但摘要明确该数值为探索性、缺乏无偏测试估计与效率测量，且作者自述贡献是整合而非新骨干或新注意力算子，因此对追求稳健实证结论的读者优先级为中等。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -2450,6 +3075,42 @@ We present S2Planner, a trajectory planner that combines three front-facing came
 **Matched keywords:** localization, digital twin
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Frame-to-Panorama Localization and Context-Aware Sampling for Scene-Specific Ship Detection in a Smart Marina Testbed
+- 作者：Ignat Romanov, Andreas Hadjipieris, Neofytos Dimitriou
+- 出版日期：2026-09-24T12:05:00Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：https://arxiv.org/abs/2609.29447
+
+### 一句话总结
+该论文提出一套面向历史PTZ海事视频的数据整理流程，通过帧到全景图的定位与上下文感知采样，将大量冗余视频帧压缩为紧凑且场景特定的训练集，用于船舶检测。
+
+### 研究问题
+智能海事基础设施虽能持续提供异构传感流，但仅有传感硬件不足以支持场景特定模型开发。历史视频流需要被空间索引、情境化，并缩减为可供标注的信息密集子集。论文针对的问题是：在缺乏可靠 pan、tilt、zoom 元数据的历史 PTZ 海事视频中，如何构建紧凑、场景特定且空间与上下文多样的船舶检测训练集，以减少标注负担。
+
+### 核心思路/方法
+论文提出一个端到端的数据整理流程，主要包含两个阶段：
+1. 帧到全景图定位：使用 SuperPoint 和 LightGlue 将历史 PTZ 视频帧定位到参考全景图上，从而恢复相机视角信息，并加入天气与太阳状态元数据。
+2. 上下文感知采样：先通过多样性采样保留相机视角与环境条件的变化；再针对地平线附近远距离船舶的样本不足问题，使用图块级视觉嵌入和高斯混合模型聚类进行第二阶段采样。
+
+### 主要贡献
+- 提出一种从缺乏可靠 PTZ 元数据的历史视频中恢复相机视角信息的方法，并结合环境上下文与视觉多样性构建紧凑、场景特定的训练集。
+- 设计了两阶段采样流程：多样性采样保持视角与环境条件变化，上下文感知采样针对远距离船舶的欠代表样本进行补充。
+- 在 CMMI MDigi-I Smart Marina 测试平台中应用该流程，将 40,718 个候选帧减少到 220 张标注图像，减少 99.5%。
+- 在该子集上微调的 YOLO26-m 检测器在按序列分组的五折交叉验证下取得 mean AP50 为 94.78% ± 0.51%，mean AP50-95 为 75.10% ± 1.73%。
+- 结果表明高冗余基础设施视频流可被转化为紧凑、空间与上下文多样的训练集，用于场景特定检测器适配，并显著降低标注成本。
+
+### 局限性
+摘要未提供足够信息。摘要未说明该流程在缺乏参考全景图、极端天气或不同测试平台下的泛化能力；也未提供失败案例、误检分析、计算开销、标注成本量化对比或与其他采样策略的消融实验细节。
+
+### 阅读优先级
+中。理由：该论文聚焦海事场景下的数据整理与采样，方法明确、指标清晰，且宣称大幅减少标注量，适合关注数据高效标注、场景特定检测适配和智能基础设施视觉应用的读者。但摘要未提供额外兴趣方向，且分类偏向具身/机器人/AR应用，若读者主要关注通用目标检测架构创新，优先级可能有限。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Smart maritime infrastructures provide continuous access to heterogeneous sensing streams, enabling repeated experimentation, digital-twin development, and AI-based maritime services. However, sensing hardware alone is not sufficient for scene-specific model development: historical video streams must also be spatially indexed, contextualized, and reduced to informative subsets for annotation. This paper presents a frame-to-panorama localization and context-aware sampling pipeline for ship detection in historical PTZ maritime video lacking reliable pan, tilt, and zoom metadata. The main contribution is an end-to-end data-curation approach that recovers camera-view information from historical PTZ video and combines it with environmental context and visual diversity to construct compact, scene-specific training sets. Specifically, frames are localized on a reference panorama using SuperPoint and LightGlue, enriched with weather and solar-state metadata, and selected through diversity sampling to preserve variation across camera view and environmental conditions. A second context-aware stage targets under-represented distant-vessel cases near the horizon using tile-level visual embeddings and Gaussian Mixture Model clustering. Applied within the CMMI MDigi-I Smart Marina testbed, the proposed pipeline reduces 40,718 candidate frames to 220 images for annotation, corresponding to a 99.5% reduction. A YOLO26-m detector fine-tuned on this subset achieves a mean AP50 of 94.78% $\pm$ 0.51% and a mean AP50-95 of 75.10% $\pm$ 1.73% under sequence-grouped five-fold cross-validation. These results demonstrate that highly redundant infrastructure video streams can be transformed into compact, spatially and contextually diverse training sets for scene-specific detector adaptation while substantially reducing annotation effort.
@@ -2463,6 +3124,48 @@ Smart maritime infrastructures provide continuous access to heterogeneous sensin
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** autonomous driving, mapping, localization, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Assessing the Impact of Fleet Size on Crowdsourced Mapping Using a Dissimilarity Measure
+- 作者：Marie-Ngoïe Badibanga Kalenda, Philippe Bonnifait, Marie-Anne Mittet
+- 出版日期：2026-09-24T08:08:48Z
+- 分类：主分类为 Embodied / Robotics / AR Applications；次分类未提供
+- 链接：摘要页 https://arxiv.org/abs/2609.29198 ；PDF https://arxiv.org/pdf/2609.29198
+
+### 一句话总结
+论文提出一个基于仿真框架的方法，用名为 GOSPAM 的差异度量评估车队规模对众包交通标志建图质量的影响。
+
+### 研究问题
+准确数字地图对 ADAS 和自动驾驶至关重要，但传统测绘方法维护成本高、难以扩展。众包车队方法是有前景的替代方案，然而参与车辆数量与最终地图质量之间的关系尚不清晰。论文聚焦于：车队规模如何影响众包交通标志维护的性能。
+
+### 核心思路/方法
+- 提出一个基于仿真的框架，用于评估众包交通标志维护。
+- 使用差异度量 GOSPAM（Generalized Optimal SubPattern Assignment for Maps），该度量结合定位误差与检测性能，并考虑假阳性（FP）和假阴性（FN）。
+- 系统对多车观测建模，包含代表性传感器噪声、检测错误和语义识别不确定性。
+- 通过空间聚类与语义过滤聚合多车观测，以估计交通标志位置。
+- 使用由实验车辆在含真值交通标志区域生成的仿真轨迹，评估车队规模影响；车辆数量范围为 5 到 50。
+- 使用标准评估指标并与 GOSPAM 进行比较分析。
+
+### 主要贡献
+- 提出一个用于评估众包交通标志维护的仿真框架。
+- 引入 GOSPAM 差异度量，将定位误差与检测性能（FP、FN）结合，用于评估众包建图质量。
+- 通过仿真实验评估车队规模（5 至 50 辆车）对众包建图性能的影响。
+- 结果表明 GOSPAM 可有效评估众包建图质量，例如首批车辆的贡献或大量车辆带来的改进。
+
+### 局限性
+- 摘要未提供足够信息说明仿真框架在真实场景中的泛化能力。
+- 摘要未提供足够信息说明 GOSPAM 与其他标准评估指标的具体比较结果细节。
+- 摘要未提供足够信息说明实验所覆盖的地理区域、交通标志类型或传感器配置的具体范围。
+- 摘要未提供足够信息说明车队规模超过 50 辆或低于 5 辆时的表现。
+- 摘要未提供足够信息说明该方法对通信延迟、数据隐私或车辆异构性的处理。
+
+### 阅读优先级
+中。理由：该论文关注众包建图中车队规模与地图质量的关系，并提出结合定位误差与检测性能的 GOSPAM 度量，对自动驾驶地图维护和众包感知评估有一定参考价值；但摘要未展示具体实验数值、对比细节或真实道路验证范围，是否具有广泛适用性需进一步阅读全文确认。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -2480,6 +3183,44 @@ Accurate digital maps are essential for Advanced Driver Assistance Systems (ADAS
 **Matched keywords:** manipulation, world model
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Representation World Model: Learning States, Transition and Executable Plans in Representation
+- 作者：Yijun Yuan, Weicheng Zheng, Weibang Wang, Minghui Qin, Chang Sun, Junhao Huang, Kenan Li, Anmin Liu, Yicheng Yao, Hang Zhao
+- 出版日期：2026-09-24T07:43:35Z
+- 分类：Embodied / Robotics / AR Applications（次要分类：摘要未提供足够信息）
+- 链接：https://arxiv.org/abs/2609.29171 ；PDF：https://arxiv.org/pdf/2609.29171
+
+### 一句话总结
+RWM 将状态、转移与可执行规划直接学习在表示空间中，通过在表示几何中构造潜在路径并用逆动力学恢复动作，避免递归 rollout 和动作空间搜索。
+
+### 研究问题
+现有世界模型通常在学习潜在表示的同时，学习显式的动力学模型，并依赖搜索、优化或基于策略的预测来完成规划。论文关注的问题是：能否不采用这种“表示 + 显式动力学 + 传统规划”的范式，而是把规划直接融入所学的表示几何中，从而在推理时更直接地完成规划。
+
+### 核心思路/方法
+论文提出 Representation World Model（RWM），核心是在表示空间中直接学习状态、转移和可执行计划。
+
+与现有世界模型不同，RWM 不将潜在表示与显式动力学模型分开学习并通过搜索、优化或策略预测来做规划，而是把规划直接纳入学习到的表示几何。具体地，RWM 通过从端点表示构造潜在路径，并沿这些潜在路径局部施加逆动力学监督，来学习表示几何；这种监督要求潜在路径保留任务相关的状态和转移信息。
+
+在推理阶段，规划通过直接在当前表示和目标表示之间构造潜在路径来完成，并使用逆动力学恢复对应动作，不需要递归 rollout，也不需要动作空间搜索。
+
+### 主要贡献
+- 提出 Representation World Model（RWM），将状态、转移和可执行计划直接学习在表示空间中。
+- 将规划直接融入表示几何，而不是依赖显式动力学模型加搜索、优化或策略预测。
+- 采用基于端点表示构造潜在路径并施加局部逆动力学监督的学习方式，要求路径保留任务相关的状态与转移信息。
+- 推理时通过构造当前表示与目标表示之间的潜在路径，并用逆动力学恢复动作，实现无需递归 rollout 或动作空间搜索的直接规划。
+- 在连续控制基准上展示了 RWM 用于直接规划的有效性；在机器人操作任务上的结果进一步显示其扩展到更复杂具身控制任务的潜力。
+
+### 局限性
+摘要未提供足够信息。摘要未给出具体实验设置、基线对比、失败案例、计算开销、表示维度或任务范围等细节，因此无法基于所给信息判断其局限。
+
+### 阅读优先级
+中。理由：论文主题属于具身智能与机器人控制中的世界模型与规划方向，提出了一种将规划嵌入表示几何、避免递归 rollout 和动作空间搜索的思路，具有一定新颖性；摘要提到连续控制基准和机器人操作的初步结果，显示潜在应用价值。但当前仅有摘要和元数据，缺少实验细节、对比结果与局限性说明，因此适合作为方向性跟踪阅读，优先级为中等。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 We propose the Representation World Model (RWM), which learns states, transitions, and executable plans directly in representation space. Unlike existing world models that typically learn latent representations together with explicit dynamics models and perform planning through search, optimization, or policy-based prediction, RWM directly incorporates planning into the learned representation geometry. RWM learns the representation geometry by applying inverse-dynamics supervision locally along latent paths constructed from endpoint representations, requiring these paths to preserve task-relevant state and transition information. At inference, planning is performed by directly constructing a latent path between the current and goal representations, with inverse dynamics used to recover the corresponding actions, without recursive rollouts or action-space search. Experiments on continuous-control benchmarks demonstrate the effectiveness of RWM for direct planning, while results on robotic manipulation further show its potential to extend to more complex embodied control tasks. These results suggest that planning directly in representation space provides a promising alternative to conventional world-model planning.
@@ -2493,6 +3234,50 @@ We propose the Representation World Model (RWM), which learns states, transition
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** robot navigation, localization, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：ReVNM: Learning-Based Visual Navigation from a Remote Camera
+- 作者：Michikuni Eguchi, Kohei Honda, Masafumi Endo, Yasuhiro Yoshimura, Ryo Yonetani
+- 出版日期：2026-09-24T03:43:13Z
+- 分类：Embodied / Robotics / AR Applications（主分类）；二级分类：摘要未提供足够信息
+- 链接：abstract_url: https://arxiv.org/abs/2609.28976；pdf_url: https://arxiv.org/pdf/2609.28976
+
+### 一句话总结
+论文提出 ReVNM，利用单一远程监控相机同时作为观测来源和隐式环境地图，通过 exo2ego 模块从远程视角预测机器人自身视角的深度观测，从而在无需预建地图的情况下实现视觉导航。
+
+### 研究问题
+- 现有 Visual Navigation Models（VNMs）虽可让机器人基于自身视角视觉观测进行导航，无需几何定位与规划，但长距离导航仍依赖预建地图。
+- 使用远程相机有望消除预建地图需求和机载视觉处理需求，但其有限视野替代自身视角观测后，难以实现无碰撞导航。
+- 训练鲁棒 VNM 所需的大规模、多样化远程视角数据缺失，进一步加剧挑战。
+- 因此，论文关注的核心问题是：如何利用远程相机作为观测来源与隐式环境地图，并克服远程视角有限视野带来的无碰撞导航困难与训练数据不足问题。
+
+### 核心思路/方法
+- 提出 Remote Visual Navigation Model（ReVNM），使用单个远程监控相机同时作为观测源和隐式环境地图。
+- 扩展当前最先进的 VNM 架构，引入 exocentric-to-egocentric（exo2ego）模块，从远程相机观测中预测机器人自身视角的深度观测。
+- 借助该模块，VNM 能在规划路径时考虑机器人前方的障碍物。
+- 采用 learning-by-synthesis 方法，仅在随机生成、包含多样障碍物布局和相机视角的世界中训练 ReVNM，并希望无需额外微调即可泛化到真实机器人导航。
+- 实验在仿真和真实世界环境中进行，摘要称结果证实了所提方法的有效性。
+
+### 主要贡献
+- 提出 ReVNM，将单一远程监控相机同时用作观测来源和隐式环境地图，以支持视觉导航。
+- 设计 exo2ego 模块，将远程相机观测转换为机器人自身视角的深度观测，帮助 VNM 在路径规划中考虑前方障碍物。
+- 采用 learning-by-synthesis 方式，仅在随机生成的多样障碍物布局与相机视角世界中训练，并声称无需额外微调即可泛化到真实机器人导航。
+- 在仿真和真实环境中进行实验，摘要称结果验证了该方法的有效性。
+
+### 局限性
+- 摘要未提供足够信息说明方法对远程相机视野范围、安装位置、遮挡情况的具体敏感程度或失效条件。
+- 摘要未提供足够信息说明 exo2ego 模块的预测误差对导航安全性和成功率的具体影响。
+- 摘要未提供足够信息说明仿真与真实世界实验的规模、指标、对比基线、消融实验及定量结果。
+- 摘要未提供足够信息说明“无需额外微调即可泛化到真实机器人导航”的适用边界与失败案例。
+- 摘要未提供足够信息说明训练数据生成方式、随机世界分布与真实环境差异带来的潜在域偏移问题。
+
+### 阅读优先级
+高。理由：该论文针对远程相机视觉导航中“有限视野导致无碰撞导航困难”和“缺乏多样远程视角训练数据”两个关键问题提出明确方法，且涉及 VNM 架构扩展、exo2ego 模块与 learning-by-synthesis，主题与具身智能、机器人导航和视觉导航模型直接相关；若关注无需预建地图的视觉导航或远程相机辅助机器人控制，该文具有较高参考价值。不过，由于摘要未给出实验规模与定量结果，实际优先级仍需结合后续全文实验细节判断。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
