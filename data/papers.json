@@ -33,7 +33,7 @@
     "abstract_url": "https://arxiv.org/abs/2610.02162",
     "pdf_url": "https://arxiv.org/pdf/2610.02162",
     "first_seen": "2026-10-02T13:51:38-04:00",
-    "last_seen": "2026-10-03T12:16:23-04:00"
+    "last_seen": "2026-10-04T12:50:51-04:00"
   },
   {
     "arxiv_id": "2610.02110",
@@ -67,7 +67,7 @@
     "abstract_url": "https://arxiv.org/abs/2610.02110",
     "pdf_url": "https://arxiv.org/pdf/2610.02110",
     "first_seen": "2026-10-02T13:51:38-04:00",
-    "last_seen": "2026-10-03T12:16:23-04:00"
+    "last_seen": "2026-10-04T12:50:51-04:00"
   },
   {
     "arxiv_id": "2610.01999",
@@ -3551,121 +3551,6 @@
     ],
     "abstract_url": "https://arxiv.org/abs/2609.33872",
     "pdf_url": "https://arxiv.org/pdf/2609.33872",
-    "first_seen": "2026-09-29T14:04:22-04:00",
-    "last_seen": "2026-09-29T14:04:22-04:00"
-  },
-  {
-    "arxiv_id": "2609.33575",
-    "version": "v1",
-    "title": "SLIP-VLA: Single-Step Latent Imagination for Policy Learning in Vision-Language-Action Models",
-    "authors": [
-      "Tianfu Li",
-      "Haoxuan Xu",
-      "Wenbo Chen",
-      "Haitian Li",
-      "Changchuan Yang",
-      "Xinhu Zheng",
-      "Jun Ma",
-      "Yuan Liu",
-      "Lujia Wang",
-      "Haoang Li"
-    ],
-    "abstract": "Vision-Language-Action models are increasingly effective for robotic manipulation, yet most predict actions directly from current observations without explicitly modeling future scene evolution. Recent methods introduce future prediction to improve action generation, but dense future modeling often requires expensive iterative denoising, while one-step alternatives can underperform their multi-step counterparts. To reconcile efficient future modeling with strong action performance, we present SLIP-VLA, a policy learning framework that equips VLA models with a Single-Step Latent Imagination for future-aware action prediction. SLIP-VLA obtains temporally dense future latent representations with a single denoising update, and we improve the perceptual sufficiency of these representations by aligning intermediate latents with future geometric and semantic features. We further improve their control sufficiency through action-conditioned latent world modeling and inverse dynamics modeling, explicitly coupling latent transitions with robot actions. SLIP-VLA achieves state-of-the-art performance across diverse simulation benchmarks and real-world manipulation tasks, while its single-step latent imagination takes only 12 ms.",
-    "published": "2026-09-27T13:53:29Z",
-    "updated": "2026-09-27T13:53:29Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "manipulation",
-      "simulation",
-      "world modeling"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched abstract keyword: manipulation",
-      "Matched abstract keyword: simulation",
-      "Matched abstract phrase: world modeling"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2609.33575",
-    "pdf_url": "https://arxiv.org/pdf/2609.33575",
-    "first_seen": "2026-09-29T14:04:22-04:00",
-    "last_seen": "2026-09-29T14:04:22-04:00"
-  },
-  {
-    "arxiv_id": "2609.33518",
-    "version": "v1",
-    "title": "SceneScaffold: Active Scene-State Construction for Unified 3D Scene Understanding",
-    "authors": [
-      "Xiangqi Li",
-      "Libo Huang",
-      "Jiarui Zhao",
-      "Weilun Feng",
-      "Chuanguang Yang",
-      "Zhulin An",
-      "Yongjun Xu"
-    ],
-    "abstract": "Recent 3D large multimodal models (3D-LMMs) rely on a visual bottleneck to compress complex 3D scene evidence into a limited number of visual tokens compatible with large language models (LLMs). Current visual bottlenecks, however, often passively compress heterogeneous 3D evidence into a homogeneous object-centric token sequence, leaving the spatial organization of the scene under-represented. This under-representation forces the LLM to recover spatial relations from a flattened token sequence, leading to unstable reasoning in relation-intensive and spatially ambiguous scenes. To address this issue, we propose SceneScaffold, an active scene-state construction framework for unified 3D scene understanding. SceneScaffold reformulates the visual bottleneck from a passive feature compressor into an active scene organizer, constructing a role-aware spatial scaffold before language reasoning. Specifically, SceneScaffold organizes superpoint-level visual evidence into scene-state components with distinct structural roles: entity states preserve core object semantics, scene-frame states maintain spatial references via boundary and region anchors, relation states encode object-environment interaction cues, and a global summary provides compact context. Through this role-aware construction, SceneScaffold provides the LLM with a spatially organized scene representation before language reasoning. Experiments on unified 3D scene understanding tasks, including 3D visual grounding, question answering, and dense captioning, demonstrate the effectiveness of SceneScaffold, while diagnostic results further show its applicability to relation-intensive and spatially ambiguous cases. Code is available at https://github.com/lixiangqi707/SceneScaffold.",
-    "published": "2026-09-27T12:39:53Z",
-    "updated": "2026-09-27T12:39:53Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "scene representation",
-      "scene understanding"
-    ],
-    "classification_score": 6,
-    "classification_reasons": [
-      "Rescued from exclusion by geometry keywords: scene representation",
-      "Matched title phrase: scene understanding",
-      "Matched abstract phrase: scene understanding"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2609.33518",
-    "pdf_url": "https://arxiv.org/pdf/2609.33518",
-    "first_seen": "2026-09-29T14:04:22-04:00",
-    "last_seen": "2026-09-29T14:04:22-04:00"
-  },
-  {
-    "arxiv_id": "2609.32837",
-    "version": "v1",
-    "title": "Scanning While Imagining: A Scene-Graph World Model for Robotic Ultrasound Navigation",
-    "authors": [
-      "Xuesong Li",
-      "Shuai Chen",
-      "Feng Li",
-      "Zhongliang Jiang",
-      "Nassir Navab",
-      "Yuan Bi"
-    ],
-    "abstract": "Ultrasound (US) acquisition depends on the operator's ability to interpret anatomy and anticipate how the view will change with probe motion. Many robotic US navigation methods select actions without explicitly predicting these anatomical changes. We propose SonoGraph-WM, an action- and goal-conditioned world model for anticipatory probe navigation. The model represents anatomy as scene graphs (SGs), capturing visible structures, their geometry, and spatial relationships without synthesizing US images. Given a history of SGs and probe poses, a unified Transformer jointly predicts future SGs and poses. A receding-horizon planner recursively imagines candidate trajectories, selects the shortest predicted path reaching a goal graph, and follows it over a short execution horizon before replanning from new observations. To reduce reliance on tracked and anatomically annotated US sequences, we generate aligned SG--pose training data from computed tomography (CT) label maps along surface-constrained probe trajectories. On four held-out CT cases, spatial relation F1 remains above 93% over 20 prediction steps, and closed-loop navigation achieves 77.50% and 75.00% success for the gallbladder and pancreas, respectively, using annotation-derived SGs. In robot--phantom navigation experiments with label-map-derived SGs, the planner reached the target view in 73.7% of trials. These findings support CT-supervised anatomical world modeling for probe planning and highlight the importance of frequent observation updates for reliable navigation. Project Page: https://noseefood.github.io/us-sonograph-wm/",
-    "published": "2026-09-26T18:10:52Z",
-    "updated": "2026-09-26T18:10:52Z",
-    "primary_arxiv_category": "cs.RO",
-    "arxiv_categories": [
-      "cs.RO",
-      "cs.AI"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "world model",
-      "world modeling"
-    ],
-    "classification_score": 8,
-    "classification_reasons": [
-      "Matched title phrase: world model",
-      "Matched abstract phrase: world model",
-      "Matched abstract phrase: world modeling"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2609.32837",
-    "pdf_url": "https://arxiv.org/pdf/2609.32837",
     "first_seen": "2026-09-29T14:04:22-04:00",
     "last_seen": "2026-09-29T14:04:22-04:00"
   }
