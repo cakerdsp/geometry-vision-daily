@@ -98,7 +98,7 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 <!-- DAILY_REPORT_END -->
 
 **Last updated:** 2026-10-10T13:20:03-04:00
-**Total number of papers:** 93
+**Total number of papers:** 88
 **Number of papers added in the latest update:** 33
 **Categories tracked:** cs.CV, cs.GR, cs.RO, eess.IV
 
@@ -1006,60 +1006,6 @@ We present DynaMesh, a dynamic texture generation method for 3D meshes. Given a 
 
 </details>
 
-#### 2026-10-04 - Mobile-4DGS: Unified Static-Dynamic Real-time Mobile Gaussian Splatting
-
-**Authors:** Xiaobiao Du, Beixi Hao, Zhen Fang, Tianqing Zhu, Richard Hartley, Xin Yu
-**Links:** [abs](https://arxiv.org/abs/2610.05289) - [pdf](https://arxiv.org/pdf/2610.05289)
-**Primary category:** Dynamic / 4D Reconstruction
-**Secondary categories:** Neural Scene Representations & Rendering
-**Matched keywords:** dynamic Gaussian, 4D Gaussian, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, rendering, radiance, splatting
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Mobile-4DGS: Unified Static-Dynamic Real-time Mobile Gaussian Splatting
-- 作者：Xiaobiao Du, Beixi Hao, Zhen Fang, Tianqing Zhu, Richard Hartley, Xin Yu
-- 出版日期：2026-10-04T15:07:47Z
-- 分类：主分类为 Dynamic / 4D Reconstruction；次分类为 Neural Scene Representations & Rendering
-- 链接：摘要链接 https://arxiv.org/abs/2610.05289；PDF 链接 https://arxiv.org/pdf/2610.05289；代码链接 https://xiaobiaodu.github.io/mobile-4dgs-project/
-
-### 一句话总结
-Mobile-4DGS 提出一个面向移动端的统一轻量框架，用于静态与动态高斯表示的实时渲染，通过压缩外观、精简高斯基元以及显式紧凑 4D 表示来降低存储与逐帧计算开销。
-
-### 研究问题
-论文关注的问题是：尽管 3D Gaussian Splatting（3DGS）在新视角合成上表现突出，但将静态和动态高斯表示部署到资源受限的移动设备上仍然困难，主要原因包括存储负担重、高斯基元冗余以及逐帧计算代价高。
-
-### 核心思路/方法
-论文提出 Mobile-4DGS，一个统一的轻量框架，目标是在移动平台上实现高保真实时的静态与动态高斯渲染。方法层面包括：
-- 紧凑外观建模：引入 Monte Carlo Specular Energy Aggregator，将高阶辐射残差压缩到一阶 Spherical Harmonics（SH）；并结合 Attribute-Conditioned SH Enhancement 模块，其预测偏移在推理前预先烘焙。
-- 基元精简：提出 Multi-View Alpha-Based Densification and Pruning 策略，在保持多视角一致性的同时抑制冗余高斯基元。
-- 动态场景表示：构建紧凑显式 4D 表示，包括二阶高斯运动、可学习时间支撑以及二值静态-动态划分，从而无需运行时变形网络即可进行连续时间建模。
-- 播放效率优化：基于静态-动态划分，提出 Depth-Order Certificate，选择性复用此前已提交的深度顺序，以减少播放过程中的重投影、排序、合并与索引缓冲区更新。
-
-### 主要贡献
-- 提出统一的轻量框架 Mobile-4DGS，面向移动端静态与动态高斯实时渲染。
-- 引入 Monte Carlo Specular Energy Aggregator 与 Attribute-Conditioned SH Enhancement，用于压缩外观表示，并将预测偏移预烘焙以降低推理开销。
-- 提出 Multi-View Alpha-Based Densification and Pruning，减少冗余高斯基元并维持多视角一致性。
-- 构建紧凑显式 4D 表示，通过二阶高斯运动、可学习时间支撑和二值静态-动态划分，实现无需运行时变形网络的连续时间建模。
-- 提出 Depth-Order Certificate，复用已提交深度顺序，以减少动态播放中的重投影、排序、合并与索引缓冲区更新。
-- 摘要称在静态与动态场景上的大量实验表明，Mobile-4DGS 显著降低存储和渲染开销，同时保持有竞争力的视觉质量，并支持移动设备上的实时 3D 与 4D 高斯 Splatting。
-
-### 局限性
-摘要未提供足够信息。摘要未给出具体实验平台、移动设备型号、帧率、存储压缩比例、视觉质量指标、失败案例或方法适用范围等细节，因此无法基于摘要判断其局限性。
-
-### 阅读优先级
-高。理由：该论文聚焦 3DGS 在移动端部署中的存储、冗余基元和逐帧计算瓶颈，并同时覆盖静态与动态高斯表示，属于动态/4D 重建与神经场景表示渲染交叉方向；若关注移动端实时高斯渲染、4D 表示压缩或高效动态场景建模，该工作具有较强相关性。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Recent advances in 3D Gaussian Splatting (3DGS) have achieved remarkable performance in novel view synthesis, yet deploying both static and dynamic Gaussian representations on resource-constrained mobile devices remains challenging due to heavy storage, redundant primitives, and costly per-frame computation. We present Mobile-4DGS, a unified lightweight framework for high-fidelity real-time static and dynamic Gaussian rendering on mobile platforms. For compact appearance modeling, we introduce a Monte Carlo Specular Energy Aggregator that compresses high-order radiance residuals into the first-order Spherical Harmonics (SH), together with an Attribute-Conditioned SH Enhancement module whose predicted offsets are pre-baked before inference. We further propose a Multi-View Alpha-Based Densification and Pruning strategy to suppress redundant primitives while maintaining multi-view consistency. For dynamic scenes, we develop a compact explicit 4D representation by constructing second-order Gaussian motion, learnable temporal support, and a binary static-dynamic partition, enabling continuous-time modeling without runtime deformation networks. Based on this partition, a Depth-Order Certificate selectively reuses previously committed depth orders to reduce re-projection, sorting, merging, and index-buffer updates during playback. Extensive experiments on static and dynamic scenes demonstrate that Mobile-4DGS substantially reduces storage and rendering overhead while maintaining competitive visual quality, enabling real-time 3D and 4D Gaussian Splatting on mobile devices. \textcolor{magenta}{\href{https://xiaobiaodu.github.io/mobile-4dgs-project/}{Code has been released: https://xiaobiaodu.github.io/mobile-4dgs-project/}}.
-
-</details>
-
 ## 3D Reconstruction & Multi-view Geometry
 
 ### 2026-10
@@ -1847,108 +1793,6 @@ HDS 将神经漂移风险估计与符号约束推理相结合。具体而言，�
 <summary>Abstract</summary>
 
 This paper introduces Hybrid DeepSEE (HDS), a Human-in-the-Loop (HITL) neuro-symbolic framework for proactive drift anticipation in Visual SLAM (V-SLAM). While data-driven models offer predictive power, their "black-box" nature often yields physically inconsistent outputs in out-of-distribution (OOD) environments. To address this, HDS integrates neural drift risk estimation with symbolic constraint reasoning. By utilizing a Large Language Model (LLM) as a reasoning bridge, the framework translates qualitative human context into interpretable symbolic constraints. Building upon this architecture, we propose a superior drift anticipation framework that ensures enhanced reliability and consistency in Visual SLAM
-
-</details>
-
-#### 2026-10-04 - F$^2$ SLAM: Turning Feed-Forward Geometry into Persistent Factors for SLAM
-
-**Authors:** Zhisong Xu, Fan Zhu, Jiawei Qian, Ziyu Chen, Zhenjun Zhao, Javier Civera
-**Links:** [abs](https://arxiv.org/abs/2610.05207) - [pdf](https://arxiv.org/pdf/2610.05207)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** None
-**Matched keywords:** simultaneous localization and mapping, SLAM, bundle adjustment, dense reconstruction, mapping, localization
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：F$^2$ SLAM: Turning Feed-Forward Geometry into Persistent Factors for SLAM
-- 作者：Zhisong Xu, Fan Zhu, Jiawei Qian, Ziyu Chen, Zhenjun Zhao, Javier Civera
-- 出版日期：2026-10-04T13:24:27Z
-- 分类：3D Reconstruction & Multi-view Geometry（主分类；未提供二级分类）
-- 链接：[摘要](https://arxiv.org/abs/2610.05207) / [PDF](https://arxiv.org/pdf/2610.05207)
-
-### 一句话总结
-该论文提出 F$^2$SLAM，将前馈三维模型提供的多视图几何直接转化为持久稠密因子图中的优化原生“目标-权重”测量，从而在统一的稠密光束法平差中联合约束位姿、逆深度与可选相机内参。
-
-### 研究问题
-前馈三维模型能提供较强的多视图几何先验，而在线 SLAM 主要依赖局部测量，在长序列上会累积漂移。现有结合二者的尝试通常把前馈预测当作外部几何状态，在在线估计完成后再进行对齐或融合，这导致更广泛的多视图证据被排除在优化 SLAM 状态的优化器之外。
-
-### 核心思路/方法
-- 不将前馈几何作为事后对齐或融合的外部状态，而是直接转换为优化原生的目标-权重测量，并附着在持久稠密因子图上。
-- 采用双频流结构：高频流维持局部跟踪约束与图连通性；低频流利用更宽的多视图上下文，在状态一致性检查后有选择地刷新已有测量。
-- 两条流通过单一稠密光束法平差共同约束同一组位姿、逆深度以及可选的相机内参。
-
-### 主要贡献
-- 提出把前馈几何转化为持久优化因子/测量的 SLAM 框架，使多视图证据进入优化器内部，而非停留在事后融合层面。
-- 设计高频局部跟踪与低频多视图上下文刷新相结合的双频机制，并引入状态一致性检查以选择性更新测量。
-- 在统一稠密光束法平差中同时约束位姿、逆深度和可选内参，覆盖标定与未标定设置。
-- 摘要称在多个基准上展示出稳定的轨迹估计与改进的稠密重建；在 Replica 数据集未标定配置下，将平均 ATE RMSE 从最强前馈基线的 0.030 m 降至 0.002 m。
-
-### 局限性
-- 摘要未提供足够信息说明方法的具体计算开销、实时性、高频流与低频流的具体频率设置。
-- 摘要未提供足够信息说明状态一致性检查的具体判据与失败情形。
-- 摘要未提供足够信息说明除 Replica 外其他基准的详细结果、消融实验及与更多 SLAM 方法的完整对比。
-- 摘要未提供足够信息说明在极端场景（如快速运动、弱纹理、动态环境）下的表现与鲁棒性。
-
-### 阅读优先级
-高。理由：该论文针对前馈几何与在线 SLAM 结合方式提出“直接转为优化原生持久因子”的明确新思路，并报告了未标定设置下显著的 ATE RMSE 改进；若关注多视图几何先验与 SLAM 优化器的深度耦合、稠密重建或标定/未标定统一优化，值得优先阅读。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Feed-forward 3D models provide strong multi-view geometric priors, while on- line simultaneous localization and mapping (SLAM) relies mainly on local mea- surements and can accumulate drift over long sequences. Existing attempts to combine the two typically treat feed-forward predictions as an external geomet- ric state that is aligned or fused with the online estimate after the fact, which keeps broader multi-view evidence outside the optimizer that refines the SLAM state. We present F2SLAM, which instead converts feed-forward geometry di- rectly into optimization-native target-weight measurements attached to a persis- tent dense factor graph. A high-frequency stream maintains local tracking con- straints and graph connectivity, while a low-frequency stream uses wider multi- view context to selectively refresh existing measurements after a state-consistency check. Both streams constrain the same poses, inverse depths, and optional cam- era intrinsics through a single dense bundle adjustment. Experiments on multiple benchmarks demonstrate consistently strong trajectory estimation and improved dense reconstruction in both calibrated and uncalibrated settings. Notably, the uncalibrated configuration reduces the average ATE RMSE from 0.030 m for the strongest feed-forward baseline to 0.002 m on the Replica dataset.
-
-</details>
-
-#### 2026-10-04 - SPACE-CLIPv2: Decoding Local Geometry from Frozen CLIP for Monocular Depth Estimation
-
-**Authors:** Hyun Song, Taewan Cho, Kangmin Kim, Andrew Jaeyong Choi
-**Links:** [abs](https://arxiv.org/abs/2610.05029) - [pdf](https://arxiv.org/pdf/2610.05029)
-**Primary category:** 3D Reconstruction & Multi-view Geometry
-**Secondary categories:** None
-**Matched keywords:** depth estimation, monocular depth
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：SPACE-CLIPv2: Decoding Local Geometry from Frozen CLIP for Monocular Depth Estimation
-- 作者：Hyun Song, Taewan Cho, Kangmin Kim, Andrew Jaeyong Choi
-- 出版日期：2026-10-04T07:50:10Z
-- 分类：3D Reconstruction & Multi-view Geometry
-- 链接：https://arxiv.org/abs/2610.05029 ；PDF：https://arxiv.org/pdf/2610.05029
-
-### 一句话总结
-SPACE-CLIPv2 在冻结 CLIP 主干上，通过固定局部邻域 token 聚合与门控残差、token 空间高通分支，改进单目深度估计中的局部几何解码。
-
-### 研究问题
-论文关注：CLIP 等视觉-语言基础模型虽具强语义表示，但其 patch token 并非直接为稠密度量几何优化；SPACE-CLIP 已表明冻结 CLIP 特征可通过层组特征融合支持单目深度估计，但仍未解决“相邻 CLIP token 应如何组合以恢复精细局部结构”的问题。
-
-### 核心思路/方法
-提出 SPACE-CLIPv2，一种冻结主干深度解码器，在 CLIP token 空间聚合固定局部邻域。具体而言：在选定的解码器阶段，模型采样固定 token stencil，预测聚合权重，并通过门控残差更新注入响应；此外，token 空间高通分支用于保留浅层局部对比。论文还比较固定采样与学习偏移采样，并在 NYU Depth V2 上相对匹配的 SPACE-CLIP 基线改进；五种子实验一致偏向固定采样而非学习偏移采样。零样本 iBims-1 评估进一步改善边界和平面几何指标。
-
-### 主要贡献
-- 提出 SPACE-CLIPv2：在冻结 CLIP 特征上通过固定局部邻域 token 聚合来解码局部几何的深度解码器。
-- 在选定解码器阶段引入固定 token stencil、预测聚合权重和门控残差更新机制。
-- 引入 token 空间高通分支以保留浅层局部对比。
-- 在 NYU Depth V2 上相对匹配 SPACE-CLIP 基线取得改进，并通过五种子实验支持固定采样优于学习偏移采样。
-- 在零样本 iBims-1 评估中改善边界与平面几何指标。
-
-### 局限性
-摘要未提供足够信息。未提供关于模型规模、计算开销、失败场景、固定 stencil 设计选择依据、学习偏移采样劣势原因、其他数据集泛化表现等细节。
-
-### 阅读优先级
-中。理由：该工作聚焦冻结 CLIP 特征用于单目深度估计中的局部 token 聚合问题，问题定义清晰，且给出 NYU Depth V2 与零样本 iBims-1 上的摘要级结果；但摘要未展开方法细节、消融规模与完整实验设置，若研究兴趣直接涉及 CLIP 几何解码或单目深度估计，可优先阅读，否则可作为中等优先级参考。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Vision-language foundation models such as CLIP provide strong semantic representations, but their patch tokens are not directly optimized for dense metric geometry. SPACE-CLIP showed that frozen CLIP features can support monocular depth estimation through layer-group feature fusion, yet it leaves open how neighboring CLIP tokens should be combined to recover fine local structure. We present SPACE-CLIPv2, a frozen-backbone depth decoder that aggregates fixed local neighborhoods in CLIP token space. At selected decoder stages, the model samples a fixed token stencil, predicts aggregation weights, and injects the resulting response through a gated residual update. A token-space high-pass branch further preserves shallow local contrast. On NYU Depth V2, SPACE-CLIPv2 improves over a matched SPACE-CLIP baseline, while five-seed experiments consistently favor fixed over learned-offset sampling. Zero-shot iBims-1 evaluation further improves boundary and planar-geometry measures. These results support constrained local token aggregation as a practical mechanism for decoding geometry from frozen CLIP representations.
 
 </details>
 
@@ -3598,57 +3442,6 @@ Recent Test-Time Training (TTT) architectures compress context into fast weights
 
 </details>
 
-#### 2026-10-03 - NAMVIS: Next-Scale Autoregressive Multi-View Image Synthesis
-
-**Authors:** Ramil Khafizov, Ilya Statsenko, Ruslan Rakhimov, Artem Komarichev, Peter Wonka, Evgeny Burnaev
-**Links:** [abs](https://arxiv.org/abs/2610.04722) - [pdf](https://arxiv.org/pdf/2610.04722)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** None
-**Matched keywords:** novel view synthesis, view synthesis
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：NAMVIS: Next-Scale Autoregressive Multi-View Image Synthesis
-- 作者：Ramil Khafizov, Ilya Statsenko, Ruslan Rakhimov, Artem Komarichev, Peter Wonka, Evgeny Burnaev
-- 出版日期：2026-10-03T19:22:02Z
-- 分类：Neural Scene Representations & Rendering（主分类）；二级分类未提供
-- 链接：摘要页 https://arxiv.org/abs/2610.04722 ；PDF https://arxiv.org/pdf/2610.04722 ；项目页 https://corl-team.github.io/namvis/
-
-### 一句话总结
-NAMVIS 将稀疏视角多视角图像合成从扩散式迭代去噪改写为“几何条件下的下一尺度自回归”，在 Objaverse、GSO、OmniObject3D 上以更高指标和 3 倍以上加速优于所评估的扩散基线。
-
-### 研究问题
-稀疏视角新视角合成是 3D 内容生成的核心问题。摘要指出，基于扩散的方法受限于迭代去噪，导致多视角生成在推理阶段代价高昂。
-
-### 核心思路/方法
-- 提出 NAMVIS，一个“无扩散”框架，将多视角图像合成重新表述为几何条件下的“下一尺度自回归”。
-- 不通过重复去噪生成目标视角，而是用少量由粗到细的尺度步骤预测离散视觉 token；在每个尺度内以及各目标视角之间并行采样所有 token。
-- 提出 Multi-scale Projective Pose Encoding，在每个分辨率上把源相机与目标相机的变换注入目标视角自注意力以及源到目标的交叉注意力，从而将生成过程锚定到显式相机几何。
-- 结合全局条件与稠密的几何感知交叉注意力，使模型在保持源视角外观的同时维持目标视角一致性。
-
-### 主要贡献
-- 提出无扩散的几何条件下一尺度自回归多视角合成框架 NAMVIS。
-- 提出 Multi-scale Projective Pose Encoding，用于在多个分辨率上注入源与目标相机变换。
-- 通过全局条件与稠密几何感知交叉注意力的结合，兼顾源视角外观保持与目标视角一致性。
-- 在 Objaverse、GSO、OmniObject3D 上，在 PSNR、SSIM、LPIPS 指标上优于所评估的扩散基线，并在相同评估设置下比所评估的扩散基线快 3 倍以上。
-
-### 局限性
-摘要未提供足够信息。摘要中仅给出正向结论与速度对比，未提及失败情形、适用边界（如视角数量、物体类型、场景尺度等）、计算资源需求或误差分析。
-
-### 阅读优先级
-高。理由：该论文针对稀疏视角多视角合成中扩散推理昂贵的明确痛点，给出非扩散的下一尺度自回归替代方案，并在多个数据集与三项指标上报告优于所评估扩散基线、且推理速度提升 3 倍以上；若关注 3D 内容生成与多视角合成的效率与质量权衡，属于值得优先阅读的工作。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Sparse-view novel view synthesis is a central problem in 3D content creation, but diffusion-based approaches remain limited by iterative denoising, making multi-view generation expensive at inference time. We introduce NAMVIS, a diffusion-free framework that reformulates multi-view image synthesis as geometry-conditioned next-scale autoregression. Instead of generating target views through repeated denoising, NAMVIS predicts discrete visual tokens through a small number of coarse-to-fine scale steps, while sampling all tokens within each scale and across target views in parallel. To anchor this generation process to explicit camera geometry, we propose Multi-scale Projective Pose Encoding, which injects source and target camera transformations into both target-view self-attention and source-to-target cross-attention at every resolution. NAMVIS further combines global conditioning with dense geometry-aware cross-attention, enabling the model to preserve source-view appearance while maintaining target-view consistency. Across Objaverse, GSO, and OmniObject3D, NAMVIS outperforms diffusion-based baselines in PSNR, SSIM, and LPIPS, while running over 3 times faster than the evaluated diffusion baselines under the same evaluation setting. These results suggest that geometry-conditioned next-scale autoregression is a promising and efficient alternative to diffusion for sparse-view multi-view synthesis. Additional qualitative results, videos, and resources are available at https://corl-team.github.io/namvis/
-
-</details>
-
 ## Embodied / Robotics / AR Applications
 
 ### 2026-10
@@ -5046,63 +4839,6 @@ RMMBench 是一个面向机器人移动操作的评测基准，通过统一框�
 <summary>Abstract</summary>
 
 Although the advancement of vision-language models (VLMs) has endowed robots with enhanced environmental understanding and task reasoning, a comprehensive evaluation methodology is important to advance the integration of VLMs in robotic navigation and manipulation. However, current benchmarks lack a comprehensive method to evaluate diverse robotic tasks, and evaluation metrics remain relatively constrained, making it difficult to assess the embodied capabilities of VLMs in a thorough and fine-grained manner. To address this issue, we propose RMMBench, an evaluation benchmark that requires robots to understand language instructions and perform long-horizon tasks in continuous spaces. RMMBench seamlessly integrates high- and low-level embodied tasks into a unified framework, constructing a "navigation-manipulation" task suite comprising 70 canonical task scenarios that range from localized manipulation to long-horizon composite navigation. The results reveal that leading VLMs still face major challenges in spatial localization when performing mobile manipulation tasks, and also highlight the necessity of enhancing the spatial perception capability of robots during long-horizon interactions. RMMBench can be accessed at https://mxxq-stack.github.io/rmmbench-project/
-
-</details>
-
-#### 2026-10-04 - Reflection-Robust 6DoF Object Tracking with Light Fields
-
-**Authors:** Nikolai Goncharov, Donald G. Dansereau
-**Links:** [abs](https://arxiv.org/abs/2610.04883) - [pdf](https://arxiv.org/pdf/2610.04883)
-**Primary category:** Embodied / Robotics / AR Applications
-**Secondary categories:** None
-**Matched keywords:** robotics, manipulation, autonomous driving
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Reflection-Robust 6DoF Object Tracking with Light Fields
-- 作者：Nikolai Goncharov, Donald G. Dansereau
-- 出版日期：2026-10-04T02:45:31Z
-- 分类：Embodied / Robotics / AR Applications（主要分类；次要分类摘要未提供足够信息）
-- 链接：[摘要](https://arxiv.org/abs/2610.04883) | [PDF](https://arxiv.org/pdf/2610.04883)
-
-### 一句话总结
-该论文提出一种基于光场的抗反射 6DoF 刚体目标跟踪方法，将反射造成的视角相关外观变化从干扰转化为位姿线索，并在自建光场跟踪数据集与两段实拍光场序列上验证，是唯一在高反射条件下保持精度的对比方法。
-
-### 研究问题
-现有 6DoF 刚体目标跟踪器普遍假设目标外观在序列中保持稳定，但这一假设在反射表面上不成立——反射表面的外观会随其映照的环境而变化。论文要解决的核心问题是：如何在存在视角相关反射外观的情况下，仍然稳健地跟踪运动刚体目标的 6DoF 位姿。
-
-### 核心思路/方法
-- 利用光场信息，将反射这一“表面麻烦”重新解释为位姿线索。
-- 逐帧流程：
-  1. 在抗反射条件下鲁棒地恢复深度，并反投影为点云，进而估计表面法线；
-  2. 将目标的视角相关外观分解为漫反射反照率与其所反射的环境贴图，得到一个可重光照的表面光场；
-  3. 从粗略初始化出发，用恢复出的环境贴图进行重光照，并在光度损失上优化位姿。
-- 关键机制：由于运动目标会映照出场景中的新部分，环境贴图随序列推进不断被填充，使该光度信号随时间变得更锐利、更有利。
-
-### 主要贡献
-- 提出一种光场基础、抗反射的 6DoF 跟踪器，把视角相关反射外观显式建模为漫反射反照率与环境贴图的分解，并用于位姿优化。
-- 提出一种随序列推进而自我增强的机制：运动目标不断映照新场景区域，使环境贴图逐步补全、跟踪信号逐步锐化。
-- 构建了一个新的光场跟踪数据集：从机器人操作基准重新渲染，包含四个受控反射率水平，并为每一水平配以模拟深度，用以复现消费级 RGB-D 传感器在光亮表面上的失效模式。
-- 额外在两段实拍光场序列上进行评估。
-- 实验结论：在漫反射目标上，该方法落后于最强基线；但在完全反射目标上，它是唯一保持精度的方案，而所有基线均出现性能退化。
-
-### 局限性
-- 摘要明确承认在漫反射目标上弱于最强基线，说明方法并非在所有外观条件下占优。
-- 摘要未提供足够信息：具体基线方法名称、各数据集上的量化指标数值、消融实验、运行时间与实时性、对光场采集硬件与标定的依赖程度、失败案例与边界条件。
-- 摘要未提供足够信息：四个受控反射率水平的具体设定，以及模拟深度的具体失效建模方式。
-- 摘要未提供足够信息：方法对非刚性形变、遮挡、快速运动等更一般场景的适用性。
-
-### 阅读优先级
-高。理由：该论文针对 6DoF 跟踪中长期被假设忽略的反射外观问题提出明确的新建模思路（可重光照表面光场 + 环境贴图随时间补全），并配套了带受控反射率与模拟深度失效的新基准数据集；摘要给出的结论对比鲜明（漫反射略逊、全反射唯一不退化），对机器人操作、自动驾驶与 AR 相关跟踪研究者具有直接参考价值。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Tracking the 6DoF pose of a moving rigid object is fundamental to robotics and autonomous driving, but existing trackers assume that object appearance is stable across a sequence, an assumption that breaks down on reflective surfaces whose appearance changes as they mirror the environment. We introduce a light field based reflection-robust 6DoF tracker that turns this apparent nuisance into a pose cue. Per frame, our method recovers depth robustly against reflections, back-projects it into a point cloud, and estimates surface normals. It then decomposes the object's view-dependent appearance into a diffuse albedo and the environment map it reflects, resulting in a relightable surface light field. Starting from a coarse initialization, we relight it by the recovered environment map and optimize the pose on the photometric loss. Because a moving object mirrors new parts of the scene, the environment map fills in as the sequence proceeds, sharpening this signal over time. To evaluate this approach, we introduce a light field tracking dataset re-rendered from a robotic manipulation benchmark at four controlled reflectivity levels, each paired with simulated depth that reproduces how consumer RGB-D sensors fail on shiny surfaces. Additionally, we evaluate on two captured light field sequences. Our method trails the strongest baselines on diffuse objects and is the only one that holds its accuracy on fully reflective objects, where every baseline degrades.
 
 </details>
 

@@ -35,7 +35,7 @@
     "abstract_url": "https://arxiv.org/abs/2610.12468",
     "pdf_url": "https://arxiv.org/pdf/2610.12468",
     "first_seen": "2026-10-10T13:20:03-04:00",
-    "last_seen": "2026-10-10T13:20:03-04:00"
+    "last_seen": "2026-10-11T13:40:51-04:00"
   },
   {
     "arxiv_id": "2610.12461",
@@ -74,7 +74,7 @@
     "abstract_url": "https://arxiv.org/abs/2610.12461",
     "pdf_url": "https://arxiv.org/pdf/2610.12461",
     "first_seen": "2026-10-10T13:20:03-04:00",
-    "last_seen": "2026-10-10T13:20:03-04:00"
+    "last_seen": "2026-10-11T13:40:51-04:00"
   },
   {
     "arxiv_id": "2610.12442",
@@ -112,7 +112,7 @@
     "abstract_url": "https://arxiv.org/abs/2610.12442",
     "pdf_url": "https://arxiv.org/pdf/2610.12442",
     "first_seen": "2026-10-10T13:20:03-04:00",
-    "last_seen": "2026-10-10T13:20:03-04:00"
+    "last_seen": "2026-10-11T13:40:51-04:00"
   },
   {
     "arxiv_id": "2610.12421",
@@ -146,7 +146,7 @@
     "abstract_url": "https://arxiv.org/abs/2610.12421",
     "pdf_url": "https://arxiv.org/pdf/2610.12421",
     "first_seen": "2026-10-10T13:20:03-04:00",
-    "last_seen": "2026-10-10T13:20:03-04:00"
+    "last_seen": "2026-10-11T13:40:51-04:00"
   },
   {
     "arxiv_id": "2610.12411",
@@ -183,7 +183,7 @@
     "abstract_url": "https://arxiv.org/abs/2610.12411",
     "pdf_url": "https://arxiv.org/pdf/2610.12411",
     "first_seen": "2026-10-10T13:20:03-04:00",
-    "last_seen": "2026-10-10T13:20:03-04:00"
+    "last_seen": "2026-10-11T13:40:51-04:00"
   },
   {
     "arxiv_id": "2610.12285",
@@ -3377,206 +3377,6 @@
     ],
     "abstract_url": "https://arxiv.org/abs/2610.05414",
     "pdf_url": "https://arxiv.org/pdf/2610.05414",
-    "first_seen": "2026-10-06T14:20:24-04:00",
-    "last_seen": "2026-10-06T14:20:24-04:00"
-  },
-  {
-    "arxiv_id": "2610.05289",
-    "version": "v1",
-    "title": "Mobile-4DGS: Unified Static-Dynamic Real-time Mobile Gaussian Splatting",
-    "authors": [
-      "Xiaobiao Du",
-      "Beixi Hao",
-      "Zhen Fang",
-      "Tianqing Zhu",
-      "Richard Hartley",
-      "Xin Yu"
-    ],
-    "abstract": "Recent advances in 3D Gaussian Splatting (3DGS) have achieved remarkable performance in novel view synthesis, yet deploying both static and dynamic Gaussian representations on resource-constrained mobile devices remains challenging due to heavy storage, redundant primitives, and costly per-frame computation. We present Mobile-4DGS, a unified lightweight framework for high-fidelity real-time static and dynamic Gaussian rendering on mobile platforms. For compact appearance modeling, we introduce a Monte Carlo Specular Energy Aggregator that compresses high-order radiance residuals into the first-order Spherical Harmonics (SH), together with an Attribute-Conditioned SH Enhancement module whose predicted offsets are pre-baked before inference. We further propose a Multi-View Alpha-Based Densification and Pruning strategy to suppress redundant primitives while maintaining multi-view consistency. For dynamic scenes, we develop a compact explicit 4D representation by constructing second-order Gaussian motion, learnable temporal support, and a binary static-dynamic partition, enabling continuous-time modeling without runtime deformation networks. Based on this partition, a Depth-Order Certificate selectively reuses previously committed depth orders to reduce re-projection, sorting, merging, and index-buffer updates during playback. Extensive experiments on static and dynamic scenes demonstrate that Mobile-4DGS substantially reduces storage and rendering overhead while maintaining competitive visual quality, enabling real-time 3D and 4D Gaussian Splatting on mobile devices. \\textcolor{magenta}{\\href{https://xiaobiaodu.github.io/mobile-4dgs-project/}{Code has been released: https://xiaobiaodu.github.io/mobile-4dgs-project/}}.",
-    "published": "2026-10-04T15:07:47Z",
-    "updated": "2026-10-04T15:07:47Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Dynamic / 4D Reconstruction",
-    "secondary_categories": [
-      "Neural Scene Representations & Rendering"
-    ],
-    "matched_keywords": [
-      "dynamic Gaussian",
-      "4D Gaussian",
-      "Gaussian Splatting",
-      "3D Gaussian Splatting",
-      "3DGS",
-      "novel view synthesis",
-      "view synthesis",
-      "rendering",
-      "radiance",
-      "splatting"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched abstract phrase: dynamic Gaussian",
-      "Matched abstract phrase: 4D Gaussian",
-      "Matched title phrase: Gaussian Splatting",
-      "Matched abstract phrase: Gaussian Splatting",
-      "Matched abstract phrase: 3D Gaussian Splatting",
-      "Matched abstract keyword: 3DGS",
-      "Matched abstract phrase: novel view synthesis",
-      "Matched abstract phrase: view synthesis",
-      "Matched abstract keyword: rendering",
-      "Matched abstract keyword: radiance",
-      "Matched title keyword: splatting",
-      "Matched abstract keyword: splatting"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2610.05289",
-    "pdf_url": "https://arxiv.org/pdf/2610.05289",
-    "first_seen": "2026-10-06T14:20:24-04:00",
-    "last_seen": "2026-10-06T14:20:24-04:00"
-  },
-  {
-    "arxiv_id": "2610.05207",
-    "version": "v1",
-    "title": "F$^2$ SLAM: Turning Feed-Forward Geometry into Persistent Factors for SLAM",
-    "authors": [
-      "Zhisong Xu",
-      "Fan Zhu",
-      "Jiawei Qian",
-      "Ziyu Chen",
-      "Zhenjun Zhao",
-      "Javier Civera"
-    ],
-    "abstract": "Feed-forward 3D models provide strong multi-view geometric priors, while on- line simultaneous localization and mapping (SLAM) relies mainly on local mea- surements and can accumulate drift over long sequences. Existing attempts to combine the two typically treat feed-forward predictions as an external geomet- ric state that is aligned or fused with the online estimate after the fact, which keeps broader multi-view evidence outside the optimizer that refines the SLAM state. We present F2SLAM, which instead converts feed-forward geometry di- rectly into optimization-native target-weight measurements attached to a persis- tent dense factor graph. A high-frequency stream maintains local tracking con- straints and graph connectivity, while a low-frequency stream uses wider multi- view context to selectively refresh existing measurements after a state-consistency check. Both streams constrain the same poses, inverse depths, and optional cam- era intrinsics through a single dense bundle adjustment. Experiments on multiple benchmarks demonstrate consistently strong trajectory estimation and improved dense reconstruction in both calibrated and uncalibrated settings. Notably, the uncalibrated configuration reduces the average ATE RMSE from 0.030 m for the strongest feed-forward baseline to 0.002 m on the Replica dataset.",
-    "published": "2026-10-04T13:24:27Z",
-    "updated": "2026-10-04T13:24:27Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "simultaneous localization and mapping",
-      "SLAM",
-      "bundle adjustment",
-      "dense reconstruction",
-      "mapping",
-      "localization"
-    ],
-    "classification_score": 9,
-    "classification_reasons": [
-      "Matched abstract phrase: simultaneous localization and mapping",
-      "Matched title keyword: SLAM",
-      "Matched abstract keyword: SLAM",
-      "Matched abstract phrase: bundle adjustment",
-      "Matched abstract phrase: dense reconstruction"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2610.05207",
-    "pdf_url": "https://arxiv.org/pdf/2610.05207",
-    "first_seen": "2026-10-06T14:20:24-04:00",
-    "last_seen": "2026-10-06T14:20:24-04:00"
-  },
-  {
-    "arxiv_id": "2610.05029",
-    "version": "v1",
-    "title": "SPACE-CLIPv2: Decoding Local Geometry from Frozen CLIP for Monocular Depth Estimation",
-    "authors": [
-      "Hyun Song",
-      "Taewan Cho",
-      "Kangmin Kim",
-      "Andrew Jaeyong Choi"
-    ],
-    "abstract": "Vision-language foundation models such as CLIP provide strong semantic representations, but their patch tokens are not directly optimized for dense metric geometry. SPACE-CLIP showed that frozen CLIP features can support monocular depth estimation through layer-group feature fusion, yet it leaves open how neighboring CLIP tokens should be combined to recover fine local structure. We present SPACE-CLIPv2, a frozen-backbone depth decoder that aggregates fixed local neighborhoods in CLIP token space. At selected decoder stages, the model samples a fixed token stencil, predicts aggregation weights, and injects the resulting response through a gated residual update. A token-space high-pass branch further preserves shallow local contrast. On NYU Depth V2, SPACE-CLIPv2 improves over a matched SPACE-CLIP baseline, while five-seed experiments consistently favor fixed over learned-offset sampling. Zero-shot iBims-1 evaluation further improves boundary and planar-geometry measures. These results support constrained local token aggregation as a practical mechanism for decoding geometry from frozen CLIP representations.",
-    "published": "2026-10-04T07:50:10Z",
-    "updated": "2026-10-04T07:50:10Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "3D Reconstruction & Multi-view Geometry",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "depth estimation",
-      "monocular depth"
-    ],
-    "classification_score": 12,
-    "classification_reasons": [
-      "Matched title phrase: depth estimation",
-      "Matched abstract phrase: depth estimation",
-      "Matched title phrase: monocular depth",
-      "Matched abstract phrase: monocular depth"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2610.05029",
-    "pdf_url": "https://arxiv.org/pdf/2610.05029",
-    "first_seen": "2026-10-06T14:20:24-04:00",
-    "last_seen": "2026-10-06T14:20:24-04:00"
-  },
-  {
-    "arxiv_id": "2610.04883",
-    "version": "v1",
-    "title": "Reflection-Robust 6DoF Object Tracking with Light Fields",
-    "authors": [
-      "Nikolai Goncharov",
-      "Donald G. Dansereau"
-    ],
-    "abstract": "Tracking the 6DoF pose of a moving rigid object is fundamental to robotics and autonomous driving, but existing trackers assume that object appearance is stable across a sequence, an assumption that breaks down on reflective surfaces whose appearance changes as they mirror the environment. We introduce a light field based reflection-robust 6DoF tracker that turns this apparent nuisance into a pose cue. Per frame, our method recovers depth robustly against reflections, back-projects it into a point cloud, and estimates surface normals. It then decomposes the object's view-dependent appearance into a diffuse albedo and the environment map it reflects, resulting in a relightable surface light field. Starting from a coarse initialization, we relight it by the recovered environment map and optimize the pose on the photometric loss. Because a moving object mirrors new parts of the scene, the environment map fills in as the sequence proceeds, sharpening this signal over time. To evaluate this approach, we introduce a light field tracking dataset re-rendered from a robotic manipulation benchmark at four controlled reflectivity levels, each paired with simulated depth that reproduces how consumer RGB-D sensors fail on shiny surfaces. Additionally, we evaluate on two captured light field sequences. Our method trails the strongest baselines on diffuse objects and is the only one that holds its accuracy on fully reflective objects, where every baseline degrades.",
-    "published": "2026-10-04T02:45:31Z",
-    "updated": "2026-10-04T02:45:31Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Embodied / Robotics / AR Applications",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "robotics",
-      "manipulation",
-      "autonomous driving"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched abstract keyword: robotics",
-      "Matched abstract keyword: manipulation",
-      "Matched abstract phrase: autonomous driving"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2610.04883",
-    "pdf_url": "https://arxiv.org/pdf/2610.04883",
-    "first_seen": "2026-10-06T14:20:24-04:00",
-    "last_seen": "2026-10-06T14:20:24-04:00"
-  },
-  {
-    "arxiv_id": "2610.04722",
-    "version": "v1",
-    "title": "NAMVIS: Next-Scale Autoregressive Multi-View Image Synthesis",
-    "authors": [
-      "Ramil Khafizov",
-      "Ilya Statsenko",
-      "Ruslan Rakhimov",
-      "Artem Komarichev",
-      "Peter Wonka",
-      "Evgeny Burnaev"
-    ],
-    "abstract": "Sparse-view novel view synthesis is a central problem in 3D content creation, but diffusion-based approaches remain limited by iterative denoising, making multi-view generation expensive at inference time. We introduce NAMVIS, a diffusion-free framework that reformulates multi-view image synthesis as geometry-conditioned next-scale autoregression. Instead of generating target views through repeated denoising, NAMVIS predicts discrete visual tokens through a small number of coarse-to-fine scale steps, while sampling all tokens within each scale and across target views in parallel. To anchor this generation process to explicit camera geometry, we propose Multi-scale Projective Pose Encoding, which injects source and target camera transformations into both target-view self-attention and source-to-target cross-attention at every resolution. NAMVIS further combines global conditioning with dense geometry-aware cross-attention, enabling the model to preserve source-view appearance while maintaining target-view consistency. Across Objaverse, GSO, and OmniObject3D, NAMVIS outperforms diffusion-based baselines in PSNR, SSIM, and LPIPS, while running over 3 times faster than the evaluated diffusion baselines under the same evaluation setting. These results suggest that geometry-conditioned next-scale autoregression is a promising and efficient alternative to diffusion for sparse-view multi-view synthesis. Additional qualitative results, videos, and resources are available at https://corl-team.github.io/namvis/",
-    "published": "2026-10-03T19:22:02Z",
-    "updated": "2026-10-03T19:22:02Z",
-    "primary_arxiv_category": "cs.CV",
-    "arxiv_categories": [
-      "cs.CV"
-    ],
-    "primary_category": "Neural Scene Representations & Rendering",
-    "secondary_categories": [],
-    "matched_keywords": [
-      "novel view synthesis",
-      "view synthesis"
-    ],
-    "classification_score": 4,
-    "classification_reasons": [
-      "Matched abstract phrase: novel view synthesis",
-      "Matched abstract phrase: view synthesis"
-    ],
-    "abstract_url": "https://arxiv.org/abs/2610.04722",
-    "pdf_url": "https://arxiv.org/pdf/2610.04722",
     "first_seen": "2026-10-06T14:20:24-04:00",
     "last_seen": "2026-10-06T14:20:24-04:00"
   }
