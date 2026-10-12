@@ -11,13 +11,13 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：88
+- 当前滚动窗口论文数：70
 - 分类分布：
-  - Neural Scene Representations & Rendering: 31
-  - Embodied / Robotics / AR Applications: 26
-  - 3D Reconstruction & Multi-view Geometry: 15
-  - Geometry Foundation Models: 12
-  - Dynamic / 4D Reconstruction: 4
+  - Neural Scene Representations & Rendering: 24
+  - Embodied / Robotics / AR Applications: 23
+  - 3D Reconstruction & Multi-view Geometry: 11
+  - Geometry Foundation Models: 9
+  - Dynamic / 4D Reconstruction: 3
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
@@ -25,53 +25,62 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-1. **几何基础模型正在从“可用的先验”升级为“可直接复用的计算骨干”。**
-   代表论文：PointVGGT、CoCam4D、FreeInpaint、FreeMatching。PointVGGT 直接把 VGGT 这类视觉几何基础模型当作零样本多视图 RGB-D 配准的主干，采用“先 foundation、后 refinement”的两阶段范式；CoCam4D 同样用 VGGT 前馈网络生成带不确定性的 3D 高斯表示做协同感知；FreeInpaint 则扩展 3D 基础模型以支持带掩码的无位姿输入。共同信号是：基础模型的输出不再只作为初始化或正则项，而是被当作结构先验直接承担位姿、几何与对应关系恢复。
+1. **视觉几何基础模型（VGGT 类）正从“重建工具”转变为“通用计算骨干”。**  
+   - 代表论文：PointVGGT、CoCam4D、FreeInpaint。  
+   - 共同点：不再把基础模型仅当作特征提取器，而是直接把它当作位姿/几何/尺度恢复的计算底座，再在其上做配准、协同感知或补全。PointVGGT 用 VGGT 恢复度量一致的全局位姿，CoCam4D 用 VGGT 前馈网络生成带不确定性的 3D 高斯表示，FreeInpaint 则在带掩码输入下保留基础模型的原生位姿与几何恢复能力。  
+   - 趋势含义：几何基础模型正在被“接口化”——下游任务通过 grounding 尺度、注入不确定性或加装注意力机制来适配，而不是重新训练一个专用模型。
 
-2. **“表示什么、如何条件化”开始比“生成得多逼真”更受关注。**
-   代表论文：PLaW-VLA、OuroWorld、LEGO、DreamTrue。PLaW-VLA 明确指出未来表征的选择和条件化方式决定 VLA 策略的长程控制效果，主张在预测导向的潜在空间建模任务相关状态而非重建视觉细节；LEGO 追问扩散模型应当接收何种跨视角条件，用学习式视角合成器替代点云重投影；DreamTrue 将动作轨迹渲染为图像空间条件；OuroWorld 用 VLM 先推断合理动态再引导视频模型。这些工作共同把研究重心从“生成质量”转向“条件表示的结构是否正确”。
+2. **3D/4D 场景表示从“静态可探索”走向“动态、可循环、可编辑、可规划”。**  
+   - 代表论文：OuroWorld、LVS、PAM-ToD、2DGS-Planner、FlyMark。  
+   - 方向分化明显：  
+     - **动态化**：OuroWorld 把静态 3DGS 变成可无缝循环的 3D cinemagraph；PAM-ToD 做跨时段外观适配。  
+     - **效率化**：LVS 用相对位姿复用 RGB-D 图像，避免重复渲染。  
+     - **功能化**：2DGS-Planner 直接从 2DGS 地图栅格化读取规划几何，而非把单个高斯基元当障碍物；FlyMark 把水印写进 3DGS 参数本身。  
+   - 趋势含义：3DGS 不再只是“渲染表示”，而正在成为承载规划、版权、外观编辑和动态模拟的统一场景介质。
 
-3. **世界模型与场景表示正在从“静态可探索”走向“动态 + 物理合理 + 反馈可训练”。**
-   代表论文：OuroWorld、DreamTrue、PLaW-VLA、PAM-ToD。OuroWorld 让冻结的 3DGS 场景产生无缝循环的多样动态；DreamTrue 用反事实后训练拓宽交互覆盖并提升物理合理性；PLaW-VLA 在预测表征空间建模未来状态；PAM-ToD 则把静态 3DGS 场景跨时段适配。趋势是从“重建一个可看的场景”转为“重建一个能随时间、动作、光照、交互变化的世界”。
+3. **机器人世界模型开始区分“预测什么”和“如何条件化动作”。**  
+   - 代表论文：DreamTrue、PLaW-VLA、ALONE。  
+   - DreamTrue 关注动作忠实性与反事实后训练；PLaW-VLA 强调在预测导向表征空间中建模任务相关未来状态，而不是重建低层视觉细节；ALONE 则把导航建模为贝叶斯空间信念传播与选择性观测。  
+   - 趋势含义：世界模型的有效性不再取决于“预测得有多像视频”，而取决于预测表征是否任务相关、动作条件是否可靠、以及模型是否知道何时该重新观测。
 
-4. **机器人/AR 方向的“训练-free / 免标定 / 免提升”路线集中出现，部署友好性成为明确卖点。**
-   代表论文：PointVGGT（免训练）、Slot3R（免训练改造，冻结主干）、FlyMark（免训练水印）、USDCraft（无需任务特定训练）、LVS（局部视图重用降低重复渲染）、2DGS-Planner（栅格化读取规划几何）。这类工作普遍不追求端到端重训大模型，而是围绕已有表示或基础模型做轻量、可插拔、可立即部署的改造，说明该方向正从“刷指标”转向“能否在真实管线里用起来”。
+4. **面向真实部署的“无位姿、免训练、即插即用、低通信”成为高频设计约束。**  
+   - 代表论文：FreeInpaint（无位姿）、Slot3R（免训练改造）、PAM-ToD（即插即用）、FlyMark（免训练水印）、CoCam4D（35 字节紧凑表示）、Distributed Relative Localization（有限通信）。  
+   - 趋势含义：这些工作共同反映出一个现实压力——真实场景中位姿标定、成对标注、通信带宽和再训练成本都不可靠，因此方法必须在这些约束下仍能工作。
 
-5. **不确定性建模与可靠性评估开始成为多智能体/退化环境任务的显式组件。**
-   代表论文：CoCam4D、ALONE、GLIO2。CoCam4D 用贝叶斯框架显式建模几何不确定性并共享紧凑高斯基元；ALONE 用贝叶斯空间世界模型预测可靠性图，只在可靠性不足时请求新观测；GLIO2 针对配准偏差被以“过度自信协方差”传播的问题重新设计前端。三者都在处理同一类问题：感知不可靠时，系统该如何表达、传播并利用这种不可靠性。
+5. **具身智能的评测资源开始向“真实居住状态”和“交互就绪”倾斜。**  
+   - 代表论文：LIVIN、USDCraft。  
+   - LIVIN 强调数字孪生要保留“被居住”后的物体摆放与空间约束，并覆盖 3D 检测、3D 重建、导航和移动操作四类任务；USDCraft 则用 LLM 程序化生成铰接式 USD 资产，面向 real-to-sim 策略迁移。  
+   - 趋势含义：仿真资产与基准的竞争点，正在从“数量多、外观真”转向“布局真实、可交互、可载入仿真器、能支撑策略迁移”。
+
 
 #### 技术路线观察
 
-- **几何基础模型方向**：PointVGGT、CoCam4D、FreeMatching 共享“用基础模型做结构对齐”的思路，但切入方式不同。PointVGGT 偏“零样本配准 + 尺度接地 + 精化”，CoCam4D 偏“带不确定性前馈表示 + 多智能体融合”，FreeMatching 偏“跨破坏物理连续性的变换建立身份保持对应”。三者都在削弱对成对估计或精确标定的依赖，值得关注的是它们是否会收敛到统一的“基础模型 + 轻量精化”范式。
+**几何基础模型方向：从“辅助线索”到“计算骨干”。**  
+PointVGGT 和 CoCam4D 都把 VGGT 类模型放在核心位置。PointVGGT 采用“先基础、后精化”范式，直接恢复全局位姿并做尺度接地；CoCam4D 则把 VGGT 前馈网络与 3D 高斯、不确定性估计和 C-V2X 通信绑定。FreeInpaint 虽然属于 3D 补全，但其关键设计也在于扩展 3D 基础模型以处理带掩码输入。这一路线的共同技术选择是：**不轻易替换基础模型，而是在其输出上做尺度对齐、不确定性建模或注意力改造**。
 
-- **3D/4D 重建方向**：FreeInpaint（无位姿前馈补全）、Slot3R（流式重建中的集合关联空间记忆）、LIVIN（真实住宅数字孪生基准）代表三条不同路径——一个解决免标定补全，一个解决在线记忆的融合策略，一个解决高保真评测资源。Slot3R 提出的“位置决定地址、不决定是否融合”是一个值得注意的表示层设计原则，可能影响后续流式重建的记忆架构。
+**3D/4D 重建方向：显式重建与概率式/免提升路线的分歧在加深。**  
+LEGO 明确反对“深度—点云—重投影”的确定性提升路线，转而用学习式视角合成器直接渲染自我中心视角，理由是扩散模型更适合接收结构对齐而非锐利纹理的条件。与之相对，PointVGGT、FreeInpaint 仍在显式几何恢复框架内做改进。Slot3R 则从记忆机制入手，主张“位置决定地址，不决定是否融合”，解决流式重建中邻近但不同状态的证据被过早平均的问题。  
+**技术侧重点差异**：LEGO 赌的是生成模型补细节的能力；PointVGGT/FreeInpaint 赌的是基础模型几何先验的可靠性；Slot3R 赌的是记忆结构比几何先验更关键。
 
-- **神经场景表示方向**：OuroWorld、PAM-ToD、LVS、FlyMark、2DGS-Planner、Neural Caching 都围绕 3DGS 生态展开，但侧重差异明显：OuroWorld 做动态循环，PAM-ToD 做跨时段外观适配，LVS 做邻近视角重用，FlyMark 做参数水印，2DGS-Planner 做规划几何读取，Neural Caching 做镜面光照缓存。趋势是 3DGS 正在从“重建表示”演化为“可编辑、可规划、可授权、可适配的资产层”。
+**神经场景表示方向：3DGS 的“后训练生命周期”成为新战场。**  
+PAM-ToD、FlyMark、LVS、2DGS-Planner 都不再训练一个新的 3DGS 场景，而是假设已有预训练 3DGS，然后分别做外观适配、水印嵌入、视图复用和路径规划。这说明 3DGS 正在形成类似“模型发布后”的生态：参数可复制、可剪枝、可重打包，因此需要版权保护、跨时段适配和下游任务接口。OuroWorld 则代表另一条路：把静态 3DGS 提升为动态 4DGS，并用傅里叶级数变形场从构造上保证循环性。
 
-- **机器人/AR 应用方向**：DreamTrue（世界模型）、PLaW-VLA（VLA 策略）、GLIO2（LiDAR-惯性-GNSS 融合）、ALONE（间歇感知导航）、Distributed Relative Localization（同构多机器人相对定位）、USDCraft（铰接资产程序化建模）、DVD（MLLM 感知输出表示）覆盖了从底层状态估计到高层策略、从仿真资产到感知接口的完整链条。一个共同点是：这些工作都不约而同地减少对“高频、全覆盖、精确标注”的依赖，转向选择性观测、反事实增广、程序化生成和紧凑表示。
+**机器人/AR 应用方向：世界模型、VLA 与导航的分工在细化。**  
+- **世界模型**：DreamTrue 解决动作遵循与反事实覆盖；PLaW-VLA 解决预测表征的任务相关性。  
+- **导航**：ALONE 处理间歇感知下的信念传播与选择性观测；2DGS-Planner 处理 2DGS 地图上的路径规划；Distributed Relative Localization 处理同构多机器人匿名识别与分布式定位。  
+- **感知输出表示**：DVD 关注 MLLM 感知中 2D/3D 输出的 token 效率问题，试图统一 2D 框、2D 掩码和 3D 框的表示。  
+- **仿真资产**：USDCraft 和 LIVIN 分别从资产生成和基准构建两端推动 real-to-sim。  
+整体看，机器人应用不再只追求“端到端大模型”，而是把世界模型、规划、定位、感知表示和仿真资产拆成可独立验证的模块。
+
+**共识与分歧**：  
+- **共识**：几乎所有工作都承认，真实场景中的位姿、标定、标注和通信不可靠，因此方法必须容忍这些缺陷。  
+- **分歧**：对于“是否还需要显式几何重建”，LEGO 与 PointVGGT/FreeInpaint 给出了不同答案；对于“未来状态该用什么表征”，PLaW-VLA 明确反对重建导向，DreamTrue 则仍在视频预测层面做动作忠实性。这些分歧是后续跟踪的关键。
+
 
 #### 值得优先阅读的论文
 
-1. **PLaW-VLA**（arXiv 2610.12285）
-   理由：它把“世界模型该预测什么、如何条件化动作生成”这个问题明确提出来并给出可量化结论（RoboTwin Hard Horizon III +11.8pp，LIBERO-Plus 零样本 +1.77pp）。对关注 VLA、世界模型与长程控制的人，这是今天最直接回答核心设计问题的一篇。
-
-2. **LEGO**（arXiv 2610.12442）
-   理由：它提出一个反直觉但论证清晰的观点——扩散模型的有效条件应优先保证结构对齐而非锐利度，并用 LVSM 风格 transformer 替代深度+点云+重投影。对做跨视角生成、新视角合成、条件扩散的人都值得细读其“条件该长什么样”的论证。
-
-3. **Slot3R**（arXiv 2610.12282）
-   理由：以“位置决定地址而非融合”这一简洁原则改造 Point3R，免训练且冻结主干，报告在 7Scenes 上 Acc 降低 57.1%-63.1%。对做流式重建与空间记忆的人，这是一个低门槛、高杠杆的可复现改进点。
-
-4. **PointVGGT**（arXiv 2610.11612）
-   理由：代表“foundation-then-refinement”范式在配准任务上的零样本落地，直接利用 VGGT 等基础模型恢复全局一致位姿，并处理尺度接地。对关心几何基础模型下游复用的人，这篇提供了清晰的范式样本。
-
-5. **ALONE**（arXiv 2610.11591）
-   理由：把“选择性观测”从工程技巧提升为贝叶斯空间世界模型的核心机制（可靠性图驱动请求观测）。对多任务共享传感器、间歇感知导航场景有直接参考价值，也与其他几篇不确定性建模工作形成呼应。
-
-#### 可能的研究机会
-
-- **基础模型 + 不确定性 + 传播的统一框架**：CoCam4D 建模几何不确定性、ALONE 预测可靠性图、GLIO2 重新设计协方差传播，三者分别在感知、规划、状态估计层面处理不可靠性，但尚无统一表述。可探索跨模块的不确定性传播与再加权机制。
-
-- **世界模型的条件表示设计原则**：PLaW-VLA 主张预测导向潜在空间、LEGO 主张概率式结构对齐条件、DreamTrue
+1. **PointVGGT: Zero-Shot Multiview RGB-D Point Cloud Registration with Visual Geometry Foundation Priors**  
+   理由：它把“基础模型作为计算骨干”这一趋势体现得最清楚，且明确提出“foundation-then-refinement”范式，对几何基础模型方向有方法论参考价值。零样本、免训练、多视图 RGB-D 配准也是实际部署中高频需求。
 
 ### interests.md 指令分析
 
@@ -2586,59 +2595,6 @@ AIMS 提出一种可扩展框架，将“可用观测数量”与“全局合成
 <summary>Abstract</summary>
 
 Feed-forward novel view synthesis methods achieve strong generalization from posed multi-view inputs, but scaling them to large input view sets remains challenging. Transformer-based approaches that jointly process all input-view tokens incur rapidly increasing computation and memory as the number of views grows, while simple view subsampling discards potentially useful observations. We introduce Anchor-Integrated Multi-View Synthesis (AIMS), a scalable framework that decouples the number of available observations from the number of views processed by the global synthesis model. AIMS selects a fixed set of spatially distributed anchor views using farthest point sampling, groups nearby observations around each anchor, and uses a lightweight learnable integrator to fuse their information into enriched anchor representations. This allows additional observations to contribute to synthesis while keeping the downstream global view budget fixed. Evaluations on RealEstate10K and ScanNet demonstrate a favorable quality--efficiency trade-off against transformer-based and Gaussian-based baselines. AIMS achieves 29.41 dB and 17.73 dB PSNR on the two datasets, respectively, with rendering averaging 7.24 ms per view.
-
-</details>
-
-#### 2026-10-05 - Learnable Spectral Activations
-
-**Authors:** Tamir Shor, Or Litany, Alex Bronstein
-**Links:** [abs](https://arxiv.org/abs/2610.07419) - [pdf](https://arxiv.org/pdf/2610.07419)
-**Primary category:** Neural Scene Representations & Rendering
-**Secondary categories:** None
-**Matched keywords:** neural radiance field, radiance field, radiance
-
-<details>
-<summary>AI 简析</summary>
-
-### Metadata
-- 标题：Learnable Spectral Activations
-- 作者：Tamir Shor, Or Litany, Alex Bronstein
-- 出版日期：2026-10-05T21:29:04Z
-- 分类：Neural Scene Representations & Rendering
-- 链接：https://arxiv.org/abs/2610.07419 ；PDF: https://arxiv.org/pdf/2610.07419
-
-### 一句话总结
-论文提出可学习谱激活（LSA），用残差截断傅里叶级数替代固定神经元级非线性，在不扩大渐近函数类的前提下改变表示分解方式，以改善隐式神经表示的重建质量。
-
-### 研究问题
-隐式神经表示（INRs）的表示能力受输入编码和激活函数所诱导的谱结构影响。现有方法主要通过坐标编码或周期性非线性来改变网络可用的频率，但摘要指出“频率可及性并非唯一瓶颈”：对于具有局部结构或空间变化结构的信号，网络还需要有效地将频率组合成多谐波内部响应。因此，问题在于如何让网络更有效地进行频率组合与谱塑形，而不仅仅是提供更多频率。
-
-### 核心思路/方法
-- 提出可学习谱激活（LSA），将固定的神经元级非线性替换为残差截断傅里叶级数。
-- 该傅里叶级数的谐波振幅在训练过程中学习得到。
-- LSA 不扩大渐近函数类，而是改变表示的分解方式：线性权重负责选择特征，激活系数负责控制谱塑形，二者由不同的梯度分别更新。
-- 在固定预激活的前提下，激活输出对系数是仿射的，因此谱调优成为一个更直接的子问题，而不是与特征选择纠缠在一起。
-- 摘要提到经验上这种分解使更多目标信号能量集中在神经正切核（NTK）的前导特征模中，与优化行为改善一致。
-- 在音频、图像、神经辐射场和神经声学场任务上，LSA 提升了重建质量。
-
-### 主要贡献
-- 提出 LSA，用可学习的残差截断傅里叶级数作为神经元级激活，学习谐波振幅以进行谱塑形。
-- 强调该方法的机制不是扩展渐近函数类，而是改变表示分解，使谱调优与特征选择通过分离的梯度解耦。
-- 给出经验观察：该分解使目标信号能量更集中于 NTK 前导特征模，与优化行为改善一致。
-- 在音频、图像、神经辐射场和神经声学场任务上报告了重建质量提升。
-
-### 局限性
-摘要未提供足够信息。摘要未说明计算开销、参数增加、训练稳定性、与具体基线方法的详细比较、消融实验、失败场景或适用范围限制。
-
-### 阅读优先级
-中。理由：论文主题属于隐式神经表示与神经场景表示中的激活/谱结构设计，问题定位明确，方法思路具有结构性意义，并覆盖音频、图像、NeRF 和神经声学场多类任务；但摘要未提供充分的实验细节、定量结果和局限分析，是否值得优先精读取决于读者对 INR 激活函数设计或谱分解优化的具体兴趣。
-
-</details>
-
-<details>
-<summary>Abstract</summary>
-
-Implicit neural representations (INRs) are shaped by the spectral structure induced by their input encodings and activation functions. Existing methods improve fitting primarily by modifying which frequencies are available to the network, through coordinate encodings or periodic nonlinearities. However, frequency access is not the only bottleneck: signals with localized or spatially varying structure require the network to efficiently compose frequencies into multi-harmonic internal responses. We introduce learnable spectral activations (LSA), which replace fixed neuron-level nonlinearities with a residual truncated Fourier series whose harmonic amplitudes are learned during training. LSA does not expand the asymptotic function class. Instead, it changes the factorization of the representation: linear weights select features while activation coefficients control spectral shaping, and the two are updated by separate gradients. Because the activation output is affine in the coefficients given fixed pre-activations, spectral tuning becomes a more direct subproblem compared to architectures where it is entangled with feature selection. Empirically, this factorization concentrates more target-signal energy in the leading eigenmodes of the neural tangent kernel, consistent with improved optimization behavior. Across audio, image, neural radiance field, and neural acoustic field tasks, LSA also improves reconstruction quality.
 
 </details>
 
