@@ -11,13 +11,13 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：55
+- 当前滚动窗口论文数：69
 - 分类分布：
-  - 3D Reconstruction & Multi-view Geometry: 19
-  - Embodied / Robotics / AR Applications: 16
-  - Neural Scene Representations & Rendering: 14
-  - Dynamic / 4D Reconstruction: 4
-  - Geometry Foundation Models: 2
+  - 3D Reconstruction & Multi-view Geometry: 22
+  - Embodied / Robotics / AR Applications: 20
+  - Neural Scene Representations & Rendering: 15
+  - Dynamic / 4D Reconstruction: 7
+  - Geometry Foundation Models: 5
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
@@ -25,42 +25,43 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-1. **“事件/多传感器补偿帧相机物理极限”成为动态重建主线。** HIVE-Diff 用事件流弥补单帧 LDR 在时间分辨率与动态范围上的不足，MISLAM 用磁-惯性替代在粉尘、烟尘、低照度下退化的视觉/激光，GPU-Native 系统用多路 RGB-D 做实时带纹理网格化。三者共同反映：当单一模态受物理约束（曝光、能见度、计算带宽）时，研究重心转向**跨模态互补与紧耦合融合**，而非单模态精度堆叠。
+1. **评测基准与数据供给正在成为独立的研究贡献，而不再只是方法论文的附属品。** 本批论文中至少有三篇以“基准/数据集”为核心贡献：BhopalMLS 提供异构非规划城市的大规模 LiDAR 语义分割数据集；3DGS-VBench+ 构建 3DGS 视频质量评估的主观基准；Visibility-Aware Reference Generation 则直接针对植被密集场景缺乏几何真值的问题设计 LiDAR 参考生成流程。三者共同指向一个变化：当感知与重建模型本身趋于成熟后，**“如何可靠地测”成为瓶颈**，且评测对象从单帧/单视图扩展到序列、视频与跨区域迁移。
 
-2. **3DGS 从“能渲染”走向“可诊断、可约束、可前馈”。** GaussFlaw 构建首个 3DGS 细粒度伪影数据集与标签体系，Neural-Color-Fields-3DGS 用连续神经颜色场与 Lipschitz 约束抑制漂浮物、改善深度，OctreeSplat 用八叉树引导前馈高斯原语按局部复杂度分配密度。方向从“提升 PSNR”转向**伪影可解释性、几何正则化与前馈化**三条并行的工程化路线。
+2. **前馈几何基础模型的“下游化”与“轻量化”改造密集出现。** DUNEDepth 将 3D 视觉基础模型混合适配到支气管镜深度与位姿估计；CoReMatch 用 Transformer + 循环坐标细化替代离散置信图匹配；SPA-Q 针对 Depth Anything 类 MDE 模型做低比特训练后量化；SR-DP 用冻结 VGGT 编码器提供多任务判别性视觉条件；Manifold Embedding 则把基础模型特征嵌入流形以正则化图像匹配。这些工作不追求新的大模型，而是**围绕已有基础模型解决适配、压缩、正则与任务迁移问题**，反映出“基础模型已就位，工程化与领域化是当前主战场”。
 
-3. **无靶标、无标注的标定与位姿估计集中出现。** SyncHeC（免标记手眼标定 + 可微渲染 + 连续时间联合优化）、AnchorHEC（腕部 + 固定相机统一无靶标标定）、ReVA-HPE（单张无标注注册图重建虚拟锚点，摆脱锚点真值姿态依赖）三篇同日出现，说明**“用可微渲染/生成先验替代物理靶标与人工标注”**正在成为机器人视觉标定的主流替代范式。
+3. **动态/4D 与神经场景表示向“非理想采集条件”和“内容生产管线”两端延伸。** 一端是鲁棒性：Phase-DGS 处理未同步多视角视频，SettleSplat 处理单目在线序列中的视野内物体移动，IGSW 处理天气编辑图像的结构失真传播，EndoS3 处理内窥镜可变形场景；另一端是可用性：GSCV++ 用标准视频编解码器压缩 3DGS 序列，3DGS-VBench+ 建立 3DGS 视频质量评估。这说明 3DGS/动态重建的研究重心正从“能否重建”转向“**在真实采集缺陷下能否稳定重建，以及重建产物能否被存储、传输和评估**”。
 
-4. **视频/世界模型开始承担“表征预训练 + 长时一致性”双重角色。** ScaleDrive 验证无动作视频潜变量预测规模化后可为端到端自动驾驶提供可迁移表征（冻结编码器做隔离验证）；AgiWorld 用智能体规划 + 视频世界模型 + 空间记忆闭环，从单图与自由指令构建持久世界。二者分别从**表征可迁移性**与**世界持久性**切入，指向视频生成模型作为具身智能基础设施的趋势。
+4. **机器人/具身方向出现“物理属性估计 + 3D 世界模型”的耦合路线。** Physical Diffusion Policy 用 3DGS 与可微 MPM 耦合从视觉演示中估计材质参数，再注入 Mixture-of-Experts 扩散策略；Hybrid Particle-Voxel Dynamics 用粒子-体素自编码器加动作条件潜动力学，在统一 3D 表示下联合预测外观、几何与触觉。二者共同点是**把物理仿真或物理参数作为 3D 表示与策略/世界模型之间的中间层**，而非仅做视觉模仿。
 
-5. **人体/操作类任务从“关节回归”转向“接触、上下文与轻量化部署”。** ReContact 以物体为中心接触计划（接触阶段、接触对、按压方向、粘滑模式）驱动人形机器人重定向；HeLM 用显式语言记忆突破 VLA 的马尔可夫假设；MoSoLoco 复用姿态检测器内部视觉特征做轻量 3D 人体定位（JRDB 误差降约 23%）；MuCHMDPoser 用外部多视角 RGB 补足 VR 稀疏传感器欠约束。共性是**显式结构化先验（接触、记忆、特征复用、多视角）替代纯端到端黑箱**。
+5. **多会话、多传感器与在线标定的“长期运行可靠性”议题集中出现。** Sparse Anchors 处理环境变化下的多会话配准，MiCaDe 在线检测 LiDAR-相机外参漂移，Mamba3R 用固定容量状态记忆适配长序列流式重建，Do Pretrained Backbones Transfer 系统研究物理传感器模态下的预训练迁移。这批工作共同关注**部署后的漂移、变化与长时程退化**，而非静态离线精度。
 
 #### 技术路线观察
 
-- **几何基础模型：从“特征提取器”升级为“可微几何先验供应商”。** OctreeSplat 冻结 VFM 提取多视角特征与几何先验做八叉树致密化；LieVLM 用 VGGT 几何 token 预测 SO(3) 局部旋转与路由系数，缓解视角诱导语义漂移；AnchorHEC 用共享 3D 基础模型重建初始化两类相机。VFM 正从下游模块的“输入”变为**标定、稠密化与视角鲁棒性的约束源**。
+- **几何基础模型方向**：路线分化明显。DUNEDepth 走“混合架构 + 合成监督/自监督联合微调”，强调领域数据（CT 派生虚拟视图）与基础模型组件的拼接；Manifold Embedding 走“函数映射 + 谱方法”路线，用 Galerkin 有限元从深度特征流形导出离散 LBO，试图以结构性正则替代启发式后处理；SR-DP 则把 VGGT 编码器冻结后仅做轻量适配，重心放在去噪器的谱路由分解上。三者对“基础模型该怎么用”给出了不同答案：**全量微调、结构正则、冻结特征+轻量适配**并存，尚未收敛。
 
-- **3D/4D 重建：动态与静态两条线分化明显。** 动态侧（HIVE-Diff 单参考 HDR 时间扩展、DynaCell 3D 时间序列虚拟染色评估）强调**时间维度上的监督稀缺**——前者靠合成数据 + 教师-学生蒸馏迁移到真实事件域，后者暴露体积时序虚拟染色缺乏统一评测的问题。静态侧（GPU-Native、OctreeSplat、Neural-Color-Fields-3DGS）则聚焦**实时性、几何细节与伪影可控**，路线从 TSDF 全 GPU 常驻到前馈高斯再到连续颜色场约束，呈现“工程管线优化”与“表示学习正则化”并进。
+- **3D/4D 重建方向**：传统多视图几何与神经表示的分工在变化。Visibility-Aware Reference Generation 仍以 SfM 与前馈模型为被评测对象，用 LiDAR 生成参考；Mamba3R 在预训练循环模型上做状态-记忆适配以控制长序列误差累积；CoReMatch 在匹配层用连续坐标细化替代离散网格。可以看到**几何精度问题正从“前端匹配/后端优化”转向“状态容量管理与连续表示”**。
 
-- **神经场景表示：约束设计比表征形式更受关注。** 同日三篇 3DGS 相关工作分别从数据（GaussFlaw-80K 的像素级掩码 + 八类缺陷标签）、连续性（Lipschitz 约束神经颜色场）、空间自适应（八叉树致密化分数）三个正交维度施加约束，说明 3DGS 的表征红利趋于饱和，**约束与诊断工具**成为新的贡献点。
+- **神经场景表示方向**：3DGS 生态已形成“重建—压缩—评估”的完整链条。GSCV++ 关注编码器兼容性与低复杂度，IGSW 关注本征解耦以隔离天气编辑误差，SettleSplat 关注在线地图的瞬态/持久变化区分，EndoS3 关注实例级运动分解与语义节点分配。技术侧重点从外观拟合转向**属性解耦（反照率/辐照度、瞬态/持久、静态/动态实例）**，这是当前 3DGS 论文较一致的方法论取向。
 
-- **机器人/AR 应用：标定与交互接口成为瓶颈环节。** SyncHeC 把延迟作为可微变量联合优化（7-DoF 臂 6.5 s 运动达 0.21 cm 平移误差、2.7 ms 延迟误差）；AnchorHEC 统一腕部与固定相机；MuCHMDPoser 用一次性无标记 HMD-相机标定 + 多视角 RGB 达到 60 FPS；Interactive 3D Cutaway 用可交互剖切把 3D 定位误差从 12.92 mm 降至 4.96 mm。这些工作共同表明：**部署侧误差的主要来源正从感知模型精度转移到时空标定与可视化接口设计**。
-
-- **数据与评测缺口被显式提出。** GaussFlaw-80K（80,049 个伪影区域）、DynaCell（3 种细胞、2 种显微镜、4 种细胞器、3 种扰动）、以及 Fitness 姿态评测（TCPFormer、PoseMamba-L、MVGFormer 在 Fit3D 上统一对比），反映社区开始**为细分场景建立可复现的评测基线**，而非继续在通用 benchmark 上刷点。
+- **机器人/AR 应用方向**：Embodied 类论文普遍把 3D 表示当作策略或世界模型的内部状态，而非仅作可视化产物。Physical Diffusion Policy 与 Hybrid Particle-Voxel Dynamics 都强调**统一 3D 表示支撑多模态（视觉+触觉）与几何一致渲染**；BhopalMLS 与 MiCaDe 则分别从数据与标定两侧支撑真实部署。整体看，应用侧对“物理正确性”和“长期可靠性”的要求正在反向塑造表示与评测设计。
 
 #### 值得优先阅读的论文
 
-1. **HIVE-Diff（2611.03465）**——提出“单参考 HDR 时间扩展”这一新任务定义，且给出合成训练 + 教师-学生蒸馏应对真实 HDR-事件配对稀缺的完整方案，对事件相机 + 生成模型交叉方向有直接参考价值。
-2. **OctreeSplat（2611.02658）**——前馈 3DGS 的空间自适应原语分配是当前 3DGS 工程化的关键问题，其“冻结 VFM + 八叉树 + 随机实体体积渲染 + 可选 TTO”的组合对该方向研究者信息密度高。
-3. **SyncHeC（2611.02999）**——把时间延迟作为可微变量与相机几何联合估计，并用离线规划器平衡空间敏感性与时间激励，方法论可迁移到其他时空标定问题。
-4. **GaussFlaw（2611.02767）**——首个 3DGS 细粒度伪影数据集与八类缺陷标签，配合 GeoCritic 做几何引导多任务诊断，适合作为 3DGS 质量评估与下游细化的起点。
-5. **HeLM（2611.02660）**——显式语言记忆 + 事件触发更新直击 VLA 的马尔可夫假设缺陷，回合内成功率提升 12.8 个百分点、长时程内存少 4.5 倍，对具身智能长程任务研究者优先级高。
+1. **Visibility-Aware Reference Generation for Benchmarking Visual 3D Reconstruction in Vegetation-Rich Environments**：它提出的 LDGVS 与 HPR 尺度选择针对的是 LiDAR 累积扫描可见性误差这一常被忽视的评测污染源，且同时覆盖前馈模型与传统 SfM 的零样本比较。对任何做户外重建评测的工作都有直接方法论参考价值。
+
+2. **Phase-DGS: Phase-guided Dynamic Gaussian Splatting from Unsynchronized Multi-view Video**：未同步多视角是动态重建落地的高频障碍，用“语义相位”替代时间戳的思路具有较强迁移性，且摘要称可与多种 DGS 骨干集成，值得优先确认其相位估计的鲁棒性与失效条件。
+
+3. **Hybrid Particle-Voxel Dynamics for Multimodal 3D World Simulation**：把粒子-体素混合表示用于动作条件世界模型并联合预测触觉，是具身方向中较完整的“表示—动力学—多模态”闭环设计，适合作为理解 3D 世界模型技术栈的入口。
+
+4. **SPA-Q: Structure-Preserving Adaptive Post-Training Quantization for Monocular Depth Estimation**：低比特 PTQ 对 MDE 基础模型的部署是现实痛点，其指出的“独立量化 Q/K 破坏注意力图”与“逐层误差累积”两个问题具体且可验证，方法组件（APC + 通道级分布对齐）也较易复现比较。
+
+5. **Do Pretrained Backbones Transfer to Physical Sensors? A Systematic Study of Multimodal Initialization Across the Sensor Stack**：2.82M 图像、16 数据集、物理与模型导出模态混合的系统研究，对多传感器预训练选型有直接指导意义；其关于模态稀疏性对 MultiMAE 类方法影响的结论值得全文核对。
 
 #### 可能的研究机会
 
-- **事件/多模态融合与 3DGS 的结合**：HIVE-Diff 的事件条件扩散与 3DGS 场景表示尚未交汇，可探索“事件流驱动的高斯致密化与时间一致性约束”。
-- **标定与重建的联合优化**：SyncHeC 的可微延迟与 AnchorHEC 的 FK 约束 bundle adjustment 提示“几何标定与稠密重建共享优化变量”的路径，尤其在多相机 + 机械臂系统中。
-- **前馈 3DGS 的伪影可诊断性**：把 GaussFlaw 的八类缺陷标签作为 OctreeSplat 类前馈方法的训练信号或评估维度，形成“诊断-致密化-修正”闭环。
-- **视频世界模型与具身策略的可迁移表征**：
+- **评测侧的“参考质量”本身可被建模与优化**：Visibility-Aware Reference Generation 的 LDGVS 只解决点级可见性过滤，尚未看到对参考深度图不确定性的端到端传播建模。可将参考生成的不确定性纳入评测指标置信区间，或与 3DGS-VBench+ 这类主观基准结合，形成“参考质量—客观指标—主观感知”的联合分析。
+
+- **3DGS 压缩与质量评估的闭环**：GSCV++ 优化率失真与编解码速度，3DGS-VBench+ 提供多维度主观评分与 RR/NR 客观模型。二者之间
 
 ### interests.md 指令分析
 
@@ -132,6 +133,39 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 **Matched keywords:** dense correspondence, image matching
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Manifold Embedding of Deep Image Features for Image Matching via Neural Adjoint Maps
+- 作者：Nafie El Amrani, Moritz Heep, Florian Bernard
+- 出版日期：2026-11-03T15:42:20Z
+- 分类：主分类 Geometry Foundation Models；次分类 3D Reconstruction & Multi-view Geometry
+- 链接：摘要页 https://arxiv.org/abs/2611.05083 ；PDF https://arxiv.org/pdf/2611.05083
+
+### 一句话总结
+论文提出利用神经伴随映射与基于深度图像特征流形嵌入构建的离散 Laplace-Beltrami 算子，将函数映射框架用于图像匹配，以缓解基础模型特征最近邻匹配的噪声与正则不足问题。
+
+### 研究问题
+论文关注真实图像中相似类别不同物体实例之间的语义对应估计，尤其是稠密对应场景。摘要指出，基础模型虽推动了困难图像对应问题的解决，但相关方法往往正则化不足；例如使用基础模型特征的常见最近邻匹配常产生噪声对应，在稠密对应中尤为突出。
+
+### 核心思路/方法
+论文通过函数映射处理图像匹配。函数映射因利用高效低维线性表示的光谱形式而在 3D 形状匹配中流行，但其要求定义域（本文中为矩形图像网格）具备有信息量且非平凡的几何结构。为给图像定义有意义的流形结构，作者使用有限元中的 Galerkin 方法，基于深度图像特征的流形嵌入推导离散 Laplace-Beltrami 算子（LBO）。此外，论文利用神经伴随映射来表示非线性映射。
+
+### 主要贡献
+- 将函数映射框架引入图像匹配，并针对图像网格缺乏非平凡几何的问题，通过深度图像特征的流形嵌入定义流形结构。
+- 使用 Galerkin 有限元方法从该嵌入推导离散 Laplace-Beltrami 算子。
+- 利用神经伴随映射表示非线性映射。
+- 摘要称该方法在多个真实图像稠密对应基准上取得零样本图像对应方法的新 state of the art，并公开代码。
+
+### 局限性
+摘要未提供足够信息说明方法的具体失败情形、计算开销、对特征质量或网格结构的敏感性，也未给出实验设置、基准名称与定量结果细节。因此无法基于给定摘要可靠总结其局限性。
+
+### 阅读优先级
+中。理由：论文涉及函数映射、流形嵌入、神经伴随映射与零样本稠密图像对应，主题与几何基础模型及多视图几何相关；摘要声称达到新 SOTA 并公开代码，具有一定参考价值。但摘要未提供实验细节与局限分析，是否需要精读取决于读者对函数映射用于图像匹配这一技术路线的具体兴趣。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Estimating semantic correspondences between different object instances of similar categories in real-world images is a fundamental challenge in computer vision. While the recent progress in foundation models has significantly advanced solutions for such difficult image correspondence problems, respective methods are often insufficiently regularised. For example, common nearest-neighbour matching with foundation model features often results in noisy correspondences, which is particularly prominent when solving for dense correspondences. In this work, we tackle image matching via functional maps, which have been popularised for 3D shape matching due to their powerful spectral formalism utilising an efficient low-dimensional linear representation. However, functional maps require that domains (in our cases the rectangular image grids) are equipped with an informative and non-trivial geometry. To define a meaningful manifold structure for images, we use Galerkin's method from finite elements to derive a discrete Laplace-Beltrami operator (LBO) based on a manifold embedding of deep image features. Further, we leverage a neural adjoint map that allows to represent non-linear mappings. We demonstrate that our method sets the new state of the art among zero-shot image correspondence methods on multiple dense correspondence benchmarks of real-world images. Our code is publicly available: https://github.com/NafieAmrani/NAMI
@@ -147,6 +181,49 @@ Estimating semantic correspondences between different object instances of simila
 **Matched keywords:** VGGT, manipulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Spectrally Routed Diffusion Policy for Multi-Task Robotic Manipulation
+- 作者：Mingcong Li, Yihan Zhou, Jiayu Qu, Xueyang Guo, Yilin Mo
+- 出版日期：2026-11-03T08:09:15Z
+- 分类：主分类 Geometry Foundation Models；次分类 Embodied / Robotics / AR Applications
+- 链接：摘要页 https://arxiv.org/abs/2611.04477 ；PDF https://arxiv.org/pdf/2611.04477
+
+### 一句话总结
+论文提出 SR-DP，通过增强多任务共享空间下的视觉条件判别性，并用谱路由分解去噪器线性层，缓解多任务联合训练中的梯度破坏性干扰，从而缩小多任务扩散策略与单任务专家之间的差距。
+
+### 研究问题
+摘要指出，基于扩散的策略在单任务机器人操作上表现较强，但单个模型在多个任务上联合训练时，持续落后于用相同示范训练的单任务专家。作者聚焦两个挑战：一是扩散策略常用的卷积编码器产生的视觉条件判别性不足；二是来自不兼容动作模式的梯度会沿相同方向更新共享去噪器的稠密参数，从而在联合训练中造成破坏性干扰。
+
+### 核心思路/方法
+摘要给出的方法包含两部分：
+1. 视觉条件构建：使用冻结的 VGGT 编码器，并配合空间压缩适配器，生成紧凑的多尺度语义-几何 token，为共享工作空间中的任务提供更具任务判别性的视觉条件。
+2. 去噪器参数组织：先以标准扩散策略训练去噪器，再对选定线性层做 SVD 分解，得到由正交秩一专家组成的冻结基，并通过谱路由与 Householder 输入旋转进行适配。
+
+摘要将方法描述为两阶段流程：Stage 1 为标准扩散策略训练，Stage 2 为上述谱路由适配。
+
+### 主要贡献
+摘要明确提到的贡献包括：
+- 提出 SR-DP（Spectrally Routed Diffusion Policy），同时针对视觉条件判别性不足和联合训练中稠密参数更新的破坏性干扰问题。
+- 使用冻结 VGGT 编码器与空间压缩适配器生成多尺度语义-几何 token，以改善共享工作空间多任务场景下的视觉条件。
+- 通过 SVD 将选定线性层分解为冻结的正交秩一专家基，并结合谱路由与 Householder 输入旋转进行适配。
+- 在六个 RoboTwin 任务上，SR-DP 平均成功率为 68.4%，比多任务 VO-DP 高 21.8 个百分点，比最强单任务基线高 3.8 个百分点。
+- 在四个真实世界双臂任务上，Stage 2 平均成功率为 43.0%，比 Stage 1 提升 19.0 个百分点。
+
+### 局限性
+- 摘要未提供足够信息说明计算开销、训练时间、参数量或推理效率。
+- 摘要未提供足够信息说明六个 RoboTwin 任务与四个真实双臂任务的具体任务定义、数据规模与评估协议细节。
+- 摘要未提供足够信息说明消融实验的完整设置，例如 VGGT 编码器、空间压缩适配器、SVD 秩一专家、谱路由与 Householder 旋转各自的独立贡献。
+- 摘要未提供足够信息说明方法在更多任务数量、不同工作空间或非双臂平台上的泛化表现。
+- 摘要未提供足够信息说明失败案例、鲁棒性测试与安全性评估。
+
+### 阅读优先级
+中。理由：论文针对多任务扩散策略中视觉条件判别性与梯度干扰两个明确问题，给出了结构化的方法组合，并在仿真与真实双臂任务上报告了成功率提升；如果关注多任务机器人操作、扩散策略或参数高效适配，具有较高参考价值。但摘要未展开消融、效率与泛化细节，是否值得深入精读需结合全文实验部分进一步判断。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Diffusion-based policies have achieved strong performance on single-task robotic manipulation. However, a single model trained jointly on multiple tasks consistently underperforms the per-task specialists trained on the same demonstrations. We focus on two challenges. First, the convolutional encoders commonly used in diffusion-based policies produce visual conditions that are not discriminative enough. Second, gradients from incompatible action modes update the shared denoiser's dense parameters along the same directions, causing destructive interference during joint training. To address both, we propose SR-DP (Spectrally Routed Diffusion Policy). A frozen VGGT encoder with a spatial-compression adapter produces compact multi-scale semantic-geometric tokens, a task-discriminative visual condition for tasks that share a workspace. We first train the denoiser as a standard diffusion policy, then decompose selected linear layers by SVD into a frozen basis of orthogonal rank-one experts, adapted through spectral routing and Householder input rotations. On six RoboTwin tasks, SR-DP averages a 68.4% success rate, surpassing multi-task VO-DP by 21.8 points and the strongest per-task baseline by 3.8 points. On four real-world bimanual tasks, Stage 2 reaches a 43.0% average success rate and improves over Stage 1 by 19.0 points.
@@ -160,6 +237,48 @@ Diffusion-based policies have achieved strong performance on single-task robotic
 **Primary category:** Geometry Foundation Models
 **Secondary categories:** 3D Reconstruction & Multi-view Geometry
 **Matched keywords:** MASt3R, motion trajectories, pose estimation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：DUNEDepth: Bronchoscopic Depth and Pose Estimation via Hybrid Adaptation of a 3D-Vision Foundation Model
+- 作者：Qi Chang, Austin Kao, Ange Lou, William E. Higgins
+- 出版日期：2026-11-02T22:13:02Z
+- 分类：primary: Geometry Foundation Models；secondary: 3D Reconstruction & Multi-view Geometry
+- 链接：[摘要](https://arxiv.org/abs/2611.04025) / [PDF](https://arxiv.org/pdf/2611.04025)
+
+### 一句话总结
+DUNEDepth 通过混合适配 3D 视觉基础模型，从支气管镜视频中估计深度与相机运动，以支持将检查视频与术前胸部 CT 建立关联。
+
+### 研究问题
+论文关注支气管镜导航与计算机辅助诊断在早期肺癌检测中的应用背景。其关键问题是：如何从患者的支气管镜气道检查视频中准确推导支气管镜深度和相机运动，并将该视频与术前 3D 胸部 CT 扫描有效关联。摘要明确指出，从检查视频中推导这些关联仍是一个开放问题。
+
+### 核心思路/方法
+论文提出 DUNEDepth，一种混合架构，包含：
+- 共享的 DUNE ViT 编码器；
+- 孪生 MASt3R 交叉注意力解码器结构；
+- 包含 MASt3R 与 Reloc3r 模型元素的预测头。
+
+为适配该应用，论文采用集成的混合“合成监督/自监督”训练策略，训练数据来源包括支气管镜视频和由 CT 衍生的虚拟支气管镜视图。摘要还说明，该方法建立在近期提出的 3D 视觉基础模型之上。
+
+### 主要贡献
+- 提出 DUNEDepth 混合架构，用于支气管镜场景下的深度与相机运动估计。
+- 将 DUNE ViT 编码器、孪生 MASt3R 交叉注意力解码器以及融合 MASt3R 与 Reloc3r 元素的预测头结合。
+- 提出合成监督与自监督结合的混合训练策略，并利用支气管镜视频与 CT 衍生虚拟支气管镜视图进行微调。
+- 摘要称，基于支气管镜视频序列的实验表明，DUNEDepth 在深度信息和相机运动轨迹推导上比此前提出的自监督方法更准确。
+
+### 局限性
+- 摘要未提供足够信息说明具体数据集规模、患者数量、数据采集条件或外部验证情况。
+- 摘要未提供足够信息说明定量评价指标、误差定义、统计显著性或以 CT 关联为最终目标的端到端评估结果。
+- 摘要未提供足够信息说明方法在不同支气管镜设备、不同气道区域、不同视频质量或真实临床部署条件下的鲁棒性。
+- 摘要未提供足够信息说明合成监督与自监督各部分的具体权重、消融结果及失败案例。
+- 摘要未提供足够信息说明计算开销、实时性或在临床工作流中的可用性。
+
+### 阅读优先级
+中。理由：该论文聚焦支气管镜视频中的深度与相机运动估计，并借助 3D 视觉基础模型进行混合适配，问题定义和架构思路与支气管镜导航、CT-视频关联及多视图几何相关。若读者关注内窥镜视觉、基础模型迁移或医学场景中的深度/位姿估计，具有参考价值；但摘要未给出充分的实验细节、临床验证规模和实时性信息，是否值得深入阅读取决于对支气管镜导航与 3D 基础模型适配方向的兴趣。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -291,6 +410,42 @@ We present PhysInsert, a framework for physically plausible reference-based obje
 **Matched keywords:** dynamic Gaussian, scene reconstruction, Gaussian Splatting, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Phase-DGS: Phase-guided Dynamic Gaussian Splatting from Unsynchronized Multi-view Video
+- 作者：Hosung Jeon, Jun Young Jeong, Sangwoon Kwak, Joonsoo Kim, Sangmin Kim, Jaesik Park, Won-Sik Cheong, Hyon-Gon Choo
+- 出版日期：2026-11-03T10:51:33Z
+- 分类：主分类 Dynamic / 4D Reconstruction；次分类 Neural Scene Representations & Rendering
+- 链接：[摘要](https://arxiv.org/abs/2611.04666) / [PDF](https://arxiv.org/pdf/2611.04666)
+
+### 一句话总结
+论文提出 Phase-DGS，用“语义相位”替代传统时间戳，为未同步多视角视频中的每一帧建立跨相机的时空对应关系，从而支持动态高斯泼溅重建。
+
+### 研究问题
+动态高斯泼溅（DGS）的时空场景重建通常假设所有相机在时间上完美同步，但这一假设在实践中很少成立。工业级同步依赖昂贵的专用硬件和复杂设置；音频对齐、几何匹配、位姿跟踪等数据驱动替代方案又受限于特定环境或场景假设。论文要解决的问题是：在多相机时间不同步的情况下，如何建立帧间的时空对应关系并完成动态场景重建。
+
+### 核心思路/方法
+Phase-DGS 不再依赖传统时间戳，而是为每一帧引入一个“语义相位”，表示该帧在底层运动周期中所处的固有状态。这样，只要不同相机拍到的是同一运动状态，这些帧就共享同一相位，与由哪台相机拍摄、何时拍摄无关，从而自然建立未同步相机之间的时空对应。摘要还指出，该方法可与现有 DGS 骨干（包括 RealTime-4DGS 和 FreeTimeGS）无缝集成。
+
+### 主要贡献
+- 提出以语义相位替代时间戳的 Phase-DGS 框架，用于未同步多视角视频的动态场景重建。
+- 利用同一运动状态共享相位的性质，在未同步相机之间建立时空对应关系。
+- 在时间偏移、丢帧和相机冻结条件下进行验证，相较基线最高取得 +8.5 dB 的 PSNR 提升。
+- 可与 RealTime-4DGS、FreeTimeGS 等现有 DGS 骨干集成。
+
+### 局限性
+- 摘要未提供足够信息说明“语义相位”的具体估计方式、是否需要额外监督或先验。
+- 摘要未提供足够信息说明方法对非周期性运动、复杂多物体运动或大幅遮挡等情形的适用性。
+- 摘要未提供足够信息说明实验数据集规模、相机数量、基线配置及 +8.5 dB 提升的具体实验条件。
+- 摘要未提供足够信息说明计算开销、实时性与工程部署成本。
+
+### 阅读优先级
+中。理由：论文聚焦动态高斯泼溅中一个实际且关键的问题——多相机时间不同步，并提出用语义相位建立跨相机对应的思路，且报告了较明显的 PSNR 提升并支持与现有骨干集成；但摘要未给出相位估计细节、适用边界和完整实验条件，需阅读全文后才能判断其通用性与可靠性。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Spatiotemporal scene reconstruction with Dynamic Gaussian Splatting (DGS) fundamentally depends on perfect temporal synchronization across all cameras, an assumption rarely achievable in practice. Industry-standard synchronization requires expensive specialized hardware and complex setup, while data-driven alternatives including audio-based alignment, geometry matching, and pose tracking remain limited by restrictive environmental or scene-specific assumptions. To overcome these limitations, we propose Phase-DGS, a framework that replaces conventional timestamps with a semantic phase representing each frame's inherent state within the underlying motion cycle. Frames capturing the same motion state share the same phase regardless of which camera records them or when, naturally establishing spatiotemporal correspondence across unsynchronized cameras. We validate Phase-DGS under temporal offsets, frame drops, and camera freezes, achieving up to +8.5 dB PSNR improvement over baselines while enabling seamless integration with existing DGS backbones including RealTime-4DGS and FreeTimeGS.
@@ -306,6 +461,55 @@ Spatiotemporal scene reconstruction with Dynamic Gaussian Splatting (DGS) fundam
 **Matched keywords:** dynamic Gaussian, 4D Gaussian, scene reconstruction, Gaussian Splatting, splatting, autonomous driving, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：IGSW: Multi-Weather Urban Scene Reconstruction with Intrinsic-Decoupled Gaussian Splatting
+- 作者：Zhongquan Wang, Long Cao, Peijia Xie, Senlei Ma, Jie Li, Guofa Li
+- 出版日期：2026-11-03T06:02:54Z
+- 分类：Dynamic / 4D Reconstruction；3D Reconstruction & Multi-view Geometry；Neural Scene Representations & Rendering；Embodied / Robotics / AR Applications
+- 链接：摘要页 https://arxiv.org/abs/2611.04374 ；PDF https://arxiv.org/pdf/2611.04374 ；项目页 https://akaxi6.github.io/IGSW/
+
+### 一句话总结
+IGSW 是一个两阶段框架，结合本征解耦的 4D 高斯场景建模与结构保持的天气精炼，用于多天气城市场景重建，以缓解天气编辑图像中的结构失真向 4D 重建传播的问题。
+
+### 研究问题
+论文关注高保真 4D 场景的多天气编辑与重建，以支持自动驾驶的端到端训练和闭环仿真。摘要指出，将生成式图像编辑与动态高斯表示结合可实现多天气场景重建，但天气编辑图像常包含结构失真；若直接拟合其外观，可能把教师图像中的错误传播到重建的 4D 场景中，损害原始场景结构和时间连续性。因此，核心问题是：在多天气编辑条件下，如何既获得目标天气外观，又保持场景结构与时间连续性。
+
+### 核心思路/方法
+IGSW 采用两阶段框架：
+
+1. **Stage I：本征解耦的 4D 高斯场景建模**
+   - 将背景高斯外观分解为：
+     - 天气共享的反照率（albedo）与法线（normals）；
+     - 天气特定的辐照度（irradiance）与残差（residuals）。
+   - 使用基于扩散的图像编辑模型生成天气教师图像，并使用基于扩散的逆渲染器估计本征图。
+   - 这些教师图像与本征图提供特征级软监督，用于稳定结构和光照变化。
+
+2. **Stage II：结构保持的天气精炼**
+   - 引入结构保持门控（structure-preservation gate），结合语义冲突与跨天气本征差异，抑制不可靠的教师区域。
+   - 使用逐高斯天气传输变量和目标天气分支，在本征解耦场景上增强期望的天气外观。
+
+### 主要贡献
+- 提出 IGSW 两阶段框架，将本征解耦的 4D 高斯场景建模与结构保持的天气精炼结合。
+- 在 Stage I 中，将背景高斯外观解耦为天气共享的反照率与法线，以及天气特定的辐照度与残差，并利用天气教师图像和本征图进行特征级软监督。
+- 在 Stage II 中，提出结构保持门控，结合语义冲突与跨天气本征差异抑制不可靠教师区域；并通过逐高斯天气传输变量和目标天气分支增强目标天气外观。
+- 摘要称在 nuScenes 和 Waymo 上，IGSW 在对比方法中取得最高的内容相似度和语义一致性，以及最低的时间误差，同时保留明显的天气相关光照与氛围。
+- 提供项目页面。
+
+### 局限性
+- 摘要未提供足够信息说明方法在不同天气类型、极端天气或复杂动态场景下的具体适用范围与失败情况。
+- 摘要未提供足够信息说明两阶段框架的计算开销、训练时间、推理效率或实时性。
+- 摘要未提供足够信息说明对扩散式天气教师图像编辑模型和扩散式逆渲染器的依赖程度及其误差影响。
+- 摘要未提供足够信息给出 nuScenes 与 Waymo 上的完整定量指标、消融实验细节和基线设置。
+- 摘要未提供足够信息说明结构保持门控中语义冲突与跨天气本征差异的具体度量方式及阈值敏感性。
+
+### 阅读优先级
+**高**。理由：该论文直接面向动态/4D 重建与多天气城市场景重建，摘要明确涉及自动驾驶仿真应用，并提出两阶段方法处理天气编辑图像结构失真传播这一关键问题；若读者关注 4D 高斯、多天气场景编辑、结构保持监督或自动驾驶闭环仿真，具有较高阅读价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 High-fidelity weather editing of 4D scenes can support end-to-end training and closed-loop simulation for autonomous driving. Combining generative image editing with dynamic Gaussian representations enables multi-weather scene reconstruction, but weather-edited images often contain structural distortions. Directly fitting their appearance may propagate errors from teacher images into the reconstructed 4D scene, compromising the original scene structure and temporal continuity. To address these challenges, we propose IGSW, a two-stage framework that combines intrinsic-decoupled 4D Gaussian scene modeling with structure-preserving weather refinement. In Stage I, background Gaussian appearance is decomposed into weather-shared albedo and normals and weather-specific irradiance and residuals. Weather teacher images generated by a diffusion-based image editing model and intrinsic maps estimated by a diffusion-based inverse renderer provide feature-level soft supervision for stable structure and illumination changes. In Stage II, a structure-preservation gate combines semantic conflicts with cross-weather intrinsic discrepancies to suppress unreliable teacher regions. Per-Gaussian weather transport variables and target-weather branches then strengthen the desired weather appearance over the intrinsic-decoupled scene. Experiments on nuScenes and Waymo show that IGSW achieves the highest content similarity and semantic consistency and the lowest temporal error among the compared methods, while retaining pronounced weather-dependent illumination and atmosphere. The project page is available at https://akaxi6.github.io/IGSW/ .
@@ -319,6 +523,45 @@ High-fidelity weather editing of 4D scenes can support end-to-end training and c
 **Primary category:** Dynamic / 4D Reconstruction
 **Secondary categories:** None
 **Matched keywords:** 4D reconstruction, dynamic 4D
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：FlowRig: Unified Skeleton Generation for 3D and 4D Meshes via Flow Matching
+- 作者：Fengzhi Guo, Nate Morrill, Shiqi Li, Cheng Zhang
+- 出版日期：2026-11-02T18:39:17Z
+- 分类：Dynamic / 4D Reconstruction
+- 链接：[摘要](https://arxiv.org/abs/2611.03775)｜[PDF](https://arxiv.org/pdf/2611.03775)
+
+### 一句话总结
+提出一个基于 flow matching 的统一骨架生成框架，旨在用单次前馈同时处理静态 3D 网格和动态 4D 网格的自动绑定问题（摘要中框架名称表述与标题不一致，详见局限性）。
+
+### 研究问题
+自动骨架绑定对静态 3D 网格动画和动态 4D 网格动画都是基础任务，但现有方法缺乏统一的前馈解决方案：静态 3D 绑定方法质量较高，却对骨骼数量控制有限，逐帧套用到动态网格上时会出现时序不稳定；已有 4D 方法通常依赖昂贵的逐序列优化。
+
+### 核心思路/方法
+- 构建模板无关、数据高效的统一 3D/4D 骨架生成框架，基于 flow matching。
+- 对整段序列做单次前馈，生成时序对齐的骨架，同时可直接处理单网格 3D 绑定。
+- 支持显式骨骼数量控制、用于候选选择的不确定性估计，以及基于掩码的插值、预测与回溯。
+- 针对配对 4D 绑定数据有限的问题，采用课程式训练：先从大规模 3D 绑定数据初始化，再适配中等规模 4D 网格-骨架数据。
+
+### 主要贡献
+- 提出面向 3D 与 4D 网格的统一前馈骨架生成框架，避免逐帧绑定带来的时序不稳定和逐序列优化开销。
+- 引入骨骼数量显式控制、不确定性估计与掩码式插值/预测/回溯等能力（具体实现细节摘要未提供足够信息）。
+- 设计从 3D 数据到 4D 数据的课程式训练策略，以缓解配对 4D 绑定数据不足。
+- 摘要称实验在静态 3D 绑定（骨骼复杂度可控）以及 4D 重建与预测（高质量、时序一致）上取得较强表现。
+
+### 局限性
+- 摘要中框架名称写作 “MoTWorld”，与标题 “FlowRig” 不一致，摘要未提供足够信息说明二者关系。
+- 摘要未提供具体数据集、评价指标、定量结果、对比基线、运行时间或失败案例，相关实验细节摘要未提供足够信息。
+- 摘要未说明骨骼数量控制的实现方式、不确定性估计的校准情况，以及掩码式预测/回溯的适用边界，摘要未提供足够信息。
+- 课程式训练对 3D 与 4D 数据分布差异的敏感性与泛化能力，摘要未提供足够信息。
+
+### 阅读优先级
+中。理由：该工作针对 3D/4D 统一自动绑定的明确空白，提出单次前馈、骨骼数可控与时序一致的思路，问题定位清晰且具应用价值；但当前仅有摘要，缺少定量实验与实现细节，且存在框架命名不一致，需阅读全文后再评估其实际效果与可复现性。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -554,6 +797,47 @@ Recent progress in visual scene generation has extended beyond static 3D scenes 
 **Matched keywords:** 3D reconstruction, structure from motion, SfM, depth estimation, surface reconstruction, localization
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Visibility-Aware Reference Generation for Benchmarking Visual 3D Reconstruction in Vegetation-Rich Environments
+- 作者：Zhipeng Zhong, Matthew Coombes, Cunjia Liu
+- 出版日期：2026-11-03T18:54:52Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：[abstract_url](https://arxiv.org/abs/2611.05361) / [pdf_url](https://arxiv.org/pdf/2611.05361)
+
+### 一句话总结
+论文提出一种复用现有多传感器定位数据集中相机图像、LiDAR 扫描和参考位姿的 LiDAR 参考生成流程，并引入 LDGVS 进行可见性过滤与 HPR 尺度选择，用于在植被密集户外环境中评测视觉深度估计与 3D 重建方法。
+
+### 研究问题
+植被密集的户外环境中，视觉 3D 重建与深度估计的可靠评测受限于几何真值数据稀缺以及完整扫描测量的成本。论文关注如何生成可用于评测的参考数据，并比较前馈视觉几何模型、传统 SfM 方法在该场景下的零样本表现。
+
+### 核心思路/方法
+- 构建基于 LiDAR 的参考生成流程，复用现有多传感器定位数据集中的相机图像、LiDAR 扫描和参考位姿，生成逐视角深度图与可见参考点云。
+- 针对累积 LiDAR 扫描中的可见性误差，提出 LargeDepth-Gap Visibility Score（LDGVS），用于逐点可见性过滤以及 Hidden Point Removal（HPR）中的自动尺度选择。
+- 在 TartanAirV2 与 TartanGround 上，将 HPR 与 LDGVS 过滤组合与 Poisson 表面重建进行比较。
+- 将流程应用于 BotanicGarden 数据集，系统比较深度估计与 3D 重建方法。
+
+### 主要贡献
+- 提出面向植被密集户外环境的 LiDAR 参考生成流程，用于评测前馈视觉几何模型与传统 SfM 方法的零样本性能。
+- 引入 LDGVS 以处理累积 LiDAR 扫描中的可见性误差，并用于逐点可见性过滤和 HPR 自动尺度选择。
+- 摘要报告：在 TartanAirV2 和 TartanGround 上，与适合完整扫描调查的 Poisson 表面重建相比，HPR 与 LDGVS 过滤组合在相近绝对相对误差下保留约三倍点密度。
+- 在 BotanicGarden 上应用该流程进行比较，指出前馈方法能高效产生稠密深度预测，但其 3D 重建可能包含重复结构；传统 SfM 通常产生更连贯的几何，但重建仍稀疏且在困难植被场景中更易失败。
+- 摘要称将发布基准工具包和数据集。
+
+### 局限性
+- 摘要未提供足够信息说明 LDGVS 的具体定义、阈值设置或参数敏感性。
+- 摘要未提供足够信息说明实验的完整定量指标、误差分布和统计显著性。
+- 摘要未提供足够信息说明 BotanicGarden 比较中各类方法的具体配置与训练/零样本设置细节。
+- 摘要未提供足够信息说明方法在更广泛植被类型、传感器配置或天气条件下的泛化能力。
+- 摘要未提供足够信息说明所发布工具包与数据集的具体范围、许可和使用方式。
+
+### 阅读优先级
+中。理由：论文主题聚焦植被密集环境下的 3D 重建评测与参考数据生成，方法点（LDGVS、HPR 尺度选择）和基准比较具有明确相关性；但摘要仅给出有限实验结论，若研究兴趣集中在可见性过滤、LiDAR 参考生成或植被场景基准评测，则值得进一步阅读全文。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Reliable evaluation of visual 3D reconstruction and depth estimation in vegetation-rich outdoor environments is limited by the scarcity of geometric ground-truth data and the cost of complete scanner surveys. We present a LiDARbased reference-generation pipeline for evaluating the zero-shot performance of feed-forward visual-geometry models alongside conventional structure-from-motion (SfM) methods. The pipeline reuses camera images, LiDAR scans, and reference poses from existing multi-sensor localization datasets to generate per-view depth maps and visible reference point clouds. To address visibility errors in accumulated LiDAR scans, we introduce the LargeDepth-Gap Visibility Score (LDGVS) for point-wise visibility filtering and automatic scale selection in Hidden Point Removal(HPR). Experiments on TartanAirV2 and TartanGround show that, compared with Poisson surface reconstruction, which is an approach suited to completed scan surveys, the combined HPR and LDGVS filtering retains approximately three times the point density at comparable absolute relative error. We also apply the pipeline to the BotanicGarden dataset to systematically compare depth estimation and 3D reconstruction methods. Feedforward methods produce dense depth predictions efficiently, but their 3D reconstructions can contain duplicated structures. Conventional SfM generally produces more coherent geometry, but its reconstructions remain sparse and more prone to failure in challenging vegetated scenes. The benchmark toolkit and datasets will be released.
@@ -567,6 +851,46 @@ Reliable evaluation of visual 3D reconstruction and depth estimation in vegetati
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** structure from motion, feature matching, localization
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Sparse Anchors for Visual Multi-Session Registration in Changing Environments
+- 作者：Yunus Talha Erzurumlu, Niklas Trekel, Saurabh Gupta, Nico Koltermann, Olga Vysotska, Jens Behley, Louis Wiesmann, Cyrill Stachniss
+- 出版日期：2026-11-03T15:43:03Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：[摘要](https://arxiv.org/abs/2611.05084) / [PDF](https://arxiv.org/pdf/2611.05084)
+
+### 一句话总结
+该论文提出利用稀疏但可靠的绝对位姿锚点，并结合会话内相对位姿约束，将新采集的查询会话轨迹配准到已有参考地图，以应对环境显著变化下的视觉多会话定位问题。
+
+### 研究问题
+论文关注变化环境中的视觉多会话配准：机器人重复监测同一环境时，需要在多次访问之间实现定位，即使环境发生变化。摘要指出，环境变化可能大幅减少持续可见的视觉内容，重复结构也可能导致错误的跨会话对应。在视觉和结构显著变化下，跨会话定位可能只对轨迹的一部分可行。因此，核心问题是如何在仅有部分可靠跨会话对应的情况下，仍将完整查询轨迹配准到参考地图。
+
+### 核心思路/方法
+论文依赖一组稀疏的可靠绝对位姿约束，并将其与会话内相对位姿信息结合，以完成完整轨迹到参考地图的配准。具体流程包括：
+1. 通过视觉位置识别、局部特征匹配和几何验证，估计绝对对齐假设；
+2. 使用序列一致性拒绝与共同查询—参考对齐不一致的假设，保留剩余位姿作为绝对锚点；
+3. 通过针对高斯特征场的特征度量对齐对锚点进行细化；
+4. 将细化后的锚点与会话内相对位姿约束结合，在鲁棒位姿图优化中完成轨迹配准。
+
+### 主要贡献
+- 提出一种面向变化环境的视觉多会话配准方法，使用稀疏可靠绝对锚点结合会话内相对位姿约束来配准完整轨迹。
+- 设计了两阶段策略：先通过视觉位置识别、局部特征匹配、几何验证和序列一致性筛选获得绝对锚点，再通过高斯特征场上的特征度量对齐细化锚点。
+- 在 HILTI26 建筑工地数据集的 15 个跨会话实验中评估，报告在 1 米内达到 94.4% 召回率、5 米内达到 100.0% 召回率，并称优于独立图像定位和独立重建 Structure-from-Motion 几何的直接配准。
+
+### 局限性
+- 摘要未提供足够信息说明方法在实时性、计算开销或大规模地图扩展方面的表现。
+- 摘要未提供足够信息说明方法对锚点数量、序列一致性阈值、特征场表示等关键参数的敏感性。
+- 摘要未提供足够信息说明在完全无可靠跨会话对应或极端场景变化下的失败模式。
+- 摘要未提供足够信息说明除 HILTI26 之外其他数据集上的泛化表现。
+- 摘要未提供足够信息说明与更多基线方法的全面比较细节。
+
+### 阅读优先级
+高。理由：该论文直接针对变化环境中的多会话视觉配准这一具有实际机器人监测价值的问题，方法思路清晰，且摘要报告了在挑战性建筑工地数据集上的定量结果；若读者关注 3D 重建、多视图几何、跨会话定位或位姿图优化，该文具有较高参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -584,6 +908,51 @@ Repeated robotic monitoring requires localization across visits to the same envi
 **Matched keywords:** depth estimation, monocular depth
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：SPA-Q: Structure-Preserving Adaptive Post-Training Quantization for Monocular Depth Estimation
+- 作者：Jaemin Choi, Jincheol Yang, Nahyun Lim, Yun-Seong Jeong, Matti Zinke, Hyunwoo Yu, Suk-Ju Kang
+- 出版日期：2026-11-03T08:20:52Z
+- 分类：主分类为 3D Reconstruction & Multi-view Geometry；无二级分类信息
+- 链接：摘要页 https://arxiv.org/abs/2611.04491 ；PDF https://arxiv.org/pdf/2611.04491
+
+### 一句话总结
+论文提出面向单目深度估计（MDE）的结构保持自适应训练后量化框架 SPA-Q，用注意力保持校准与通道级分布对齐缓解 Depth Anything 类模型在低比特 PTQ 下的注意力结构破坏与逐层误差累积问题。
+
+### 研究问题
+摘要指出，以 Depth Anything 为代表的 MDE 基础模型虽泛化强，但 Transformer 架构带来高计算与内存开销，部署困难；PTQ 是实用压缩方案，但低比特 PTQ 对 MDE 仍具挑战。作者将 PTQ 应用于 Depth Anything 时识别出两个关键问题：
+1. 分别最小化 query 与 key 投影的量化误差，无法保持二者交互形成的注意力图；
+2. 量化误差跨层累积，导致中间特征分布发生偏移。
+
+### 核心思路/方法
+SPA-Q 是一个结构保持的自适应 PTQ 框架，包含两个主要组件：
+1. **Attention-Preserving Calibration (APC，注意力保持校准）**：通过匹配全精度注意力分布来确定 query 与 key 的量化参数，而非独立最小化二者各自的量化误差。
+2. **Channel-Wise Distribution Alignment (CWDA，通道级分布对齐）**：学习通道级仿射变换，以缓解量化引起的分布偏移；训练完成后，所学参数被吸收进权重。
+
+摘要未提供 APC 与 CWDA 的具体实现细节、校准数据规模、训练流程或超参数设置。
+
+### 主要贡献
+- 识别并形式化了将 PTQ 用于 Depth Anything 时的两个关键问题：注意力图未被保持、逐层量化误差累积导致中间特征分布偏移。
+- 提出 SPA-Q 框架，以 APC 保持注意力结构，以 CWDA 对齐通道分布，并将 CWDA 学习参数在训练后吸收进权重。
+- 实验结果显示，在 4-bit 量化下，SPA-Q 持续优于现有 PTQ 方法；在 NYUv2 与 KITTI 数据集上平均取得 AbsRel 降低 25.9%、δ₁ 提升 17.3%。
+
+摘要未提供具体对比方法清单、模型规模、硬件平台或推理加速数据。
+
+### 局限性
+- 摘要仅报告 4-bit 量化下的结果，未说明 2-bit、3-bit、8-bit 或混合精度设置的表现。
+- 摘要未提供 APC 与 CWDA 的计算开销、校准时间、额外内存占用，也未给出参数吸收后的实际部署收益数据。
+- 摘要未说明方法对其他 MDE 架构（非 Depth Anything 类 Transformer）的适用性。
+- 摘要未提供消融实验细节、失败案例或对极端场景的鲁棒性分析。
+- 摘要未提供训练/校准数据规模、是否依赖标注数据等实现条件。
+- 以上均需注意：摘要未提供足够信息。
+
+### 阅读优先级
+**中**。理由：该论文聚焦 MDE 基础模型的低比特 PTQ 部署，问题定位明确（注意力结构保持与跨层分布偏移），方法组件清晰，且摘要给出 NYUv2/KITTI 上 4-bit 的量化指标提升，对模型压缩与高效部署方向具有参考价值。但摘要未披露实现细节、开销与更广泛比特设置下的表现，若读者关注具体工程落地或非 Depth Anything 架构的迁移，需进一步阅读全文核实。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Monocular depth estimation (MDE) has advanced rapidly with the emergence of foundation models such as Depth Anything. Their transformer-based architectures provide strong generalization across diverse scenes and domains, but also incur high computational and memory cost, making efficient deployment challenging. Post-Training Quantization (PTQ) provides an efficient and practical solution for model compression, yet low-bit PTQ remains challenging for MDE models. When applying PTQ to Depth Anything, we identify two key challenges: (i) independently minimizing the quantization error of the query and key projections fails to preserve the attention maps induced by their interaction, and (ii) quantization errors accumulate across layers, resulting in intermediate feature distribution shifts. To address these issues, we propose SPA-Q, a Structure-Preserving Adaptive PTQ framework for MDE, consisting of two main components. First, Attention-Preserving Calibration (APC) determines query and key quantization parameters by matching the full-precision attention distribution. Second, Channel-Wise Distribution Alignment (CWDA) learns channel-wise affine transformations to mitigate quantization-induced distribution shifts, and the learned parameters are absorbed into the weights after training. Experimental results show that SPA-Q consistently outperforms existing PTQ methods under 4-bit quantization, achieving an average 25.9% reduction in AbsRel and a 17.3% improvement in $δ_1$ across NYUv2 and KITTI datasets.
@@ -597,6 +966,48 @@ Monocular depth estimation (MDE) has advanced rapidly with the emergence of foun
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** 3D reconstruction
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Mamba3R: Fixed-Capacity Selective State Memory for Long-Sequence 3D Reconstruction
+- 作者：Zhenxiang Xiong, Tianchen Deng, Nailin Wang, Lei Zhao, Guole Shen, Weidong Che
+- 出版日期：2026-11-03T03:03:35Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：[摘要](https://arxiv.org/abs/2611.04221) / [PDF](https://arxiv.org/pdf/2611.04221)
+
+### 一句话总结
+Mamba3R 提出一种容量固定的选择性状态记忆适配器，在不更新预训练循环模型主干与任务头的前提下，增强长序列流式三维重建的轨迹与几何精度。
+
+### 研究问题
+流式三维重建需要在固定 GPU 预算下对长输入保持几何质量。预训练循环模型虽提供有界状态，但冻结主干会固定其已学习的状态-观测交互，缺少可训练的适配路径。论文关注如何在有限且不变的记忆容量下改善长序列重建表现。
+
+### 核心思路/方法
+- 设计联合的状态-记忆适配器，提供可训练适配路径，同时不更新主干或任务头。
+- 采用选择性状态空间混合器，联合变换原生状态特征与固定容量辅助记忆。
+- 通过显式读、写路径跨帧传递信息，并用分解的反馈路径调节新增记忆向模型反馈的内容。
+- 仅训练 1.28 百万适配器参数；在共享周期重置协议下与循环基线比较。
+- 摘要提到进行匹配比较以支持混合算子选择和辅助记忆跨帧传递的有效性。
+
+### 主要贡献
+- 提出 Mamba3R 状态-记忆适配器，在冻结主干与任务头条件下实现可训练适配。
+- 在公共室内、室外数据集及机器人记录轨迹上，相比循环基线降低轨迹误差，并提升累积表面与深度精度，摘要称某一指标最高提升 40%。
+- 匹配比较支持混合算子的选择以及辅助记忆跨帧携带的作用。
+- 报告分配内存保持不变；帧数从一千增至两千时，吞吐变化至多 1.4%。
+- 离线回放记录轨迹时，RTX 4060 在 5.1 GiB 内使用同一检查点平均 11.7 FPS，平均吞吐覆盖 10 Hz 传感器速率。
+
+### 局限性
+- 摘要未提供足够信息说明方法在非室内/室外场景或更极端长序列下的泛化表现。
+- 摘要未提供足够信息说明 1.28M 适配器参数之外的计算开销细节及训练成本。
+- 摘要未提供足够信息说明与更多类型基线（如非循环方法）的系统比较。
+- 摘要未提供足够信息说明失败案例、误差分布及对传感器噪声的鲁棒性。
+- 摘要未提供足够信息说明“共享周期重置协议”的具体设定及其对结论的影响范围。
+
+### 阅读优先级
+高。理由：论文直接面向固定 GPU 预算下的长序列流式三维重建，提出仅训练少量参数的适配方案，并给出轨迹、表面、深度、内存与吞吐等多方面摘要级结果；若关注长序列重建的效率与精度平衡，该工作具有较高参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -614,6 +1025,47 @@ Streaming 3D reconstruction must maintain geometric quality over long inputs wit
 **Matched keywords:** stereo depth, dense reconstruction, autonomous driving
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Do Pretrained Backbones Transfer to Physical Sensors? A Systematic Study of Multimodal Initialization Across the Sensor Stack
+- 作者：Fabio Montello, Ronja Güldenring, Lucas Mogensen Sandby, Christoffer Koo Øhrstrøm, Lazaros Nalpantidis
+- 出版日期：2026-11-02T22:29:36Z
+- 分类：主分类为 3D Reconstruction & Multi-view Geometry；二级分类：摘要未提供足够信息
+- 链接：摘要页 https://arxiv.org/abs/2611.04034；PDF https://arxiv.org/pdf/2611.04034
+
+### 一句话总结
+论文系统研究预训练骨干网络向真实物理传感器多模态场景的迁移表现，并通过构建大规模多传感器自动驾驶图像集合与改进 MultiMAE 预训练，比较域内预训练与常见现成预训练骨干在下游传感器融合任务上的效果。
+
+### 研究问题
+论文指出，多传感器计算机视觉中从预训练骨干迁移学习已成常见做法，但仍有两个开放问题：哪些预训练权重最适合迁移到多传感器设置；域内预训练能否优于现成方案。摘要还指出，MultiMAE 等方法依赖稠密、模型导出的模态，而真实物理传感器应用中，聚合多样公开数据集进行大规模预训练会天然引入模态稀疏性，因此这些方法能否稳健迁移到真实物理传感器场景尚不清楚。
+
+### 核心思路/方法
+- 构建一个多传感器自动驾驶图像集合，包含来自 16 个公开数据集的 2.82M 张图像，覆盖物理硬件模态（RGB、LWIR、NIR、Event）和模型导出模态（Stereo Depth、Segmentation）。
+- 基于 MultiMAE 方法在该集合上进行域内预训练。
+- 调整 MultiMAE 的损失公式以适应稀疏样本。
+- 研究强制编码器瓶颈对模态对齐的影响，以及针对稠密重建的额外损失（SSIM 和 FFT）的影响。
+- 在下游传感器融合任务上，系统比较常见预训练骨干（ViT、MAE、DINO、MultiMAE）。
+
+### 主要贡献
+- 构建并整理了一个大规模多传感器自动驾驶图像集合，用于域内预训练研究，规模为 2.82M 张图像、16 个公开数据集，涵盖物理硬件模态与模型导出模态。
+- 针对真实物理传感器场景中的模态稀疏问题，调整 MultiMAE 损失公式，并考察编码器瓶颈与稠密重建额外损失（SSIM、FFT）的作用。
+- 系统比较 ViT、MAE、DINO、MultiMAE 等预训练骨干在多传感器下游融合任务上的迁移表现。
+- 摘要给出的发现是：MultiMAE 是出乎意料的强现成基线，即使对从未见过的模态也能有效迁移；而作者的目标性修改在多传感器迁移和整体稳健性上带来增量但一致的改进。
+
+### 局限性
+- 摘要未提供足够信息说明下游传感器融合任务的具体类型、评价指标和定量结果。
+- 摘要未提供足够信息说明 16 个公开数据集的具体构成、各模态样本数量分布及模态稀疏程度。
+- 摘要未提供足够信息说明编码器瓶颈和 SSIM/FFT 额外损失各自的消融细节与单独影响。
+- 摘要未提供足够信息说明与 ViT、MAE、DINO、MultiMAE 比较时的具体预训练权重来源、训练配置和计算成本。
+- 摘要未提供足够信息说明该研究结论对其他传感器栈、其他自动驾驶数据集或其他任务领域的泛化边界。
+
+### 阅读优先级
+中。理由：论文主题涉及多传感器预训练迁移、物理传感器模态和 MultiMAE 改进，对多模态计算机视觉与传感器融合研究有直接相关性；摘要给出了清晰的问题设定、数据规模和比较对象，并报告了“MultiMAE 强现成基线”和“目标修改带来一致增量改进”的结论。但摘要未提供具体任务、指标和定量结果，是否高优先级阅读取决于读者对传感器融合下游任务或 MultiMAE 域内预训练细节的兴趣。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Transfer learning from pretrained backbones has become standard practice in multi-sensor computer vision---yet two questions remain open: which pretrained weights transfer best to multi-sensor setups, and can in-domain pretraining outperform off-the-shelf solutions? Frameworks like MultiMAE demonstrate the utility of masked autoencoding in a multi-modal context, but rely entirely on dense, model-derived modalities. It is unclear how robustly these methods translate to real-world applications that use physical sensors, where the aggregation of diverse public datasets for large-scale pretraining inherently introduces modality sparsity. To investigate this systematically, we curate a multi-sensor autonomous driving collection of $2.82M$ images from 16 publicly available datasets, incorporating both physical hardware modalities (RGB, LWIR, NIR, Event) and model-derived modalities (Stereo Depth, Segmentation). We use this collection for in-domain pretraining based on the MultiMAE approach. We adapt MultiMAE's loss formulation to accommodate sparse samples, and study the effect of an enforced encoder bottleneck for modality alignment and of additional losses specific to dense reconstruction (SSIM and FFT). We then systematically compare against common pretrained backbones (ViT, MAE, DINO and MultiMAE) across downstream sensor fusion tasks. We find that MultiMAE is a surprisingly strong out-of-the-box baseline, transferring effectively even to modalities it has never seen, while our targeted modifications yield incremental but consistent improvements on multi-sensor transfer and overall robustness.
@@ -627,6 +1079,39 @@ Transfer learning from pretrained backbones has become standard practice in mult
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** SLAM, feature matching, mapping, localization
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：CoReMatch: Recurrent Continuous Coordinate Refinement for Real-Time Robotic Feature Matching
+- 作者：Robert J. Wang, Charles Ling, Boyu Wang
+- 出版日期：2026-11-02T20:36:30Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：https://arxiv.org/abs/2611.03932
+
+### 一句话总结
+CoReMatch 提出一种在连续坐标空间中循环细化对应关系的特征匹配框架，旨在兼顾机器人感知任务中的匹配精度与实时效率。
+
+### 研究问题
+现有半稠密匹配器在固定网格上预测置信度，导致对应关系被限制在预定义位置；若要实现精确定位，需要高分辨率网格，计算成本较高。论文关注如何避免离散置信图预测的上述限制，并提升实时特征匹配的精度与效率。
+
+### 核心思路/方法
+CoReMatch 将对应关系直接在连续坐标空间中细化，而不是预测离散置信图。该框架通过跨迭代传播信息逐步改进对应估计：在粗阶段，使用 Deep Aggregated Transformer 捕获全局上下文并迭代更新对应坐标；随后由轻量回归头进一步锐化定位。
+
+### 主要贡献
+- 提出 CoReMatch，一种循环连续坐标细化框架，用于实时机器人特征匹配。
+- 在连续坐标空间中细化对应关系，避免固定网格对对应位置的限制。
+- 在粗阶段结合 Deep Aggregated Transformer 进行全局上下文建模与坐标迭代更新，并用轻量回归头进一步精化定位。
+- 摘要称在室内和室外基准上取得精度与效率的较好平衡，精度优于 Efficient LoFTR，且在嵌入式边缘硬件上运行速度超过其 10 倍。
+
+### 局限性
+摘要未提供足够信息。未说明具体数据集、评价指标、网络结构细节、训练策略、计算资源、失败场景或泛化能力等。
+
+### 阅读优先级
+中。理由：论文主题与实时机器人特征匹配、连续坐标细化相关，摘要给出了明确的问题动机和效率优势；但摘要未提供充分实验细节与局限性信息，需阅读全文后才能判断其方法可靠性与适用边界。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1490,6 +1975,43 @@ Novel view synthesis (NVS) in degraded scenes aims to reconstruct 3D scenes from
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, splatting, mapping
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：GSCV++: Lightweight 3D Gaussian Splatting Sequence Compression via Standard Video Codecs
+- 作者：Qi Yang, Yingzhan Xu, Kai Zhang, Li Zhang
+- 出版日期：2026-11-03T18:54:29Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：[摘要](https://arxiv.org/abs/2611.05359) / [PDF](https://arxiv.org/pdf/2611.05359)
+
+### 一句话总结
+GSCV++ 提出一种基于标准视频编解码器的轻量级 3D Gaussian Splatting 序列压缩流程，通过改进预处理、3D 到 2D 映射和实际压缩配置，在保持低复杂度与硬件兼容性的同时提升率失真性能和编解码速度。
+
+### 研究问题
+论文面向工业场景对低复杂度和硬件兼容性的需求，研究如何利用标准视频编解码器高效压缩 3D Gaussian Splatting 序列。摘要指出，需要在预处理、3D 到 2D 映射以及实际视频压缩配置方面联合改进，以降低数据量、减少冗余信息、生成更适合视频编解码器的 2D 特征图，并控制压缩复杂度。
+
+### 核心思路/方法
+论文提出 GSCV++，从三个方面改进 GS 序列压缩：
+1. **预处理**：提出能量自适应帧间球谐（SH）交流分量降维（EA-SHDR），用于生成紧凑且稳定的时间 SH AC 特征空间，从而减少后续映射和实际压缩的数据量，并在消除冗余信息的同时降低复杂度。
+2. **3D 到 2D 映射**：设计基于先验的 Inter-MiniPLAS（P-MiniPLAS），通过基于先验的权重因子推断和小尺度重映射生成平滑的 2D 特征图。与原始 Parallel Linear Assignment Sorting（PLAS）和 Morton 扫描相比，P-MiniPLAS 旨在使生成的 2D 图更适合视频编解码器，同时保持较低计算复杂度。
+3. **实际压缩**：提出内容感知广义压缩（CA-GC），使用非均匀位深拆分生成坐标图，并引入编码单元尺寸选择以有效控制压缩复杂度，从而在不涉及规范性变化的情况下充分利用视频编解码器性能。
+
+### 主要贡献
+- 提出 GSCV++，一个面向 3D Gaussian Splatting 序列的轻量级压缩流程，基于标准视频编解码器。
+- 提出 EA-SHDR，用于预处理阶段生成紧凑、稳定的时间 SH AC 特征空间。
+- 提出 P-MiniPLAS，用于生成更适合视频编解码器的平滑 2D 特征图，并保持较低计算复杂度。
+- 提出 CA-GC，通过非均匀位深拆分和编码单元尺寸选择提升实际压缩效率与复杂度控制。
+- 摘要称实验显示，与 SOTA 方法相比，GSCV++ 在帧内和帧间预测率失真上分别取得超过 20% 和 60% 的增益，并在 2D 图生成、编码和解码速度上快于使用同类视频编解码器的其他 SOTA 方法；消融研究验证了所提模块的有效性和鲁棒性。
+
+### 局限性
+摘要未提供足够信息说明方法的具体适用边界、失败场景、对不同 GS 序列规模或内容类型的敏感性，以及实验数据集、评价协议和完整消融细节。因此无法仅依据摘要判断其泛化性和实际部署限制。
+
+### 阅读优先级
+**中**。理由：该论文关注 3D Gaussian Splatting 序列压缩与标准视频编解码器的结合，问题明确且工程实用性强，摘要给出了较清晰的模块设计和性能声明；但若关注理论创新或非视频编解码器路线的压缩方法，则优先级可降低。是否优先阅读取决于对 GS 压缩、视频编码兼容性和低复杂度部署的兴趣。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 This paper presents GSCV++, a lightweight pipeline for 3D {G}aussian {S}platting (GS) sequences {C}ompression with standard {V}ideo codecs. To meet the requirements of low-complexity and hardware compatibility from the industry, GSCV++ jointly improves preprocessing, 3D-to-2D mapping, and practical video compression configuration of GS compression. First, for preprocessing, energy-adaptive inter-frame spherical harmonic (SH) alternative current (AC) dimensionality reduction (EA-SHDR) is proposed to produces a compact and stable temporal SH AC feature space. It can reduce the data volume of following mapping and practical compression, as well as less complexity while eliminating redundant information. Second, for 3D-to-2D mapping, prior-based Inter-MiniPLAS (P-MiniPLAS) is designed to generate smooth 2D feature maps through prior-based weighting factor inference and small scale remapping. Compared with vanilla Parallel Linear Assignment Sorting (PLAS) and Morton scan, P-MiniPLAS ensures the generated 2D maps are more suitable for the video codec while maintaining a low level of computational complexity. Third, for practical compression, content-aware generalized compression (CA-GC) is developed to use a non-uniform bit-depth split for coordinate map generation, and a coding unit size selection is introduced for efficient compression complexity control, which fully exploits the performance of video codecs without involving normative changes. Experiments demonstrate that GSCV++ reports over 20\% in intra- and 60\% in inter-prediction rate-distortion gains compared with state-of-the-art (SOTA) methods. GSCV++ also achieves faster 2D map generation, encoding, and decoding than other SOTA methods using the same type of video codecs. Ablation studies verify the effectiveness and robustness of the proposed modules and provide insights for subsequent research.
@@ -1503,6 +2025,43 @@ This paper presents GSCV++, a lightweight pipeline for 3D {G}aussian {S}platting
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, novel view synthesis, view synthesis, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：3DGS-VBench+ and 3DGSV-Assessor: A Multi-Dimensional Subjective Benchmark and a Reference-Flexible Objective Model for 3D Gaussian Splatting Video Quality Assessment
+- 作者：Yuke Xing, William Gordon, Jiarui Wang, Yujie Zhang, Guangtao Zhai, Yiling Xu
+- 出版日期：2026-11-03T08:26:13Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：摘要页 https://arxiv.org/abs/2611.04498 ；PDF https://arxiv.org/pdf/2611.04498 ；项目/代码 https://github.com/YukeXing/3DGSV-Assessor
+
+### 一句话总结
+论文面向3D Gaussian Splatting（3DGS）视频质量评估，构建了覆盖整体、几何与颜色三个维度的主观基准3DGS-VBench+，并提出可在一次生成中输出三维质量分数、且支持减参考（RR）与无参考（NR）模式的客观评估框架3DGSV-Assessor。
+
+### 研究问题
+摘要指出，3DGS虽支持实时新视角合成，但存储开销大，因此压缩必不可少；而训练与压缩都会引入与表示相关的失真。由于不少方法中的生成式压缩对几何属性和颜色属性采用不同参数，可能产生“维度特定”的失真，这促使研究进行多维度质量评估。此外，真实场景采集通常缺乏与合成连续相机轨迹对齐的真值视频，只能获得稀疏采集视图作为参考。因此，论文要解决的问题是：在对齐参考稀缺的条件下，如何对3DGS视频进行多维度质量评估，并构建相应主观基准与客观模型。
+
+### 核心思路/方法
+论文首先提出3DGS-VBench+：一个大规模主观视频质量评估基准，包含3,036个3DGS重建，每个重建配对一个渲染视频，覆盖11个真实场景与22个合成场景，由6种代表性压缩算法在系统设计的级别下生成，并标注9,108个MOS，覆盖整体质量、几何质量与颜色质量。基于该基准，论文提出3DGSV-Assessor：一个参考灵活的大规模多模态框架，在一次生成过程中为三个维度打分，并通过有界门控将基于排序的参考线索融合进冻结回归器，支持减参考（RR）与无参考（NR）评估。摘要称大量实验表明其在该基准上与人类感知达到最先进相关性，并对其他新视角合成基准具有较强零样本泛化能力。
+
+### 主要贡献
+- 构建3DGS-VBench+：大规模3DGS视频主观质量评估基准，含3,036个重建及配对渲染视频、11个真实场景与22个合成场景、6种代表性压缩算法及系统设计级别，并提供9,108个覆盖整体、几何、颜色质量的MOS标注。
+- 提出3DGSV-Assessor：参考灵活的大规模多模态客观质量评估框架，一次生成输出整体、几何、颜色三维分数，并通过有界门控融合基于排序的参考线索到冻结回归器，支持RR与NR评估。
+- 摘要声称在3DGS-VBench+上与人类感知达到最先进相关性，并展现出对其他新视角合成基准的较强零样本泛化能力。
+- 摘要说明数据集与代码将公开于 https://github.com/YukeXing/3DGSV-Assessor。
+
+### 局限性
+- 摘要未提供足够信息说明主观实验的具体受试者规模、标注流程一致性或MOS置信度分析。
+- 摘要未提供足够信息说明3DGSV-Assessor的具体网络结构、训练细节、计算开销与推理时延。
+- 摘要未提供足够信息说明“有界门控”的具体设计、超参数选择及其消融结果。
+- 摘要未提供足够信息给出与其他方法对比的完整实验设置、评价指标数值及零样本泛化的具体基准与幅度。
+- 摘要未提供足够信息讨论该方法在非3DGS表示或其他压缩类型下的适用边界。
+
+### 阅读优先级
+中。理由：若关注3DGS压缩后的质量评估、多维度主观基准构建或参考灵活（RR/NR）的多模态质量模型，该论文与问题设定直接相关，且同时提供基准与模型；但摘要未给出具体实验数值、方法细节与消融信息，需阅读全文才能判断其可复现性与实际增益，因此优先级定为中而非高。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1520,6 +2079,44 @@ This paper presents GSCV++, a lightweight pipeline for 3D {G}aussian {S}platting
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, splatting, manipulation, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Physical Diffusion Policy via MPM-Guided 3D Gaussian Simulation
+- 作者：Can Wang, Qiyuan Qiao, Lei Liu, Ge Yuan, Xinhui Liu, Dong Xu
+- 出版日期：2026-11-03T08:21:49Z
+- 分类：主分类 Neural Scene Representations & Rendering；次分类 Embodied / Robotics / AR Applications
+- 链接：摘要页 https://arxiv.org/abs/2611.04493 ；PDF https://arxiv.org/pdf/2611.04493
+
+### 一句话总结
+该论文提出一种物理感知的扩散策略，通过将 3D Gaussian Splatting 与可微 Material Point Method 模拟耦合来从视觉演示中估计物体材质属性，并据此构建材质感知的 Mixture-of-Experts 扩散策略，以提升异构物体操纵的成功率与泛化性。
+
+### 研究问题
+论文针对日常物体操纵策略学习中的核心困难：不同材质物体具有不同的形变与接触动力学。扩散策略虽能建模多模态操纵行为，但摘要指出其通常缺乏显式物理推理，面对异构物体时可能产生“平均化”的动作。论文要解决的问题是：如何让基于视觉模仿学习的扩散策略具备对物体物理属性的理解，从而在不同物理条件下自适应生成操纵行为。
+
+### 核心思路/方法
+摘要给出的方法链条包括三个环节：
+1. **物理参数估计**：将 3D Gaussian Splatting 与可微 Material Point Method 模拟耦合，从视觉演示中恢复材质属性；其中视频引导与粒子级约束用于实现准确的物理参数估计。
+2. **物理条件注入策略**：将估计出的物理条件集成到材质感知的 Mixture-of-Experts 扩散策略中，使行为生成可跨不同物理状态自适应。
+3. **实际部署机制**：引入 physics memory bank，在不需要在线模拟优化的情况下提供高效的物理检索。
+
+### 主要贡献
+基于摘要可归纳的贡献为：
+- 提出一种物理感知的扩散策略框架，将视觉模仿学习与物体物理理解相结合。
+- 构建了由 3D Gaussian Splatting 与可微 MPM 模拟耦合的材质属性估计方法，并利用视频引导和粒子级约束提升参数估计准确性。
+- 设计了材质感知的 Mixture-of-Experts 扩散策略，以适配不同物理状态下的行为生成。
+- 提出 physics memory bank，用于部署阶段的高效物理检索，避免在线模拟优化。
+- 摘要称在大量仿真与真实物体上的实验显示，相比现有基于扩散的方法，该方法在操纵成功率和泛化性上有提升。
+
+### 局限性
+摘要未提供足够信息说明以下方面：具体实验设置、基线方法细节、成功率数值、真实世界实验规模、材质属性估计的误差范围、Mixture-of-Experts 的结构与训练细节、physics memory bank 的存储与检索开销，以及方法在未见材质或复杂接触场景下的失效模式。因此无法基于给定摘要评估其定量性能边界与适用范围。
+
+### 阅读优先级
+**中**。理由：论文主题位于神经场景表示与机器人操纵的交叉处，若关注扩散策略的物理先验注入、3D Gaussian Splatting 用于物理参数估计、或可微 MPM 与策略学习的结合，则具有较高相关性；但摘要未提供定量结果与实验细节，无法仅凭摘要判断其相对优势的强度，需阅读全文进一步确认。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Learning robust manipulation policies for diverse everyday objects remains challenging because objects with different materials exhibit distinct deformation and contact dynamics. While diffusion policies provide a powerful framework for modeling multimodal manipulation behaviors, they typically lack explicit physical reasoning and may produce averaged actions when facing heterogeneous objects. We present a physics-aware diffusion policy that augments visual imitation learning with object physical understanding. Our framework recovers material properties from visual demonstrations by coupling 3D Gaussian Splatting with differentiable Material Point Method simulation, where video guidance and particle-level constraints enable accurate physical parameter estimation. The estimated physics conditions are further integrated into a material-aware Mixture-of-Experts diffusion policy, allowing adaptive behavior generation across different physical regimes. For practical deployment, we introduce a physics memory bank that provides efficient physical retrieval without requiring online simulation optimization. Experiments on a wide range of simulated and real-world objects demonstrate improved manipulation success and generalization over existing diffusion-based approaches. These results show that incorporating physical knowledge is critical for scalable robot manipulation in diverse environments.
@@ -1535,6 +2132,48 @@ Learning robust manipulation policies for diverse everyday objects remains chall
 **Matched keywords:** deformable reconstruction, SLAM, Gaussian Splatting, splatting, mapping, scene understanding
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：EndoS3:Endoscopic Semantic Splatting SLAM
+- 作者：Mona Sheikh Zeinoddin, Benjamin Wright, Zafer Tandogdu, Greg Shaw, Evangelos Mazomenos, Danail Stoyanov
+- 出版日期：2026-11-03T05:41:06Z
+- 分类：Neural Scene Representations & Rendering；次要分类：3D Reconstruction & Multi-view Geometry, Embodied / Robotics / AR Applications
+- 链接：摘要页 https://arxiv.org/abs/2611.04358 ；PDF https://arxiv.org/pdf/2611.04358
+
+### 一句话总结
+论文提出基于高斯溅射（Gaussian Splatting）的内窥镜语义 SLAM 框架 EndoS3，并引入带 RGB-D 帧、相机位姿与实例标注的 ex-vivo 胆囊切除数据集 CRCD++，摘要称其在跟踪、重建和语义建图上优于对比方法。
+
+### 研究问题
+摘要指出，面向 3D 手术场景理解的语义 SLAM 仍研究不足，原因有二：一是需并行解决相机位姿跟踪、高保真可变形重建和语义建图三项困难任务；二是缺乏能在接近真实手术流程环境下全面评估这三项任务所需真值的数据集。论文旨在同时应对方法框架与评测数据两方面的缺口。
+
+### 核心思路/方法
+- 提出 EndoS3，一种以高斯溅射为基础、利用实例掩码引导三项任务的语义 SLAM 框架。
+- 实例级运动分解模块：在补偿相机运动后评估残差光流，并考虑光流噪声、比较相邻实例间运动，以分离静态与动态实例。
+- 相机跟踪针对静态高斯进行；实例感知的形变场为每个动态实例配置各自的控制节点与形变网络。
+- 语义节点分配模块：按实例的尺寸与非刚性程度，在实例间重新分配固定节点预算。
+- 构建 CRCD++：ex-vivo 胆囊切除数据集，包含 RGB-D 帧、相机位姿和实例标注，用于完整语义 SLAM 评估。
+
+### 主要贡献
+- 提出 EndoS3 语义 SLAM 框架，以实例掩码统一引导运动分解、相机跟踪、动态实例形变建模与语义节点分配。
+- 提出实例级运动分解，通过残差光流、噪声考量与邻域实例比较区分静态/动态实例。
+- 提出实例感知形变场与语义节点分配机制，为动态实例分配独立控制节点与形变网络，并按尺寸和非刚性重分配固定节点预算。
+- 发布 CRCD++ ex-vivo 胆囊切除数据集，提供 RGB-D 帧、相机位姿与实例标注，支持完整语义 SLAM 评测。
+- 摘要报告在 CRCD++ 与 SemSup 数据集上，EndoS3 在跟踪、重建和语义建图方面超过现有通用及手术语义 SLAM 方法；结论强调语义感知的运动与形变建模对手术语义 SLAM 至关重要。
+
+### 局限性
+- 摘要未提供足够信息说明具体实验设置、评价指标、对比方法数量与消融细节。
+- 摘要未提供足够信息说明 EndoS3 在真实活体手术、不同术式或跨数据集条件下的泛化能力。
+- 摘要未提供足够信息说明方法对实例掩码质量、光流噪声或动态场景复杂度的敏感性与失败情形。
+- 摘要未提供足够信息说明 CRCD++ 的规模、采集设备、标注规范及数据多样性。
+- 摘要未提供足够信息说明计算开销、实时性及临床部署可行性。
+
+### 阅读优先级
+中。理由：论文聚焦内窥镜语义 SLAM，将实例掩码、运动分解、可变形高斯重建与语义建图结合，并配套新数据集，对手术场景理解与神经渲染交叉方向具有参考价值；但摘要未给出实验规模、定量指标和失败案例分析，是否值得优先精读需结合全文实验与数据集细节进一步判断。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Purpose: Despite advances in 3D surgical scene understanding, semantic simultaneous localisation and mapping (SLAM) remains under-explored for two key reasons. First, it requires solving three challenging tasks in parallel: camera pose tracking, high-fidelity deformable reconstruction, and semantic mapping, making progress particularly demanding. Second, the scarcity of datasets providing the necessary ground truth to evaluate all three tasks comprehensively under conditions that closely reflect real surgical procedures environments. Method: We propose EndoS3, a Gaussian Splatting-based semantic SLAM framework that uses instance masks to guide all three tasks. An instance-level motion decomposition module separates static and dynamic instances by evaluating residual flow after compensating for camera motion, accounting for flow noise and comparing motion across neighbouring instances. The camera is tracked against the static Gaussians, while an instance-aware warp field gives each dynamic instance its own control nodes and deformation network. A semantic node allocation module redistributes a fixed node budget across instances according to their size and non-rigidity. We also introduce CRCD++, an ex-vivo Cholecystectomy dataset with RGB-D frames, camera pose and instance annotations for full semantic SLAM evaluation. Results: EndoS3 surpasses all state-of-the-art general-purpose and surgical semantic SLAM methods in tracking, reconstruction and semantic mapping on the CRCD++ and SemSup datasets. Conclusion: Semantic-aware motion and deformation modelling is vital to surgical semantic SLAM. EndoS3 and CRCD++ offer a method and benchmark for improved geometric and semantic understanding in endoscopy.
@@ -1548,6 +2187,42 @@ Purpose: Despite advances in 3D surgical scene understanding, semantic simultane
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** Embodied / Robotics / AR Applications
 **Matched keywords:** novel view synthesis, view synthesis, robotics, mapping, augmented reality
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：SettleSplat: Monocular Gaussian Mapping under In-View Scene Changes
+- 作者：Anh Thuan Tran, Xiyun Song, Yubin Zhou, Heather Yu, Jana Kosecka, Liang Peng
+- 出版日期：2026-11-03T02:29:27Z
+- 分类：主分类 Neural Scene Representations & Rendering；次分类 Embodied / Robotics / AR Applications
+- 链接：摘要页 https://arxiv.org/abs/2611.04195 ；PDF https://arxiv.org/pdf/2611.04195
+
+### 一句话总结
+SettleSplat 面向单目在线序列中相机视野内物体被操作引发的场景变化，通过高斯动态性场剔除瞬态变化，并利用几何矛盾与参数无关的渲染深度不确定性识别持久变化，从而维护更新的 3D 高斯地图。
+
+### 研究问题
+论文关注“视野内场景变化”（in-view scene changes）：在单个在线序列中，物体在相机前被操作。该设定不同于以往检测相机视野外变化或不同次拍摄之间变化的工作。其难点在于瞬态动态与持久动态交织：物体移动时可能是干扰物，稳定后则成为场景中的持久变化。现有方法多假设静态场景或将动态作为异常值过滤，近期工作虽开始移除干扰物以获得干净静态背景，但视野内场景变化仍研究不足。
+
+### 核心思路/方法
+基于摘要，方法包括两部分：
+1. 将粗略的逐像素不确定性提升为高斯动态性场，并据此剪除瞬态高斯。
+2. 针对持久变化，利用由参数无关的渲染深度不确定性加权的几何矛盾，区分真实变化与优化不足区域。
+系统目标是在上述变化下维持最新的 3D 高斯地图，属于单目在线建图系统。
+
+### 主要贡献
+- 提出 SettleSplat，一个单目在线建图系统，可在视野内场景变化下维护更新的 3D 高斯地图。
+- 将逐像素不确定性提升为高斯动态性场，用于剪除瞬态变化。
+- 使用参数无关的渲染深度不确定性加权几何矛盾，以分离真实持久变化与优化不足区域。
+- 在 Bonn 和 Co-Fusion 上报告了结果：SettleSplat 获得一致的 3D 高斯地图，在全图与变化区域上优于当前基线，并保持可比速度。
+
+### 局限性
+摘要未提供足够信息。未提供关于计算开销细节、失败案例、对特定场景类型或运动模式的适用边界、长期在线运行稳定性、参数敏感性等信息的说明。
+
+### 阅读优先级
+中。理由：该论文聚焦在线单目 3D 高斯建图中的视野内场景变化，问题设定对 AR、机器人和自主系统等应用具有相关性，且摘要给出了明确的方法要点与基准结果；但摘要未展开实验细节与局限分析，是否优先精读取决于读者对动态场景高斯建图或在线建图方向的直接兴趣。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -2111,6 +2786,38 @@ Feed-forward 3D Gaussian Splatting predicts a scene from a few images, but our p
 **Matched keywords:** robotics, autonomous driving, virtual reality
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Low-Density 3D Point Cloud Classification
+- 作者：Ahmed Baha Ben Jmaa, Faten Chaieb
+- 出版日期：2026-11-03T18:07:11Z
+- 分类：主分类 Embodied / Robotics / AR Applications；无二级分类
+- 链接：[摘要](https://arxiv.org/abs/2611.05291) ｜ [PDF](https://arxiv.org/pdf/2611.05291)
+
+### 一句话总结
+本文针对低密度 3D 点云分类性能下降的问题，提出面向低密度点云的架构 LD-PointNet++，并在 ModelNet 基准上报告了跨密度水平保持 90% 以上准确率的结果。
+
+### 研究问题
+3D 点云分类在增强现实/虚拟现实、机器人、自动驾驶等领域应用广泛，但真实场景中由于传感技术限制和环境条件变化，点云密度会发生变化。现有分类方法在稠密点云上表现良好，但在低密度点云上性能可能下降。论文要解决的核心问题是：如何在密度水平变化的条件下，尤其是低密度条件下，稳定地进行 3D 点云分类。
+
+### 核心思路/方法
+论文提出名为 LD-PointNet++ 的架构，专门针对低密度点云分类进行优化。作为铺垫，作者还开展了首个系统性基准评测研究，在不同密度水平下评估当前最先进的点云分类方法，并据此揭示低密度环境下显著的性能下降。摘要未提供 LD-PointNet++ 的具体网络结构、模块设计或训练策略等细节。
+
+### 主要贡献
+- 开展首个系统性基准评测研究，在不同密度水平下评估最先进的点云分类方法，揭示低密度环境下性能显著下降的现象。
+- 提出面向低密度点云分类的架构 LD-PointNet++。
+- 在 ModelNet 基准数据集上的实验结果表明，LD-PointNet++ 在低密度场景下优于上述对比方法，并在不同密度水平下保持 90% 以上的稳定准确率。
+
+### 局限性
+摘要未提供足够信息说明方法的具体结构、计算开销、对真实传感器噪声的鲁棒性、除 ModelNet 外的泛化表现，以及基准评测所覆盖的具体方法清单和密度设置细节。因此无法基于摘要评估其适用范围与潜在限制。
+
+### 阅读优先级
+中。理由：该论文关注点云密度变化这一实际部署中的关键问题，并提供了跨密度基准评测与专门架构，对机器人、AR/VR 等主分类应用有直接相关性；但摘要未给出方法细节和更广泛的实验验证信息，需阅读全文后才能判断其技术新颖性与结论稳健性。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 3D point cloud classification, a task in computer vision, has recently gained substantial interest due to its extensive applications across various domains such as augmented and virtual reality, robotics, and autonomous driving. However, classifying 3D point clouds becomes challenging in real-world scenarios where the density levels vary. These variations are due to limitations inherent to current sensing technologies and variable environmental conditions, which often prevent the capture of detailed and comprehensive geometric representations. Existing classification methods, which have demonstrated impressive results on dense point clouds, may be affected and could experience reduced performance when dealing with low-density point clouds. Addressing this challenge, this paper introduces LD-PointNet++, an architecture optimized for the classification of low-density point clouds. To pave the way for LD-PointNet++, we conduct the first benchmarking study that systematically evaluates state-of-the-art point cloud classification methods across varying densities, revealing significant performance declines in low-density environments. Experimental results on the ModelNet benchmark dataset demonstrate that LD-PointNet++ not only outperforms these methods in low-density scenarios but also demonstrates consistent accuracy above 90% across different density levels.
@@ -2124,6 +2831,44 @@ Feed-forward 3D Gaussian Splatting predicts a scene from a few images, but our p
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** camera calibration, autonomous driving
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：MiCaDe: Online LiDAR-Camera Miscalibration Change Detection for Autonomous Driving
+- 作者：Carlo Sgaravatti, Riccardo Pieroni, Matteo Corno, Sergio M. Savaresi, Luca Magri, Giacomo Boracchi
+- 出版日期：2026-11-03T13:52:45Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：[摘要](https://arxiv.org/abs/2611.04912) / [PDF](https://arxiv.org/pdf/2611.04912)
+
+### 一句话总结
+MiCaDe 是一种在线检测 LiDAR-相机外参标定何时失效的方法，利用跨模态检测框的几何一致性构建统计监测流，并通过变点模型累积证据以发现细微漂移。
+
+### 研究问题
+自动驾驶多传感器感知依赖相机与 LiDAR 之间的准确标定。长期部署中，振动、热效应和轻微机械冲击会导致标定漂移，使外参不再准确，进而给下游融合任务带来系统性误差。论文关注的问题是：如何在不依赖标定靶标、不修改感知栈的前提下，在线检测外参标定是否已经不再准确。
+
+### 核心思路/方法
+论文提出 MiCaDe（Miscalibration Change Detection），核心假设是：在标定正确时，标准目标检测器产生的 3D 与 2D 边界框应保持几何一致。方法通过匹配跨模态检测结果，导出几何一致性指标，作为外参漂移的敏感指示量；将这些指标聚合成固定大小的批次，并与参考分布比较打分，形成似然流；随后用 Change Point Model（CPM）对该似然流进行监测。CPM 随时间累积统计证据，从而能够检测原本不易察觉的细微漂移。摘要称该方法无需标定靶标，也无需修改感知栈，并具有低误报率和可忽略的计算开销。
+
+### 主要贡献
+- 提出一种在线 LiDAR-相机外参标定变化检测方案 MiCaDe，用于判断外参是否仍准确。
+- 利用标准目标检测器输出的 3D/2D 边界框跨模态几何一致性构造检测指标，不依赖标定靶标。
+- 将一致性指标批量化并与参考分布比较，结合 CPM 累积统计证据，以检测细微标定漂移。
+- 摘要称该方法无需修改感知栈，具有低误报率和可忽略的计算开销。
+- 摘要称在多个长序列数据集以及一个物理诱导标定误差的真实世界数据集上进行了实验，验证了多条件下的可靠检测，并提供代码链接。
+
+### 局限性
+- 摘要未提供足够信息说明方法对检测器性能、检测漏检或跨模态匹配失败的敏感性。
+- 摘要未提供足够信息说明参考分布如何构建、是否需要场景特定假设，以及冷启动或分布变化下的表现。
+- 摘要未提供足够信息给出具体误报率、检测延迟、计算开销数值或与其他方法的定量对比。
+- 摘要未提供足够信息说明在极端天气、稀疏点云、目标稀少场景下的适用性。
+- 摘要未提供足够信息说明物理诱导标定误差实验的规模、标定误差类型与范围。
+
+### 阅读优先级
+中。理由：该论文针对自动驾驶长期部署中的在线标定漂移检测问题，问题定义清晰，方法思路简洁且不依赖标定靶标，若关注多传感器融合可靠性与在线监测，具有参考价值；但当前仅有摘要，缺少定量实验结果、误报率与检测延迟等关键细节，是否值得深入阅读需结合全文实验部分进一步判断。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -2141,6 +2886,47 @@ Reliable multi-sensor perception in autonomous vehicles requires accurate calibr
 **Matched keywords:** scene understanding
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：BhopalMLS: A LiDAR Dataset for Semantic Scene Understanding in Heterogeneous Urban Environments
+- 作者：Pyare Lal Chauhan, Vaibhav Kumar, Bharat Lohani
+- 出版日期：2026-11-03T10:41:37Z
+- 分类：主分类 Embodied / Robotics / AR Applications；无次分类
+- 链接：[摘要](https://arxiv.org/abs/2611.04654) / [PDF](https://arxiv.org/pdf/2611.04654)
+
+### 一句话总结
+论文提出面向印度博帕尔非规划、异构城市环境的移动激光扫描（MLS）大规模 LiDAR 数据集 BhopalMLS，并基于语义/实例分割与跨区域迁移实验，论证其细粒度子类型覆盖对 3D 感知可比性与迁移性的价值。
+
+### 研究问题
+现有 3D 数据集多采集于规划良好的城市，结构更统一、子类型多样性不足；而密集、异构、混合交通、非正式结构与狭窄非规划街道等场景缺乏专门基准。论文关注：此类非规划城市环境能否为 3D 语义/实例分割提供更具挑战和代表性的测试平台，以及其相对既有数据集在跨区域迁移上的特性。
+
+### 核心思路/方法
+- 构建 BhopalMLS：约 10 km 道路走廊、超过 12 亿点、19,518 个标注实例、62 个细粒度静态类别，并归并为 12 类与 21 类两套基准分类体系；另设 6 个可选运动类子类用于动态对象分析。
+- 在两种粒度上进行语义分割与实例分割评测，比较微调基础模型与监督基线。
+- 与 Ke-MLS、Toronto-3D、Paris-Lille-3D、SemanticKITTI 四个既有数据集做跨区域迁移实验，考察双向迁移性。
+- 通过固定标签预算的因子控制重训练，区分数据集规模、走廊几何与子类型覆盖对迁移优势的贡献。
+
+### 主要贡献
+- 发布 BhopalMLS 数据集，覆盖非规划、异构城市环境的 MLS 点云，并提供 12 类/21 类基准分类与细粒度子类型标注，以及动态对象可选子类。
+- 给出语义与实例分割基准结果：微调基础模型优于监督基线，如 Utonia(L) 在 12 类基准上达到 71.28% mIoU（对比从零训练的 PTv3 68.04%）和 44.07% mAP50。
+- 揭示一致的“非对称可迁移性”：在每一对数据集上，BhopalMLS 训练的模型迁移到其他数据集优于反向迁移（Utonia(L) 与 Concerto(L) 平均 21.5、最高 36 mIoU 点），即使目标数据集更稠密亦然。
+- 通过固定标签预算的因子控制实验，将迁移优势归因于 BhopalMLS 的子类型清单覆盖，而非数据集规模或走廊几何；将每类坍缩为单一子类型会使 Utonia(L) 与 Concerto(L) 分别损失 13.0 与 13.3 mIoU 点。
+- 提供数据与交互式查看器链接。
+
+### 局限性
+- 摘要未提供足够信息说明传感器配置、采集平台细节、标注流程与质量控制、标注一致性或误差分析。
+- 摘要未提供足够信息说明 21 类基准上的完整分割结果、各对比数据集的逐项数值，以及跨区域实验的具体协议细节。
+- 摘要未提供足够信息说明动态对象分析（6 个运动子类）的评测结果。
+- 摘要未提供足够信息说明数据集在天气、光照、季节或长期变化上的覆盖情况。
+- 摘要未提供足够信息说明计算资源、训练时长与模型超参数等可复现性细节。
+
+### 阅读优先级
+中。理由：若关注 3D 语义/实例分割、LiDAR 数据集构建或跨区域迁移与域泛化，该文提供了非规划城市环境的新基准与“子类型覆盖驱动迁移性”的可检验结论，具有较高参考价值；但摘要未给出传感器、标注协议与完整实验细节，需阅读全文才能评估数据质量与可复现性。若仅关注方法创新而非数据与基准，优先级可下调。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 We introduce BhopalMLS, a large-scale Mobile Laser Scanning (MLS) dataset from a dense, heterogeneous urban environment in Bhopal, India, with mixed traffic, informal structures, and narrow unplanned streets. It spans approximately 10 km of road corridors with over 1.2 billion points and 19,518 annotated instances across 62 fine-grained static categories, grouped into 12-class and 21-class benchmark taxonomies; 6 optional moving-class subclasses support dynamic-object analysis. Existing 3D datasets, collected in well-planned cities, are structurally more uniform than such unplanned settings, and lack their subtype diversity. On semantic and instance segmentation at both granularities, fine-tuned foundation models surpass supervised baselines: Utonia(L) reaches 71.28% mIoU (vs. PTv3's 68.04% from scratch) and 44.07% mAP50 on the 12-class benchmark. Cross-region experiments against four established datasets (Ke-MLS, Toronto-3D, Paris-Lille-3D, SemanticKITTI) reveal a consistent asymmetric transferability: models trained on BhopalMLS transfer better than the reverse on every pair, for both Utonia(L) and Concerto(L) (mean 21.5, up to 36 mIoU points), holding even when the target is denser. Factor-controlled retraining at a fixed label budget, repeated on both models, attributes this to the coverage of BhopalMLS's subtype inventory rather than to dataset size or corridor geometry: collapsing each class to a single subtype costs 13.0 and 13.3 mIoU points for Utonia(L) and Concerto(L). BhopalMLS therefore offers a testbed for 3D perception beyond well-planned cities. Data and an interactive viewer are at https://geoai4cities.github.io/bhopalmls.
@@ -2154,6 +2940,46 @@ We introduce BhopalMLS, a large-scale Mobile Laser Scanning (MLS) dataset from a
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** rendering, simulation, world modeling
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Hybrid Particle-Voxel Dynamics for Multimodal 3D World Simulation
+- 作者：Jimmy Wang, Yifan Chou, Kaifeng Zhang, Yixuan Wang, Binghao Huang, Tao Yu, Saleh Nabi, Yunzhu Li
+- 出版日期：2026-11-03T08:20:53Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：摘要页 https://arxiv.org/abs/2611.04492 ；PDF https://arxiv.org/pdf/2611.04492
+
+### 一句话总结
+该论文提出“3D World Simulator”，用混合粒子-体素自编码器将点云压缩为紧凑 3D 体素潜变量，并通过动作条件潜动力学模型联合预测外观、几何与触觉，从而进行多模态 3D 世界模拟。
+
+### 研究问题
+论文关注的是：如何让动作条件世界模型显式建模底层 3D 场景，而不是仅在 2D 图像或视频空间预测未来观测。摘要指出，许多现有动作条件世界模型在 2D 空间预测未来观测，导致跨视角和长时程交互中的空间一致性具有挑战。因此，论文要解决的是在统一 3D 表示下进行动作条件、多模态、长时程世界预测的问题。
+
+### 核心思路/方法
+摘要给出的方法包括两部分：
+1. 混合粒子-体素自编码器：将点云压缩为紧凑的 3D 体素潜变量；
+2. 动作条件潜动力学模型：预测这些 3D 体素潜变量的演化。
+
+二者共享统一的 3D 表示，使模型能够从任意视角进行几何一致的渲染，并灵活整合空间对齐的触觉信号。整体框架被描述为动作条件的多模态世界建模框架，联合预测外观、几何和触觉观测。
+
+### 主要贡献
+根据摘要，论文的贡献可归纳为：
+- 提出 3D World Simulator，一个动作条件的多模态世界建模框架，从统一 3D 表示联合预测外观、几何与触觉观测；
+- 结合混合粒子-体素自编码器与动作条件潜动力学模型，在紧凑 3D 体素潜空间中进行预测；
+- 共享 3D 表示支持任意视角的几何一致渲染，并支持空间对齐触觉信号的灵活整合；
+- 实验展示 50 Hz 的交互式、长时程、多模态预测；
+- 展示该模型可利用触觉与多视角视觉观测（包括腕装相机和新视角相机）为策略训练与评估生成可扩展数据；
+- 将方法扩展到包含多样物体的大型数据集，并展示基于模型的规划可处理未见物体和机器人配置。
+
+### 局限性
+摘要未提供足够信息说明局限性。摘要未提供足够信息说明失败案例、计算成本、对真实机器人部署的限制、触觉信号获取条件、数据集规模细节或与基线方法的定量比较。
+
+### 阅读优先级
+高。理由：该论文直接面向具身智能/机器人中的动作条件 3D 世界建模，问题定义清晰，方法将 3D 几何、外观与触觉统一到共享表示中，并声称支持 50 Hz 交互式长时程预测、策略数据生成和基于模型的规划；这些内容与机器人策略学习、评估和规划高度相关。但摘要未给出定量结果和局限性细节，阅读时需重点核查实验设置与泛化边界。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
