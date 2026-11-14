@@ -17447,6 +17447,13 @@
       "path": "reports/daily/2026-11-13.md",
       "tasks": [],
       "ai_trend_report": true
+    },
+    "2026-11-14": {
+      "status": "success",
+      "updated_at": "2026-11-14T18:58:26Z",
+      "path": "reports/daily/2026-11-14.md",
+      "tasks": [],
+      "ai_trend_report": true
     }
   }
 }
