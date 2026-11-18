@@ -11,13 +11,13 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 ### 数据概况
 
-- 当前滚动窗口论文数：46
+- 当前滚动窗口论文数：52
 - 分类分布：
-  - Embodied / Robotics / AR Applications: 17
-  - 3D Reconstruction & Multi-view Geometry: 14
-  - Neural Scene Representations & Rendering: 6
-  - Dynamic / 4D Reconstruction: 6
-  - Geometry Foundation Models: 3
+  - Embodied / Robotics / AR Applications: 20
+  - 3D Reconstruction & Multi-view Geometry: 12
+  - Neural Scene Representations & Rendering: 9
+  - Dynamic / 4D Reconstruction: 7
+  - Geometry Foundation Models: 4
 - 当前兴趣方向：未指定
 - 当前显式任务：未指定
 
@@ -25,58 +25,37 @@ A daily updated collection of papers on geometry foundation models, 3D reconstru
 
 #### 今日主要趋势
 
-1. **“渲染指标 ≠ 三维/度量正确性”成为多个子方向的共同反思。** 
- - 3DGS 分割方向：VODA 指出渲染掩码准确不代表三维选择完整，alpha 混合监督让遮挡/低贡献高斯欠监督，并引入 Removal-3D 与 RDE 评估体积完整性（2611.21383）。
- - 单目度量深度方向：*What the Averages Hide* 指出跨数据集平均指标掩盖逐图严重失败，剩余困难主要是尺度（2611.20518）。
- - 位姿估计方向：MomentPnP 针对无对应关系的盲 PnP，强调在不依赖显式对应的情况下获得位姿（2611.20797）。
- - 共同信号：评价体系从“平均/渲染层面好看”转向“逐图失败率、体积完整性、尺度偏差、无对应鲁棒性”等更贴近下游任务的指标。
+1. **3DGS 从“能重建”走向“可部署、可编辑、可评估”的系统化阶段。** 今日窗口内 3DGS 相关论文覆盖了多个此前薄弱的工程与评价环节：ReTouchGS 面向预训练模型的免参考美学调色与参考引导色彩迁移，强调跨视角色调一致和免渲染更新；DOOM-GS 首次把外存优化扩展到大规模动态高斯，突破显存假设；Cross3DGS 用 Vulkan 统一跨厂商、跨平台训练，把训练从 CUDA 工作站推到手机与穿戴设备；CueSplat 面向边缘设备做稀疏形变调度；QuantileGS 则给出渲染误差的共形上界，补上“可靠性量化”这一环。同时 CoSphere-SLAM 把全景多智能体 SLAM 与高斯泼溅结合。可以看出，3DGS 的研究重心正从表征质量本身，转向内存/算力约束、跨设备可移植性、颜色可控性与不确定性度量等落地瓶颈。
 
-2. **3DGS 从“能渲染”走向“可操作、可信任、可管理”。** 
- - 可信任/不确定性：QuantileGS 为 3DGS 新视角合成提供逐像素 RGB 误差上界与共形校准（2611.21253）。
- - 可操作/对象级：VODA 关注 Gaussian 分割的三维完整性（2611.21383）。
- - 可管理/系统效率：GDM-GS 把结构化 3DGS 轨迹渲染重构为空间数据管理问题，在视图内、跨视图、跨处理器三层去冗余（2611.20546）。
- - 这说明 3DGS 研究重心正从表示与渲染质量，扩展到分割监督、不确定性量化与系统级数据管理。
+2. **前馈几何基础模型与经典几何先验出现明确的“互补融合”路线。** Refin3R 不再把相机位姿或深度当作辅助输入，而是把 SfM 点作为几何引导，在图像网格上传播，并用 2D/3D 双分支双向交互来同时扩展覆盖范围和建模多视图结构。这与 CascadeJEPA 的问题意识形成呼应：后者发现 I-JEPA 在预训练中语义识别提升的同时 3D 几何表示退化，归因于在不完整空间上下文下预测高度抽象潜表示，于是用全网格上下文编码和级联交叉注意力来恢复 patch 级几何信息。两篇论文从不同入口指向同一判断：纯数据驱动的语义预训练与前馈预测，需要显式几何结构来约束，而几何先验的注入方式正从“拼接输入”转向“架构内双向耦合”。
 
-3. **动态/4D 重建强调“物理或几何约束 + 前馈效率”。** 
- - IGRecon4D 用实例先验蒸馏抑制动态目标泄漏到静态表示，并用 LiDAR 锚定高斯位置缓解跨视角几何漂移（2611.21126）。
- - Cosmos4D 用引力势与共享低维力场约束星系恒星运动，并按亮度分层建模（2611.20089）。
- - 两者都反对“自由形变拟合图像”的路线，转而引入领域约束（交通参与者先验、LiDAR、引力）来提升 4D 表示的物理/几何可信度。
+3. **世界模型的重心从像素级生成转向结构化、紧凑、可承载状态的世界表示。** AgentWorld 明确批评像素级未来帧生成保留大量与驾驶无关的外观细节，主张以 agent 为中心的离散 token 承载语义身份、3D 几何、运动与交互，并联合做推理与轨迹规划。InertialWorld 把“惯性”作为自回归视频世界模型的结构性先验，用稠密欧拉网格加持久拉格朗日载体的 Inertial Memory 跨时间携带场景证据，而不是每步重建，以抑制 rollout 误差累积。Invoker-Render（Code World Model 2.0）则以结构代理、外观参考和语言为共享条件接口，配对双向创作模型与因果四步流式模型，并用 Progressive Forcing 处理步压缩与自回归漂移。三篇论文的共同点是：都在为“世界状态该用什么表示、如何随时间演化”给出显式设计，而非把连续性留给视频预测隐式学习。
 
-4. **机器人/具身方向出现“数据规模化 + 架构模块化”的双线推进。** 
- - 数据规模化：WinDEX 面向野外第一人称双目视频，构建度量 3D 手部标注、端到端网络、蒸馏流式模型与低成本采集硬件（2611.21143）；AnyR2V 把路侧多模态观测转成七摄像头环视视频，用路侧数据扩充自动驾驶训练（2611.19830）；AsymEEF 用少量源演示迁移到异构双臂末端执行器（2611.20557）。
- - 架构模块化：EasyNav 以显式共享导航状态作为模块唯一接口，实现表示无关的 ROS2 导航框架（2611.19894）；视觉语言导航系统把 Grounding DINO、深度定位、语义建图与 Nav2 串成端到端 ROS2 系统（2611.20558）。
- - 共同点：不再只追求单点算法，而是围绕“数据飞轮”和“可替换模块/时序契约”构建系统。
+4. **具身智能的安全与可控性开始被当作独立研究问题。** 一方面，InteractVLA 指出预训练 VLA 策略在智能体系统中被当作不透明的语言基元，失败时无法引导、只能重试或人工接管，于是用双向几何接口把流式 VLA 变成可几何引导、可检查的工具。另一方面，Network-Exposed Configuration Attacks 展示了另一类风险：在 Reachy Mini Lite 上，对话式提示注入被抵抗，但网络暴露的配置层可被未认证攻击者替换人格设置与云端 LLM 系统提示，并在物理硬件上产生可观察行为变化。两篇论文合起来说明，具身系统的失效面不只是“策略不够强”，还包括接口不可解释和部署配置不安全。
 
-5. **几何基础模型与经典几何方法并行回暖。** 
- - 几何基础模型被用于前馈 4D 驾驶重建（IGRecon4D，2611.21126）和单目度量深度评估（2611.20518）。
- - 同时，MomentPnP 用置换不变矩 + EM 的无学习路线在盲 PnP 上大幅降低旋转误差（2611.20797）；Polygraph 用位姿图、学习式图像检索、稀疏特征匹配与两级一致性门控实现在线多会话轨迹优化（2611.21163）。
- - 趋势不是“基础模型取代经典几何”，而是两者在鲁棒性、可解释性与在线效率上互补。
+5. **水下与机器人视觉偏向多任务联合与轻量化，且强调不确定性。** TRIDENT 用单主干加三个并行解码器联合做去雾、深度与不确定性估计，强调内存与推理时间效率；Joint-ID 用 Transformer 在共享层次化特征空间中联合图像增强与深度估计，并构建含多种失真与场景深度的合成数据集。两篇论文都面向水下散射、吸收、湍流导致的纹理模糊与低对比度，都把“增强”和“深度”视为相互促进而非独立预处理。这一方向的价值在于：为视觉引导的水下机器人提供更稳定的感知前端。
 
 #### 技术路线观察
 
-- **几何基础模型**：IGRecon4D 把实例级语义先验蒸馏进动态掩码学习，并用稀疏 LiDAR 引导稠密深度、反投影锚定高斯位置，体现“基础模型先验 + 传感器几何锚定”的组合路线。*What the Averages Hide* 则对 11 个近期架构做逐图失败分析，说明几何基础模型的评估正从平均指标转向失败模式与尺度归因。MomentPnP 代表另一极：不依赖学习，用矩匹配 + EM 处理无对应盲 PnP，强调可解释的几何初始化。
+**几何基础模型方向**呈现“显式几何先验回归”的态势。Refin3R 的路线是用 SfM 点做引导，并让 2D 分支外推几何覆盖、3D 分支建模多视图结构，本质上是把经典多视图几何的可靠性重新引入前馈模型。CascadeJEPA 则从自监督预训练侧切入，诊断语义与几何的失衡，并通过级联预测增强 patch 级交互。两者都没有推倒重来，而是在现有架构上做结构性修补，说明该方向当前的性价比高于重训大模型。
 
-- **3D/4D 重建**：Polygraph 走“在线、逐关键帧/空间簇、不建 3D 地图”的位姿图路线，用学习式检索 + 稀疏匹配 + 两级门控保证跨会话边可靠；MomentPnP 解决无对应位姿初始化；IGRecon4D 与 Cosmos4D 分别把 4D 重建推向驾驶场景与天文场景，共同点是引入外部约束（LiDAR、引力）而非纯自由形变。WinDEX 则把度量 3D 手部重建与视觉惯性 SLAM 结合，服务遥操作与策略学习。
+**3D/4D 重建方向**出现明显的“效率与规模双线并行”。一条线是压缩规模：ARG-Avatar 用仅 68M 可训练参数，借助动画与渲染已有的几何对应关系（FACRoPE、ITR）引导 token 关注对应 patch，质疑“必须靠扩容”的惯性。另一条线是扩张规模：DOOM-GS 处理超出显存的大规模动态高斯，CueSplat 在边缘设备上按预算稀疏调度精确形变。两条线其实共享同一逻辑——把计算放到真正需要的地方，而不是均匀地施加于所有图元或所有参数。
 
-- **神经场景表示**：3DGS 相关论文分化为三条线：监督目标（VODA 的体素监督）、不确定性（QuantileGS 的共形误差上界）、系统效率（GDM-GS 的空间数据管理）。Cosmos4D 把 4D 高斯泼溅与引力约束结合，说明高斯表示正在向“带物理先验的动态表示”扩展。整体看，3DGS 的竞争点从渲染保真度转向三维完整性、可靠性保证与轨迹级效率。
+**神经场景表示方向**的工程化特征最强。Cross3DGS 的关注点不是渲染质量，而是不同 GPU 与驱动在并行特性、内存限制、命令提交上的差异如何决定训练调度能否正确执行；DOOM-GS 关注时空图元的缓存管理；CueSplat 关注冻结主干下的后训练调度。同时，VODA 指出“渲染掩码准确不等于三维选择完整”，并用 Removal-3D 与 RDE 来度量体积完整性；QuantileGS 用共形校准给出逐像素 RGB 误差上界。这表明该方向正在补齐评价体系：从“看起来对不对”转向“三维上是否完整、误差是否有覆盖保证”。
 
-- **机器人/AR 应用**：WinDEX、AsymEEF、AnyR2V 关注数据采集与跨形态/跨视角复用，目标都是降低具身数据成本；EasyNav、视觉语言导航系统、Polygraph 关注系统架构与在线运行；Radar Panoptic Transformer 则在稀疏雷达点云上做全景分割，服务动态场景理解。应用侧的技术侧重是“可部署性”：时序契约、实时推理、低成本硬件、仿真验证与真实机器人实验。
-
-- **触觉与感知补充**：非成像光学触觉传感器综述（2611.20770）提出把机械载荷、光学编码、读出与触觉推断统一到机器人任务需求的框架，提示具身感知不只依赖视觉，触觉传感的“可辨识性 + 反馈时序”是另一条评估主线。
+**机器人/AR 应用方向**则在“利用先验、约束生成”上收敛。PriDex 把人类视频先验经仿真强化学习精炼为双臂灵巧操作演示，并用物体运动置信度自适应平衡物体级与腕部级引导；HandRSI 把推理 harness 的自动优化与选择性蒸馏做成递归闭环，用十项指标复合与 hypervolume 选择来约束改进；InteractVLA 用可微“指令到位姿”映射把智能体指定的末端目标转成动作专家的输入梯度。这些工作都在解决同一个工程难题：如何把不完美、不确定的上游信号（人类视频、语言指令、自动生成的推理后处理）转成可执行且可验证的机器人行为。
 
 #### 值得优先阅读的论文
 
-1. **The Mask Is Not the Object: Volumetric Supervision for 3D Gaussian Segmentation（2611.21383）** 
- 优先理由：直接挑战 3DGS 分割中“渲染掩码即对象”的隐含假设，提出即插即用监督目标与新基准/指标，对对象级 3DGS 编辑、移除、操作等下游任务影响面大。
+1. **Refin3R（2611.23051）**：它代表了几何基础模型当前最务实的一条改进路线——用 SfM 点做引导、双分支双向交互。若你在做前馈重建或点图预测，这篇的架构设计最可直接借鉴，且与 CascadeJEPA 的几何退化诊断互为参照。
 
-2. **What the Averages Hide: Monocular Metric Depth Models Still Fail in Everyday Scenes, Mostly on Scale（2611.20518）** 
- 优先理由：对 11 个架构、18 个模型评估、7 个基准 4,406 张图做逐图失败分析，结论“剩余困难主要是尺度”对单目度量深度、SLAM、机器人导航都有直接参考价值，且方法论可迁移到其他感知任务评估。
+2. **AgentWorld（2611.22880）**：它把“世界模型该推理什么状态”这一问题讲得最清楚，并用离散 agent token 把几何 grounding、推理监督与强化学习串起来。对自动驾驶之外的具身规划也有方法论迁移价值。
 
-3. **Polygraph: Large-Scale Multi-Session Trajectory Optimization using Pose Graphs（2611.21163）** 
- 优先理由：在线多会话轨迹优化是机器人/AR 长期建图的现实问题，论文明确处理“不建 3D 地图、逐关键帧/空间簇、两级一致性门控”，工程与系统参考价值高。
+3. **VODA / The Mask Is Not the Object（2611.21383）**：它指出的“渲染掩码准确但三维选择不完整”是 3DGS 分割中被低估的系统性偏差，且给出了可复用的基准与指标。做对象级 3D 编辑、移除、操作的研究者应优先读。
 
-4. **QuantileGS: Quantile-Based Conformal Bounds on RGB Rendering Errors for Novel View Synthesis with 3D Gaussian Splatting（2611.21253）** 
- 优先理由：把共形校准引入 3DGS 渲染误差上界，补足“新视角可靠性”
+4. **QuantileGS（2611.21253）**：不确定性量化在新视角合成中仍属少数派，但它直接关系到 3DGS 能否用于需要可靠性保证的下游决策。后处理框架、冻结模型、共形校准的组合使其实用门槛较低。
+
+5. **InteractVLA（2611.22584）**：它把 V
 
 ### interests.md 指令分析
 
@@ -146,6 +125,45 @@ Use the Actions tab on GitHub and run the workflow_dispatch trigger manually.
 **Primary category:** Geometry Foundation Models
 **Secondary categories:** 3D Reconstruction & Multi-view Geometry
 **Matched keywords:** point map, feed-forward 3D reconstruction, 3D reconstruction, structure from motion, SfM
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Refin3R: Geometry-Guided Refinement for Feed-Forward 3D Reconstruction
+- 作者：Jongmin Lee, Jaeyeong Kim, Seungryong Kim
+- 出版日期：2026-11-17T16:46:34Z
+- 分类：Geometry Foundation Models（主分类）；3D Reconstruction & Multi-view Geometry（次分类）
+- 链接：[摘要](https://arxiv.org/abs/2611.23051) | [PDF](https://arxiv.org/pdf/2611.23051)
+
+### 一句话总结
+Refin3R 利用 Structure-from-Motion（SfM）点对前馈式点图预测进行几何引导的细化，通过 2D 与 3D 双分支双向交互，生成稠密且准确的点图。
+
+### 研究问题
+前馈式 3D 重建模型能在单次前向中从多张图像预测稠密点图，但缺乏显式几何约束时，预测往往跨视图不一致且缺乏细粒度精度。已有方法虽引入相机位姿或深度等几何先验，但仅将其作为辅助输入、逐视图独立处理，或只在先验可用处细化几何，未能充分利用几何信息。
+
+### 核心思路/方法
+- 以 SfM 点为几何引导，在图像网格上传播 SfM 几何，对前馈点图进行细化。
+- 采用双分支架构：
+  - 2D 分支借助几何感知的骨干特征，将 SfM 几何扩展到其覆盖范围之外；
+  - 3D 分支对所有视图的 SfM 点进行推理，捕捉图像网格本身无法表示的多视图结构。
+- 两个分支双向交换信息，联合细化每个视图，输出稠密且准确的点图。
+
+### 主要贡献
+- 提出 Refin3R，用 SfM 点细化前馈点图，并将 SfM 几何在图像网格上传播。
+- 设计 2D/3D 双分支架构，分别负责扩展 SfM 几何覆盖范围与建模多视图结构，并通过双向信息交换联合细化各视图。
+- 据摘要，在 ScanNet++、ETH3D、Tanks & Temples 以及域外的人体与手术场景上，点图精度一致优于前馈式和几何引导方法，且运行速度快于最强的几何引导基线。
+
+### 局限性
+- 摘要未提供足够信息说明方法对 SfM 点质量或覆盖度的依赖程度及失效情形。
+- 摘要未提供足够信息说明各数据集上的具体量化指标、运行时间数值与消融实验结果。
+- 摘要未提供足够信息说明双分支的具体网络结构、训练策略与实现细节。
+- 摘要未提供足够信息说明在极端稀疏视角或 SfM 失败场景下的表现。
+
+### 阅读优先级
+中。理由：该工作针对前馈式 3D 重建的跨视图一致性与精度问题，提出以 SfM 点为几何引导的双分支细化框架，并在多个数据集及域外场景报告了精度与速度优势，对多视图几何与 3D 重建方向有参考价值；但摘要未给出量化结果与实现细节，需阅读全文才能评估其实际效果与适用边界。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -330,6 +348,46 @@ We present Kosmo-GFM, a scene reconstruction system that integrates a geometry f
 **Matched keywords:** avatar reconstruction, rendering, augmented reality
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：ARG-Avatar: Animation-Rendering Guidance for Efficient Feedforward Avatar Reconstruction
+- 作者：Jianjin Xu, Soham Dasgupta, Fernando De la Torre
+- 出版日期：2026-11-17T04:45:07Z
+- 分类：Dynamic / 4D Reconstruction；Neural Scene Representations & Rendering
+- 链接：[摘要](https://arxiv.org/abs/2611.22207) ｜ [PDF](https://arxiv.org/pdf/2611.22207)
+
+### 一句话总结
+提出一种仅含 68M 可训练参数的高效前馈虚拟人重建框架 ARG-Avatar，利用动画与渲染提供的几何对应关系引导注意力，以更少参数、数据和算力取得 SOTA 重建质量。
+
+### 研究问题
+从图像重建可动画的 3D 人体虚拟人对游戏和增强现实等应用很重要。前馈方法把推理时间缩短到数秒，但近期方法严重依赖扩大模型容量、训练数据和计算量。作者追问：这种规模化是否必要？摘要将问题定位为在保持前馈效率的同时，避免依赖大规模扩展来获得高质量重建。
+
+### 核心思路/方法
+核心洞察是：3D 动画和渲染本身已提供强几何对应关系，而现有方法大多试图从数据中学习这些关系。基于此，作者设计了两项组件：
+- Foreground Avatar Coordinate RoPE attention（FACRoPE）注意力机制；
+- Intermediate Token Rendering（ITR）流程。
+
+二者用于引导 avatar tokens 关注其对应的 patches，从而在前馈框架中利用动画-渲染引导实现高效重建。模型仅有 68M 可训练参数。
+
+### 主要贡献
+- 提出 ARG-Avatar，一个仅含 68M 可训练参数的高效前馈虚拟人重建框架，并达到 SOTA 重建质量。
+- 提出 FACRoPE 注意力和 ITR 流程，利用动画与渲染提供的几何对应关系引导 token 与 patch 的对应注意力。
+- 在多个数据集上验证：当使用两张或更多输入图像时，ARG-Avatar 持续优于先前方法。
+- 与 LHM++ 相比：可训练参数约少 9 倍，训练序列约少 4.8 倍，训练计算约少 14 倍，运行速度快 6 倍；在分布外 NeuMan 基准上 PSNR 提升 2.7 dB。
+
+### 局限性
+- 摘要仅说明“使用两张或更多输入图像”时持续优于先前方法，未提供单张输入图像场景的表现，具体限制未说明。
+- 摘要未提供失败案例、泛化边界、对特定数据分布的依赖等细节。
+- 摘要未提供训练数据规模、模型结构细节及消融实验的具体设置。
+- 其他潜在局限：摘要未提供足够信息。
+
+### 阅读优先级
+高。理由：该工作直接挑战“前馈虚拟人重建必须依赖大规模扩展”的假设，以 68M 参数取得 SOTA，并给出相对 LHM++ 的参数、数据、算力、速度和 PSNR 多项定量对比；同时涉及 FACRoPE 与 ITR 两个可复用设计，对动态/4D 重建与高效前馈方法研究具有较高参考价值。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Reconstructing animatable 3D human avatars from images is important for applications such as gaming and augmented reality. Feedforward methods make avatar reconstruction accessible by reducing inference time to a few seconds, but recent approaches rely heavily on scaling model capacity, training data, and computation. We ask whether such scaling is necessary. To this end, we introduce ARG-Avatar, an efficient feedforward framework with only 68M trainable parameters that achieves SOTA reconstruction quality. Our key insight is that 3D animation and rendering already provide strong geometric correspondences that existing methods largely attempt to learn from data. In light of this, we design the Foreground Avatar Coordinate RoPE attention (FACRoPE) and Intermediate Token Rendering (ITR) pipeline to guide avatar tokens to attend to their corresponding patches. Experiments across multiple datasets show that ARG-Avatar consistently outperforms prior methods when using two or more input images. Compared with LHM++, ARG-Avatar uses approximately 9$\times$ fewer trainable parameters, 4.8$\times$ fewer training sequences, and 14$\times$ less training compute, while running 6$\times$ faster and achieving a 2.7 dB PSNR improvement on the out-of-distribution NeuMan benchmark.
@@ -345,6 +403,44 @@ Reconstructing animatable 3D human avatars from images is important for applicat
 **Matched keywords:** motion trajectory, simulation
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：VTT: Reading Vehicle Size and Powertrain Type from Motion Trajectory Across Unseen Car Models
+- 作者：Yuhang Wang, Yuechen Guo, Jingxin Yang, Chuheng Wei, Suyang Chen, Abdulaziz Alhuraish, Yiyi Wang, Mingyang Ban, Jingran Sun, Hao Zhou
+- 出版日期：2026-11-17T02:49:01Z
+- 分类：Dynamic / 4D Reconstruction
+- 链接：摘要页 https://arxiv.org/abs/2611.22109 ；PDF https://arxiv.org/pdf/2611.22109
+
+### 一句话总结
+论文提出 VTT 数据集与基准，用于在未见过的车型上从运动轨迹和 CAN 信号识别车辆尺寸类别与动力类型，并比较序列模型、统计特征及大语言模型提出的物理特征。
+
+### 研究问题
+如何从车辆运动与控制器局域网（CAN）信号中识别车辆尺寸和动力类型，并在未见过的车型和未见过的驾驶员条件下评估跨车型泛化能力；同时比较不同输入特征与序列架构在该任务上的表现。
+
+### 核心思路/方法
+构建包含 9,062 次行驶、约 3,950 小时、1,431 辆车和 174 个车型的数据集，提供基于 footprint 的三类尺寸标签和动力类型标签，并设置未见车型与未见驾驶员的评估。使用 60 秒窗口，比较四种序列架构、统计特征以及由大语言模型提出的物理特征。训练中采用辅助物理目标、数据增强和任务特定加权。
+
+### 主要贡献
+- 提出面向跨未见车型车辆属性识别的 VTT 数据集与基准，包含尺寸类别和动力类型标签。
+- 在 60 秒窗口下系统比较四种序列架构、统计特征和大语言模型提出的物理特征。
+- 通过辅助物理目标、数据增强和任务特定加权，将纯电与燃油车辆识别的 drive-level macro-F1 提升至 92.6–93.0%，尺寸分类从 62.9% 提升至 67.1%。
+- 在额外 4,061 名驾驶员的公开日志上验证：全输入模型对 88 个车型中的 86 个正确识别动力类型；尺寸准确率为 63.2%，接近内部车辆级结果 63.5%。
+- 物理特征分析将动力类型识别与减速行为关联，将尺寸识别与转向响应关联。
+
+### 局限性
+- 尺寸分类准确率仍明显低于动力类型识别，跨车型尺寸泛化能力有限。
+- 摘要指出尺寸类别边界附近存在错误，且更长观测带来的增益有限。
+- 摘要强调标签分辨率和训练车队覆盖对跨车型泛化的重要性，但未提供更细粒度的失败案例分析。
+- 关于四种序列架构的具体名称、各自性能差异、数据增强与任务加权的详细消融结果，摘要未提供足够信息。
+- 公开日志的具体来源、数据分布及与内部数据集的差异，摘要未提供足够信息。
+
+### 阅读优先级
+中。理由：该工作涉及车辆轨迹属性识别与跨车型泛化基准，包含数据集、评估协议和多类特征比较，对交通分析、仿真和轨迹数据增强有潜在参考价值；但摘要显示尺寸分类性能仍有限，且部分实验细节未给出，是否优先精读取决于读者对跨车型泛化或 CAN/运动信号建模的具体兴趣。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Vehicle size and powertrain information can enrich trajectory data for traffic analysis and simulation. We present VTT, a dataset and benchmark for identifying these attributes from motion and controller area network (CAN) signals across unseen car models. The dataset contains 9,062 drives, about 3,950 h, from 1,431 vehicles and 174 car models. It provides three footprint-based size classes, powertrain labels, and evaluation on unseen car models and unseen drivers. Using 60-s windows, we compare four sequence architectures, statistical features and physical features proposed by large language models. Training with auxiliary physical targets, data augmentation and task-specific weighting raises drive-level macro-F1 to 92.6-93.0% for battery-electric versus combustion vehicles and from 62.9% to 67.1% for size classification. On public logs from 4,061 additional drivers, the full-input model identifies powertrain correctly for 86 of 88 car models; size accuracy is 63.2%, close to the internal vehicle-level result of 63.5%. Physical-feature analysis links powertrain recognition to deceleration behaviour and size recognition to steering response. Errors near size-class boundaries and limited gains from longer observations highlight the importance of label resolution and training-fleet coverage for cross-model generalisation.
@@ -358,6 +454,45 @@ Vehicle size and powertrain information can enrich trajectory data for traffic a
 **Primary category:** Dynamic / 4D Reconstruction
 **Secondary categories:** Neural Scene Representations & Rendering
 **Matched keywords:** dynamic Gaussian, 4D Gaussian, Gaussian Splatting, rendering, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：CueSplat: Learning to Schedule Sparse Deformation for Dynamic Gaussian Splatting on Edge Devices
+- 作者：Qingyuan Tang, He Zhu, Shixuan Sun, Anbang Wu, Jingwen Leng, Minyi Guo, Yu Feng
+- 出版日期：2026-11-17T02:24:13Z
+- 分类：Dynamic / 4D Reconstruction；Neural Scene Representations & Rendering
+- 链接：[摘要](https://arxiv.org/abs/2611.22095) / [PDF](https://arxiv.org/pdf/2611.22095)
+
+### 一句话总结
+CueSplat 是一种训练后框架，通过轻量学习路由器按预算稀疏选择需精确形变更新的高斯，并复用邻近帧选择结果、以漂移信号触发全形变重建历史，从而在边缘设备上加速 4D 高斯泼溅渲染。
+
+### 研究问题
+基于形变的 4D 高斯泼溅需要逐帧对所有高斯评估形变网络，这在边缘设备上计算开销很大；而高斯轨迹往往具有局部可预测性，但预测可靠性会随高斯和时间变化。论文试图在保持预训练主干冻结及高斯集合不变的前提下，减少逐帧精确形变评估的计算量。
+
+### 核心思路/方法
+- 利用高斯轨迹的局部时间规律性，从近期历史预测高斯属性。
+- 使用轻量学习路由器，在离线校准的场景特定预算内选择需要精确形变更新的高斯；选择时考虑预测可靠性与渲染贡献。
+- 选择的索引在邻近帧间复用，以降低路由开销；被选中的高斯在每一帧仍获得精确更新。
+- 使用漂移信号调度连续三帧全形变，以重建预测历史并控制累积预测误差。
+- 方法为训练后框架，保持预训练主干冻结并保留其高斯集合。
+
+### 主要贡献
+- 提出 CueSplat 训练后框架，在冻结预训练主干和保留高斯集合的条件下调度稀疏形变。
+- 结合历史预测、轻量学习路由器、场景特定离线校准预算、邻近帧索引复用与漂移触发的全形变重建。
+- 在四种主流 4DGS 算法上评估，Jetson AGX Orin 和 Orin NX 上分别最高获得 \(6.74\times\) 和 \(8.15\times\) 加速，数据集平均 PSNR 最多下降 \(0.16\) dB。
+
+### 局限性
+- 摘要未提供足够信息说明方法在更广泛场景、不同预算设置或极端动态下的泛化表现。
+- 摘要未提供足够信息说明连续三帧全形变策略的额外开销细节及其对总体加速的影响。
+- 摘要未提供足够信息说明学习路由器的训练数据、离线校准流程与超参数敏感性。
+- 摘要未提供足够信息说明除 PSNR 外的其他质量指标、内存占用或能耗表现。
+
+### 阅读优先级
+中。理由：论文聚焦边缘设备上的 4DGS 推理加速，问题明确且报告了较大加速与较小 PSNR 下降；但摘要未给出方法细节、完整实验设置与多指标评估，是否高优先级取决于读者对边缘部署和 4D 动态重建加速的具体兴趣。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -598,6 +733,45 @@ Dynamic reconstruction from casual video must preserve valid subject motion whil
 **Matched keywords:** depth estimation, feature matching
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：TRIDENT: Efficient Triple-Task Learning of Dehazing, Depth, and Uncertainty Estimation for Underwater 3-D Robot Visual Perception
+- 作者：Geonmo Yang, Younggun Cho
+- 出版日期：2026-11-17T05:08:06Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：摘要页 https://arxiv.org/abs/2611.22224 ；PDF https://arxiv.org/pdf/2611.22224 ；补充材料 https://sites.google.com/view/underwater-trident/home
+
+### 一句话总结
+论文提出 TRIDENT，一种面向水下 3-D 机器人视觉感知的快速轻量三任务联合学习模型，同时处理图像增强、深度估计与不确定性估计，并通过共享主干和三个并行解码器提升特征共享效率。
+
+### 研究问题
+水下视觉系统受光传播影响，常出现纹理模糊和颜色对比度低的问题，这会显著降低稳定机器人操作所需的感知能力。论文关注水下 3-D 视觉系统中的多维视觉任务，具体包括图像增强、深度估计和不确定性估计，并希望在同时完成三项任务的同时保持模型在内存占用和推理时间上的效率。
+
+### 核心思路/方法
+TRIDENT 采用一个主干结构与三个并行解码器，以实现高效的特征共享；模型被设计为快速且轻量的形式。摘要还指出，该模型被设计为可训练以表达复杂参数化。论文将图像增强、深度估计与不确定性估计作为联合学习任务，并报告该方法在特征匹配中表现出鲁棒性，且可从 2-D 视觉任务平滑扩展到 3-D 视觉任务。
+
+### 主要贡献
+- 提出面向水下 3-D 机器人视觉感知的 TRIDENT 模型，联合处理图像增强、深度估计和不确定性估计三项任务。
+- 采用一个主干加三个并行解码器的结构，实现高效特征共享，并以快速、轻量为设计目标。
+- 在多个标准数据集上的实验评估中，摘要声称 TRIDENT 在图像增强和深度估计上显著优于现有方法。
+- 尽管执行三项任务，摘要声称该模型在内存大小和推理时间上均比其他方法更高效。
+- 联合学习方法在特征匹配中展现出鲁棒性，并从 2-D 视觉任务扩展到 3-D 视觉任务。
+
+### 局限性
+- 摘要未提供足够信息说明具体使用了哪些标准数据集、数据规模及采集条件。
+- 摘要未提供足够信息说明训练细节、损失函数设计、复杂参数化的具体形式及超参数设置。
+- 摘要未提供足够信息给出内存大小、推理时间和精度指标的具体数值。
+- 摘要未提供足够信息说明不确定性估计的定量评估方式与结果。
+- 摘要未提供足够信息说明特征匹配鲁棒性的实验设置、对比方法与失败情形。
+- 摘要未提供足够信息讨论模型在真实水下机器人平台上的部署验证与实时性边界。
+
+### 阅读优先级
+中。理由：该论文面向水下机器人 3-D 视觉感知，将去雾、深度与不确定性估计统一到一个轻量三任务模型中，问题设定和应用方向明确；摘要声称在图像增强、深度估计及效率上优于现有方法，并涉及 2-D 到 3-D 任务扩展与特征匹配鲁棒性。但摘要未给出具体数据集、指标数值和实验细节，是否值得深入阅读需结合全文实验与机器人部署验证进一步判断。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Underwater visual systems often suffer from blurry textures and low color contrast due to the inevitable light propagation. These issues can significantly degrade the perception of stable robotic operations. In this paper, we introduce a novel learning-based sensing system that tackles the multidimensional vision tasks in underwater; concretely, we deal with image enhancement, depth estimation, and uncertainty for 3-D visual systems. Also, we propose a TRIDENT model in a fast and lightweight manner; TRIDENT consists of three parallelized decoders and one backbone structure for efficient feature sharing. In addition, it is designed to be trained to express complex parameterization. In experimental evaluation on several standard datasets, we demonstrate that TRIDENT significantly outperforms other existing methods on image enhancement and depth estimation. Despite performing three tasks, our model has better efficiency than the others for both memory size and inference time. Finally, our joint learning approach demonstrates robustness in feature matching and seamlessly extends from 2-D to 3-D vision tasks. Supplements are available at https://sites.google.com/view/underwater-trident/home
@@ -613,6 +787,45 @@ Underwater visual systems often suffer from blurry textures and low color contra
 **Matched keywords:** depth estimation, feature matching, robotics
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Joint-ID: Transformer-based Joint Image Enhancement and Depth Estimation for Underwater Environments
+- 作者：Geonmo Yang, Gilhwan Kang, Juhui Lee, Younggun Cho
+- 出版日期：2026-11-17T04:49:09Z
+- 分类：主分类为 3D Reconstruction & Multi-view Geometry；无次级分类
+- 链接：摘要页 https://arxiv.org/abs/2611.22212 ；PDF https://arxiv.org/pdf/2611.22212 ；补充材料 https://sites.google.com/view/joint-id/home
+
+### 一句话总结
+提出基于 Transformer 的 Joint-ID 网络，从原始水下图像中联合学习图像增强与深度估计，以提升水下视觉感知质量并服务于水下机器人相关视觉任务。
+
+### 研究问题
+水下成像受散射、吸收和湍流等因素影响，导致图像质量下降、可见度受限；论文希望同时改善水下图像质量并获取深度信息，以支持水下环境中的视觉感知。
+
+### 核心思路/方法
+- 采用联合学习思路，将图像增强与深度估计放在同一框架中处理，输入为原始水下图像。
+- 提出 Transformer 神经网络 Joint-ID，目标是获得高感知质量的图像与深度信息。
+- 构建多模态目标函数，针对无效深度、清晰度不足以及由颜色和局部纹理导致的图像退化进行约束。
+- 设计端到端训练流程，在共享的层次化特征空间中实现联合恢复与深度估计。
+- 提出一个包含多种失真和场景深度的合成数据集，用于多任务学习。
+- 在合成数据集、标准数据集以及具有不同光谱和严重浑浊的真实水下图像上评估 Joint-ID；并展示其在特征匹配和显著性检测方面的能力，面向视觉引导的水下机器人应用。
+
+### 主要贡献
+- 提出 Joint-ID，一种基于 Transformer 的水下图像增强与深度估计联合学习方法，可从原始水下图像获取高感知质量图像和深度信息。
+- 提出面向无效深度、清晰度不足以及颜色与局部纹理退化的多模态目标函数。
+- 设计共享层次化特征空间中的端到端联合恢复与深度估计训练流程。
+- 提出包含多种失真与场景深度的合成数据集，用于多任务学习。
+- 在合成、标准及真实水下图像上评估方法有效性，并展示其用于特征匹配和显著性检测的潜力。
+
+### 局限性
+摘要未提供足够信息。摘要未给出失败场景、计算开销、实时性、泛化边界或定量局限；仅提到真实水下图像具有不同光谱和严重浑浊，但未说明方法在这些条件下的具体限制。
+
+### 阅读优先级
+中。理由：论文主题聚焦水下图像增强与深度估计的联合学习，并涉及 Transformer、多任务目标函数、合成数据集和水下机器人视觉应用；若关注水下视觉感知或多任务学习，具有相关性。但摘要未提供具体定量结果、对比方法细节和局限性信息，是否精读需结合对这些方向的具体兴趣再判断。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Underwater imaging is a challenging task due to factors such as scattering, absorption, and turbulence, which degrade image quality and limit visibility. In this paper, we propose a novel approach for enhancing underwater images that leverages the benefits of joint learning for simultaneous image enhancement and depth estimation. We introduce Joint-ID, a transformer-based neural network that can obtain high-perceptual image quality and depth information from raw underwater images. Our approach formulates a multi-modal objective function that addresses invalid depth, lack of sharpness, and image degradation based on color and local texture. We design an end-to-end training pipeline that enables joint restoration and depth estimation in a shared hierarchical feature space. Additionally, we propose a synthetic dataset with various distortions and scene depths for multi-task learning. We evaluate Joint-ID on synthetic and standard datasets, as well as real underwater images with diverse spectra and harsh turbidity, demonstrating its effectiveness for underwater image enhancement and depth estimation. Furthermore, we demonstrate the ability of Joint-ID to perform feature matching and saliency detection for visually guided underwater robots. Our proposed method has the potential to improve the visual perception of underwater environments and benefit applications such as oceanography and underwater robotics. Supplements are available at: https://sites.google.com/view/joint-id/home
@@ -626,6 +839,48 @@ Underwater imaging is a challenging task due to factors such as scattering, abso
 **Primary category:** 3D Reconstruction & Multi-view Geometry
 **Secondary categories:** None
 **Matched keywords:** pose estimation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：HandRSI: Recursive Self-Improvement for Hand Pose Estimation
+- 作者：Zhekai Wang, Luqing Luo, Wenhao Yao, Junjie Lu, Huanan Zhu, Feifei Gao, Yuhua Jiang
+- 出版日期：2026-11-17T03:55:44Z
+- 分类：3D Reconstruction & Multi-view Geometry
+- 链接：[摘要](https://arxiv.org/abs/2611.22164) / [PDF](https://arxiv.org/pdf/2611.22164)
+
+### 一句话总结
+HandRSI 提出一种递归自我改进框架，将手部姿态估计器的“推理执行框架（harness）自动优化”与“基于该框架的选择性蒸馏”交替迭代，从而减少边界漏检、遮挡误置与抖动。
+
+### 研究问题
+摘要指出，第一人称 3D 手部姿态估计器仍存在三类失败：图像边界处漏检手部、遮挡手部定位错误以及抖动。这类失败通常依赖手写推理后处理与微调来修正，而这两个步骤相互依赖，却又被分开调优。论文关注如何把二者纳入统一、可递归改进的流程中。
+
+### 核心思路/方法
+- 系统由视频估计器与可执行的推理 harness 组成。
+- 每一轮中，coding agents 改进 harness；只有在该改动于留出数据上提升全部十项基准指标的复合表现、且没有显著降低任一指标时，才被接受。
+- 被接受的 harness 通过选择性蒸馏指导估计器：在无真值帧上监督手部存在性与时序一致性，在真值帧上监督姿态。
+- 由于更新后的估计器可能改变哪些推理改进仍然有效，harness 会在新估计器上重新验证，形成递归自我改进闭环。
+- 在精度—速度前沿上使用 hypervolume 选择，得到 Lite、Medium、Heavy 三种系统，运行速度为 20.7 至 41.1 FPS。
+
+### 主要贡献
+- 提出 HandRSI 递归自我改进框架，耦合推理 harness 优化与估计器选择性蒸馏。
+- 以统一的十指标复合准则和“不得显著回退任一指标”的约束接受 harness 改动，并在更新后的估计器上重新验证。
+- 从 ACE-Ego-Hand 模型出发，五轮迭代在 HOT3D 上降低 MPJPE-p 35%、在 ARCTIC 上降低 11%，并将抖动约减半。
+- 在 HOT3D 上，HandRSI 的 MPJPE-p 比在同一真值上微调的 ACE-Ego-Hand 低 16%。
+- 在统一协议下，于两个基准的全部十项指标上优于九种复跑的已发表方法。
+- 公开代码、评估器、harnesses 与权重。
+
+### 局限性
+- 摘要未提供足够信息说明计算成本、迭代轮数上限、coding agents 的具体配置与失败案例。
+- 摘要未提供足够信息说明各基准数据规模、训练/留出划分细节及统计显著性检验方式。
+- 摘要未提供足够信息说明方法在其他手部数据集、不同传感器或非第一人称场景中的泛化表现。
+- 摘要未提供足够信息说明 harness 改动空间、接受准则中“显著回退”的具体阈值，以及超参数敏感性。
+
+### 阅读优先级
+高。理由：该工作直接针对第一人称 3D 手部姿态估计中的边界、遮挡与抖动问题，给出可递归自我改进的系统级方案，并在两个基准的十项指标上报告了相对强基线与其他方法的比较，同时公开代码与权重；对关注手部姿态估计、推理时自适应与自动优化推理流程的研究者有较高参考价值。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1128,6 +1383,44 @@ Micro aerial vehicles that operate without GPS often run SLAM on ARM-based edge 
 **Matched keywords:** scene reconstruction, Gaussian Splatting, 3D Gaussian Splatting, 3DGS, rendering, splatting, mapping
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：ReTouchGS: Ultralight Render-free Aesthetic Color Enhancement and Transfer for 3D Gaussian Splatting
+- 作者：Chuanzhi Xu, Boyu Wei, Chengkun Yue, Xuanhua Yin, Yiyang Li, Haodong Chen, Qiang Qu, Weidong Cai
+- 出版日期：2026-11-17T16:47:43Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：[摘要](https://arxiv.org/abs/2611.23054) / [PDF](https://arxiv.org/pdf/2611.23054)
+
+### 一句话总结
+ReTouchGS 是面向预训练 3D Gaussian Splatting 模型的免参考美学色彩增强与参考引导色彩迁移框架，通过预测场景级 LUT 并结合轻量网络实现无需渲染的解析式颜色更新。
+
+### 研究问题
+现有 3DGS 色彩迁移与交互编辑方法依赖参考图像和用户指定颜色调整；而在许多应用中，用户只需要自动的美学色彩增强，使场景在视觉上更吸引人，同时保持跨视角的颜色与色调一致。摘要指出，如何对预训练 3DGS 模型进行免参考的美学色彩增强，并兼顾参考引导的色彩迁移，是本文关注的问题。
+
+### 核心思路/方法
+- 面向预训练 3DGS 模型，提出免参考美学色彩增强：从模型及其关联相机参数预测场景级颜色查找表（LUT）。
+- 支持参考引导色彩迁移：使用同一场景的一个编辑视图及其对应原始渲染，拟合场景级 LUT。
+- 使用共享的 blend-aware 色彩细化网络（仅 44.7K 参数）对解析式颜色更新进行细化，实现无需渲染的颜色映射。
+- 方法保持几何不变，并可在数秒内输出标准 3DGS 资产。
+- 设计 ReTouch3D 基准，用于评估跨视角的美学色彩增强与参考引导色彩迁移。
+
+### 主要贡献
+- 据摘要所述，提出首个面向预训练 3DGS 模型的免参考美学色彩增强框架。
+- 提出场景级 LUT 预测与基于单编辑视图的参考引导 LUT 拟合路径，统一支持美学增强与参考引导迁移。
+- 设计仅 44.7K 参数的共享 blend-aware 色彩细化网络，实现无需渲染的解析式颜色更新。
+- 构建 ReTouch3D 基准以支持跨视角评估。
+- 摘要称实验在美学色彩增强与参考引导色彩迁移上表现出高色彩准确度，并对未见场景具有较强泛化能力。
+
+### 局限性
+摘要未提供足够信息。摘要未给出具体失败情形、适用范围限制、计算开销细节或对不同 3DGS 变体的适用性分析；相关局限需以论文正文为准。
+
+### 阅读优先级
+中。理由：该工作聚焦 3DGS 的免参考美学色彩增强与轻量免渲染颜色更新，问题定位清晰，且提供基准与跨视角一致性诉求；但摘要未展开定量结果、对比基线细节与失败案例分析，是否值得优先精读取决于读者对 3DGS 颜色编辑、LUT 风格迁移或轻量后处理方向的兴趣。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 3D Gaussian Splatting (3DGS) enables photorealistic scene reconstruction. Existing 3DGS color transfer and interactive editing methods are guided by reference images and user-specified color adjustments. However, in many applications, users simply want aesthetically guided color enhancement that automatically makes the scene more visually appealing while maintaining consistent colors and tones across viewpoints. We present ReTouchGS, to our knowledge the first framework for reference-free aesthetic color enhancement of pretrained 3DGS models. It predicts a scene-level color lookup table (LUT) from the model and its associated camera parameters. ReTouchGS also supports reference-guided color transfer by fitting a scene-level LUT using one edited view of the same scene and its corresponding original render. A shared blend-aware color refinement network with only 44.7K parameters refines an analytic color update to realize either color mapping without rendering. It preserves geometry and delivers standard 3DGS assets in seconds. We also design the ReTouch3D benchmark to support the evaluation of aesthetic color enhancement and reference-guided color transfer across viewpoints. Experiments demonstrate high color accuracy and strong generalization to unseen scenes in both aesthetic color enhancement and reference-guided color transfer.
@@ -1141,6 +1434,49 @@ Micro aerial vehicles that operate without GPS often run SLAM on ARM-based edge 
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** None
 **Matched keywords:** Gaussian Splatting, splatting
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：DOOM-GS: Dynamic Out-of-core Optimization for Massive Gaussian Splatting
+- 作者：Doğa Yılmaz, Jialin Zhu, Binglun Wang, He Wang
+- 出版日期：2026-11-17T14:00:20Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：摘要页 https://arxiv.org/abs/2611.22805 ；PDF https://arxiv.org/pdf/2611.22805
+
+### 一句话总结
+DOOM-GS 是针对大规模动态 Gaussian Splatting 的首个外存（out-of-core）优化方法，通过面向时空图元的内存管理策略与面向海量图元的快速学习方法，在 GPU 显存不足时仍支持城市级动态场景重建。
+
+### 研究问题
+传统 Gaussian Splatting 采用 in-core 训练，假设 GPU 显存足以容纳全部图元；当图元数量超过显存容量（如大规模环境）时该假设失效。已有外存训练研究仅限静态场景，而动态 GS 图元在空间和时间上移动，破坏了现有外存研究的常见假设，在内存管理与训练上带来新挑战。摘要未提供足够信息说明具体破坏的假设细节与训练困难的具体形式。
+
+### 核心思路/方法
+- 提出 DOOM-GS，首个专门面向大规模动态 GS 的外存优化方法。
+- 设计新的内存管理策略，针对时空图元优化缓存。
+- 提出面向大量图元的快速学习方法。
+- 由于缺乏合适的大规模动态 GS 数据集，构建并贡献了一个新数据集用于评估。
+- 因无直接可比方法，适配若干密切 related 方法进行对比。
+- 摘要未提供足够信息说明缓存策略的具体机制、快速学习方法的算法细节与实现方式。
+
+### 主要贡献
+- 首次将外存优化扩展到动态 Gaussian Splatting，填补静态外存研究未覆盖的动态场景空白。
+- 提出面向时空图元的内存管理策略与面向海量图元的快速学习方法。
+- 贡献一个用于大规模动态 GS 评估的新数据集（摘要未提供足够信息说明数据集规模、采集方式与场景类型）。
+- 通过广泛评估验证有效性，宣称可在中等硬件上高质量重建城市级动态场景，为后续研究与应用提供基础工具。
+- 摘要未提供足够信息说明具体定量指标、对比结果与消融实验结论。
+
+### 局限性
+- 摘要未提供足够信息说明方法的具体计算开销、内存换入换出代价与实时性表现。
+- 摘要未提供足够信息说明对硬件配置的具体要求与“中等硬件”的界定。
+- 摘要未提供足够信息说明新数据集的覆盖范围与多样性，以及适配对比方法的公平性细节。
+- 摘要未提供足够信息说明方法在极端规模或高度动态场景下的失效条件。
+- 摘要未提供足够信息说明代码、数据是否公开。
+
+### 阅读优先级
+中。理由：该论文针对大规模动态 GS 的显存瓶颈提出首个外存优化方案，并附带新数据集与对比评估，问题定位清晰、应用指向明确（城市级动态场景）；但摘要未给出定量结果、方法细节与开源信息，是否值得深入阅读需结合正文实验与实现细节进一步判断。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1158,6 +1494,40 @@ Traditional Gaussian Splatting (GS) methods use in-core training, i.e. assuming 
 **Matched keywords:** Gaussian Splatting, 3D Gaussian Splatting, 3DGS, splatting
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Cross3DGS: Unified Vulkan-Based 3D Gaussian Splatting Training from Workstations to Mobile Devices
+- 作者：Hiroyuki Sato, Yusuke Takimoto
+- 出版日期：2026-11-17T05:39:40Z
+- 分类：Neural Scene Representations & Rendering
+- 链接：https://arxiv.org/abs/2611.22240
+
+### 一句话总结
+提出基于 Vulkan 的跨厂商、跨平台 3D Gaussian Splatting 训练器 Cross3DGS，通过按设备选择执行调度，使同一套优化器在从工作站到手机的多类 GPU 上完成标准质量训练。
+
+### 研究问题
+现有 3DGS 训练通常依赖 CUDA 工作站；要在拍摄设备或其配套手机、笔记本上训练，仅移植 kernel 不够，因为 GPU 与驱动在并行特性、内存限制和命令提交上存在差异，这些差异决定训练调度能否正确执行并返回正确更新。如何在跨厂商、跨平台环境下保持同一优化器并正确执行训练，是论文关注的问题。
+
+### 核心思路/方法
+Cross3DGS 是一个跨厂商、跨平台的 Vulkan 训练器，保留一个优化器，并按设备分两步选择执行调度：先依据设备限制、工作负载规模和观察到的驱动失败，用规则排除已知不能正确运行的调度；再按固定偏好顺序从剩余可行调度中选择一个。论文以标准质量训练（30k 次更新、一百万个 Gaussian）为统一配置。
+
+### 主要贡献
+- 提出 Cross3DGS，一个基于 Vulkan 的跨厂商、跨平台 3DGS 训练器，采用单一优化器与按设备调度选择机制。
+- 在摘要所述测量配置中，覆盖 NVIDIA、Intel、Arm、Qualcomm、AMD 和 Apple GPU，包括 Android 设备和 iPhone，均完成标准质量训练；而现有可移植训练器 VkSplat 和 Brush 在部分移动 GPU 上无法运行。
+- 在工作站 11 个场景上平均，Cross3DGS 质量高于 VkSplat，训练时间无显著差异；Brush 在相近质量下训练时间约为其三倍。
+- Cross3DGS 的最终质量在不同设备间几乎一致。
+- 提供一个移动应用，可在设备上完成从手持采集到可查看模型的整个流程。
+
+### 局限性
+摘要未提供足够信息说明具体设备型号、完整实验设置、各平台训练时间数值、内存占用、功耗与热限制、规则覆盖范围及失败调度的具体类型；也未提供移动端训练规模、模型质量评价指标细节和与更多基线方法的比较。摘要未提供足够信息评估方法在未测量 GPU/驱动上的泛化能力。
+
+### 阅读优先级
+中。理由：论文主题涉及 3DGS 训练的跨厂商与移动端部署，若关注 Vulkan 可移植训练、端侧 3DGS 应用或跨 GPU 调度，具有较高相关性；但摘要仅给出方法框架和部分结果概述，缺少详细实验与实现信息，是否需要优先精读取决于对端侧训练和跨平台部署的具体兴趣。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Scenes captured with handheld and wearable cameras are still shipped to a CUDA workstation for 3D Gaussian Splatting (3DGS) training. Training on the device that captured them, or on its companion phone or laptop, requires more than translating kernels: GPUs and drivers differ in parallel features, memory limits, and command submission, and these differences decide whether a training schedule executes and returns the correct update. We present Cross3DGS, a cross-vendor, cross-platform Vulkan trainer that keeps one optimizer and chooses its execution schedule per device in two steps: rules on device limits, workload size, and observed driver failures exclude the schedules known not to run correctly, and a fixed preference order selects one of the remaining feasible schedules. The same core completes standard-quality training (30k updates, one million Gaussians) on every configuration we measured, spanning NVIDIA, Intel, Arm, Qualcomm, AMD, and Apple GPUs and including Android devices and an iPhone, whereas the existing portable trainers VkSplat and Brush do not run on some of the mobile GPUs. Averaged over 11 scenes on a workstation, Cross3DGS has higher quality than VkSplat with no significant difference in training time, and Brush reports about three times the training time at comparable quality. The final quality of Cross3DGS is nearly identical across devices. A mobile application turns a handheld capture into a viewable model entirely on the device.
@@ -1171,6 +1541,49 @@ Scenes captured with handheld and wearable cameras are still shipped to a CUDA w
 **Primary category:** Neural Scene Representations & Rendering
 **Secondary categories:** 3D Reconstruction & Multi-view Geometry
 **Matched keywords:** SLAM, Gaussian Splatting, rendering, splatting, mapping
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：CoSphere-SLAM: Multi-Agent Panoramic Gaussian Splatting SLAM with Spherical Loop Closure
+- 作者：Qi Shao, Zhihao Cao, Shuhao Zhai, Taoyu Wu, Zhuoxiao Li, Anh Nguyen, Long Hu, Xianzhi Li, Hong Liang, Baoru Huang, Liang Li
+- 出版日期：2026-11-17T05:37:15Z
+- 分类：主分类 Neural Scene Representations & Rendering；次分类 3D Reconstruction & Multi-view Geometry
+- 链接：[摘要](https://arxiv.org/abs/2611.22235) / [PDF](https://arxiv.org/pdf/2611.22235)
+
+### 一句话总结
+提出首个面向全景相机的多智能体高斯泼溅 SLAM 框架 CoSphere-SLAM，通过球面回环闭合与方向性全局优化应对任意朝向重叠、对称房间误回环、单目尺度漂移和短基线深度噪声问题。
+
+### 研究问题
+论文聚焦多智能体全景相机协作的密集建图与 SLAM，具体问题包括：
+- 全景智能体可在任意 3D 朝向下观测到重叠场景，不同于仅能在相似朝向下共享视图的针孔智能体；但搜索全旋转会产生跨不同对称房间、彼此一致的虚假回环闭合。
+- 连续单目尺度漂移会在重访表面处使刚性合并的地图发生分裂。
+- 短基线下的深度噪声会扭曲回环的平移方向。
+
+### 核心思路/方法
+- **球面回环闭合**：在 $\mathrm{SO}(3)$ 上通过快速傅里叶相关对齐球面特征，以支持任意朝向；并通过全局 $\mathrm{Sim}(3)$ 共识拒绝对称虚假回环。
+- **方向性全局优化**：基于回环构建逐关键帧 $\mathrm{Sim}(3)$ 位姿图，采用对数尺度正则化修正尺度漂移，并将光流平移方向与基于深度的平移幅值分离。
+- **全向高斯融合**：利用每个高斯所属关键帧的相似度变换高斯，并在其最大射线响应处渲染高斯，以联合细化位姿与地图。
+
+### 主要贡献
+- 提出 CoSphere-SLAM，摘要称其为首个面向全景相机的多智能体高斯泼溅 SLAM 框架。
+- 设计球面回环闭合机制，在 $\mathrm{SO}(3)$ 上通过快速傅里叶相关对齐球面特征，并利用全局 $\mathrm{Sim}(3)$ 共识拒绝对称虚假回环。
+- 提出方向性全局优化，以逐关键帧 $\mathrm{Sim}(3)$ 位姿图和对数尺度正则化修正尺度漂移，并分离光流平移方向与深度平移幅值。
+- 提出全向高斯融合，将高斯按关键帧相似度变换并在最大射线响应处渲染，以联合细化位姿和地图。
+- 摘要称在室内与跨会话多智能体全景基准上，于单智能体和多智能体方法中取得 state-of-the-art 的轨迹精度与渲染质量。
+
+### 局限性
+- 具体实验数据集规模、基线方法清单、定量指标数值和消融实验细节：摘要未提供足够信息。
+- 方法在极端尺度漂移、严重深度噪声或高度复杂对称环境下的失败模式与鲁棒性边界：摘要未提供足够信息。
+- 计算开销、实时性、通信带宽和地图存储需求：摘要未提供足够信息。
+- 对全景相机标定误差、不同全景传感器型号的敏感性：摘要未提供足够信息。
+- 代码与数据是否公开、项目网站以外的复现细节：摘要未提供足够信息。
+
+### 阅读优先级
+**中**。理由：该论文面向多智能体全景高斯泼溅 SLAM，问题定义清晰，球面回环、$\mathrm{Sim}(3)$ 共识与方向性全局优化具有一定方法新意，且摘要声称取得 state-of-the-art 轨迹与渲染结果；但摘要未给出实验规模、基线、定量结果和失败案例分析，是否值得深入阅读需结合全文实验与可复现性进一步判断。若关注全景 SLAM、多智能体协作建图或高斯泼溅 SLAM，可优先查阅实验部分。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1445,6 +1858,48 @@ Reconstructing optically thick media from photographs requires modeling multiple
 **Matched keywords:** simulation, world model
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Code World Model 2.0: Towards Infinite Controllable Video Generation
+- 作者：Ruoyu Wang, Hao Zhong, Yanming Yang, Jiahao Tian, Lin Liu, Biao Gong, Guoshan Lu, Yiding Tian, Chunhua Shen, Zhenzhong Lan, Chi Zhang
+- 出版日期：2026-11-17T15:23:57Z
+- 分类：主分类 Embodied / Robotics / AR Applications；次分类：摘要未提供
+- 链接：[摘要](https://arxiv.org/abs/2611.22925) / [PDF](https://arxiv.org/pdf/2611.22925)
+
+### 一句话总结
+论文提出 Invoker-Render：以结构代理、外观参考和语言为共享条件接口，将双向创作模型与因果四步流式模型配对，并通过 Progressive Forcing 缓解步压缩与自回归漂移，面向可控视频生成与实时交互流式渲染。
+
+### 研究问题
+摘要指出视觉代理将显式世界状态模拟与真实感视频合成解耦，为离线片段创作和实时交互流式生成提供可控接口。但实际渲染器面临两个挑战：
+1. 上游代理的粒度差异大，从粗粒度布局到精细关节几何，取决于交互方式；
+2. 流式推理需要在少量因果步骤内运行，并且在自生成历史中不累积漂移。
+
+### 核心思路/方法
+- 提出 Invoker-Render，配对双向创作模型与因果四步流式模型，二者共享一个条件接口，该接口覆盖结构代理、外观参考和语言。
+- 在约 200 小时对齐的多粒度语料上训练，使模型在提供精细几何约束时遵循约束，在粗粒度代理下合成合理的局部运动，从而支持运行时选择输入细节。
+- 提出 Progressive Forcing（ProForcing），用于连接双向创作与实时流式生成，避免步压缩与 rollout 漂移叠加。其训练过程包括：先训练因果预测器，再用训练视频得到的历史将其蒸馏为四步渲染器；随后训练转向连续自生成 rollout。
+- 使用流水线化服务栈支持高效流式推理。
+
+### 主要贡献
+- 提出共享条件接口下的双向创作模型与因果四步流式模型组合 Invoker-Render。
+- 构建约 200 小时对齐的多粒度训练语料，并支持不同代理家族、粒度与相机路径的控制。
+- 提出 Progressive Forcing（ProForcing），用于桥接双向创作与实时流式生成并缓解压缩与漂移问题。
+- 摘要报告实验显示：相较近期流式基线有一致增益；支持稳定的 30 分钟赛车 rollout，并保持场景与主体外观。
+- 提供流水线化服务栈以支持高效流式推理。
+
+### 局限性
+- 摘要未提供足够信息说明模型的具体失败模式、定量指标细节、对比基线清单与消融实验规模。
+- 摘要未提供足够信息说明 30 分钟 rollout 的评测协议、漂移度量方式及计算资源开销。
+- 摘要未提供足够信息说明多粒度语料的具体构成、标注方式与数据偏置。
+- 摘要未提供足够信息说明方法在非赛车场景或更广泛开放域中的泛化边界。
+
+### 阅读优先级
+中。理由：论文聚焦可控视频生成与世界模型式渲染，涉及实时流式、长时 rollout 稳定性和多粒度代理控制，问题定义清晰且方法要素明确；但摘要未给出定量结果细节与充分实验协议，是否高优先级取决于读者对流式可控视频生成、实时渲染或具身/AR 应用方向的直接兴趣。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Visual proxies decouple explicit world-state simulation from photorealistic video synthesis, offering a controllable interface for both offline clip creation and real-time interactive streaming. Yet a practical renderer must address two challenges. Upstream proxies vary from coarse layouts to fine articulated geometry depending on the interaction, and streaming inference must operate in a few causal steps without accumulating drift across self-generated history. We present Invoker-Render, pairing a bidirectional creation model with a causal four-step streaming model under a shared conditioning interface over structural proxies, an appearance reference, and language. Trained on an aligned approximately 200-hour multi-granularity corpus, Invoker-Render honors fine geometric constraints when supplied while synthesizing plausible local motion under coarse proxies, enabling runtime selection of input detail. To bridge bidirectional creation and real-time streaming without compounding step compression and rollout drift, we introduce Progressive Forcing (ProForcing). ProForcing first trains a causal predictor and distills it into a four-step renderer using histories derived from training videos. Training then shifts to continuous self-generated rollouts. A pipelined serving stack supports efficient streaming inference. Experiments show versatile control across proxy families, granularities, and camera paths, consistent gains over recent streaming baselines, and stable 30-minute racing rollouts that preserve scene and subject appearance.
@@ -1458,6 +1913,42 @@ Visual proxies decouple explicit world-state simulation from photorealistic vide
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** autonomous driving, driving scene, world model, world modeling
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Learning Agent-Centric Vision-Language-Action World Models for Autonomous Driving
+- 作者：Guoqing Wang, Pin Tang, Xiangxuan Ren, Chao Ma
+- 出版日期：2026-11-17T14:53:49Z
+- 分类：主分类为 Embodied / Robotics / AR Applications；次分类未提供
+- 链接：摘要页 https://arxiv.org/abs/2611.22880 ；PDF https://arxiv.org/pdf/2611.22880
+
+### 一句话总结
+论文提出 AgentWorld，一种以交通参与者（agent）为中心的 VLA 世界模型，用离散 agent token 同时进行场景推理与轨迹规划，以避免像素级未来帧生成中大量与驾驶无关的视觉细节带来的瓶颈。
+
+### 研究问题
+现有将 VLA 模型与世界建模结合的端到端自动驾驶方法，多在像素级生成未来帧，并产生大量稠密视觉 token。摘要指出，这类生成结果虽然视觉上看似合理，但保留了许多与驾驶无关的外观细节，只有小部分 token 直接编码与规划相关的因素，例如 agent 几何、运动动态和交互，从而形成显著性能瓶颈。由此引出问题：世界 VLA 模型应基于何种世界状态进行推理，以支持超越像素级预测的规划。
+
+### 核心思路/方法
+论文主张面向规划的世界建模应聚焦于紧凑、结构化的、以 agent 为中心的潜在状态，用来捕捉驾驶场景中物体随时间的交互。据此提出 AgentWorld：使用离散 agent token 联合进行推理和轨迹规划；每个 token 动态绑定到周围某个 agent，并关联该对象的状态，包括语义身份、3D 几何、运动与交互上下文。摘要称 AgentWorld 通过三个关键过程学习这些 token：显式几何 grounding、面向推理的监督微调，以及面向 agent 的强化学习。
+
+### 主要贡献
+- 提出以 agent 为中心的 VLA 世界模型 AgentWorld，用离散 agent token 同时服务推理与轨迹规划。
+- 明确指出现有像素级世界 VLA 模型中稠密视觉 token 与规划相关性不足的问题，并主张以紧凑结构化的 agent-centric latent state 作为规划导向的世界建模对象。
+- 设计三类学习过程：显式几何 grounding、推理导向监督微调、agent 导向强化学习。
+- 摘要称在多样驾驶场景下的开环与闭环实验表明，AgentWorld 提升规划能力、充分利用视觉证据与 agent 动态，并产生可解释的 agent-centric 世界状态。具体实验设置与数值结果摘要未提供足够信息。
+
+### 局限性
+- 摘要未提供足够信息说明开环与闭环实验的具体数据集、评价指标、基线对比和定量结果。
+- 摘要未提供足够信息说明三类训练过程的具体实现细节、计算开销或 token 数量等设计参数。
+- 摘要未提供足够信息说明方法在失败场景、长尾场景或真实部署条件下的表现与限制。
+- 摘要未提供足够信息说明与像素级世界 VLA 方法在同等条件下的系统性消融结果。
+
+### 阅读优先级
+中。理由：论文主题与端到端自动驾驶中的 VLA、世界模型和规划相关，且提出以 agent 为中心的表征思路，具有明确的问题意识和潜在参考价值；但当前仅有标题、作者与摘要，缺少实验细节、定量结果和实现信息，是否值得深入复现或引用需待全文确认。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1475,6 +1966,50 @@ Recent progress in integrating vision-language-action (VLA) models with world mo
 **Matched keywords:** embodied AI, robotics, mapping
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Network-Exposed Configuration Attacks on LLM-Controlled Social Robots
+- 作者：Stanley Akingbola, Ugbede Ibrahim, Yan Lin Aung, Quang Dan Le, Hong Qing Yu
+- 出版日期：2026-11-17T13:27:57Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：摘要页 https://arxiv.org/abs/2611.22761 ；PDF https://arxiv.org/pdf/2611.22761
+
+### 一句话总结
+论文研究针对 LLM 控制社交机器人 Reachy Mini Lite 的网络暴露配置攻击，发现攻击者可通过管理接口在无对话输入的情况下替换人格设置和云端 LLM 系统提示，并在物理硬件上产生可观察行为变化。
+
+### 研究问题
+论文关注具身机器人中 LLM 带来的安全依赖问题：除推理层之外，网络暴露的配置层是否可被未认证攻击者利用，从而绕过对话式提示注入的防护，改变机器人的人格设置与云端 LLM 系统提示。摘要还关注此类弱点在公开仓库中的复现情况，以及开发者网络假设与消费级具身 AI 安全之间的部署差距。
+
+### 核心思路/方法
+- 以 Pollen Robotics Reachy Mini Lite 为对象，研究网络暴露的配置攻击路径。
+- 对比两类攻击面：一是 11 次、覆盖 5 个类别的提示注入尝试（摘要称均被抵抗）；二是配置层攻击路径（摘要称两条路径均在物理硬件上产生可观察行为变化）。
+- 展示本地和网络邻近访问方式，并将弱点映射到 CWE-306（关键功能缺少认证）和 CWE-1327（绑定到不受限 IP 地址），报告 CVSS v3.1 分数为 6.5（中危）。
+- 指出配置端点可在无 CORS 预检情况下接受跨源请求（CWE-352；6.5 中危），且持久记忆存储未执行其声明的限制。
+- 对 59 个公开仓库进行源码审查，统计缺失认证的出现情况。
+
+### 主要贡献
+- 揭示 LLM 控制社交机器人在配置层的网络暴露攻击：无需对抗性对话输入即可替换人格设置和云端 LLM 系统提示。
+- 在物理硬件上观察到配置层攻击导致的行为变化，并与提示注入被抵抗的结果形成对比。
+- 给出弱点映射与风险评分：CWE-306、CWE-1327、CWE-352，CVSS v3.1 均为 6.5（中危）。
+- 通过 59 个公开仓库的源码审查，报告缺失认证在 11 个可源码验证的真实应用中有 10 个存在，计入一个框架默认案例后为 11/11；摘要明确限定这表示样本仓库中的复现，而非商业产品中的普遍性。
+- 提出开发者导向的网络假设与消费级具身 AI 安全之间存在部署差距，并指出潜在后果包括通过机上摄像头和麦克风进行监视，以及对附近用户实施社会工程。
+- 摘要称提供概念验证代码、证据和调查，链接为 https://bit.ly/reachypi。
+
+### 局限性
+- 摘要未提供足够信息说明实验环境、样本规模、测试协议和统计细节。
+- 摘要未提供足够信息说明提示注入 11 次尝试的具体类别内容与判定标准。
+- 摘要未提供足够信息说明配置层两条攻击路径的具体技术细节与独立复现条件。
+- 摘要未提供足够信息说明 59 个公开仓库的筛选标准、应用类型分布及审查方法。
+- 摘要明确将仓库审查结论限定为样本内复现，不能外推为商业产品中的普遍性。
+- 摘要未提供足够信息说明缓解措施的有效性评估。
+
+### 阅读优先级
+中。理由：论文聚焦 LLM 控制具身机器人的配置层安全，问题具体且涉及物理硬件行为变化，并给出 CWE 映射、CVSS 评分和公开仓库审查，对具身 AI 与机器人安全读者有参考价值；但摘要未提供实验细节和缓解评估，且仓库结论被作者明确限定为样本内复现，因此优先级定为中而非高。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Large language models (LLMs) in embodied robots create security dependencies beyond inference. We investigate a network-exposed configuration attack on the Pollen Robotics Reachy Mini Lite, allowing an unauthenticated attacker to replace personality settings and the cloud LLM's system prompt through a management interface, without adversarial conversational input. Eleven prompt-injection attempts across five categories were reported as resisted, whereas both configuration-layer attack paths produced observable behavioural changes on physical hardware. We demonstrate local and network-adjacent access, mapping the weakness to CWE-306 (Missing Authentication for a Critical Function) and CWE-1327 (Binding to an Unrestricted IP Address), with a reported CVSS v3.1 score of 6.5 (Medium). A configuration endpoint also accepts cross-origin requests without a CORS preflight (CWE-352; 6.5 Medium), while the persistent-memory sink stores content without enforcing its stated restrictions. A source review of 59 public repositories identifies missing authentication in 10 of 11 source-verifiable genuine applications, or 11 of 11 including a framework-default case. These findings indicate recurrence within the sampled repositories, not prevalence in commercial products. We characterise a deployment gap between developer-oriented network assumptions and consumer-facing embodied AI security: inference-layer refusal cannot prevent unauthorised changes to model instructions. Potential consequences include surveillance through onboard cameras and microphones and social engineering of nearby users. Proof-of-concept code, evidence and the survey are available at https://bit.ly/reachypi.
@@ -1488,6 +2023,41 @@ Large language models (LLMs) in embodied robots create security dependencies bey
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** world model, world modeling
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：CascadeJEPA: Enhancing 3D Geometric Representations via Spatially Coupled Cascaded Prediction
+- 作者：Kailai Zhou, Ziqi Chen, Xiaoning Xu, Yuefeng Wu, Zixuan Fu, Zijun Lin, Zhihao Li, Youwei Pang, Xiaoqi Zhao, Xun Cao, Bihan Wen
+- 出版日期：2026-11-17T12:36:05Z
+- 分类：Embodied / Robotics / AR Applications
+- 链接：摘要页 https://arxiv.org/abs/2611.22686 ；PDF https://arxiv.org/pdf/2611.22686
+
+### 一句话总结
+针对 I-JEPA 在预训练中语义识别提升但 3D 几何表示退化的问题，论文提出 CascadeJEPA，通过全网格上下文编码与预测阶段间的交叉注意力增强 patch 级交互，在基本保留原架构的同时改善 3D 几何任务表现并维持语义识别性能。
+
+### 研究问题
+论文指出，对 I-JEPA 的分析发现语义学习与几何学习之间存在逐渐扩大的差距：预训练中语义识别改善的同时，3D 几何表示却在退化。作者假设，这一现象部分源于在不完整空间上下文下预测高度抽象的潜在表示，使模型更偏向语义规律而非细粒度几何信息。因此，核心问题是：如何在不大幅改动 I-JEPA 架构的前提下，缓解语义与几何表示之间的失衡。
+
+### 核心思路/方法
+论文提出 CascadeJEPA，一个“空间耦合的级联预测”框架。其关键设计包括：全网格上下文编码（full-grid context encoding），以及预测阶段之间的交叉注意力（cross-attention between prediction stages），以促进更丰富的 patch 级交互。摘要强调该方法在较大程度上保留了原始 I-JEPA 架构。
+
+### 主要贡献
+- 识别并分析了 I-JEPA 中语义识别提升与 3D 几何表示退化之间的不一致现象。
+- 提出 CascadeJEPA，通过全网格上下文编码和阶段间交叉注意力增强 patch 级交互，同时基本保留 I-JEPA 架构。
+- 摘要称在多个 3D 几何任务上相较 I-JEPA 取得显著提升，并保持较强的语义识别性能；优势还延伸到未来特征预测和世界模型规划。
+
+### 局限性
+- 摘要未提供足够信息说明具体实验设置、数据集、评价指标和定量结果。
+- 摘要未提供足够信息说明计算开销、训练成本或架构改动带来的效率影响。
+- 摘要未提供足够信息说明方法在不同骨干网络或不同预训练规模下的泛化性。
+- 摘要未提供足够信息说明“全网格上下文编码”和“阶段间交叉注意力”的详细实现与消融结果。
+
+### 阅读优先级
+中。理由：论文聚焦 JEPA 类视觉表示学习中语义与 3D 几何表示的平衡问题，问题定位清晰，且与具身/机器人/AR 应用分类相关；但当前仅有摘要信息，缺少实验细节与定量证据，适合作为相关方向的可跟踪工作进一步阅读全文确认。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
@@ -1505,6 +2075,48 @@ Joint-Embedding Predictive Architectures (JEPAs) have emerged as a promising par
 **Matched keywords:** manipulation, mapping
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：InteractVLA: Turning VLAs into Interactive Tools for Agentic Robotic Manipulation
+- 作者：Chen Zhao, Zipeng Ye, Shifeng Bao, Yihan Lin, Haitao Shen, Yining Luo, Yuchen Xie, Jing Zhang
+- 出版日期：2026-11-17T11:07:45Z
+- 分类：主分类为 Embodied / Robotics / AR Applications；二级分类摘要未提供
+- 链接：[摘要](https://arxiv.org/abs/2611.22584)｜[PDF](https://arxiv.org/pdf/2611.22584)｜[项目页](https://lingwupro.github.io/InteractVLA/)
+
+### 一句话总结
+InteractVLA 通过双向几何接口，把预训练的流式 VLA 策略转化为可由视觉语言智能体进行几何引导与结果检查的可控工具，以缓解策略调用失败时的无效重试或人工接管问题。
+
+### 研究问题
+现有智能体式操作（agentic manipulation）系统把预训练的 VLA 策略当作不透明的、仅接受语言指令的基元：当策略在不熟悉指令或场景扰动下调用失败时，智能体无法引导其行为，只能无效重试或付出高昂代价进行人工接管。论文旨在解决“预训练 VLA 策略缺乏可引导性与可检查性”这一问题。
+
+### 核心思路/方法
+论文提出 InteractVLA 框架，通过一个与视觉语言智能体之间的双向几何接口，使预训练的流式（flow-based）VLA 成为几何上可引导、可检查的工具，包含两个方向：
+
+- **前向：测试时几何引导（test-time geometric guidance）**。将智能体指定的末端执行器目标，经由可微的“指令到位姿”映射，通过动作专家转换为输入梯度；“软时间目标对齐（soft-time target alignment）”把到达时间视为潜在的执行索引，以匹配目标位姿，同时不扭曲策略原有的接近运动。
+- **反向：动作信息驱动的智能体式精修（action-informed agentic refinement）**。将生成的动作块与标定后的相机重投影暴露给智能体，使其能够诊断空间偏差、为后续 VLA 调用修正目标，或在已引导轨迹之上局部调整运动片段。
+
+摘要还指出，让 VLA 变得可控不仅提升了在线智能体式工具使用，还解锁了有效的递归自我改进（RSI）。
+
+### 主要贡献
+- 提出 InteractVLA，将预训练流式 VLA 从“不透明、仅语言”的基元转变为具备几何可引导性与可检查性的交互式工具。
+- 设计双向几何接口：前向实现测试时几何引导与软时间目标对齐；反向实现基于动作块与相机重投影的智能体式诊断与精修。
+- 摘要报告达到当前最优性能：LIBERO-Plus 99.4%、RoboDojo 48.62%、RoboCasa365 89.4%。
+- 摘要声称该可控性可解锁有效的递归自我改进（RSI）。
+
+### 局限性
+- 摘要未提供足够信息说明实验设置、基线对比、消融实验与失败案例分析。
+- 摘要未提供足够信息说明方法在不同 VLA 架构、任务类型或真实机器人平台上的泛化能力。
+- 摘要未提供足够信息说明计算开销、推理时延以及“输入梯度”引导的稳定性与安全性。
+- 摘要未提供足够信息说明 RSI 的具体机制、收益来源及其潜在风险。
+- 摘要未提供足够信息说明“标定后的相机重投影”对相机标定误差的敏感程度。
+
+### 阅读优先级
+**高**。理由：论文直指智能体式机器人操作中 VLA 策略不可引导、不可检查的关键瓶颈，提出的双向几何接口思路具有方法层面的新颖性；摘要给出的三个基准指标（LIBERO-Plus、RoboDojo、RoboCasa365）覆盖面较广且数值较高，并涉及 RSI 这一值得关注的议题。但需注意，上述判断仅基于摘要，实验细节与结论可靠性需阅读全文核实。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 Existing agentic manipulation systems treat pretrained vision-language-action (VLA) policies as opaque, language-only primitives: when a policy call fails under unfamiliar instructions or scene perturbations, the agent cannot steer its behavior and is forced into futile retries or costly manual takeover. We present InteractVLA, a framework that turns pretrained flow-based VLAs into geometrically steerable and inspectable tools through a bidirectional geometric interface with vision-language agents. In the forward direction, test-time geometric guidance translates an agent-specified end-effector target into input gradients through the action expert via a differentiable command-to-pose mapping, while soft-time target alignment treats arrival time as a latent execution index to match the target pose without distorting the policy's approach motion. In the reverse direction, action-informed agentic refinement exposes generated action chunks and calibrated camera reprojections back to the agent, allowing it to diagnose spatial discrepancies, revise targets for subsequent VLA calls, or locally adjust motion segments on top of the guided trajectory. Making the VLA controllable not only boosts online agentic tool use, but also unlocks effective recursive self-improvement (RSI), achieving state-of-the-art performance of 99.4\% on LIBERO-Plus, 48.62\% on RoboDojo, and 89.4\% on RoboCasa365. Project page: https://lingwupro.github.io/InteractVLA/.
@@ -1520,6 +2132,43 @@ Existing agentic manipulation systems treat pretrained vision-language-action (V
 **Matched keywords:** manipulation, simulation, world model
 
 <details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：Inertial Video World Models
+- 作者：Yuan Gao, Fan Xu, Yu Guo, Yuxu Lu, Zhengru Fang, Hao Wu, Xiaomeng Huang
+- 出版日期：2026-11-17T07:09:41Z
+- 分类：主分类为 Embodied / Robotics / AR Applications；二级分类摘要未提供。
+- 链接：摘要页 https://arxiv.org/abs/2611.22314 ；PDF https://arxiv.org/pdf/2611.22314 ；代码 https://github.com/YuanGao-YG/InertialWorld
+
+### 一句话总结
+论文提出 InertialWorld，将“惯性”作为自回归视频世界模型的结构性先验，通过 Inertial Memory 跨时间携带场景证据而非每步重建，以缓解自回归推演中的误差累积和动力学不稳定问题。
+
+### 研究问题
+论文关注现有视频世界模型缺乏显式的惯性状态演化机制，导致运动与结构的连续性只能隐含在视频预测中；在自回归推演过程中，反复重建会累积误差并使预测动力学不稳定。
+
+### 核心思路/方法
+核心是将惯性引入为自回归预测的结构性先验：已有场景证据跨时间被携带，而不是在每一步重新构建。关键组件为 Inertial Memory，它将记忆从被动的预测上下文转变为演化的视频状态，包含两种互补视图：
+- 稠密欧拉网格：保留与场景对齐的证据；
+- 持久拉格朗日载体：将局部内容绑定到学习到的规范坐标。
+
+每一步中，模型根据动作条件运动传输载体内容，由传输后的载体和稠密网格预测完整的下一视频状态，并使用学习到的门控将传输内容与新预测内容组合进记忆，供下一步使用。
+
+### 主要贡献
+- 提出 InertialWorld，将惯性作为自回归视频世界模型的结构性先验，使场景证据跨时间携带而非逐步重建。
+- 设计 Inertial Memory，以稠密欧拉网格和持久拉格朗日载体两种互补视图表示演化的视频状态。
+- 给出基于动作条件运动传输载体、预测下一视频状态并用学习门控融合传输内容与新预测内容的逐步更新机制。
+- 摘要称在机器人操作、3D 游戏仿真和开放世界导航等多个领域进行了广泛实验，并在自回归预测性能上优于强视频世界模型基线；具体实验设置与数值结果摘要未提供足够信息。
+
+### 局限性
+摘要未提供足够信息来评估局限性，例如计算开销、长期推演稳定性边界、失败场景、对各领域的泛化限制以及基线对比的详细实验条件等，均未在摘要中说明。
+
+### 阅读优先级
+中。理由：论文主题与具身智能、机器人操作和视频世界模型的自回归稳定性直接相关，方法思路清晰且提供代码链接；但摘要未给出具体实验数值、消融结果和局限分析，是否值得优先精读需结合全文实验部分进一步判断。
+
+</details>
+
+<details>
 <summary>Abstract</summary>
 
 The physical world has inertia: it evolves from what already exists rather than being recreated at every instant. However, many existing video world models lack an explicit mechanism for inertial state evolution, leaving the continuity of motion and structure implicit in video prediction. During autoregressive rollouts, repeated reconstruction can accumulate errors and destabilize the predicted dynamics. To address this limitation, we introduce InertialWorld, an Inertial Video World Model that makes inertia a structural prior for autoregressive prediction: existing scene evidence is carried across time rather than reconstructed at every step. Central to this formulation is Inertial Memory, which turns memory from passive predictive context into an evolving video state with two complementary views: a dense Eulerian grid preserves scene-aligned evidence, while persistent Lagrangian carriers bind local content to learned canonical coordinates. At each step, the model transports the carrier content according to action-conditioned motion, predicts the complete next video state from the transported carriers and dense grid, and uses a learned gate to combine transported and newly predicted content into the memory for the next step. Extensive experiments across multiple domains, including robot manipulation, 3D game simulation, and open-world navigation, demonstrate that InertialWorld achieves competitive autoregressive prediction performance against strong video world model baselines. Codes link: https://github.com/YuanGao-YG/InertialWorld
@@ -1533,6 +2182,46 @@ The physical world has inertia: it evolves from what already exists rather than 
 **Primary category:** Embodied / Robotics / AR Applications
 **Secondary categories:** None
 **Matched keywords:** manipulation, simulation
+
+<details>
+<summary>AI 简析</summary>
+
+### Metadata
+- 标题：From Human Videos to Bimanual Dexterous Manipulation Data: Confidence-Guided RL Refinement of Video Priors
+- 作者：Yanghong Liu, Yang Chen, Kailang Xu, Bang Du, Feiyang Yang, Jiawei Xia, Zhengtao Yao, Yubiao Zhang, Masayoshi Tomizuka, Ruihai Wu, Wei Zhan
+- 出版日期：2026-11-16T21:23:58Z
+- 分类：Embodied / Robotics / AR Applications（其余二级分类：摘要未提供足够信息）
+- 链接：[摘要](https://arxiv.org/abs/2611.21908) / [PDF](https://arxiv.org/pdf/2611.21908)
+
+### 一句话总结
+PriDex 提出一种框架，将人类视频中的先验通过仿真中的强化学习精炼为机器人可执行的双臂灵巧操作演示，并用其训练基于视觉的扩散策略。
+
+### 研究问题
+为双臂灵巧操作采集演示成本高昂，因此希望利用人类视频作为机器人训练数据来源；但视频-derived 运动估计存在不确定性，且人类与机器人本体存在差异，直接进行运动迁移具有挑战性。
+
+### 核心思路/方法
+- 整体框架：PriDex 在仿真中通过强化学习把人类视频先验转化为可执行的机器人灵巧操作演示，并保留任务相关的交互结构，同时允许机器人重新生成符合自身本体的行为。
+- 抓取选择：利用人-物交互提供的可供性线索，从基于几何的候选抓取中选择与任务相关、且面向机器人本体的抓取。
+- 运动精炼：以物体轨迹作为任务级参考，以相对双臂腕部轨迹作为协调运动的补充引导。
+- 置信度自适应：由于遮挡或视觉歧义会使物体运动估计不可靠，PriDex 使用物体运动置信度自适应平衡上述两类先验：置信度高时更强调物体级引导，置信度下降时增加腕部级引导的贡献。
+- 强化学习与策略训练：强化学习在机器人运动学与物理约束下精炼视频-derived 先验，随后 rollout 所得策略以生成机器人演示，用于训练基于视觉的扩散策略。
+
+### 主要贡献
+- 提出 PriDex 框架，将人类视频先验转化为机器人可执行的双臂灵巧操作演示。
+- 引入人-物交互可供性线索用于选择任务相关、机器人特定的抓取。
+- 设计基于物体运动置信度的自适应机制，平衡物体轨迹与相对双臂腕部轨迹两类先验。
+- 在四个双臂灵巧操作任务（倒水、扫入簸箕、拧瓶盖、擦盘子）上评估仿真机器人数据生成与下游视觉运动策略学习。
+
+### 局限性
+- 摘要未提供足够信息关于方法在真实机器人上的部署效果。
+- 摘要未提供足够信息关于视频质量、遮挡程度或置信度估计误差对性能影响的具体量化结果。
+- 摘要未提供足够信息关于与基线方法的详细对比、失败案例或计算成本。
+- 摘要未提供足够信息关于四个任务之外的泛化能力。
+
+### 阅读优先级
+中。理由：该工作聚焦于利用人类视频降低双臂灵巧操作数据采集成本，问题具有实际意义；方法结合可供性抓取选择、置信度自适应先验融合与强化学习精炼，思路较完整；但摘要未给出定量结果与真实机器人验证信息，需阅读全文后判断其有效性。
+
+</details>
 
 <details>
 <summary>Abstract</summary>
