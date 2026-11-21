@@ -21151,5 +21151,16 @@
     "total_tokens": 15158,
     "estimated_cost_usd": 0.00237412,
     "estimated_cost_cny": 0.017094
+  },
+  {
+    "timestamp": "2026-11-21T20:24:25Z",
+    "task": "daily_trend_report",
+    "arxiv_id": null,
+    "model": "deepseek-v4-flash",
+    "prompt_tokens": 13358,
+    "completion_tokens": 1800,
+    "total_tokens": 15158,
+    "estimated_cost_usd": 0.00237412,
+    "estimated_cost_cny": 0.017094
   }
 ]
